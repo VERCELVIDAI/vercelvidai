@@ -1,0 +1,1348 @@
+import fs from 'fs';
+import path from 'path';
+import {
+  UserProfile,
+  Workspace,
+  WorkspaceMember,
+  Project,
+  Asset,
+  GenerationJob,
+  CreditAccount,
+  CreditLedgerEntry,
+  Plan,
+  Subscription,
+  Payment,
+  CreditPack,
+  AIProvider,
+  AIModel,
+  Template,
+  BrandKit,
+  RenderJob,
+  WebhookEvent,
+  AuditLog,
+  SupportTicket,
+  JobStatus,
+  CreditTransactionType,
+} from '../types';
+
+interface DatabaseSchema {
+  profiles: UserProfile[];
+  passwords: Record<string, string>; // userId -> hashedPassword/plaintext dev
+  workspaces: Workspace[];
+  workspaceMembers: WorkspaceMember[];
+  projects: Project[];
+  assets: Asset[];
+  generationJobs: GenerationJob[];
+  creditAccounts: Record<string, CreditAccount>; // userId -> account
+  creditLedger: CreditLedgerEntry[];
+  plans: Plan[];
+  subscriptions: Subscription[];
+  payments: Payment[];
+  creditPacks: CreditPack[];
+  aiProviders: AIProvider[];
+  aiModels: AIModel[];
+  templates: Template[];
+  brandKits: BrandKit[];
+  renderJobs: RenderJob[];
+  webhookEvents: WebhookEvent[];
+  auditLogs: AuditLog[];
+  supportTickets: SupportTicket[];
+}
+
+const DATA_DIR = path.join(process.cwd(), 'data');
+const DB_FILE = path.join(DATA_DIR, 'database.json');
+
+function ensureDataDir() {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+}
+
+function getInitialDatabase(): DatabaseSchema {
+  const now = new Date().toISOString();
+
+  const demoUserId = 'usr_creator_demo_1';
+  const adminUserId = 'usr_admin_master_1';
+  const demoWorkspaceId = 'ws_creator_demo_1';
+  const adminWorkspaceId = 'ws_admin_master_1';
+
+  return {
+    profiles: [
+      {
+        id: demoUserId,
+        email: 'creator@vidai.io',
+        displayName: 'Aria Vance',
+        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        role: 'creator',
+        onboardingData: {
+          primaryUseCase: 'ecommerce',
+          experienceLevel: 'intermediate',
+          socialPlatforms: ['Instagram', 'YouTube Shorts', 'TikTok'],
+          videoTypes: ['Product Commercials', 'Social Media Reels'],
+          completed: true,
+        },
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: adminUserId,
+        email: 'admin@vidai.io',
+        displayName: 'System Administrator',
+        avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+        role: 'admin',
+        createdAt: now,
+        updatedAt: now,
+      },
+    ],
+    passwords: {
+      [demoUserId]: 'Demo1234!',
+      [adminUserId]: 'Admin1234!',
+    },
+    workspaces: [
+      {
+        id: demoWorkspaceId,
+        ownerId: demoUserId,
+        name: 'Aria’s Creative Studio',
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: adminWorkspaceId,
+        ownerId: adminUserId,
+        name: 'Vidai Global Ops',
+        createdAt: now,
+        updatedAt: now,
+      },
+    ],
+    workspaceMembers: [
+      { workspaceId: demoWorkspaceId, userId: demoUserId, role: 'owner', joinedAt: now },
+      { workspaceId: adminWorkspaceId, userId: adminUserId, role: 'owner', joinedAt: now },
+    ],
+    creditAccounts: {
+      [demoUserId]: {
+        userId: demoUserId,
+        availableBalance: 350,
+        reservedBalance: 0,
+        updatedAt: now,
+      },
+      [adminUserId]: {
+        userId: adminUserId,
+        availableBalance: 99999,
+        reservedBalance: 0,
+        updatedAt: now,
+      },
+    },
+    creditLedger: [
+      {
+        id: 'cld_welcome_1',
+        userId: demoUserId,
+        transactionType: 'signup_bonus',
+        amount: 100,
+        balanceAfter: 100,
+        idempotencyKey: 'welcome_grant_' + demoUserId,
+        metadata: { note: 'Initial signup allowance' },
+        createdAt: now,
+      },
+      {
+        id: 'cld_starter_boost_1',
+        userId: demoUserId,
+        transactionType: 'purchase',
+        amount: 250,
+        balanceAfter: 350,
+        idempotencyKey: 'starter_pack_' + demoUserId,
+        metadata: { packName: 'Starter Creator Pack' },
+        createdAt: now,
+      },
+    ],
+    plans: [
+      {
+        id: 'plan_free',
+        name: 'Free Explorer',
+        priceInr: 0,
+        billingInterval: 'month',
+        creditsPerPeriod: 60,
+        entitlements: {
+          maxResolution: '720p',
+          watermark: true,
+          maxVideoLengthSec: 30,
+          supportedModels: ['vidai-cinematic-v1', 'fal-flux-pro'],
+          storageMb: 1000,
+          brandKitsAllowed: 1,
+        },
+        isActive: true,
+      },
+      {
+        id: 'plan_starter',
+        name: 'Starter Creator',
+        priceInr: 999,
+        billingInterval: 'month',
+        creditsPerPeriod: 500,
+        entitlements: {
+          maxResolution: '1080p',
+          watermark: false,
+          maxVideoLengthSec: 60,
+          supportedModels: ['vidai-cinematic-v1', 'fal-flux-pro', 'eleven-multilingual'],
+          storageMb: 10000,
+          brandKitsAllowed: 2,
+        },
+        isActive: true,
+      },
+      {
+        id: 'plan_creator',
+        name: 'Pro Creator',
+        priceInr: 2499,
+        billingInterval: 'month',
+        creditsPerPeriod: 1600,
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 180,
+          supportedModels: ['vidai-cinematic-v1', 'runway-gen3', 'luma-ray', 'fal-flux-pro', 'eleven-multilingual'],
+          storageMb: 50000,
+          priorityQueue: true,
+          brandKitsAllowed: 5,
+        },
+        isActive: true,
+      },
+      {
+        id: 'plan_business',
+        name: 'Studio Agency',
+        priceInr: 6999,
+        billingInterval: 'month',
+        creditsPerPeriod: 5000,
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 600,
+          supportedModels: ['all'],
+          storageMb: 250000,
+          priorityQueue: true,
+          brandKitsAllowed: 20,
+        },
+        isActive: true,
+      },
+    ],
+    subscriptions: [
+      {
+        id: 'sub_demo_creator',
+        userId: demoUserId,
+        planId: 'plan_creator',
+        providerSubscriptionId: 'sub_rzp_mock_live_123',
+        status: 'active',
+        currentPeriodStart: now,
+        currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        cancelAtPeriodEnd: false,
+        createdAt: now,
+      },
+    ],
+    creditPacks: [
+      { id: 'pack_500', name: '500 Credits Boost', priceInr: 499, creditAmount: 500, isActive: true },
+      { id: 'pack_1200', name: '1,200 Credits Studio', priceInr: 999, creditAmount: 1200, isActive: true },
+      { id: 'pack_3500', name: '3,500 Credits Scale', priceInr: 2499, creditAmount: 3500, isActive: true },
+      { id: 'pack_10000', name: '10,000 Credits Agency', priceInr: 5999, creditAmount: 10000, isActive: true },
+    ],
+    aiProviders: [
+      { id: 'vidai_core', name: 'Vidai Neural Engine (High Speed)', providerType: 'multimodal', configurationStatus: 'configured', isActive: true },
+      { id: 'runway', name: 'Runway Gen-3 Alpha', providerType: 'video', configurationStatus: 'configured', isActive: true },
+      { id: 'luma', name: 'Luma Dream Machine Ray', providerType: 'video', configurationStatus: 'configured', isActive: true },
+      { id: 'fal_ai', name: 'Fal.ai Fast Media Engine', providerType: 'multimodal', configurationStatus: 'configured', isActive: true },
+      { id: 'elevenlabs', name: 'ElevenLabs Neural Voices', providerType: 'audio', configurationStatus: 'configured', isActive: true },
+      { id: 'openai', name: 'OpenAI GPT-4o Script Engine', providerType: 'text', configurationStatus: 'configured', isActive: true },
+    ],
+    aiModels: [
+      {
+        id: 'vidai-cinematic-v1',
+        providerId: 'vidai_core',
+        modelIdentifier: 'vidai-cinematic-v1',
+        displayName: 'Vidai Cinematic HD',
+        mediaType: 'video',
+        capabilities: {
+          resolutions: ['720p', '1080p'],
+          aspectRatios: ['16:9', '9:16', '1:1'],
+          maxDuration: 10,
+        },
+        costConfiguration: { unitCostUsd: 0.05 },
+        creditPricing: { costCredits: 25 },
+        isActive: true,
+      },
+      {
+        id: 'runway-gen3',
+        providerId: 'runway',
+        modelIdentifier: 'gen3-alpha-turbo',
+        displayName: 'Runway Gen-3 Alpha Turbo',
+        mediaType: 'video',
+        capabilities: {
+          resolutions: ['1080p', '4k'],
+          aspectRatios: ['16:9', '9:16'],
+          maxDuration: 15,
+        },
+        costConfiguration: { unitCostUsd: 0.2 },
+        creditPricing: { costCredits: 50 },
+        isActive: true,
+      },
+      {
+        id: 'luma-ray',
+        providerId: 'luma',
+        modelIdentifier: 'ray-v2-production',
+        displayName: 'Luma Dream Machine Ray',
+        mediaType: 'video',
+        capabilities: {
+          resolutions: ['1080p'],
+          aspectRatios: ['16:9', '9:16', '1:1'],
+          maxDuration: 10,
+        },
+        costConfiguration: { unitCostUsd: 0.15 },
+        creditPricing: { costCredits: 40 },
+        isActive: true,
+      },
+      {
+        id: 'fal-flux-pro',
+        providerId: 'fal_ai',
+        modelIdentifier: 'fal-ai/flux-pro-v1',
+        displayName: 'Flux 1.1 Pro Vision',
+        mediaType: 'image',
+        capabilities: {
+          resolutions: ['1024x1024', '1920x1080', '1080x1920'],
+          aspectRatios: ['1:1', '16:9', '9:16'],
+        },
+        costConfiguration: { unitCostUsd: 0.02 },
+        creditPricing: { costCredits: 5 },
+        isActive: true,
+      },
+      {
+        id: 'eleven-multilingual',
+        providerId: 'elevenlabs',
+        modelIdentifier: 'eleven_turbo_v2_5',
+        displayName: 'ElevenLabs Neural Voice HD',
+        mediaType: 'voice',
+        capabilities: {
+          languages: ['en', 'hi', 'es', 'fr', 'de', 'ja'],
+          emotions: ['neutral', 'excited', 'whispering', 'dramatic'],
+        },
+        costConfiguration: { unitCostUsd: 0.01 },
+        creditPricing: { costCredits: 10 },
+        isActive: true,
+      },
+    ],
+    templates: [
+      {
+        id: 'tmpl_1',
+        slug: 'instagram-reels-ecommerce',
+        title: 'Viral Luxury Product Reel',
+        category: 'Instagram Reels',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80',
+        templateData: {
+          aspectRatio: '9:16',
+          duration: 15,
+          music: 'energetic-beat',
+          scenes: [
+            { text: 'Engineered for Performance', duration: 5, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4' },
+            { text: 'Ultralight Ergonomic Design', duration: 5, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4' },
+            { text: 'Claim 30% Off Today', duration: 5, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-man-jogging-towards-camera-42177-large.mp4' },
+          ],
+        },
+        isPublished: true,
+      },
+      {
+        id: 'tmpl_2',
+        slug: 'youtube-shorts-tech',
+        title: 'Daily AI & Tech Breakdown',
+        category: 'YouTube Shorts',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80',
+        templateData: {
+          aspectRatio: '9:16',
+          duration: 20,
+          music: 'lo-fi-tech',
+          scenes: [
+            { text: 'The AI Breakthrough Nobody Saw Coming', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-41589-large.mp4' },
+            { text: 'Here is what it means for creators', duration: 7, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-mother-and-daughter-using-a-laptop-42322-large.mp4' },
+            { text: 'Follow for daily breakdowns', duration: 7, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-at-home-42318-large.mp4' },
+          ],
+        },
+        isPublished: true,
+      },
+      {
+        id: 'tmpl_3',
+        slug: 'cinematic-luxury-perfume',
+        title: 'Cinematic Perfume Commercial',
+        category: 'Product Commercials',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&auto=format&fit=crop&q=80',
+        templateData: {
+          aspectRatio: '16:9',
+          duration: 18,
+          music: 'ambient-orchestral',
+          scenes: [
+            { text: 'Elegance in Every Breath', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-perfume-bottle-and-flowers-42354-large.mp4' },
+            { text: 'Crafted in Grasse, France', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-waterfall-in-forest-2213-large.mp4' },
+            { text: 'Vercel Vidai Signature Collection', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4' },
+          ],
+        },
+        isPublished: true,
+      },
+      {
+        id: 'tmpl_4',
+        slug: 'saas-explainer-flow',
+        title: 'SaaS Product Walkthrough',
+        category: 'Explainer Videos',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
+        templateData: {
+          aspectRatio: '16:9',
+          duration: 30,
+          scenes: [
+            { text: 'Build faster with AI Workflows', duration: 10 },
+            { text: 'Collaborate in real time', duration: 10 },
+            { text: 'Deploy worldwide instantly', duration: 10 },
+          ],
+        },
+        isPublished: true,
+      },
+      {
+        id: 'tmpl_5',
+        slug: 'ugc-testimonial-unboxing',
+        title: 'High-Converting UGC Hook',
+        category: 'UGC Ads',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop&q=80',
+        templateData: {
+          aspectRatio: '9:16',
+          duration: 25,
+          scenes: [
+            { text: 'Wait! Do not buy that until you see this', duration: 6 },
+            { text: 'Here is what surprised me most', duration: 9 },
+            { text: 'Link in bio with my 20% code', duration: 10 },
+          ],
+        },
+        isPublished: true,
+      },
+      {
+        id: 'tmpl_6',
+        slug: 'youtube-longform-opener',
+        title: 'Cinematic YouTube Channel Intro',
+        category: 'YouTube Videos',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80',
+        templateData: {
+          aspectRatio: '16:9',
+          duration: 12,
+          scenes: [
+            { text: 'Welcome to the Next Era', duration: 6 },
+            { text: 'Subscribe for Weekly Masterclasses', duration: 6 },
+          ],
+        },
+        isPublished: true,
+      },
+    ],
+    brandKits: [
+      {
+        id: 'bk_demo_1',
+        workspaceId: demoWorkspaceId,
+        name: 'Vercel Vidai Signature Kit',
+        colors: ['#0B0C10', '#8B5CF6', '#38BDF8', '#FFFFFF'],
+        fonts: ['Inter', 'Outfit', 'Cinzel'],
+        guidelinesText: 'Modern, high-energy tech visual aesthetic with violet rim lighting and dynamic pacing.',
+      },
+    ],
+    projects: [
+      {
+        id: 'prj_demo_reel_1',
+        workspaceId: demoWorkspaceId,
+        ownerId: demoUserId,
+        title: 'Cyberpunk Runner — Summer Commercial',
+        description: 'Cinematic futuristic footwear reveal teaser for Instagram & YouTube Shorts.',
+        mediaType: 'video',
+        status: 'completed',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80',
+        isFavorite: true,
+        timeline: {
+          durationSec: 15,
+          aspectRatio: '9:16',
+          resolution: '1080p',
+          backgroundColor: '#090A0F',
+          tracks: [
+            { id: 'trk_video_1', type: 'video', name: 'Primary Video' },
+            { id: 'trk_text_1', type: 'text', name: 'Subtitles & Titles' },
+            { id: 'trk_audio_1', type: 'audio', name: 'Background Beat' },
+          ],
+          clips: [
+            {
+              id: 'clp_v1',
+              trackId: 'trk_video_1',
+              type: 'video',
+              title: 'Opening Footwear Shot',
+              sourceUrl: 'https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4',
+              startTimeSec: 0,
+              durationSec: 5,
+              volume: 1,
+            },
+            {
+              id: 'clp_v2',
+              trackId: 'trk_video_1',
+              type: 'video',
+              title: 'Urban Sprint Cinematic',
+              sourceUrl: 'https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4',
+              startTimeSec: 5,
+              durationSec: 5,
+              volume: 1,
+            },
+            {
+              id: 'clp_v3',
+              trackId: 'trk_video_1',
+              type: 'video',
+              title: 'Hero Brand Lockup',
+              sourceUrl: 'https://assets.mixkit.co/videos/preview/mixkit-man-jogging-towards-camera-42177-large.mp4',
+              startTimeSec: 10,
+              durationSec: 5,
+              volume: 1,
+            },
+            {
+              id: 'clp_t1',
+              trackId: 'trk_text_1',
+              type: 'text',
+              title: 'Headline Hook',
+              text: 'STEP INTO TOMORROW',
+              startTimeSec: 1,
+              durationSec: 3.5,
+              style: { fontSize: 32, color: '#FFFFFF', backgroundColor: 'rgba(0,0,0,0.6)', positionY: 80 },
+            },
+            {
+              id: 'clp_t2',
+              trackId: 'trk_text_1',
+              type: 'text',
+              title: 'CTA Text',
+              text: 'GET 30% OFF NOW',
+              startTimeSec: 10.5,
+              durationSec: 4,
+              style: { fontSize: 36, color: '#38BDF8', backgroundColor: 'rgba(11,12,16,0.8)', positionY: 75 },
+            },
+          ],
+        },
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'prj_demo_explainer_2',
+        workspaceId: demoWorkspaceId,
+        ownerId: demoUserId,
+        title: 'AI Video Marketing Playbook',
+        description: 'Landscape YouTube explainer for marketing teams.',
+        mediaType: 'video',
+        status: 'draft',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
+        isFavorite: false,
+        timeline: {
+          durationSec: 30,
+          aspectRatio: '16:9',
+          resolution: '1080p',
+          tracks: [
+            { id: 'trk_v', type: 'video', name: 'Main Video Track' },
+            { id: 'trk_t', type: 'text', name: 'Key Points' },
+          ],
+          clips: [
+            {
+              id: 'clp_2_1',
+              trackId: 'trk_v',
+              type: 'video',
+              title: 'Studio Workspace',
+              sourceUrl: 'https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-41589-large.mp4',
+              startTimeSec: 0,
+              durationSec: 12,
+            },
+          ],
+        },
+        createdAt: new Date(Date.now() - 86400000).toISOString(),
+        updatedAt: now,
+      },
+    ],
+    assets: [
+      {
+        id: 'ast_sample_1',
+        workspaceId: demoWorkspaceId,
+        ownerId: demoUserId,
+        name: 'Cyberpunk Sneaker 3D Render.png',
+        assetType: 'image',
+        storageKey: 'assets/demo/sneaker_render.png',
+        url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=80',
+        mimeType: 'image/png',
+        fileSize: 1450230,
+        createdAt: now,
+      },
+      {
+        id: 'ast_sample_2',
+        workspaceId: demoWorkspaceId,
+        ownerId: demoUserId,
+        name: 'Brand Audio Theme - Synthwave.mp3',
+        assetType: 'audio',
+        storageKey: 'assets/demo/synthwave_theme.mp3',
+        url: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=synthwave-80s-110045.mp3',
+        mimeType: 'audio/mpeg',
+        fileSize: 3200100,
+        createdAt: now,
+      },
+    ],
+    generationJobs: [
+      {
+        id: 'job_sample_completed_1',
+        userId: demoUserId,
+        workspaceId: demoWorkspaceId,
+        projectId: 'prj_demo_reel_1',
+        providerId: 'vidai_core',
+        modelId: 'vidai-cinematic-v1',
+        status: 'completed',
+        progressPercent: 100,
+        progressMessage: 'Rendering completed successfully',
+        input: {
+          prompt: 'Ultra-cinematic slow motion close up of high-tech futuristic athletic running sneakers with violet neon accents on wet asphalt city street at night.',
+          aspectRatio: '9:16',
+          durationSec: 5,
+          resolution: '1080p',
+        },
+        output: {
+          videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4',
+          thumbnailUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80',
+          isDemoSimulated: true,
+        },
+        estimatedCredits: 25,
+        reservedCredits: 25,
+        actualCredits: 25,
+        providerRequestId: 'req_vidai_demo_8829',
+        createdAt: new Date(Date.now() - 3600000).toISOString(),
+        updatedAt: new Date(Date.now() - 3540000).toISOString(),
+        completedAt: new Date(Date.now() - 3540000).toISOString(),
+      },
+    ],
+    payments: [
+      {
+        id: 'pay_starter_1',
+        userId: demoUserId,
+        orderId: 'order_rzp_mock_123',
+        providerPaymentId: 'pay_rzp_mock_456',
+        amountInr: 999,
+        currency: 'INR',
+        status: 'success',
+        paymentType: 'subscription',
+        createdAt: now,
+      },
+    ],
+    renderJobs: [],
+    webhookEvents: [],
+    auditLogs: [
+      {
+        id: 'aud_1',
+        actorId: demoUserId,
+        action: 'PROJECT_CREATED',
+        resourceType: 'project',
+        resourceId: 'prj_demo_reel_1',
+        createdAt: now,
+      },
+    ],
+    supportTickets: [
+      {
+        id: 'tkt_1',
+        userId: demoUserId,
+        userEmail: 'creator@vidai.io',
+        subject: 'Inquiry regarding 4K 60fps export presets',
+        category: 'Feature Request',
+        status: 'in_progress',
+        priority: 'medium',
+        createdAt: now,
+        updatedAt: now,
+      },
+    ],
+  };
+}
+
+class Store {
+  private db: DatabaseSchema | null = null;
+
+  private load(): DatabaseSchema {
+    if (this.db) return this.db;
+    ensureDataDir();
+    if (!fs.existsSync(DB_FILE)) {
+      const initial = getInitialDatabase();
+      this.save(initial);
+      this.db = initial;
+      return this.db;
+    }
+    try {
+      const raw = fs.readFileSync(DB_FILE, 'utf-8');
+      this.db = JSON.parse(raw);
+      return this.db!;
+    } catch (err) {
+      console.error('Error reading db file, re-initializing:', err);
+      const initial = getInitialDatabase();
+      this.save(initial);
+      this.db = initial;
+      return this.db;
+    }
+  }
+
+  private save(data: DatabaseSchema): void {
+    ensureDataDir();
+    const tempFile = `${DB_FILE}.${Date.now()}.tmp`;
+    fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(tempFile, DB_FILE);
+    this.db = data;
+  }
+
+  // ==========================================
+  // USERS & AUTH
+  // ==========================================
+  getProfileById(id: string): UserProfile | undefined {
+    return this.load().profiles.find((p) => p.id === id);
+  }
+
+  getProfileByEmail(email: string): UserProfile | undefined {
+    return this.load().profiles.find((p) => p.email.toLowerCase() === email.toLowerCase());
+  }
+
+  verifyPassword(userId: string, plainText: string): boolean {
+    const db = this.load();
+    const stored = db.passwords[userId];
+    if (!stored) return false;
+    return stored === plainText;
+  }
+
+  createProfile(params: { email: string; displayName: string; passwordPlainText: string; role?: 'creator' | 'admin' }): { profile: UserProfile; workspace: Workspace } {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const userId = 'usr_' + Math.random().toString(36).substring(2, 10);
+    const workspaceId = 'ws_' + Math.random().toString(36).substring(2, 10);
+
+    const profile: UserProfile = {
+      id: userId,
+      email: params.email.toLowerCase(),
+      displayName: params.displayName,
+      role: params.role || 'creator',
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const workspace: Workspace = {
+      id: workspaceId,
+      ownerId: userId,
+      name: `${params.displayName}'s Studio`,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const member: WorkspaceMember = {
+      workspaceId,
+      userId,
+      role: 'owner',
+      joinedAt: now,
+    };
+
+    // Credit account with 100 free credits
+    const creditAccount: CreditAccount = {
+      userId,
+      availableBalance: 100,
+      reservedBalance: 0,
+      updatedAt: now,
+    };
+
+    const ledgerEntry: CreditLedgerEntry = {
+      id: 'cld_' + Math.random().toString(36).substring(2, 12),
+      userId,
+      transactionType: 'signup_bonus',
+      amount: 100,
+      balanceAfter: 100,
+      idempotencyKey: `signup_grant_${userId}`,
+      metadata: { note: 'Welcome signup allowance' },
+      createdAt: now,
+    };
+
+    db.profiles.push(profile);
+    db.passwords[userId] = params.passwordPlainText;
+    db.workspaces.push(workspace);
+    db.workspaceMembers.push(member);
+    db.creditAccounts[userId] = creditAccount;
+    db.creditLedger.push(ledgerEntry);
+
+    this.save(db);
+    return { profile, workspace };
+  }
+
+  updateProfile(id: string, updates: Partial<UserProfile>): UserProfile {
+    const db = this.load();
+    const idx = db.profiles.findIndex((p) => p.id === id);
+    if (idx === -1) throw new Error('User not found');
+    db.profiles[idx] = {
+      ...db.profiles[idx],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.save(db);
+    return db.profiles[idx];
+  }
+
+  deleteProfile(id: string): boolean {
+    const db = this.load();
+    db.profiles = db.profiles.filter((p) => p.id !== id);
+    delete db.passwords[id];
+    delete db.creditAccounts[id];
+    db.projects = db.projects.filter((p) => p.ownerId !== id);
+    db.assets = db.assets.filter((a) => a.ownerId !== id);
+    db.generationJobs = db.generationJobs.filter((g) => g.userId !== id);
+    this.save(db);
+    return true;
+  }
+
+  getAllProfiles(): UserProfile[] {
+    return this.load().profiles;
+  }
+
+  // ==========================================
+  // WORKSPACES
+  // ==========================================
+  getUserWorkspaces(userId: string): Workspace[] {
+    const db = this.load();
+    const memberships = db.workspaceMembers.filter((m) => m.userId === userId).map((m) => m.workspaceId);
+    return db.workspaces.filter((w) => memberships.includes(w.id));
+  }
+
+  getWorkspaceById(id: string): Workspace | undefined {
+    return this.load().workspaces.find((w) => w.id === id);
+  }
+
+  // ==========================================
+  // CREDIT WALLET & ATOMIC TRANSACTIONS (SECTION 13)
+  // ==========================================
+  getCreditAccount(userId: string): CreditAccount {
+    const db = this.load();
+    if (!db.creditAccounts[userId]) {
+      const now = new Date().toISOString();
+      db.creditAccounts[userId] = {
+        userId,
+        availableBalance: 100,
+        reservedBalance: 0,
+        updatedAt: now,
+      };
+      this.save(db);
+    }
+    return db.creditAccounts[userId];
+  }
+
+  getCreditLedger(userId: string): CreditLedgerEntry[] {
+    return this.load()
+      .creditLedger.filter((c) => c.userId === userId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  /**
+   * Atomically reserve credits before starting a generation job.
+   * Throws error if available balance is insufficient.
+   */
+  reserveCredits(userId: string, amount: number, jobId?: string): CreditAccount {
+    const db = this.load();
+    const account = db.creditAccounts[userId] || {
+      userId,
+      availableBalance: 0,
+      reservedBalance: 0,
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (account.availableBalance < amount) {
+      throw new Error(`Insufficient credits. Required: ${amount}, Available: ${account.availableBalance}`);
+    }
+
+    account.availableBalance -= amount;
+    account.reservedBalance += amount;
+    account.updatedAt = new Date().toISOString();
+    db.creditAccounts[userId] = account;
+
+    const ledgerEntry: CreditLedgerEntry = {
+      id: 'cld_' + Math.random().toString(36).substring(2, 12),
+      userId,
+      transactionType: 'generation_reserve',
+      amount: -amount,
+      balanceAfter: account.availableBalance,
+      relatedJobId: jobId,
+      idempotencyKey: jobId ? `reserve_${jobId}` : undefined,
+      metadata: { reservedAmount: amount },
+      createdAt: new Date().toISOString(),
+    };
+    db.creditLedger.push(ledgerEntry);
+
+    this.save(db);
+    return account;
+  }
+
+  /**
+   * Settle reserved credits when a job completes.
+   * If actual is less than reserved, refund the difference.
+   */
+  settleCredits(userId: string, jobId: string, reservedAmount: number, actualAmount: number): CreditAccount {
+    const db = this.load();
+    const account = db.creditAccounts[userId];
+    if (!account) throw new Error('Credit account not found');
+
+    const refundDifference = reservedAmount - actualAmount;
+    account.reservedBalance = Math.max(0, account.reservedBalance - reservedAmount);
+
+    if (refundDifference > 0) {
+      account.availableBalance += refundDifference;
+    }
+
+    account.updatedAt = new Date().toISOString();
+    db.creditAccounts[userId] = account;
+
+    const ledgerEntry: CreditLedgerEntry = {
+      id: 'cld_' + Math.random().toString(36).substring(2, 12),
+      userId,
+      transactionType: 'generation_settle',
+      amount: -actualAmount,
+      balanceAfter: account.availableBalance,
+      relatedJobId: jobId,
+      idempotencyKey: `settle_${jobId}`,
+      metadata: { reserved: reservedAmount, actual: actualAmount, refunded: refundDifference },
+      createdAt: new Date().toISOString(),
+    };
+    db.creditLedger.push(ledgerEntry);
+
+    this.save(db);
+    return account;
+  }
+
+  /**
+   * Compensating refund if a generation fails or is cancelled.
+   */
+  refundCredits(userId: string, amount: number, reason: string, jobId?: string): CreditAccount {
+    const db = this.load();
+    const account = db.creditAccounts[userId];
+    if (!account) throw new Error('Credit account not found');
+
+    account.availableBalance += amount;
+    if (account.reservedBalance >= amount) {
+      account.reservedBalance -= amount;
+    }
+    account.updatedAt = new Date().toISOString();
+    db.creditAccounts[userId] = account;
+
+    const ledgerEntry: CreditLedgerEntry = {
+      id: 'cld_' + Math.random().toString(36).substring(2, 12),
+      userId,
+      transactionType: 'refund',
+      amount: amount,
+      balanceAfter: account.availableBalance,
+      relatedJobId: jobId,
+      idempotencyKey: jobId ? `refund_${jobId}_${Date.now()}` : undefined,
+      metadata: { reason },
+      createdAt: new Date().toISOString(),
+    };
+    db.creditLedger.push(ledgerEntry);
+
+    this.save(db);
+    return account;
+  }
+
+  /**
+   * Add credits via payment or subscription with idempotency check.
+   */
+  addCredits(
+    userId: string,
+    amount: number,
+    transactionType: CreditTransactionType,
+    paymentId?: string,
+    idempotencyKey?: string,
+    metadata?: Record<string, any>
+  ): CreditAccount {
+    const db = this.load();
+    if (idempotencyKey) {
+      const existing = db.creditLedger.find((l) => l.idempotencyKey === idempotencyKey);
+      if (existing) {
+        return db.creditAccounts[userId]; // already processed idempotently
+      }
+    }
+
+    const account = db.creditAccounts[userId] || {
+      userId,
+      availableBalance: 0,
+      reservedBalance: 0,
+      updatedAt: new Date().toISOString(),
+    };
+
+    account.availableBalance += amount;
+    account.updatedAt = new Date().toISOString();
+    db.creditAccounts[userId] = account;
+
+    const ledgerEntry: CreditLedgerEntry = {
+      id: 'cld_' + Math.random().toString(36).substring(2, 12),
+      userId,
+      transactionType,
+      amount,
+      balanceAfter: account.availableBalance,
+      paymentId,
+      idempotencyKey,
+      metadata,
+      createdAt: new Date().toISOString(),
+    };
+    db.creditLedger.push(ledgerEntry);
+
+    this.save(db);
+    return account;
+  }
+
+  // ==========================================
+  // PROJECTS (SECTION 7 & 11)
+  // ==========================================
+  getProjects(workspaceId: string, filter?: { mediaType?: string; status?: string; favoriteOnly?: boolean }): Project[] {
+    let list = this.load().projects.filter((p) => p.workspaceId === workspaceId && !p.deletedAt);
+    if (filter?.mediaType && filter.mediaType !== 'all') {
+      list = list.filter((p) => p.mediaType === filter.mediaType);
+    }
+    if (filter?.status && filter.status !== 'all') {
+      list = list.filter((p) => p.status === filter.status);
+    }
+    if (filter?.favoriteOnly) {
+      list = list.filter((p) => p.isFavorite);
+    }
+    return list.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  }
+
+  getProjectById(id: string): Project | undefined {
+    return this.load().projects.find((p) => p.id === id && !p.deletedAt);
+  }
+
+  createProject(params: {
+    workspaceId: string;
+    ownerId: string;
+    title: string;
+    description?: string;
+    mediaType?: 'video' | 'image' | 'audio' | 'script';
+    timeline?: any;
+    thumbnailUrl?: string;
+  }): Project {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const id = 'prj_' + Math.random().toString(36).substring(2, 11);
+
+    const project: Project = {
+      id,
+      workspaceId: params.workspaceId,
+      ownerId: params.ownerId,
+      title: params.title || 'Untitled Project',
+      description: params.description || '',
+      mediaType: params.mediaType || 'video',
+      status: 'draft',
+      thumbnailUrl: params.thumbnailUrl || 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80',
+      timeline: params.timeline || {
+        durationSec: 15,
+        aspectRatio: '16:9',
+        resolution: '1080p',
+        tracks: [
+          { id: 'trk_v1', type: 'video', name: 'Video 1' },
+          { id: 'trk_t1', type: 'text', name: 'Text & Titles' },
+          { id: 'trk_a1', type: 'audio', name: 'Audio' },
+        ],
+        clips: [],
+      },
+      isFavorite: false,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.projects.push(project);
+    this.save(db);
+    return project;
+  }
+
+  updateProject(id: string, updates: Partial<Project>): Project {
+    const db = this.load();
+    const idx = db.projects.findIndex((p) => p.id === id);
+    if (idx === -1) throw new Error('Project not found');
+
+    db.projects[idx] = {
+      ...db.projects[idx],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.save(db);
+    return db.projects[idx];
+  }
+
+  duplicateProject(id: string, newOwnerId?: string): Project {
+    const db = this.load();
+    const original = db.projects.find((p) => p.id === id);
+    if (!original) throw new Error('Project not found');
+
+    const now = new Date().toISOString();
+    const copy: Project = {
+      ...JSON.parse(JSON.stringify(original)),
+      id: 'prj_' + Math.random().toString(36).substring(2, 11),
+      title: `${original.title} (Copy)`,
+      ownerId: newOwnerId || original.ownerId,
+      createdAt: now,
+      updatedAt: now,
+    };
+    db.projects.push(copy);
+    this.save(db);
+    return copy;
+  }
+
+  deleteProject(id: string): boolean {
+    const db = this.load();
+    const project = db.projects.find((p) => p.id === id);
+    if (!project) return false;
+    project.deletedAt = new Date().toISOString();
+    this.save(db);
+    return true;
+  }
+
+  // ==========================================
+  // GENERATION JOBS (SECTION 10)
+  // ==========================================
+  createGenerationJob(params: {
+    userId: string;
+    workspaceId: string;
+    projectId?: string;
+    providerId: string;
+    modelId: string;
+    input: any;
+    estimatedCredits: number;
+  }): GenerationJob {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const id = 'job_' + Math.random().toString(36).substring(2, 12);
+
+    // Atomically reserve the credits
+    this.reserveCredits(params.userId, params.estimatedCredits, id);
+
+    const job: GenerationJob = {
+      id,
+      userId: params.userId,
+      workspaceId: params.workspaceId,
+      projectId: params.projectId,
+      providerId: params.providerId,
+      modelId: params.modelId,
+      status: 'queued',
+      progressPercent: 5,
+      progressMessage: 'Job queued and dispatched to AI inference pipeline...',
+      input: params.input,
+      estimatedCredits: params.estimatedCredits,
+      reservedCredits: params.estimatedCredits,
+      actualCredits: 0,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.generationJobs.push(job);
+    this.save(db);
+    return job;
+  }
+
+  updateJobStatus(
+    id: string,
+    status: JobStatus,
+    updates: {
+      progressPercent?: number;
+      progressMessage?: string;
+      output?: any;
+      actualCredits?: number;
+      errorCode?: string;
+      errorMessage?: string;
+      providerRequestId?: string;
+    }
+  ): GenerationJob {
+    const db = this.load();
+    const job = db.generationJobs.find((j) => j.id === id);
+    if (!job) throw new Error('Job not found');
+
+    const previousStatus = job.status;
+    job.status = status;
+    job.updatedAt = new Date().toISOString();
+
+    if (updates.progressPercent !== undefined) job.progressPercent = updates.progressPercent;
+    if (updates.progressMessage) job.progressMessage = updates.progressMessage;
+    if (updates.output) job.output = updates.output;
+    if (updates.providerRequestId) job.providerRequestId = updates.providerRequestId;
+    if (updates.errorCode) job.errorCode = updates.errorCode;
+    if (updates.errorMessage) job.errorMessage = updates.errorMessage;
+
+    if (status === 'completed' && previousStatus !== 'completed') {
+      job.completedAt = new Date().toISOString();
+      job.actualCredits = updates.actualCredits ?? job.estimatedCredits;
+      this.settleCredits(job.userId, job.id, job.reservedCredits, job.actualCredits);
+    } else if ((status === 'failed' || status === 'cancelled') && previousStatus !== 'failed' && previousStatus !== 'cancelled') {
+      // Compensating refund
+      this.refundCredits(job.userId, job.reservedCredits, `Job ${status}: ${updates.errorMessage || 'Execution halted'}`, job.id);
+    }
+
+    this.save(db);
+    return job;
+  }
+
+  getJobById(id: string): GenerationJob | undefined {
+    return this.load().generationJobs.find((j) => j.id === id);
+  }
+
+  getUserJobs(userId: string): GenerationJob[] {
+    return this.load()
+      .generationJobs.filter((j) => j.userId === userId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  getAllJobs(): GenerationJob[] {
+    return this.load()
+      .generationJobs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  // ==========================================
+  // ASSETS (SECTION 12)
+  // ==========================================
+  getAssets(workspaceId: string): Asset[] {
+    return this.load()
+      .assets.filter((a) => a.workspaceId === workspaceId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  createAsset(asset: Omit<Asset, 'id' | 'createdAt'>): Asset {
+    const db = this.load();
+    const id = 'ast_' + Math.random().toString(36).substring(2, 11);
+    const newAsset: Asset = {
+      ...asset,
+      id,
+      createdAt: new Date().toISOString(),
+    };
+    db.assets.push(newAsset);
+    this.save(db);
+    return newAsset;
+  }
+
+  deleteAsset(id: string): boolean {
+    const db = this.load();
+    db.assets = db.assets.filter((a) => a.id !== id);
+    this.save(db);
+    return true;
+  }
+
+  // ==========================================
+  // BRAND KITS
+  // ==========================================
+  getBrandKits(workspaceId: string): BrandKit[] {
+    return this.load().brandKits.filter((b) => b.workspaceId === workspaceId);
+  }
+
+  updateBrandKit(id: string, updates: Partial<BrandKit>): BrandKit {
+    const db = this.load();
+    const idx = db.brandKits.findIndex((b) => b.id === id);
+    if (idx === -1) throw new Error('Brand kit not found');
+    db.brandKits[idx] = { ...db.brandKits[idx], ...updates };
+    this.save(db);
+    return db.brandKits[idx];
+  }
+
+  // ==========================================
+  // PLANS, SUBSCRIPTIONS & PAYMENTS (SECTION 14)
+  // ==========================================
+  getPlans(): Plan[] {
+    return this.load().plans.filter((p) => p.isActive);
+  }
+
+  getCreditPacks(): CreditPack[] {
+    return this.load().creditPacks.filter((p) => p.isActive);
+  }
+
+  getUserSubscription(userId: string): { subscription?: Subscription; plan?: Plan } {
+    const db = this.load();
+    const sub = db.subscriptions.find((s) => s.userId === userId && s.status === 'active');
+    if (!sub) return {};
+    const plan = db.plans.find((p) => p.id === sub.planId);
+    return { subscription: sub, plan };
+  }
+
+  createPayment(payment: Omit<Payment, 'id' | 'createdAt'>): Payment {
+    const db = this.load();
+    const id = 'pay_' + Math.random().toString(36).substring(2, 11);
+    const newPayment: Payment = {
+      ...payment,
+      id,
+      createdAt: new Date().toISOString(),
+    };
+    db.payments.push(newPayment);
+    this.save(db);
+    return newPayment;
+  }
+
+  getAllPayments(): Payment[] {
+    return this.load().payments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  // ==========================================
+  // PROVIDERS & MODELS (SECTION 9)
+  // ==========================================
+  getProviders(): AIProvider[] {
+    return this.load().aiProviders;
+  }
+
+  getModels(): AIModel[] {
+    return this.load().aiModels.filter((m) => m.isActive);
+  }
+
+  getModelById(id: string): AIModel | undefined {
+    return this.load().aiModels.find((m) => m.id === id);
+  }
+
+  // ==========================================
+  // TEMPLATES
+  // ==========================================
+  getTemplates(category?: string): Template[] {
+    const list = this.load().templates.filter((t) => t.isPublished);
+    if (category && category !== 'All') {
+      return list.filter((t) => t.category.toLowerCase() === category.toLowerCase());
+    }
+    return list;
+  }
+
+  getTemplateBySlug(slug: string): Template | undefined {
+    return this.load().templates.find((t) => t.slug === slug);
+  }
+
+  // ==========================================
+  // AUDIT LOGS & TICKETS
+  // ==========================================
+  logAudit(actorId: string | undefined, action: string, resourceType: string, resourceId: string, metadata?: any): void {
+    const db = this.load();
+    const entry: AuditLog = {
+      id: 'aud_' + Math.random().toString(36).substring(2, 12),
+      actorId,
+      action,
+      resourceType,
+      resourceId,
+      metadata,
+      createdAt: new Date().toISOString(),
+    };
+    db.auditLogs.push(entry);
+    this.save(db);
+  }
+
+  getAuditLogs(): AuditLog[] {
+    return this.load().auditLogs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  getSupportTickets(userId?: string): SupportTicket[] {
+    const db = this.load();
+    if (userId) {
+      return db.supportTickets.filter((t) => t.userId === userId);
+    }
+    return db.supportTickets.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  createSupportTicket(params: { userId: string; userEmail?: string; subject: string; category: string; priority?: 'low' | 'medium' | 'high' }): SupportTicket {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const ticket: SupportTicket = {
+      id: 'tkt_' + Math.random().toString(36).substring(2, 9),
+      userId: params.userId,
+      userEmail: params.userEmail,
+      subject: params.subject,
+      category: params.category,
+      status: 'open',
+      priority: params.priority || 'medium',
+      createdAt: now,
+      updatedAt: now,
+    };
+    db.supportTickets.push(ticket);
+    this.save(db);
+    return ticket;
+  }
+}
+
+export const dbStore = new Store();

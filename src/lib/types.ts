@@ -1,0 +1,346 @@
+// ==============================================================================
+// VERCEL VIDAI - APPLICATION TYPES & INTERFACES (SECTION 16)
+// ==============================================================================
+
+export type UserRole = 'creator' | 'admin' | 'enterprise';
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  displayName: string;
+  avatarUrl?: string;
+  role: UserRole;
+  onboardingData?: {
+    primaryUseCase?: string;
+    experienceLevel?: string;
+    socialPlatforms?: string[];
+    videoTypes?: string[];
+    completed?: boolean;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Workspace {
+  id: string;
+  ownerId: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WorkspaceMember {
+  workspaceId: string;
+  userId: string;
+  role: 'owner' | 'admin' | 'member' | 'viewer';
+  joinedAt: string;
+}
+
+export type MediaType = 'video' | 'image' | 'audio' | 'script';
+export type ProjectStatus = 'draft' | 'processing' | 'completed' | 'archived';
+
+export interface TimelineClip {
+  id: string;
+  trackId: string;
+  type: 'video' | 'image' | 'audio' | 'text';
+  title: string;
+  sourceUrl?: string;
+  text?: string;
+  startTimeSec: number;
+  durationSec: number;
+  offsetSec?: number;
+  volume?: number;
+  muted?: boolean;
+  opacity?: number;
+  style?: {
+    fontSize?: number;
+    color?: string;
+    backgroundColor?: string;
+    positionX?: number;
+    positionY?: number;
+  };
+}
+
+export interface TimelineTrack {
+  id: string;
+  type: 'video' | 'overlay' | 'text' | 'audio';
+  name: string;
+  muted?: boolean;
+  locked?: boolean;
+}
+
+export interface TimelineData {
+  durationSec: number;
+  aspectRatio: '16:9' | '9:16' | '1:1';
+  resolution: '720p' | '1080p' | '4k';
+  backgroundColor?: string;
+  tracks: TimelineTrack[];
+  clips: TimelineClip[];
+}
+
+export interface Project {
+  id: string;
+  workspaceId: string;
+  ownerId: string;
+  title: string;
+  description?: string;
+  mediaType: MediaType;
+  status: ProjectStatus;
+  thumbnailUrl?: string;
+  timeline: TimelineData;
+  metadata?: Record<string, any>;
+  isFavorite?: boolean;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string | null;
+}
+
+export interface Asset {
+  id: string;
+  workspaceId: string;
+  ownerId: string;
+  projectId?: string;
+  assetType: 'video' | 'image' | 'audio' | 'font';
+  name: string;
+  storageKey: string;
+  url: string;
+  mimeType: string;
+  fileSize: number;
+  metadata?: Record<string, any>;
+  createdAt: string;
+}
+
+export type JobStatus = 'queued' | 'processing' | 'completed' | 'failed' | 'cancelled';
+
+export interface GenerationJob {
+  id: string;
+  userId: string;
+  workspaceId: string;
+  projectId?: string;
+  providerId: string;
+  modelId: string;
+  status: JobStatus;
+  progressPercent: number;
+  progressMessage?: string;
+  input: {
+    prompt?: string;
+    negativePrompt?: string;
+    aspectRatio?: '16:9' | '9:16' | '1:1';
+    durationSec?: number;
+    resolution?: string;
+    referenceImageUrl?: string;
+    scriptText?: string;
+    voiceId?: string;
+    style?: string;
+    [key: string]: any;
+  };
+  output?: {
+    videoUrl?: string;
+    thumbnailUrl?: string;
+    audioUrl?: string;
+    imageUrl?: string;
+    transcript?: string;
+    metadata?: Record<string, any>;
+    isDemoSimulated?: boolean;
+  };
+  estimatedCredits: number;
+  reservedCredits: number;
+  actualCredits: number;
+  providerRequestId?: string;
+  errorCode?: string;
+  errorMessage?: string;
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+}
+
+export interface CreditAccount {
+  userId: string;
+  availableBalance: number;
+  reservedBalance: number;
+  updatedAt: string;
+}
+
+export type CreditTransactionType =
+  | 'signup_bonus'
+  | 'monthly_allowance'
+  | 'purchase'
+  | 'generation_reserve'
+  | 'generation_settle'
+  | 'refund'
+  | 'admin_adjustment';
+
+export interface CreditLedgerEntry {
+  id: string;
+  userId: string;
+  transactionType: CreditTransactionType;
+  amount: number;
+  balanceAfter: number;
+  relatedJobId?: string;
+  paymentId?: string;
+  idempotencyKey?: string;
+  metadata?: Record<string, any>;
+  createdAt: string;
+}
+
+export interface Plan {
+  id: string;
+  name: string;
+  priceInr: number;
+  billingInterval: 'month' | 'year';
+  creditsPerPeriod: number;
+  entitlements: {
+    maxResolution: '720p' | '1080p' | '4k';
+    watermark: boolean;
+    maxVideoLengthSec: number;
+    supportedModels: string[];
+    storageMb: number;
+    priorityQueue?: boolean;
+    brandKitsAllowed?: number;
+  };
+  isActive: boolean;
+}
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  planId: string;
+  providerSubscriptionId?: string;
+  status: 'active' | 'past_due' | 'canceled' | 'trialing';
+  currentPeriodStart: string;
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+  createdAt: string;
+}
+
+export interface Payment {
+  id: string;
+  userId: string;
+  orderId: string;
+  providerPaymentId?: string;
+  amountInr: number;
+  currency: 'INR' | 'USD';
+  status: 'pending' | 'success' | 'failed' | 'refunded';
+  paymentType: 'subscription' | 'credit_pack';
+  webhookEventId?: string;
+  metadata?: Record<string, any>;
+  createdAt: string;
+}
+
+export interface CreditPack {
+  id: string;
+  name: string;
+  priceInr: number;
+  creditAmount: number;
+  isActive: boolean;
+}
+
+export interface AIProvider {
+  id: string;
+  name: string;
+  providerType: 'video' | 'image' | 'audio' | 'text' | 'multimodal';
+  configurationStatus: 'configured' | 'unconfigured' | 'mock';
+  isActive: boolean;
+}
+
+export interface AIModel {
+  id: string;
+  providerId: string;
+  modelIdentifier: string;
+  displayName: string;
+  mediaType: 'video' | 'image' | 'voice' | 'script';
+  capabilities: {
+    resolutions?: string[];
+    aspectRatios?: string[];
+    maxDuration?: number;
+    languages?: string[];
+    emotions?: string[];
+    [key: string]: any;
+  };
+  costConfiguration: {
+    unitCostUsd: number;
+  };
+  creditPricing: {
+    costCredits: number;
+  };
+  isActive: boolean;
+}
+
+export interface Template {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  thumbnailUrl: string;
+  templateData: {
+    aspectRatio: '16:9' | '9:16' | '1:1';
+    duration: number;
+    music?: string;
+    scenes: Array<{
+      text: string;
+      duration: number;
+      mediaUrl?: string;
+    }>;
+  };
+  isPublished: boolean;
+}
+
+export interface BrandKit {
+  id: string;
+  workspaceId: string;
+  name: string;
+  logoAssetId?: string;
+  logoUrl?: string;
+  colors: string[];
+  fonts: string[];
+  guidelinesText?: string;
+}
+
+export interface RenderJob {
+  id: string;
+  projectId: string;
+  userId: string;
+  status: 'queued' | 'rendering' | 'completed' | 'failed';
+  settings: {
+    resolution: '720p' | '1080p' | '4k';
+    fps: number;
+    format: 'mp4' | 'webm';
+  };
+  outputAssetId?: string;
+  outputUrl?: string;
+  errorMessage?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WebhookEvent {
+  id: string;
+  provider: string;
+  eventId: string;
+  eventType: string;
+  processingStatus: 'received' | 'processed' | 'ignored' | 'failed';
+  receivedAt: string;
+  processedAt?: string;
+}
+
+export interface AuditLog {
+  id: string;
+  actorId?: string;
+  action: string;
+  resourceType: string;
+  resourceId: string;
+  metadata?: Record<string, any>;
+  createdAt: string;
+}
+
+export interface SupportTicket {
+  id: string;
+  userId: string;
+  userEmail?: string;
+  subject: string;
+  category: string;
+  status: 'open' | 'in_progress' | 'resolved' | 'closed';
+  priority: 'low' | 'medium' | 'high';
+  createdAt: string;
+  updatedAt: string;
+}

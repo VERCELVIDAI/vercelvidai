@@ -1,0 +1,1522 @@
+{
+  "profiles": [
+    {
+      "id": "usr_creator_demo_1",
+      "email": "creator@vidai.io",
+      "displayName": "Aria Vance",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "role": "creator",
+      "onboardingData": {
+        "primaryUseCase": "ecommerce",
+        "experienceLevel": "intermediate",
+        "socialPlatforms": [
+          "Instagram",
+          "YouTube Shorts",
+          "TikTok"
+        ],
+        "videoTypes": [
+          "Product Commercials",
+          "Social Media Reels"
+        ],
+        "completed": true
+      },
+      "createdAt": "2026-10-21T06:14:19.599Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "usr_admin_master_1",
+      "email": "admin@vidai.io",
+      "displayName": "System Administrator",
+      "avatarUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
+      "role": "admin",
+      "createdAt": "2026-10-21T06:14:19.599Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "usr_n5udt4o8",
+      "email": "test_user_1792563259597@vidai.io",
+      "displayName": "Test Runner",
+      "role": "creator",
+      "createdAt": "2026-10-21T06:14:19.602Z",
+      "updatedAt": "2026-10-21T06:14:19.602Z"
+    }
+  ],
+  "passwords": {
+    "usr_creator_demo_1": "Demo1234!",
+    "usr_admin_master_1": "Admin1234!",
+    "usr_n5udt4o8": "ValidPass123!"
+  },
+  "workspaces": [
+    {
+      "id": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "name": "Aria’s Creative Studio",
+      "createdAt": "2026-10-21T06:14:19.599Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "ws_admin_master_1",
+      "ownerId": "usr_admin_master_1",
+      "name": "Vidai Global Ops",
+      "createdAt": "2026-10-21T06:14:19.599Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "ws_sc4a4yu1",
+      "ownerId": "usr_n5udt4o8",
+      "name": "Test Runner's Studio",
+      "createdAt": "2026-10-21T06:14:19.602Z",
+      "updatedAt": "2026-10-21T06:14:19.602Z"
+    }
+  ],
+  "workspaceMembers": [
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "userId": "usr_creator_demo_1",
+      "role": "owner",
+      "joinedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "workspaceId": "ws_admin_master_1",
+      "userId": "usr_admin_master_1",
+      "role": "owner",
+      "joinedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "workspaceId": "ws_sc4a4yu1",
+      "userId": "usr_n5udt4o8",
+      "role": "owner",
+      "joinedAt": "2026-10-21T06:14:19.602Z"
+    }
+  ],
+  "creditAccounts": {
+    "usr_creator_demo_1": {
+      "userId": "usr_creator_demo_1",
+      "availableBalance": 300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T09:13:26.553Z"
+    },
+    "usr_admin_master_1": {
+      "userId": "usr_admin_master_1",
+      "availableBalance": 99999,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    "usr_n5udt4o8": {
+      "userId": "usr_n5udt4o8",
+      "availableBalance": 225,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T06:14:20.847Z"
+    }
+  },
+  "creditLedger": [
+    {
+      "id": "cld_welcome_1",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "welcome_grant_usr_creator_demo_1",
+      "metadata": {
+        "note": "Initial signup allowance"
+      },
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "cld_starter_boost_1",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "purchase",
+      "amount": 250,
+      "balanceAfter": 350,
+      "idempotencyKey": "starter_pack_usr_creator_demo_1",
+      "metadata": {
+        "packName": "Starter Creator Pack"
+      },
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "cld_slva49pnf0",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_n5udt4o8",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T06:14:19.602Z"
+    },
+    {
+      "id": "cld_eauw9hogzp",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "generation_reserve",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792563259604",
+      "idempotencyKey": "reserve_job_test_1792563259604",
+      "metadata": {
+        "reservedAmount": 50
+      },
+      "createdAt": "2026-10-21T06:14:19.605Z"
+    },
+    {
+      "id": "cld_yqth0zglwt",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "generation_settle",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792563259604",
+      "idempotencyKey": "settle_job_test_1792563259604",
+      "metadata": {
+        "reserved": 50,
+        "actual": 50,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T06:14:19.607Z"
+    },
+    {
+      "id": "cld_5qg0b7xzzb",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "generation_reserve",
+      "amount": -30,
+      "balanceAfter": 20,
+      "relatedJobId": "job_fail_1792563259613",
+      "idempotencyKey": "reserve_job_fail_1792563259613",
+      "metadata": {
+        "reservedAmount": 30
+      },
+      "createdAt": "2026-10-21T06:14:19.613Z"
+    },
+    {
+      "id": "cld_mz4yjqgmqi",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "refund",
+      "amount": 30,
+      "balanceAfter": 50,
+      "relatedJobId": "job_fail_1792563259613",
+      "idempotencyKey": "refund_job_fail_1792563259613_1792563259615",
+      "metadata": {
+        "reason": "Simulated cluster timeout"
+      },
+      "createdAt": "2026-10-21T06:14:19.615Z"
+    },
+    {
+      "id": "cld_yu5nqfgend",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "purchase",
+      "amount": 200,
+      "balanceAfter": 250,
+      "paymentId": "pay_123",
+      "idempotencyKey": "order_test_idempotent_1792563259617",
+      "createdAt": "2026-10-21T06:14:19.618Z"
+    },
+    {
+      "id": "cld_p1c87jemv1",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_ugdkhpjoxg",
+      "idempotencyKey": "reserve_job_ugdkhpjoxg",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-21T06:14:19.632Z"
+    },
+    {
+      "id": "cld_hvqdkussun",
+      "userId": "usr_n5udt4o8",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_ugdkhpjoxg",
+      "idempotencyKey": "settle_job_ugdkhpjoxg",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T06:14:20.847Z"
+    },
+    {
+      "id": "cld_ongcawnfju",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 325,
+      "relatedJobId": "job_thjmq46zpc",
+      "idempotencyKey": "reserve_job_thjmq46zpc",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-21T09:12:42.137Z"
+    },
+    {
+      "id": "cld_05qgces8rh",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 325,
+      "relatedJobId": "job_thjmq46zpc",
+      "idempotencyKey": "settle_job_thjmq46zpc",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T09:12:43.363Z"
+    },
+    {
+      "id": "cld_nbvzmuv2qg",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 300,
+      "relatedJobId": "job_uiy1h9p3yo",
+      "idempotencyKey": "reserve_job_uiy1h9p3yo",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-21T09:13:25.340Z"
+    },
+    {
+      "id": "cld_x1wuvqs1sp",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 300,
+      "relatedJobId": "job_uiy1h9p3yo",
+      "idempotencyKey": "settle_job_uiy1h9p3yo",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T09:13:26.553Z"
+    }
+  ],
+  "plans": [
+    {
+      "id": "plan_free",
+      "name": "Free Explorer",
+      "priceInr": 0,
+      "billingInterval": "month",
+      "creditsPerPeriod": 60,
+      "entitlements": {
+        "maxResolution": "720p",
+        "watermark": true,
+        "maxVideoLengthSec": 30,
+        "supportedModels": [
+          "vidai-cinematic-v1",
+          "fal-flux-pro"
+        ],
+        "storageMb": 1000,
+        "brandKitsAllowed": 1
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_starter",
+      "name": "Starter Creator",
+      "priceInr": 999,
+      "billingInterval": "month",
+      "creditsPerPeriod": 500,
+      "entitlements": {
+        "maxResolution": "1080p",
+        "watermark": false,
+        "maxVideoLengthSec": 60,
+        "supportedModels": [
+          "vidai-cinematic-v1",
+          "fal-flux-pro",
+          "eleven-multilingual"
+        ],
+        "storageMb": 10000,
+        "brandKitsAllowed": 2
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_creator",
+      "name": "Pro Creator",
+      "priceInr": 2499,
+      "billingInterval": "month",
+      "creditsPerPeriod": 1600,
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 180,
+        "supportedModels": [
+          "vidai-cinematic-v1",
+          "runway-gen3",
+          "luma-ray",
+          "fal-flux-pro",
+          "eleven-multilingual"
+        ],
+        "storageMb": 50000,
+        "priorityQueue": true,
+        "brandKitsAllowed": 5
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_business",
+      "name": "Studio Agency",
+      "priceInr": 6999,
+      "billingInterval": "month",
+      "creditsPerPeriod": 5000,
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 600,
+        "supportedModels": [
+          "all"
+        ],
+        "storageMb": 250000,
+        "priorityQueue": true,
+        "brandKitsAllowed": 20
+      },
+      "isActive": true
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "sub_demo_creator",
+      "userId": "usr_creator_demo_1",
+      "planId": "plan_creator",
+      "providerSubscriptionId": "sub_rzp_mock_live_123",
+      "status": "active",
+      "currentPeriodStart": "2026-10-21T06:14:19.599Z",
+      "currentPeriodEnd": "2026-11-20T06:14:19.600Z",
+      "cancelAtPeriodEnd": false,
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    }
+  ],
+  "creditPacks": [
+    {
+      "id": "pack_500",
+      "name": "500 Credits Boost",
+      "priceInr": 499,
+      "creditAmount": 500,
+      "isActive": true
+    },
+    {
+      "id": "pack_1200",
+      "name": "1,200 Credits Studio",
+      "priceInr": 999,
+      "creditAmount": 1200,
+      "isActive": true
+    },
+    {
+      "id": "pack_3500",
+      "name": "3,500 Credits Scale",
+      "priceInr": 2499,
+      "creditAmount": 3500,
+      "isActive": true
+    },
+    {
+      "id": "pack_10000",
+      "name": "10,000 Credits Agency",
+      "priceInr": 5999,
+      "creditAmount": 10000,
+      "isActive": true
+    }
+  ],
+  "aiProviders": [
+    {
+      "id": "vidai_core",
+      "name": "Vidai Neural Engine (High Speed)",
+      "providerType": "multimodal",
+      "configurationStatus": "configured",
+      "isActive": true
+    },
+    {
+      "id": "runway",
+      "name": "Runway Gen-3 Alpha",
+      "providerType": "video",
+      "configurationStatus": "configured",
+      "isActive": true
+    },
+    {
+      "id": "luma",
+      "name": "Luma Dream Machine Ray",
+      "providerType": "video",
+      "configurationStatus": "configured",
+      "isActive": true
+    },
+    {
+      "id": "fal_ai",
+      "name": "Fal.ai Fast Media Engine",
+      "providerType": "multimodal",
+      "configurationStatus": "configured",
+      "isActive": true
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs Neural Voices",
+      "providerType": "audio",
+      "configurationStatus": "configured",
+      "isActive": true
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI GPT-4o Script Engine",
+      "providerType": "text",
+      "configurationStatus": "configured",
+      "isActive": true
+    }
+  ],
+  "aiModels": [
+    {
+      "id": "vidai-cinematic-v1",
+      "providerId": "vidai_core",
+      "modelIdentifier": "vidai-cinematic-v1",
+      "displayName": "Vidai Cinematic HD",
+      "mediaType": "video",
+      "capabilities": {
+        "resolutions": [
+          "720p",
+          "1080p"
+        ],
+        "aspectRatios": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "maxDuration": 10
+      },
+      "costConfiguration": {
+        "unitCostUsd": 0.05
+      },
+      "creditPricing": {
+        "costCredits": 25
+      },
+      "isActive": true
+    },
+    {
+      "id": "runway-gen3",
+      "providerId": "runway",
+      "modelIdentifier": "gen3-alpha-turbo",
+      "displayName": "Runway Gen-3 Alpha Turbo",
+      "mediaType": "video",
+      "capabilities": {
+        "resolutions": [
+          "1080p",
+          "4k"
+        ],
+        "aspectRatios": [
+          "16:9",
+          "9:16"
+        ],
+        "maxDuration": 15
+      },
+      "costConfiguration": {
+        "unitCostUsd": 0.2
+      },
+      "creditPricing": {
+        "costCredits": 50
+      },
+      "isActive": true
+    },
+    {
+      "id": "luma-ray",
+      "providerId": "luma",
+      "modelIdentifier": "ray-v2-production",
+      "displayName": "Luma Dream Machine Ray",
+      "mediaType": "video",
+      "capabilities": {
+        "resolutions": [
+          "1080p"
+        ],
+        "aspectRatios": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "maxDuration": 10
+      },
+      "costConfiguration": {
+        "unitCostUsd": 0.15
+      },
+      "creditPricing": {
+        "costCredits": 40
+      },
+      "isActive": true
+    },
+    {
+      "id": "fal-flux-pro",
+      "providerId": "fal_ai",
+      "modelIdentifier": "fal-ai/flux-pro-v1",
+      "displayName": "Flux 1.1 Pro Vision",
+      "mediaType": "image",
+      "capabilities": {
+        "resolutions": [
+          "1024x1024",
+          "1920x1080",
+          "1080x1920"
+        ],
+        "aspectRatios": [
+          "1:1",
+          "16:9",
+          "9:16"
+        ]
+      },
+      "costConfiguration": {
+        "unitCostUsd": 0.02
+      },
+      "creditPricing": {
+        "costCredits": 5
+      },
+      "isActive": true
+    },
+    {
+      "id": "eleven-multilingual",
+      "providerId": "elevenlabs",
+      "modelIdentifier": "eleven_turbo_v2_5",
+      "displayName": "ElevenLabs Neural Voice HD",
+      "mediaType": "voice",
+      "capabilities": {
+        "languages": [
+          "en",
+          "hi",
+          "es",
+          "fr",
+          "de",
+          "ja"
+        ],
+        "emotions": [
+          "neutral",
+          "excited",
+          "whispering",
+          "dramatic"
+        ]
+      },
+      "costConfiguration": {
+        "unitCostUsd": 0.01
+      },
+      "creditPricing": {
+        "costCredits": 10
+      },
+      "isActive": true
+    }
+  ],
+  "templates": [
+    {
+      "id": "tmpl_1",
+      "slug": "instagram-reels-ecommerce",
+      "title": "Viral Luxury Product Reel",
+      "category": "Instagram Reels",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+      "templateData": {
+        "aspectRatio": "9:16",
+        "duration": 15,
+        "music": "energetic-beat",
+        "scenes": [
+          {
+            "text": "Engineered for Performance",
+            "duration": 5,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4"
+          },
+          {
+            "text": "Ultralight Ergonomic Design",
+            "duration": 5,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4"
+          },
+          {
+            "text": "Claim 30% Off Today",
+            "duration": 5,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-jogging-towards-camera-42177-large.mp4"
+          }
+        ]
+      },
+      "isPublished": true
+    },
+    {
+      "id": "tmpl_2",
+      "slug": "youtube-shorts-tech",
+      "title": "Daily AI & Tech Breakdown",
+      "category": "YouTube Shorts",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80",
+      "templateData": {
+        "aspectRatio": "9:16",
+        "duration": 20,
+        "music": "lo-fi-tech",
+        "scenes": [
+          {
+            "text": "The AI Breakthrough Nobody Saw Coming",
+            "duration": 6,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-41589-large.mp4"
+          },
+          {
+            "text": "Here is what it means for creators",
+            "duration": 7,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-mother-and-daughter-using-a-laptop-42322-large.mp4"
+          },
+          {
+            "text": "Follow for daily breakdowns",
+            "duration": 7,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-at-home-42318-large.mp4"
+          }
+        ]
+      },
+      "isPublished": true
+    },
+    {
+      "id": "tmpl_3",
+      "slug": "cinematic-luxury-perfume",
+      "title": "Cinematic Perfume Commercial",
+      "category": "Product Commercials",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&auto=format&fit=crop&q=80",
+      "templateData": {
+        "aspectRatio": "16:9",
+        "duration": 18,
+        "music": "ambient-orchestral",
+        "scenes": [
+          {
+            "text": "Elegance in Every Breath",
+            "duration": 6,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-perfume-bottle-and-flowers-42354-large.mp4"
+          },
+          {
+            "text": "Crafted in Grasse, France",
+            "duration": 6,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-waterfall-in-forest-2213-large.mp4"
+          },
+          {
+            "text": "Vercel Vidai Signature Collection",
+            "duration": 6,
+            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4"
+          }
+        ]
+      },
+      "isPublished": true
+    },
+    {
+      "id": "tmpl_4",
+      "slug": "saas-explainer-flow",
+      "title": "SaaS Product Walkthrough",
+      "category": "Explainer Videos",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80",
+      "templateData": {
+        "aspectRatio": "16:9",
+        "duration": 30,
+        "scenes": [
+          {
+            "text": "Build faster with AI Workflows",
+            "duration": 10
+          },
+          {
+            "text": "Collaborate in real time",
+            "duration": 10
+          },
+          {
+            "text": "Deploy worldwide instantly",
+            "duration": 10
+          }
+        ]
+      },
+      "isPublished": true
+    },
+    {
+      "id": "tmpl_5",
+      "slug": "ugc-testimonial-unboxing",
+      "title": "High-Converting UGC Hook",
+      "category": "UGC Ads",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop&q=80",
+      "templateData": {
+        "aspectRatio": "9:16",
+        "duration": 25,
+        "scenes": [
+          {
+            "text": "Wait! Do not buy that until you see this",
+            "duration": 6
+          },
+          {
+            "text": "Here is what surprised me most",
+            "duration": 9
+          },
+          {
+            "text": "Link in bio with my 20% code",
+            "duration": 10
+          }
+        ]
+      },
+      "isPublished": true
+    },
+    {
+      "id": "tmpl_6",
+      "slug": "youtube-longform-opener",
+      "title": "Cinematic YouTube Channel Intro",
+      "category": "YouTube Videos",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+      "templateData": {
+        "aspectRatio": "16:9",
+        "duration": 12,
+        "scenes": [
+          {
+            "text": "Welcome to the Next Era",
+            "duration": 6
+          },
+          {
+            "text": "Subscribe for Weekly Masterclasses",
+            "duration": 6
+          }
+        ]
+      },
+      "isPublished": true
+    }
+  ],
+  "brandKits": [
+    {
+      "id": "bk_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "name": "Vercel Vidai Signature Kit",
+      "colors": [
+        "#0B0C10",
+        "#8B5CF6",
+        "#38BDF8",
+        "#FFFFFF"
+      ],
+      "fonts": [
+        "Inter",
+        "Outfit",
+        "Cinzel"
+      ],
+      "guidelinesText": "Modern, high-energy tech visual aesthetic with violet rim lighting and dynamic pacing."
+    }
+  ],
+  "projects": [
+    {
+      "id": "prj_demo_reel_1",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Cyberpunk Runner — Summer Commercial",
+      "description": "Cinematic futuristic footwear reveal teaser for Instagram & YouTube Shorts.",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+      "isFavorite": true,
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "9:16",
+        "resolution": "1080p",
+        "backgroundColor": "#090A0F",
+        "tracks": [
+          {
+            "id": "trk_video_1",
+            "type": "video",
+            "name": "Primary Video"
+          },
+          {
+            "id": "trk_text_1",
+            "type": "text",
+            "name": "Subtitles & Titles"
+          },
+          {
+            "id": "trk_audio_1",
+            "type": "audio",
+            "name": "Background Beat"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_v1",
+            "trackId": "trk_video_1",
+            "type": "video",
+            "title": "Opening Footwear Shot",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "startTimeSec": 0,
+            "durationSec": 5,
+            "volume": 1
+          },
+          {
+            "id": "clp_v2",
+            "trackId": "trk_video_1",
+            "type": "video",
+            "title": "Urban Sprint Cinematic",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "startTimeSec": 5,
+            "durationSec": 5,
+            "volume": 1
+          },
+          {
+            "id": "clp_v3",
+            "trackId": "trk_video_1",
+            "type": "video",
+            "title": "Hero Brand Lockup",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-jogging-towards-camera-42177-large.mp4",
+            "startTimeSec": 10,
+            "durationSec": 5,
+            "volume": 1
+          },
+          {
+            "id": "clp_t1",
+            "trackId": "trk_text_1",
+            "type": "text",
+            "title": "Headline Hook",
+            "text": "STEP INTO TOMORROW",
+            "startTimeSec": 1,
+            "durationSec": 3.5,
+            "style": {
+              "fontSize": 32,
+              "color": "#FFFFFF",
+              "backgroundColor": "rgba(0,0,0,0.6)",
+              "positionY": 80
+            }
+          },
+          {
+            "id": "clp_t2",
+            "trackId": "trk_text_1",
+            "type": "text",
+            "title": "CTA Text",
+            "text": "GET 30% OFF NOW",
+            "startTimeSec": 10.5,
+            "durationSec": 4,
+            "style": {
+              "fontSize": 36,
+              "color": "#38BDF8",
+              "backgroundColor": "rgba(11,12,16,0.8)",
+              "positionY": 75
+            }
+          }
+        ]
+      },
+      "createdAt": "2026-10-21T06:14:19.599Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "prj_demo_explainer_2",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "AI Video Marketing Playbook",
+      "description": "Landscape YouTube explainer for marketing teams.",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80",
+      "isFavorite": false,
+      "timeline": {
+        "durationSec": 30,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v",
+            "type": "video",
+            "name": "Main Video Track"
+          },
+          {
+            "id": "trk_t",
+            "type": "text",
+            "name": "Key Points"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_2_1",
+            "trackId": "trk_v",
+            "type": "video",
+            "title": "Studio Workspace",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-41589-large.mp4",
+            "startTimeSec": 0,
+            "durationSec": 12
+          }
+        ]
+      },
+      "createdAt": "2026-10-20T06:14:19.600Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "prj_nf32r1nr8",
+      "workspaceId": "ws_sc4a4yu1",
+      "ownerId": "usr_n5udt4o8",
+      "title": "Test Timeline Project",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          },
+          {
+            "id": "clp_t4hz7q0",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Cinematic futuristic cit",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T06:14:19.626Z",
+      "updatedAt": "2026-10-21T06:14:20.852Z"
+    },
+    {
+      "id": "prj_2dt4a3p3w",
+      "workspaceId": "ws_sc4a4yu1",
+      "ownerId": "usr_n5udt4o8",
+      "title": "Test Timeline Project (Copy)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T06:14:19.629Z",
+      "updatedAt": "2026-10-21T06:14:19.629Z"
+    },
+    {
+      "id": "prj_xgq4ghbeb",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Live Test Cyberpunk Commercial",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_p7gvnmo",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Futuristic hyper-car spe",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T09:12:42.119Z",
+      "updatedAt": "2026-10-21T09:12:43.372Z"
+    },
+    {
+      "id": "prj_iwd0du0ta",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Live Test Cyberpunk Commercial",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_gapnmj0",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Futuristic hyper-car spe",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T09:13:25.328Z",
+      "updatedAt": "2026-10-21T09:13:26.561Z"
+    }
+  ],
+  "assets": [
+    {
+      "id": "ast_sample_1",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "name": "Cyberpunk Sneaker 3D Render.png",
+      "assetType": "image",
+      "storageKey": "assets/demo/sneaker_render.png",
+      "url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=80",
+      "mimeType": "image/png",
+      "fileSize": 1450230,
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "ast_sample_2",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "name": "Brand Audio Theme - Synthwave.mp3",
+      "assetType": "audio",
+      "storageKey": "assets/demo/synthwave_theme.mp3",
+      "url": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=synthwave-80s-110045.mp3",
+      "mimeType": "audio/mpeg",
+      "fileSize": 3200100,
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "workspaceId": "ws_sc4a4yu1",
+      "ownerId": "usr_n5udt4o8",
+      "projectId": "prj_nf32r1nr8",
+      "name": "Cinematic futuristic city stre (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_ugdkhpjoxg/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_ugdkhpjoxg",
+        "isDemoSimulated": true
+      },
+      "id": "ast_a1ofdth65",
+      "createdAt": "2026-10-21T06:14:20.850Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_xgq4ghbeb",
+      "name": "Futuristic hyper-car speeding  (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_thjmq46zpc/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_thjmq46zpc",
+        "isDemoSimulated": true
+      },
+      "id": "ast_chr3nsg33",
+      "createdAt": "2026-10-21T09:12:43.369Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_xgq4ghbeb",
+      "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
+      "assetType": "video",
+      "storageKey": "renders/prj_xgq4ghbeb/rnd_jwec9ce2.mp4",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 18450000,
+      "metadata": {
+        "settings": {
+          "resolution": "1080p",
+          "fps": 30
+        },
+        "isRenderedExport": true
+      },
+      "id": "ast_gn0eg4zp6",
+      "createdAt": "2026-10-21T09:12:46.171Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_iwd0du0ta",
+      "name": "Futuristic hyper-car speeding  (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_uiy1h9p3yo/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_uiy1h9p3yo",
+        "isDemoSimulated": true
+      },
+      "id": "ast_l72z7glc9",
+      "createdAt": "2026-10-21T09:13:26.559Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_iwd0du0ta",
+      "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
+      "assetType": "video",
+      "storageKey": "renders/prj_iwd0du0ta/rnd_rxbnqkze.mp4",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 18450000,
+      "metadata": {
+        "settings": {
+          "resolution": "1080p",
+          "fps": 30
+        },
+        "isRenderedExport": true
+      },
+      "id": "ast_pkqc25p4h",
+      "createdAt": "2026-10-21T09:13:29.364Z"
+    }
+  ],
+  "generationJobs": [
+    {
+      "id": "job_sample_completed_1",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "projectId": "prj_demo_reel_1",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Rendering completed successfully",
+      "input": {
+        "prompt": "Ultra-cinematic slow motion close up of high-tech futuristic athletic running sneakers with violet neon accents on wet asphalt city street at night.",
+        "aspectRatio": "9:16",
+        "durationSec": 5,
+        "resolution": "1080p"
+      },
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "providerRequestId": "req_vidai_demo_8829",
+      "createdAt": "2026-10-21T05:14:19.600Z",
+      "updatedAt": "2026-10-21T05:15:19.600Z",
+      "completedAt": "2026-10-21T05:15:19.600Z"
+    },
+    {
+      "id": "job_ugdkhpjoxg",
+      "userId": "usr_n5udt4o8",
+      "workspaceId": "ws_sc4a4yu1",
+      "projectId": "prj_nf32r1nr8",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
+      "input": {
+        "prompt": "Cinematic futuristic city street with neon lights",
+        "aspectRatio": "16:9",
+        "durationSec": 5
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-21T06:14:19.632Z",
+      "updatedAt": "2026-10-21T06:14:20.847Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Cinematic futuristic city street with neon lights",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Vidai-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "vidai_req_job_ugdkhpjoxg_1792563260846",
+      "completedAt": "2026-10-21T06:14:20.847Z"
+    },
+    {
+      "id": "job_thjmq46zpc",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "projectId": "prj_xgq4ghbeb",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
+      "input": {
+        "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+        "aspectRatio": "16:9",
+        "durationSec": 5,
+        "resolution": "1080p"
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-21T09:12:42.137Z",
+      "updatedAt": "2026-10-21T09:12:43.362Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Vidai-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "vidai_req_job_thjmq46zpc_1792573963362",
+      "completedAt": "2026-10-21T09:12:43.362Z"
+    },
+    {
+      "id": "job_uiy1h9p3yo",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "projectId": "prj_iwd0du0ta",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
+      "input": {
+        "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+        "aspectRatio": "16:9",
+        "durationSec": 5,
+        "resolution": "1080p"
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-21T09:13:25.340Z",
+      "updatedAt": "2026-10-21T09:13:26.553Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Vidai-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "vidai_req_job_uiy1h9p3yo_1792574006553",
+      "completedAt": "2026-10-21T09:13:26.553Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay_starter_1",
+      "userId": "usr_creator_demo_1",
+      "orderId": "order_rzp_mock_123",
+      "providerPaymentId": "pay_rzp_mock_456",
+      "amountInr": 999,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "subscription",
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    }
+  ],
+  "renderJobs": [],
+  "webhookEvents": [],
+  "auditLogs": [
+    {
+      "id": "aud_1",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_demo_reel_1",
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "aud_q8i6uloa02",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:10:03.200Z"
+    },
+    {
+      "id": "aud_nihce68407",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:10:19.855Z"
+    },
+    {
+      "id": "aud_nm4gtytv58",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:12:42.083Z"
+    },
+    {
+      "id": "aud_2bfufqzphh",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_xgq4ghbeb",
+      "metadata": {
+        "title": "Live Test Cyberpunk Commercial"
+      },
+      "createdAt": "2026-10-21T09:12:42.121Z"
+    },
+    {
+      "id": "aud_dobr9t9ppn",
+      "actorId": "usr_creator_demo_1",
+      "action": "GENERATION_JOB_DISPATCHED",
+      "resourceType": "generation_job",
+      "resourceId": "job_thjmq46zpc",
+      "metadata": {
+        "modelId": "vidai-cinematic-v1",
+        "estimatedCredits": 25
+      },
+      "createdAt": "2026-10-21T09:12:42.142Z"
+    },
+    {
+      "id": "aud_uc5vhawm58",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_RENDER_REQUESTED",
+      "resourceType": "project",
+      "resourceId": "prj_xgq4ghbeb",
+      "metadata": {
+        "renderJobId": "rnd_jwec9ce2",
+        "resolution": "1080p"
+      },
+      "createdAt": "2026-10-21T09:12:46.173Z"
+    },
+    {
+      "id": "aud_7oj2xhftv0",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:13:25.309Z"
+    },
+    {
+      "id": "aud_rvett3s2r9",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_iwd0du0ta",
+      "metadata": {
+        "title": "Live Test Cyberpunk Commercial"
+      },
+      "createdAt": "2026-10-21T09:13:25.330Z"
+    },
+    {
+      "id": "aud_jx2yd8m4y8",
+      "actorId": "usr_creator_demo_1",
+      "action": "GENERATION_JOB_DISPATCHED",
+      "resourceType": "generation_job",
+      "resourceId": "job_uiy1h9p3yo",
+      "metadata": {
+        "modelId": "vidai-cinematic-v1",
+        "estimatedCredits": 25
+      },
+      "createdAt": "2026-10-21T09:13:25.346Z"
+    },
+    {
+      "id": "aud_sm5oye3ss9",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_RENDER_REQUESTED",
+      "resourceType": "project",
+      "resourceId": "prj_iwd0du0ta",
+      "metadata": {
+        "renderJobId": "rnd_rxbnqkze",
+        "resolution": "1080p"
+      },
+      "createdAt": "2026-10-21T09:13:29.366Z"
+    },
+    {
+      "id": "aud_y06fq8roue",
+      "actorId": "usr_admin_master_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_admin_master_1",
+      "createdAt": "2026-10-21T09:13:29.445Z"
+    }
+  ],
+  "supportTickets": [
+    {
+      "id": "tkt_1",
+      "userId": "usr_creator_demo_1",
+      "userEmail": "creator@vidai.io",
+      "subject": "Inquiry regarding 4K 60fps export presets",
+      "category": "Feature Request",
+      "status": "in_progress",
+      "priority": "medium",
+      "createdAt": "2026-10-21T06:14:19.599Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
+    }
+  ]
+}
