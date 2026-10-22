@@ -61,7 +61,8 @@ export async function GET(req: NextRequest) {
   // 3. Exchange authorization code for access & ID tokens
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI || `${requestOrigin}/api/auth/google/callback`;
+  const currentPath = req.nextUrl.pathname;
+  const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI || `${requestOrigin}${currentPath}`;
 
   if (!clientId || !clientSecret) {
     const msg = encodeURIComponent('Server configuration error: GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET is missing.');

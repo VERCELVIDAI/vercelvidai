@@ -27,13 +27,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(`${appUrl}/login?error=${errorMsg}&authProvider=google_unconfigured`);
   }
 
-  // Generate cryptographically secure random state & nonce to prevent CSRF / replay attacks
+  // Generate cryptographically secure random state to prevent CSRF
   const state = crypto.randomBytes(24).toString('hex');
-  const nonce = crypto.randomBytes(24).toString('hex');
 
   const oauthStatePayload = JSON.stringify({
     state,
-    nonce,
     returnUrl,
     createdAt: Date.now(),
   });
@@ -55,7 +53,6 @@ export async function GET(req: NextRequest) {
   googleAuthUrl.searchParams.set('response_type', 'code');
   googleAuthUrl.searchParams.set('scope', 'openid email profile');
   googleAuthUrl.searchParams.set('state', state);
-  googleAuthUrl.searchParams.set('nonce', nonce);
   googleAuthUrl.searchParams.set('access_type', 'offline');
   googleAuthUrl.searchParams.set('prompt', 'select_account');
 
