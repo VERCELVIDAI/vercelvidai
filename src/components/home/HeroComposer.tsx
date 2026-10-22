@@ -171,10 +171,11 @@ export function HeroComposer() {
           type="button"
           onClick={handleEnhanceWithGemini}
           disabled={isEnhancing}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-pink-50/90 border border-pink-200/90 text-pink-700 hover:bg-pink-100 text-xs font-semibold transition-all disabled:opacity-50 shadow-sm"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 min-h-[38px] rounded-xl bg-pink-50/90 border border-pink-200/90 text-pink-700 hover:bg-pink-100 text-xs font-semibold transition-all disabled:opacity-50 shadow-xs cursor-pointer"
         >
-          <Sparkles className={`w-3.5 h-3.5 text-pink-600 ${isEnhancing ? 'animate-spin' : ''}`} />
-          <span>{isEnhancing ? 'Gemini Enhancing...' : 'Enhance with Gemini'}</span>
+          <Sparkles className={`w-3.5 h-3.5 text-pink-600 shrink-0 ${isEnhancing ? 'animate-spin' : ''}`} />
+          <span className="hidden xs:inline sm:inline">{isEnhancing ? 'Gemini Enhancing...' : 'Enhance with Gemini'}</span>
+          <span className="inline xs:hidden sm:hidden">{isEnhancing ? 'Enhancing...' : 'Gemini'}</span>
         </button>
       </div>
 
@@ -270,9 +271,9 @@ export function HeroComposer() {
         </div>
 
         {/* Action Button & Cost Estimate */}
-        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end pt-2 sm:pt-0">
           <div className="flex items-center gap-1.5 text-xs text-slate-600 font-mono font-semibold">
-            <Zap className="w-3.5 h-3.5 text-emerald-600" />
+            <Zap className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
             <span>{estimatedCredits} credits</span>
           </div>
 
@@ -280,7 +281,7 @@ export function HeroComposer() {
             type="button"
             onClick={handleGenerate}
             disabled={isSubmitting || !prompt.trim()}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 shadow-lg shadow-emerald-500/25 disabled:opacity-50 transition-all cursor-pointer text-xs uppercase tracking-wider"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 min-h-[44px] rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 shadow-lg shadow-emerald-500/25 disabled:opacity-50 transition-all cursor-pointer text-xs uppercase tracking-wider"
           >
             {isSubmitting ? (
               <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

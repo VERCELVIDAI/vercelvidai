@@ -265,58 +265,65 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-[#17211D] hover:bg-emerald-50"
+            aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+            className="md:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl text-[#17211D] hover:bg-emerald-50 flex items-center justify-center transition-colors"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-emerald-800" /> : <Menu className="w-5 h-5 text-slate-800" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-emerald-500/20 glass-modal p-4 space-y-3">
+        <div className="md:hidden border-t border-emerald-500/20 glass-modal p-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 shadow-2xl">
           <div className="space-y-1 font-semibold text-sm">
             <Link
               href="/studios/cinema"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-xl hover:bg-emerald-50 text-[#17211D]"
+              className="flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl hover:bg-emerald-50 text-[#17211D] transition-colors"
             >
-              Cinema Studio
+              <Film className="w-4 h-4 text-emerald-600" />
+              <span>Cinema Studio</span>
             </Link>
             <Link
               href="/studios/marketing"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-xl hover:bg-emerald-50 text-[#17211D]"
+              className="flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl hover:bg-emerald-50 text-[#17211D] transition-colors"
             >
-              Marketing Studio
+              <Megaphone className="w-4 h-4 text-pink-500" />
+              <span>Marketing Studio</span>
             </Link>
             <Link
               href="/studios/storyboard"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-xl hover:bg-emerald-50 text-[#17211D]"
+              className="flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl hover:bg-emerald-50 text-[#17211D] transition-colors"
             >
-              Storyboard Studio
+              <Layers className="w-4 h-4 text-emerald-600" />
+              <span>Storyboard Studio</span>
             </Link>
             <Link
               href="/create"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-xl hover:bg-emerald-50 text-[#17211D]"
+              className="flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl hover:bg-emerald-50 text-[#17211D] transition-colors"
             >
-              Create Video & Visuals
+              <Sparkles className="w-4 h-4 text-emerald-600" />
+              <span>Create Video & Visuals</span>
             </Link>
             <Link
               href="/templates"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-xl hover:bg-emerald-50 text-[#17211D]"
+              className="flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl hover:bg-emerald-50 text-[#17211D] transition-colors"
             >
-              Templates
+              <Sliders className="w-4 h-4 text-teal-600" />
+              <span>Templates</span>
             </Link>
             <Link
               href="/pricing"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-xl hover:bg-emerald-50 text-[#17211D]"
+              className="flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl hover:bg-emerald-50 text-[#17211D] transition-colors"
             >
-              Pricing
+              <Zap className="w-4 h-4 text-amber-500" />
+              <span>Pricing & Plans</span>
             </Link>
           </div>
 
@@ -325,25 +332,27 @@ export function Header() {
               <Link
                 href="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-2.5 rounded-xl text-center text-xs font-bold glass-button"
+                className="w-full min-h-[44px] py-3 rounded-xl text-center text-xs font-bold glass-button flex items-center justify-center gap-2"
               >
-                Go to Dashboard
+                <span>Go to Dashboard</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             ) : (
               <>
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-xl text-center text-xs font-bold glass-button-secondary"
+                  className="w-full min-h-[44px] py-3 rounded-xl text-center text-xs font-bold glass-button-secondary flex items-center justify-center"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-xl text-center text-xs font-bold glass-button"
+                  className="w-full min-h-[44px] py-3 rounded-xl text-center text-xs font-bold glass-button flex items-center justify-center gap-1.5"
                 >
-                  Start Creating Free
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Start Creating Free</span>
                 </Link>
               </>
             )}

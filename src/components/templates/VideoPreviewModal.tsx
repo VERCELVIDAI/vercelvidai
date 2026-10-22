@@ -124,11 +124,11 @@ export function VideoPreviewModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto glass-modal border border-emerald-500/20 rounded-3xl shadow-2xl flex flex-col text-[#17211D]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/40 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="relative w-full max-w-5xl max-h-[94vh] overflow-y-auto glass-modal border border-emerald-500/20 rounded-3xl shadow-2xl flex flex-col text-[#17211D]">
         {/* Modal Header */}
-        <div className="sticky top-0 z-30 p-4 sm:p-5 border-b border-emerald-500/10 bg-white/90 backdrop-blur-md flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+        <div className="sticky top-0 z-30 p-3 sm:p-5 border-b border-emerald-500/10 bg-white/95 backdrop-blur-md flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-500/20">
               {template.category}
             </span>
@@ -141,7 +141,7 @@ export function VideoPreviewModal({
             type="button"
             onClick={onClose}
             aria-label="Close template preview"
-            className="p-2 rounded-xl glass-button text-slate-600 hover:text-[#17211D] transition-colors"
+            className="p-2 min-h-[44px] min-w-[44px] rounded-xl glass-button text-slate-600 hover:text-[#17211D] flex items-center justify-center transition-colors"
           >
             <X className="w-5 h-5" />
           </button>

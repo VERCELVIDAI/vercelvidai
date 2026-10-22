@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Logo } from '../brand/Logo';
@@ -23,6 +23,7 @@ import {
   LogOut,
   Sparkles,
   Zap,
+  X,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -33,6 +34,18 @@ interface SidebarProps {
 export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0, reservedBalance: 0 } }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handleToggle = () => setIsMobileOpen((prev) => !prev);
+    window.addEventListener('fluvia-toggle-mobile-sidebar', handleToggle);
+    return () => window.removeEventListener('fluvia-toggle-mobile-sidebar', handleToggle);
+  }, []);
+
+  // Close drawer on route change
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [pathname]);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -61,19 +74,30 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     { label: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
 
-  return (
-    <aside className="w-64 flex flex-col justify-between shrink-0 h-screen sticky top-0 select-none border-r border-emerald-500/15 glass-sidebar transition-colors duration-200 text-[#17211D]">
+  const renderContent = (isDrawer: boolean) => (
+    <>
       <div className="flex flex-col flex-1 overflow-y-auto">
         {/* Brand header */}
-        <div className="p-4 border-b border-emerald-500/15">
+        <div className="p-4 border-b border-emerald-500/15 flex items-center justify-between">
           <Logo size="sm" showTagline={false} />
+          {isDrawer && (
+            <button
+              type="button"
+              onClick={() => setIsMobileOpen(false)}
+              aria-label="Close navigation"
+              className="p-1.5 rounded-xl text-slate-500 hover:text-[#17211D] hover:bg-emerald-50 transition-colors"
+            >
+              <X className="w-5 h-5 text-slate-700" />
+            </button>
+          )}
         </div>
 
         {/* Quick Create CTA */}
         <div className="p-3">
           <Link
             href="/create"
-            className="w-full py-2.5 px-3 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 transition-all cursor-pointer"
+            onClick={() => isDrawer && setIsMobileOpen(false)}
+            className="w-full py-2.5 px-3 min-h-[44px] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 transition-all cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-emerald-100" />
             <span>New Creation</span>
@@ -85,13 +109,14 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
           {/* Main */}
           <Link
             href="/dashboard"
-            className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
+            onClick={() => isDrawer && setIsMobileOpen(false)}
+            className={`flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold transition-all border ${
               pathname === '/dashboard'
                 ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300 shadow-xs'
                 : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
             }`}
           >
-            <Home className="w-4 h-4 text-slate-500" />
+            <Home className="w-4 h-4 text-slate-500 shrink-0" />
             <span>Dashboard Overview</span>
           </Link>
 
@@ -107,14 +132,15 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
+                  onClick={() => isDrawer && setIsMobileOpen(false)}
+                  className={`flex items-center justify-between px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
                     isActive
                       ? 'font-bold bg-emerald-100 text-emerald-950 border-emerald-300 shadow-xs'
                       : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-500'}`} />
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-700' : 'text-slate-500'}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
@@ -139,13 +165,14 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
+                  onClick={() => isDrawer && setIsMobileOpen(false)}
+                  className={`flex items-center gap-2.5 px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
                     isActive
                       ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300'
                       : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-slate-500" />
+                  <Icon className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -164,13 +191,14 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
+                  onClick={() => isDrawer && setIsMobileOpen(false)}
+                  className={`flex items-center gap-2.5 px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
                     isActive
                       ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300'
                       : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-slate-500" />
+                  <Icon className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -181,13 +209,14 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
           {userRole === 'admin' && (
             <Link
               href="/admin"
-              className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all mt-2 ${
+              onClick={() => isDrawer && setIsMobileOpen(false)}
+              className={`flex items-center gap-2.5 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold transition-all mt-2 ${
                 pathname.startsWith('/admin')
                   ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold'
                   : 'text-amber-700 hover:bg-amber-50'
               }`}
             >
-              <ShieldAlert className="w-4 h-4" />
+              <ShieldAlert className="w-4 h-4 shrink-0" />
               <span>Admin Console</span>
             </Link>
           )}
@@ -198,7 +227,8 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
       <div className="p-3 border-t border-emerald-500/15 space-y-2">
         <Link
           href="/dashboard/wallet"
-          className="p-3 bg-emerald-50/90 hover:bg-emerald-100/80 rounded-xl border border-emerald-300/80 flex items-center justify-between transition-colors block text-left shadow-xs"
+          onClick={() => isDrawer && setIsMobileOpen(false)}
+          className="p-3 bg-emerald-50/90 hover:bg-emerald-100/80 rounded-2xl border border-emerald-300/80 flex items-center justify-between transition-colors block text-left shadow-xs"
         >
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-emerald-200 text-emerald-800 flex items-center justify-center">
@@ -213,7 +243,11 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
         </Link>
 
         <div className="flex items-center justify-between text-xs text-slate-500 px-1 pt-1">
-          <Link href="/help" className="hover:text-emerald-800 flex items-center gap-1 text-[11px] font-medium">
+          <Link
+            href="/help"
+            onClick={() => isDrawer && setIsMobileOpen(false)}
+            className="hover:text-emerald-800 flex items-center gap-1 text-[11px] font-medium"
+          >
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Support</span>
           </Link>
@@ -226,6 +260,28 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
           </button>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden md:flex w-64 flex-col justify-between shrink-0 h-screen sticky top-0 select-none border-r border-emerald-500/15 glass-sidebar transition-colors duration-200 text-[#17211D]">
+        {renderContent(false)}
+      </aside>
+
+      {/* Mobile Drawer Overlay */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex animate-in fade-in duration-200">
+          <div
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+            onClick={() => setIsMobileOpen(false)}
+          />
+          <aside className="relative flex flex-col justify-between w-72 max-w-[85vw] h-full bg-white shadow-2xl z-10 glass-sidebar border-r border-emerald-500/25 animate-in slide-in-from-left duration-200 text-[#17211D]">
+            {renderContent(true)}
+          </aside>
+        </div>
+      )}
+    </>
   );
 }

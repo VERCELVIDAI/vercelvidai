@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { User, Bell, Sparkles, Zap, ShieldCheck } from 'lucide-react';
+import { User, Bell, Sparkles, Zap, ShieldCheck, Menu } from 'lucide-react';
 
 interface DashboardHeaderProps {
   displayName?: string;
@@ -25,10 +25,26 @@ export function DashboardHeader({
   const effectiveRole = user?.role || role;
   const effectiveAvatar = user?.avatarUrl || avatarUrl;
 
+  const handleOpenMobileSidebar = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('fluvia-toggle-mobile-sidebar'));
+    }
+  };
+
   return (
-    <header className="h-16 glass-navbar border-b border-emerald-500/15 px-6 flex items-center justify-between sticky top-0 z-40 transition-colors duration-200 text-[#17211D]">
-      <div className="flex items-center gap-3">
-        <span className="text-xs font-mono px-2.5 py-1 rounded-md border border-emerald-500/20 bg-emerald-50/60 text-slate-700 font-bold shadow-2xs">
+    <header className="h-16 glass-navbar border-b border-emerald-500/15 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-40 transition-colors duration-200 text-[#17211D]">
+      <div className="flex items-center gap-2 sm:gap-3">
+        {/* Mobile Sidebar Hamburger Trigger */}
+        <button
+          type="button"
+          onClick={handleOpenMobileSidebar}
+          aria-label="Toggle navigation drawer"
+          className="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-xl text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 flex items-center justify-center transition-colors cursor-pointer"
+        >
+          <Menu className="w-5 h-5 text-slate-800" />
+        </button>
+
+        <span className="text-xs font-mono px-2.5 py-1 rounded-md border border-emerald-500/20 bg-emerald-50/60 text-slate-700 font-bold shadow-2xs truncate max-w-[120px] sm:max-w-none">
           {workspaceName}
         </span>
         <span className="hidden sm:inline-block opacity-40">•</span>

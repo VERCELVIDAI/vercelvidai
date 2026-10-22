@@ -159,9 +159,9 @@ export default function DashboardPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-10 text-left">
+        <main className="flex-1 p-4 sm:p-8 max-w-7xl mx-auto w-full space-y-8 sm:space-y-10 text-left">
           {/* Greeting Banner & Available Credits */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-50 via-teal-50/50 to-pink-50/40 p-6 rounded-2xl border border-emerald-500/20 relative overflow-hidden shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-50 via-teal-50/50 to-pink-50/40 p-5 sm:p-6 rounded-3xl border border-emerald-500/20 relative overflow-hidden shadow-sm">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">

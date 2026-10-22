@@ -217,22 +217,22 @@ function CheckoutContent() {
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D]">
       {/* Top Header */}
-      <header className="h-16 glass-navbar px-6 flex items-center justify-between border-b border-emerald-500/15">
+      <header className="h-16 glass-navbar px-4 sm:px-6 flex items-center justify-between border-b border-emerald-500/15">
         <Link href="/pricing" className="flex items-center gap-2 text-xs text-slate-600 hover:text-emerald-800 font-bold transition-colors">
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Pricing</span>
+          <span className="hidden sm:inline">Back to Pricing</span>
         </Link>
         <Logo size="sm" />
-        <div className="flex items-center gap-2 text-emerald-700 text-xs font-bold">
-          <Lock className="w-3.5 h-3.5 text-emerald-600" />
-          <span>256-bit Encrypted PayU Checkout</span>
+        <div className="flex items-center gap-1.5 sm:gap-2 text-emerald-700 text-[11px] sm:text-xs font-bold">
+          <Lock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+          <span>PayU India Verified</span>
         </div>
       </header>
 
       {/* Main Checkout Area */}
-      <main className="flex-1 max-w-5xl mx-auto w-full p-6 sm:p-10 text-left">
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Complete Your Order</h1>
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8 sm:p-10 text-left">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#17211D]">Complete Your Order</h1>
           <p className="mt-1 text-xs sm:text-sm text-slate-600">
             Secure checkout powered by PayU India. Instant credit fulfillment with official GST tax invoice.
           </p>
@@ -247,7 +247,7 @@ function CheckoutContent() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Customer Billing Details Form */}
-          <div className="lg:col-span-7 glass-card border border-emerald-500/20 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+          <div className="lg:col-span-7 glass-card border border-emerald-500/20 rounded-3xl p-5 sm:p-8 space-y-6 shadow-xl">
             <div className="flex items-center gap-2 pb-4 border-b border-emerald-500/15">
               <Building2 className="w-5 h-5 text-emerald-700" />
               <h2 className="text-base font-bold text-[#17211D]">Billing Information</h2>
@@ -380,15 +380,15 @@ function CheckoutContent() {
                 </button>
               </div>
 
-              <div className="flex items-center justify-center gap-4 pt-2 text-[11px] text-slate-600 font-medium">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 pt-2 text-[11px] text-slate-600 font-medium">
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> UPI (GPay, PhonePe, Paytm)
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> UPI (GPay, PhonePe, Paytm)
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Credit / Debit Cards
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> Credit / Debit Cards
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Net Banking
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> Net Banking
                 </span>
               </div>
             </form>

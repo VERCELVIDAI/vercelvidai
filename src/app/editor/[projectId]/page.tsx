@@ -58,6 +58,9 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
   const [history, setHistory] = useState<any[]>([]);
   const [future, setFuture] = useState<any[]>([]);
 
+  // Mobile editor active panel toggle
+  const [mobileTab, setMobileTab] = useState<'timeline' | 'inspector' | 'tools'>('timeline');
+
   const fetchAssets = async () => {
     setIsAssetsLoading(true);
     try {
@@ -426,9 +429,9 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
       {/* 2. MAIN WORKSPACE (Cinema Player + Inspector) */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Tools / Media Palette (Hidden on small screens) */}
+        {/* Left Tools / Media Palette (Desktop only) */}
         <aside
-          className="w-16 border-r flex flex-col items-center py-4 gap-4 shrink-0 transition-colors duration-200"
+          className="hidden md:flex w-16 border-r flex-col items-center py-4 gap-4 shrink-0 transition-colors duration-200"
           style={{
             backgroundColor: 'var(--app-sidebar)',
             borderColor: 'var(--app-card-border)',
@@ -471,14 +474,14 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
         </aside>
 
         {/* Central Cinema Viewport */}
-        <div className="flex-1 flex flex-col bg-[#050608] relative overflow-hidden items-center justify-center p-4">
+        <div className="flex-1 flex flex-col bg-[#050608] relative overflow-hidden items-center justify-center p-2 sm:p-4">
           {/* Cinema Frame */}
           <div
-            className={`relative rounded-xl overflow-hidden bg-black shadow-2xl border border-white/10 transition-all ${
+            className={`relative rounded-xl overflow-hidden bg-black shadow-2xl border border-white/10 transition-all max-h-[35vh] sm:max-h-[50vh] ${
               timeline.aspectRatio === '9:16'
-                ? 'aspect-[9/16] h-[340px] sm:h-[400px]'
+                ? 'aspect-[9/16] h-[260px] sm:h-[400px]'
                 : timeline.aspectRatio === '1:1'
-                ? 'aspect-square h-[340px] sm:h-[380px]'
+                ? 'aspect-square h-[260px] sm:h-[380px]'
                 : 'aspect-video w-full max-w-3xl'
             }`}
           >
@@ -503,14 +506,17 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                 return (
                   <div
                     key={c.id}
-                    onClick={() => setActiveClipId(c.id)}
+                    onClick={() => {
+                      setActiveClipId(c.id);
+                      setMobileTab('inspector');
+                    }}
                     className="absolute inset-x-4 flex justify-center cursor-pointer pointer-events-auto"
                     style={{ bottom: `${c.style?.positionY || 20}%` }}
                   >
                     <span
-                      className="px-4 py-1.5 rounded-lg font-black tracking-wider text-center drop-shadow-xl border border-white/20 select-none"
+                      className="px-4 py-1.5 rounded-lg font-black tracking-wider text-center drop-shadow-xl border border-white/20 select-none text-xs sm:text-base"
                       style={{
-                        fontSize: `${c.style?.fontSize || 28}px`,
+                        fontSize: `${c.style?.fontSize || 24}px`,
                         color: c.style?.color || '#FFFFFF',
                         backgroundColor: c.style?.backgroundColor || 'rgba(0,0,0,0.6)',
                       }}
@@ -523,23 +529,24 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
           </div>
 
           {/* Quick Playback Transport Controls */}
-          <div className="mt-3 flex items-center gap-4 glass-card px-4 py-1.5 rounded-full border border-emerald-500/20 text-xs shadow-lg">
+          <div className="mt-2.5 flex items-center gap-3 sm:gap-4 glass-card px-4 py-1.5 rounded-full border border-emerald-500/20 text-xs shadow-lg">
             <button
               onClick={togglePlay}
-              className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center hover:bg-emerald-600 transition-colors shadow-sm"
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+              className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center hover:bg-emerald-600 transition-colors shadow-sm shrink-0"
             >
               {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
             </button>
 
-            <span className="font-mono text-slate-300">
+            <span className="font-mono text-slate-300 text-[11px] sm:text-xs">
               {Math.floor(currentTimeSec)}s / {timeline.durationSec || 15}s
             </span>
           </div>
         </div>
 
-        {/* Right Inspector Panel */}
+        {/* Right Inspector Panel (Desktop only) */}
         <aside
-          className="w-72 border-l p-4 flex flex-col justify-between shrink-0 overflow-y-auto transition-colors duration-200"
+          className="hidden md:flex w-72 border-l p-4 flex-col justify-between shrink-0 overflow-y-auto transition-colors duration-200"
           style={{
             backgroundColor: 'var(--app-surface)',
             borderColor: 'var(--app-card-border)',
@@ -636,116 +643,297 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
         </aside>
       </div>
 
-      {/* 3. MULTI-TRACK TIMELINE (Bottom Panel) */}
+      {/* MOBILE TAB CONTROLS (Only visible on screens < 768px) */}
+      <div className="md:hidden flex border-t border-emerald-500/20 bg-white/95 text-xs font-bold divide-x divide-emerald-500/15 shrink-0">
+        <button
+          type="button"
+          onClick={() => setMobileTab('timeline')}
+          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === 'timeline'
+              ? 'bg-emerald-50 text-emerald-800 border-b-2 border-emerald-600'
+              : 'text-slate-600'
+          }`}
+        >
+          <Film className="w-3.5 h-3.5" />
+          <span>Timeline</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab('inspector')}
+          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === 'inspector'
+              ? 'bg-emerald-50 text-emerald-800 border-b-2 border-emerald-600'
+              : 'text-slate-600'
+          }`}
+        >
+          <Sliders className="w-3.5 h-3.5" />
+          <span>Inspector {activeClip ? '•' : ''}</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab('tools')}
+          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === 'tools'
+              ? 'bg-emerald-50 text-emerald-800 border-b-2 border-emerald-600'
+              : 'text-slate-600'
+          }`}
+        >
+          <Plus className="w-3.5 h-3.5" />
+          <span>Media Tools</span>
+        </button>
+      </div>
+
+      {/* 3. MULTI-TRACK TIMELINE & MOBILE PANELS (Bottom Area) */}
       <div
-        className="h-60 border-t flex flex-col shrink-0 transition-colors duration-200"
+        className="h-56 sm:h-60 border-t flex flex-col shrink-0 transition-colors duration-200 overflow-hidden"
         style={{
           backgroundColor: 'var(--app-sidebar)',
           borderColor: 'var(--app-card-border)',
         }}
       >
-        {/* Timeline ruler & playhead */}
-        <div
-          className="h-7 border-b flex items-center px-4 justify-between text-[11px] font-mono"
-          style={{
-            backgroundColor: 'var(--app-surface)',
-            borderColor: 'var(--app-card-border)',
-            color: 'var(--app-text-muted)',
-          }}
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-emerald-700 font-bold">TIMELINE</span>
+        {/* Mobile Tab Condition: Inspector */}
+        {mobileTab === 'inspector' && (
+          <div className="md:hidden flex-1 p-4 overflow-y-auto text-xs text-left">
+            {activeClip ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between border-b border-emerald-500/15 pb-2">
+                  <span className="font-bold text-[#17211D] uppercase tracking-wider">
+                    Clip Properties: {activeClip.title || activeClip.text || 'Selected Clip'}
+                  </span>
+                  <button
+                    onClick={() => handleDeleteClip(activeClip.id)}
+                    className="p-1 rounded text-rose-600 hover:bg-rose-50"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {activeClip.type === 'text' && (
+                  <div className="space-y-2.5">
+                    <div>
+                      <label className="block text-slate-600 mb-1 font-semibold">Overlay Text</label>
+                      <input
+                        type="text"
+                        value={activeClip.text || ''}
+                        onChange={(e) => {
+                          recordHistory();
+                          activeClip.text = e.target.value;
+                          setTimeline({ ...timeline });
+                        }}
+                        className="w-full bg-white text-[#17211D] px-3 py-2 rounded-xl border border-emerald-500/20 focus:outline-none"
+                      />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1">
+                        <label className="block text-slate-600 mb-1 font-semibold">Color</label>
+                        <input
+                          type="color"
+                          value={activeClip.style?.color || '#FFFFFF'}
+                          onChange={(e) => {
+                            recordHistory();
+                            activeClip.style = { ...activeClip.style, color: e.target.value };
+                            setTimeline({ ...timeline });
+                          }}
+                          className="w-full h-8 rounded-lg cursor-pointer border border-emerald-500/20"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label className="block text-slate-600 mb-1 font-semibold">Duration: {activeClip.durationSec}s</label>
+                        <input
+                          type="range"
+                          min={1}
+                          max={10}
+                          value={activeClip.durationSec}
+                          onChange={(e) => {
+                            recordHistory();
+                            activeClip.durationSec = Number(e.target.value);
+                            setTimeline({ ...timeline });
+                          }}
+                          className="w-full accent-emerald-500 cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeClip.type === 'video' && (
+                  <div className="space-y-2">
+                    <p className="text-slate-600">Duration: <strong className="text-[#17211D]">{activeClip.durationSec}s</strong></p>
+                    <button
+                      onClick={() => handleSplitClip(activeClip.id)}
+                      className="py-2 px-3 rounded-xl bg-emerald-50 text-emerald-800 font-bold border border-emerald-300 flex items-center justify-center gap-1.5"
+                    >
+                      <Scissors className="w-3.5 h-3.5" />
+                      <span>Split Clip in Half</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="py-8 text-center text-slate-500 space-y-1">
+                <Sliders className="w-6 h-6 mx-auto text-emerald-600" />
+                <p>Tap any clip or caption in the Timeline tab to edit its properties.</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Mobile Tab Condition: Media Tools */}
+        {mobileTab === 'tools' && (
+          <div className="md:hidden flex-1 p-4 grid grid-cols-2 gap-2.5 overflow-y-auto">
             <button
-              onClick={handleAddTextOverlay}
-              className="text-[11px] text-slate-600 hover:text-emerald-700 flex items-center gap-1 font-medium"
+              onClick={() => {
+                handleAddSampleScene();
+                setMobileTab('timeline');
+              }}
+              className="p-3 rounded-xl bg-white border border-emerald-500/20 flex flex-col items-center gap-1.5 text-xs font-bold text-slate-700 shadow-xs"
             >
-              <Plus className="w-3 h-3 text-emerald-600" />
-              <span>Add Caption Track</span>
+              <Film className="w-5 h-5 text-emerald-600" />
+              <span>Add AI Scene</span>
             </button>
+            <button
+              onClick={() => {
+                fetchAssets();
+                setAssetModalOpen(true);
+              }}
+              className="p-3 rounded-xl bg-white border border-emerald-500/20 flex flex-col items-center gap-1.5 text-xs font-bold text-slate-700 shadow-xs"
+            >
+              <Layers className="w-5 h-5 text-emerald-600" />
+              <span>Import Asset</span>
+            </button>
+            <button
+              onClick={() => {
+                handleAddTextOverlay();
+                setMobileTab('timeline');
+              }}
+              className="p-3 rounded-xl bg-white border border-emerald-500/20 flex flex-col items-center gap-1.5 text-xs font-bold text-slate-700 shadow-xs"
+            >
+              <Type className="w-5 h-5 text-sky-500" />
+              <span>Add Caption</span>
+            </button>
+            <Link
+              href="/create?mode=video"
+              className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col items-center gap-1.5 text-xs font-bold text-emerald-800 shadow-xs"
+            >
+              <Sparkles className="w-5 h-5 text-emerald-600" />
+              <span>Generate AI Clip</span>
+            </Link>
+          </div>
+        )}
+
+        {/* Timeline Tracks (Visible on Desktop OR when mobileTab === 'timeline') */}
+        <div className={`flex-1 flex flex-col overflow-hidden ${mobileTab !== 'timeline' ? 'hidden md:flex' : 'flex'}`}>
+          {/* Timeline ruler & playhead */}
+          <div
+            className="h-8 border-b flex items-center px-4 justify-between text-[11px] font-mono shrink-0"
+            style={{
+              backgroundColor: 'var(--app-surface)',
+              borderColor: 'var(--app-card-border)',
+              color: 'var(--app-text-muted)',
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-emerald-700 font-bold">TIMELINE</span>
+              <button
+                onClick={handleAddTextOverlay}
+                className="hidden sm:flex text-[11px] text-slate-600 hover:text-emerald-700 items-center gap-1 font-medium"
+              >
+                <Plus className="w-3 h-3 text-emerald-600" />
+                <span>Add Caption Track</span>
+              </button>
+            </div>
+
+            <div className="flex-1 max-w-xl mx-3 sm:mx-4">
+              <input
+                type="range"
+                min={0}
+                max={timeline.durationSec || 15}
+                step={0.1}
+                value={currentTimeSec}
+                onChange={(e) => handleSeek(Number(e.target.value))}
+                className="w-full accent-emerald-500 cursor-pointer h-1.5"
+              />
+            </div>
+
+            <span className="font-bold text-[#17211D]">{Math.floor(currentTimeSec)}s</span>
           </div>
 
-          <div className="flex-1 max-w-xl mx-4">
-            <input
-              type="range"
-              min={0}
-              max={timeline.durationSec || 15}
-              step={0.1}
-              value={currentTimeSec}
-              onChange={(e) => handleSeek(Number(e.target.value))}
-              className="w-full accent-emerald-500 cursor-pointer h-1"
-            />
-          </div>
+          {/* Tracks Area (Scrolls horizontally ONLY within its own container) */}
+          <div className="flex-1 overflow-y-auto overflow-x-auto p-3 space-y-2">
+            <div className="min-w-[540px] space-y-2">
+              {/* TRACK 1: Video Track */}
+              <div className="flex items-center gap-3">
+                <div className="w-24 shrink-0 text-xs font-mono text-slate-500 flex items-center gap-1.5 font-medium">
+                  <Film className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>VIDEO</span>
+                </div>
 
-          <span>{Math.floor(currentTimeSec)}s</span>
-        </div>
+                <div className="flex-1 h-12 bg-white/40 rounded-xl border border-emerald-500/15 relative flex items-center p-1 gap-2">
+                  {timeline.clips
+                    .filter((c: any) => c.type === 'video')
+                    .map((clip: any) => (
+                      <div
+                        key={clip.id}
+                        onClick={() => {
+                          setActiveClipId(clip.id);
+                          setMobileTab('inspector');
+                        }}
+                        className={`h-full rounded-lg px-3 flex items-center justify-between text-xs font-semibold cursor-pointer border transition-all ${
+                          activeClipId === clip.id
+                            ? 'bg-emerald-500 text-white border-emerald-300 shadow-md'
+                            : 'bg-emerald-50/80 text-emerald-900 border-emerald-500/20 hover:border-emerald-500/40'
+                        }`}
+                        style={{ flex: clip.durationSec }}
+                      >
+                        <span className="truncate">{clip.title}</span>
+                        <span className="text-[10px] opacity-75 font-mono shrink-0 ml-2">{clip.durationSec}s</span>
+                      </div>
+                    ))}
+                </div>
+              </div>
 
-        {/* Tracks Area */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-2">
-          {/* TRACK 1: Video Track */}
-          <div className="flex items-center gap-3">
-            <div className="w-24 shrink-0 text-xs font-mono text-slate-500 flex items-center gap-1.5 font-medium">
-              <Film className="w-3.5 h-3.5 text-emerald-600" />
-              <span>VIDEO</span>
-            </div>
+              {/* TRACK 2: Text / Subtitle Track */}
+              <div className="flex items-center gap-3">
+                <div className="w-24 shrink-0 text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                  <Type className="w-3.5 h-3.5 text-sky-400" />
+                  <span>CAPTIONS</span>
+                </div>
 
-            <div className="flex-1 h-12 bg-white/40 rounded-xl border border-emerald-500/15 relative flex items-center p-1 gap-2">
-              {timeline.clips
-                .filter((c: any) => c.type === 'video')
-                .map((clip: any) => (
-                  <div
-                    key={clip.id}
-                    onClick={() => setActiveClipId(clip.id)}
-                    className={`h-full rounded-lg px-3 flex items-center justify-between text-xs font-semibold cursor-pointer border transition-all ${
-                      activeClipId === clip.id
-                        ? 'bg-emerald-500 text-white border-emerald-300 shadow-md'
-                        : 'bg-emerald-50/80 text-emerald-900 border-emerald-500/20 hover:border-emerald-500/40'
-                    }`}
-                    style={{ flex: clip.durationSec }}
-                  >
-                    <span className="truncate">{clip.title}</span>
-                    <span className="text-[10px] opacity-75 font-mono shrink-0 ml-2">{clip.durationSec}s</span>
-                  </div>
-                ))}
-            </div>
-          </div>
+                <div className="flex-1 h-9 bg-white/[0.02] rounded-xl border border-white/5 relative flex items-center p-1 gap-2">
+                  {timeline.clips
+                    .filter((c: any) => c.type === 'text')
+                    .map((clip: any) => (
+                      <div
+                        key={clip.id}
+                        onClick={() => {
+                          setActiveClipId(clip.id);
+                          setMobileTab('inspector');
+                        }}
+                        className={`h-full rounded-md px-2.5 flex items-center justify-between text-[11px] font-medium cursor-pointer border transition-all ${
+                          activeClipId === clip.id
+                            ? 'bg-sky-600 text-white border-white'
+                            : 'bg-sky-950/60 text-sky-200 border-sky-500/30 hover:border-sky-400'
+                        }`}
+                        style={{ flex: clip.durationSec }}
+                      >
+                        <span className="truncate">{clip.text}</span>
+                        <span className="text-[10px] opacity-75 font-mono ml-2 shrink-0">{clip.durationSec}s</span>
+                      </div>
+                    ))}
+                </div>
+              </div>
 
-          {/* TRACK 2: Text / Subtitle Track */}
-          <div className="flex items-center gap-3">
-            <div className="w-24 shrink-0 text-xs font-mono text-slate-400 flex items-center gap-1.5">
-              <Type className="w-3.5 h-3.5 text-sky-400" />
-              <span>CAPTIONS</span>
-            </div>
+              {/* TRACK 3: Audio Track */}
+              <div className="flex items-center gap-3">
+                <div className="w-24 shrink-0 text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                  <Music className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>AUDIO</span>
+                </div>
 
-            <div className="flex-1 h-9 bg-white/[0.02] rounded-xl border border-white/5 relative flex items-center p-1 gap-2">
-              {timeline.clips
-                .filter((c: any) => c.type === 'text')
-                .map((clip: any) => (
-                  <div
-                    key={clip.id}
-                    onClick={() => setActiveClipId(clip.id)}
-                    className={`h-full rounded-md px-2.5 flex items-center justify-between text-[11px] font-medium cursor-pointer border transition-all ${
-                      activeClipId === clip.id
-                        ? 'bg-sky-600 text-white border-white'
-                        : 'bg-sky-950/60 text-sky-200 border-sky-500/30 hover:border-sky-400'
-                    }`}
-                    style={{ flex: clip.durationSec }}
-                  >
-                    <span className="truncate">{clip.text}</span>
-                    <span className="text-[10px] opacity-75 font-mono ml-2 shrink-0">{clip.durationSec}s</span>
-                  </div>
-                ))}
-            </div>
-          </div>
-
-          {/* TRACK 3: Audio Track */}
-          <div className="flex items-center gap-3">
-            <div className="w-24 shrink-0 text-xs font-mono text-slate-400 flex items-center gap-1.5">
-              <Music className="w-3.5 h-3.5 text-emerald-400" />
-              <span>AUDIO</span>
-            </div>
-
-            <div className="flex-1 h-8 bg-emerald-950/20 rounded-xl border border-emerald-500/20 flex items-center px-3 text-[11px] font-mono text-emerald-300">
-              Synthwave Master Audio Track (Royalty-Free 128BPM)
+                <div className="flex-1 h-8 bg-emerald-950/20 rounded-xl border border-emerald-500/20 flex items-center px-3 text-[11px] font-mono text-emerald-300 truncate">
+                  Synthwave Master Audio Track (Royalty-Free 128BPM)
+                </div>
+              </div>
             </div>
           </div>
         </div>
