@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs';
+import path from 'path';
 import { geminiService } from '@/lib/ai/gemini';
-import { getSession } from '@/lib/auth/session';
+import { getCurrentUser, getSession } from '@/lib/auth/session';
+import { dbStore } from '@/lib/db/store';
 
 export async function POST(req: NextRequest) {
   try {
@@ -95,9 +98,165 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true, ...reply });
       }
 
+      case 'generate-image': {
+        const current = await getCurrentUser();
+        if (!current) {
+          return NextResponse.json(
+            { error: 'Please sign in to generate images with Gemini.' },
+            { status: 401 }
+          );
+        }
+
+        const { prompt, aspectRatio, negativePrompt, model } = body;
+        if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
+          return NextResponse.json(
+            { error: 'A creative prompt is required for image generation.' },
+            { status: 400 }
+          );
+        }
+
+        const trimmedPrompt = prompt.trim();
+        if (trimmedPrompt.length > 2000) {
+          return NextResponse.json(
+            { error: 'Prompt length exceeds the 2000 character maximum limit.' },
+            { status: 400 }
+          );
+        }
+
+        // 5 credits per image generation
+        const creditCost = 5;
+        const creditAccount = dbStore.getCreditAccount(current.user.id);
+        if (creditAccount.availableBalance < creditCost) {
+          return NextResponse.json(
+            {
+              error: `Insufficient credits. You need ${creditCost} credits for Gemini image generation, but currently have ${creditAccount.availableBalance} available.`,
+              requiredCredits: creditCost,
+              availableBalance: creditAccount.availableBalance,
+            },
+            { status: 402 }
+          );
+        }
+
+        // Atomically reserve the credits before invoking Gemini
+        const reservationId = `gemini_img_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+        dbStore.reserveCredits(current.user.id, creditCost, reservationId);
+
+        try {
+          const genResult = await geminiService.generateImage({
+            prompt: trimmedPrompt,
+            aspectRatio: aspectRatio || '1:1',
+            negativePrompt,
+            model,
+          });
+
+          if (!genResult.success || !genResult.imageBuffer) {
+            // Refund reserved credits immediately upon provider error
+            dbStore.refundCredits(
+              current.user.id,
+              creditCost,
+              `Gemini Image Error: ${genResult.errorCode || 'FAILED'} - ${genResult.error}`,
+              reservationId
+            );
+
+            const httpStatus = genResult.errorCode === 'QUOTA_EXHAUSTED' ? 429 : 502;
+            return NextResponse.json(
+              {
+                success: false,
+                error: genResult.error || 'Gemini image generation failed.',
+                errorCode: genResult.errorCode || 'PROVIDER_ERROR',
+                rawDetails: genResult.rawDetails,
+                preservedPrompt: trimmedPrompt,
+                modelUsed: genResult.modelUsed,
+              },
+              { status: httpStatus }
+            );
+          }
+
+          // Write binary image to public/uploads/generated
+          const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
+          if (!fs.existsSync(uploadsDir)) {
+            fs.mkdirSync(uploadsDir, { recursive: true });
+          }
+
+          const ext = genResult.mimeType?.includes('jpeg')
+            ? 'jpg'
+            : genResult.mimeType?.includes('webp')
+            ? 'webp'
+            : 'png';
+          const filename = `gemini_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${ext}`;
+          const filePath = path.join(uploadsDir, filename);
+          fs.writeFileSync(filePath, genResult.imageBuffer);
+
+          const publicUrl = `/uploads/generated/${filename}`;
+
+          // Create persistent asset in user workspace
+          const asset = dbStore.createAsset({
+            workspaceId: current.workspace.id,
+            ownerId: current.user.id,
+            name: trimmedPrompt.slice(0, 48) + (trimmedPrompt.length > 48 ? '...' : ''),
+            assetType: 'image',
+            storageKey: `uploads/generated/${filename}`,
+            url: publicUrl,
+            mimeType: genResult.mimeType || 'image/png',
+            fileSize: genResult.imageBuffer.length,
+            metadata: {
+              prompt: trimmedPrompt,
+              aspectRatio: genResult.aspectRatio,
+              model: genResult.modelUsed,
+              provider: 'gemini',
+              generatedAt: new Date().toISOString(),
+            },
+          });
+
+          // Settle the reserved credits
+          dbStore.settleCredits(current.user.id, reservationId, creditCost, creditCost);
+
+          dbStore.logAudit(current.user.id, 'GEMINI_IMAGE_GENERATED', 'asset', asset.id, {
+            model: genResult.modelUsed,
+            prompt: trimmedPrompt.slice(0, 80),
+            credits: creditCost,
+          });
+
+          const updatedAccount = dbStore.getCreditAccount(current.user.id);
+
+          return NextResponse.json({
+            success: true,
+            imageUrl: publicUrl,
+            asset,
+            prompt: trimmedPrompt,
+            aspectRatio: genResult.aspectRatio,
+            modelUsed: genResult.modelUsed,
+            creditsDeducted: creditCost,
+            availableBalance: updatedAccount.availableBalance,
+          });
+        } catch (execErr: any) {
+          // Safeguard refund
+          try {
+            dbStore.refundCredits(
+              current.user.id,
+              creditCost,
+              `Unexpected failure: ${execErr.message}`,
+              reservationId
+            );
+          } catch (refundErr) {
+            console.error('[Fluvia Gemini] Refund failed:', refundErr);
+          }
+
+          return NextResponse.json(
+            {
+              success: false,
+              error: execErr.message || 'Image generation processing failed.',
+              errorCode: 'PROVIDER_ERROR',
+              preservedPrompt: trimmedPrompt,
+            },
+            { status: 500 }
+          );
+        }
+      }
+
       default:
         return NextResponse.json(
-          { error: `Unknown action: "${action}". Supported: enhance-prompt, generate-script, generate-storyboard, marketing-copilot, assistant, status.` },
+          { error: `Unknown action: "${action}". Supported: generate-image, enhance-prompt, generate-script, generate-storyboard, marketing-copilot, assistant, status.` },
           { status: 400 }
         );
     }

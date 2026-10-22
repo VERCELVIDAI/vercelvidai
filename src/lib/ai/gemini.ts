@@ -12,9 +12,12 @@ import { z } from 'zod';
 
 // Configurable model IDs
 export const GEMINI_MODELS = {
-  FLASH: process.env.GEMINI_FLASH_MODEL || 'gemini-3.8-flash',
-  PRO: process.env.GEMINI_PRO_MODEL || 'gemini-3.8-flash',
+  FLASH: process.env.GEMINI_FLASH_MODEL || 'gemini-3.5-flash',
+  PRO: process.env.GEMINI_PRO_MODEL || 'gemini-3.5-flash',
   NEXT: process.env.GEMINI_NEXT_MODEL || 'gemini-3.5-flash',
+  IMAGE_FLASH: process.env.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image',
+  IMAGE_PRO: 'gemini-3-pro-image',
+  IMAGE_FALLBACK: 'gemini-2.5-flash-image',
 } as const;
 
 // Structured Storyboard Schema
@@ -562,6 +565,133 @@ Output strictly JSON:
         isSimulated: true,
       };
     }
+  }
+
+  /**
+   * Capability: Native Gemini-Powered Image Generation
+   * Generates high-fidelity visual assets using the official Google Gen AI SDK.
+   * Model: gemini-3.1-flash-image (with fallback to gemini-3-pro-image and gemini-2.5-flash-image).
+   */
+  async generateImage(params: {
+    prompt: string;
+    aspectRatio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4';
+    negativePrompt?: string;
+    model?: string;
+  }): Promise<{
+    success: boolean;
+    imageBuffer?: Buffer;
+    mimeType?: string;
+    modelUsed: string;
+    aspectRatio: string;
+    prompt: string;
+    error?: string;
+    errorCode?: 'QUOTA_EXHAUSTED' | 'INVALID_KEY' | 'UNCONFIGURED' | 'PROVIDER_ERROR';
+    rawDetails?: string;
+  }> {
+    const client = this.getClient();
+    const ratio = params.aspectRatio || '1:1';
+    const primaryModel = params.model || GEMINI_MODELS.IMAGE_FLASH;
+
+    if (!client) {
+      return {
+        success: false,
+        modelUsed: primaryModel,
+        aspectRatio: ratio,
+        prompt: params.prompt,
+        error: 'Gemini API key is not configured. Please configure GEMINI_API_KEY in server environment.',
+        errorCode: 'UNCONFIGURED',
+      };
+    }
+
+    // Enhance prompt with aspect ratio guidance
+    let promptWithGuidance = params.prompt.trim();
+    if (params.aspectRatio && !promptWithGuidance.toLowerCase().includes('aspect ratio')) {
+      promptWithGuidance += `, aspect ratio ${ratio}`;
+    }
+    if (params.negativePrompt && params.negativePrompt.trim()) {
+      promptWithGuidance += ` (Do not include: ${params.negativePrompt.trim()})`;
+    }
+
+    const candidateModels = [
+      primaryModel,
+      GEMINI_MODELS.IMAGE_PRO,
+      GEMINI_MODELS.IMAGE_FALLBACK,
+    ];
+
+    let lastError: any = null;
+
+    for (const modelCandidate of candidateModels) {
+      try {
+        console.log(`[Fluvia Gemini] Requesting image generation with model: ${modelCandidate}`);
+        const response = await client.models.generateContent({
+          model: modelCandidate,
+          contents: promptWithGuidance,
+        });
+
+        const candidates = response.candidates || [];
+        for (const candidate of candidates) {
+          const parts = candidate.content?.parts || [];
+          for (const part of parts) {
+            if (part.inlineData && part.inlineData.data) {
+              const mimeType = part.inlineData.mimeType || 'image/png';
+              const buffer = Buffer.from(part.inlineData.data, 'base64');
+
+              // Validate binary header (PNG, JPEG, WEBP)
+              const isValidImage = buffer.length > 50 && (
+                (buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4E && buffer[3] === 0x47) || // PNG
+                (buffer[0] === 0xFF && buffer[1] === 0xD8 && buffer[2] === 0xFF) || // JPEG
+                (buffer[0] === 0x52 && buffer[1] === 0x49 && buffer[2] === 0x46 && buffer[3] === 0x46) // WEBP/RIFF
+              );
+
+              if (isValidImage) {
+                return {
+                  success: true,
+                  imageBuffer: buffer,
+                  mimeType,
+                  modelUsed: modelCandidate,
+                  aspectRatio: ratio,
+                  prompt: params.prompt,
+                };
+              }
+            }
+          }
+        }
+
+        lastError = new Error(`Model '${modelCandidate}' completed without returning image payload.`);
+      } catch (err: any) {
+        lastError = err;
+        const msg = String(err?.message || err);
+        console.warn(`[Fluvia Gemini] Model ${modelCandidate} failed:`, msg);
+
+        // If quota limit is 0 on free tier, breaking avoids redundant repeated quota errors
+        if (msg.includes('RESOURCE_EXHAUSTED') || msg.includes('limit: 0') || msg.includes('quota')) {
+          break;
+        }
+      }
+    }
+
+    // Classify error for clear user guidance
+    const errText = String(lastError?.message || lastError || 'Unknown provider error');
+    let errorCode: 'QUOTA_EXHAUSTED' | 'INVALID_KEY' | 'UNCONFIGURED' | 'PROVIDER_ERROR' = 'PROVIDER_ERROR';
+    let userFacingError = errText;
+
+    if (errText.includes('RESOURCE_EXHAUSTED') || errText.includes('429') || errText.includes('quota') || errText.includes('limit: 0')) {
+      errorCode = 'QUOTA_EXHAUSTED';
+      userFacingError = 'Google Gemini image generation quota is currently not enabled for this API key tier. In Google AI Studio, image generation models (gemini-3.1-flash-image) require an attached billing account / Pay-As-You-Go plan (https://ai.google.dev/pricing).';
+    } else if (errText.includes('API_KEY_INVALID') || errText.includes('403') || errText.includes('401')) {
+      errorCode = 'INVALID_KEY';
+      userFacingError = 'Invalid or unauthorized Gemini API key. Please check your GEMINI_API_KEY setting.';
+    }
+
+    return {
+      success: false,
+      modelUsed: primaryModel,
+      aspectRatio: ratio,
+      prompt: params.prompt,
+      error: userFacingError,
+      errorCode,
+      rawDetails: errText,
+    };
   }
 }
 

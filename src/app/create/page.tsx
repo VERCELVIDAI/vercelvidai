@@ -30,6 +30,8 @@ const MODELS = [
   { id: 'vidai-cinematic-v1', name: 'Fluvia Cinematic HD (Legacy)', cost: 25, badge: 'Fast' },
   { id: 'runway-gen3', name: 'Runway Gen-3 Alpha', cost: 50, badge: 'Ultra' },
   { id: 'luma-ray', name: 'Luma Dream Machine Ray', cost: 40, badge: 'Realistic Motion' },
+  { id: 'gemini-3.1-flash-image', name: 'Google Gemini 3.1 Flash Image', cost: 5, badge: 'Official Google' },
+  { id: 'gemini-3-pro-image', name: 'Google Gemini 3 Pro Image (Ultra)', cost: 10, badge: 'Ultra' },
   { id: 'fal-flux-pro', name: 'Flux 1.1 Pro Vision (Image)', cost: 5, badge: 'Photoreal' },
   { id: 'eleven-multilingual', name: 'ElevenLabs Voice HD', cost: 10, badge: 'Voiceover' },
 ];
@@ -48,7 +50,7 @@ function CreateWorkspaceContent() {
   const [mode, setMode] = useState<'video' | 'image' | 'audio' | 'script'>(initialMode);
   const [prompt, setPrompt] = useState(initialPrompt);
   const [modelId, setModelId] = useState(initialModel);
-  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '1:1'>(initialRatio);
+  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '1:1' | '4:3'>(initialRatio);
   const [durationSec, setDurationSec] = useState<number>(5);
   const [referenceUrl, setReferenceUrl] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
@@ -219,14 +221,14 @@ function CreateWorkspaceContent() {
                 type="button"
                 onClick={() => {
                   setMode('image');
-                  setModelId('fal-flux-pro');
+                  setModelId('gemini-3.1-flash-image');
                 }}
                 className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   mode === 'image' ? 'bg-pink-500 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
                 }`}
               >
                 <ImageIcon className="w-3.5 h-3.5" />
-                <span>AI Image (Flux)</span>
+                <span>AI Image (Gemini)</span>
               </button>
 
               <button
@@ -296,7 +298,7 @@ function CreateWorkspaceContent() {
                 {/* Aspect Ratio */}
                 <div>
                   <label className="block text-slate-700 uppercase font-bold mb-1.5">Aspect Ratio</label>
-                  <div className="grid grid-cols-3 gap-1 bg-white/80 p-1 rounded-xl border border-emerald-500/20 shadow-2xs">
+                  <div className="grid grid-cols-4 gap-1 bg-white/80 p-1 rounded-xl border border-emerald-500/20 shadow-2xs">
                     <button
                       type="button"
                       onClick={() => setAspectRatio('16:9')}
@@ -323,6 +325,15 @@ function CreateWorkspaceContent() {
                       }`}
                     >
                       1:1
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setAspectRatio('4:3')}
+                      className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                        aspectRatio === '4:3' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
+                      }`}
+                    >
+                      4:3
                     </button>
                   </div>
                 </div>

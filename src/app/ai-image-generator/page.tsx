@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
-import { HeroComposer } from '@/components/home/HeroComposer';
+import { GeminiImageStudio } from '@/components/studio/GeminiImageStudio';
 import { Image as ImageIcon, Sparkles, ArrowRight, Wand2, Palette, Shield } from 'lucide-react';
 
 export default function AIImageGeneratorPage() {
@@ -10,26 +10,26 @@ export default function AIImageGeneratorPage() {
     <div className="min-h-screen flex flex-col text-[#17211D]">
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-left">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-50 border border-pink-300 text-xs font-bold text-pink-700 mb-4 shadow-xs">
-            <ImageIcon className="w-3.5 h-3.5 text-pink-600" />
-            <span>Flux 1.1 Pro & Ultra-Resolution AI Images</span>
+            <Sparkles className="w-3.5 h-3.5 text-pink-600" />
+            <span>Google Gemini Imagen & Flux 1.1 Pro Vision</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-[#17211D] tracking-tight">
-            AI Image Studio
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#17211D] tracking-tight">
+            Gemini AI Image Studio
           </h1>
-          <p className="mt-4 text-base sm:text-xl text-slate-600">
-            Generate photorealistic concept art, ecommerce product mockups, and YouTube thumbnails with prompt comprehension.
+          <p className="mt-3 text-sm sm:text-lg text-slate-600">
+            Generate ultra-high-fidelity concept art, luxury commercial advertisements, and product renderings powered by Google Gemini AI.
           </p>
         </div>
 
-        {/* Embedded Interactive Composer */}
-        <div className="mb-20">
-          <HeroComposer />
+        {/* Embedded Interactive Gemini Image Studio */}
+        <div className="mb-16">
+          <GeminiImageStudio />
         </div>
 
-        {/* Gallery of Flux Generated Visuals */}
+        {/* Gallery of High Fidelity Visuals */}
         <div className="my-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#17211D] mb-8 text-center">
             Curated High-Fidelity Generations

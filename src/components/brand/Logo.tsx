@@ -13,24 +13,24 @@ interface LogoProps {
 
 export function Logo({ className = '', size = 'md', href = '/', showTagline = false }: LogoProps) {
   const iconSizes = {
-    sm: 'w-7 h-7',
-    md: 'w-9 h-9',
-    lg: 'w-11 h-11',
-    xl: 'w-14 h-14',
+    sm: 'w-6 h-6 sm:w-7 sm:h-7',
+    md: 'w-7 h-7 sm:w-9 sm:h-9',
+    lg: 'w-9 h-9 sm:w-11 sm:h-11',
+    xl: 'w-12 h-12 sm:w-14 sm:h-14',
   };
 
   const textSizes = {
-    sm: 'text-base',
-    md: 'text-lg',
-    lg: 'text-xl',
-    xl: 'text-2xl',
+    sm: 'text-sm sm:text-base',
+    md: 'text-[15px] sm:text-lg',
+    lg: 'text-lg sm:text-xl',
+    xl: 'text-xl sm:text-2xl',
   };
 
   const content = (
-    <div className={`flex items-center gap-2.5 group select-none cursor-pointer ${className}`}>
+    <div className={`flex items-center gap-2 sm:gap-2.5 group select-none cursor-pointer shrink-0 min-w-0 ${className}`}>
       {/* Fluid-motion Playframe Mark */}
       <div
-        className={`relative ${iconSizes[size]} rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-pink-400 p-[1.5px] shadow-md shadow-emerald-500/20 group-hover:shadow-emerald-500/35 group-hover:scale-105 transition-all duration-300 ease-out`}
+        className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-pink-400 p-[1.5px] shadow-md shadow-emerald-500/20 group-hover:shadow-emerald-500/35 group-hover:scale-105 transition-all duration-300 ease-out`}
       >
         <div className="w-full h-full bg-white/90 backdrop-blur-md rounded-[10px] flex items-center justify-center relative overflow-hidden border border-white/60">
           {/* Luminous dynamic ambient glow */}

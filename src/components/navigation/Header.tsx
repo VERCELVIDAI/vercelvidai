@@ -42,8 +42,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full glass-navbar transition-all duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4 min-w-0">
+        <div className="flex items-center gap-4 lg:gap-8 shrink-0 min-w-0">
           <Logo size="md" />
 
           {/* Desktop Navigation */}
@@ -234,11 +234,11 @@ export function Header() {
         </div>
 
         {/* Right CTA Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {user ? (
             <Link
               href="/dashboard"
-              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold glass-button flex items-center gap-1.5"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold glass-button flex items-center gap-1 sm:gap-1.5 shrink-0"
             >
               <span>Dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -247,16 +247,17 @@ export function Header() {
             <>
               <Link
                 href="/login"
-                className="hidden sm:inline-flex px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold glass-button-secondary"
+                className="hidden sm:inline-flex px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold glass-button-secondary shrink-0"
               >
                 Sign In
               </Link>
               <Link
                 href="/create"
-                className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold glass-button flex items-center gap-1.5"
+                className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold glass-button flex items-center gap-1 sm:gap-1.5 shrink-0 shadow-xs"
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Start Creating</span>
+                <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                <span className="hidden sm:inline">Start Creating</span>
+                <span className="inline sm:hidden">Create</span>
               </Link>
             </>
           )}
@@ -266,7 +267,7 @@ export function Header() {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
-            className="md:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl text-[#17211D] hover:bg-emerald-50 flex items-center justify-center transition-colors"
+            className="md:hidden min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] p-2 rounded-xl text-[#17211D] hover:bg-emerald-50 flex items-center justify-center transition-colors shrink-0"
           >
             {mobileMenuOpen ? <X className="w-5 h-5 text-emerald-800" /> : <Menu className="w-5 h-5 text-slate-800" />}
           </button>
