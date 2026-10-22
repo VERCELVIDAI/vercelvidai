@@ -32,7 +32,13 @@ export default function AdminConsolePage() {
   const [billingSearch, setBillingSearch] = useState('');
   const [recheckStatus, setRecheckStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'providers' | 'jobs' | 'audits' | 'billing'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'providers' | 'jobs' | 'audits' | 'billing' | 'pricing'>('overview');
+
+  // Pricing & Legal Settings Admin State
+  const [billingConfig, setBillingConfig] = useState<any>(null);
+  const [adminPlans, setAdminPlans] = useState<any[]>([]);
+  const [adminPacks, setAdminPacks] = useState<any[]>([]);
+  const [pricingActionStatus, setPricingActionStatus] = useState<string | null>(null);
 
   // Manual Credit Adjustment Modal
   const [adjModal, setAdjModal] = useState<{ open: boolean; userId: string; userEmail: string } | null>(null);
@@ -42,10 +48,11 @@ export default function AdminConsolePage() {
 
   const fetchAdminData = async () => {
     try {
-      const [overviewRes, usersRes, billRes] = await Promise.all([
+      const [overviewRes, usersRes, billRes, settingsRes] = await Promise.all([
         fetch('/api/admin/overview'),
         fetch('/api/admin/users'),
         fetch('/api/admin/billing/overview'),
+        fetch('/api/admin/billing/settings'),
       ]);
 
       if (!overviewRes.ok) {
@@ -60,6 +67,12 @@ export default function AdminConsolePage() {
       }
       if (billRes.ok) {
         setBillingData(await billRes.json());
+      }
+      if (settingsRes.ok) {
+        const s = await settingsRes.json();
+        setBillingConfig(s.billingSettings || {});
+        setAdminPlans(s.plans || []);
+        setAdminPacks(s.creditPacks || []);
       }
     } catch (e) {
       console.error(e);
@@ -86,6 +99,73 @@ export default function AdminConsolePage() {
       }
     } catch (e: any) {
       setRecheckStatus(`Network error: ${e.message}`);
+    }
+  };
+
+  const handleUpdatePlanPrice = async (planId: string, priceInr: number, priceAnnualInr: number, creditsPerPeriod: number) => {
+    setPricingActionStatus(`Updating plan ${planId}...`);
+    try {
+      const res = await fetch('/api/admin/billing/plans', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          planId,
+          updates: { priceInr, priceAnnualInr, creditsPerPeriod },
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setPricingActionStatus(`Successfully updated ${planId}!`);
+        fetchAdminData();
+      } else {
+        setPricingActionStatus(`Error: ${data.error}`);
+      }
+    } catch (e: any) {
+      setPricingActionStatus(`Network error: ${e.message}`);
+    }
+  };
+
+  const handleUpdateCreditPack = async (packId: string, priceInr: number, creditAmount: number) => {
+    setPricingActionStatus(`Updating credit pack ${packId}...`);
+    try {
+      const res = await fetch('/api/admin/billing/packs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packId,
+          updates: { priceInr, creditAmount },
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setPricingActionStatus(`Successfully updated credit pack ${packId}!`);
+        fetchAdminData();
+      } else {
+        setPricingActionStatus(`Error: ${data.error}`);
+      }
+    } catch (e: any) {
+      setPricingActionStatus(`Network error: ${e.message}`);
+    }
+  };
+
+  const handleUpdateBillingConfig = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPricingActionStatus(`Saving supplier legal and GST configuration...`);
+    try {
+      const res = await fetch('/api/admin/billing/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(billingConfig),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setPricingActionStatus(`Supplier billing & GST configuration updated!`);
+        fetchAdminData();
+      } else {
+        setPricingActionStatus(`Error: ${data.error}`);
+      }
+    } catch (e: any) {
+      setPricingActionStatus(`Network error: ${e.message}`);
     }
   };
 
@@ -167,6 +247,7 @@ export default function AdminConsolePage() {
         <div className="flex gap-1 bg-white/5 p-1 rounded-xl text-xs font-semibold">
           {[
             { id: 'overview', label: 'Metrics Overview' },
+            { id: 'pricing', label: 'Pricing, Plans & Tax' },
             { id: 'billing', label: 'Billing & Finance' },
             { id: 'users', label: 'User Directory' },
             { id: 'providers', label: 'AI Providers & Models' },
@@ -389,6 +470,273 @@ export default function AdminConsolePage() {
                   <span className="text-slate-500 text-[11px]">{new Date(aud.createdAt).toLocaleString()}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* BILLING & FINANCE TAB */}
+        {/* PRICING, PLANS & TAX SETTINGS TAB */}
+        {activeTab === 'pricing' && (
+          <div className="space-y-8 animate-in fade-in duration-200">
+            {pricingActionStatus && (
+              <div className="p-4 bg-violet-950/60 border border-violet-500/40 text-violet-200 text-xs rounded-2xl flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" />
+                <span>{pricingActionStatus}</span>
+              </div>
+            )}
+
+            {/* 1. Subscription Plans Management */}
+            <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden space-y-4 p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+                <div>
+                  <h3 className="text-base font-bold text-white">Fluvia Flow Subscription Tiers & Entitlements</h3>
+                  <p className="text-xs text-slate-400">
+                    Manage authoritative prices, included computing credits, and model dispatch limits.
+                  </p>
+                </div>
+                <span className="text-[10px] uppercase font-mono px-2.5 py-1 rounded bg-violet-600/20 text-violet-300 border border-violet-500/30 font-bold self-start sm:self-auto">
+                  Server-Side Truth
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {(adminPlans || []).map((p: any) => (
+                  <div key={p.id} className="p-5 rounded-xl bg-white/[0.02] border border-white/10 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-bold text-white text-sm">{p.name}</h4>
+                        <span className="text-[10px] font-mono text-slate-500">ID: {p.id}</span>
+                      </div>
+                      <span className="text-[10px] font-mono uppercase bg-white/10 px-2 py-0.5 rounded text-slate-300">
+                        {p.category || 'individual'}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">
+                          Monthly Price (INR)
+                        </label>
+                        <input
+                          type="number"
+                          defaultValue={p.priceInr}
+                          id={`price_m_${p.id}`}
+                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">
+                          Annual Rate / Mo (INR)
+                        </label>
+                        <input
+                          type="number"
+                          defaultValue={p.priceAnnualInr || Math.round(p.priceInr * 0.8)}
+                          id={`price_a_${p.id}`}
+                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">
+                          Credits / Period
+                        </label>
+                        <input
+                          type="number"
+                          defaultValue={p.creditsPerPeriod}
+                          id={`credits_${p.id}`}
+                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">
+                          Max Resolution
+                        </label>
+                        <div className="px-3 py-1.5 rounded-lg bg-white/[0.03] text-white font-mono text-xs border border-white/5">
+                          {p.entitlements?.maxResolution || '1080p'}
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const mVal = Number((document.getElementById(`price_m_${p.id}`) as HTMLInputElement)?.value);
+                        const aVal = Number((document.getElementById(`price_a_${p.id}`) as HTMLInputElement)?.value);
+                        const cVal = Number((document.getElementById(`credits_${p.id}`) as HTMLInputElement)?.value);
+                        handleUpdatePlanPrice(p.id, mVal, aVal, cVal);
+                      }}
+                      className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold transition-all border border-white/10"
+                    >
+                      Save {p.name} Changes
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 2. Credit Packs Management */}
+            <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden space-y-4 p-6">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div>
+                  <h3 className="text-base font-bold text-white">Credit Top-Up Packs</h3>
+                  <p className="text-xs text-slate-400">Manage instant on-demand wallet recharge packs.</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {(adminPacks || []).map((pack: any) => (
+                  <div key={pack.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <strong className="text-white text-xs">{pack.name}</strong>
+                      <span className="text-[10px] font-mono text-slate-500">{pack.id}</span>
+                    </div>
+
+                    <div className="space-y-2 text-xs">
+                      <div>
+                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">Base Price (INR)</label>
+                        <input
+                          type="number"
+                          defaultValue={pack.priceInr}
+                          id={`pack_price_${pack.id}`}
+                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-2.5 py-1 text-xs text-white font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">Credits Awarded</label>
+                        <input
+                          type="number"
+                          defaultValue={pack.creditAmount}
+                          id={`pack_credits_${pack.id}`}
+                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-2.5 py-1 text-xs text-white font-mono"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const pVal = Number((document.getElementById(`pack_price_${pack.id}`) as HTMLInputElement)?.value);
+                        const cVal = Number((document.getElementById(`pack_credits_${pack.id}`) as HTMLInputElement)?.value);
+                        handleUpdateCreditPack(pack.id, pVal, cVal);
+                      }}
+                      className="w-full py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold transition-all border border-white/10"
+                    >
+                      Update Pack
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 3. Supplier Legal Identity & Tax Settings */}
+            <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden p-6 space-y-6">
+              <div className="border-b border-white/10 pb-4">
+                <h3 className="text-base font-bold text-white">Supplier Legal Identity & GST Settings</h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  These details appear automatically on all PDF Tax Invoices, Receipts, and PayU transaction manifests.
+                </p>
+              </div>
+
+              {billingConfig && (
+                <form onSubmit={handleUpdateBillingConfig} className="space-y-4 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Supplier Legal Entity Name</label>
+                      <input
+                        type="text"
+                        value={billingConfig.legalName || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, legalName: e.target.value })}
+                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        placeholder="e.g. Fluvia Flow Technologies Pvt. Ltd."
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Trade / Brand Name</label>
+                      <input
+                        type="text"
+                        value={billingConfig.tradeName || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, tradeName: e.target.value })}
+                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        placeholder="e.g. Fluvia Flow"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-400 font-semibold mb-1">Registered Office Address</label>
+                    <input
+                      type="text"
+                      value={billingConfig.registeredAddress || ''}
+                      onChange={(e) => setBillingConfig({ ...billingConfig, registeredAddress: e.target.value })}
+                      className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                      placeholder="e.g. Plot 42, DLF Cyber City, Phase III"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">City</label>
+                      <input
+                        type="text"
+                        value={billingConfig.city || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, city: e.target.value })}
+                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">State (Origin for Tax Calc)</label>
+                      <input
+                        type="text"
+                        value={billingConfig.state || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, state: e.target.value })}
+                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        placeholder="e.g. Delhi"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Pincode</label>
+                      <input
+                        type="text"
+                        value={billingConfig.pincode || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, pincode: e.target.value })}
+                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Supplier GSTIN (15 characters)</label>
+                      <input
+                        type="text"
+                        value={billingConfig.gstin || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, gstin: e.target.value.toUpperCase() })}
+                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white font-mono"
+                        placeholder="07AAAAA0000A1Z5"
+                        maxLength={15}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Billing Support Email</label>
+                      <input
+                        type="email"
+                        value={billingConfig.supportEmail || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, supportEmail: e.target.value })}
+                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        placeholder="billing@fluviaflow.ai"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl text-xs transition-all shadow-md"
+                    >
+                      Save Supplier & Tax Configuration
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         )}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/navigation/Header';
@@ -17,449 +17,977 @@ import {
   Download,
   Database,
   Layers,
+  ChevronDown,
+  ChevronUp,
+  X,
+  Sliders,
+  Check,
+  Plus,
+  Flame,
+  Users,
+  Video,
+  Film,
+  Camera,
+  Cpu,
 } from 'lucide-react';
+
+interface PlanConfig {
+  id: string;
+  name: string;
+  tier: 'basic' | 'pro' | 'max' | 'teams';
+  category: 'individual' | 'business';
+  monthlyPrice: number;
+  annualMonthlyPrice: number;
+  credits: number;
+  badge?: string;
+  desc: string;
+  highlight?: boolean;
+  videoGenerationsEstimate: number; // e.g. 5s videos @ 25 credits
+  imageGenerationsEstimate: number; // images @ 5 credits
+  exportResolution: '1080p' | '4K' | '4K 60fps';
+  storageGb: number;
+  models: string[];
+  features: string[];
+  ctaText: string;
+}
 
 export default function PricingPage() {
   const router = useRouter();
+  const [planCategory, setPlanCategory] = useState<'individual' | 'business'>('individual');
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('month');
-  const [selectedPack, setSelectedPack] = useState<string>('pack_1200');
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [purchaseModal, setPurchaseModal] = useState<{
-    open: boolean;
-    type: 'plan' | 'pack';
-    id: string;
-    name: string;
-    price: number;
-    credits: number;
-  } | null>(null);
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [showRecommenderModal, setShowRecommenderModal] = useState(false);
+  const [showDetailedMatrix, setShowDetailedMatrix] = useState(false);
 
-  const plans = [
-    {
-      id: 'plan_free',
-      name: 'Free Explorer',
-      monthlyPrice: 0,
-      annualPrice: 0,
-      credits: 60,
-      badge: null,
-      desc: 'Ideal for testing AI video generation workflows.',
-      features: [
-        '60 Credits every month',
-        '720p HD Exports',
-        'Watermarked exports',
-        '30 seconds max clip duration',
-        'Fluvia Core & Flux AI models',
-        '1 GB Cloud Storage',
-        'Standard Community Support',
-      ],
-      cta: 'Current Plan',
-      buttonVariant: 'secondary',
-    },
+  // Questionnaire state
+  const [qVolume, setQVolume] = useState<'low' | 'medium' | 'high' | 'agency'>('medium');
+  const [qQuality, setQQuality] = useState<'1080p' | '4k'>('4k');
+  const [qTeam, setQTeam] = useState<'solo' | 'team'>('solo');
+
+  // Persist billing interval preference in session
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('fluvia_billing_interval');
+      if (saved === 'month' || saved === 'year') {
+        setBillingInterval(saved);
+      }
+    } catch {
+      // Ignore sessionStorage errors
+    }
+  }, []);
+
+  const handleIntervalChange = (interval: 'month' | 'year') => {
+    setBillingInterval(interval);
+    try {
+      sessionStorage.setItem('fluvia_billing_interval', interval);
+    } catch {
+      // Ignore
+    }
+  };
+
+  // Four authentic Fluvia Flow plans
+  const allPlans: PlanConfig[] = [
     {
       id: 'plan_starter',
-      name: 'Starter Creator',
+      name: 'Fluvia Basic',
+      tier: 'basic',
+      category: 'individual',
       monthlyPrice: 999,
-      annualPrice: 799,
+      annualMonthlyPrice: 799,
       credits: 500,
-      badge: null,
-      desc: 'Perfect for content creators & YouTubers.',
+      desc: 'For beginners and occasional creators getting started with cinematic AI.',
+      videoGenerationsEstimate: 20, // 500 / 25
+      imageGenerationsEstimate: 100, // 500 / 5
+      exportResolution: '1080p',
+      storageGb: 10,
+      models: ['Fluvia Cinematic v1', 'Flux Fast', 'ElevenLabs Audio'],
       features: [
         '500 Credits every month',
         '1080p Full HD Exports',
-        'No watermark on any export',
-        '60 seconds clip duration',
-        'Runway Gen-3 & Fluvia Core',
-        'ElevenLabs Voice synthesis',
+        'Watermark-free video rendering',
+        '60s Max Clip Duration',
+        'Standard Generation Queue',
+        'Fluvia Cinema & Storyboard Studio',
         '10 GB Cloud Storage',
-        'Priority email assistance',
+        'Standard Email Assistance',
       ],
-      cta: 'Upgrade to Starter',
-      buttonVariant: 'primary',
+      ctaText: 'Start with Basic',
     },
     {
       id: 'plan_creator',
-      name: 'Pro Creator',
+      name: 'Fluvia Pro',
+      tier: 'pro',
+      category: 'individual',
       monthlyPrice: 2499,
-      annualPrice: 1999,
+      annualMonthlyPrice: 1999,
       credits: 1600,
       badge: 'Most Popular',
-      desc: 'For professional marketers, agencies & power creators.',
+      highlight: true,
+      desc: 'For regular creators and freelancers who produce frequent high-impact video content.',
+      videoGenerationsEstimate: 64, // 1600 / 25
+      imageGenerationsEstimate: 320, // 1600 / 5
+      exportResolution: '4K',
+      storageGb: 50,
+      models: ['Fluvia Cinematic v1', 'Runway Gen-3 Alpha', 'Luma Ray', 'Flux Pro', 'ElevenLabs Multi'],
       features: [
         '1,600 Credits every month',
-        '4K Ultra HD Exports',
-        'Runway Gen-3 Alpha & Luma Ray',
-        'Priority GPU generation queue',
-        'Multi-track timeline video editor',
-        '5 Brand Kits (Logos, Fonts, Colors)',
-        '50 GB Cloud Storage',
-        'Expedited VIP Support',
+        '4K Ultra HD Master Exports',
+        'Priority GPU Rendering Queue',
+        '180s Clip Duration & Timeline Editor',
+        'Gemini Prompt Enhancer & Copilot',
+        'Multi-Track Video Canvas',
+        '5 Custom Brand Kits',
+        '50 GB High-Speed Storage',
+        'Priority VIP Assistance',
       ],
-      cta: 'Upgrade to Pro',
-      buttonVariant: 'gradient',
+      ctaText: 'Upgrade to Pro',
+    },
+    {
+      id: 'plan_max',
+      name: 'Fluvia Max',
+      tier: 'max',
+      category: 'individual',
+      monthlyPrice: 4999,
+      annualMonthlyPrice: 3999,
+      credits: 4000,
+      badge: 'Power Studio',
+      desc: 'For professional filmmakers, advertisers, and intensive multi-scene AI production.',
+      videoGenerationsEstimate: 160, // 4000 / 25
+      imageGenerationsEstimate: 800, // 4000 / 5
+      exportResolution: '4K 60fps',
+      storageGb: 150,
+      models: ['All Flagship Models', 'Dedicated GPU Lane', 'Cinematic Anamorphic Grade', 'Gemini Director'],
+      features: [
+        '4,000 Credits every month',
+        '4K 60fps Cinema Master exports',
+        'Dedicated GPU Priority Slot',
+        'Gemini Storyboard Sequencer & Scripts',
+        'Cinema Optical Lens Presets (Kodak 2383)',
+        'Marketing Studio with 3 Hook Angles',
+        '15 Custom Brand Kits & Presets',
+        '150 GB Ultra Cloud Storage',
+        'Expedited 2-Hour SLA Assistance',
+      ],
+      ctaText: 'Access Max Studio',
     },
     {
       id: 'plan_business',
-      name: 'Studio Agency',
-      monthlyPrice: 6999,
-      annualPrice: 5599,
-      credits: 5000,
-      badge: 'Ultimate Power',
-      desc: 'Designed for production agencies and scaling teams.',
+      name: 'Fluvia Teams',
+      tier: 'teams',
+      category: 'business',
+      monthlyPrice: 9999,
+      annualMonthlyPrice: 7999,
+      credits: 10000,
+      badge: 'Agencies & Teams',
+      desc: 'For creative agencies, studios, and production teams requiring collaborative workspaces.',
+      videoGenerationsEstimate: 400, // 10000 / 25
+      imageGenerationsEstimate: 2000, // 10000 / 5
+      exportResolution: '4K 60fps',
+      storageGb: 500,
+      models: ['All Models Uncapped', 'Concurrent GPU Nodes', 'Custom Model Weights', 'Full API'],
       features: [
-        '5,000 Credits every month',
+        '10,000 Pooled Credits every month',
+        'Up to 10 Team Member Seats',
+        'Shared Workspace, Asset Pool & Wallet',
         '4K 60fps Cinema Master exports',
-        'Uncapped generation duration (10 min)',
-        'All current & future AI models',
-        'Dedicated GPU priority slot',
-        '20 Team Brand Kits & Workspace',
-        '250 GB High-Speed Storage',
-        'Dedicated Account Manager & SLA',
+        'Unlimited Brand Kits & Templates',
+        '500 GB Shared Team Storage',
+        'Dedicated Account Director',
+        'Custom B2B GST Invoicing & SLA',
       ],
-      cta: 'Get Studio Agency',
-      buttonVariant: 'primary',
+      ctaText: 'Get Fluvia Teams',
     },
   ];
 
+  // Display 4 cards side by side on desktop (or filter when tab selected)
+  const displayedPlans =
+    planCategory === 'business'
+      ? [allPlans[1], allPlans[2], allPlans[3]]
+      : allPlans;
+
   const creditPacks = [
-    { id: 'pack_500', name: '500 Credits Boost', priceInr: 499, credits: 500 },
-    { id: 'pack_1200', name: '1,200 Credits Studio', priceInr: 999, credits: 1200, popular: true },
-    { id: 'pack_3500', name: '3,500 Credits Scale', priceInr: 2499, credits: 3500 },
-    { id: 'pack_10000', name: '10,000 Credits Agency', priceInr: 5999, credits: 10000 },
+    {
+      id: 'pack_500',
+      name: '500 Credits Boost',
+      credits: 500,
+      priceInr: 499,
+      taxInr: 89.82,
+      totalInr: 588.82,
+      perCredit: '₹0.99',
+      popular: false,
+    },
+    {
+      id: 'pack_1200',
+      name: '1,200 Credits Studio',
+      credits: 1200,
+      priceInr: 999,
+      taxInr: 179.82,
+      totalInr: 1178.82,
+      perCredit: '₹0.83',
+      popular: true,
+    },
+    {
+      id: 'pack_3500',
+      name: '3,500 Credits Scale',
+      credits: 3500,
+      priceInr: 2499,
+      taxInr: 449.82,
+      totalInr: 2948.82,
+      perCredit: '₹0.71',
+      popular: false,
+    },
+    {
+      id: 'pack_10000',
+      name: '10,000 Credits Agency',
+      credits: 10000,
+      priceInr: 5999,
+      taxInr: 1079.82,
+      totalInr: 7078.82,
+      perCredit: '₹0.59',
+      popular: false,
+    },
   ];
 
-  const handleInitiatePayment = (type: 'plan' | 'pack', item: any) => {
-    router.push(`/checkout?type=${type}&id=${item.id}`);
+  // Compute plan recommendation based on questionnaire
+  const getRecommendedPlan = () => {
+    if (qTeam === 'team' || qVolume === 'agency') return allPlans[3]; // Teams
+    if (qVolume === 'high' || (qVolume === 'medium' && qQuality === '4k')) return allPlans[2]; // Max
+    if (qVolume === 'medium' || qQuality === '4k') return allPlans[1]; // Pro
+    return allPlans[0]; // Basic
   };
 
-  const handleConfirmOrder = async () => {
-    if (!purchaseModal) return;
-    router.push(`/checkout?type=${purchaseModal.type}&id=${purchaseModal.id}`);
+  const handleSelectPlan = (planId: string) => {
+    router.push(`/checkout?type=subscription&id=${planId}&interval=${billingInterval}`);
+  };
+
+  const handleBuyCreditPack = (packId: string) => {
+    router.push(`/checkout?type=pack&id=${packId}`);
   };
 
   return (
     <div
       className="min-h-screen flex flex-col transition-colors duration-200"
       style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
+        backgroundColor: '#090A0F',
+        color: 'var(--app-text-primary, #F8FAFC)',
       }}
     >
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Header Title */}
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 w-full">
+        {/* ========================================================================= */}
+        {/* HEADER CONTROLS SECTION */}
+        {/* ========================================================================= */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-600/10 border border-violet-500/20 text-xs font-semibold text-violet-400 mb-4">
-            <Zap className="w-3.5 h-3.5" />
-            <span>India-Focused INR Pricing • PayU Hosted Checkout & GST Invoices</span>
+          {/* Top Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold text-violet-300 mb-4 shadow-inner">
+            <Zap className="w-3.5 h-3.5 text-violet-400" />
+            <span>PayU India Verified • 18% GST Compliant • Instant Creative GPU Provisioning</span>
           </div>
+
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Predictable plans. Uncapped creativity.
+            Plans built for creators who move fast.
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
-            Choose a plan that fits your production volume. Upgrade, downgrade, or buy credit packs at any time.
+          <p className="mt-3.5 text-base sm:text-lg text-slate-400 font-normal">
+            Every plan includes genuine server-grade AI rendering, multi-track timeline editing, and zero export watermarks.
           </p>
 
-          {/* Monthly / Annual Toggle */}
-          <div className="mt-8 inline-flex items-center p-1 bg-white/[0.05] rounded-xl border border-white/10">
+          {/* Navigation Controls: Tabs & Billing Toggle */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* Individual vs Business Tabs */}
+            <div className="inline-flex p-1 rounded-xl bg-white/[0.04] border border-white/10 shadow-lg">
+              <button
+                type="button"
+                onClick={() => setPlanCategory('individual')}
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
+                  planCategory === 'individual'
+                    ? 'bg-white/15 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Individual Creators
+              </button>
+              <button
+                type="button"
+                onClick={() => setPlanCategory('business')}
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
+                  planCategory === 'business'
+                    ? 'bg-white/15 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Users className="w-3.5 h-3.5" />
+                <span>Business & Teams</span>
+              </button>
+            </div>
+
+            {/* Monthly / Annual Billing Toggle */}
+            <div className="inline-flex items-center p-1 rounded-xl bg-white/[0.04] border border-white/10 shadow-lg">
+              <button
+                type="button"
+                onClick={() => handleIntervalChange('month')}
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
+                  billingInterval === 'month'
+                    ? 'bg-violet-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                onClick={() => handleIntervalChange('year')}
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
+                  billingInterval === 'year'
+                    ? 'bg-violet-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <span>Annual Billing</span>
+                <span className="text-[10px] font-extrabold bg-emerald-400 text-black px-1.5 py-0.5 rounded shadow-sm">
+                  SAVE 20%
+                </span>
+              </button>
+            </div>
+
+            {/* Not sure which plan? */}
             <button
-              onClick={() => setBillingInterval('month')}
-              className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
-                billingInterval === 'month' ? 'bg-violet-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
-              }`}
+              type="button"
+              onClick={() => setShowRecommenderModal(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-300 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 transition-all"
             >
-              Monthly Billing
+              <HelpCircle className="w-3.5 h-3.5 text-violet-400" />
+              <span>Not sure which plan?</span>
             </button>
-            <button
-              onClick={() => setBillingInterval('year')}
-              className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-1.5 ${
-                billingInterval === 'year' ? 'bg-violet-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <span>Annual Billing</span>
-              <span className="text-[10px] bg-emerald-500 text-black font-extrabold px-1.5 py-0.5 rounded">
-                Save 20%
-              </span>
-            </button>
+          </div>
+
+          {/* Transparent Credit Consumption Note */}
+          <div className="mt-6 text-xs text-slate-400 max-w-2xl mx-auto flex items-center justify-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span>
+              <strong>Credit consumption:</strong> 1 second of Fluvia Cinematic Video = 5 credits (25 credits per 5s clip). Flux Image = 5 credits. Unused credits roll over while your subscription remains active.
+            </span>
           </div>
         </div>
 
-        {/* Pricing Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {plans.map((p) => {
-            const price = billingInterval === 'month' ? p.monthlyPrice : p.annualPrice;
-            const isZero = price === 0;
+        {/* ========================================================================= */}
+        {/* FOUR PREMIUM COMPARISON CARDS */}
+        {/* ========================================================================= */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          {displayedPlans.map((plan) => {
+            const isAnnual = billingInterval === 'year';
+            const price = isAnnual ? plan.annualMonthlyPrice : plan.monthlyPrice;
+            const fullAnnualCharged = plan.annualMonthlyPrice * 12;
+            const savingsPercent = Math.round(
+              ((plan.monthlyPrice - plan.annualMonthlyPrice) / plan.monthlyPrice) * 100
+            );
+
+            // Visual Tier Styles based on reference prompt
+            // Basic: graphite & silver
+            // Pro: dark olive & neon lime
+            // Max: dark burgundy & vibrant magenta
+            // Teams: deep navy & electric blue
+            const tierStyles = {
+              basic: {
+                bg: 'bg-[#111216]',
+                border: 'border-zinc-700/60 hover:border-zinc-500',
+                glow: 'hover:shadow-[0_0_30px_rgba(161,161,170,0.1)]',
+                accentText: 'text-zinc-300',
+                badgeBg: 'bg-zinc-800 text-zinc-300 border-zinc-700',
+                buttonClass: 'bg-white/10 hover:bg-white/20 text-white border border-white/15',
+                checkColor: 'text-zinc-400',
+                creditBadge: 'bg-zinc-800/80 text-zinc-300 border-zinc-700/50',
+              },
+              pro: {
+                bg: 'bg-[#101511]',
+                border: 'border-lime-500/50 shadow-[0_0_20px_rgba(132,204,22,0.15)] hover:border-lime-400',
+                glow: 'hover:shadow-[0_0_40px_rgba(132,204,22,0.25)]',
+                accentText: 'text-lime-400',
+                badgeBg: 'bg-lime-500 text-black font-extrabold border-lime-400',
+                buttonClass: 'bg-lime-500 hover:bg-lime-400 text-black font-extrabold shadow-lg shadow-lime-500/25',
+                checkColor: 'text-lime-400',
+                creditBadge: 'bg-lime-950/60 text-lime-300 border-lime-500/30',
+              },
+              max: {
+                bg: 'bg-[#160f15]',
+                border: 'border-fuchsia-500/50 hover:border-fuchsia-400',
+                glow: 'hover:shadow-[0_0_40px_rgba(217,70,239,0.25)]',
+                accentText: 'text-fuchsia-400',
+                badgeBg: 'bg-fuchsia-500 text-white font-extrabold border-fuchsia-400',
+                buttonClass: 'bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:from-fuchsia-500 hover:to-pink-500 text-white font-bold shadow-lg shadow-fuchsia-600/30',
+                checkColor: 'text-fuchsia-400',
+                creditBadge: 'bg-fuchsia-950/60 text-fuchsia-300 border-fuchsia-500/30',
+              },
+              teams: {
+                bg: 'bg-[#0d1421]',
+                border: 'border-sky-500/50 hover:border-sky-400',
+                glow: 'hover:shadow-[0_0_40px_rgba(14,165,233,0.25)]',
+                accentText: 'text-sky-400',
+                badgeBg: 'bg-sky-500 text-black font-extrabold border-sky-400',
+                buttonClass: 'bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-black font-extrabold shadow-lg shadow-sky-500/30',
+                checkColor: 'text-sky-400',
+                creditBadge: 'bg-sky-950/60 text-sky-300 border-sky-500/30',
+              },
+            }[plan.tier];
 
             return (
               <div
-                key={p.id}
-                className={`p-6 rounded-2xl glass-panel border flex flex-col justify-between relative transition-all duration-300 hover:-translate-y-1 ${
-                  p.badge
-                    ? 'border-violet-500 shadow-2xl shadow-violet-600/20 bg-gradient-to-b from-[#131522] to-[#0E1017]'
-                    : 'border-white/[0.08]'
-                }`}
+                key={plan.id}
+                className={`relative rounded-2xl p-6 sm:p-7 flex flex-col justify-between border transition-all duration-300 ${tierStyles.bg} ${tierStyles.border} ${tierStyles.glow}`}
               >
-                {p.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-[11px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-lg">
-                    {p.badge}
-                  </span>
+                {/* Badge if present */}
+                {plan.badge && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span
+                      className={`text-[10px] uppercase tracking-wider px-3 py-1 rounded-full border shadow-md ${tierStyles.badgeBg}`}
+                    >
+                      {plan.badge}
+                    </span>
+                  </div>
                 )}
 
                 <div>
-                  <h3 className="font-bold text-white text-xl">{p.name}</h3>
-                  <p className="mt-1 text-xs text-slate-400 h-8">{p.desc}</p>
-
-                  <div className="mt-4 flex items-baseline gap-1">
-                    <span className="text-4xl font-extrabold text-white">₹{price}</span>
-                    <span className="text-xs text-slate-400">/{billingInterval === 'month' ? 'mo' : 'mo (billed yearly)'}</span>
-                  </div>
-
-                  <div className="mt-3 text-xs font-semibold text-violet-300 bg-violet-950/60 p-2.5 rounded-xl border border-violet-800/40 flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>{p.credits} credits every month</span>
-                  </div>
-
-                  <div className="mt-6 border-t border-white/[0.08] pt-6">
-                    <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider block mb-3">
-                      Includes:
+                  {/* Plan Name & Tagline */}
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xl font-bold text-white tracking-tight">{plan.name}</h3>
+                    <span className="text-xs uppercase font-mono tracking-wider text-slate-400">
+                      {plan.category}
                     </span>
-                    <ul className="space-y-2.5 text-xs text-slate-300">
-                      {p.features.map((f, fi) => (
-                        <li key={fi} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                          <span>{f}</span>
+                  </div>
+                  <p className="mt-2 text-xs text-slate-400 leading-relaxed min-h-[36px]">
+                    {plan.desc}
+                  </p>
+
+                  {/* Pricing Display */}
+                  <div className="mt-5 pb-5 border-b border-white/[0.08]">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xs text-slate-400">INR</span>
+                      <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        ₹{price.toLocaleString()}
+                      </span>
+                      <span className="text-xs text-slate-400">/ month</span>
+                    </div>
+
+                    {isAnnual ? (
+                      <div className="mt-1 text-[11px] text-emerald-400 flex items-center gap-1 font-medium">
+                        <span>Billed annually (₹{fullAnnualCharged.toLocaleString()} / yr)</span>
+                        <span className="px-1 py-0.2 bg-emerald-500/20 text-emerald-300 rounded text-[9px] font-bold">
+                          SAVE {savingsPercent}%
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="mt-1 text-[11px] text-slate-500">
+                        Billed monthly • Cancel anytime
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Credits & Production Entitlement Summary */}
+                  <div className="mt-5 space-y-3">
+                    <div
+                      className={`p-3 rounded-xl border flex items-center justify-between ${tierStyles.creditBadge}`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Zap className="w-4 h-4" />
+                        <span className="text-xs font-bold">Monthly Credits:</span>
+                      </div>
+                      <span className="text-sm font-extrabold font-mono">
+                        {plan.credits.toLocaleString()}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
+                      <div className="p-2 rounded-lg bg-white/[0.02] border border-white/5">
+                        <span className="text-slate-500 block text-[10px]">Estimated Videos</span>
+                        <strong className="text-white font-mono">~{plan.videoGenerationsEstimate} clips (5s)</strong>
+                      </div>
+                      <div className="p-2 rounded-lg bg-white/[0.02] border border-white/5">
+                        <span className="text-slate-500 block text-[10px]">Max Resolution</span>
+                        <strong className="text-white font-mono">{plan.exportResolution}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Feature List */}
+                  <div className="mt-6 space-y-2.5">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                      Included Capabilities:
+                    </span>
+                    <ul className="space-y-2">
+                      {plan.features.map((feat, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300 leading-snug">
+                          <CheckCircle2
+                            className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${tierStyles.checkColor}`}
+                          />
+                          <span>{feat}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
 
-                <div className="mt-8">
-                  {isZero ? (
-                    <Link
-                      href="/signup"
-                      className="w-full block py-3 rounded-xl text-center text-sm font-semibold bg-white/10 hover:bg-white/15 text-white transition-colors"
-                    >
-                      Start Free with 100 Credits
-                    </Link>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => handleInitiatePayment('plan', p)}
-                      className={`w-full py-3 rounded-xl text-center text-sm font-semibold transition-all shadow-lg ${
-                        p.buttonVariant === 'gradient'
-                          ? 'bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 hover:from-violet-500 hover:to-sky-400 text-white shadow-violet-600/30'
-                          : 'bg-violet-600 hover:bg-violet-500 text-white shadow-violet-600/20'
-                      }`}
-                    >
-                      {p.cta}
-                    </button>
-                  )}
+                {/* Card CTA Button */}
+                <div className="mt-8 pt-4 border-t border-white/[0.06]">
+                  <button
+                    type="button"
+                    onClick={() => handleSelectPlan(plan.id)}
+                    className={`w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all ${tierStyles.buttonClass}`}
+                  >
+                    <span>{plan.ctaText}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                  <p className="text-[10px] text-center text-slate-500 mt-2">
+                    PayU India Secured • Instant Activation
+                  </p>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Credit Packs Section */}
-        <section className="mt-24 p-8 rounded-2xl glass-panel border border-white/10 relative overflow-hidden">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-            <div>
-              <div className="flex items-center gap-2 text-violet-400 font-semibold text-xs uppercase tracking-wider mb-1">
-                <Sparkles className="w-4 h-4" />
-                <span>Need extra generations?</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                One-Time Top-Up Credit Packs
-              </h2>
-              <p className="mt-1 text-sm text-slate-400">
-                Top up your wallet anytime. Purchased credit packs never expire and stack with your monthly allowance.
+        {/* Detailed Feature Comparison Toggle */}
+        <div className="mt-12 text-center">
+          <button
+            type="button"
+            onClick={() => setShowDetailedMatrix(!showDetailedMatrix)}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all shadow-sm"
+          >
+            <Sliders className="w-4 h-4 text-violet-400" />
+            <span>{showDetailedMatrix ? 'Hide Detailed Feature Matrix' : 'Compare All Plan Entitlements & Models'}</span>
+            {showDetailedMatrix ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          </button>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* DETAILED ENTITLEMENT MATRIX */}
+        {/* ========================================================================= */}
+        {showDetailedMatrix && (
+          <div className="mt-8 bg-[#0E1017] border border-white/10 rounded-2xl overflow-hidden shadow-2xl animate-in fade-in duration-300">
+            <div className="p-6 bg-white/[0.02] border-b border-white/10">
+              <h3 className="text-lg font-bold text-white">Full Feature & Model Comparison</h3>
+              <p className="text-xs text-slate-400 mt-1">
+                Authentic comparison based on server-side model dispatching and storage parameters.
               </p>
             </div>
 
-            <div className="flex items-center gap-3 text-xs text-slate-400 bg-white/5 p-3 rounded-xl border border-white/5">
-              <ShieldCheck className="w-5 h-5 text-emerald-400" />
-              <span>Instant credit crediting via PayU India</span>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-white/10 bg-white/[0.01] text-slate-400">
+                    <th className="py-3.5 px-6 font-bold text-white w-1/3">Feature / Entitlement</th>
+                    <th className="py-3.5 px-4 font-semibold text-zinc-300">Fluvia Basic</th>
+                    <th className="py-3.5 px-4 font-semibold text-lime-400">Fluvia Pro</th>
+                    <th className="py-3.5 px-4 font-semibold text-fuchsia-400">Fluvia Max</th>
+                    <th className="py-3.5 px-4 font-semibold text-sky-400">Fluvia Teams</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {/* Category: AI Models */}
+                  <tr className="bg-white/[0.03]">
+                    <td colSpan={5} className="py-2.5 px-6 font-bold uppercase tracking-wider text-[11px] text-violet-400">
+                      1. AI Models & Generation
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Fluvia Cinematic v1 (Fast Motion)</td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Runway Gen-3 Alpha & Luma Ray</td>
+                    <td className="py-3 px-4 text-slate-600"><X className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Google Gemini 2.0 Flash Storyboard & Script Engine</td>
+                    <td className="py-3 px-4 text-slate-400">Basic Scripts</td>
+                    <td className="py-3 px-4 text-emerald-400">Full Access</td>
+                    <td className="py-3 px-4 text-emerald-400">Director Mode</td>
+                    <td className="py-3 px-4 text-emerald-400">Enterprise API</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">ElevenLabs Neural Voice Synthesis</td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                  </tr>
+
+                  {/* Category: Video & Editing */}
+                  <tr className="bg-white/[0.03]">
+                    <td colSpan={5} className="py-2.5 px-6 font-bold uppercase tracking-wider text-[11px] text-violet-400">
+                      2. Export & Canvas Studio
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Max Render Resolution</td>
+                    <td className="py-3 px-4 text-white font-mono">1080p Full HD</td>
+                    <td className="py-3 px-4 text-white font-mono">4K Ultra HD</td>
+                    <td className="py-3 px-4 text-white font-mono">4K 60fps Cinema</td>
+                    <td className="py-3 px-4 text-white font-mono">4K 60fps Master</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Multi-track Timeline Video Editor</td>
+                    <td className="py-3 px-4 text-slate-400">2 Tracks</td>
+                    <td className="py-3 px-4 text-emerald-400">Unlimited Tracks</td>
+                    <td className="py-3 px-4 text-emerald-400">Unlimited Tracks</td>
+                    <td className="py-3 px-4 text-emerald-400">Unlimited Tracks</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Custom Aspect Ratios (21:9, 16:9, 9:16, 1:1)</td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Export Watermark</td>
+                    <td className="py-3 px-4 text-emerald-400">None (Clean)</td>
+                    <td className="py-3 px-4 text-emerald-400">None (Clean)</td>
+                    <td className="py-3 px-4 text-emerald-400">None (Clean)</td>
+                    <td className="py-3 px-4 text-emerald-400">None (Clean)</td>
+                  </tr>
+
+                  {/* Category: Workspaces & Collaboration */}
+                  <tr className="bg-white/[0.03]">
+                    <td colSpan={5} className="py-2.5 px-6 font-bold uppercase tracking-wider text-[11px] text-violet-400">
+                      3. Storage, Collaboration & Support
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">High-Speed Cloud Storage</td>
+                    <td className="py-3 px-4 text-white font-mono">10 GB</td>
+                    <td className="py-3 px-4 text-white font-mono">50 GB</td>
+                    <td className="py-3 px-4 text-white font-mono">150 GB</td>
+                    <td className="py-3 px-4 text-white font-mono">500 GB</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Team Seats Allowed</td>
+                    <td className="py-3 px-4 text-slate-400">1 Seat</td>
+                    <td className="py-3 px-4 text-slate-400">1 Seat</td>
+                    <td className="py-3 px-4 text-slate-400">1 Seat</td>
+                    <td className="py-3 px-4 text-sky-400 font-bold">Up to 10 Seats</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">GPU Queue Priority</td>
+                    <td className="py-3 px-4 text-slate-400">Standard</td>
+                    <td className="py-3 px-4 text-lime-400">Priority Slot</td>
+                    <td className="py-3 px-4 text-fuchsia-400">Dedicated Lane</td>
+                    <td className="py-3 px-4 text-sky-400">Concurrent Nodes</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6 text-slate-300">Official GST Invoices & B2B ITC</td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                    <td className="py-3 px-4 text-emerald-400"><Check className="w-4 h-4" /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+        )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* ========================================================================= */}
+        {/* CREDIT TOP-UP PACKS SECTION */}
+        {/* ========================================================================= */}
+        <div className="mt-20 pt-16 border-t border-white/10">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-xs uppercase font-extrabold tracking-wider text-violet-400 px-3 py-1 rounded-full bg-violet-600/10 border border-violet-500/20">
+              One-Time Creative Boost
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-3">
+              Need extra credits? Top up on-demand.
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-slate-400">
+              Credits never expire. Purchased credits are added instantly to your wallet upon PayU clearance.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {creditPacks.map((pack) => (
               <div
                 key={pack.id}
-                className={`p-5 rounded-xl border flex flex-col justify-between transition-all ${
+                className={`relative rounded-2xl p-5 border transition-all duration-200 flex flex-col justify-between ${
                   pack.popular
-                    ? 'bg-violet-600/10 border-violet-500/50 shadow-lg shadow-violet-600/10'
+                    ? 'bg-[#151221] border-violet-500/50 shadow-lg shadow-violet-500/10'
                     : 'bg-[#0E1017] border-white/10 hover:border-white/20'
                 }`}
               >
+                {pack.popular && (
+                  <span className="absolute -top-2.5 right-4 text-[9px] uppercase tracking-wider font-extrabold bg-violet-600 text-white px-2.5 py-0.5 rounded-full shadow">
+                    Best Value
+                  </span>
+                )}
+
                 <div>
-                  <div className="flex justify-between items-center">
-                    <h3 className="font-bold text-white text-base">{pack.name}</h3>
-                    {pack.popular && (
-                      <span className="text-[10px] bg-violet-600 text-white px-2 py-0.5 rounded font-bold">
-                        Best Value
-                      </span>
-                    )}
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-base font-bold text-white">{pack.name}</h4>
+                    <span className="text-[11px] font-mono text-slate-400">{pack.perCredit} / cred</span>
                   </div>
-                  <div className="mt-3 flex items-baseline gap-1">
-                    <span className="text-2xl font-black text-white">₹{pack.priceInr}</span>
-                    <span className="text-xs text-slate-400">one-time</span>
+
+                  <div className="mt-4 flex items-baseline gap-1">
+                    <span className="text-xs text-slate-400">INR</span>
+                    <span className="text-2xl font-extrabold text-white">₹{pack.priceInr.toLocaleString()}</span>
+                    <span className="text-[11px] text-slate-400">+ 18% GST</span>
                   </div>
-                  <p className="mt-2 text-xs text-violet-300 font-semibold">
-                    +{pack.credits} Generative Credits
+
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Total: <strong className="text-slate-200">₹{pack.totalInr.toFixed(2)}</strong> (incl. taxes)
                   </p>
+
+                  <div className="mt-4 p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between text-xs">
+                    <span className="text-slate-400">Wallet Credits:</span>
+                    <strong className="text-violet-400 font-mono font-bold">
+                      +{pack.credits.toLocaleString()}
+                    </strong>
+                  </div>
                 </div>
 
                 <button
                   type="button"
-                  onClick={() => handleInitiatePayment('pack', pack)}
-                  className="mt-5 w-full py-2.5 rounded-lg text-xs font-bold text-white bg-white/10 hover:bg-violet-600 transition-colors flex items-center justify-center gap-1.5"
+                  onClick={() => handleBuyCreditPack(pack.id)}
+                  className={`mt-6 w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                    pack.popular
+                      ? 'bg-violet-600 hover:bg-violet-500 text-white shadow-md shadow-violet-600/30'
+                      : 'bg-white/10 hover:bg-white/15 text-white border border-white/10'
+                  }`}
                 >
-                  <CreditCard className="w-3.5 h-3.5" />
-                  <span>Buy Credits Now</span>
+                  <span>Buy Pack</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             ))}
           </div>
-        </section>
+        </div>
 
-        {/* Feature Comparison Matrix */}
-        <section className="mt-24">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Detailed Plan Comparison</h2>
-            <p className="mt-2 text-sm text-slate-400">Everything you need to select the right tier.</p>
+        {/* ========================================================================= */}
+        {/* BILLING SECURITY & FAQS */}
+        {/* ========================================================================= */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-white/10">
+          <div className="p-5 rounded-2xl bg-[#0E1017] border border-white/10">
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <h4 className="text-sm font-bold text-white">Official Tax Invoices & B2B ITC</h4>
+            <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+              Every settled transaction generates a downloadable PDF Tax Invoice (SAC 998314) and official payment receipt. GSTIN input tax credits are fully supported.
+            </p>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl glass-panel border border-white/10">
-            <table className="w-full text-left text-xs sm:text-sm">
-              <thead>
-                <tr className="border-b border-white/10 bg-white/[0.02]">
-                  <th className="p-4 font-bold text-white">Feature & Capability</th>
-                  <th className="p-4 font-bold text-slate-300">Free</th>
-                  <th className="p-4 font-bold text-slate-300">Starter</th>
-                  <th className="p-4 font-bold text-violet-400">Pro Creator</th>
-                  <th className="p-4 font-bold text-slate-300">Studio Agency</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/[0.06] text-slate-300">
-                <tr>
-                  <td className="p-4 font-medium text-white">Monthly Credits</td>
-                  <td className="p-4">60 cr</td>
-                  <td className="p-4">500 cr</td>
-                  <td className="p-4 font-semibold text-violet-300">1,600 cr</td>
-                  <td className="p-4 font-semibold text-white">5,000 cr</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-medium text-white">Maximum Export Resolution</td>
-                  <td className="p-4">720p HD</td>
-                  <td className="p-4">1080p FHD</td>
-                  <td className="p-4 font-semibold text-emerald-400">4K Ultra HD</td>
-                  <td className="p-4 font-semibold text-emerald-400">4K 60fps Master</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-medium text-white">Watermark Free</td>
-                  <td className="p-4 text-rose-400">No (Watermarked)</td>
-                  <td className="p-4 text-emerald-400">Yes</td>
-                  <td className="p-4 text-emerald-400">Yes</td>
-                  <td className="p-4 text-emerald-400">Yes</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-medium text-white">Supported AI Video Models</td>
-                  <td className="p-4">Fluvia Core</td>
-                  <td className="p-4">Fluvia Core & Gen-3</td>
-                  <td className="p-4">Runway Gen-3 & Luma Ray</td>
-                  <td className="p-4">All Current & Future Models</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-medium text-white">Timeline Editor & Multi-track</td>
-                  <td className="p-4">Basic</td>
-                  <td className="p-4">Standard</td>
-                  <td className="p-4 text-emerald-400">Full Studio Suite</td>
-                  <td className="p-4 text-emerald-400">Full Studio Suite</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-medium text-white">Cloud Storage Quota</td>
-                  <td className="p-4">1 GB</td>
-                  <td className="p-4">10 GB</td>
-                  <td className="p-4">50 GB</td>
-                  <td className="p-4">250 GB</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="p-5 rounded-2xl bg-[#0E1017] border border-white/10">
+            <div className="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mb-3">
+              <CreditCard className="w-4 h-4" />
+            </div>
+            <h4 className="text-sm font-bold text-white">Encrypted PayU India Gateway</h4>
+            <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+              Payments are processed via PayU with 128-bit SHA-512 cryptographic verification. UPI, RuPay, Visa, Mastercard, and Net Banking are supported natively.
+            </p>
           </div>
-        </section>
 
-        {/* Razorpay Checkout Simulator Modal */}
-        {purchaseModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-[#12141A] border border-white/15 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold">
-                    ₹
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-white text-base">Razorpay INR Checkout</h3>
-                    <p className="text-xs text-slate-400">Secure Payment Gateway</p>
-                  </div>
-                </div>
-                {!isProcessing && (
+          <div className="p-5 rounded-2xl bg-[#0E1017] border border-white/10">
+            <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center mb-3">
+              <Clock className="w-4 h-4" />
+            </div>
+            <h4 className="text-sm font-bold text-white">Rollover & No Surprise Fees</h4>
+            <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+              Unused subscription credits roll over across active billing cycles. Upgrade or downgrade anytime; credit balances are preserved safely in your wallet.
+            </p>
+          </div>
+        </div>
+      </main>
+
+      {/* ========================================================================= */}
+      {/* INTERACTIVE PLAN RECOMMENDER MODAL */}
+      {/* ========================================================================= */}
+      {showRecommenderModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#10121A] border border-white/15 rounded-2xl max-w-lg w-full p-6 sm:p-7 shadow-2xl relative space-y-6">
+            <button
+              type="button"
+              onClick={() => setShowRecommenderModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div>
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-violet-400 px-2.5 py-0.5 rounded bg-violet-600/10 border border-violet-500/20">
+                Plan Matchmaker
+              </span>
+              <h3 className="text-xl font-bold text-white mt-2">Find your optimal Fluvia Flow plan</h3>
+              <p className="text-xs text-slate-400 mt-1">
+                Answer 3 quick questions to get an algorithmic recommendation tailored to your production volume.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {/* Question 1: Monthly Video Volume */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-2">
+                  1. How many videos or visuals do you render each month?
+                </label>
+                <div className="grid grid-cols-2 gap-2 text-xs">
                   <button
-                    onClick={() => setPurchaseModal(null)}
-                    className="text-slate-400 hover:text-white text-sm"
+                    type="button"
+                    onClick={() => setQVolume('low')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qVolume === 'low'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
                   >
-                    ✕
+                    <strong>Under 20 clips</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">Occasional testing</span>
                   </button>
-                )}
-              </div>
-
-              <div className="py-5 space-y-4">
-                <div className="bg-[#0E1017] p-4 rounded-xl border border-white/5 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-slate-400">Item:</span>
-                    <span className="font-semibold text-white">{purchaseModal.name}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-slate-400">Credits Credited:</span>
-                    <span className="font-semibold text-violet-400">+{purchaseModal.credits} cr</span>
-                  </div>
-                  <div className="flex justify-between text-sm border-t border-white/5 pt-2">
-                    <span className="text-slate-400">Total Payable:</span>
-                    <span className="text-xl font-bold text-emerald-400">₹{purchaseModal.price}</span>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setQVolume('medium')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qVolume === 'medium'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <strong>20 - 70 clips</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">Regular creator</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQVolume('high')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qVolume === 'high'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <strong>70 - 180 clips</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">Advertisers & Pro VFX</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQVolume('agency')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qVolume === 'agency'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <strong>200+ clips</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">Agency production</span>
+                  </button>
                 </div>
-
-                {statusMessage && (
-                  <div className="p-3 bg-violet-950/60 border border-violet-700/50 rounded-xl text-xs text-violet-200 flex items-center gap-2">
-                    {isProcessing && <div className="w-3.5 h-3.5 border-2 border-violet-300 border-t-transparent rounded-full animate-spin shrink-0" />}
-                    <span>{statusMessage}</span>
-                  </div>
-                )}
               </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setPurchaseModal(null)}
-                  disabled={isProcessing}
-                  className="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={handleConfirmOrder}
-                  disabled={isProcessing}
-                  className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-lg shadow-violet-600/30 flex items-center justify-center gap-1.5"
-                >
-                  <span>Pay ₹{purchaseModal.price} (UPI/Card)</span>
-                </button>
+              {/* Question 2: Export Resolution */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-2">
+                  2. What is your primary delivery resolution?
+                </label>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setQQuality('1080p')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qQuality === '1080p'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <strong>1080p Full HD</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">Reels, Shorts, TikTok</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQQuality('4k')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qQuality === '4k'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <strong>4K Ultra HD Cinema</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">Commercials & YouTube</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Question 3: Team Collaboration */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-2">
+                  3. Are you working solo or as a collaborative team?
+                </label>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setQTeam('solo')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qTeam === 'solo'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <strong>Solo Creator</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">1 user seat</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQTeam('team')}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      qTeam === 'team'
+                        ? 'border-violet-500 bg-violet-600/20 text-white'
+                        : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <strong>Agency / Team</strong>
+                    <span className="block text-[10px] text-slate-500 mt-0.5">Multi-seat shared wallet</span>
+                  </button>
+                </div>
               </div>
             </div>
+
+            {/* Recommendation Result */}
+            {(() => {
+              const rec = getRecommendedPlan();
+              return (
+                <div className="p-4 rounded-xl bg-violet-600/10 border border-violet-500/30 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-violet-300">Recommended for You:</span>
+                    <strong className="text-base font-extrabold text-white">{rec.name}</strong>
+                  </div>
+                  <p className="text-xs text-slate-300">{rec.desc}</p>
+                  <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-white/10">
+                    <span>
+                      INR ₹
+                      {billingInterval === 'year'
+                        ? rec.annualMonthlyPrice.toLocaleString()
+                        : rec.monthlyPrice.toLocaleString()}
+                      /mo
+                    </span>
+                    <span className="text-emerald-400 font-bold font-mono">
+                      {rec.credits.toLocaleString()} Credits / mo
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowRecommenderModal(false);
+                      handleSelectPlan(rec.id);
+                    }}
+                    className="w-full py-2.5 px-4 bg-violet-600 hover:bg-violet-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-violet-600/30 transition-all"
+                  >
+                    <span>Proceed with {rec.name}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              );
+            })()}
           </div>
-        )}
-      </main>
+        </div>
+      )}
 
       <Footer />
     </div>

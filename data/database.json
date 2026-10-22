@@ -195,6 +195,78 @@
       "role": "creator",
       "createdAt": "2026-10-22T06:26:41.804Z",
       "updatedAt": "2026-10-22T06:26:41.804Z"
+    },
+    {
+      "id": "usr_7p9mh3cp",
+      "email": "test_user_1792650969504@vidai.io",
+      "displayName": "Test Runner",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:36:09.509Z",
+      "updatedAt": "2026-10-22T06:36:09.509Z"
+    },
+    {
+      "id": "usr_u97a66o6",
+      "email": "secure_1792650969606@vidai.io",
+      "displayName": "Security Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:36:09.606Z",
+      "updatedAt": "2026-10-22T06:36:09.606Z"
+    },
+    {
+      "id": "usr_iujtrqky",
+      "email": "payu_test_1792650974002@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:36:14.002Z",
+      "updatedAt": "2026-10-22T06:36:14.002Z"
+    },
+    {
+      "id": "usr_wkqo36qs",
+      "email": "test_user_1792651701435@vidai.io",
+      "displayName": "Test Runner",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:48:21.439Z",
+      "updatedAt": "2026-10-22T06:48:21.439Z"
+    },
+    {
+      "id": "usr_qdvbhte2",
+      "email": "secure_1792651701537@vidai.io",
+      "displayName": "Security Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:48:21.537Z",
+      "updatedAt": "2026-10-22T06:48:21.537Z"
+    },
+    {
+      "id": "usr_5ox3c3lw",
+      "email": "payu_test_1792651704903@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:48:24.903Z",
+      "updatedAt": "2026-10-22T06:48:24.903Z"
+    },
+    {
+      "id": "usr_m5iinrca",
+      "email": "test_user_1792651772539@vidai.io",
+      "displayName": "Test Runner",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:49:32.544Z",
+      "updatedAt": "2026-10-22T06:49:32.544Z"
+    },
+    {
+      "id": "usr_ezxq1mfb",
+      "email": "secure_1792651772640@vidai.io",
+      "displayName": "Security Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:49:32.640Z",
+      "updatedAt": "2026-10-22T06:49:32.640Z"
+    },
+    {
+      "id": "usr_s7hf1hov",
+      "email": "payu_test_1792651776431@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T06:49:36.431Z",
+      "updatedAt": "2026-10-22T06:49:36.431Z"
     }
   ],
   "passwords": {
@@ -218,7 +290,16 @@
     "usr_pdsc905a": "scrypt:bdca1380d16e56efd9f7966fd588cf22:a2927703749e2897adbd0029196e018fc6fb7e6ea778aa9896542fd81f22ce53df5dbb0cd394bafd0ef052eb049394a1260926ddaa3e66ad35d818c2f139386a",
     "usr_hk5zt7jc": "scrypt:c0e51ab58b2b028a9ba68c349551273d:9dc24f59f6fea7274f4097475f84b3f040e7b51e23f2baeee96dcd56156c6dd3a4dda308f39f686235d86a8a979de8bd963e0983c741c54627dffc47664058e8",
     "usr_a1lj6mof": "scrypt:0beb9fe23c73e6900339a0b44b36e26f:c3d52a2ff2f4a22dd49048c37da6eabcc9f7ef35700c8f73bbd62c4b47776b4131a06c0af6eece4ad51b51e7293a200fca5f5c2f7712da64162ffb7a19f22daa",
-    "usr_r2935684": "scrypt:1e43fbf7d794351c71c7d57bd11e6419:2a90995dea24492f23bc8ac3d0ecbb45828cda232af9a046a3c4c22cc0123699518da48349cc86ec350c8835d5f9f0474d3422fd819bcade79b8468901cdfc8f"
+    "usr_r2935684": "scrypt:1e43fbf7d794351c71c7d57bd11e6419:2a90995dea24492f23bc8ac3d0ecbb45828cda232af9a046a3c4c22cc0123699518da48349cc86ec350c8835d5f9f0474d3422fd819bcade79b8468901cdfc8f",
+    "usr_7p9mh3cp": "scrypt:bf45897936c4f93f72108da1529c2144:34e26e6bc7b5b9ca2550be0bbe22770d25b1815922b5c9c43a0e1eef8d06e3cc97dbefa5401c40cf436aa3d85c9713b93330d924ea5a4f62244dc3ca654ec3ca",
+    "usr_u97a66o6": "scrypt:2d70c359dcb76ed0a63405345e84f2d5:521398b61c652392bab1b6df84f8eac839ec4962e8423d47dbff421d7a707880c7d8787c3a0889acb10d0c0def73e48c838d25b7bc3be0f8e6ec2fbfa63d4d06",
+    "usr_iujtrqky": "scrypt:618e1f56f500b6a822bcd7daf6f58def:b0c903fb871387295ace05d3022b3f773e5798c418777461275273aa805d4fe963153f16936c519174de3d301e1361fc6d823df05576aeb11151d2686310cc3a",
+    "usr_wkqo36qs": "scrypt:2bd0fd975df4e96e55aca4080d0c0eff:b857ae050b48565f20eafb0c045c272ecf43224851a435a6e949b2810bdf22369e60011a7cf2a39542b19369815c9dce16caf05fdada33ed13c4a5394203cdda",
+    "usr_qdvbhte2": "scrypt:e4693f0722863cbbcc5c46297ccf87de:d25b2daef5f1623a8fcf57f54259015bab2f28c2470a855196cebd089ade38074aa6cd34c3b81ce95c525438df003ff4c7736becc8887530bc16ee9bba2980c5",
+    "usr_5ox3c3lw": "scrypt:662a0c21bec9b31f067aa0027dcec96e:aa5a89a9438265a544199b40e4125d76be1db089281a5ecb0329dffb94986ed2cbe9c5cdfd4a055154bdf2f85bc854e78c7cf3d9c43264b5a21670a1bb81ea2c",
+    "usr_m5iinrca": "scrypt:241b96fc7b1357c49df70ee28e1ac305:adde6172e533f2ddd8fb021d45dc4f2820c110aba395299105a26079a92b3cb82977bed9c1083a911a6a16f8e58428554301ec16d5d6ef43cecc209280122db8",
+    "usr_ezxq1mfb": "scrypt:e658db1e0b8151c30e91c3433377d108:fe4c1e50818ff783a3c366e033a93c12cb31da527311c72c45734244138acc24029e28c7b1b207cab12f0303604f8ac050fd514a516e73608c9374f4d507e1c8",
+    "usr_s7hf1hov": "scrypt:b5175b6a248f73e072197300059a0f05:cd66a9cbe3b34a65bce78bb44e1af0d46ab8c6ee0ca03f78e1155325f3a2db52276a64a7684e07a4d6ffea0e4502e33f0049b14ecf995af7145a871dfa64671b"
   },
   "workspaces": [
     {
@@ -367,6 +448,69 @@
       "name": "Fintech Tester's Studio",
       "createdAt": "2026-10-22T06:26:41.804Z",
       "updatedAt": "2026-10-22T06:26:41.804Z"
+    },
+    {
+      "id": "ws_c0c5cjnc",
+      "ownerId": "usr_7p9mh3cp",
+      "name": "Test Runner's Studio",
+      "createdAt": "2026-10-22T06:36:09.509Z",
+      "updatedAt": "2026-10-22T06:36:09.509Z"
+    },
+    {
+      "id": "ws_njmz6wwh",
+      "ownerId": "usr_u97a66o6",
+      "name": "Security Tester's Studio",
+      "createdAt": "2026-10-22T06:36:09.606Z",
+      "updatedAt": "2026-10-22T06:36:09.606Z"
+    },
+    {
+      "id": "ws_f5ffslra",
+      "ownerId": "usr_iujtrqky",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-22T06:36:14.002Z",
+      "updatedAt": "2026-10-22T06:36:14.002Z"
+    },
+    {
+      "id": "ws_zhojb7se",
+      "ownerId": "usr_wkqo36qs",
+      "name": "Test Runner's Studio",
+      "createdAt": "2026-10-22T06:48:21.439Z",
+      "updatedAt": "2026-10-22T06:48:21.439Z"
+    },
+    {
+      "id": "ws_xc8qxays",
+      "ownerId": "usr_qdvbhte2",
+      "name": "Security Tester's Studio",
+      "createdAt": "2026-10-22T06:48:21.537Z",
+      "updatedAt": "2026-10-22T06:48:21.537Z"
+    },
+    {
+      "id": "ws_gjqtg9d4",
+      "ownerId": "usr_5ox3c3lw",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-22T06:48:24.903Z",
+      "updatedAt": "2026-10-22T06:48:24.903Z"
+    },
+    {
+      "id": "ws_an4p6m11",
+      "ownerId": "usr_m5iinrca",
+      "name": "Test Runner's Studio",
+      "createdAt": "2026-10-22T06:49:32.544Z",
+      "updatedAt": "2026-10-22T06:49:32.544Z"
+    },
+    {
+      "id": "ws_774t5k0v",
+      "ownerId": "usr_ezxq1mfb",
+      "name": "Security Tester's Studio",
+      "createdAt": "2026-10-22T06:49:32.640Z",
+      "updatedAt": "2026-10-22T06:49:32.640Z"
+    },
+    {
+      "id": "ws_wnemu99p",
+      "ownerId": "usr_s7hf1hov",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-22T06:49:36.431Z",
+      "updatedAt": "2026-10-22T06:49:36.431Z"
     }
   ],
   "workspaceMembers": [
@@ -495,14 +639,68 @@
       "userId": "usr_r2935684",
       "role": "owner",
       "joinedAt": "2026-10-22T06:26:41.804Z"
+    },
+    {
+      "workspaceId": "ws_c0c5cjnc",
+      "userId": "usr_7p9mh3cp",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:36:09.509Z"
+    },
+    {
+      "workspaceId": "ws_njmz6wwh",
+      "userId": "usr_u97a66o6",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:36:09.606Z"
+    },
+    {
+      "workspaceId": "ws_f5ffslra",
+      "userId": "usr_iujtrqky",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:36:14.002Z"
+    },
+    {
+      "workspaceId": "ws_zhojb7se",
+      "userId": "usr_wkqo36qs",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:48:21.439Z"
+    },
+    {
+      "workspaceId": "ws_xc8qxays",
+      "userId": "usr_qdvbhte2",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:48:21.537Z"
+    },
+    {
+      "workspaceId": "ws_gjqtg9d4",
+      "userId": "usr_5ox3c3lw",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:48:24.903Z"
+    },
+    {
+      "workspaceId": "ws_an4p6m11",
+      "userId": "usr_m5iinrca",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:49:32.544Z"
+    },
+    {
+      "workspaceId": "ws_774t5k0v",
+      "userId": "usr_ezxq1mfb",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:49:32.640Z"
+    },
+    {
+      "workspaceId": "ws_wnemu99p",
+      "userId": "usr_s7hf1hov",
+      "role": "owner",
+      "joinedAt": "2026-10-22T06:49:36.431Z"
     }
   ],
   "creditAccounts": {
     "usr_creator_demo_1": {
       "userId": "usr_creator_demo_1",
-      "availableBalance": 225,
+      "availableBalance": 1225,
       "reservedBalance": 0,
-      "updatedAt": "2026-10-21T09:44:05.368Z"
+      "updatedAt": "2026-10-22T06:49:39.345Z"
     },
     "usr_admin_master_1": {
       "userId": "usr_admin_master_1",
@@ -623,6 +821,60 @@
       "availableBalance": 1300,
       "reservedBalance": 0,
       "updatedAt": "2026-10-22T06:26:41.882Z"
+    },
+    "usr_7p9mh3cp": {
+      "userId": "usr_7p9mh3cp",
+      "availableBalance": 225,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:36:10.819Z"
+    },
+    "usr_u97a66o6": {
+      "userId": "usr_u97a66o6",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:36:09.606Z"
+    },
+    "usr_iujtrqky": {
+      "userId": "usr_iujtrqky",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:36:14.188Z"
+    },
+    "usr_wkqo36qs": {
+      "userId": "usr_wkqo36qs",
+      "availableBalance": 225,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:48:22.742Z"
+    },
+    "usr_qdvbhte2": {
+      "userId": "usr_qdvbhte2",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:48:21.537Z"
+    },
+    "usr_5ox3c3lw": {
+      "userId": "usr_5ox3c3lw",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:48:24.988Z"
+    },
+    "usr_m5iinrca": {
+      "userId": "usr_m5iinrca",
+      "availableBalance": 225,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:49:33.851Z"
+    },
+    "usr_ezxq1mfb": {
+      "userId": "usr_ezxq1mfb",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:49:32.640Z"
+    },
+    "usr_s7hf1hov": {
+      "userId": "usr_s7hf1hov",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T06:49:36.532Z"
     }
   },
   "creditLedger": [
@@ -1545,60 +1797,571 @@
         "amountInr": 1178.82
       },
       "createdAt": "2026-10-22T06:26:41.882Z"
+    },
+    {
+      "id": "cld_801lii37og",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_7p9mh3cp",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:36:09.509Z"
+    },
+    {
+      "id": "cld_2sf8w28qpn",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "generation_reserve",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792650969566",
+      "idempotencyKey": "reserve_job_test_1792650969566",
+      "metadata": {
+        "reservedAmount": 50
+      },
+      "createdAt": "2026-10-22T06:36:09.566Z"
+    },
+    {
+      "id": "cld_hm1k9ldjbc",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "generation_settle",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792650969566",
+      "idempotencyKey": "settle_job_test_1792650969566",
+      "metadata": {
+        "reserved": 50,
+        "actual": 50,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T06:36:09.571Z"
+    },
+    {
+      "id": "cld_f5oy24bfza",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "generation_reserve",
+      "amount": -30,
+      "balanceAfter": 20,
+      "relatedJobId": "job_fail_1792650969574",
+      "idempotencyKey": "reserve_job_fail_1792650969574",
+      "metadata": {
+        "reservedAmount": 30
+      },
+      "createdAt": "2026-10-22T06:36:09.574Z"
+    },
+    {
+      "id": "cld_t16s5faew1",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "refund",
+      "amount": 30,
+      "balanceAfter": 50,
+      "relatedJobId": "job_fail_1792650969574",
+      "idempotencyKey": "refund_job_fail_1792650969574_1792650969577",
+      "metadata": {
+        "reason": "Simulated cluster timeout"
+      },
+      "createdAt": "2026-10-22T06:36:09.577Z"
+    },
+    {
+      "id": "cld_xmvaf4f3sd",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "purchase",
+      "amount": 200,
+      "balanceAfter": 250,
+      "paymentId": "pay_123",
+      "idempotencyKey": "order_test_idempotent_1792650969582",
+      "createdAt": "2026-10-22T06:36:09.583Z"
+    },
+    {
+      "id": "cld_kaxz9l5erl",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_0iu5kcwtmt",
+      "idempotencyKey": "reserve_job_0iu5kcwtmt",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-22T06:36:09.598Z"
+    },
+    {
+      "id": "cld_7dmhbo24ja",
+      "userId": "usr_u97a66o6",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_u97a66o6",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:36:09.606Z"
+    },
+    {
+      "id": "cld_fsbziog1lu",
+      "userId": "usr_7p9mh3cp",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_0iu5kcwtmt",
+      "idempotencyKey": "settle_job_0iu5kcwtmt",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T06:36:10.819Z"
+    },
+    {
+      "id": "cld_x4prtxoslk",
+      "userId": "usr_iujtrqky",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_iujtrqky",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:36:14.002Z"
+    },
+    {
+      "id": "cld_do03kua455",
+      "userId": "usr_iujtrqky",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_j9dngsd2f",
+      "idempotencyKey": "payu_fulfill_TXN_1792650974177_S88AIC",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792650974177_S88AIC",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-22T06:36:14.188Z"
+    },
+    {
+      "id": "cld_n5t6r5rb22",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_wkqo36qs",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:48:21.439Z"
+    },
+    {
+      "id": "cld_djfcxgr8et",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "generation_reserve",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792651701493",
+      "idempotencyKey": "reserve_job_test_1792651701493",
+      "metadata": {
+        "reservedAmount": 50
+      },
+      "createdAt": "2026-10-22T06:48:21.493Z"
+    },
+    {
+      "id": "cld_oyska7lo0a",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "generation_settle",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792651701493",
+      "idempotencyKey": "settle_job_test_1792651701493",
+      "metadata": {
+        "reserved": 50,
+        "actual": 50,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T06:48:21.498Z"
+    },
+    {
+      "id": "cld_otk67v7nar",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "generation_reserve",
+      "amount": -30,
+      "balanceAfter": 20,
+      "relatedJobId": "job_fail_1792651701502",
+      "idempotencyKey": "reserve_job_fail_1792651701502",
+      "metadata": {
+        "reservedAmount": 30
+      },
+      "createdAt": "2026-10-22T06:48:21.502Z"
+    },
+    {
+      "id": "cld_h0t0ulm5jw",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "refund",
+      "amount": 30,
+      "balanceAfter": 50,
+      "relatedJobId": "job_fail_1792651701502",
+      "idempotencyKey": "refund_job_fail_1792651701502_1792651701505",
+      "metadata": {
+        "reason": "Simulated cluster timeout"
+      },
+      "createdAt": "2026-10-22T06:48:21.505Z"
+    },
+    {
+      "id": "cld_oaol108d2y",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "purchase",
+      "amount": 200,
+      "balanceAfter": 250,
+      "paymentId": "pay_123",
+      "idempotencyKey": "order_test_idempotent_1792651701510",
+      "createdAt": "2026-10-22T06:48:21.510Z"
+    },
+    {
+      "id": "cld_66wmn4uesg",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_ml90sbmg03",
+      "idempotencyKey": "reserve_job_ml90sbmg03",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-22T06:48:21.527Z"
+    },
+    {
+      "id": "cld_7bles45bjg",
+      "userId": "usr_qdvbhte2",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_qdvbhte2",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:48:21.537Z"
+    },
+    {
+      "id": "cld_ylvo1c3f8t",
+      "userId": "usr_wkqo36qs",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_ml90sbmg03",
+      "idempotencyKey": "settle_job_ml90sbmg03",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T06:48:22.742Z"
+    },
+    {
+      "id": "cld_zh86hhajem",
+      "userId": "usr_5ox3c3lw",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_5ox3c3lw",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:48:24.903Z"
+    },
+    {
+      "id": "cld_ywqyvub618",
+      "userId": "usr_5ox3c3lw",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_81heeevz6",
+      "idempotencyKey": "payu_fulfill_TXN_1792651704979_I4T71F",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792651704979_I4T71F",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-22T06:48:24.988Z"
+    },
+    {
+      "id": "cld_smr212af3p",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "subscription_grant",
+      "amount": 500,
+      "balanceAfter": 725,
+      "paymentId": "ord_payu_xs3fswsa6",
+      "idempotencyKey": "payu_sub_grant_TXN_1792651764997_OJJD7H",
+      "metadata": {
+        "planId": "plan_starter",
+        "billingInterval": "month",
+        "txnid": "TXN_1792651764997_OJJD7H"
+      },
+      "createdAt": "2026-10-22T06:49:25.007Z"
+    },
+    {
+      "id": "cld_26a9suza96",
+      "userId": "usr_m5iinrca",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_m5iinrca",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:49:32.544Z"
+    },
+    {
+      "id": "cld_tefg93yaex",
+      "userId": "usr_m5iinrca",
+      "transactionType": "generation_reserve",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792651772596",
+      "idempotencyKey": "reserve_job_test_1792651772596",
+      "metadata": {
+        "reservedAmount": 50
+      },
+      "createdAt": "2026-10-22T06:49:32.596Z"
+    },
+    {
+      "id": "cld_wi0lhot0hu",
+      "userId": "usr_m5iinrca",
+      "transactionType": "generation_settle",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792651772596",
+      "idempotencyKey": "settle_job_test_1792651772596",
+      "metadata": {
+        "reserved": 50,
+        "actual": 50,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T06:49:32.602Z"
+    },
+    {
+      "id": "cld_5kysrt6bwp",
+      "userId": "usr_m5iinrca",
+      "transactionType": "generation_reserve",
+      "amount": -30,
+      "balanceAfter": 20,
+      "relatedJobId": "job_fail_1792651772606",
+      "idempotencyKey": "reserve_job_fail_1792651772606",
+      "metadata": {
+        "reservedAmount": 30
+      },
+      "createdAt": "2026-10-22T06:49:32.606Z"
+    },
+    {
+      "id": "cld_j970iooc9j",
+      "userId": "usr_m5iinrca",
+      "transactionType": "refund",
+      "amount": 30,
+      "balanceAfter": 50,
+      "relatedJobId": "job_fail_1792651772606",
+      "idempotencyKey": "refund_job_fail_1792651772606_1792651772610",
+      "metadata": {
+        "reason": "Simulated cluster timeout"
+      },
+      "createdAt": "2026-10-22T06:49:32.610Z"
+    },
+    {
+      "id": "cld_3hequw9r7x",
+      "userId": "usr_m5iinrca",
+      "transactionType": "purchase",
+      "amount": 200,
+      "balanceAfter": 250,
+      "paymentId": "pay_123",
+      "idempotencyKey": "order_test_idempotent_1792651772615",
+      "createdAt": "2026-10-22T06:49:32.616Z"
+    },
+    {
+      "id": "cld_ieq07uf0zg",
+      "userId": "usr_m5iinrca",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_xc8lwunid9",
+      "idempotencyKey": "reserve_job_xc8lwunid9",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-22T06:49:32.630Z"
+    },
+    {
+      "id": "cld_cz29bn4ydy",
+      "userId": "usr_ezxq1mfb",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_ezxq1mfb",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:49:32.640Z"
+    },
+    {
+      "id": "cld_3299oqpr0s",
+      "userId": "usr_m5iinrca",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_xc8lwunid9",
+      "idempotencyKey": "settle_job_xc8lwunid9",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T06:49:33.851Z"
+    },
+    {
+      "id": "cld_icq2bq83og",
+      "userId": "usr_s7hf1hov",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_s7hf1hov",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T06:49:36.431Z"
+    },
+    {
+      "id": "cld_gf4iifpno6",
+      "userId": "usr_s7hf1hov",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_uq3kufl62",
+      "idempotencyKey": "payu_fulfill_TXN_1792651776523_HITLB2",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792651776523_HITLB2",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-22T06:49:36.532Z"
+    },
+    {
+      "id": "cld_dhm4rd7s16",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "subscription_grant",
+      "amount": 500,
+      "balanceAfter": 1225,
+      "paymentId": "ord_payu_mi1hxzurs",
+      "idempotencyKey": "payu_sub_grant_TXN_1792651779335_UBX6LP",
+      "metadata": {
+        "planId": "plan_starter",
+        "billingInterval": "month",
+        "txnid": "TXN_1792651779335_UBX6LP"
+      },
+      "createdAt": "2026-10-22T06:49:39.345Z"
     }
   ],
   "plans": [
     {
       "id": "plan_free",
       "name": "Free Explorer",
+      "description": "Ideal for testing AI video generation workflows.",
       "priceInr": 0,
+      "priceAnnualInr": 0,
       "billingInterval": "month",
       "creditsPerPeriod": 60,
+      "category": "individual",
+      "accentTheme": "basic",
+      "features": [
+        "60 Credits every month",
+        "720p HD Exports",
+        "Watermarked exports",
+        "30s max clip duration",
+        "Fluvia Core & Flux AI models",
+        "1 GB Cloud Storage",
+        "Standard Community Support"
+      ],
       "entitlements": {
         "maxResolution": "720p",
         "watermark": true,
         "maxVideoLengthSec": 30,
         "supportedModels": [
-          "vidai-cinematic-v1",
+          "fluvia-cinematic-v1",
           "fal-flux-pro"
         ],
         "storageMb": 1000,
-        "brandKitsAllowed": 1
+        "brandKitsAllowed": 1,
+        "seatsAllowed": 1,
+        "commercialLicense": false,
+        "apiAccess": false,
+        "supportLevel": "community"
       },
       "isActive": true
     },
     {
       "id": "plan_starter",
-      "name": "Starter Creator",
+      "name": "Fluvia Basic",
+      "description": "Updated for creator testing",
       "priceInr": 999,
+      "priceAnnualInr": 799,
       "billingInterval": "month",
       "creditsPerPeriod": 500,
+      "category": "individual",
+      "accentTheme": "basic",
+      "features": [
+        "500 Credits every month",
+        "1080p Full HD Exports",
+        "Watermark-free rendering",
+        "60s Max Clip Duration",
+        "Fluvia Cinematic & Flux Fast",
+        "10 GB Cloud Storage",
+        "Standard Community Support"
+      ],
       "entitlements": {
         "maxResolution": "1080p",
         "watermark": false,
         "maxVideoLengthSec": 60,
         "supportedModels": [
-          "vidai-cinematic-v1",
+          "fluvia-cinematic-v1",
           "fal-flux-pro",
           "eleven-multilingual"
         ],
         "storageMb": 10000,
-        "brandKitsAllowed": 2
+        "brandKitsAllowed": 2,
+        "seatsAllowed": 1,
+        "commercialLicense": true,
+        "apiAccess": false,
+        "supportLevel": "standard"
       },
       "isActive": true
     },
     {
       "id": "plan_creator",
-      "name": "Pro Creator",
+      "name": "Fluvia Pro",
+      "description": "For regular creators and freelancers who produce frequent video content.",
       "priceInr": 2499,
+      "priceAnnualInr": 1999,
       "billingInterval": "month",
       "creditsPerPeriod": 1600,
+      "category": "individual",
+      "badge": "Recommended",
+      "accentTheme": "pro",
+      "features": [
+        "1,600 Credits every month",
+        "4K Ultra HD Exports",
+        "Runway Gen-3 & Fluvia Cinema",
+        "Priority GPU rendering queue",
+        "Multi-track timeline video editor",
+        "5 Brand Kits (Logos, Fonts, Colors)",
+        "50 GB Cloud Storage",
+        "Priority VIP Assistance"
+      ],
       "entitlements": {
         "maxResolution": "4k",
         "watermark": false,
         "maxVideoLengthSec": 180,
         "supportedModels": [
-          "vidai-cinematic-v1",
+          "fluvia-cinematic-v1",
           "runway-gen3",
           "luma-ray",
           "fal-flux-pro",
@@ -1606,16 +2369,73 @@
         ],
         "storageMb": 50000,
         "priorityQueue": true,
-        "brandKitsAllowed": 5
+        "brandKitsAllowed": 5,
+        "seatsAllowed": 1,
+        "commercialLicense": true,
+        "apiAccess": false,
+        "supportLevel": "priority"
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_max",
+      "name": "Fluvia Max",
+      "description": "For professional creators, advertisers and intensive AI workflows.",
+      "priceInr": 4999,
+      "priceAnnualInr": 3999,
+      "billingInterval": "month",
+      "creditsPerPeriod": 4000,
+      "category": "individual",
+      "badge": "Power Studio",
+      "accentTheme": "max",
+      "features": [
+        "4,000 Credits every month",
+        "4K 60fps Cinema Master exports",
+        "Dedicated GPU priority lane",
+        "Gemini Storyboard & Director Mode",
+        "All flagship & beta AI models",
+        "15 Brand Kits & custom presets",
+        "150 GB Cloud Storage",
+        "Expedited 2-hour SLA Support"
+      ],
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 360,
+        "supportedModels": [
+          "all"
+        ],
+        "storageMb": 150000,
+        "priorityQueue": true,
+        "brandKitsAllowed": 15,
+        "seatsAllowed": 1,
+        "commercialLicense": true,
+        "apiAccess": true,
+        "supportLevel": "priority"
       },
       "isActive": true
     },
     {
       "id": "plan_business",
-      "name": "Studio Agency",
-      "priceInr": 6999,
+      "name": "Fluvia Teams",
+      "description": "For agencies, businesses and collaborative creative teams.",
+      "priceInr": 9999,
+      "priceAnnualInr": 7999,
       "billingInterval": "month",
-      "creditsPerPeriod": 5000,
+      "creditsPerPeriod": 10000,
+      "category": "business",
+      "badge": "Agencies & Teams",
+      "accentTheme": "teams",
+      "features": [
+        "10,000 Credits every month",
+        "Multi-seat team workspace (Up to 10)",
+        "Shared credit wallet & asset pool",
+        "4K 60fps Cinema Master exports",
+        "Unlimited Brand Kits & templates",
+        "500 GB High-Speed Storage",
+        "Dedicated Account Manager",
+        "Custom GST invoicing & SLA"
+      ],
       "entitlements": {
         "maxResolution": "4k",
         "watermark": false,
@@ -1623,9 +2443,13 @@
         "supportedModels": [
           "all"
         ],
-        "storageMb": 250000,
+        "storageMb": 500000,
         "priorityQueue": true,
-        "brandKitsAllowed": 20
+        "brandKitsAllowed": 50,
+        "seatsAllowed": 10,
+        "commercialLicense": true,
+        "apiAccess": true,
+        "supportLevel": "dedicated"
       },
       "isActive": true
     }
@@ -1634,11 +2458,11 @@
     {
       "id": "sub_demo_creator",
       "userId": "usr_creator_demo_1",
-      "planId": "plan_creator",
-      "providerSubscriptionId": "sub_rzp_mock_live_123",
+      "planId": "plan_starter",
+      "providerSubscriptionId": "payu_sub_TXN_1792651779335_UBX6LP",
       "status": "active",
-      "currentPeriodStart": "2026-10-21T06:14:19.599Z",
-      "currentPeriodEnd": "2026-11-20T06:14:19.600Z",
+      "currentPeriodStart": "2026-10-22T06:49:39.345Z",
+      "currentPeriodEnd": "2027-10-22T06:49:39.349Z",
       "cancelAtPeriodEnd": false,
       "createdAt": "2026-10-21T06:14:19.599Z"
     }
@@ -2851,6 +3675,306 @@
       "isFavorite": false,
       "createdAt": "2026-10-22T06:24:13.922Z",
       "updatedAt": "2026-10-22T06:24:13.922Z"
+    },
+    {
+      "id": "prj_nvpek9hn7",
+      "workspaceId": "ws_c0c5cjnc",
+      "ownerId": "usr_7p9mh3cp",
+      "title": "Test Timeline Project",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          },
+          {
+            "id": "clp_v3zx2m6",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Cinematic futuristic cit",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T06:36:09.588Z",
+      "updatedAt": "2026-10-22T06:36:10.831Z"
+    },
+    {
+      "id": "prj_jouj3o3q0",
+      "workspaceId": "ws_c0c5cjnc",
+      "ownerId": "usr_7p9mh3cp",
+      "title": "Test Timeline Project (Copy)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T06:36:09.592Z",
+      "updatedAt": "2026-10-22T06:36:09.592Z"
+    },
+    {
+      "id": "prj_2ootw0qhx",
+      "workspaceId": "ws_zhojb7se",
+      "ownerId": "usr_wkqo36qs",
+      "title": "Test Timeline Project",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          },
+          {
+            "id": "clp_zsou9p1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Cinematic futuristic cit",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T06:48:21.516Z",
+      "updatedAt": "2026-10-22T06:48:22.755Z"
+    },
+    {
+      "id": "prj_mb2c3787v",
+      "workspaceId": "ws_zhojb7se",
+      "ownerId": "usr_wkqo36qs",
+      "title": "Test Timeline Project (Copy)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T06:48:21.521Z",
+      "updatedAt": "2026-10-22T06:48:21.521Z"
+    },
+    {
+      "id": "prj_jz8wd8hup",
+      "workspaceId": "ws_an4p6m11",
+      "ownerId": "usr_m5iinrca",
+      "title": "Test Timeline Project",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          },
+          {
+            "id": "clp_09ioblm",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Cinematic futuristic cit",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T06:49:32.621Z",
+      "updatedAt": "2026-10-22T06:49:33.863Z"
+    },
+    {
+      "id": "prj_2ncj2qm05",
+      "workspaceId": "ws_an4p6m11",
+      "ownerId": "usr_m5iinrca",
+      "title": "Test Timeline Project (Copy)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T06:49:32.625Z",
+      "updatedAt": "2026-10-22T06:49:32.625Z"
     }
   ],
   "assets": [
@@ -3130,6 +4254,57 @@
       },
       "id": "ast_4i3ee0ebc",
       "createdAt": "2026-10-22T06:24:15.163Z"
+    },
+    {
+      "workspaceId": "ws_c0c5cjnc",
+      "ownerId": "usr_7p9mh3cp",
+      "projectId": "prj_nvpek9hn7",
+      "name": "Cinematic futuristic city stre (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_0iu5kcwtmt/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_0iu5kcwtmt",
+        "isDemoSimulated": true
+      },
+      "id": "ast_487agskhh",
+      "createdAt": "2026-10-22T06:36:10.826Z"
+    },
+    {
+      "workspaceId": "ws_zhojb7se",
+      "ownerId": "usr_wkqo36qs",
+      "projectId": "prj_2ootw0qhx",
+      "name": "Cinematic futuristic city stre (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_ml90sbmg03/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_ml90sbmg03",
+        "isDemoSimulated": true
+      },
+      "id": "ast_svep8jp8a",
+      "createdAt": "2026-10-22T06:48:22.750Z"
+    },
+    {
+      "workspaceId": "ws_an4p6m11",
+      "ownerId": "usr_m5iinrca",
+      "projectId": "prj_jz8wd8hup",
+      "name": "Cinematic futuristic city stre (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_xc8lwunid9/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_xc8lwunid9",
+        "isDemoSimulated": true
+      },
+      "id": "ast_4ay59f0wv",
+      "createdAt": "2026-10-22T06:49:33.859Z"
     }
   ],
   "generationJobs": [
@@ -3472,6 +4647,108 @@
       },
       "providerRequestId": "fluvia_req_job_ao4cw8mfu6_1792650255154",
       "completedAt": "2026-10-22T06:24:15.155Z"
+    },
+    {
+      "id": "job_0iu5kcwtmt",
+      "userId": "usr_7p9mh3cp",
+      "workspaceId": "ws_c0c5cjnc",
+      "projectId": "prj_nvpek9hn7",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Fluvia Cinema Core (Production Grade)",
+      "input": {
+        "prompt": "Cinematic futuristic city street with neon lights",
+        "aspectRatio": "16:9",
+        "durationSec": 5
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-22T06:36:09.598Z",
+      "updatedAt": "2026-10-22T06:36:10.819Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Cinematic futuristic city street with neon lights",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Fluvia-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "fluvia_req_job_0iu5kcwtmt_1792650970819",
+      "completedAt": "2026-10-22T06:36:10.819Z"
+    },
+    {
+      "id": "job_ml90sbmg03",
+      "userId": "usr_wkqo36qs",
+      "workspaceId": "ws_zhojb7se",
+      "projectId": "prj_2ootw0qhx",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Fluvia Cinema Core (Production Grade)",
+      "input": {
+        "prompt": "Cinematic futuristic city street with neon lights",
+        "aspectRatio": "16:9",
+        "durationSec": 5
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-22T06:48:21.527Z",
+      "updatedAt": "2026-10-22T06:48:22.742Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Cinematic futuristic city street with neon lights",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Fluvia-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "fluvia_req_job_ml90sbmg03_1792651702741",
+      "completedAt": "2026-10-22T06:48:22.742Z"
+    },
+    {
+      "id": "job_xc8lwunid9",
+      "userId": "usr_m5iinrca",
+      "workspaceId": "ws_an4p6m11",
+      "projectId": "prj_jz8wd8hup",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Fluvia Cinema Core (Production Grade)",
+      "input": {
+        "prompt": "Cinematic futuristic city street with neon lights",
+        "aspectRatio": "16:9",
+        "durationSec": 5
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-22T06:49:32.630Z",
+      "updatedAt": "2026-10-22T06:49:33.851Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Cinematic futuristic city street with neon lights",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Fluvia-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "fluvia_req_job_xc8lwunid9_1792651773851",
+      "completedAt": "2026-10-22T06:49:33.851Z"
     }
   ],
   "payments": [
@@ -3535,6 +4812,42 @@
       "processingStatus": "processed",
       "receivedAt": "2026-10-22T06:24:14.094Z",
       "processedAt": "2026-10-22T06:24:14.094Z"
+    },
+    {
+      "id": "evt_replay_test_1792650969747",
+      "eventId": "evt_replay_test_1792650969747",
+      "provider": "razorpay",
+      "eventType": "payment.captured",
+      "payload": {
+        "amount": 50000
+      },
+      "processingStatus": "processed",
+      "receivedAt": "2026-10-22T06:36:09.747Z",
+      "processedAt": "2026-10-22T06:36:09.747Z"
+    },
+    {
+      "id": "evt_replay_test_1792651701676",
+      "eventId": "evt_replay_test_1792651701676",
+      "provider": "razorpay",
+      "eventType": "payment.captured",
+      "payload": {
+        "amount": 50000
+      },
+      "processingStatus": "processed",
+      "receivedAt": "2026-10-22T06:48:21.676Z",
+      "processedAt": "2026-10-22T06:48:21.676Z"
+    },
+    {
+      "id": "evt_replay_test_1792651772773",
+      "eventId": "evt_replay_test_1792651772773",
+      "provider": "razorpay",
+      "eventType": "payment.captured",
+      "payload": {
+        "amount": 50000
+      },
+      "processingStatus": "processed",
+      "receivedAt": "2026-10-22T06:49:32.773Z",
+      "processedAt": "2026-10-22T06:49:32.773Z"
     }
   ],
   "auditLogs": [
@@ -4771,6 +6084,198 @@
         "productInfo": "500 Credits Boost (500 Credits)"
       },
       "createdAt": "2026-10-22T06:26:41.981Z"
+    },
+    {
+      "id": "aud_x7cdehjgj2",
+      "actorId": "usr_iujtrqky",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_j9dngsd2f",
+      "metadata": {
+        "txnid": "TXN_1792650974177_S88AIC",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-22T06:36:14.182Z"
+    },
+    {
+      "id": "aud_r936f3st1q",
+      "actorId": "usr_iujtrqky",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_j9dngsd2f",
+      "metadata": {
+        "txnid": "TXN_1792650974177_S88AIC",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0011",
+        "receiptNumber": "RCP-2026-0011",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-22T06:36:14.204Z"
+    },
+    {
+      "id": "aud_1v34itb84f",
+      "actorId": "usr_iujtrqky",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_1ean7vii7",
+      "metadata": {
+        "txnid": "TXN_1792650974309_A4JGJ0",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-22T06:36:14.314Z"
+    },
+    {
+      "id": "aud_jeyqjce5ei",
+      "actorId": "usr_5ox3c3lw",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_81heeevz6",
+      "metadata": {
+        "txnid": "TXN_1792651704979_I4T71F",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-22T06:48:24.983Z"
+    },
+    {
+      "id": "aud_6zi1ziwve7",
+      "actorId": "usr_5ox3c3lw",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_81heeevz6",
+      "metadata": {
+        "txnid": "TXN_1792651704979_I4T71F",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0012",
+        "receiptNumber": "RCP-2026-0012",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-22T06:48:25.006Z"
+    },
+    {
+      "id": "aud_mj4r29iwkx",
+      "actorId": "usr_5ox3c3lw",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_mpecqhzl8",
+      "metadata": {
+        "txnid": "TXN_1792651705105_1NKYI3",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-22T06:48:25.108Z"
+    },
+    {
+      "id": "aud_0e66gs63sr",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_k8djsyl0f",
+      "metadata": {
+        "txnid": "TXN_1792651732534_AR0OGL",
+        "totalAmount": 11313.84,
+        "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)"
+      },
+      "createdAt": "2026-10-22T06:48:52.540Z"
+    },
+    {
+      "id": "aud_zc1pbf9eo3",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_xs3fswsa6",
+      "metadata": {
+        "txnid": "TXN_1792651764997_OJJD7H",
+        "totalAmount": 11313.84,
+        "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)"
+      },
+      "createdAt": "2026-10-22T06:49:25.001Z"
+    },
+    {
+      "id": "aud_18t4rzne2r",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_xs3fswsa6",
+      "metadata": {
+        "txnid": "TXN_1792651764997_OJJD7H",
+        "totalAmount": 11313.84,
+        "invoiceNumber": "INV-2026-0013",
+        "receiptNumber": "RCP-2026-0013",
+        "creditsAwarded": 500
+      },
+      "createdAt": "2026-10-22T06:49:25.028Z"
+    },
+    {
+      "id": "aud_kjvcxjm58p",
+      "actorId": "usr_s7hf1hov",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_uq3kufl62",
+      "metadata": {
+        "txnid": "TXN_1792651776523_HITLB2",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-22T06:49:36.527Z"
+    },
+    {
+      "id": "aud_19nwuh5scs",
+      "actorId": "usr_s7hf1hov",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_uq3kufl62",
+      "metadata": {
+        "txnid": "TXN_1792651776523_HITLB2",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0014",
+        "receiptNumber": "RCP-2026-0014",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-22T06:49:36.552Z"
+    },
+    {
+      "id": "aud_oqo4u4sb2v",
+      "actorId": "usr_s7hf1hov",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_wazbetfwb",
+      "metadata": {
+        "txnid": "TXN_1792651776641_TKFLY5",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-22T06:49:36.646Z"
+    },
+    {
+      "id": "aud_dsuvvz4z8u",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_mi1hxzurs",
+      "metadata": {
+        "txnid": "TXN_1792651779335_UBX6LP",
+        "totalAmount": 11313.84,
+        "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)"
+      },
+      "createdAt": "2026-10-22T06:49:39.339Z"
+    },
+    {
+      "id": "aud_85ojfx94xp",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_mi1hxzurs",
+      "metadata": {
+        "txnid": "TXN_1792651779335_UBX6LP",
+        "totalAmount": 11313.84,
+        "invoiceNumber": "INV-2026-0015",
+        "receiptNumber": "RCP-2026-0015",
+        "creditsAwarded": 500
+      },
+      "createdAt": "2026-10-22T06:49:39.365Z"
     }
   ],
   "supportTickets": [
@@ -5780,6 +7285,382 @@
       "createdAt": "2026-10-22T06:26:41.977Z",
       "updatedAt": "2026-10-22T06:26:41.984Z",
       "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792650974177_S88AIC",
+      "userId": "usr_iujtrqky",
+      "workspaceId": "ws_f5ffslra",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792650974002@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792650974177_S88AIC",
+      "id": "ord_payu_j9dngsd2f",
+      "createdAt": "2026-10-22T06:36:14.178Z",
+      "updatedAt": "2026-10-22T06:36:14.200Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_qhxa7tg14",
+      "invoiceNumber": "INV-2026-0011",
+      "receiptId": "rcp_tg7fjk7jo",
+      "receiptNumber": "RCP-2026-0011",
+      "verifiedAt": "2026-10-22T06:36:14.187Z"
+    },
+    {
+      "txnid": "TXN_1792650974309_A4JGJ0",
+      "userId": "usr_iujtrqky",
+      "workspaceId": "ws_f5ffslra",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792650974002@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792650974309_A4JGJ0",
+      "id": "ord_payu_1ean7vii7",
+      "createdAt": "2026-10-22T06:36:14.309Z",
+      "updatedAt": "2026-10-22T06:36:14.318Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792651704979_I4T71F",
+      "userId": "usr_5ox3c3lw",
+      "workspaceId": "ws_gjqtg9d4",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792651704903@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792651704979_I4T71F",
+      "id": "ord_payu_81heeevz6",
+      "createdAt": "2026-10-22T06:48:24.980Z",
+      "updatedAt": "2026-10-22T06:48:25.002Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_skvj2xrk4",
+      "invoiceNumber": "INV-2026-0012",
+      "receiptId": "rcp_7mgplgn0a",
+      "receiptNumber": "RCP-2026-0012",
+      "verifiedAt": "2026-10-22T06:48:24.988Z"
+    },
+    {
+      "txnid": "TXN_1792651705105_1NKYI3",
+      "userId": "usr_5ox3c3lw",
+      "workspaceId": "ws_gjqtg9d4",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792651704903@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792651705105_1NKYI3",
+      "id": "ord_payu_mpecqhzl8",
+      "createdAt": "2026-10-22T06:48:25.105Z",
+      "updatedAt": "2026-10-22T06:48:25.112Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792651732534_AR0OGL",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+      "currency": "INR",
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "totalAmount": 11313.84,
+      "amountPaise": 1131384,
+      "taxBreakdown": {
+        "baseAmount": 9588,
+        "taxRate": 18,
+        "taxAmount": 1725.84,
+        "cgstRate": 9,
+        "cgstAmount": 862.92,
+        "sgstRate": 9,
+        "sgstAmount": 862.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1792651732534_AR0OGL",
+      "id": "ord_payu_k8djsyl0f",
+      "createdAt": "2026-10-22T06:48:52.534Z",
+      "updatedAt": "2026-10-22T06:48:52.534Z"
+    },
+    {
+      "txnid": "TXN_1792651764997_OJJD7H",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+      "currency": "INR",
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "totalAmount": 11313.84,
+      "amountPaise": 1131384,
+      "taxBreakdown": {
+        "baseAmount": 9588,
+        "taxRate": 18,
+        "taxAmount": 1725.84,
+        "cgstRate": 9,
+        "cgstAmount": 862.92,
+        "sgstRate": 9,
+        "sgstAmount": 862.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792651764997_OJJD7H",
+      "id": "ord_payu_xs3fswsa6",
+      "createdAt": "2026-10-22T06:49:24.997Z",
+      "updatedAt": "2026-10-22T06:49:25.023Z",
+      "payuMihpayid": "mih_1792651765006",
+      "payuBankRefNum": "BNK_1792651765006",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_qx6akz2yb",
+      "invoiceNumber": "INV-2026-0013",
+      "receiptId": "rcp_tpawd08zt",
+      "receiptNumber": "RCP-2026-0013",
+      "verifiedAt": "2026-10-22T06:49:25.006Z"
+    },
+    {
+      "txnid": "TXN_1792651776523_HITLB2",
+      "userId": "usr_s7hf1hov",
+      "workspaceId": "ws_wnemu99p",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792651776431@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792651776523_HITLB2",
+      "id": "ord_payu_uq3kufl62",
+      "createdAt": "2026-10-22T06:49:36.524Z",
+      "updatedAt": "2026-10-22T06:49:36.547Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_i55h0fk8n",
+      "invoiceNumber": "INV-2026-0014",
+      "receiptId": "rcp_yhocldv49",
+      "receiptNumber": "RCP-2026-0014",
+      "verifiedAt": "2026-10-22T06:49:36.532Z"
+    },
+    {
+      "txnid": "TXN_1792651776641_TKFLY5",
+      "userId": "usr_s7hf1hov",
+      "workspaceId": "ws_wnemu99p",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792651776431@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792651776641_TKFLY5",
+      "id": "ord_payu_wazbetfwb",
+      "createdAt": "2026-10-22T06:49:36.642Z",
+      "updatedAt": "2026-10-22T06:49:36.654Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792651779335_UBX6LP",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+      "currency": "INR",
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "totalAmount": 11313.84,
+      "amountPaise": 1131384,
+      "taxBreakdown": {
+        "baseAmount": 9588,
+        "taxRate": 18,
+        "taxAmount": 1725.84,
+        "cgstRate": 9,
+        "cgstAmount": 862.92,
+        "sgstRate": 9,
+        "sgstAmount": 862.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792651779335_UBX6LP",
+      "id": "ord_payu_mi1hxzurs",
+      "createdAt": "2026-10-22T06:49:39.335Z",
+      "updatedAt": "2026-10-22T06:49:39.361Z",
+      "payuMihpayid": "mih_1792651779345",
+      "payuBankRefNum": "BNK_1792651779345",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_ifldqr7d9",
+      "invoiceNumber": "INV-2026-0015",
+      "receiptId": "rcp_gh9hq10f5",
+      "receiptNumber": "RCP-2026-0015",
+      "verifiedAt": "2026-10-22T06:49:39.345Z"
     }
   ],
   "invoices": [
@@ -6342,6 +8223,286 @@
       "id": "inv_wvf1pljcp",
       "createdAt": "2026-10-22T06:26:41.885Z",
       "updatedAt": "2026-10-22T06:26:41.885Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0011",
+      "orderId": "ord_payu_j9dngsd2f",
+      "txnid": "TXN_1792650974177_S88AIC",
+      "userId": "usr_iujtrqky",
+      "workspaceId": "ws_f5ffslra",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792650974002@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T06:36:14.187Z",
+      "dueDate": "2026-10-22T06:36:14.187Z",
+      "paymentDate": "2026-10-22T06:36:14.187Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_qhxa7tg14",
+      "createdAt": "2026-10-22T06:36:14.192Z",
+      "updatedAt": "2026-10-22T06:36:14.192Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0012",
+      "orderId": "ord_payu_81heeevz6",
+      "txnid": "TXN_1792651704979_I4T71F",
+      "userId": "usr_5ox3c3lw",
+      "workspaceId": "ws_gjqtg9d4",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792651704903@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T06:48:24.988Z",
+      "dueDate": "2026-10-22T06:48:24.988Z",
+      "paymentDate": "2026-10-22T06:48:24.988Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_skvj2xrk4",
+      "createdAt": "2026-10-22T06:48:24.993Z",
+      "updatedAt": "2026-10-22T06:48:24.993Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0013",
+      "orderId": "ord_payu_xs3fswsa6",
+      "txnid": "TXN_1792651764997_OJJD7H",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 9588,
+          "taxableValue": 9588,
+          "gstRate": 18,
+          "cgstAmount": 862.92,
+          "sgstAmount": 862.92,
+          "igstAmount": 0,
+          "totalAmount": 11313.84
+        }
+      ],
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "cgstAmount": 862.92,
+      "sgstAmount": 862.92,
+      "igstAmount": 0,
+      "totalAmount": 11313.84,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T06:49:25.006Z",
+      "dueDate": "2026-10-22T06:49:25.006Z",
+      "paymentDate": "2026-10-22T06:49:25.006Z",
+      "payuPaymentId": "mih_1792651765006",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_qx6akz2yb",
+      "createdAt": "2026-10-22T06:49:25.011Z",
+      "updatedAt": "2026-10-22T06:49:25.011Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0014",
+      "orderId": "ord_payu_uq3kufl62",
+      "txnid": "TXN_1792651776523_HITLB2",
+      "userId": "usr_s7hf1hov",
+      "workspaceId": "ws_wnemu99p",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792651776431@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T06:49:36.532Z",
+      "dueDate": "2026-10-22T06:49:36.532Z",
+      "paymentDate": "2026-10-22T06:49:36.532Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_i55h0fk8n",
+      "createdAt": "2026-10-22T06:49:36.537Z",
+      "updatedAt": "2026-10-22T06:49:36.537Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0015",
+      "orderId": "ord_payu_mi1hxzurs",
+      "txnid": "TXN_1792651779335_UBX6LP",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 9588,
+          "taxableValue": 9588,
+          "gstRate": 18,
+          "cgstAmount": 862.92,
+          "sgstAmount": 862.92,
+          "igstAmount": 0,
+          "totalAmount": 11313.84
+        }
+      ],
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "cgstAmount": 862.92,
+      "sgstAmount": 862.92,
+      "igstAmount": 0,
+      "totalAmount": 11313.84,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T06:49:39.345Z",
+      "dueDate": "2026-10-22T06:49:39.345Z",
+      "paymentDate": "2026-10-22T06:49:39.345Z",
+      "payuPaymentId": "mih_1792651779345",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_ifldqr7d9",
+      "createdAt": "2026-10-22T06:49:39.350Z",
+      "updatedAt": "2026-10-22T06:49:39.350Z"
     }
   ],
   "receipts": [
@@ -6574,6 +8735,121 @@
       "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
       "id": "rcp_906nw18gq",
       "createdAt": "2026-10-22T06:26:41.891Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0011",
+      "orderId": "ord_payu_j9dngsd2f",
+      "txnid": "TXN_1792650974177_S88AIC",
+      "invoiceId": "inv_qhxa7tg14",
+      "invoiceNumber": "INV-2026-0011",
+      "userId": "usr_iujtrqky",
+      "workspaceId": "ws_f5ffslra",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792650974002@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-22T06:36:14.187Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792650974177_S88AIC-MVJ63SAD",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_tg7fjk7jo",
+      "createdAt": "2026-10-22T06:36:14.197Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0012",
+      "orderId": "ord_payu_81heeevz6",
+      "txnid": "TXN_1792651704979_I4T71F",
+      "invoiceId": "inv_skvj2xrk4",
+      "invoiceNumber": "INV-2026-0012",
+      "userId": "usr_5ox3c3lw",
+      "workspaceId": "ws_gjqtg9d4",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792651704903@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-22T06:48:24.988Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792651704979_I4T71F-MVJ6JG6D",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_7mgplgn0a",
+      "createdAt": "2026-10-22T06:48:24.997Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0013",
+      "orderId": "ord_payu_xs3fswsa6",
+      "txnid": "TXN_1792651764997_OJJD7H",
+      "invoiceId": "inv_qx6akz2yb",
+      "invoiceNumber": "INV-2026-0013",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "customerName": "Annual Subscriber",
+      "customerEmail": "creator@vidai.io",
+      "amountReceived": 11313.84,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1792651765006",
+      "payuBankRefNum": "BNK_1792651765006",
+      "productPurchased": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+      "paymentDate": "2026-10-22T06:49:25.006Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792651764997_OJJD7H-MVJ6KQHM",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_tpawd08zt",
+      "createdAt": "2026-10-22T06:49:25.018Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0014",
+      "orderId": "ord_payu_uq3kufl62",
+      "txnid": "TXN_1792651776523_HITLB2",
+      "invoiceId": "inv_i55h0fk8n",
+      "invoiceNumber": "INV-2026-0014",
+      "userId": "usr_s7hf1hov",
+      "workspaceId": "ws_wnemu99p",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792651776431@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-22T06:49:36.532Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792651776523_HITLB2-MVJ6KZDQ",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_yhocldv49",
+      "createdAt": "2026-10-22T06:49:36.542Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0015",
+      "orderId": "ord_payu_mi1hxzurs",
+      "txnid": "TXN_1792651779335_UBX6LP",
+      "invoiceId": "inv_ifldqr7d9",
+      "invoiceNumber": "INV-2026-0015",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "customerName": "Annual Subscriber",
+      "customerEmail": "creator@vidai.io",
+      "amountReceived": 11313.84,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1792651779345",
+      "payuBankRefNum": "BNK_1792651779345",
+      "productPurchased": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+      "paymentDate": "2026-10-22T06:49:39.345Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792651779335_UBX6LP-MVJ6L1JW",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_gh9hq10f5",
+      "createdAt": "2026-10-22T06:49:39.356Z"
     }
   ],
   "creditNotes": [],

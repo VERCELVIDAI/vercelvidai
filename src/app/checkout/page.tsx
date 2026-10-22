@@ -45,6 +45,7 @@ function CheckoutContent() {
   const searchParams = useSearchParams();
   const itemType = searchParams.get('type') || 'pack';
   const itemId = searchParams.get('id') || 'pack_1200';
+  const interval = (searchParams.get('interval') || 'month') as 'month' | 'year';
 
   const [user, setUser] = useState<any>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
@@ -68,6 +69,7 @@ function CheckoutContent() {
     basePrice: number;
     credits: number;
     isSubscription: boolean;
+    intervalLabel?: string;
   }>({
     name: '1,200 Credits Studio Pack',
     description: 'Instant top-up credits for video, voice and image generation.',
@@ -80,7 +82,7 @@ function CheckoutContent() {
     fetch('/api/auth/me')
       .then((res) => {
         if (!res.ok) {
-          router.push(`/login?redirect=/checkout?type=${itemType}&id=${itemId}`);
+          router.push(`/login?redirect=/checkout?type=${itemType}&id=${itemId}&interval=${interval}`);
           return;
         }
         return res.json();
@@ -113,20 +115,26 @@ function CheckoutContent() {
       });
     } else {
       const plans: Record<string, any> = {
-        plan_free: { name: 'Free Starter', basePrice: 0, credits: 100 },
-        plan_creator: { name: 'Pro Creator Plan', basePrice: 2499, credits: 1500 },
-        plan_business: { name: 'Studio Agency Plan', basePrice: 6999, credits: 5000 },
+        plan_free: { name: 'Free Explorer', monthly: 0, annualPerMo: 0, credits: 60, desc: 'Testing workflows.' },
+        plan_starter: { name: 'Fluvia Basic', monthly: 999, annualPerMo: 799, credits: 500, desc: '1080p Full HD exports with Fluvia Cinematic & Flux.' },
+        plan_creator: { name: 'Fluvia Pro', monthly: 2499, annualPerMo: 1999, credits: 1600, desc: '4K Ultra HD exports, priority queue & timeline editor.' },
+        plan_max: { name: 'Fluvia Max', monthly: 4999, annualPerMo: 3999, credits: 4000, desc: '4K 60fps cinema master, dedicated GPU & Gemini storyboard.' },
+        plan_business: { name: 'Fluvia Teams', monthly: 9999, annualPerMo: 7999, credits: 10000, desc: 'Multi-seat team workspace, shared wallet & custom SLA.' },
       };
       const pl = plans[itemId] || plans.plan_creator;
+      const isAnnual = interval === 'year';
+      const calculatedPrice = isAnnual ? pl.annualPerMo * 12 : pl.monthly;
+
       setItemDetails({
         name: pl.name,
-        description: 'Monthly SaaS membership with priority queue & 1080p rendering.',
-        basePrice: pl.basePrice,
+        description: pl.desc,
+        basePrice: calculatedPrice,
         credits: pl.credits,
         isSubscription: true,
+        intervalLabel: isAnnual ? `Annual (₹${pl.annualPerMo}/mo billed ₹${calculatedPrice}/yr)` : 'Monthly',
       });
     }
-  }, [itemType, itemId, router]);
+  }, [itemType, itemId, interval, router]);
 
   // Tax calculation
   const isInterState = customerState !== 'Delhi';
@@ -155,6 +163,7 @@ function CheckoutContent() {
         body: JSON.stringify({
           paymentType: itemType === 'pack' ? 'credit_pack' : 'subscription',
           itemPlanOrPackId: itemId,
+          billingInterval: interval,
           customerDetails: {
             name: customerName,
             email: customerEmail,
@@ -418,6 +427,13 @@ function CheckoutContent() {
                   {itemDetails.credits.toLocaleString()} Credits
                 </strong>
               </div>
+
+              {itemDetails.intervalLabel && (
+                <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/5">
+                  <span>Billing Cycle:</span>
+                  <span className="text-emerald-400 font-semibold">{itemDetails.intervalLabel}</span>
+                </div>
+              )}
             </div>
 
             {/* Price Breakdown */}

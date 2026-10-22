@@ -166,6 +166,7 @@ export interface CreatePayUOrderParams {
   workspaceId: string;
   paymentType: 'subscription' | 'credit_pack';
   itemPlanOrPackId: string;
+  billingInterval?: 'month' | 'year';
   customerDetails: CustomerBillingDetails;
 }
 
@@ -209,10 +210,20 @@ export async function createPayUPaymentOrder(
     basePriceInr = pack.priceInr;
     productInfo = `${pack.name} (${pack.creditAmount.toLocaleString()} Credits)`;
   } else if (params.paymentType === 'subscription') {
-    const plan = dbStore.getPlans().find((p) => p.id === params.itemPlanOrPackId);
+    const plan =
+      dbStore.getPlans().find((p) => p.id === params.itemPlanOrPackId) ||
+      dbStore.getPlanById(params.itemPlanOrPackId);
     if (!plan) throw new Error('Invalid subscription plan selected.');
-    basePriceInr = plan.priceInr;
-    productInfo = `${plan.name} - ${plan.billingInterval === 'year' ? 'Annual' : 'Monthly'} Subscription`;
+
+    const interval = params.billingInterval || plan.billingInterval || 'month';
+    if (interval === 'year') {
+      const monthlyRate = plan.priceAnnualInr || Math.round(plan.priceInr * 0.8);
+      basePriceInr = monthlyRate * 12;
+      productInfo = `${plan.name} - Annual Subscription (12 Months at INR ${monthlyRate}/mo)`;
+    } else {
+      basePriceInr = plan.priceInr;
+      productInfo = `${plan.name} - Monthly Subscription`;
+    }
   }
 
   // Calculate GST & total
@@ -391,7 +402,8 @@ export async function verifyPaymentWithPayU(txnid: string): Promise<PayUVerifica
 }
 
 export interface FulfillPayUOrderParams {
-  txnid: string;
+  txnid?: string;
+  orderId?: string;
   payuPayload?: Record<string, any>;
   skipHashCheckIfAlreadyVerified?: boolean;
 }
@@ -417,10 +429,12 @@ export async function fulfillPayUPayment(
   params: FulfillPayUOrderParams
 ): Promise<FulfillmentResult> {
   const config = getPayUConfig();
-  const order = dbStore.getPayUOrderByTxnid(params.txnid);
+  const order =
+    (params.txnid ? dbStore.getPayUOrderByTxnid(params.txnid) : undefined) ||
+    (params.orderId ? dbStore.getPayUOrderById(params.orderId) : undefined);
 
   if (!order) {
-    throw new Error(`Order with transaction ID ${params.txnid} not found.`);
+    throw new Error(`Order with transaction ID ${params.txnid || params.orderId} not found.`);
   }
 
   // Idempotency: If already fulfilled, return existing records
@@ -513,13 +527,27 @@ export async function fulfillPayUPayment(
     );
 
     // Update or activate user subscription
+    const isAnnual = order.productInfo.includes('Annual');
+    const periodDays = isAnnual ? 365 : 30;
+    const periodEnd = new Date(Date.now() + periodDays * 24 * 60 * 60 * 1000).toISOString();
+
     const existingSub = dbStore.getUserSubscription(order.userId).subscription;
     if (existingSub) {
       existingSub.planId = order.itemPlanOrPackId;
       existingSub.status = 'active';
       existingSub.providerSubscriptionId = `payu_sub_${order.txnid}`;
       existingSub.currentPeriodStart = now;
-      existingSub.currentPeriodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+      existingSub.currentPeriodEnd = periodEnd;
+    } else {
+      dbStore.createSubscription({
+        userId: order.userId,
+        planId: order.itemPlanOrPackId,
+        providerSubscriptionId: `payu_sub_${order.txnid}`,
+        status: 'active',
+        currentPeriodStart: now,
+        currentPeriodEnd: periodEnd,
+        cancelAtPeriodEnd: false,
+      });
     }
   }
 

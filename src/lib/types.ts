@@ -195,9 +195,15 @@ export interface CreditLedgerEntry {
 export interface Plan {
   id: string;
   name: string;
+  description?: string;
   priceInr: number;
+  priceAnnualInr?: number;
   billingInterval: 'month' | 'year';
   creditsPerPeriod: number;
+  category?: 'individual' | 'business';
+  badge?: string;
+  accentTheme?: 'basic' | 'pro' | 'max' | 'teams';
+  features?: string[];
   entitlements: {
     maxResolution: '720p' | '1080p' | '4k';
     watermark: boolean;
@@ -206,6 +212,10 @@ export interface Plan {
     storageMb: number;
     priorityQueue?: boolean;
     brandKitsAllowed?: number;
+    seatsAllowed?: number;
+    commercialLicense?: boolean;
+    apiAccess?: boolean;
+    supportLevel?: 'community' | 'standard' | 'priority' | 'dedicated';
   };
   isActive: boolean;
 }

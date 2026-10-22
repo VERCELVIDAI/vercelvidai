@@ -222,51 +222,142 @@ function getInitialDatabase(): DatabaseSchema {
       },
       {
         id: 'plan_starter',
-        name: 'Starter Creator',
+        name: 'Fluvia Basic',
+        description: 'For beginners and occasional creators getting started with cinematic AI.',
         priceInr: 999,
+        priceAnnualInr: 799,
         billingInterval: 'month',
         creditsPerPeriod: 500,
+        category: 'individual',
+        accentTheme: 'basic',
+        features: [
+          '500 Credits every month',
+          '1080p Full HD Exports',
+          'Watermark-free rendering',
+          '60s Max Clip Duration',
+          'Fluvia Cinematic & Flux Fast',
+          '10 GB Cloud Storage',
+          'Standard Community Support',
+        ],
         entitlements: {
           maxResolution: '1080p',
           watermark: false,
           maxVideoLengthSec: 60,
-          supportedModels: ['vidai-cinematic-v1', 'fal-flux-pro', 'eleven-multilingual'],
+          supportedModels: ['fluvia-cinematic-v1', 'fal-flux-pro', 'eleven-multilingual'],
           storageMb: 10000,
           brandKitsAllowed: 2,
+          seatsAllowed: 1,
+          commercialLicense: true,
+          apiAccess: false,
+          supportLevel: 'standard',
         },
         isActive: true,
       },
       {
         id: 'plan_creator',
-        name: 'Pro Creator',
+        name: 'Fluvia Pro',
+        description: 'For regular creators and freelancers who produce frequent video content.',
         priceInr: 2499,
+        priceAnnualInr: 1999,
         billingInterval: 'month',
         creditsPerPeriod: 1600,
+        category: 'individual',
+        badge: 'Recommended',
+        accentTheme: 'pro',
+        features: [
+          '1,600 Credits every month',
+          '4K Ultra HD Exports',
+          'Runway Gen-3 & Fluvia Cinema',
+          'Priority GPU rendering queue',
+          'Multi-track timeline video editor',
+          '5 Brand Kits (Logos, Fonts, Colors)',
+          '50 GB Cloud Storage',
+          'Priority VIP Assistance',
+        ],
         entitlements: {
           maxResolution: '4k',
           watermark: false,
           maxVideoLengthSec: 180,
-          supportedModels: ['vidai-cinematic-v1', 'runway-gen3', 'luma-ray', 'fal-flux-pro', 'eleven-multilingual'],
+          supportedModels: ['fluvia-cinematic-v1', 'runway-gen3', 'luma-ray', 'fal-flux-pro', 'eleven-multilingual'],
           storageMb: 50000,
           priorityQueue: true,
           brandKitsAllowed: 5,
+          seatsAllowed: 1,
+          commercialLicense: true,
+          apiAccess: false,
+          supportLevel: 'priority',
+        },
+        isActive: true,
+      },
+      {
+        id: 'plan_max',
+        name: 'Fluvia Max',
+        description: 'For professional creators, advertisers and intensive AI workflows.',
+        priceInr: 4999,
+        priceAnnualInr: 3999,
+        billingInterval: 'month',
+        creditsPerPeriod: 4000,
+        category: 'individual',
+        badge: 'Power Studio',
+        accentTheme: 'max',
+        features: [
+          '4,000 Credits every month',
+          '4K 60fps Cinema Master exports',
+          'Dedicated GPU priority lane',
+          'Gemini Storyboard & Director Mode',
+          'All flagship & beta AI models',
+          '15 Brand Kits & custom presets',
+          '150 GB Cloud Storage',
+          'Expedited 2-hour SLA Support',
+        ],
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 360,
+          supportedModels: ['all'],
+          storageMb: 150000,
+          priorityQueue: true,
+          brandKitsAllowed: 15,
+          seatsAllowed: 1,
+          commercialLicense: true,
+          apiAccess: true,
+          supportLevel: 'priority',
         },
         isActive: true,
       },
       {
         id: 'plan_business',
-        name: 'Studio Agency',
-        priceInr: 6999,
+        name: 'Fluvia Teams',
+        description: 'For agencies, businesses and collaborative creative teams.',
+        priceInr: 9999,
+        priceAnnualInr: 7999,
         billingInterval: 'month',
-        creditsPerPeriod: 5000,
+        creditsPerPeriod: 10000,
+        category: 'business',
+        badge: 'Agencies & Teams',
+        accentTheme: 'teams',
+        features: [
+          '10,000 Credits every month',
+          'Multi-seat team workspace (Up to 10)',
+          'Shared credit wallet & asset pool',
+          '4K 60fps Cinema Master exports',
+          'Unlimited Brand Kits & templates',
+          '500 GB High-Speed Storage',
+          'Dedicated Account Manager',
+          'Custom GST invoicing & SLA',
+        ],
         entitlements: {
           maxResolution: '4k',
           watermark: false,
           maxVideoLengthSec: 600,
           supportedModels: ['all'],
-          storageMb: 250000,
+          storageMb: 500000,
           priorityQueue: true,
-          brandKitsAllowed: 20,
+          brandKitsAllowed: 50,
+          seatsAllowed: 10,
+          commercialLicense: true,
+          apiAccess: true,
+          supportLevel: 'dedicated',
         },
         isActive: true,
       },
@@ -1358,8 +1449,45 @@ class Store {
     return this.load().plans.filter((p) => p.isActive);
   }
 
+  getPlanById(id: string): Plan | undefined {
+    return this.load().plans.find((p) => p.id === id || (id === 'plan_basic' && p.id === 'plan_starter') || (id === 'plan_teams' && p.id === 'plan_business'));
+  }
+
+  updatePlan(planId: string, updates: Partial<Plan>): Plan {
+    const db = this.load();
+    const idx = db.plans.findIndex((p) => p.id === planId);
+    if (idx === -1) {
+      throw new Error(`Plan ${planId} not found`);
+    }
+    db.plans[idx] = {
+      ...db.plans[idx],
+      ...updates,
+      entitlements: {
+        ...db.plans[idx].entitlements,
+        ...(updates.entitlements || {}),
+      },
+    };
+    this.save(db);
+    return db.plans[idx];
+  }
+
   getCreditPacks(): CreditPack[] {
     return this.load().creditPacks.filter((p) => p.isActive);
+  }
+
+  getCreditPackById(id: string): CreditPack | undefined {
+    return this.load().creditPacks.find((p) => p.id === id);
+  }
+
+  updateCreditPack(packId: string, updates: Partial<CreditPack>): CreditPack {
+    const db = this.load();
+    const idx = db.creditPacks.findIndex((p) => p.id === packId);
+    if (idx === -1) {
+      throw new Error(`Credit pack ${packId} not found`);
+    }
+    db.creditPacks[idx] = { ...db.creditPacks[idx], ...updates };
+    this.save(db);
+    return db.creditPacks[idx];
   }
 
   getUserSubscription(userId: string): { subscription?: Subscription; plan?: Plan } {
@@ -1368,6 +1496,19 @@ class Store {
     if (!sub) return {};
     const plan = db.plans.find((p) => p.id === sub.planId);
     return { subscription: sub, plan };
+  }
+
+  createSubscription(params: Omit<Subscription, 'id' | 'createdAt'>): Subscription {
+    const db = this.load();
+    const id = 'sub_' + Math.random().toString(36).substring(2, 11);
+    const newSub: Subscription = {
+      ...params,
+      id,
+      createdAt: new Date().toISOString(),
+    };
+    db.subscriptions.push(newSub);
+    this.save(db);
+    return newSub;
   }
 
   createPayment(payment: Omit<Payment, 'id' | 'createdAt'>): Payment {
