@@ -14,8 +14,82 @@ export interface SessionData {
   workspaceId: string;
 }
 
+function getSessionSecret(): string {
+  return process.env.APP_SECRET || 'fluvia-flow-production-super-secret-key-32-chars-minimum-fallback';
+}
+
 function signPayload(payloadStr: string): string {
-  return crypto.createHmac('sha256', SESSION_SECRET).update(payloadStr).digest('hex');
+  return crypto.createHmac('sha256', getSessionSecret()).update(payloadStr).digest('hex');
+}
+
+export function createSignedSessionToken(data: SessionData): string {
+  const payload = Buffer.from(JSON.stringify(data)).toString('base64url');
+  const signature = signPayload(payload);
+  return `${payload}.${signature}`;
+}
+
+export function parseSignedSessionToken(token: string): SessionData | null {
+  try {
+    if (!token || typeof token !== 'string') return null;
+    let clean = token.trim();
+    if (clean.startsWith('"') && clean.endsWith('"')) {
+      clean = clean.slice(1, -1);
+    }
+
+    const dotIndex = clean.lastIndexOf('.');
+    if (dotIndex === -1) {
+      // Legacy unsigned fallback
+      try {
+        const decoded = Buffer.from(clean, 'base64url').toString('utf-8');
+        if (decoded.startsWith('{')) return JSON.parse(decoded);
+      } catch {}
+      const fallback = Buffer.from(clean, 'base64').toString('utf-8');
+      return JSON.parse(fallback);
+    }
+
+    const payload = clean.substring(0, dotIndex);
+    const signature = clean.substring(dotIndex + 1);
+
+    // Verify signature against payload
+    const expectedSig = signPayload(payload);
+    let isValid = false;
+
+    if (signature.length === expectedSig.length) {
+      const sigBuf = Buffer.from(signature);
+      const expBuf = Buffer.from(expectedSig);
+      if (crypto.timingSafeEqual(sigBuf, expBuf)) {
+        isValid = true;
+      }
+    }
+
+    // Check fallback for decoded payload if URL encoding changed characters
+    if (!isValid) {
+      const altPayload = decodeURIComponent(payload);
+      const altSig = signPayload(altPayload);
+      if (signature.length === altSig.length) {
+        const sigBuf = Buffer.from(signature);
+        const altBuf = Buffer.from(altSig);
+        if (crypto.timingSafeEqual(sigBuf, altBuf)) {
+          isValid = true;
+        }
+      }
+    }
+
+    if (!isValid) {
+      console.warn('[Session] Signature mismatch on token verification');
+      return null;
+    }
+
+    // Decode JSON from base64url or standard base64
+    let jsonStr = Buffer.from(payload, 'base64url').toString('utf-8');
+    if (!jsonStr.startsWith('{')) {
+      jsonStr = Buffer.from(payload, 'base64').toString('utf-8');
+    }
+    return JSON.parse(jsonStr) as SessionData;
+  } catch (err) {
+    console.warn('[Session] Parse error:', err);
+    return null;
+  }
 }
 
 export async function getSession(): Promise<SessionData | null> {
@@ -25,53 +99,28 @@ export async function getSession(): Promise<SessionData | null> {
     return null;
   }
 
-  try {
-    const val = decodeURIComponent(sessionCookie.value);
-    let payloadStr = '';
+  const parsed = parseSignedSessionToken(sessionCookie.value);
+  if (!parsed || !parsed.userId) return null;
 
-    // Check if token has signature: format payloadBase64.signatureHex
-    const dotIndex = val.lastIndexOf('.');
-    if (dotIndex !== -1) {
-      const payloadBase64 = val.substring(0, dotIndex);
-      const signatureHex = val.substring(dotIndex + 1);
-      const expectedSig = signPayload(payloadBase64);
+  const profile = dbStore.getProfileById(parsed.userId);
+  if (!profile) return null;
 
-      const sigBuf = Buffer.from(signatureHex);
-      const expBuf = Buffer.from(expectedSig);
-      if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
-        console.warn('Session signature mismatch — rejecting tampered cookie');
-        return null;
-      }
-      payloadStr = Buffer.from(payloadBase64, 'base64').toString('utf-8');
-    } else {
-      // Legacy unsigned base64 token fallback
-      payloadStr = Buffer.from(val, 'base64').toString('utf-8');
-    }
+  // Securely ensure role and email match the canonical database record to prevent privilege escalation
+  parsed.role = profile.role as 'creator' | 'admin' | 'enterprise';
+  parsed.email = profile.email;
 
-    const parsed: SessionData = JSON.parse(payloadStr);
-    const profile = dbStore.getProfileById(parsed.userId);
-    if (!profile) return null;
-
-    // Securely ensure role and email match the canonical database record to prevent privilege escalation
-    parsed.role = profile.role as 'creator' | 'admin' | 'enterprise';
-    parsed.email = profile.email;
-
-    return parsed;
-  } catch (err) {
-    return null;
-  }
+  return parsed;
 }
 
 export async function setSession(data: SessionData): Promise<void> {
   const cookieStore = cookies();
-  const payloadBase64 = Buffer.from(JSON.stringify(data)).toString('base64');
-  const signature = signPayload(payloadBase64);
-  const signedToken = `${payloadBase64}.${signature}`;
+  const signedToken = createSignedSessionToken(data);
 
-  const isHttps = process.env.NEXT_PUBLIC_APP_URL?.startsWith('https');
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+  const isHttps = appUrl.startsWith('https://') || (process.env.NODE_ENV === 'production' && !appUrl.includes('localhost'));
   const cookieOpts = {
     httpOnly: true,
-    secure: isHttps ? true : false,
+    secure: isHttps,
     sameSite: 'lax' as const,
     path: '/',
     maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -82,10 +131,11 @@ export async function setSession(data: SessionData): Promise<void> {
 
 export async function clearSession(): Promise<void> {
   const cookieStore = cookies();
-  const isHttps = process.env.NEXT_PUBLIC_APP_URL?.startsWith('https');
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+  const isHttps = appUrl.startsWith('https://') || (process.env.NODE_ENV === 'production' && !appUrl.includes('localhost'));
   const clearOpts = {
     httpOnly: true,
-    secure: isHttps ? true : false,
+    secure: isHttps,
     sameSite: 'lax' as const,
     path: '/',
     maxAge: 0,
@@ -101,8 +151,19 @@ export async function getCurrentUser(): Promise<{ user: UserProfile; workspace: 
   const user = dbStore.getProfileById(session.userId);
   if (!user) return null;
 
-  const workspaces = dbStore.getUserWorkspaces(user.id);
-  const workspace = workspaces.find((w) => w.id === session.workspaceId) || workspaces[0];
+  const workspace = dbStore.ensureUserWorkspace(user.id, user.displayName);
 
   return { user, workspace };
+}
+
+/**
+ * Validate redirect URL to prevent Open Redirect vulnerabilities
+ */
+export function validateRedirectUrl(url: string | null | undefined, defaultUrl: string = '/dashboard'): string {
+  if (!url) return defaultUrl;
+  // Relative internal path only (starts with / but not // or /\)
+  if (url.startsWith('/') && !url.startsWith('//') && !url.startsWith('/\\')) {
+    return url;
+  }
+  return defaultUrl;
 }

@@ -2,38 +2,62 @@ import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/db/store';
 import { setSession } from '@/lib/auth/session';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
 
     if (!email || !password) {
-      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Please enter both your email address and password.' },
+        { status: 400 }
+      );
     }
 
-    const profile = dbStore.getProfileByEmail(email);
+    const normalizedEmail = (email || '').toLowerCase().trim();
+    const profile = dbStore.getProfileByEmail(normalizedEmail);
+
     if (!profile) {
-      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Invalid email address or password. Please verify your credentials.' },
+        { status: 401 }
+      );
     }
 
     const isValid = dbStore.verifyPassword(profile.id, password);
     if (!isValid) {
-      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Invalid email address or password. Please verify your credentials.' },
+        { status: 401 }
+      );
     }
 
-    const workspaces = dbStore.getUserWorkspaces(profile.id);
-    const workspaceId = workspaces[0]?.id || 'ws_default';
+    // Ensure a workspace is guaranteed to exist for this user
+    const workspace = dbStore.ensureUserWorkspace(profile.id, profile.displayName);
 
     await setSession({
       userId: profile.id,
       email: profile.email,
       role: profile.role,
-      workspaceId,
+      workspaceId: workspace.id,
     });
 
-    dbStore.logAudit(profile.id, 'USER_LOGIN', 'profile', profile.id);
+    dbStore.logAudit(profile.id, 'USER_LOGIN', 'profile', profile.id, {
+      email: profile.email,
+      authProvider: 'password',
+    });
 
-    return NextResponse.json({ success: true, user: profile, workspaceId });
+    return NextResponse.json({
+      success: true,
+      user: profile,
+      workspaceId: workspace.id,
+    });
   } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Login failed' }, { status: 500 });
+    console.error('[Login API Error]:', err);
+    return NextResponse.json(
+      { error: err.message || 'Login failed. Please try again.' },
+      { status: 500 }
+    );
   }
 }

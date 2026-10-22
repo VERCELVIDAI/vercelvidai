@@ -59,6 +59,7 @@ interface DatabaseSchema {
   receipts: PaymentReceipt[];
   creditNotes: CreditNote[];
   billingSettings: SupplierLegalDetails;
+  passwordResetTokens?: Record<string, { token: string; expiresAt: string; email: string }>;
 }
 
 // Determine writable data directory (handles Vercel / serverless read-only filesystem gracefully)
@@ -822,12 +823,14 @@ function getInitialDatabase(): DatabaseSchema {
 
 class Store {
   private db: DatabaseSchema | null = null;
+  private lastMtime: number = 0;
 
   private ensureCollections(schema: DatabaseSchema): void {
     if (!schema.payuOrders) schema.payuOrders = [];
     if (!schema.invoices) schema.invoices = [];
     if (!schema.receipts) schema.receipts = [];
     if (!schema.creditNotes) schema.creditNotes = [];
+    if (!schema.passwordResetTokens) schema.passwordResetTokens = {};
     if (!schema.billingSettings) {
       schema.billingSettings = {
         legalName: 'Fluvia Flow Technologies Private Limited',
@@ -844,13 +847,25 @@ class Store {
   }
 
   private load(): DatabaseSchema {
-    if (this.db) return this.db;
     ensureDataDir();
+
+    let fileMtime = 0;
+    try {
+      if (fs.existsSync(DB_FILE)) {
+        fileMtime = fs.statSync(DB_FILE).mtimeMs;
+      }
+    } catch (e) {}
+
+    // Return in-memory cache if file has not been modified by another process
+    if (this.db && fileMtime > 0 && fileMtime <= this.lastMtime) {
+      return this.db;
+    }
 
     if (fs.existsSync(DB_FILE)) {
       try {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
         this.db = JSON.parse(raw);
+        this.lastMtime = fileMtime;
         this.ensureCollections(this.db!);
         return this.db!;
       } catch (err) {
@@ -862,6 +877,7 @@ class Store {
       try {
         const raw = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
         this.db = JSON.parse(raw);
+        this.lastMtime = fs.statSync(BUNDLED_DB_FILE).mtimeMs;
         this.ensureCollections(this.db!);
         return this.db!;
       } catch (err) {}
@@ -877,9 +893,12 @@ class Store {
     this.db = data;
     try {
       ensureDataDir();
-      const tempFile = `${DB_FILE}.${Date.now()}.tmp`;
+      const tempFile = `${DB_FILE}.${Date.now()}.${Math.random().toString(36).substring(2, 7)}.tmp`;
       fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf-8');
       fs.renameSync(tempFile, DB_FILE);
+      try {
+        this.lastMtime = fs.statSync(DB_FILE).mtimeMs;
+      } catch (e) {}
     } catch (err) {
       console.warn('[DBStore] Read-only or restricted filesystem; state safely preserved in memory:', err);
     }
@@ -998,13 +1017,209 @@ class Store {
     return this.load().profiles;
   }
 
+  getProfileByGoogleId(googleId: string): UserProfile | undefined {
+    return this.load().profiles.find((p) => p.googleId === googleId);
+  }
+
+  createGoogleProfile(params: {
+    googleId: string;
+    email: string;
+    displayName: string;
+    avatarUrl?: string;
+  }): { profile: UserProfile; workspace: Workspace } {
+    const db = this.load();
+    const normalizedEmail = params.email.toLowerCase().trim();
+
+    // 1. Existing user with this Google ID
+    const byGoogle = db.profiles.find((p) => p.googleId === params.googleId);
+    if (byGoogle) {
+      const ws = this.ensureUserWorkspace(byGoogle.id, byGoogle.displayName);
+      return { profile: byGoogle, workspace: ws };
+    }
+
+    // 2. Existing user by email — link Google account without duplicating or resetting credits
+    const byEmail = db.profiles.find((p) => p.email.toLowerCase() === normalizedEmail);
+    if (byEmail) {
+      byEmail.googleId = params.googleId;
+      byEmail.authProvider = byEmail.authProvider || 'google';
+      byEmail.emailVerified = true;
+      if (params.avatarUrl && !byEmail.avatarUrl) {
+        byEmail.avatarUrl = params.avatarUrl;
+      }
+      byEmail.updatedAt = new Date().toISOString();
+      this.save(db);
+      const ws = this.ensureUserWorkspace(byEmail.id, byEmail.displayName);
+      return { profile: byEmail, workspace: ws };
+    }
+
+    // 3. New Google User
+    const now = new Date().toISOString();
+    const userId = 'usr_' + Math.random().toString(36).substring(2, 10);
+    const workspaceId = 'ws_' + Math.random().toString(36).substring(2, 10);
+
+    const profile: UserProfile = {
+      id: userId,
+      email: normalizedEmail,
+      displayName: params.displayName || normalizedEmail.split('@')[0],
+      avatarUrl: params.avatarUrl,
+      role: 'creator',
+      authProvider: 'google',
+      googleId: params.googleId,
+      emailVerified: true,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const workspace: Workspace = {
+      id: workspaceId,
+      ownerId: userId,
+      name: `${profile.displayName}'s Studio`,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const member: WorkspaceMember = {
+      workspaceId,
+      userId,
+      role: 'owner',
+      joinedAt: now,
+    };
+
+    // Award welcome credits ONCE
+    const creditAccount: CreditAccount = {
+      userId,
+      availableBalance: 100,
+      reservedBalance: 0,
+      updatedAt: now,
+    };
+
+    const ledgerEntry: CreditLedgerEntry = {
+      id: 'cld_' + Math.random().toString(36).substring(2, 12),
+      userId,
+      transactionType: 'signup_bonus',
+      amount: 100,
+      balanceAfter: 100,
+      idempotencyKey: `google_signup_grant_${userId}`,
+      metadata: { note: 'Welcome Google signup allowance' },
+      createdAt: now,
+    };
+
+    db.profiles.push(profile);
+    db.workspaces.push(workspace);
+    db.workspaceMembers.push(member);
+    db.creditAccounts[userId] = creditAccount;
+    db.creditLedger.push(ledgerEntry);
+
+    this.save(db);
+    return { profile, workspace };
+  }
+
+  // ==========================================
+  // PASSWORD RECOVERY WORKFLOW
+  // ==========================================
+  createPasswordResetToken(email: string): { token: string; expiresAt: string; resetLink: string } | null {
+    const db = this.load();
+    const user = this.getProfileByEmail(email);
+    if (!user) return null;
+
+    if (!db.passwordResetTokens) {
+      db.passwordResetTokens = {};
+    }
+
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour validity
+
+    db.passwordResetTokens[user.id] = {
+      token,
+      expiresAt,
+      email: user.email,
+    };
+
+    this.save(db);
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const resetLink = `${appUrl}/reset-password?token=${token}&email=${encodeURIComponent(user.email)}`;
+
+    return { token, expiresAt, resetLink };
+  }
+
+  verifyPasswordResetToken(email: string, token: string): boolean {
+    const db = this.load();
+    if (!db.passwordResetTokens) return false;
+
+    const user = this.getProfileByEmail(email);
+    if (!user) return false;
+
+    const record = db.passwordResetTokens[user.id];
+    if (!record) return false;
+
+    if (record.token !== token) return false;
+    if (new Date(record.expiresAt).getTime() < Date.now()) return false;
+
+    return true;
+  }
+
+  resetPasswordWithToken(email: string, token: string, newPasswordPlainText: string): boolean {
+    const db = this.load();
+    if (!this.verifyPasswordResetToken(email, token)) return false;
+
+    const user = this.getProfileByEmail(email);
+    if (!user) return false;
+
+    db.passwords[user.id] = hashPassword(newPasswordPlainText);
+    delete db.passwordResetTokens![user.id];
+    user.updatedAt = new Date().toISOString();
+    this.save(db);
+
+    return true;
+  }
+
   // ==========================================
   // WORKSPACES
   // ==========================================
+  ensureUserWorkspace(userId: string, displayName?: string): Workspace {
+    const db = this.load();
+    const memberships = db.workspaceMembers.filter((m) => m.userId === userId).map((m) => m.workspaceId);
+    const existing = db.workspaces.find((w) => memberships.includes(w.id));
+    if (existing) return existing;
+
+    const now = new Date().toISOString();
+    const workspaceId = 'ws_' + Math.random().toString(36).substring(2, 10);
+    const user = db.profiles.find((p) => p.id === userId);
+    const name = displayName || user?.displayName || 'Personal';
+
+    const workspace: Workspace = {
+      id: workspaceId,
+      ownerId: userId,
+      name: `${name}'s Studio`,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const member: WorkspaceMember = {
+      workspaceId,
+      userId,
+      role: 'owner',
+      joinedAt: now,
+    };
+
+    db.workspaces.push(workspace);
+    db.workspaceMembers.push(member);
+    this.save(db);
+    return workspace;
+  }
+
   getUserWorkspaces(userId: string): Workspace[] {
     const db = this.load();
     const memberships = db.workspaceMembers.filter((m) => m.userId === userId).map((m) => m.workspaceId);
-    return db.workspaces.filter((w) => memberships.includes(w.id));
+    const workspaces = db.workspaces.filter((w) => memberships.includes(w.id));
+    if (workspaces.length === 0) {
+      const user = db.profiles.find((p) => p.id === userId);
+      if (user) {
+        return [this.ensureUserWorkspace(userId, user.displayName)];
+      }
+    }
+    return workspaces;
   }
 
   getWorkspaceById(id: string): Workspace | undefined {

@@ -24,6 +24,7 @@ import {
   Zap,
   CheckCircle2,
   ExternalLink,
+  ShieldAlert,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -32,6 +33,8 @@ export default function DashboardPage() {
   const [projects, setProjects] = useState<any[]>([]);
   const [jobs, setJobs] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Quick prompt input
   const [quickPrompt, setQuickPrompt] = useState('');
@@ -42,30 +45,46 @@ export default function DashboardPage() {
   const [deleteModal, setDeleteModal] = useState<{ id: string; title: string } | null>(null);
 
   const fetchDashboardData = async () => {
+    setIsLoading(true);
+    setLoadError(null);
     try {
-      const authRes = await fetch('/api/auth/me');
-      if (!authRes.ok) {
-        router.push('/login');
+      const authRes = await fetch('/api/auth/me', { cache: 'no-store' });
+      if (authRes.status === 401) {
+        setIsRedirecting(true);
+        router.push('/login?returnUrl=/dashboard');
         return;
+      }
+      if (!authRes.ok) {
+        throw new Error('Failed to load profile and workspace data.');
       }
       const authData = await authRes.json();
       setData(authData);
 
-      const [projRes, jobsRes] = await Promise.all([
-        fetch('/api/projects'),
-        fetch('/api/jobs'),
+      const [projRes, jobsRes] = await Promise.allSettled([
+        fetch('/api/projects', { cache: 'no-store' }),
+        fetch('/api/jobs', { cache: 'no-store' }),
       ]);
 
-      if (projRes.ok) {
-        const p = await projRes.json();
-        setProjects(p.projects || []);
+      if (projRes.status === 'fulfilled' && projRes.value.ok) {
+        try {
+          const p = await projRes.value.json();
+          setProjects(p.projects || []);
+        } catch {
+          setProjects([]);
+        }
       }
-      if (jobsRes.ok) {
-        const j = await jobsRes.json();
-        setJobs(j.jobs || []);
+
+      if (jobsRes.status === 'fulfilled' && jobsRes.value.ok) {
+        try {
+          const j = await jobsRes.value.json();
+          setJobs(j.jobs || []);
+        } catch {
+          setJobs([]);
+        }
       }
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      console.error('[Dashboard fetch error]:', err);
+      setLoadError(err.message || 'Unable to connect to Fluvia Flow workspace.');
     } finally {
       setIsLoading(false);
     }
@@ -129,12 +148,78 @@ export default function DashboardPage() {
     } catch (e) {}
   };
 
+  if (isRedirecting) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white via-[#F0FDF4]/50 to-[#FFF1F7]/40 text-[#17211D] flex items-center justify-center p-4">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="w-9 h-9 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-bold text-[#17211D]">Session expired or sign in required</p>
+          <span className="text-xs text-slate-500">Redirecting to Fluvia Flow sign in...</span>
+        </div>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-slate-500 font-mono">Loading creative workspace...</span>
+      <div className="min-h-screen bg-[#F8FAFC] flex text-[#17211D]">
+        {/* Placeholder sidebar */}
+        <div className="hidden md:block w-64 border-r border-emerald-500/15 bg-white/70 p-4 space-y-4">
+          <div className="h-8 w-32 bg-emerald-100/60 rounded-lg animate-pulse" />
+          <div className="space-y-2 pt-6">
+            <div className="h-4 w-24 bg-slate-200/70 rounded animate-pulse" />
+            <div className="h-9 w-full bg-slate-100 rounded-xl animate-pulse" />
+            <div className="h-9 w-full bg-slate-100 rounded-xl animate-pulse" />
+            <div className="h-9 w-full bg-slate-100 rounded-xl animate-pulse" />
+          </div>
+        </div>
+
+        {/* Placeholder content */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <div className="h-16 border-b border-emerald-500/15 bg-white/60 px-6 flex items-center justify-between">
+            <div className="h-6 w-32 bg-slate-200/70 rounded-md animate-pulse" />
+            <div className="h-8 w-24 bg-emerald-100/60 rounded-full animate-pulse" />
+          </div>
+          <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
+            <div className="h-28 rounded-3xl bg-emerald-50/50 border border-emerald-500/20 animate-pulse" />
+            <div className="h-32 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="h-64 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
+              <div className="h-64 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
+              <div className="h-64 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loadError && !data) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white via-[#F0FDF4]/50 to-[#FFF1F7]/40 flex items-center justify-center p-4 text-[#17211D]">
+        <div className="p-8 max-w-md w-full glass-card border border-rose-300 rounded-3xl shadow-xl text-center space-y-4 bg-white/95">
+          <div className="w-12 h-12 rounded-full bg-rose-100 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <h2 className="text-lg font-bold text-[#17211D]">Unable to Load Creative Studio</h2>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            {loadError}
+          </p>
+          <div className="pt-2 flex gap-3 justify-center">
+            <button
+              type="button"
+              onClick={() => fetchDashboardData()}
+              className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-md transition-all cursor-pointer"
+            >
+              Try Again
+            </button>
+            <Link
+              href="/login"
+              className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-all"
+            >
+              Sign In Again
+            </Link>
+          </div>
         </div>
       </div>
     );

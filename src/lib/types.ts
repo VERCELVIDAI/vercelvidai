@@ -17,6 +17,9 @@ export interface UserProfile {
   displayName: string;
   avatarUrl?: string;
   role: UserRole;
+  authProvider?: 'password' | 'google';
+  googleId?: string;
+  emailVerified?: boolean;
   onboardingData?: {
     primaryUseCase?: string;
     experienceLevel?: string;

@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Logo } from '@/components/brand/Logo';
 import { AuthHeroVisual } from '@/components/auth/AuthHeroVisual';
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
 import { DevDemoShortcuts } from '@/components/auth/DevDemoShortcuts';
 import {
   ArrowRight,
@@ -13,8 +14,8 @@ import {
   Eye,
   EyeOff,
   AlertCircle,
-  Shield,
-  Sparkles,
+  CheckCircle2,
+  X,
 } from 'lucide-react';
 
 function LoginForm() {
@@ -23,11 +24,20 @@ function LoginForm() {
   const returnUrl = searchParams.get('returnUrl') || '/dashboard';
   const useTemplate = searchParams.get('useTemplate');
 
+  const queryError = searchParams.get('error');
+  const queryMessage = searchParams.get('message');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(queryError || null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(queryMessage || null);
+
+  useEffect(() => {
+    if (queryError) setError(queryError);
+    if (queryMessage) setSuccessMessage(queryMessage);
+  }, [queryError, queryMessage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,6 +77,7 @@ function LoginForm() {
   const handleDevFill = (demoEmail: string, demoPass: string) => {
     setEmail(demoEmail);
     setPassword(demoPass);
+    setError(null);
   };
 
   return (
@@ -89,13 +100,56 @@ function LoginForm() {
           </p>
         </div>
 
-        {/* Error Alert */}
-        {error && (
-          <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2.5 animate-in fade-in duration-200">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
-            <span className="font-semibold leading-relaxed">{error}</span>
+        {/* Success Alert */}
+        {successMessage && (
+          <div className="mb-5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-900 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+              <span className="font-semibold leading-relaxed">{successMessage}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setSuccessMessage(null)}
+              className="text-emerald-700 hover:text-emerald-900"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
           </div>
         )}
+
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+              <span className="font-semibold leading-relaxed">{error}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setError(null)}
+              className="text-rose-600 hover:text-rose-800"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
+        {/* Official Google Sign-In */}
+        <div className="mb-5">
+          <GoogleSignInButton returnUrl={returnUrl} label="Continue with Google" />
+        </div>
+
+        {/* Divider */}
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-emerald-500/15" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-[#FAFDFB] px-3 text-slate-500 font-mono text-[11px]">
+              Or continue with email
+            </span>
+          </div>
+        </div>
 
         {/* Clean Sign-In Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -154,7 +208,7 @@ function LoginForm() {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-md transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-md transition-colors cursor-pointer"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -213,7 +267,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 transition-colors duration-200 text-[#17211D]">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 transition-colors duration-200 text-[#17211D] bg-[#FAFDFB]">
       {/* LEFT SIDE: Brand Visual & 3D Interactive Media Composition */}
       <AuthHeroVisual />
 
