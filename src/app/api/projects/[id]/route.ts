@@ -13,6 +13,14 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
 
+  const isOwner = project.ownerId === current.user.id;
+  const isWorkspace = project.workspaceId === current.workspace.id;
+  const isAdmin = current.user.role === 'admin';
+
+  if (!isOwner && !isWorkspace && !isAdmin) {
+    return NextResponse.json({ error: 'Forbidden: Access denied to this project' }, { status: 403 });
+  }
+
   return NextResponse.json({ project });
 }
 
@@ -25,6 +33,14 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const project = dbStore.getProjectById(params.id);
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+  }
+
+  const isOwner = project.ownerId === current.user.id;
+  const isWorkspace = project.workspaceId === current.workspace.id;
+  const isAdmin = current.user.role === 'admin';
+
+  if (!isOwner && !isWorkspace && !isAdmin) {
+    return NextResponse.json({ error: 'Forbidden: Access denied to this project' }, { status: 403 });
   }
 
   const body = await req.json();
@@ -46,6 +62,19 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
   const current = await getCurrentUser();
   if (!current) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const project = dbStore.getProjectById(params.id);
+  if (!project) {
+    return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+  }
+
+  const isOwner = project.ownerId === current.user.id;
+  const isWorkspace = project.workspaceId === current.workspace.id;
+  const isAdmin = current.user.role === 'admin';
+
+  if (!isOwner && !isWorkspace && !isAdmin) {
+    return NextResponse.json({ error: 'Forbidden: Access denied to this project' }, { status: 403 });
   }
 
   const deleted = dbStore.deleteProject(params.id);

@@ -50,9 +50,9 @@ export function Logo({ className = '', size = 'md', href = '/' }: LogoProps) {
       </div>
 
       <div className="flex flex-col">
-        <span className={`font-bold tracking-tight text-white flex items-center gap-1 ${textSizes[size]}`}>
+        <span className={`font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1 ${textSizes[size]}`}>
           <span>Vercel</span>
-          <span className="bg-gradient-to-r from-violet-400 via-indigo-300 to-sky-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-violet-500 via-indigo-500 to-sky-400 bg-clip-text text-transparent">
             Vidai
           </span>
         </span>

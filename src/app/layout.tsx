@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { ThemeProvider } from '@/components/theme/ThemeContext';
 
 export const metadata: Metadata = {
   title: 'Vercel Vidai — Next-Gen AI Video Creation Platform',
@@ -30,9 +31,41 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="antialiased bg-[#090A0F] text-slate-100 min-h-screen selection:bg-violet-600/30 selection:text-violet-200">
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedMode = localStorage.getItem('vidai_theme');
+                  var savedColor = localStorage.getItem('vidai_color_theme') || 'midnight-violet';
+                  var mode = 'dark';
+                  if (savedMode === 'light') {
+                    mode = 'light';
+                  } else if (savedMode === 'system') {
+                    mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  document.documentElement.classList.add(mode);
+                  document.documentElement.setAttribute('data-theme', mode);
+                  document.documentElement.setAttribute('data-color-theme', savedColor);
+                  document.documentElement.style.colorScheme = mode;
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body
+        className="antialiased min-h-screen transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--app-bg)',
+          color: 'var(--app-text-primary)',
+        }}
+      >
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

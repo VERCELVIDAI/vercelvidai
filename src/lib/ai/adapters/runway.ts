@@ -40,6 +40,14 @@ export class RunwayAdapter extends BaseAIProviderAdapter {
     }
 
     try {
+      const payload: Record<string, any> = {
+        promptText: input.prompt,
+        model: 'gen3a_turbo',
+        duration: input.durationSec === 10 ? 10 : 5,
+        ratio: input.aspectRatio === '9:16' ? '9:16' : '16:9',
+        promptImage: input.sourceImageUrl || input.referenceImageUrl || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1280&auto=format&fit=crop&q=80',
+      };
+
       const response = await fetch('https://api.dev.runwayml.com/v1/image_to_video', {
         method: 'POST',
         headers: {
@@ -47,11 +55,7 @@ export class RunwayAdapter extends BaseAIProviderAdapter {
           'X-Runway-Version': '2024-09-13',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          promptText: input.prompt,
-          duration: input.durationSec || 5,
-          ratio: input.aspectRatio === '9:16' ? '9:16' : '16:9',
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

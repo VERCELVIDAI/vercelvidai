@@ -37,3 +37,42 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ asset }, { status: 201 });
 }
+
+export async function DELETE(req: NextRequest) {
+  const current = await getCurrentUser();
+  if (!current) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  let id = req.nextUrl.searchParams.get('id');
+  if (!id) {
+    try {
+      const body = await req.json();
+      id = body?.id;
+    } catch (e) {
+      // ignore json parse error if empty body
+    }
+  }
+
+  if (!id) {
+    return NextResponse.json({ error: 'Asset ID is required' }, { status: 400 });
+  }
+
+  const asset = dbStore.getAssetById(id);
+  if (!asset) {
+    return NextResponse.json({ error: 'Asset not found' }, { status: 404 });
+  }
+
+  const isOwner = asset.ownerId === current.user.id;
+  const isWorkspace = asset.workspaceId === current.workspace.id;
+  const isAdmin = current.user.role === 'admin';
+
+  if (!isOwner && !isWorkspace && !isAdmin) {
+    return NextResponse.json({ error: 'Forbidden: Access denied to this asset' }, { status: 403 });
+  }
+
+  dbStore.deleteAsset(id);
+  dbStore.logAudit(current.user.id, 'ASSET_DELETED', 'asset', id, { name: asset.name });
+
+  return NextResponse.json({ success: true });
+}

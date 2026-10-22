@@ -51,6 +51,15 @@ export default function DashboardPage() {
       const authData = await authRes.json();
       setData(authData);
 
+      // Route first-time users to theme selection
+      if (authData.user && authData.user.themePreferences?.completed !== true) {
+        const locallyCompleted = typeof window !== 'undefined' && localStorage.getItem('vidai_theme_completed') === 'true';
+        if (!locallyCompleted) {
+          router.push('/onboarding/theme');
+          return;
+        }
+      }
+
       const [projRes, jobsRes] = await Promise.all([
         fetch('/api/projects'),
         fetch('/api/jobs'),
@@ -145,7 +154,13 @@ export default function DashboardPage() {
   const plan = data?.subscription?.plan || { name: 'Free Explorer' };
 
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex">
+    <div
+      className="min-h-screen flex transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-bg)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       {/* Sidebar */}
       <Sidebar userRole={user.role} credits={credits} />
 

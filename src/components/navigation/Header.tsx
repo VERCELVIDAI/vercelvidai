@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '../brand/Logo';
+import { ThemeToggle } from '../theme/ThemeToggle';
 import {
   Video,
   Sparkles,
@@ -40,13 +41,20 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#090A0F]/80 backdrop-blur-xl">
+    <header
+      className="sticky top-0 z-50 w-full border-b backdrop-blur-xl transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-surface)',
+        borderColor: 'var(--app-card-border)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Logo size="md" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-300">
+          <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300">
             {/* AI Tools Dropdown */}
             <div
               className="relative"
@@ -227,11 +235,12 @@ export function Header() {
 
         {/* Action Buttons */}
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
           {user ? (
             <>
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
                 Dashboard
               </Link>
@@ -247,7 +256,7 @@ export function Header() {
             <>
               <Link
                 href="/login"
-                className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
                 Sign In
               </Link>
@@ -263,10 +272,11 @@ export function Header() {
         </div>
 
         {/* Mobile menu trigger */}
-        <div className="flex md:hidden">
+        <div className="flex md:hidden items-center gap-2">
+          <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-400 hover:text-white focus:outline-none"
+            className="p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white focus:outline-none"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

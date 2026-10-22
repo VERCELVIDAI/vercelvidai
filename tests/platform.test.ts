@@ -158,6 +158,58 @@ async function runTests() {
   const persistedJob = dbStore.getJobById(genJob.id);
   assert(persistedJob !== undefined, 'Job persisted in reliable job table across refreshes');
 
+  // TEST 9: Salted Scrypt Cryptographic Password Security
+  console.log('\n--- 9. Salted Scrypt Password Security & Auto-Migration ---');
+  const secureEmail = `secure_${Date.now()}@vidai.io`;
+  const { profile: secureUser } = dbStore.createProfile({
+    displayName: 'Security Tester',
+    email: secureEmail,
+    passwordPlainText: 'SuperSecret2026!',
+    role: 'creator',
+  });
+  const validCheck = dbStore.verifyPassword(secureUser.id, 'SuperSecret2026!');
+  const wrongCheck = dbStore.verifyPassword(secureUser.id, 'WrongPassword!');
+  assert(validCheck === true, 'Scrypt hashed password verified correctly with valid secret');
+  assert(wrongCheck === false, 'Scrypt verification safely rejects incorrect password');
+
+  // TEST 10: Webhook Replay Protection
+  console.log('\n--- 10. Webhook Replay Protection & Duplicate Detection ---');
+  const testEventId = `evt_replay_test_${Date.now()}`;
+  const firstWebhook = dbStore.logWebhookEvent({
+    eventId: testEventId,
+    eventType: 'payment.captured',
+    payload: { amount: 50000 },
+  });
+  const duplicateWebhook = dbStore.logWebhookEvent({
+    eventId: testEventId,
+    eventType: 'payment.captured',
+    payload: { amount: 50000 },
+  });
+  assert(firstWebhook === true, 'First webhook event processed and recorded');
+  assert(duplicateWebhook === false, 'Duplicate webhook event rejected (replay prevented)');
+  assert(dbStore.isWebhookProcessed(testEventId) === true, 'Webhook marked processed');
+
+  // TEST 11: Asset Store & Ownership Verification
+  console.log('\n--- 11. Asset Retrieval & Ownership Verification ---');
+  const asset = dbStore.createAsset({
+    workspaceId: workspace.id,
+    ownerId: profile.id,
+    name: 'AuditTestImage.png',
+    assetType: 'image',
+    storageKey: `uploads/${workspace.id}/test.png`,
+    url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff',
+    mimeType: 'image/png',
+    fileSize: 500000,
+  });
+  const retrievedAsset = dbStore.getAssetById(asset.id);
+  assert(retrievedAsset !== undefined && retrievedAsset.name === 'AuditTestImage.png', 'Asset retrieved by ID successfully');
+  assert(retrievedAsset?.ownerId === profile.id, 'Asset ownerId matches creator');
+
+  const assetDeleted = dbStore.deleteAsset(asset.id);
+  assert(assetDeleted === true, 'Asset deleted from store');
+  const afterDeleteAsset = dbStore.getAssetById(asset.id);
+  assert(afterDeleteAsset === undefined, 'Deleted asset no longer exists in store');
+
   console.log('\n================================================================');
   console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
   console.log('================================================================\n');

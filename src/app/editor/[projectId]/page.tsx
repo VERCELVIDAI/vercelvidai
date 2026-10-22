@@ -27,6 +27,7 @@ import {
   Ratio,
   Sliders,
   HelpCircle,
+  X,
 } from 'lucide-react';
 
 export default function VideoEditorPage({ params }: { params: { projectId: string } }) {
@@ -41,6 +42,11 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
   const [isSaving, setIsSaving] = useState(false);
   const [saveToast, setSaveToast] = useState(false);
 
+  // Asset Library Modal State
+  const [assetModalOpen, setAssetModalOpen] = useState(false);
+  const [availableAssets, setAvailableAssets] = useState<any[]>([]);
+  const [isAssetsLoading, setIsAssetsLoading] = useState(false);
+
   // Export State
   const [exportModalOpen, setExportModalOpen] = useState(false);
   const [exportResolution, setExportResolution] = useState<'720p' | '1080p' | '4k'>('1080p');
@@ -51,6 +57,51 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
   // Undo / Redo history stacks
   const [history, setHistory] = useState<any[]>([]);
   const [future, setFuture] = useState<any[]>([]);
+
+  const fetchAssets = async () => {
+    setIsAssetsLoading(true);
+    try {
+      const res = await fetch('/api/assets');
+      if (res.ok) {
+        const data = await res.json();
+        setAvailableAssets(data.assets || []);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsAssetsLoading(false);
+    }
+  };
+
+  const handleAddAssetToTimeline = (asset: any) => {
+    recordHistory();
+    const isAudio = asset.assetType === 'audio';
+    const isImage = asset.assetType === 'image';
+
+    const trackId = isAudio ? 'trk_a1' : 'trk_v1';
+    const type = isAudio ? 'audio' : isImage ? 'image' : 'video';
+    const clipDuration = isAudio ? 10 : 5;
+
+    const newClip = {
+      id: 'clp_' + Math.random().toString(36).substring(2, 9),
+      trackId,
+      type,
+      title: asset.name,
+      sourceUrl: asset.url,
+      thumbnailUrl: asset.url,
+      startTimeSec: currentTimeSec,
+      durationSec: clipDuration,
+      volume: 1,
+    };
+
+    setTimeline((prev: any) => ({
+      ...prev,
+      durationSec: Math.max(prev.durationSec || 15, currentTimeSec + clipDuration),
+      clips: [...prev.clips, newClip],
+    }));
+    setActiveClipId(newClip.id);
+    setAssetModalOpen(false);
+  };
 
   useEffect(() => {
     fetch(`/api/projects/${params.projectId}`)
@@ -279,9 +330,21 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
   const videoSrc = primaryClip?.sourceUrl || 'https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4';
 
   return (
-    <div className="min-h-screen bg-[#07080B] text-slate-100 flex flex-col h-screen overflow-hidden select-none">
+    <div
+      className="min-h-screen flex flex-col h-screen overflow-hidden select-none transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-bg)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       {/* 1. TOP TOOLBAR */}
-      <header className="h-14 border-b border-white/[0.08] bg-[#0B0C11] px-4 flex items-center justify-between shrink-0">
+      <header
+        className="h-14 border-b px-4 flex items-center justify-between shrink-0"
+        style={{
+          backgroundColor: 'var(--app-surface)',
+          borderColor: 'var(--app-card-border)',
+        }}
+      >
         <div className="flex items-center gap-3">
           <Link
             href="/dashboard"
@@ -364,13 +427,30 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
       {/* 2. MAIN WORKSPACE (Cinema Player + Inspector) */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Tools / Media Palette (Hidden on small screens) */}
-        <aside className="w-16 bg-[#090A0F] border-r border-white/[0.08] flex flex-col items-center py-4 gap-4 shrink-0">
+        <aside
+          className="w-16 border-r flex flex-col items-center py-4 gap-4 shrink-0 transition-colors duration-200"
+          style={{
+            backgroundColor: 'var(--app-sidebar)',
+            borderColor: 'var(--app-card-border)',
+          }}
+        >
           <button
             onClick={handleAddSampleScene}
             className="p-2.5 rounded-xl bg-white/5 hover:bg-violet-600 text-slate-300 hover:text-white transition-all"
             title="Add AI Scene"
           >
             <Film className="w-5 h-5" />
+          </button>
+
+          <button
+            onClick={() => {
+              fetchAssets();
+              setAssetModalOpen(true);
+            }}
+            className="p-2.5 rounded-xl bg-white/5 hover:bg-violet-600 text-slate-300 hover:text-white transition-all"
+            title="Import Asset from Library"
+          >
+            <Layers className="w-5 h-5" />
           </button>
 
           <button
@@ -458,7 +538,14 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
         </div>
 
         {/* Right Inspector Panel */}
-        <aside className="w-72 bg-[#0A0B10] border-l border-white/[0.08] p-4 flex flex-col justify-between shrink-0 overflow-y-auto">
+        <aside
+          className="w-72 border-l p-4 flex flex-col justify-between shrink-0 overflow-y-auto transition-colors duration-200"
+          style={{
+            backgroundColor: 'var(--app-surface)',
+            borderColor: 'var(--app-card-border)',
+            color: 'var(--app-text-primary)',
+          }}
+        >
           {activeClip ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-2">
@@ -550,9 +637,22 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
       </div>
 
       {/* 3. MULTI-TRACK TIMELINE (Bottom Panel) */}
-      <div className="h-60 border-t border-white/[0.08] bg-[#090A0F] flex flex-col shrink-0">
+      <div
+        className="h-60 border-t flex flex-col shrink-0 transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--app-sidebar)',
+          borderColor: 'var(--app-card-border)',
+        }}
+      >
         {/* Timeline ruler & playhead */}
-        <div className="h-7 border-b border-white/[0.06] bg-[#07080B] flex items-center px-4 justify-between text-[11px] text-slate-500 font-mono">
+        <div
+          className="h-7 border-b flex items-center px-4 justify-between text-[11px] font-mono"
+          style={{
+            backgroundColor: 'var(--app-surface)',
+            borderColor: 'var(--app-card-border)',
+            color: 'var(--app-text-muted)',
+          }}
+        >
           <div className="flex items-center gap-3">
             <span className="text-violet-400 font-bold">TIMELINE</span>
             <button
@@ -754,6 +854,90 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* 5. ASSET PICKER MODAL */}
+      {assetModalOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#12141C] border border-white/10 rounded-2xl w-full max-w-2xl p-6 shadow-2xl relative space-y-4 flex flex-col max-h-[85vh]">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10 shrink-0">
+              <div className="flex items-center gap-2">
+                <Layers className="w-5 h-5 text-violet-400" />
+                <h3 className="font-bold text-white text-base">Select from Workspace Assets</h3>
+              </div>
+              <button
+                onClick={() => setAssetModalOpen(false)}
+                className="text-slate-400 hover:text-white p-1 rounded-lg"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto pr-1">
+              {isAssetsLoading ? (
+                <div className="py-12 flex justify-center">
+                  <div className="w-6 h-6 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : availableAssets.length === 0 ? (
+                <div className="py-12 text-center text-slate-400 space-y-3">
+                  <p className="text-sm">No assets found in workspace library.</p>
+                  <Link
+                    href="/dashboard/assets"
+                    className="inline-block px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-semibold text-white"
+                  >
+                    Upload Assets in Dashboard
+                  </Link>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {availableAssets.map((asset) => (
+                    <div
+                      key={asset.id}
+                      className="p-3 bg-white/5 hover:bg-white/[0.08] border border-white/5 hover:border-violet-500/50 rounded-xl flex items-center gap-3 transition-all group"
+                    >
+                      <div className="w-12 h-12 rounded-lg bg-black/50 overflow-hidden shrink-0 flex items-center justify-center border border-white/10">
+                        {asset.assetType === 'image' || asset.assetType === 'video' ? (
+                          <img
+                            src={asset.url}
+                            alt={asset.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLElement).style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          <Music className="w-5 h-5 text-violet-400" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xs font-bold text-white truncate">{asset.name}</h4>
+                        <span className="text-[10px] uppercase font-mono text-slate-400">
+                          {asset.assetType}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => handleAddAssetToTimeline(asset)}
+                        className="px-2.5 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-xs font-bold shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                      >
+                        Insert
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-end pt-3 border-t border-white/10 shrink-0">
+              <button
+                type="button"
+                onClick={() => setAssetModalOpen(false)}
+                className="px-4 py-2 rounded-xl text-slate-300 bg-white/5 hover:bg-white/10 text-xs font-semibold"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

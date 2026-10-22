@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
+import crypto from 'crypto';
 import {
   UserProfile,
   Workspace,
@@ -23,6 +25,11 @@ import {
   SupportTicket,
   JobStatus,
   CreditTransactionType,
+  PayUPaymentOrder,
+  Invoice,
+  PaymentReceipt,
+  CreditNote,
+  SupplierLegalDetails,
 } from '../types';
 
 interface DatabaseSchema {
@@ -47,15 +54,57 @@ interface DatabaseSchema {
   webhookEvents: WebhookEvent[];
   auditLogs: AuditLog[];
   supportTickets: SupportTicket[];
+  payuOrders: PayUPaymentOrder[];
+  invoices: Invoice[];
+  receipts: PaymentReceipt[];
+  creditNotes: CreditNote[];
+  billingSettings: SupplierLegalDetails;
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const DB_FILE = path.join(DATA_DIR, 'database.json');
+// Determine writable data directory (handles Vercel / serverless read-only filesystem gracefully)
+const isServerless = process.env.VERCEL === '1' || Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME);
+const BUNDLED_DB_FILE = path.join(process.cwd(), 'data', 'database.json');
+const DATA_DIR = isServerless ? path.join(os.tmpdir(), 'vidai-data') : path.join(process.cwd(), 'data');
+const DB_FILE = isServerless ? path.join(DATA_DIR, 'database.json') : path.join(process.cwd(), 'data', 'database.json');
 
 function ensureDataDir() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    if (isServerless && !fs.existsSync(DB_FILE) && fs.existsSync(BUNDLED_DB_FILE)) {
+      try {
+        fs.copyFileSync(BUNDLED_DB_FILE, DB_FILE);
+      } catch (copyErr) {
+        // Fallback: will initialize in-memory
+      }
+    }
+  } catch (err) {
+    // Read-only filesystem fallback
   }
+}
+
+export function hashPassword(password: string): string {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const derivedKey = crypto.scryptSync(password, salt, 64).toString('hex');
+  return `scrypt:${salt}:${derivedKey}`;
+}
+
+export function verifyPasswordHash(plainText: string, storedHashOrPlain: string): boolean {
+  if (!storedHashOrPlain || !plainText) return false;
+  if (storedHashOrPlain.startsWith('scrypt:')) {
+    const parts = storedHashOrPlain.split(':');
+    if (parts.length !== 3) return false;
+    const salt = parts[1];
+    const hashHex = parts[2];
+    const derivedKey = crypto.scryptSync(plainText, salt, 64).toString('hex');
+    const hashBuf = Buffer.from(hashHex, 'hex');
+    const derivedBuf = Buffer.from(derivedKey, 'hex');
+    if (hashBuf.length !== derivedBuf.length) return false;
+    return crypto.timingSafeEqual(hashBuf, derivedBuf);
+  }
+  // Plaintext fallback for legacy / pre-seeded data
+  return storedHashOrPlain === plainText;
 }
 
 function getInitialDatabase(): DatabaseSchema {
@@ -95,8 +144,8 @@ function getInitialDatabase(): DatabaseSchema {
       },
     ],
     passwords: {
-      [demoUserId]: 'Demo1234!',
-      [adminUserId]: 'Admin1234!',
+      [demoUserId]: hashPassword('Demo1234!'),
+      [adminUserId]: hashPassword('Admin1234!'),
     },
     workspaces: [
       {
@@ -646,40 +695,87 @@ function getInitialDatabase(): DatabaseSchema {
         updatedAt: now,
       },
     ],
+    payuOrders: [],
+    invoices: [],
+    receipts: [],
+    creditNotes: [],
+    billingSettings: {
+      legalName: 'Vercel Vidai Technologies Private Limited',
+      tradeName: 'Vercel Vidai',
+      registeredAddress: 'Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001',
+      state: 'Delhi',
+      gstin: '07AAAAA0000A1Z5',
+      pan: 'AAAAA0000A',
+      supportEmail: 'billing@vidai.io',
+      website: 'https://vidai.io',
+      isGstRegistered: true,
+    },
   };
 }
 
 class Store {
   private db: DatabaseSchema | null = null;
 
-  private load(): DatabaseSchema {
-    if (this.db) return this.db;
-    ensureDataDir();
-    if (!fs.existsSync(DB_FILE)) {
-      const initial = getInitialDatabase();
-      this.save(initial);
-      this.db = initial;
-      return this.db;
-    }
-    try {
-      const raw = fs.readFileSync(DB_FILE, 'utf-8');
-      this.db = JSON.parse(raw);
-      return this.db!;
-    } catch (err) {
-      console.error('Error reading db file, re-initializing:', err);
-      const initial = getInitialDatabase();
-      this.save(initial);
-      this.db = initial;
-      return this.db;
+  private ensureCollections(schema: DatabaseSchema): void {
+    if (!schema.payuOrders) schema.payuOrders = [];
+    if (!schema.invoices) schema.invoices = [];
+    if (!schema.receipts) schema.receipts = [];
+    if (!schema.creditNotes) schema.creditNotes = [];
+    if (!schema.billingSettings) {
+      schema.billingSettings = {
+        legalName: 'Vercel Vidai Technologies Private Limited',
+        tradeName: 'Vercel Vidai',
+        registeredAddress: 'Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001',
+        state: 'Delhi',
+        gstin: '07AAAAA0000A1Z5',
+        pan: 'AAAAA0000A',
+        supportEmail: 'billing@vidai.io',
+        website: 'https://vidai.io',
+        isGstRegistered: true,
+      };
     }
   }
 
-  private save(data: DatabaseSchema): void {
+  private load(): DatabaseSchema {
+    if (this.db) return this.db;
     ensureDataDir();
-    const tempFile = `${DB_FILE}.${Date.now()}.tmp`;
-    fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf-8');
-    fs.renameSync(tempFile, DB_FILE);
+
+    if (fs.existsSync(DB_FILE)) {
+      try {
+        const raw = fs.readFileSync(DB_FILE, 'utf-8');
+        this.db = JSON.parse(raw);
+        this.ensureCollections(this.db!);
+        return this.db!;
+      } catch (err) {
+        console.warn('[DBStore] Error reading primary db file, trying fallback:', err);
+      }
+    }
+
+    if (fs.existsSync(BUNDLED_DB_FILE)) {
+      try {
+        const raw = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
+        this.db = JSON.parse(raw);
+        this.ensureCollections(this.db!);
+        return this.db!;
+      } catch (err) {}
+    }
+
+    const initial = getInitialDatabase();
+    this.save(initial);
+    this.db = initial;
+    return this.db;
+  }
+
+  private save(data: DatabaseSchema): void {
     this.db = data;
+    try {
+      ensureDataDir();
+      const tempFile = `${DB_FILE}.${Date.now()}.tmp`;
+      fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf-8');
+      fs.renameSync(tempFile, DB_FILE);
+    } catch (err) {
+      console.warn('[DBStore] Read-only or restricted filesystem; state safely preserved in memory:', err);
+    }
   }
 
   // ==========================================
@@ -697,7 +793,13 @@ class Store {
     const db = this.load();
     const stored = db.passwords[userId];
     if (!stored) return false;
-    return stored === plainText;
+    const isValid = verifyPasswordHash(plainText, stored);
+    // If authenticated via legacy plaintext password, upgrade in-place to salted scrypt
+    if (isValid && !stored.startsWith('scrypt:')) {
+      db.passwords[userId] = hashPassword(plainText);
+      this.save(db);
+    }
+    return isValid;
   }
 
   createProfile(params: { email: string; displayName: string; passwordPlainText: string; role?: 'creator' | 'admin' }): { profile: UserProfile; workspace: Workspace } {
@@ -750,7 +852,7 @@ class Store {
     };
 
     db.profiles.push(profile);
-    db.passwords[userId] = params.passwordPlainText;
+    db.passwords[userId] = hashPassword(params.passwordPlainText);
     db.workspaces.push(workspace);
     db.workspaceMembers.push(member);
     db.creditAccounts[userId] = creditAccount;
@@ -1193,6 +1295,10 @@ class Store {
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
+  getAssetById(id: string): Asset | undefined {
+    return this.load().assets.find((a) => a.id === id);
+  }
+
   createAsset(asset: Omit<Asset, 'id' | 'createdAt'>): Asset {
     const db = this.load();
     const id = 'ast_' + Math.random().toString(36).substring(2, 11);
@@ -1342,6 +1448,238 @@ class Store {
     db.supportTickets.push(ticket);
     this.save(db);
     return ticket;
+  }
+
+  // ==========================================
+  // WEBHOOK IDEMPOTENCY
+  // ==========================================
+  logWebhookEvent(params: { eventId?: string; eventType: string; payload: any }): boolean {
+    const db = this.load();
+    const eventId = params.eventId || `wh_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    if (db.webhookEvents.some((w) => w.id === eventId)) {
+      return false; // Already processed (replay attack or duplicate callback)
+    }
+    const entry: WebhookEvent = {
+      id: eventId,
+      eventId,
+      provider: 'razorpay',
+      eventType: params.eventType,
+      payload: params.payload,
+      processingStatus: 'processed',
+      receivedAt: new Date().toISOString(),
+      processedAt: new Date().toISOString(),
+    };
+    db.webhookEvents.push(entry);
+    this.save(db);
+    return true;
+  }
+
+  isWebhookProcessed(eventId: string): boolean {
+    return this.load().webhookEvents.some((w) => w.id === eventId);
+  }
+
+  // ==========================================
+  // BILLING SETTINGS & SUPPLIER CONFIG
+  // ==========================================
+  getBillingSettings(): SupplierLegalDetails {
+    return this.load().billingSettings;
+  }
+
+  updateBillingSettings(updates: Partial<SupplierLegalDetails>): SupplierLegalDetails {
+    const db = this.load();
+    db.billingSettings = { ...db.billingSettings, ...updates };
+    this.save(db);
+    return db.billingSettings;
+  }
+
+  // ==========================================
+  // PAYU PAYMENT ORDERS
+  // ==========================================
+  createPayUOrder(params: Omit<PayUPaymentOrder, 'id' | 'createdAt' | 'updatedAt'>): PayUPaymentOrder {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const id = 'ord_payu_' + Math.random().toString(36).substring(2, 11);
+
+    const order: PayUPaymentOrder = {
+      ...params,
+      id,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.payuOrders.push(order);
+    this.save(db);
+    return order;
+  }
+
+  getPayUOrderById(id: string): PayUPaymentOrder | undefined {
+    return this.load().payuOrders.find((o) => o.id === id);
+  }
+
+  getPayUOrderByTxnid(txnid: string): PayUPaymentOrder | undefined {
+    return this.load().payuOrders.find((o) => o.txnid === txnid);
+  }
+
+  updatePayUOrder(id: string, updates: Partial<PayUPaymentOrder>): PayUPaymentOrder {
+    const db = this.load();
+    const idx = db.payuOrders.findIndex((o) => o.id === id || o.txnid === id);
+    if (idx === -1) throw new Error('PayU payment order not found');
+
+    db.payuOrders[idx] = {
+      ...db.payuOrders[idx],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.save(db);
+    return db.payuOrders[idx];
+  }
+
+  getPayUOrders(userId?: string, workspaceId?: string): PayUPaymentOrder[] {
+    let list = this.load().payuOrders;
+    if (userId) {
+      list = list.filter((o) => o.userId === userId);
+    }
+    if (workspaceId) {
+      list = list.filter((o) => o.workspaceId === workspaceId);
+    }
+    return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  getAllPayUOrders(): PayUPaymentOrder[] {
+    return this.load().payuOrders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  // ==========================================
+  // INVOICES & SEQUENTIAL NUMBERING
+  // ==========================================
+  getNextInvoiceNumber(): string {
+    const db = this.load();
+    const year = new Date().getFullYear();
+    const count = (db.invoices?.length || 0) + 1;
+    return `INV-${year}-${count.toString().padStart(4, '0')}`;
+  }
+
+  createInvoice(params: Omit<Invoice, 'id' | 'createdAt' | 'updatedAt'>): Invoice {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const id = 'inv_' + Math.random().toString(36).substring(2, 11);
+
+    const invoice: Invoice = {
+      ...params,
+      id,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.invoices.push(invoice);
+    this.save(db);
+    return invoice;
+  }
+
+  getInvoiceById(id: string): Invoice | undefined {
+    return this.load().invoices.find((i) => i.id === id);
+  }
+
+  getInvoiceByNumber(invoiceNumber: string): Invoice | undefined {
+    return this.load().invoices.find((i) => i.invoiceNumber.toLowerCase() === invoiceNumber.toLowerCase());
+  }
+
+  getInvoices(userId?: string, workspaceId?: string): Invoice[] {
+    let list = this.load().invoices;
+    if (userId) {
+      list = list.filter((i) => i.userId === userId);
+    }
+    if (workspaceId) {
+      list = list.filter((i) => i.workspaceId === workspaceId);
+    }
+    return list.sort((a, b) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime());
+  }
+
+  getAllInvoices(): Invoice[] {
+    return this.load().invoices.sort((a, b) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime());
+  }
+
+  // ==========================================
+  // PAYMENT RECEIPTS & SEQUENTIAL NUMBERING
+  // ==========================================
+  getNextReceiptNumber(): string {
+    const db = this.load();
+    const year = new Date().getFullYear();
+    const count = (db.receipts?.length || 0) + 1;
+    return `RCP-${year}-${count.toString().padStart(4, '0')}`;
+  }
+
+  createReceipt(params: Omit<PaymentReceipt, 'id' | 'createdAt'>): PaymentReceipt {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const id = 'rcp_' + Math.random().toString(36).substring(2, 11);
+
+    const receipt: PaymentReceipt = {
+      ...params,
+      id,
+      createdAt: now,
+    };
+
+    db.receipts.push(receipt);
+    this.save(db);
+    return receipt;
+  }
+
+  getReceiptById(id: string): PaymentReceipt | undefined {
+    return this.load().receipts.find((r) => r.id === id);
+  }
+
+  getReceiptByNumber(receiptNumber: string): PaymentReceipt | undefined {
+    return this.load().receipts.find((r) => r.receiptNumber.toLowerCase() === receiptNumber.toLowerCase());
+  }
+
+  getReceipts(userId?: string, workspaceId?: string): PaymentReceipt[] {
+    let list = this.load().receipts;
+    if (userId) {
+      list = list.filter((r) => r.userId === userId);
+    }
+    if (workspaceId) {
+      list = list.filter((r) => r.workspaceId === workspaceId);
+    }
+    return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  getAllReceipts(): PaymentReceipt[] {
+    return this.load().receipts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  // ==========================================
+  // CREDIT NOTES & ADJUSTMENTS
+  // ==========================================
+  getNextCreditNoteNumber(): string {
+    const db = this.load();
+    const year = new Date().getFullYear();
+    const count = (db.creditNotes?.length || 0) + 1;
+    return `CN-${year}-${count.toString().padStart(4, '0')}`;
+  }
+
+  createCreditNote(params: Omit<CreditNote, 'id' | 'createdAt'>): CreditNote {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const id = 'cn_' + Math.random().toString(36).substring(2, 11);
+
+    const creditNote: CreditNote = {
+      ...params,
+      id,
+      createdAt: now,
+    };
+
+    db.creditNotes.push(creditNote);
+    this.save(db);
+    return creditNote;
+  }
+
+  getCreditNotes(userId?: string): CreditNote[] {
+    let list = this.load().creditNotes;
+    if (userId) {
+      list = list.filter((c) => c.userId === userId);
+    }
+    return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 }
 

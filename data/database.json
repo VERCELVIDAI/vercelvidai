@@ -39,12 +39,123 @@
       "role": "creator",
       "createdAt": "2026-10-21T06:14:19.602Z",
       "updatedAt": "2026-10-21T06:14:19.602Z"
+    },
+    {
+      "id": "usr_90wxv7hx",
+      "email": "test_user_1792575547101@vidai.io",
+      "displayName": "Test Runner",
+      "role": "creator",
+      "createdAt": "2026-10-21T09:39:07.103Z",
+      "updatedAt": "2026-10-21T09:39:07.103Z"
+    },
+    {
+      "id": "usr_e57xso2v",
+      "email": "secure_1792575547179@vidai.io",
+      "displayName": "Security Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T09:39:07.179Z",
+      "updatedAt": "2026-10-21T09:39:07.179Z"
+    },
+    {
+      "id": "usr_hfz44067",
+      "email": "payu_test_1792577425030@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T10:10:25.030Z",
+      "updatedAt": "2026-10-21T10:10:25.030Z"
+    },
+    {
+      "id": "usr_kv2tuxqi",
+      "email": "payu_test_1792577448780@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T10:10:48.780Z",
+      "updatedAt": "2026-10-21T10:10:48.780Z"
+    },
+    {
+      "id": "usr_14fdcmzx",
+      "email": "payu_test_1792580724204@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T11:05:24.204Z",
+      "updatedAt": "2026-10-21T11:05:24.204Z"
+    },
+    {
+      "id": "usr_xbckq4d5",
+      "email": "payu_test_1792581111940@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T11:11:51.940Z",
+      "updatedAt": "2026-10-21T11:11:51.940Z"
+    },
+    {
+      "id": "usr_23ee9gat",
+      "email": "payu_test_1792582447718@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T11:34:07.718Z",
+      "updatedAt": "2026-10-21T11:34:07.718Z"
+    },
+    {
+      "id": "usr_2ofu0hbt",
+      "email": "theme_tester_1792583744889@vidai.local",
+      "displayName": "Theme Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T11:55:44.928Z",
+      "updatedAt": "2026-10-21T11:55:45.156Z",
+      "themePreferences": {
+        "colorTheme": "mint-breeze",
+        "mode": "light",
+        "completed": true,
+        "updatedAt": "2026-10-21T11:55:45.156Z"
+      }
+    },
+    {
+      "id": "usr_febhs4vq",
+      "email": "payu_test_1792583751761@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T11:55:51.761Z",
+      "updatedAt": "2026-10-21T11:55:51.761Z"
+    },
+    {
+      "id": "usr_alzrl7nc",
+      "email": "creator_1792586547758@vidai.io",
+      "displayName": "Alex Creator",
+      "role": "creator",
+      "createdAt": "2026-10-21T12:42:27.811Z",
+      "updatedAt": "2026-10-21T12:42:28.078Z",
+      "themePreferences": {
+        "colorTheme": "rose-quartz",
+        "mode": "dark",
+        "completed": true,
+        "updatedAt": "2026-10-21T12:42:28.077Z"
+      }
+    },
+    {
+      "id": "usr_nqxfoxpb",
+      "email": "payu_test_1792586555831@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-21T12:42:35.831Z",
+      "updatedAt": "2026-10-21T12:42:35.831Z"
     }
   ],
   "passwords": {
-    "usr_creator_demo_1": "Demo1234!",
-    "usr_admin_master_1": "Admin1234!",
-    "usr_n5udt4o8": "ValidPass123!"
+    "usr_creator_demo_1": "scrypt:4fd1632eafacfffe39bd64035e93dc8c:6869b23cd370375a60977173f58d509d61645359da64f4f9c0194d8595c60643b6a305dc3b14fc7674d60f3fe834ef96d2d3cc45bb0a9e00862c9c39ca48ba2a",
+    "usr_admin_master_1": "scrypt:1c23e0a8f0ef792ea897e9ba74ca058a:0c24c87fff21d2bd6efdfe23f9d6a312840899aac7b955908b260c6c68e96345d2542836c65f8b27f4ccc429d295934ac7c5bffff90b5f9bb3ed133ca17b6e81",
+    "usr_n5udt4o8": "ValidPass123!",
+    "usr_90wxv7hx": "scrypt:46ebe68d74bebf770a16f4765dba600a:990f9438c7a0c8d957d4012022c8590253173c4efb6838d504250a261a55263134375000902a03b91294bd198ba374283990ec37273b941aea79d6a4016967bf",
+    "usr_e57xso2v": "scrypt:0c43c71b5470b0b522494b8906e0c848:9fbdddecbef9a91670e1ceab06aa7efb6e11faf4fe68c523fcd9d6c85a1aec5d686cb222f808ed08806fb07d48acd1f0afca823ad796487ad4f0257e49b691f9",
+    "usr_hfz44067": "scrypt:21c1025b8bd6e9cff36a4bdc2db7c70b:7dd4b84ac269524cdfc0d5e69334a6aac7bff1c15578807c41b836a0ef2025c8c8c15b769b5871a6c90ae87fed23f6f83e592f9392e234f468364599b7c49531",
+    "usr_kv2tuxqi": "scrypt:4ff744764665b6e37e31c635a1c03201:db3ec1528f908e6e3d23a05b8bd0e9aedffea3d29cac69db884004e4f9663ca1c30258b17dfde2d5dbc18314f61fea19eb1fe82557c02389106bf563be825917",
+    "usr_14fdcmzx": "scrypt:2608c7861eb509ea7039fb651185cf6c:3913353e7afb293818bb76bf74b3d692c533f2d434553d9775cf38aa653047c8f02d39add276f0fe7994203f17ae47673b8df1ed926650dc75fdd46dd6fff7a1",
+    "usr_xbckq4d5": "scrypt:9d969529f7242f6bda5ed299a8e2bcdb:51e0e5e2798db9ff3bdf5faa89a78b354f864d3775cc51055e8cc34de83ad60465e304191397a835858b113732a8c33bf52350de77aceaa8d1fb14aed363e020",
+    "usr_23ee9gat": "scrypt:3e60049256ea3e0acde91e8c1221d5e8:4a4535535d3aa719d428487e652cb18b2beeb2ed403fde9cfc00778abcf0b2866ee8e3057f586ef2aba3d4a7a5b84f092d2a88e0d2dfa2b0c38a927485637add",
+    "usr_2ofu0hbt": "scrypt:c0946a61e8d135b58a18aad51b71d610:d1859806598360a5b725a1e35f79afe6b2f1346a1a388cb2f7433e1853956e5909ff1df406341932a7b4f8ac51862ea9b1d1c23172a5de4d2d10e2504c379eb2",
+    "usr_febhs4vq": "scrypt:d5a59ca77a66bebbe3f38a35f9fb6f54:56fe4ca82bd4053b53014520b1c5c2bdcd9beacd011dd6295386349017e5691f5e4ba71ed5ddcb1c848d644d9a6b22f1e3b7382e705ce5368dd13acea07efe58",
+    "usr_alzrl7nc": "scrypt:007871c8c2c6c7393a2c997b1e92105d:e72a70487063b9e9e1804fa57ea445f7c38584de6bf673f50a83c7d4479f3c74476e490554ed5f4f02d28a5ec0446b57dea3c1c94aa4db82950a27f51237f934",
+    "usr_nqxfoxpb": "scrypt:2b3609ea3e79e4a994e7ee95aad1cdff:4501e612cf569015b2fbe7bd81be816ad4225a81e672dc1b01ab35d133cabb711ea8c766119b835b127ff1d0bbfcc9c4a22f100ec5bd8f1c68c546d0d5abb882"
   },
   "workspaces": [
     {
@@ -67,6 +178,83 @@
       "name": "Test Runner's Studio",
       "createdAt": "2026-10-21T06:14:19.602Z",
       "updatedAt": "2026-10-21T06:14:19.602Z"
+    },
+    {
+      "id": "ws_2n4pvj9t",
+      "ownerId": "usr_90wxv7hx",
+      "name": "Test Runner's Studio",
+      "createdAt": "2026-10-21T09:39:07.103Z",
+      "updatedAt": "2026-10-21T09:39:07.103Z"
+    },
+    {
+      "id": "ws_u9o73ube",
+      "ownerId": "usr_e57xso2v",
+      "name": "Security Tester's Studio",
+      "createdAt": "2026-10-21T09:39:07.179Z",
+      "updatedAt": "2026-10-21T09:39:07.179Z"
+    },
+    {
+      "id": "ws_0sc4nugo",
+      "ownerId": "usr_hfz44067",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-21T10:10:25.030Z",
+      "updatedAt": "2026-10-21T10:10:25.030Z"
+    },
+    {
+      "id": "ws_3oe1ucz7",
+      "ownerId": "usr_kv2tuxqi",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-21T10:10:48.780Z",
+      "updatedAt": "2026-10-21T10:10:48.780Z"
+    },
+    {
+      "id": "ws_fbm5jfot",
+      "ownerId": "usr_14fdcmzx",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-21T11:05:24.204Z",
+      "updatedAt": "2026-10-21T11:05:24.204Z"
+    },
+    {
+      "id": "ws_ellvlvpu",
+      "ownerId": "usr_xbckq4d5",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-21T11:11:51.940Z",
+      "updatedAt": "2026-10-21T11:11:51.940Z"
+    },
+    {
+      "id": "ws_u2s04pjx",
+      "ownerId": "usr_23ee9gat",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-21T11:34:07.718Z",
+      "updatedAt": "2026-10-21T11:34:07.718Z"
+    },
+    {
+      "id": "ws_op3c2o8l",
+      "ownerId": "usr_2ofu0hbt",
+      "name": "Theme Tester's Studio",
+      "createdAt": "2026-10-21T11:55:44.928Z",
+      "updatedAt": "2026-10-21T11:55:44.928Z"
+    },
+    {
+      "id": "ws_9q3wkum2",
+      "ownerId": "usr_febhs4vq",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-21T11:55:51.761Z",
+      "updatedAt": "2026-10-21T11:55:51.761Z"
+    },
+    {
+      "id": "ws_dpgdgn1x",
+      "ownerId": "usr_alzrl7nc",
+      "name": "Alex Creator's Studio",
+      "createdAt": "2026-10-21T12:42:27.811Z",
+      "updatedAt": "2026-10-21T12:42:27.811Z"
+    },
+    {
+      "id": "ws_3ew3yt64",
+      "ownerId": "usr_nqxfoxpb",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-21T12:42:35.831Z",
+      "updatedAt": "2026-10-21T12:42:35.831Z"
     }
   ],
   "workspaceMembers": [
@@ -87,14 +275,80 @@
       "userId": "usr_n5udt4o8",
       "role": "owner",
       "joinedAt": "2026-10-21T06:14:19.602Z"
+    },
+    {
+      "workspaceId": "ws_2n4pvj9t",
+      "userId": "usr_90wxv7hx",
+      "role": "owner",
+      "joinedAt": "2026-10-21T09:39:07.103Z"
+    },
+    {
+      "workspaceId": "ws_u9o73ube",
+      "userId": "usr_e57xso2v",
+      "role": "owner",
+      "joinedAt": "2026-10-21T09:39:07.179Z"
+    },
+    {
+      "workspaceId": "ws_0sc4nugo",
+      "userId": "usr_hfz44067",
+      "role": "owner",
+      "joinedAt": "2026-10-21T10:10:25.030Z"
+    },
+    {
+      "workspaceId": "ws_3oe1ucz7",
+      "userId": "usr_kv2tuxqi",
+      "role": "owner",
+      "joinedAt": "2026-10-21T10:10:48.780Z"
+    },
+    {
+      "workspaceId": "ws_fbm5jfot",
+      "userId": "usr_14fdcmzx",
+      "role": "owner",
+      "joinedAt": "2026-10-21T11:05:24.204Z"
+    },
+    {
+      "workspaceId": "ws_ellvlvpu",
+      "userId": "usr_xbckq4d5",
+      "role": "owner",
+      "joinedAt": "2026-10-21T11:11:51.940Z"
+    },
+    {
+      "workspaceId": "ws_u2s04pjx",
+      "userId": "usr_23ee9gat",
+      "role": "owner",
+      "joinedAt": "2026-10-21T11:34:07.718Z"
+    },
+    {
+      "workspaceId": "ws_op3c2o8l",
+      "userId": "usr_2ofu0hbt",
+      "role": "owner",
+      "joinedAt": "2026-10-21T11:55:44.928Z"
+    },
+    {
+      "workspaceId": "ws_9q3wkum2",
+      "userId": "usr_febhs4vq",
+      "role": "owner",
+      "joinedAt": "2026-10-21T11:55:51.761Z"
+    },
+    {
+      "workspaceId": "ws_dpgdgn1x",
+      "userId": "usr_alzrl7nc",
+      "role": "owner",
+      "joinedAt": "2026-10-21T12:42:27.811Z"
+    },
+    {
+      "workspaceId": "ws_3ew3yt64",
+      "userId": "usr_nqxfoxpb",
+      "role": "owner",
+      "joinedAt": "2026-10-21T12:42:35.831Z"
     }
   ],
   "creditAccounts": {
     "usr_creator_demo_1": {
       "userId": "usr_creator_demo_1",
-      "availableBalance": 300,
+      "availableBalance": 225,
       "reservedBalance": 0,
-      "updatedAt": "2026-10-21T09:13:26.553Z"
+      "updatedAt": "2026-10-21T09:44:05.368Z"
     },
     "usr_admin_master_1": {
       "userId": "usr_admin_master_1",
@@ -107,6 +361,72 @@
       "availableBalance": 225,
       "reservedBalance": 0,
       "updatedAt": "2026-10-21T06:14:20.847Z"
+    },
+    "usr_90wxv7hx": {
+      "userId": "usr_90wxv7hx",
+      "availableBalance": 225,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T09:39:08.391Z"
+    },
+    "usr_e57xso2v": {
+      "userId": "usr_e57xso2v",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T09:39:07.179Z"
+    },
+    "usr_hfz44067": {
+      "userId": "usr_hfz44067",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T10:10:25.231Z"
+    },
+    "usr_kv2tuxqi": {
+      "userId": "usr_kv2tuxqi",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T10:10:48.870Z"
+    },
+    "usr_14fdcmzx": {
+      "userId": "usr_14fdcmzx",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T11:05:24.404Z"
+    },
+    "usr_xbckq4d5": {
+      "userId": "usr_xbckq4d5",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T11:11:52.151Z"
+    },
+    "usr_23ee9gat": {
+      "userId": "usr_23ee9gat",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T11:34:07.892Z"
+    },
+    "usr_2ofu0hbt": {
+      "userId": "usr_2ofu0hbt",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T11:55:44.928Z"
+    },
+    "usr_febhs4vq": {
+      "userId": "usr_febhs4vq",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T11:55:51.954Z"
+    },
+    "usr_alzrl7nc": {
+      "userId": "usr_alzrl7nc",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T12:42:27.811Z"
+    },
+    "usr_nqxfoxpb": {
+      "userId": "usr_nqxfoxpb",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-21T12:42:36.019Z"
     }
   },
   "creditLedger": [
@@ -293,6 +613,426 @@
         "refunded": 0
       },
       "createdAt": "2026-10-21T09:13:26.553Z"
+    },
+    {
+      "id": "cld_37f0kpkyvc",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 275,
+      "relatedJobId": "job_b3thm8wdrm",
+      "idempotencyKey": "reserve_job_b3thm8wdrm",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-21T09:30:42.819Z"
+    },
+    {
+      "id": "cld_ttknvzn3gp",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 275,
+      "relatedJobId": "job_b3thm8wdrm",
+      "idempotencyKey": "settle_job_b3thm8wdrm",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T09:30:44.035Z"
+    },
+    {
+      "id": "cld_hpyvkljj47",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_90wxv7hx",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T09:39:07.103Z"
+    },
+    {
+      "id": "cld_qwr80urbme",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "generation_reserve",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792575547153",
+      "idempotencyKey": "reserve_job_test_1792575547153",
+      "metadata": {
+        "reservedAmount": 50
+      },
+      "createdAt": "2026-10-21T09:39:07.153Z"
+    },
+    {
+      "id": "cld_4kaibqll5q",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "generation_settle",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792575547153",
+      "idempotencyKey": "settle_job_test_1792575547153",
+      "metadata": {
+        "reserved": 50,
+        "actual": 50,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T09:39:07.155Z"
+    },
+    {
+      "id": "cld_kpbb20tkku",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "generation_reserve",
+      "amount": -30,
+      "balanceAfter": 20,
+      "relatedJobId": "job_fail_1792575547159",
+      "idempotencyKey": "reserve_job_fail_1792575547159",
+      "metadata": {
+        "reservedAmount": 30
+      },
+      "createdAt": "2026-10-21T09:39:07.159Z"
+    },
+    {
+      "id": "cld_tokwum0h4m",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "refund",
+      "amount": 30,
+      "balanceAfter": 50,
+      "relatedJobId": "job_fail_1792575547159",
+      "idempotencyKey": "refund_job_fail_1792575547159_1792575547161",
+      "metadata": {
+        "reason": "Simulated cluster timeout"
+      },
+      "createdAt": "2026-10-21T09:39:07.161Z"
+    },
+    {
+      "id": "cld_yg4tvpak95",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "purchase",
+      "amount": 200,
+      "balanceAfter": 250,
+      "paymentId": "pay_123",
+      "idempotencyKey": "order_test_idempotent_1792575547163",
+      "createdAt": "2026-10-21T09:39:07.163Z"
+    },
+    {
+      "id": "cld_6x69815g7v",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_2dbgym5axu",
+      "idempotencyKey": "reserve_job_2dbgym5axu",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-21T09:39:07.173Z"
+    },
+    {
+      "id": "cld_2hpov36ue3",
+      "userId": "usr_e57xso2v",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_e57xso2v",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T09:39:07.179Z"
+    },
+    {
+      "id": "cld_eo672mehlb",
+      "userId": "usr_90wxv7hx",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_2dbgym5axu",
+      "idempotencyKey": "settle_job_2dbgym5axu",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T09:39:08.391Z"
+    },
+    {
+      "id": "cld_svdp25jb85",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 250,
+      "relatedJobId": "job_ya6yrr70b1",
+      "idempotencyKey": "reserve_job_ya6yrr70b1",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-21T09:42:28.211Z"
+    },
+    {
+      "id": "cld_0nzdwll01e",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 250,
+      "relatedJobId": "job_ya6yrr70b1",
+      "idempotencyKey": "settle_job_ya6yrr70b1",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T09:42:29.433Z"
+    },
+    {
+      "id": "cld_1jhemput5n",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_t9bd11ttja",
+      "idempotencyKey": "reserve_job_t9bd11ttja",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-21T09:44:04.152Z"
+    },
+    {
+      "id": "cld_817xvi9lt7",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_t9bd11ttja",
+      "idempotencyKey": "settle_job_t9bd11ttja",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-21T09:44:05.368Z"
+    },
+    {
+      "id": "cld_f9ip9j48r6",
+      "userId": "usr_hfz44067",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_hfz44067",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T10:10:25.030Z"
+    },
+    {
+      "id": "cld_64w2q4hvq0",
+      "userId": "usr_hfz44067",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_a4gzpuhd7",
+      "idempotencyKey": "payu_fulfill_TXN_1792577425222_VIW6EW",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792577425222_VIW6EW",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-21T10:10:25.231Z"
+    },
+    {
+      "id": "cld_26dl9mlggg",
+      "userId": "usr_kv2tuxqi",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_kv2tuxqi",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T10:10:48.780Z"
+    },
+    {
+      "id": "cld_518xxb5qwu",
+      "userId": "usr_kv2tuxqi",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_dvg9vk2p6",
+      "idempotencyKey": "payu_fulfill_TXN_1792577448862_HJLOWW",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792577448862_HJLOWW",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-21T10:10:48.870Z"
+    },
+    {
+      "id": "cld_lxc1kwv5wz",
+      "userId": "usr_14fdcmzx",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_14fdcmzx",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T11:05:24.204Z"
+    },
+    {
+      "id": "cld_uznq3s675n",
+      "userId": "usr_14fdcmzx",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_vtnnaal7l",
+      "idempotencyKey": "payu_fulfill_TXN_1792580724396_9BGNAO",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792580724396_9BGNAO",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-21T11:05:24.404Z"
+    },
+    {
+      "id": "cld_lstxtn4m6j",
+      "userId": "usr_xbckq4d5",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_xbckq4d5",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T11:11:51.940Z"
+    },
+    {
+      "id": "cld_ouhieg18di",
+      "userId": "usr_xbckq4d5",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_eniy9xacc",
+      "idempotencyKey": "payu_fulfill_TXN_1792581112143_2PVOGL",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792581112143_2PVOGL",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-21T11:11:52.151Z"
+    },
+    {
+      "id": "cld_w40amavp7i",
+      "userId": "usr_23ee9gat",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_23ee9gat",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T11:34:07.718Z"
+    },
+    {
+      "id": "cld_hce2cju9ia",
+      "userId": "usr_23ee9gat",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_80ctfbhtl",
+      "idempotencyKey": "payu_fulfill_TXN_1792582447884_HRLTLC",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792582447884_HRLTLC",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-21T11:34:07.892Z"
+    },
+    {
+      "id": "cld_eip6ezcsp0",
+      "userId": "usr_2ofu0hbt",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_2ofu0hbt",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T11:55:44.928Z"
+    },
+    {
+      "id": "cld_7ywqea36j3",
+      "userId": "usr_febhs4vq",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_febhs4vq",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T11:55:51.761Z"
+    },
+    {
+      "id": "cld_hq6vgs1ocp",
+      "userId": "usr_febhs4vq",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_tr2t8ts7w",
+      "idempotencyKey": "payu_fulfill_TXN_1792583751943_Y2IXYK",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792583751943_Y2IXYK",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-21T11:55:51.954Z"
+    },
+    {
+      "id": "cld_rw9ocpa0n9",
+      "userId": "usr_alzrl7nc",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_alzrl7nc",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T12:42:27.811Z"
+    },
+    {
+      "id": "cld_s3q8d5y95r",
+      "userId": "usr_nqxfoxpb",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_nqxfoxpb",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-21T12:42:35.831Z"
+    },
+    {
+      "id": "cld_yn46ozz136",
+      "userId": "usr_nqxfoxpb",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_j9wtk2swz",
+      "idempotencyKey": "payu_fulfill_TXN_1792586556009_G2OJT7",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792586556009_G2OJT7",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-21T12:42:36.019Z"
     }
   ],
   "plans": [
@@ -1117,6 +1857,288 @@
       "isFavorite": false,
       "createdAt": "2026-10-21T09:13:25.328Z",
       "updatedAt": "2026-10-21T09:13:26.561Z"
+    },
+    {
+      "id": "prj_prj9rln11",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Live Test Cyberpunk Commercial",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_7ud9rh6",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Futuristic hyper-car spe",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T09:30:42.806Z",
+      "updatedAt": "2026-10-21T09:30:44.042Z"
+    },
+    {
+      "id": "prj_y0koyo0gu",
+      "workspaceId": "ws_2n4pvj9t",
+      "ownerId": "usr_90wxv7hx",
+      "title": "Test Timeline Project",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          },
+          {
+            "id": "clp_oz45or0",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Cinematic futuristic cit",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T09:39:07.167Z",
+      "updatedAt": "2026-10-21T09:39:08.406Z"
+    },
+    {
+      "id": "prj_vglr4pbtu",
+      "workspaceId": "ws_2n4pvj9t",
+      "ownerId": "usr_90wxv7hx",
+      "title": "Test Timeline Project (Copy)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T09:39:07.170Z",
+      "updatedAt": "2026-10-21T09:39:07.170Z"
+    },
+    {
+      "id": "prj_j5kqra5l3",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Live Test Cyberpunk Commercial",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_7lj99pf",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Futuristic hyper-car spe",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T09:42:28.193Z",
+      "updatedAt": "2026-10-21T09:42:29.441Z"
+    },
+    {
+      "id": "prj_h1wlwrmyy",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Live Test Cyberpunk Commercial",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_0fqw9t2",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Futuristic hyper-car spe",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T09:44:04.141Z",
+      "updatedAt": "2026-10-21T09:44:05.374Z"
+    },
+    {
+      "id": "prj_u9uqlda3p",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Viral Luxury Sportswear Reel (Project)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "9:16",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video Scenes"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Subtitles & Captions"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_v1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Macro Friction Hook",
+            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "startTimeSec": 0,
+            "durationSec": 15
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-21T11:33:59.223Z",
+      "updatedAt": "2026-10-21T11:33:59.223Z"
     }
   ],
   "assets": [
@@ -1234,43 +2256,212 @@
       },
       "id": "ast_pkqc25p4h",
       "createdAt": "2026-10-21T09:13:29.364Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_prj9rln11",
+      "name": "Futuristic hyper-car speeding  (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_b3thm8wdrm/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_b3thm8wdrm",
+        "isDemoSimulated": true
+      },
+      "id": "ast_ynfverhjq",
+      "createdAt": "2026-10-21T09:30:44.039Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_prj9rln11",
+      "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
+      "assetType": "video",
+      "storageKey": "renders/prj_prj9rln11/rnd_a54h7xh2.mp4",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 18450000,
+      "metadata": {
+        "settings": {
+          "resolution": "1080p",
+          "fps": 30
+        },
+        "isRenderedExport": true
+      },
+      "id": "ast_k7tkgq9tv",
+      "createdAt": "2026-10-21T09:30:46.848Z"
+    },
+    {
+      "workspaceId": "ws_2n4pvj9t",
+      "ownerId": "usr_90wxv7hx",
+      "projectId": "prj_y0koyo0gu",
+      "name": "Cinematic futuristic city stre (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_2dbgym5axu/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_2dbgym5axu",
+        "isDemoSimulated": true
+      },
+      "id": "ast_ruz1gpzyc",
+      "createdAt": "2026-10-21T09:39:08.401Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_j5kqra5l3",
+      "name": "Futuristic hyper-car speeding  (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_ya6yrr70b1/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_ya6yrr70b1",
+        "isDemoSimulated": true
+      },
+      "id": "ast_4enui84in",
+      "createdAt": "2026-10-21T09:42:29.438Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_j5kqra5l3",
+      "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
+      "assetType": "video",
+      "storageKey": "renders/prj_j5kqra5l3/rnd_6pvbr4r4.mp4",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 18450000,
+      "metadata": {
+        "settings": {
+          "resolution": "1080p",
+          "fps": 30
+        },
+        "isRenderedExport": true
+      },
+      "id": "ast_gzyhzqnnw",
+      "createdAt": "2026-10-21T09:42:32.252Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_h1wlwrmyy",
+      "name": "Futuristic hyper-car speeding  (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_t9bd11ttja/video",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_t9bd11ttja",
+        "isDemoSimulated": true
+      },
+      "id": "ast_hxwb3tf85",
+      "createdAt": "2026-10-21T09:44:05.372Z"
+    },
+    {
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "projectId": "prj_h1wlwrmyy",
+      "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
+      "assetType": "video",
+      "storageKey": "renders/prj_h1wlwrmyy/rnd_nbn03dot.mp4",
+      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 18450000,
+      "metadata": {
+        "settings": {
+          "resolution": "1080p",
+          "fps": 30
+        },
+        "isRenderedExport": true
+      },
+      "id": "ast_bd4306g2y",
+      "createdAt": "2026-10-21T09:44:08.169Z"
     }
   ],
   "generationJobs": [
     {
-      "id": "job_sample_completed_1",
+      "id": "job_t9bd11ttja",
       "userId": "usr_creator_demo_1",
       "workspaceId": "ws_creator_demo_1",
-      "projectId": "prj_demo_reel_1",
+      "projectId": "prj_h1wlwrmyy",
       "providerId": "vidai_core",
       "modelId": "vidai-cinematic-v1",
       "status": "completed",
       "progressPercent": 100,
-      "progressMessage": "Rendering completed successfully",
+      "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
       "input": {
-        "prompt": "Ultra-cinematic slow motion close up of high-tech futuristic athletic running sneakers with violet neon accents on wet asphalt city street at night.",
-        "aspectRatio": "9:16",
+        "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+        "aspectRatio": "16:9",
         "durationSec": 5,
         "resolution": "1080p"
-      },
-      "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
-        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
-        "isDemoSimulated": true
       },
       "estimatedCredits": 25,
       "reservedCredits": 25,
       "actualCredits": 25,
-      "providerRequestId": "req_vidai_demo_8829",
-      "createdAt": "2026-10-21T05:14:19.600Z",
-      "updatedAt": "2026-10-21T05:15:19.600Z",
-      "completedAt": "2026-10-21T05:15:19.600Z"
+      "createdAt": "2026-10-21T09:44:04.152Z",
+      "updatedAt": "2026-10-21T09:44:05.368Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Vidai-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "vidai_req_job_t9bd11ttja_1792575845367",
+      "completedAt": "2026-10-21T09:44:05.368Z"
     },
     {
-      "id": "job_ugdkhpjoxg",
-      "userId": "usr_n5udt4o8",
-      "workspaceId": "ws_sc4a4yu1",
-      "projectId": "prj_nf32r1nr8",
+      "id": "job_ya6yrr70b1",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "projectId": "prj_j5kqra5l3",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
+      "input": {
+        "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+        "aspectRatio": "16:9",
+        "durationSec": 5,
+        "resolution": "1080p"
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-21T09:42:28.210Z",
+      "updatedAt": "2026-10-21T09:42:29.433Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Vidai-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "vidai_req_job_ya6yrr70b1_1792575749433",
+      "completedAt": "2026-10-21T09:42:29.433Z"
+    },
+    {
+      "id": "job_2dbgym5axu",
+      "userId": "usr_90wxv7hx",
+      "workspaceId": "ws_2n4pvj9t",
+      "projectId": "prj_y0koyo0gu",
       "providerId": "vidai_core",
       "modelId": "vidai-cinematic-v1",
       "status": "completed",
@@ -1284,8 +2475,8 @@
       "estimatedCredits": 25,
       "reservedCredits": 25,
       "actualCredits": 25,
-      "createdAt": "2026-10-21T06:14:19.632Z",
-      "updatedAt": "2026-10-21T06:14:20.847Z",
+      "createdAt": "2026-10-21T09:39:07.173Z",
+      "updatedAt": "2026-10-21T09:39:08.390Z",
       "output": {
         "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
@@ -1297,8 +2488,78 @@
           "engine": "Vidai-Cinematic-v1"
         }
       },
-      "providerRequestId": "vidai_req_job_ugdkhpjoxg_1792563260846",
-      "completedAt": "2026-10-21T06:14:20.847Z"
+      "providerRequestId": "vidai_req_job_2dbgym5axu_1792575548389",
+      "completedAt": "2026-10-21T09:39:08.391Z"
+    },
+    {
+      "id": "job_b3thm8wdrm",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "projectId": "prj_prj9rln11",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
+      "input": {
+        "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+        "aspectRatio": "16:9",
+        "durationSec": 5,
+        "resolution": "1080p"
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-21T09:30:42.818Z",
+      "updatedAt": "2026-10-21T09:30:44.035Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Vidai-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "vidai_req_job_b3thm8wdrm_1792575044035",
+      "completedAt": "2026-10-21T09:30:44.035Z"
+    },
+    {
+      "id": "job_uiy1h9p3yo",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "projectId": "prj_iwd0du0ta",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
+      "input": {
+        "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+        "aspectRatio": "16:9",
+        "durationSec": 5,
+        "resolution": "1080p"
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-21T09:13:25.340Z",
+      "updatedAt": "2026-10-21T09:13:26.553Z",
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Vidai-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "vidai_req_job_uiy1h9p3yo_1792574006553",
+      "completedAt": "2026-10-21T09:13:26.553Z"
     },
     {
       "id": "job_thjmq46zpc",
@@ -1336,39 +2597,67 @@
       "completedAt": "2026-10-21T09:12:43.362Z"
     },
     {
-      "id": "job_uiy1h9p3yo",
-      "userId": "usr_creator_demo_1",
-      "workspaceId": "ws_creator_demo_1",
-      "projectId": "prj_iwd0du0ta",
+      "id": "job_ugdkhpjoxg",
+      "userId": "usr_n5udt4o8",
+      "workspaceId": "ws_sc4a4yu1",
+      "projectId": "prj_nf32r1nr8",
       "providerId": "vidai_core",
       "modelId": "vidai-cinematic-v1",
       "status": "completed",
       "progressPercent": 100,
       "progressMessage": "Generated via Vidai Standard Core (Curated Sample)",
       "input": {
-        "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+        "prompt": "Cinematic futuristic city street with neon lights",
         "aspectRatio": "16:9",
-        "durationSec": 5,
-        "resolution": "1080p"
+        "durationSec": 5
       },
       "estimatedCredits": 25,
       "reservedCredits": 25,
       "actualCredits": 25,
-      "createdAt": "2026-10-21T09:13:25.340Z",
-      "updatedAt": "2026-10-21T09:13:26.553Z",
+      "createdAt": "2026-10-21T06:14:19.632Z",
+      "updatedAt": "2026-10-21T06:14:20.847Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
-        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
-          "prompt": "Futuristic hyper-car speeding through neon lit highway with violet reflections",
+          "prompt": "Cinematic futuristic city street with neon lights",
           "aspectRatio": "16:9",
           "durationSec": 5,
           "engine": "Vidai-Cinematic-v1"
         }
       },
-      "providerRequestId": "vidai_req_job_uiy1h9p3yo_1792574006553",
-      "completedAt": "2026-10-21T09:13:26.553Z"
+      "providerRequestId": "vidai_req_job_ugdkhpjoxg_1792563260846",
+      "completedAt": "2026-10-21T06:14:20.847Z"
+    },
+    {
+      "id": "job_sample_completed_1",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "projectId": "prj_demo_reel_1",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Rendering completed successfully",
+      "input": {
+        "prompt": "Ultra-cinematic slow motion close up of high-tech futuristic athletic running sneakers with violet neon accents on wet asphalt city street at night.",
+        "aspectRatio": "9:16",
+        "durationSec": 5,
+        "resolution": "1080p"
+      },
+      "output": {
+        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "providerRequestId": "req_vidai_demo_8829",
+      "createdAt": "2026-10-21T05:14:19.600Z",
+      "updatedAt": "2026-10-21T05:15:19.600Z",
+      "completedAt": "2026-10-21T05:15:19.600Z"
     }
   ],
   "payments": [
@@ -1385,105 +2674,268 @@
     }
   ],
   "renderJobs": [],
-  "webhookEvents": [],
+  "webhookEvents": [
+    {
+      "id": "evt_replay_test_1792575547315",
+      "provider": "razorpay",
+      "eventType": "payment.captured",
+      "payload": {
+        "amount": 50000
+      },
+      "processed": true,
+      "createdAt": "2026-10-21T09:39:07.316Z"
+    },
+    {
+      "id": "wh_test_live_audit_1",
+      "eventId": "wh_test_live_audit_1",
+      "provider": "razorpay",
+      "eventType": "payment.captured",
+      "payload": {
+        "event": "payment.captured",
+        "id": "wh_test_live_audit_1"
+      },
+      "processingStatus": "processed",
+      "receivedAt": "2026-10-21T09:43:07.261Z",
+      "processedAt": "2026-10-21T09:43:07.261Z"
+    }
+  ],
   "auditLogs": [
     {
-      "id": "aud_1",
-      "actorId": "usr_creator_demo_1",
-      "action": "PROJECT_CREATED",
-      "resourceType": "project",
-      "resourceId": "prj_demo_reel_1",
-      "createdAt": "2026-10-21T06:14:19.599Z"
-    },
-    {
-      "id": "aud_q8i6uloa02",
-      "actorId": "usr_creator_demo_1",
+      "id": "aud_rb873rb7nz",
+      "actorId": "usr_admin_master_1",
       "action": "USER_LOGIN",
       "resourceType": "profile",
-      "resourceId": "usr_creator_demo_1",
-      "createdAt": "2026-10-21T09:10:03.200Z"
+      "resourceId": "usr_admin_master_1",
+      "createdAt": "2026-10-21T09:44:08.284Z"
     },
     {
-      "id": "aud_nihce68407",
-      "actorId": "usr_creator_demo_1",
-      "action": "USER_LOGIN",
-      "resourceType": "profile",
-      "resourceId": "usr_creator_demo_1",
-      "createdAt": "2026-10-21T09:10:19.855Z"
-    },
-    {
-      "id": "aud_nm4gtytv58",
-      "actorId": "usr_creator_demo_1",
-      "action": "USER_LOGIN",
-      "resourceType": "profile",
-      "resourceId": "usr_creator_demo_1",
-      "createdAt": "2026-10-21T09:12:42.083Z"
-    },
-    {
-      "id": "aud_2bfufqzphh",
-      "actorId": "usr_creator_demo_1",
-      "action": "PROJECT_CREATED",
-      "resourceType": "project",
-      "resourceId": "prj_xgq4ghbeb",
-      "metadata": {
-        "title": "Live Test Cyberpunk Commercial"
-      },
-      "createdAt": "2026-10-21T09:12:42.121Z"
-    },
-    {
-      "id": "aud_dobr9t9ppn",
-      "actorId": "usr_creator_demo_1",
-      "action": "GENERATION_JOB_DISPATCHED",
-      "resourceType": "generation_job",
-      "resourceId": "job_thjmq46zpc",
-      "metadata": {
-        "modelId": "vidai-cinematic-v1",
-        "estimatedCredits": 25
-      },
-      "createdAt": "2026-10-21T09:12:42.142Z"
-    },
-    {
-      "id": "aud_uc5vhawm58",
+      "id": "aud_w53qdv25iv",
       "actorId": "usr_creator_demo_1",
       "action": "PROJECT_RENDER_REQUESTED",
       "resourceType": "project",
-      "resourceId": "prj_xgq4ghbeb",
+      "resourceId": "prj_h1wlwrmyy",
       "metadata": {
-        "renderJobId": "rnd_jwec9ce2",
+        "renderJobId": "rnd_nbn03dot",
         "resolution": "1080p"
       },
-      "createdAt": "2026-10-21T09:12:46.173Z"
+      "createdAt": "2026-10-21T09:44:08.171Z"
     },
     {
-      "id": "aud_7oj2xhftv0",
-      "actorId": "usr_creator_demo_1",
-      "action": "USER_LOGIN",
-      "resourceType": "profile",
-      "resourceId": "usr_creator_demo_1",
-      "createdAt": "2026-10-21T09:13:25.309Z"
-    },
-    {
-      "id": "aud_rvett3s2r9",
-      "actorId": "usr_creator_demo_1",
-      "action": "PROJECT_CREATED",
-      "resourceType": "project",
-      "resourceId": "prj_iwd0du0ta",
-      "metadata": {
-        "title": "Live Test Cyberpunk Commercial"
-      },
-      "createdAt": "2026-10-21T09:13:25.330Z"
-    },
-    {
-      "id": "aud_jx2yd8m4y8",
+      "id": "aud_my4cnqqyb5",
       "actorId": "usr_creator_demo_1",
       "action": "GENERATION_JOB_DISPATCHED",
       "resourceType": "generation_job",
-      "resourceId": "job_uiy1h9p3yo",
+      "resourceId": "job_t9bd11ttja",
       "metadata": {
         "modelId": "vidai-cinematic-v1",
         "estimatedCredits": 25
       },
-      "createdAt": "2026-10-21T09:13:25.346Z"
+      "createdAt": "2026-10-21T09:44:04.159Z"
+    },
+    {
+      "id": "aud_hxww2q0yqs",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_h1wlwrmyy",
+      "metadata": {
+        "title": "Live Test Cyberpunk Commercial"
+      },
+      "createdAt": "2026-10-21T09:44:04.143Z"
+    },
+    {
+      "id": "aud_ng1ffc7p22",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:44:04.129Z"
+    },
+    {
+      "id": "aud_e3ebicdula",
+      "actorId": "usr_creator_demo_1",
+      "action": "ASSET_DELETED",
+      "resourceType": "asset",
+      "resourceId": "ast_u75pui8vt",
+      "metadata": {
+        "name": "Test Ownership Video.mp4"
+      },
+      "createdAt": "2026-10-21T09:44:03.816Z"
+    },
+    {
+      "id": "aud_lor0pxe94o",
+      "actorId": "usr_creator_demo_1",
+      "action": "ASSET_UPLOADED",
+      "resourceType": "asset",
+      "resourceId": "ast_u75pui8vt",
+      "metadata": {
+        "name": "Test Ownership Video.mp4"
+      },
+      "createdAt": "2026-10-21T09:44:03.805Z"
+    },
+    {
+      "id": "aud_2qj3rfslf6",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:44:03.789Z"
+    },
+    {
+      "id": "aud_bde45u4i1f",
+      "actorId": "usr_creator_demo_1",
+      "action": "ASSET_DELETED",
+      "resourceType": "asset",
+      "resourceId": "ast_1dttfnf7f",
+      "metadata": {
+        "name": "Test Ownership Video.mp4"
+      },
+      "createdAt": "2026-10-21T09:43:07.230Z"
+    },
+    {
+      "id": "aud_xawvtoxx0e",
+      "actorId": "usr_creator_demo_1",
+      "action": "ASSET_UPLOADED",
+      "resourceType": "asset",
+      "resourceId": "ast_1dttfnf7f",
+      "metadata": {
+        "name": "Test Ownership Video.mp4"
+      },
+      "createdAt": "2026-10-21T09:43:07.217Z"
+    },
+    {
+      "id": "aud_bxt286z9lb",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:43:07.058Z"
+    },
+    {
+      "id": "aud_msln38x5og",
+      "actorId": "usr_admin_master_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_admin_master_1",
+      "createdAt": "2026-10-21T09:42:32.415Z"
+    },
+    {
+      "id": "aud_4u1oata93z",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_RENDER_REQUESTED",
+      "resourceType": "project",
+      "resourceId": "prj_j5kqra5l3",
+      "metadata": {
+        "renderJobId": "rnd_6pvbr4r4",
+        "resolution": "1080p"
+      },
+      "createdAt": "2026-10-21T09:42:32.255Z"
+    },
+    {
+      "id": "aud_yrqf1w2hsv",
+      "actorId": "usr_creator_demo_1",
+      "action": "GENERATION_JOB_DISPATCHED",
+      "resourceType": "generation_job",
+      "resourceId": "job_ya6yrr70b1",
+      "metadata": {
+        "modelId": "vidai-cinematic-v1",
+        "estimatedCredits": 25
+      },
+      "createdAt": "2026-10-21T09:42:28.217Z"
+    },
+    {
+      "id": "aud_womumbtmhy",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_j5kqra5l3",
+      "metadata": {
+        "title": "Live Test Cyberpunk Commercial"
+      },
+      "createdAt": "2026-10-21T09:42:28.195Z"
+    },
+    {
+      "id": "aud_4fzsgwcsr1",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:42:28.150Z"
+    },
+    {
+      "id": "aud_rcdvean80g",
+      "actorId": "usr_admin_master_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_admin_master_1",
+      "createdAt": "2026-10-21T09:30:46.943Z"
+    },
+    {
+      "id": "aud_88oe25ia0d",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_RENDER_REQUESTED",
+      "resourceType": "project",
+      "resourceId": "prj_prj9rln11",
+      "metadata": {
+        "renderJobId": "rnd_a54h7xh2",
+        "resolution": "1080p"
+      },
+      "createdAt": "2026-10-21T09:30:46.855Z"
+    },
+    {
+      "id": "aud_tii3sqpph7",
+      "actorId": "usr_creator_demo_1",
+      "action": "GENERATION_JOB_DISPATCHED",
+      "resourceType": "generation_job",
+      "resourceId": "job_b3thm8wdrm",
+      "metadata": {
+        "modelId": "vidai-cinematic-v1",
+        "estimatedCredits": 25
+      },
+      "createdAt": "2026-10-21T09:30:42.823Z"
+    },
+    {
+      "id": "aud_1xlr2gqbl5",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_prj9rln11",
+      "metadata": {
+        "title": "Live Test Cyberpunk Commercial"
+      },
+      "createdAt": "2026-10-21T09:30:42.809Z"
+    },
+    {
+      "id": "aud_3whrrceb6p",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:30:42.791Z"
+    },
+    {
+      "id": "aud_e0n327yu5r",
+      "actorId": "usr_admin_master_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_admin_master_1",
+      "createdAt": "2026-10-21T09:26:09.462Z"
+    },
+    {
+      "id": "aud_icsdu4wzl5",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:25:09.516Z"
+    },
+    {
+      "id": "aud_y06fq8roue",
+      "actorId": "usr_admin_master_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_admin_master_1",
+      "createdAt": "2026-10-21T09:13:29.445Z"
     },
     {
       "id": "aud_sm5oye3ss9",
@@ -1498,12 +2950,866 @@
       "createdAt": "2026-10-21T09:13:29.366Z"
     },
     {
-      "id": "aud_y06fq8roue",
+      "id": "aud_jx2yd8m4y8",
+      "actorId": "usr_creator_demo_1",
+      "action": "GENERATION_JOB_DISPATCHED",
+      "resourceType": "generation_job",
+      "resourceId": "job_uiy1h9p3yo",
+      "metadata": {
+        "modelId": "vidai-cinematic-v1",
+        "estimatedCredits": 25
+      },
+      "createdAt": "2026-10-21T09:13:25.346Z"
+    },
+    {
+      "id": "aud_rvett3s2r9",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_iwd0du0ta",
+      "metadata": {
+        "title": "Live Test Cyberpunk Commercial"
+      },
+      "createdAt": "2026-10-21T09:13:25.330Z"
+    },
+    {
+      "id": "aud_7oj2xhftv0",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:13:25.309Z"
+    },
+    {
+      "id": "aud_uc5vhawm58",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_RENDER_REQUESTED",
+      "resourceType": "project",
+      "resourceId": "prj_xgq4ghbeb",
+      "metadata": {
+        "renderJobId": "rnd_jwec9ce2",
+        "resolution": "1080p"
+      },
+      "createdAt": "2026-10-21T09:12:46.173Z"
+    },
+    {
+      "id": "aud_dobr9t9ppn",
+      "actorId": "usr_creator_demo_1",
+      "action": "GENERATION_JOB_DISPATCHED",
+      "resourceType": "generation_job",
+      "resourceId": "job_thjmq46zpc",
+      "metadata": {
+        "modelId": "vidai-cinematic-v1",
+        "estimatedCredits": 25
+      },
+      "createdAt": "2026-10-21T09:12:42.142Z"
+    },
+    {
+      "id": "aud_2bfufqzphh",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_xgq4ghbeb",
+      "metadata": {
+        "title": "Live Test Cyberpunk Commercial"
+      },
+      "createdAt": "2026-10-21T09:12:42.121Z"
+    },
+    {
+      "id": "aud_nm4gtytv58",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:12:42.083Z"
+    },
+    {
+      "id": "aud_nihce68407",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:10:19.855Z"
+    },
+    {
+      "id": "aud_q8i6uloa02",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T09:10:03.200Z"
+    },
+    {
+      "id": "aud_1",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_demo_reel_1",
+      "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "id": "aud_ndajfwsbmn",
+      "actorId": "usr_admin_master_1",
+      "action": "USER_LOGOUT",
+      "resourceType": "profile",
+      "resourceId": "usr_admin_master_1",
+      "createdAt": "2026-10-21T10:00:01.139Z"
+    },
+    {
+      "id": "aud_cu0xr525py",
+      "actorId": "usr_hfz44067",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_a4gzpuhd7",
+      "metadata": {
+        "txnid": "TXN_1792577425222_VIW6EW",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-21T10:10:25.226Z"
+    },
+    {
+      "id": "aud_r81w28ox6c",
+      "actorId": "usr_hfz44067",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_a4gzpuhd7",
+      "metadata": {
+        "txnid": "TXN_1792577425222_VIW6EW",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0001",
+        "receiptNumber": "RCP-2026-0001",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-21T10:10:25.244Z"
+    },
+    {
+      "id": "aud_9s7izf47qw",
+      "actorId": "usr_hfz44067",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_qhjr2qdt1",
+      "metadata": {
+        "txnid": "TXN_1792577425367_9UUX1J",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-21T10:10:25.369Z"
+    },
+    {
+      "id": "aud_p7bzt5voki",
+      "actorId": "usr_kv2tuxqi",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_dvg9vk2p6",
+      "metadata": {
+        "txnid": "TXN_1792577448862_HJLOWW",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-21T10:10:48.865Z"
+    },
+    {
+      "id": "aud_8a23c741d2",
+      "actorId": "usr_kv2tuxqi",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_dvg9vk2p6",
+      "metadata": {
+        "txnid": "TXN_1792577448862_HJLOWW",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0002",
+        "receiptNumber": "RCP-2026-0002",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-21T10:10:48.882Z"
+    },
+    {
+      "id": "aud_fi0dbrpzqf",
+      "actorId": "usr_kv2tuxqi",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_h993ayl1m",
+      "metadata": {
+        "txnid": "TXN_1792577448990_9EAIEF",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-21T10:10:48.993Z"
+    },
+    {
+      "id": "aud_o9erwckuwr",
+      "actorId": "usr_14fdcmzx",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_vtnnaal7l",
+      "metadata": {
+        "txnid": "TXN_1792580724396_9BGNAO",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-21T11:05:24.399Z"
+    },
+    {
+      "id": "aud_7huchv5vau",
+      "actorId": "usr_14fdcmzx",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_vtnnaal7l",
+      "metadata": {
+        "txnid": "TXN_1792580724396_9BGNAO",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0003",
+        "receiptNumber": "RCP-2026-0003",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-21T11:05:24.415Z"
+    },
+    {
+      "id": "aud_1eu89rqfso",
+      "actorId": "usr_14fdcmzx",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_mme4evl3c",
+      "metadata": {
+        "txnid": "TXN_1792580724529_DZNIS3",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-21T11:05:24.532Z"
+    },
+    {
+      "id": "aud_jpmoiwz2pk",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:10:54.723Z"
+    },
+    {
+      "id": "aud_zcsojvom4r",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:11:00.613Z"
+    },
+    {
+      "id": "aud_q55b2a3iik",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:11:07.801Z"
+    },
+    {
+      "id": "aud_ljswzgvxc9",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:11:26.412Z"
+    },
+    {
+      "id": "aud_25ytrda3ad",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_q8c41f9mw",
+      "metadata": {
+        "txnid": "TXN_1792581086432_9E6VMB",
+        "totalAmount": 588.82,
+        "productInfo": "Vidai Creative Credits Pack"
+      },
+      "createdAt": "2026-10-21T11:11:26.436Z"
+    },
+    {
+      "id": "aud_dcte93de0e",
+      "actorId": "usr_xbckq4d5",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_eniy9xacc",
+      "metadata": {
+        "txnid": "TXN_1792581112143_2PVOGL",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-21T11:11:52.146Z"
+    },
+    {
+      "id": "aud_ecjwigpjmr",
+      "actorId": "usr_xbckq4d5",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_eniy9xacc",
+      "metadata": {
+        "txnid": "TXN_1792581112143_2PVOGL",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0004",
+        "receiptNumber": "RCP-2026-0004",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-21T11:11:52.163Z"
+    },
+    {
+      "id": "aud_asj8fdelah",
+      "actorId": "usr_xbckq4d5",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_xbygoabem",
+      "metadata": {
+        "txnid": "TXN_1792581112279_UVRG68",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-21T11:11:52.281Z"
+    },
+    {
+      "id": "aud_itljppvry4",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:16:49.177Z"
+    },
+    {
+      "id": "aud_o8boes997b",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_51746sj58",
+      "metadata": {
+        "txnid": "TXN_1792581409205_0MR0DY",
+        "totalAmount": 588.82,
+        "productInfo": "Vidai Creative Credits Pack"
+      },
+      "createdAt": "2026-10-21T11:16:49.208Z"
+    },
+    {
+      "id": "aud_b4optu9ra0",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:18:18.038Z"
+    },
+    {
+      "id": "aud_h2yyol58t7",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_2u2dzkcfa",
+      "metadata": {
+        "txnid": "TXN_1792581498063_MT1YNH",
+        "totalAmount": 588.82,
+        "productInfo": "Vidai Creative Credits Pack"
+      },
+      "createdAt": "2026-10-21T11:18:18.067Z"
+    },
+    {
+      "id": "aud_8v7i265bm9",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:20:01.872Z"
+    },
+    {
+      "id": "aud_7is6hlcssf",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_7kr1kjxwe",
+      "metadata": {
+        "txnid": "TXN_1792581621783_DXB67I",
+        "totalAmount": 1178.82,
+        "productInfo": "Starter Creator - Monthly Subscription"
+      },
+      "createdAt": "2026-10-21T11:20:21.787Z"
+    },
+    {
+      "id": "aud_rgrh17x94z",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-21T11:33:59.197Z"
+    },
+    {
+      "id": "aud_mq4lf78u2q",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_u9uqlda3p",
+      "metadata": {
+        "title": "Viral Luxury Sportswear Reel (Project)"
+      },
+      "createdAt": "2026-10-21T11:33:59.226Z"
+    },
+    {
+      "id": "aud_od1v6ln551",
       "actorId": "usr_admin_master_1",
       "action": "USER_LOGIN",
       "resourceType": "profile",
       "resourceId": "usr_admin_master_1",
-      "createdAt": "2026-10-21T09:13:29.445Z"
+      "createdAt": "2026-10-21T11:33:59.304Z"
+    },
+    {
+      "id": "aud_15fdm762wj",
+      "actorId": "usr_23ee9gat",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_80ctfbhtl",
+      "metadata": {
+        "txnid": "TXN_1792582447884_HRLTLC",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-21T11:34:07.886Z"
+    },
+    {
+      "id": "aud_gym2k0fm43",
+      "actorId": "usr_23ee9gat",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_80ctfbhtl",
+      "metadata": {
+        "txnid": "TXN_1792582447884_HRLTLC",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0005",
+        "receiptNumber": "RCP-2026-0005",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-21T11:34:07.902Z"
+    },
+    {
+      "id": "aud_g2kvlxxi29",
+      "actorId": "usr_23ee9gat",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_9zj30glin",
+      "metadata": {
+        "txnid": "TXN_1792582448012_D1E5F8",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-21T11:34:08.018Z"
+    },
+    {
+      "id": "aud_p3hr5o94uc",
+      "actorId": "usr_2ofu0hbt",
+      "action": "USER_SIGNUP",
+      "resourceType": "profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "email": "theme_tester_1792583744889@vidai.local"
+      },
+      "createdAt": "2026-10-21T11:55:45.004Z"
+    },
+    {
+      "id": "aud_4sq3o4rrj0",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "midnight-violet",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.036Z"
+    },
+    {
+      "id": "aud_a4wz6dq2vy",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "ocean-blue",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.048Z"
+    },
+    {
+      "id": "aud_6vfmyaxu9l",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "emerald-luxe",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.061Z"
+    },
+    {
+      "id": "aud_sxribfu7ni",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "rose-quartz",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.073Z"
+    },
+    {
+      "id": "aud_ekucwd75uv",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "sunset-ember",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.086Z"
+    },
+    {
+      "id": "aud_r8choo2gwa",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "arctic-silver",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.098Z"
+    },
+    {
+      "id": "aud_o9cn7kv4tr",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "royal-indigo",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.111Z"
+    },
+    {
+      "id": "aud_6dyke0ukbb",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "obsidian-gold",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.123Z"
+    },
+    {
+      "id": "aud_6p37jjwsin",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "mint-breeze",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.137Z"
+    },
+    {
+      "id": "aud_jdi32ftxg2",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "cyber-cyan",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.149Z"
+    },
+    {
+      "id": "aud_fqusqv8egg",
+      "actorId": "usr_2ofu0hbt",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_2ofu0hbt",
+      "metadata": {
+        "colorTheme": "mint-breeze",
+        "mode": "light",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T11:55:45.160Z"
+    },
+    {
+      "id": "aud_nr7wltcy99",
+      "actorId": "usr_febhs4vq",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_tr2t8ts7w",
+      "metadata": {
+        "txnid": "TXN_1792583751943_Y2IXYK",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-21T11:55:51.949Z"
+    },
+    {
+      "id": "aud_rcyprrotk8",
+      "actorId": "usr_febhs4vq",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_tr2t8ts7w",
+      "metadata": {
+        "txnid": "TXN_1792583751943_Y2IXYK",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0006",
+        "receiptNumber": "RCP-2026-0006",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-21T11:55:51.970Z"
+    },
+    {
+      "id": "aud_r8txl36oz0",
+      "actorId": "usr_febhs4vq",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_oy0ax4s8i",
+      "metadata": {
+        "txnid": "TXN_1792583752105_2NFC0B",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-21T11:55:52.111Z"
+    },
+    {
+      "id": "aud_1k97yrmo4y",
+      "actorId": "usr_alzrl7nc",
+      "action": "USER_SIGNUP",
+      "resourceType": "profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "email": "creator_1792586547758@vidai.io"
+      },
+      "createdAt": "2026-10-21T12:42:27.878Z"
+    },
+    {
+      "id": "aud_cdocz3gkni",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "midnight-violet",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:27.915Z"
+    },
+    {
+      "id": "aud_arkt5pgt5d",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "ocean-blue",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:27.928Z"
+    },
+    {
+      "id": "aud_cbb1n9z9sb",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "emerald-luxe",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:27.941Z"
+    },
+    {
+      "id": "aud_ghptc7roks",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "rose-quartz",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:27.956Z"
+    },
+    {
+      "id": "aud_d996pqcl4e",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "sunset-ember",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:27.968Z"
+    },
+    {
+      "id": "aud_59jl2munf3",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "arctic-silver",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:27.983Z"
+    },
+    {
+      "id": "aud_qowkc4pitp",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "royal-indigo",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:27.998Z"
+    },
+    {
+      "id": "aud_6y9cy0gndj",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "obsidian-gold",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:28.013Z"
+    },
+    {
+      "id": "aud_9yz9369zos",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "mint-breeze",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:28.030Z"
+    },
+    {
+      "id": "aud_pw347wmrx2",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "cyber-cyan",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:28.043Z"
+    },
+    {
+      "id": "aud_vwkl4e5lm4",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "rose-quartz",
+        "mode": "light",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:28.059Z"
+    },
+    {
+      "id": "aud_48b5hm8l74",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "rose-quartz",
+        "mode": "system",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:28.069Z"
+    },
+    {
+      "id": "aud_b85owqhin9",
+      "actorId": "usr_alzrl7nc",
+      "action": "UPDATE_THEME_PREFERENCE",
+      "resourceType": "user_profile",
+      "resourceId": "usr_alzrl7nc",
+      "metadata": {
+        "colorTheme": "rose-quartz",
+        "mode": "dark",
+        "completed": true
+      },
+      "createdAt": "2026-10-21T12:42:28.086Z"
+    },
+    {
+      "id": "aud_r8872m91kz",
+      "actorId": "usr_nqxfoxpb",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_j9wtk2swz",
+      "metadata": {
+        "txnid": "TXN_1792586556009_G2OJT7",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-21T12:42:36.014Z"
+    },
+    {
+      "id": "aud_qjjqeikzb7",
+      "actorId": "usr_nqxfoxpb",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_j9wtk2swz",
+      "metadata": {
+        "txnid": "TXN_1792586556009_G2OJT7",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0007",
+        "receiptNumber": "RCP-2026-0007",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-21T12:42:36.033Z"
+    },
+    {
+      "id": "aud_zrorps2t0v",
+      "actorId": "usr_nqxfoxpb",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_u2eplslzd",
+      "metadata": {
+        "txnid": "TXN_1792586556141_HZRYYJ",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-21T12:42:36.147Z"
     }
   ],
   "supportTickets": [
@@ -1518,5 +3824,1321 @@
       "createdAt": "2026-10-21T06:14:19.599Z",
       "updatedAt": "2026-10-21T06:14:19.599Z"
     }
-  ]
+  ],
+  "payuOrders": [
+    {
+      "txnid": "TXN_1792577425222_VIW6EW",
+      "userId": "usr_hfz44067",
+      "workspaceId": "ws_0sc4nugo",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792577425030@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792577425222_VIW6EW",
+      "id": "ord_payu_a4gzpuhd7",
+      "createdAt": "2026-10-21T10:10:25.223Z",
+      "updatedAt": "2026-10-21T10:10:25.242Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_mc34qqsga",
+      "invoiceNumber": "INV-2026-0001",
+      "receiptId": "rcp_5x21cslf3",
+      "receiptNumber": "RCP-2026-0001",
+      "verifiedAt": "2026-10-21T10:10:25.231Z"
+    },
+    {
+      "txnid": "TXN_1792577425367_9UUX1J",
+      "userId": "usr_hfz44067",
+      "workspaceId": "ws_0sc4nugo",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792577425030@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792577425367_9UUX1J",
+      "id": "ord_payu_qhjr2qdt1",
+      "createdAt": "2026-10-21T10:10:25.367Z",
+      "updatedAt": "2026-10-21T10:10:25.372Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792577448862_HJLOWW",
+      "userId": "usr_kv2tuxqi",
+      "workspaceId": "ws_3oe1ucz7",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792577448780@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792577448862_HJLOWW",
+      "id": "ord_payu_dvg9vk2p6",
+      "createdAt": "2026-10-21T10:10:48.863Z",
+      "updatedAt": "2026-10-21T10:10:48.880Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_isq97lnir",
+      "invoiceNumber": "INV-2026-0002",
+      "receiptId": "rcp_ydjkezynv",
+      "receiptNumber": "RCP-2026-0002",
+      "verifiedAt": "2026-10-21T10:10:48.870Z"
+    },
+    {
+      "txnid": "TXN_1792577448990_9EAIEF",
+      "userId": "usr_kv2tuxqi",
+      "workspaceId": "ws_3oe1ucz7",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792577448780@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792577448990_9EAIEF",
+      "id": "ord_payu_h993ayl1m",
+      "createdAt": "2026-10-21T10:10:48.990Z",
+      "updatedAt": "2026-10-21T10:10:48.996Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792580724396_9BGNAO",
+      "userId": "usr_14fdcmzx",
+      "workspaceId": "ws_fbm5jfot",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792580724204@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792580724396_9BGNAO",
+      "id": "ord_payu_vtnnaal7l",
+      "createdAt": "2026-10-21T11:05:24.396Z",
+      "updatedAt": "2026-10-21T11:05:24.412Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_sczcjjpxx",
+      "invoiceNumber": "INV-2026-0003",
+      "receiptId": "rcp_przp75jyp",
+      "receiptNumber": "RCP-2026-0003",
+      "verifiedAt": "2026-10-21T11:05:24.404Z"
+    },
+    {
+      "txnid": "TXN_1792580724529_DZNIS3",
+      "userId": "usr_14fdcmzx",
+      "workspaceId": "ws_fbm5jfot",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792580724204@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792580724529_DZNIS3",
+      "id": "ord_payu_mme4evl3c",
+      "createdAt": "2026-10-21T11:05:24.529Z",
+      "updatedAt": "2026-10-21T11:05:24.535Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792581086432_9E6VMB",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "pack",
+      "itemPlanOrPackId": "pack-studio",
+      "productInfo": "Vidai Creative Credits Pack",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Creator",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1792581086432_9E6VMB",
+      "id": "ord_payu_q8c41f9mw",
+      "createdAt": "2026-10-21T11:11:26.432Z",
+      "updatedAt": "2026-10-21T11:11:26.432Z"
+    },
+    {
+      "txnid": "TXN_1792581112143_2PVOGL",
+      "userId": "usr_xbckq4d5",
+      "workspaceId": "ws_ellvlvpu",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792581111940@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792581112143_2PVOGL",
+      "id": "ord_payu_eniy9xacc",
+      "createdAt": "2026-10-21T11:11:52.143Z",
+      "updatedAt": "2026-10-21T11:11:52.161Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_zha5uqmek",
+      "invoiceNumber": "INV-2026-0004",
+      "receiptId": "rcp_und4jafz9",
+      "receiptNumber": "RCP-2026-0004",
+      "verifiedAt": "2026-10-21T11:11:52.151Z"
+    },
+    {
+      "txnid": "TXN_1792581112279_UVRG68",
+      "userId": "usr_xbckq4d5",
+      "workspaceId": "ws_ellvlvpu",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792581111940@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792581112279_UVRG68",
+      "id": "ord_payu_xbygoabem",
+      "createdAt": "2026-10-21T11:11:52.279Z",
+      "updatedAt": "2026-10-21T11:11:52.284Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792581409205_0MR0DY",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "pack",
+      "itemPlanOrPackId": "pack-studio",
+      "productInfo": "Vidai Creative Credits Pack",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Creator",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1792581409205_0MR0DY",
+      "id": "ord_payu_51746sj58",
+      "createdAt": "2026-10-21T11:16:49.205Z",
+      "updatedAt": "2026-10-21T11:16:49.205Z"
+    },
+    {
+      "txnid": "TXN_1792581498063_MT1YNH",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "pack",
+      "itemPlanOrPackId": "pack-starter",
+      "productInfo": "Vidai Creative Credits Pack",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Creator",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1792581498063_MT1YNH",
+      "id": "ord_payu_2u2dzkcfa",
+      "createdAt": "2026-10-21T11:18:18.064Z",
+      "updatedAt": "2026-10-21T11:18:18.064Z"
+    },
+    {
+      "txnid": "TXN_1792581621783_DXB67I",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Starter Creator - Monthly Subscription",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 9,
+        "cgstAmount": 89.91,
+        "sgstRate": 9,
+        "sgstAmount": 89.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Vance",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1792581621783_DXB67I",
+      "id": "ord_payu_7kr1kjxwe",
+      "createdAt": "2026-10-21T11:20:21.784Z",
+      "updatedAt": "2026-10-21T11:20:21.784Z"
+    },
+    {
+      "txnid": "TXN_1792582447884_HRLTLC",
+      "userId": "usr_23ee9gat",
+      "workspaceId": "ws_u2s04pjx",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792582447718@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792582447884_HRLTLC",
+      "id": "ord_payu_80ctfbhtl",
+      "createdAt": "2026-10-21T11:34:07.884Z",
+      "updatedAt": "2026-10-21T11:34:07.900Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_5i20db8tw",
+      "invoiceNumber": "INV-2026-0005",
+      "receiptId": "rcp_ckqldv1yz",
+      "receiptNumber": "RCP-2026-0005",
+      "verifiedAt": "2026-10-21T11:34:07.891Z"
+    },
+    {
+      "txnid": "TXN_1792582448012_D1E5F8",
+      "userId": "usr_23ee9gat",
+      "workspaceId": "ws_u2s04pjx",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792582447718@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792582448012_D1E5F8",
+      "id": "ord_payu_9zj30glin",
+      "createdAt": "2026-10-21T11:34:08.012Z",
+      "updatedAt": "2026-10-21T11:34:08.023Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792583751943_Y2IXYK",
+      "userId": "usr_febhs4vq",
+      "workspaceId": "ws_9q3wkum2",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792583751761@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792583751943_Y2IXYK",
+      "id": "ord_payu_tr2t8ts7w",
+      "createdAt": "2026-10-21T11:55:51.944Z",
+      "updatedAt": "2026-10-21T11:55:51.967Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_kt61c0g9k",
+      "invoiceNumber": "INV-2026-0006",
+      "receiptId": "rcp_ampqyenxe",
+      "receiptNumber": "RCP-2026-0006",
+      "verifiedAt": "2026-10-21T11:55:51.953Z"
+    },
+    {
+      "txnid": "TXN_1792583752105_2NFC0B",
+      "userId": "usr_febhs4vq",
+      "workspaceId": "ws_9q3wkum2",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792583751761@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792583752105_2NFC0B",
+      "id": "ord_payu_oy0ax4s8i",
+      "createdAt": "2026-10-21T11:55:52.105Z",
+      "updatedAt": "2026-10-21T11:55:52.115Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792586556009_G2OJT7",
+      "userId": "usr_nqxfoxpb",
+      "workspaceId": "ws_3ew3yt64",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792586555831@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792586556009_G2OJT7",
+      "id": "ord_payu_j9wtk2swz",
+      "createdAt": "2026-10-21T12:42:36.010Z",
+      "updatedAt": "2026-10-21T12:42:36.030Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_braj7tk91",
+      "invoiceNumber": "INV-2026-0007",
+      "receiptId": "rcp_oldsljkyq",
+      "receiptNumber": "RCP-2026-0007",
+      "verifiedAt": "2026-10-21T12:42:36.018Z"
+    },
+    {
+      "txnid": "TXN_1792586556141_HZRYYJ",
+      "userId": "usr_nqxfoxpb",
+      "workspaceId": "ws_3ew3yt64",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792586555831@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792586556141_HZRYYJ",
+      "id": "ord_payu_u2eplslzd",
+      "createdAt": "2026-10-21T12:42:36.141Z",
+      "updatedAt": "2026-10-21T12:42:36.150Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    }
+  ],
+  "invoices": [
+    {
+      "invoiceNumber": "INV-2026-0001",
+      "orderId": "ord_payu_a4gzpuhd7",
+      "txnid": "TXN_1792577425222_VIW6EW",
+      "userId": "usr_hfz44067",
+      "workspaceId": "ws_0sc4nugo",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792577425030@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T10:10:25.231Z",
+      "dueDate": "2026-10-21T10:10:25.231Z",
+      "paymentDate": "2026-10-21T10:10:25.231Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_mc34qqsga",
+      "createdAt": "2026-10-21T10:10:25.234Z",
+      "updatedAt": "2026-10-21T10:10:25.234Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0002",
+      "orderId": "ord_payu_dvg9vk2p6",
+      "txnid": "TXN_1792577448862_HJLOWW",
+      "userId": "usr_kv2tuxqi",
+      "workspaceId": "ws_3oe1ucz7",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792577448780@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T10:10:48.870Z",
+      "dueDate": "2026-10-21T10:10:48.870Z",
+      "paymentDate": "2026-10-21T10:10:48.870Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_isq97lnir",
+      "createdAt": "2026-10-21T10:10:48.873Z",
+      "updatedAt": "2026-10-21T10:10:48.873Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0003",
+      "orderId": "ord_payu_vtnnaal7l",
+      "txnid": "TXN_1792580724396_9BGNAO",
+      "userId": "usr_14fdcmzx",
+      "workspaceId": "ws_fbm5jfot",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792580724204@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T11:05:24.404Z",
+      "dueDate": "2026-10-21T11:05:24.404Z",
+      "paymentDate": "2026-10-21T11:05:24.404Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_sczcjjpxx",
+      "createdAt": "2026-10-21T11:05:24.406Z",
+      "updatedAt": "2026-10-21T11:05:24.406Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0004",
+      "orderId": "ord_payu_eniy9xacc",
+      "txnid": "TXN_1792581112143_2PVOGL",
+      "userId": "usr_xbckq4d5",
+      "workspaceId": "ws_ellvlvpu",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792581111940@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T11:11:52.151Z",
+      "dueDate": "2026-10-21T11:11:52.151Z",
+      "paymentDate": "2026-10-21T11:11:52.151Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_zha5uqmek",
+      "createdAt": "2026-10-21T11:11:52.155Z",
+      "updatedAt": "2026-10-21T11:11:52.155Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0005",
+      "orderId": "ord_payu_80ctfbhtl",
+      "txnid": "TXN_1792582447884_HRLTLC",
+      "userId": "usr_23ee9gat",
+      "workspaceId": "ws_u2s04pjx",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792582447718@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T11:34:07.891Z",
+      "dueDate": "2026-10-21T11:34:07.891Z",
+      "paymentDate": "2026-10-21T11:34:07.891Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_5i20db8tw",
+      "createdAt": "2026-10-21T11:34:07.894Z",
+      "updatedAt": "2026-10-21T11:34:07.894Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0006",
+      "orderId": "ord_payu_tr2t8ts7w",
+      "txnid": "TXN_1792583751943_Y2IXYK",
+      "userId": "usr_febhs4vq",
+      "workspaceId": "ws_9q3wkum2",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792583751761@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T11:55:51.953Z",
+      "dueDate": "2026-10-21T11:55:51.953Z",
+      "paymentDate": "2026-10-21T11:55:51.953Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_kt61c0g9k",
+      "createdAt": "2026-10-21T11:55:51.958Z",
+      "updatedAt": "2026-10-21T11:55:51.958Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0007",
+      "orderId": "ord_payu_j9wtk2swz",
+      "txnid": "TXN_1792586556009_G2OJT7",
+      "userId": "usr_nqxfoxpb",
+      "workspaceId": "ws_3ew3yt64",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792586555831@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T12:42:36.018Z",
+      "dueDate": "2026-10-21T12:42:36.018Z",
+      "paymentDate": "2026-10-21T12:42:36.018Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_braj7tk91",
+      "createdAt": "2026-10-21T12:42:36.022Z",
+      "updatedAt": "2026-10-21T12:42:36.022Z"
+    }
+  ],
+  "receipts": [
+    {
+      "receiptNumber": "RCP-2026-0001",
+      "orderId": "ord_payu_a4gzpuhd7",
+      "txnid": "TXN_1792577425222_VIW6EW",
+      "invoiceId": "inv_mc34qqsga",
+      "invoiceNumber": "INV-2026-0001",
+      "userId": "usr_hfz44067",
+      "workspaceId": "ws_0sc4nugo",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792577425030@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-21T10:10:25.231Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792577425222_VIW6EW-MVHYBDJP",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_5x21cslf3",
+      "createdAt": "2026-10-21T10:10:25.237Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0002",
+      "orderId": "ord_payu_dvg9vk2p6",
+      "txnid": "TXN_1792577448862_HJLOWW",
+      "invoiceId": "inv_isq97lnir",
+      "invoiceNumber": "INV-2026-0002",
+      "userId": "usr_kv2tuxqi",
+      "workspaceId": "ws_3oe1ucz7",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792577448780@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-21T10:10:48.870Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792577448862_HJLOWW-MVHYBVSC",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_ydjkezynv",
+      "createdAt": "2026-10-21T10:10:48.876Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0003",
+      "orderId": "ord_payu_vtnnaal7l",
+      "txnid": "TXN_1792580724396_9BGNAO",
+      "invoiceId": "inv_sczcjjpxx",
+      "invoiceNumber": "INV-2026-0003",
+      "userId": "usr_14fdcmzx",
+      "workspaceId": "ws_fbm5jfot",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792580724204@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-21T11:05:24.404Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792580724396_9BGNAO-MVI0A37E",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_przp75jyp",
+      "createdAt": "2026-10-21T11:05:24.410Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0004",
+      "orderId": "ord_payu_eniy9xacc",
+      "txnid": "TXN_1792581112143_2PVOGL",
+      "invoiceId": "inv_zha5uqmek",
+      "invoiceNumber": "INV-2026-0004",
+      "userId": "usr_xbckq4d5",
+      "workspaceId": "ws_ellvlvpu",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792581111940@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-21T11:11:52.151Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792581112143_2PVOGL-MVI0IEE6",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_und4jafz9",
+      "createdAt": "2026-10-21T11:11:52.158Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0005",
+      "orderId": "ord_payu_80ctfbhtl",
+      "txnid": "TXN_1792582447884_HRLTLC",
+      "invoiceId": "inv_5i20db8tw",
+      "invoiceNumber": "INV-2026-0005",
+      "userId": "usr_23ee9gat",
+      "workspaceId": "ws_u2s04pjx",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792582447718@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-21T11:34:07.891Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792582447884_HRLTLC-MVI1B121",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_ckqldv1yz",
+      "createdAt": "2026-10-21T11:34:07.897Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0006",
+      "orderId": "ord_payu_tr2t8ts7w",
+      "txnid": "TXN_1792583751943_Y2IXYK",
+      "invoiceId": "inv_kt61c0g9k",
+      "invoiceNumber": "INV-2026-0006",
+      "userId": "usr_febhs4vq",
+      "workspaceId": "ws_9q3wkum2",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792583751761@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-21T11:55:51.953Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792583751943_Y2IXYK-MVI22ZA3",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_ampqyenxe",
+      "createdAt": "2026-10-21T11:55:51.963Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0007",
+      "orderId": "ord_payu_j9wtk2swz",
+      "txnid": "TXN_1792586556009_G2OJT7",
+      "invoiceId": "inv_braj7tk91",
+      "invoiceNumber": "INV-2026-0007",
+      "userId": "usr_nqxfoxpb",
+      "workspaceId": "ws_3ew3yt64",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792586555831@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-21T12:42:36.018Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792586556009_G2OJT7-MVI3R2WQ",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_oldsljkyq",
+      "createdAt": "2026-10-21T12:42:36.026Z"
+    }
+  ],
+  "creditNotes": [],
+  "billingSettings": {
+    "legalName": "Vercel Vidai Technologies Private Limited",
+    "tradeName": "Vercel Vidai",
+    "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+    "state": "Delhi",
+    "gstin": "07AAAAA0000A1Z5",
+    "pan": "AAAAA0000A",
+    "supportEmail": "billing@vidai.io",
+    "website": "https://vidai.io",
+    "isGstRegistered": true
+  }
 }

@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { DashboardHeader } from '@/components/dashboard/Header';
-import { Settings, User, Lock, Trash2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Settings, User, Lock, Trash2, CheckCircle2, AlertCircle, Palette, ArrowRight } from 'lucide-react';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -54,7 +55,13 @@ export default function SettingsPage() {
   const credits = data?.credits || { availableBalance: 0, reservedBalance: 0 };
 
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex">
+    <div
+      className="min-h-screen flex transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-bg)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       <Sidebar userRole={user.role} credits={credits} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
@@ -119,6 +126,29 @@ export default function SettingsPage() {
                 Save Changes
               </button>
             </form>
+          </div>
+
+          {/* Appearance & Color Themes */}
+          <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-4">
+            <div className="flex items-start justify-between flex-wrap gap-4">
+              <div>
+                <h3 className="font-bold text-white text-base mb-1 flex items-center gap-2">
+                  <Palette className="w-4 h-4 text-violet-400" />
+                  <span>Workspace Appearance & Themes</span>
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Select from 10 bespoke color themes across Light, Dark, or System preference.
+                </p>
+              </div>
+
+              <Link
+                href="/dashboard/settings/appearance"
+                className="px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+              >
+                <span>Customize Themes</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
 
           {/* Danger Zone: Account Deletion */}

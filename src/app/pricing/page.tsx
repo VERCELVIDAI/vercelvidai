@@ -127,83 +127,23 @@ export default function PricingPage() {
     { id: 'pack_10000', name: '10,000 Credits Agency', priceInr: 5999, credits: 10000 },
   ];
 
-  const handleInitiatePayment = async (type: 'plan' | 'pack', item: any) => {
-    // Check authentication first
-    const authRes = await fetch('/api/auth/me');
-    if (!authRes.ok) {
-      router.push(`/signup?returnUrl=${encodeURIComponent('/pricing')}`);
-      return;
-    }
-
-    setPurchaseModal({
-      open: true,
-      type,
-      id: item.id,
-      name: item.name,
-      price: type === 'plan' ? (billingInterval === 'month' ? item.monthlyPrice : item.annualPrice * 12) : item.priceInr,
-      credits: item.credits || item.creditAmount,
-    });
+  const handleInitiatePayment = (type: 'plan' | 'pack', item: any) => {
+    router.push(`/checkout?type=${type}&id=${item.id}`);
   };
 
   const handleConfirmOrder = async () => {
     if (!purchaseModal) return;
-    setIsProcessing(true);
-    setStatusMessage('Initiating secure Razorpay checkout...');
-
-    try {
-      // 1. Create order on server
-      const orderRes = await fetch('/api/payments/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          paymentType: purchaseModal.type === 'plan' ? 'subscription' : 'credit_pack',
-          itemPlanOrPackId: purchaseModal.id,
-        }),
-      });
-
-      if (!orderRes.ok) {
-        throw new Error('Failed to create payment order');
-      }
-
-      const orderData = await orderRes.json();
-      setStatusMessage('Simulating Razorpay UPI / Card payment verification...');
-
-      // 2. Simulate or verify signature with server
-      setTimeout(async () => {
-        try {
-          const verifyRes = await fetch('/api/payments/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              orderId: orderData.orderId,
-              paymentId: `pay_rzp_mock_${Date.now()}`,
-              signature: 'simulated_valid_sig_client',
-            }),
-          });
-
-          if (!verifyRes.ok) {
-            throw new Error('Verification failed');
-          }
-
-          setStatusMessage('Payment verified successfully! Credits added to your wallet.');
-          setTimeout(() => {
-            setPurchaseModal(null);
-            setIsProcessing(false);
-            router.push('/dashboard?paymentSuccess=true');
-          }, 1500);
-        } catch (err: any) {
-          setStatusMessage(`Error: ${err.message}`);
-          setIsProcessing(false);
-        }
-      }, 1200);
-    } catch (err: any) {
-      setStatusMessage(`Order error: ${err.message}`);
-      setIsProcessing(false);
-    }
+    router.push(`/checkout?type=${purchaseModal.type}&id=${purchaseModal.id}`);
   };
 
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex flex-col">
+    <div
+      className="min-h-screen flex flex-col transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-bg)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -211,7 +151,7 @@ export default function PricingPage() {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-600/10 border border-violet-500/20 text-xs font-semibold text-violet-400 mb-4">
             <Zap className="w-3.5 h-3.5" />
-            <span>India-Focused INR Pricing • Razorpay Integration</span>
+            <span>India-Focused INR Pricing • PayU Hosted Checkout & GST Invoices</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
             Predictable plans. Uncapped creativity.
@@ -339,7 +279,7 @@ export default function PricingPage() {
 
             <div className="flex items-center gap-3 text-xs text-slate-400 bg-white/5 p-3 rounded-xl border border-white/5">
               <ShieldCheck className="w-5 h-5 text-emerald-400" />
-              <span>Instant credit crediting via Razorpay</span>
+              <span>Instant credit crediting via PayU India</span>
             </div>
           </div>
 

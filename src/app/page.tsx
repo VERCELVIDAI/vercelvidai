@@ -4,6 +4,7 @@ import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { HeroComposer } from '@/components/home/HeroComposer';
 import { HeroVisual } from '@/components/home/HeroVisual';
+import { FeaturedTemplateCarousel } from '@/components/home/FeaturedTemplateCarousel';
 import {
   Sparkles,
   ArrowRight,
@@ -25,7 +26,13 @@ import {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex flex-col">
+    <div
+      className="min-h-screen flex flex-col transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-bg)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       <Header />
 
       <main className="flex-1">
@@ -304,18 +311,23 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
+        {/* 4.5 FEATURED TEMPLATE CAROUSEL */}
+        {/* ========================================================================= */}
+        <FeaturedTemplateCarousel />
+
+        {/* ========================================================================= */}
         {/* 5. PRICING PREVIEW */}
         {/* ========================================================================= */}
         <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs uppercase tracking-widest text-violet-400 font-semibold mb-3">
+            <h2 className="text-xs uppercase tracking-widest text-violet-600 dark:text-violet-400 font-semibold mb-3">
               Transparent Credit-Based Pricing
             </h2>
-            <p className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            <p className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
               Pay in INR with complete flexibility
             </p>
-            <p className="mt-4 text-slate-400 text-sm">
-              No hidden fees. Full Razorpay INR integration. Unused credits rollover with active plans.
+            <p className="mt-4 text-slate-600 dark:text-slate-400 text-sm">
+              No hidden fees. Full PayU India Hosted Checkout & UPI integration. Unused credits rollover with active plans.
             </p>
           </div>
 
@@ -431,7 +443,7 @@ export default function HomePage() {
                 },
                 {
                   q: 'Can I pay using Indian Payment Methods (UPI, Netbanking, Cards)?',
-                  a: 'Yes! Vercel Vidai supports direct INR billing through official Razorpay checkout, allowing UPI, credit cards, debit cards, and corporate netbanking.',
+                  a: 'Yes! Vercel Vidai supports direct INR billing through official PayU India Hosted Checkout, allowing UPI, credit cards, debit cards, and corporate netbanking with automatic GST invoices and receipts.',
                 },
                 {
                   q: 'What happens if external AI providers have outages or credentials are missing?',

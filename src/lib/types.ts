@@ -4,6 +4,13 @@
 
 export type UserRole = 'creator' | 'admin' | 'enterprise';
 
+export interface ThemePreferences {
+  colorTheme: string; // e.g. 'midnight-violet', 'ocean-blue', etc.
+  mode: 'dark' | 'light' | 'system';
+  completed: boolean;
+  updatedAt: string;
+}
+
 export interface UserProfile {
   id: string;
   email: string;
@@ -17,6 +24,7 @@ export interface UserProfile {
     videoTypes?: string[];
     completed?: boolean;
   };
+  themePreferences?: ThemePreferences;
   createdAt: string;
   updatedAt: string;
 }
@@ -164,6 +172,7 @@ export interface CreditAccount {
 export type CreditTransactionType =
   | 'signup_bonus'
   | 'monthly_allowance'
+  | 'subscription_grant'
   | 'purchase'
   | 'generation_reserve'
   | 'generation_settle'
@@ -318,6 +327,7 @@ export interface WebhookEvent {
   provider: string;
   eventId: string;
   eventType: string;
+  payload?: any;
   processingStatus: 'received' | 'processed' | 'ignored' | 'failed';
   receivedAt: string;
   processedAt?: string;
@@ -343,4 +353,173 @@ export interface SupportTicket {
   priority: 'low' | 'medium' | 'high';
   createdAt: string;
   updatedAt: string;
+}
+
+// ==============================================================================
+// PAYU INDIA & BILLING SYSTEM INTERFACES
+// ==============================================================================
+
+export interface TaxBreakdown {
+  baseAmount: number;
+  taxRate: number; // e.g. 18
+  taxAmount: number;
+  cgstRate: number; // e.g. 9
+  cgstAmount: number;
+  sgstRate: number; // e.g. 9
+  sgstAmount: number;
+  igstRate: number; // e.g. 18
+  igstAmount: number;
+  isInterState: boolean;
+  placeOfSupply: string;
+}
+
+export interface CustomerBillingDetails {
+  name: string;
+  email: string;
+  phone: string;
+  address?: string;
+  city?: string;
+  state: string;
+  pincode?: string;
+  gstin?: string;
+}
+
+export interface SupplierLegalDetails {
+  legalName: string;
+  tradeName: string;
+  registeredAddress: string;
+  state: string;
+  gstin?: string;
+  pan?: string;
+  supportEmail: string;
+  website: string;
+  isGstRegistered: boolean;
+}
+
+export interface PayUPaymentOrder {
+  id: string;
+  txnid: string;
+  userId: string;
+  workspaceId: string;
+  paymentType: 'subscription' | 'credit_pack';
+  itemPlanOrPackId: string;
+  productInfo: string;
+  currency: 'INR';
+  baseAmount: number;
+  taxAmount: number;
+  totalAmount: number;
+  amountPaise: number;
+  taxBreakdown: TaxBreakdown;
+  customerDetails: CustomerBillingDetails;
+  status: 'created' | 'pending' | 'success' | 'failed' | 'cancelled' | 'refunded';
+  payuMihpayid?: string;
+  payuBankRefNum?: string;
+  payuPaymentMode?: string;
+  payuResponseHash?: string;
+  payuError?: string;
+  idempotencyKey: string;
+  invoiceId?: string;
+  invoiceNumber?: string;
+  receiptId?: string;
+  receiptNumber?: string;
+  createdAt: string;
+  updatedAt: string;
+  verifiedAt?: string;
+}
+
+export interface InvoiceItem {
+  id: string;
+  description: string;
+  hsnSacCode: string;
+  quantity: number;
+  unitPrice: number;
+  taxableValue: number;
+  gstRate: number;
+  cgstAmount: number;
+  sgstAmount: number;
+  igstAmount: number;
+  totalAmount: number;
+}
+
+export interface Invoice {
+  id: string;
+  invoiceNumber: string;
+  orderId: string;
+  txnid: string;
+  userId: string;
+  workspaceId: string;
+  supplier: SupplierLegalDetails;
+  customer: CustomerBillingDetails;
+  items: InvoiceItem[];
+  baseAmount: number;
+  taxAmount: number;
+  cgstAmount: number;
+  sgstAmount: number;
+  igstAmount: number;
+  totalAmount: number;
+  currency: 'INR';
+  status: 'paid' | 'pending' | 'cancelled' | 'refunded';
+  issueDate: string;
+  dueDate: string;
+  paymentDate?: string;
+  payuPaymentId?: string;
+  terms: string;
+  notes: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PaymentReceipt {
+  id: string;
+  receiptNumber: string;
+  orderId: string;
+  txnid: string;
+  invoiceId?: string;
+  invoiceNumber?: string;
+  userId: string;
+  workspaceId: string;
+  customerName: string;
+  customerEmail: string;
+  amountReceived: number;
+  currency: 'INR';
+  paymentMethod: string;
+  payuMihpayid?: string;
+  payuBankRefNum?: string;
+  productPurchased: string;
+  paymentDate: string;
+  paymentStatus: 'verified_success';
+  verificationReference: string;
+  footerNotice: string;
+  createdAt: string;
+}
+
+export interface CreditNote {
+  id: string;
+  creditNoteNumber: string;
+  invoiceId: string;
+  invoiceNumber: string;
+  userId: string;
+  workspaceId: string;
+  orderId: string;
+  txnid: string;
+  reason: string;
+  adjustmentAmount: number;
+  taxAdjustment: number;
+  totalAdjustment: number;
+  status: 'issued' | 'applied';
+  createdAt: string;
+}
+
+export interface BillingOverviewStats {
+  subscription?: Subscription;
+  plan?: Plan;
+  availableCredits: number;
+  purchasedCredits: number;
+  creditsUsed: number;
+  totalSuccessfulPayments: number;
+  totalSpentInr: number;
+  recentTransactions: PayUPaymentOrder[];
+  pendingOrdersCount: number;
+  latestInvoices: Invoice[];
+  latestReceipts: PaymentReceipt[];
 }

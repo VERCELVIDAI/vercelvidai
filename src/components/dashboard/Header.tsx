@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { User, Bell, Sparkles, Zap, ShieldCheck } from 'lucide-react';
+import { ThemeToggle } from '../theme/ThemeToggle';
 
 interface DashboardHeaderProps {
   displayName?: string;
@@ -20,22 +21,44 @@ export function DashboardHeader({
   workspaceName = 'Personal Studio',
 }: DashboardHeaderProps) {
   return (
-    <header className="h-16 border-b border-white/[0.08] bg-[#090A0F]/90 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-40">
+    <header
+      className="h-16 border-b backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-40 transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-surface)',
+        borderColor: 'var(--app-card-border)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       <div className="flex items-center gap-3">
-        <span className="text-xs font-mono text-slate-400 bg-white/5 px-2.5 py-1 rounded-md border border-white/5">
+        <span
+          className="text-xs font-mono px-2.5 py-1 rounded-md border"
+          style={{
+            backgroundColor: 'var(--app-card)',
+            borderColor: 'var(--app-card-border)',
+            color: 'var(--app-text-secondary)',
+          }}
+        >
           {workspaceName}
         </span>
-        <span className="hidden sm:inline-block text-slate-500">•</span>
-        <span className="hidden sm:inline-block text-xs text-slate-400">
+        <span className="hidden sm:inline-block opacity-40">•</span>
+        <span className="hidden sm:inline-block text-xs" style={{ color: 'var(--app-text-muted)' }}>
           All AI Inference Nodes Operational
         </span>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 sm:gap-4">
+        {/* Theme Mode Switcher */}
+        <ThemeToggle />
+
         {/* Credit Quick Display */}
         <Link
           href="/dashboard/wallet"
-          className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold hover:opacity-90 transition-all border"
+          style={{
+            backgroundColor: 'var(--app-badge-bg)',
+            color: 'var(--app-badge-text)',
+            borderColor: 'var(--app-badge-border)',
+          }}
         >
           <Zap className="w-3.5 h-3.5 text-amber-400" />
           <span>{credits} Credits</span>

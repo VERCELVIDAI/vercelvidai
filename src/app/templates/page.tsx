@@ -1,170 +1,356 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
-import { Sparkles, Layers, ArrowRight, Play, Filter } from 'lucide-react';
+import { TemplateCard } from '@/components/templates/TemplateCard';
+import { VideoPreviewModal } from '@/components/templates/VideoPreviewModal';
+import {
+  TEMPLATES_DATA,
+  TEMPLATE_CATEGORIES,
+  VideoTemplate,
+  TemplateCategory,
+} from '@/lib/templates';
+import {
+  Search,
+  Sparkles,
+  Layers,
+  Ratio,
+  SlidersHorizontal,
+  Flame,
+  Film,
+  X,
+} from 'lucide-react';
 
-const CATEGORIES = [
-  'All',
-  'Instagram Reels',
-  'YouTube Shorts',
-  'Product Commercials',
-  'Explainer Videos',
-  'UGC Ads',
-  'YouTube Videos',
-];
+function TemplateExplorer() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-const TEMPLATES = [
-  {
-    id: 'tmpl_1',
-    slug: 'instagram-reels-ecommerce',
-    title: 'Viral Luxury Product Reel',
-    category: 'Instagram Reels',
-    aspect: '9:16 Vertical',
-    duration: '15s',
-    thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80',
-    desc: 'High-energy sportswear and sneaker commercial with kinetic typography hooks.',
-  },
-  {
-    id: 'tmpl_2',
-    slug: 'youtube-shorts-tech',
-    title: 'Daily AI & Tech Breakdown',
-    category: 'YouTube Shorts',
-    aspect: '9:16 Vertical',
-    duration: '20s',
-    thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80',
-    desc: 'Bite-sized viral news template with floating subtitles and laptop coding scenes.',
-  },
-  {
-    id: 'tmpl_3',
-    slug: 'cinematic-luxury-perfume',
-    title: 'Cinematic Perfume Commercial',
-    category: 'Product Commercials',
-    aspect: '16:9 Landscape',
-    duration: '18s',
-    thumbnail: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&auto=format&fit=crop&q=80',
-    desc: 'Volumetric glass perfume bottle in botanical forest misty lighting.',
-  },
-  {
-    id: 'tmpl_4',
-    slug: 'saas-explainer-flow',
-    title: 'SaaS Product Walkthrough',
-    category: 'Explainer Videos',
-    aspect: '16:9 Landscape',
-    duration: '30s',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
-    desc: 'Modern software product launch teaser with timeline highlights and feature bullets.',
-  },
-  {
-    id: 'tmpl_5',
-    slug: 'ugc-testimonial-unboxing',
-    title: 'High-Converting UGC Hook',
-    category: 'UGC Ads',
-    aspect: '9:16 Vertical',
-    duration: '25s',
-    thumbnail: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop&q=80',
-    desc: 'Selfie-style product discovery and honest unboxing testimonial format for TikTok.',
-  },
-  {
-    id: 'tmpl_6',
-    slug: 'youtube-longform-opener',
-    title: 'Cinematic YouTube Channel Intro',
-    category: 'YouTube Videos',
-    aspect: '16:9 Landscape',
-    duration: '12s',
-    thumbnail: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80',
-    desc: 'Heavy bass impact teaser with 3D logo explosion and subscribe button callout.',
-  },
-];
+  // URL state support
+  const initialCategory = (searchParams.get('category') as TemplateCategory) || 'All Templates';
+  const initialAspect = searchParams.get('aspect') || 'all';
 
-export default function TemplatesPage() {
-  const [selectedCat, setSelectedCat] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
+  const [selectedAspect, setSelectedAspect] = useState<string>(initialAspect);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortBy, setSortBy] = useState<'trending' | 'duration' | 'name'>('trending');
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [previewTemplate, setPreviewTemplate] = useState<VideoTemplate | null>(null);
+  const [isCloning, setIsCloning] = useState<string | null>(null);
 
-  const filtered = selectedCat === 'All'
-    ? TEMPLATES
-    : TEMPLATES.filter((t) => t.category === selectedCat);
+  // Load favorites from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('vidai_favorite_templates');
+      if (saved) setFavorites(JSON.parse(saved));
+    } catch (e) {}
+  }, []);
+
+  const toggleFavorite = (templateId: string) => {
+    setFavorites((prev) => {
+      const updated = prev.includes(templateId)
+        ? prev.filter((id) => id !== templateId)
+        : [...prev, templateId];
+      try {
+        localStorage.setItem('vidai_favorite_templates', JSON.stringify(updated));
+      } catch (e) {}
+      return updated;
+    });
+  };
+
+  // Filter and Sort templates
+  const filteredTemplates = useMemo(() => {
+    return TEMPLATES_DATA.filter((tmpl) => {
+      // Category filter
+      if (selectedCategory === 'Trending') {
+        if (tmpl.badge !== 'Trending' && tmpl.badge !== 'Hot') return false;
+      } else if (selectedCategory !== 'All Templates' && tmpl.category !== selectedCategory) {
+        return false;
+      }
+
+      // Aspect ratio filter
+      if (selectedAspect !== 'all' && tmpl.aspect !== selectedAspect) {
+        return false;
+      }
+
+      // Search query filter
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const matchesTitle = tmpl.title.toLowerCase().includes(q);
+        const matchesDesc = tmpl.description.toLowerCase().includes(q);
+        const matchesCategory = tmpl.category.toLowerCase().includes(q);
+        const matchesTags = tmpl.tags.some((t) => t.toLowerCase().includes(q));
+        if (!matchesTitle && !matchesDesc && !matchesCategory && !matchesTags) {
+          return false;
+        }
+      }
+
+      return true;
+    }).sort((a, b) => {
+      if (sortBy === 'duration') return a.durationSec - b.durationSec;
+      if (sortBy === 'name') return a.title.localeCompare(b.title);
+      // 'trending'
+      const aWeight = a.badge === 'Trending' ? 2 : a.badge === 'Hot' ? 1 : 0;
+      const bWeight = b.badge === 'Trending' ? 2 : b.badge === 'Hot' ? 1 : 0;
+      return bWeight - aWeight;
+    });
+  }, [selectedCategory, selectedAspect, searchQuery, sortBy]);
+
+  // Working "Use Template" Flow
+  const handleUseTemplate = async (template: VideoTemplate) => {
+    setIsCloning(template.id);
+    try {
+      // 1. Check authentication status
+      const authRes = await fetch('/api/auth/me');
+      if (!authRes.ok) {
+        // Unauthenticated: preserve intent in returnUrl
+        router.push(
+          `/login?returnUrl=${encodeURIComponent(`/templates/${template.slug}`)}&useTemplate=true`
+        );
+        return;
+      }
+
+      // 2. Instantiate independent new project from template
+      const res = await fetch('/api/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: `${template.title} (Project)`,
+          mediaType: 'video',
+          thumbnailUrl: template.thumbnail,
+          timeline: {
+            durationSec: template.durationSec,
+            aspectRatio: template.aspect,
+            resolution: '1080p',
+            tracks: [
+              { id: 'trk_v1', type: 'video', name: 'Video Scenes' },
+              { id: 'trk_t1', type: 'text', name: 'Subtitles & Captions' },
+              { id: 'trk_a1', type: 'audio', name: 'Soundtrack & Voice' },
+            ],
+            clips: [
+              {
+                id: `clp_v_${Date.now()}_1`,
+                trackId: 'trk_v1',
+                type: 'video',
+                title: template.scenes[0]?.title || 'Opening Hook',
+                sourceUrl: template.videoPreview,
+                startTimeSec: 0,
+                durationSec: template.durationSec,
+                volume: 1,
+              },
+            ],
+          },
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to create project from template');
+      }
+
+      const data = await res.json();
+      // 3. Open project directly in the multi-track editor
+      router.push(`/editor/${data.project.id}`);
+    } catch (err: any) {
+      alert(`Error initializing template: ${err.message}`);
+      setIsCloning(null);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex flex-col">
+    <>
+      {/* 2. SEARCH & FILTER CONTROLS */}
+      <div className="space-y-6 mb-10">
+        {/* Search Bar + Aspect Toggle + Sorter */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          {/* Search Input */}
+          <div className="relative flex-1 max-w-lg">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by topic, brand, style (e.g. Luxury, UGC, Tech)..."
+              className="w-full bg-white dark:bg-[#11131C] text-slate-900 dark:text-white pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 text-sm shadow-sm transition-all"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Aspect Ratio Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1 shrink-0">
+              <Ratio className="w-3.5 h-3.5" />
+              <span>Aspect:</span>
+            </span>
+            {[
+              { label: 'All', value: 'all' },
+              { label: '16:9 Landscape', value: '16:9' },
+              { label: '9:16 Vertical', value: '9:16' },
+              { label: '1:1 Square', value: '1:1' },
+            ].map((a) => (
+              <button
+                key={a.value}
+                type="button"
+                onClick={() => setSelectedAspect(a.value)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-all ${
+                  selectedAspect === a.value
+                    ? 'bg-violet-600 text-white shadow-sm font-semibold'
+                    : 'bg-white dark:bg-[#11131C] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10'
+                }`}
+              >
+                {a.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Sort Selector */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <span>Sort:</span>
+            </span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="bg-white dark:bg-[#11131C] text-slate-900 dark:text-white text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 focus:outline-none focus:border-violet-500 font-medium shadow-sm"
+            >
+              <option value="trending">Trending & ROI</option>
+              <option value="duration">Shortest First</option>
+              <option value="name">Alphabetical</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Category Filter Pills (All 16 Categories) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {TEMPLATE_CATEGORIES.map((cat) => {
+            const count =
+              cat === 'All Templates'
+                ? TEMPLATES_DATA.length
+                : cat === 'Trending'
+                ? TEMPLATES_DATA.filter((t) => t.badge === 'Trending' || t.badge === 'Hot').length
+                : TEMPLATES_DATA.filter((t) => t.category === cat).length;
+
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 ${
+                  selectedCategory === cat
+                    ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-600/25'
+                    : 'bg-white dark:bg-[#11131C] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10'
+                }`}
+              >
+                {cat === 'Trending' && <Flame className="w-3.5 h-3.5 text-amber-300" />}
+                <span>{cat}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                    selectedCategory === cat
+                      ? 'bg-white/20 text-white'
+                      : 'bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400'
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 3. TEMPLATE GRID */}
+      {filteredTemplates.length === 0 ? (
+        <div className="py-20 text-center rounded-3xl bg-white dark:bg-[#11131C] border border-slate-200 dark:border-white/10 p-8 shadow-sm">
+          <Film className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+            No matching templates found
+          </h3>
+          <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+            Try adjusting your search query, selecting "All Templates", or resetting the aspect ratio filter.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedCategory('All Templates');
+              setSelectedAspect('all');
+              setSearchQuery('');
+            }}
+            className="mt-6 px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold shadow-md hover:bg-violet-500 transition-colors"
+          >
+            Reset Filters
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {filteredTemplates.map((template) => (
+            <TemplateCard
+              key={template.id}
+              template={template}
+              onPreview={(t) => setPreviewTemplate(t)}
+              onUseTemplate={(t) => handleUseTemplate(t)}
+              isFavorited={favorites.includes(template.id)}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* 4. EXPANDED VIDEO PREVIEW MODAL */}
+      <VideoPreviewModal
+        template={previewTemplate}
+        onClose={() => setPreviewTemplate(null)}
+        onUseTemplate={(t) => handleUseTemplate(t)}
+        onSelectRelated={(r) => setPreviewTemplate(r)}
+      />
+    </>
+  );
+}
+
+export default function TemplatesPage() {
+  return (
+    <div
+      className="min-h-screen flex flex-col transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-bg)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-600/10 border border-violet-500/20 text-xs font-semibold text-violet-400 mb-4">
-            <Layers className="w-3.5 h-3.5" />
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        {/* 1. HERO HEADER (Rendered immediately in SSR for immediate SEO and zero layout jump) */}
+        <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-600/10 dark:bg-violet-600/20 border border-violet-500/25 text-xs font-semibold text-violet-600 dark:text-violet-300 mb-6 backdrop-blur-md">
+            <Sparkles className="w-4 h-4 text-amber-500" />
             <span>Curated Creative Library</span>
+            <span className="text-slate-300 dark:text-slate-600">•</span>
+            <span>Over 300+ Verified AI Layouts</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
-            Creative Video Templates
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15]">
+            Start with a template.{' '}
+            <span className="bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">
+              Finish with something extraordinary.
+            </span>
           </h1>
-          <p className="mt-4 text-base sm:text-xl text-slate-300">
-            Pre-assembled multi-track timelines with synchronized audio, transitions, and copy hooks ready for instant AI remake.
+
+          <p className="mt-5 text-base sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Explore creative starting points for ads, social content, product films and stories.
           </p>
         </div>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCat(cat)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-                selectedCat === cat
-                  ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/30'
-                  : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid of Templates */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((tmpl) => (
-            <Link
-              key={tmpl.id}
-              href={`/templates/${tmpl.slug}`}
-              className="rounded-2xl glass-panel border border-white/10 overflow-hidden group hover:border-violet-500/50 transition-all flex flex-col justify-between"
-            >
-              <div>
-                <div className="aspect-[16/10] relative overflow-hidden bg-slate-900">
-                  <img
-                    src={tmpl.thumbnail}
-                    alt={tmpl.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-[11px] font-mono text-slate-300 border border-white/10">
-                    {tmpl.duration}
-                  </div>
-                  <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                    <span className="text-[11px] font-bold text-violet-300 bg-violet-950/80 backdrop-blur-md px-2 py-0.5 rounded border border-violet-500/30">
-                      {tmpl.category}
-                    </span>
-                    <span className="text-[10px] text-slate-400 font-mono">{tmpl.aspect}</span>
-                  </div>
-                </div>
-
-                <div className="p-5">
-                  <h3 className="font-bold text-white text-lg group-hover:text-violet-300 transition-colors">
-                    {tmpl.title}
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed line-clamp-2">
-                    {tmpl.desc}
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-5 pt-0 border-t border-white/5 mt-4 flex items-center justify-between text-xs font-semibold text-violet-400">
-                <span>Customize in Studio</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Link>
-          ))}
-        </div>
+        <Suspense fallback={<div className="py-20 text-center font-mono text-xs text-slate-400">Loading interactive template catalog...</div>}>
+          <TemplateExplorer />
+        </Suspense>
       </main>
 
       <Footer />

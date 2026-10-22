@@ -20,6 +20,7 @@ export interface GenerationInputPayload {
   durationSec?: number;
   resolution?: string;
   referenceImageUrl?: string;
+  sourceImageUrl?: string;
   scriptText?: string;
   voiceId?: string;
   style?: string;

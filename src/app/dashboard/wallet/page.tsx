@@ -67,7 +67,13 @@ export default function CreditWalletPage() {
   const isLowBalance = credits.availableBalance < 30;
 
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex">
+    <div
+      className="min-h-screen flex transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--app-bg)',
+        color: 'var(--app-text-primary)',
+      }}
+    >
       <Sidebar userRole={user.role} credits={credits} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
