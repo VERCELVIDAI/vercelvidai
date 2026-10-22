@@ -205,19 +205,33 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
 
   // 5. TAX BREAKDOWN & GRAND TOTAL BOX (Right Aligned)
   const summaryBoxWidth = 220;
+  const hasDiscount = Boolean(invoice.discountAmount && invoice.discountAmount > 0);
+  const summaryBoxHeight = hasDiscount ? 135 : 110;
   const summaryBoxX = width - 40 - summaryBoxWidth;
 
   page.drawRectangle({
     x: summaryBoxX,
-    y: cursorY - 100,
+    y: cursorY - summaryBoxHeight + 10,
     width: summaryBoxWidth,
-    height: 110,
+    height: summaryBoxHeight,
     color: colorBgLight,
     borderColor: colorBorder,
     borderWidth: 1,
   });
 
   let sumY = cursorY - 14;
+
+  if (hasDiscount) {
+    if (invoice.originalBaseAmount) {
+      page.drawText('Original Subtotal:', { x: summaryBoxX + 15, y: sumY, size: 8.5, font: fontRegular, color: colorSlate });
+      page.drawText(`INR ${invoice.originalBaseAmount.toFixed(2)}`, { x: summaryBoxX + 130, y: sumY, size: 8.5, font: fontBold, color: colorDark });
+      sumY -= 14;
+    }
+    page.drawText(`Coupon (${invoice.couponCode || 'PROMO'}):`, { x: summaryBoxX + 15, y: sumY, size: 8.5, font: fontRegular, color: colorEmerald });
+    page.drawText(`-INR ${invoice.discountAmount!.toFixed(2)}`, { x: summaryBoxX + 130, y: sumY, size: 8.5, font: fontBold, color: colorEmerald });
+    sumY -= 14;
+  }
+
   page.drawText('Base Taxable Value:', { x: summaryBoxX + 15, y: sumY, size: 8.5, font: fontRegular, color: colorSlate });
   page.drawText(`INR ${invoice.baseAmount.toFixed(2)}`, { x: summaryBoxX + 130, y: sumY, size: 8.5, font: fontBold, color: colorDark });
 
@@ -382,6 +396,16 @@ export async function generateReceiptPdf(
     font: fontBold,
     color: colorDark,
   });
+
+  if (receipt.discountAmount && receipt.discountAmount > 0) {
+    page.drawText(`Coupon ${receipt.couponCode || 'PROMO'} Applied (-INR ${receipt.discountAmount.toFixed(2)})`, {
+      x: 60,
+      y: cursorY - 60,
+      size: 7.5,
+      font: fontBold,
+      color: colorEmerald,
+    });
+  }
 
   // Verified Badge
   page.drawRectangle({

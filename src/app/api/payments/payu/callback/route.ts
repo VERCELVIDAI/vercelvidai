@@ -39,12 +39,14 @@ export async function POST(req: NextRequest) {
         );
       }
     } else if (status === 'cancel' || status === 'cancelled') {
+      dbStore.cancelCouponRedemption(txnid);
       dbStore.updatePayUOrder(txnid, {
         status: 'cancelled',
         payuError: payload.error_Message || 'Transaction cancelled by customer on PayU portal',
       });
       return NextResponse.redirect(`${hostUrl}/payment/status?txnid=${encodeURIComponent(txnid)}&status=cancelled`, 303);
     } else {
+      dbStore.cancelCouponRedemption(txnid);
       dbStore.updatePayUOrder(txnid, {
         status: 'failed',
         payuError: payload.error_Message || `Transaction failed with status: ${status}`,

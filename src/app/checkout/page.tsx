@@ -15,6 +15,9 @@ import {
   AlertCircle,
   HelpCircle,
   ExternalLink,
+  Tag,
+  X,
+  Loader2,
 } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 
@@ -61,6 +64,14 @@ function CheckoutContent() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Coupon state
+  const [couponInput, setCouponInput] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [couponPricing, setCouponPricing] = useState<any>(null);
+  const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
+  const [couponError, setCouponError] = useState('');
+  const [couponSuccess, setCouponSuccess] = useState('');
 
   // Item details
   const [itemDetails, setItemDetails] = useState<{
@@ -136,11 +147,73 @@ function CheckoutContent() {
     }
   }, [itemType, itemId, interval, router]);
 
-  // Tax calculation
+  // Revalidate coupon if item, interval, or state changes
+  useEffect(() => {
+    if (appliedCoupon?.code) {
+      handleApplyCoupon(appliedCoupon.code, false);
+    }
+  }, [itemType, itemId, interval, customerState]);
+
+  const handleApplyCoupon = async (codeToValidate?: string, showSuccessMsg = true) => {
+    const code = (codeToValidate || couponInput).trim();
+    if (!code) {
+      setCouponError('Please enter a coupon code.');
+      setCouponSuccess('');
+      return;
+    }
+
+    setIsValidatingCoupon(true);
+    setCouponError('');
+    if (showSuccessMsg) setCouponSuccess('');
+
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code,
+          paymentType: itemType === 'pack' ? 'credit_pack' : 'subscription',
+          itemPlanOrPackId: itemId,
+          billingInterval: interval,
+          customerState,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.valid) {
+        setCouponError(data.error || 'Invalid or expired coupon code.');
+        setAppliedCoupon(null);
+        setCouponPricing(null);
+      } else {
+        setAppliedCoupon(data.coupon);
+        setCouponPricing(data.pricing);
+        if (showSuccessMsg) {
+          setCouponSuccess(`Coupon ${data.coupon.code} applied! Saved INR ${data.pricing.discountAmount.toFixed(2)}.`);
+        }
+      }
+    } catch {
+      setCouponError('Network error while validating coupon. Please try again.');
+    } finally {
+      setIsValidatingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponPricing(null);
+    setCouponInput('');
+    setCouponError('');
+    setCouponSuccess('');
+  };
+
+  // Tax and pricing calculation
   const isInterState = customerState !== 'Delhi';
   const taxRate = 18;
-  const taxAmount = Math.round((itemDetails.basePrice * taxRate) / 100 * 100) / 100;
-  const totalAmount = Math.round((itemDetails.basePrice + taxAmount) * 100) / 100;
+  const finalBasePrice = couponPricing ? couponPricing.discountedBaseAmount : itemDetails.basePrice;
+  const discountAmount = couponPricing ? couponPricing.discountAmount : 0;
+  const taxAmount = couponPricing ? couponPricing.taxAmount : Math.round(((finalBasePrice * taxRate) / 100) * 100) / 100;
+  const totalAmount = couponPricing ? couponPricing.totalAmount : Math.round((finalBasePrice + taxAmount) * 100) / 100;
+  const isZeroPayable = couponPricing?.isZeroPayable || totalAmount === 0;
 
   const handleSubmitPayment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -172,15 +245,27 @@ function CheckoutContent() {
             address: customerAddress,
             gstin: customerGstin,
           },
+          couponCode: appliedCoupon?.code,
         }),
       });
 
       if (!res.ok) {
         const errData = await res.json();
-        throw new Error(errData.error || 'Failed to initialize PayU payment order');
+        throw new Error(errData.error || 'Failed to initialize payment order');
       }
 
-      const { payuParams } = await res.json();
+      const orderData = await res.json();
+
+      // Zero-payment / 100% discount free checkout flow
+      if (orderData.isZeroPayment && orderData.redirectUrl) {
+        window.location.href = orderData.redirectUrl;
+        return;
+      }
+
+      const { payuParams } = orderData;
+      if (!payuParams) {
+        throw new Error('Payment gateway parameters missing.');
+      }
 
       // Submit Form directly to PayU Hosted Checkout Gateway
       const form = document.createElement('form');
@@ -376,7 +461,13 @@ function CheckoutContent() {
                   className="w-full py-3.5 px-6 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 cursor-pointer"
                 >
                   <Lock className="w-4 h-4" />
-                  <span>{isSubmitting ? 'Connecting to PayU...' : `Continue to Pay INR ${totalAmount.toFixed(2)}`}</span>
+                  <span>
+                    {isSubmitting
+                      ? 'Processing Order...'
+                      : isZeroPayable
+                      ? 'Claim Free Order (INR 0.00)'
+                      : `Continue to Pay INR ${totalAmount.toFixed(2)}`}
+                  </span>
                 </button>
               </div>
 
@@ -424,12 +515,117 @@ function CheckoutContent() {
               )}
             </div>
 
+            {/* Coupon Code Section */}
+            <div className="p-4 rounded-xl bg-white/70 border border-emerald-500/20 space-y-3 shadow-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-[#17211D] flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>Have a coupon code?</span>
+                </span>
+                {appliedCoupon && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveCoupon}
+                    className="text-[11px] text-rose-600 hover:text-rose-700 font-semibold underline cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+
+              {appliedCoupon ? (
+                <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs">
+                  <div className="flex items-center gap-2 text-emerald-900 font-mono font-bold">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>{appliedCoupon.code}</span>
+                    <span className="text-emerald-700 font-normal font-sans text-[11px]">
+                      ({appliedCoupon.discountType === 'percentage' ? `${appliedCoupon.discountValue}% off` : `INR ${appliedCoupon.discountValue} off`})
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemoveCoupon}
+                    className="p-1 rounded hover:bg-emerald-100 text-slate-500 hover:text-rose-600 transition-colors"
+                    title="Remove coupon"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={couponInput}
+                    onChange={(e) => {
+                      setCouponInput(e.target.value.toUpperCase());
+                      if (couponError) setCouponError('');
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleApplyCoupon();
+                      }
+                    }}
+                    placeholder="e.g. SAVE20"
+                    className="flex-1 glass-input rounded-xl px-3 py-2 text-xs text-[#17211D] font-mono uppercase border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleApplyCoupon()}
+                    disabled={isValidatingCoupon || !couponInput.trim()}
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs disabled:opacity-50 transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    {isValidatingCoupon ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      'Apply'
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {couponSuccess && (
+                <p className="text-[11px] text-emerald-700 font-medium flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 shrink-0" />
+                  <span>{couponSuccess}</span>
+                </p>
+              )}
+
+              {couponError && (
+                <p className="text-[11px] text-rose-600 font-medium flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3 shrink-0" />
+                  <span>{couponError}</span>
+                </p>
+              )}
+            </div>
+
             {/* Price Breakdown */}
             <div className="space-y-2.5 text-xs">
               <div className="flex justify-between text-slate-600">
-                <span>Base Plan Price:</span>
-                <span className="text-[#17211D] font-mono font-bold">INR {itemDetails.basePrice.toFixed(2)}</span>
+                <span>Subtotal:</span>
+                <span className={`text-[#17211D] font-mono font-bold ${appliedCoupon ? 'line-through text-slate-400' : ''}`}>
+                  INR {itemDetails.basePrice.toFixed(2)}
+                </span>
               </div>
+
+              {appliedCoupon && couponPricing && (
+                <>
+                  <div className="flex justify-between text-emerald-700 font-semibold bg-emerald-50/80 p-2 rounded-lg border border-emerald-200">
+                    <span className="flex items-center gap-1.5">
+                      <Tag className="w-3.5 h-3.5 shrink-0" />
+                      <span>Coupon: {appliedCoupon.code}</span>
+                    </span>
+                    <span className="font-mono font-bold">-INR {couponPricing.discountAmount.toFixed(2)}</span>
+                  </div>
+
+                  <div className="flex justify-between text-slate-600">
+                    <span>Discounted Base:</span>
+                    <span className="text-[#17211D] font-mono font-bold">
+                      INR {couponPricing.discountedBaseAmount.toFixed(2)}
+                    </span>
+                  </div>
+                </>
+              )}
 
               {isInterState ? (
                 <div className="flex justify-between text-slate-600">

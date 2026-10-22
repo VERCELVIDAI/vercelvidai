@@ -22,6 +22,12 @@ import {
   FileText,
   Download,
   Clock,
+  Tag,
+  Percent,
+  Trash2,
+  Edit3,
+  X,
+  Check,
 } from 'lucide-react';
 
 export default function AdminConsolePage() {
@@ -32,13 +38,35 @@ export default function AdminConsolePage() {
   const [billingSearch, setBillingSearch] = useState('');
   const [recheckStatus, setRecheckStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'providers' | 'jobs' | 'audits' | 'billing' | 'pricing'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'providers' | 'jobs' | 'audits' | 'billing' | 'pricing' | 'coupons'>('overview');
 
   // Pricing & Legal Settings Admin State
   const [billingConfig, setBillingConfig] = useState<any>(null);
   const [adminPlans, setAdminPlans] = useState<any[]>([]);
   const [adminPacks, setAdminPacks] = useState<any[]>([]);
   const [pricingActionStatus, setPricingActionStatus] = useState<string | null>(null);
+
+  // Coupons Admin State
+  const [couponsList, setCouponsList] = useState<any[]>([]);
+  const [couponRedemptions, setCouponRedemptions] = useState<any[]>([]);
+  const [couponStats, setCouponStats] = useState<any>(null);
+  const [couponSearch, setCouponSearch] = useState('');
+  const [couponActionStatus, setCouponActionStatus] = useState<string | null>(null);
+  const [couponModal, setCouponModal] = useState<{ open: boolean; mode: 'create' | 'edit'; coupon?: any } | null>(null);
+  const [couponForm, setCouponForm] = useState({
+    code: '',
+    description: '',
+    discountType: 'percentage' as 'percentage' | 'fixed',
+    discountValue: 20,
+    maxDiscount: '',
+    minimumOrderValue: '',
+    startsAt: '',
+    expiresAt: '',
+    usageLimit: '',
+    perUserLimit: '',
+    applicableTypes: [] as string[],
+    isActive: true,
+  });
 
   // Manual Credit Adjustment Modal
   const [adjModal, setAdjModal] = useState<{ open: boolean; userId: string; userEmail: string } | null>(null);
@@ -48,11 +76,12 @@ export default function AdminConsolePage() {
 
   const fetchAdminData = async () => {
     try {
-      const [overviewRes, usersRes, billRes, settingsRes] = await Promise.all([
+      const [overviewRes, usersRes, billRes, settingsRes, couponsRes] = await Promise.all([
         fetch('/api/admin/overview'),
         fetch('/api/admin/users'),
         fetch('/api/admin/billing/overview'),
         fetch('/api/admin/billing/settings'),
+        fetch('/api/admin/coupons'),
       ]);
 
       if (!overviewRes.ok) {
@@ -73,6 +102,12 @@ export default function AdminConsolePage() {
         setBillingConfig(s.billingSettings || {});
         setAdminPlans(s.plans || []);
         setAdminPacks(s.creditPacks || []);
+      }
+      if (couponsRes.ok) {
+        const c = await couponsRes.json();
+        setCouponsList(c.coupons || []);
+        setCouponRedemptions(c.redemptions || []);
+        setCouponStats(c.stats || null);
       }
     } catch (e) {
       console.error(e);
@@ -99,6 +134,129 @@ export default function AdminConsolePage() {
       }
     } catch (e: any) {
       setRecheckStatus(`Network error: ${e.message}`);
+    }
+  };
+
+  const fetchCouponsData = async () => {
+    try {
+      const res = await fetch('/api/admin/coupons');
+      if (res.ok) {
+        const c = await res.json();
+        setCouponsList(c.coupons || []);
+        setCouponRedemptions(c.redemptions || []);
+        setCouponStats(c.stats || null);
+      }
+    } catch (e) {
+      console.error('Error refreshing coupons:', e);
+    }
+  };
+
+  const handleOpenCreateCoupon = () => {
+    setCouponForm({
+      code: '',
+      description: '',
+      discountType: 'percentage',
+      discountValue: 20,
+      maxDiscount: '',
+      minimumOrderValue: '',
+      startsAt: '',
+      expiresAt: '',
+      usageLimit: '',
+      perUserLimit: '',
+      applicableTypes: [],
+      isActive: true,
+    });
+    setCouponActionStatus(null);
+    setCouponModal({ open: true, mode: 'create' });
+  };
+
+  const handleOpenEditCoupon = (cpn: any) => {
+    setCouponForm({
+      code: cpn.code,
+      description: cpn.description || '',
+      discountType: cpn.discountType,
+      discountValue: cpn.discountValue,
+      maxDiscount: cpn.maxDiscount ? String(cpn.maxDiscount) : '',
+      minimumOrderValue: cpn.minimumOrderValue ? String(cpn.minimumOrderValue) : '',
+      startsAt: cpn.startsAt ? cpn.startsAt.split('T')[0] : '',
+      expiresAt: cpn.expiresAt ? cpn.expiresAt.split('T')[0] : '',
+      usageLimit: cpn.usageLimit ? String(cpn.usageLimit) : '',
+      perUserLimit: cpn.perUserLimit ? String(cpn.perUserLimit) : '',
+      applicableTypes: cpn.applicableTypes || [],
+      isActive: cpn.isActive ?? true,
+    });
+    setCouponActionStatus(null);
+    setCouponModal({ open: true, mode: 'edit', coupon: cpn });
+  };
+
+  const handleSaveCoupon = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCouponActionStatus('Saving coupon...');
+
+    try {
+      const isEdit = couponModal?.mode === 'edit';
+      const url = isEdit ? `/api/admin/coupons/${couponModal.coupon.id}` : '/api/admin/coupons';
+      const method = isEdit ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: couponForm.code,
+          description: couponForm.description,
+          discountType: couponForm.discountType,
+          discountValue: couponForm.discountValue,
+          maxDiscount: couponForm.maxDiscount ? Number(couponForm.maxDiscount) : undefined,
+          minimumOrderValue: couponForm.minimumOrderValue ? Number(couponForm.minimumOrderValue) : undefined,
+          startsAt: couponForm.startsAt || undefined,
+          expiresAt: couponForm.expiresAt || undefined,
+          usageLimit: couponForm.usageLimit ? Number(couponForm.usageLimit) : undefined,
+          perUserLimit: couponForm.perUserLimit ? Number(couponForm.perUserLimit) : undefined,
+          applicableTypes: couponForm.applicableTypes,
+          isActive: couponForm.isActive,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setCouponActionStatus(`Error: ${data.error || 'Failed to save coupon'}`);
+        return;
+      }
+
+      setCouponActionStatus(`Coupon ${couponForm.code} saved successfully!`);
+      fetchCouponsData();
+      setTimeout(() => setCouponModal(null), 800);
+    } catch (err: any) {
+      setCouponActionStatus(`Error: ${err.message}`);
+    }
+  };
+
+  const handleToggleCouponStatus = async (cpn: any) => {
+    try {
+      const res = await fetch(`/api/admin/coupons/${cpn.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isActive: !cpn.isActive }),
+      });
+      if (res.ok) {
+        fetchCouponsData();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDeleteCoupon = async (cpn: any) => {
+    if (!confirm(`Are you sure you want to delete coupon ${cpn.code}?`)) return;
+    try {
+      const res = await fetch(`/api/admin/coupons/${cpn.id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        fetchCouponsData();
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -242,6 +400,7 @@ export default function AdminConsolePage() {
           {[
             { id: 'overview', label: 'Metrics Overview' },
             { id: 'pricing', label: 'Pricing, Plans & Tax' },
+            { id: 'coupons', label: 'Coupons & Discounts' },
             { id: 'billing', label: 'Billing & Finance' },
             { id: 'users', label: 'User Directory' },
             { id: 'providers', label: 'AI Providers & Models' },
@@ -420,6 +579,225 @@ export default function AdminConsolePage() {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* CREATE / EDIT COUPON MODAL */}
+        {couponModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
+            <div className="glass-modal rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between pb-3 border-b border-emerald-500/15">
+                <h3 className="font-bold text-[#17211D] text-base flex items-center gap-2">
+                  <Tag className="w-4 h-4 text-emerald-600" />
+                  <span>{couponModal.mode === 'create' ? 'Create New Coupon' : `Edit Coupon: ${couponModal.coupon.code}`}</span>
+                </h3>
+                <button
+                  onClick={() => setCouponModal(null)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-emerald-50 cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {couponActionStatus && (
+                <div className={`p-3 text-xs rounded-xl ${couponActionStatus.startsWith('Error') ? 'bg-rose-50 border border-rose-300 text-rose-800' : 'bg-emerald-50 border border-emerald-300 text-emerald-800'}`}>
+                  {couponActionStatus}
+                </div>
+              )}
+
+              <form onSubmit={handleSaveCoupon} className="space-y-4 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Coupon Code *</label>
+                    <input
+                      type="text"
+                      required
+                      value={couponForm.code}
+                      onChange={(e) => setCouponForm({ ...couponForm, code: e.target.value.toUpperCase() })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase border border-emerald-500/20"
+                      placeholder="e.g. SUMMER25"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Discount Type *</label>
+                    <select
+                      value={couponForm.discountType}
+                      onChange={(e) => setCouponForm({ ...couponForm, discountType: e.target.value as any })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20 cursor-pointer bg-white"
+                    >
+                      <option value="percentage">Percentage (%)</option>
+                      <option value="fixed">Fixed Amount (INR)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">
+                      Discount Value * {couponForm.discountType === 'percentage' ? '(%)' : '(INR)'}
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      min={1}
+                      max={couponForm.discountType === 'percentage' ? 100 : 100000}
+                      value={couponForm.discountValue}
+                      onChange={(e) => setCouponForm({ ...couponForm, discountValue: Number(e.target.value) })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold border border-emerald-500/20"
+                    />
+                  </div>
+
+                  {couponForm.discountType === 'percentage' && (
+                    <div>
+                      <label className="block text-slate-700 font-bold mb-1">Max Discount Cap (INR)</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={couponForm.maxDiscount}
+                        onChange={(e) => setCouponForm({ ...couponForm, maxDiscount: e.target.value })}
+                        className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                        placeholder="e.g. 500 (optional)"
+                      />
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Minimum Order Value (INR)</label>
+                    <input
+                      type="number"
+                      min={0}
+                      value={couponForm.minimumOrderValue}
+                      onChange={(e) => setCouponForm({ ...couponForm, minimumOrderValue: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      placeholder="e.g. 499 (optional)"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Description</label>
+                  <input
+                    type="text"
+                    value={couponForm.description}
+                    onChange={(e) => setCouponForm({ ...couponForm, description: e.target.value })}
+                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    placeholder="e.g. 20% off up to INR 500 for creator subscriptions"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Total Max Redemptions</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={couponForm.usageLimit}
+                      onChange={(e) => setCouponForm({ ...couponForm, usageLimit: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      placeholder="e.g. 500 (blank for unlimited)"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Per-User Limit</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={couponForm.perUserLimit}
+                      onChange={(e) => setCouponForm({ ...couponForm, perUserLimit: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      placeholder="e.g. 1 per customer"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Starts At Date</label>
+                    <input
+                      type="date"
+                      value={couponForm.startsAt}
+                      onChange={(e) => setCouponForm({ ...couponForm, startsAt: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Expires At Date</label>
+                    <input
+                      type="date"
+                      value={couponForm.expiresAt}
+                      onChange={(e) => setCouponForm({ ...couponForm, expiresAt: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Restrict Checkout Types</label>
+                  <div className="flex gap-4 pt-1">
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={couponForm.applicableTypes.includes('subscription')}
+                        onChange={(e) => {
+                          const next = e.target.checked
+                            ? [...couponForm.applicableTypes, 'subscription']
+                            : couponForm.applicableTypes.filter((t) => t !== 'subscription');
+                          setCouponForm({ ...couponForm, applicableTypes: next });
+                        }}
+                        className="rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>Subscriptions</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={couponForm.applicableTypes.includes('credit_pack')}
+                        onChange={(e) => {
+                          const next = e.target.checked
+                            ? [...couponForm.applicableTypes, 'credit_pack']
+                            : couponForm.applicableTypes.filter((t) => t !== 'credit_pack');
+                          setCouponForm({ ...couponForm, applicableTypes: next });
+                        }}
+                        className="rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>Credit Packs</span>
+                    </label>
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-1">Leave both unchecked to allow all products.</p>
+                </div>
+
+                <div className="pt-2">
+                  <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={couponForm.isActive}
+                      onChange={(e) => setCouponForm({ ...couponForm, isActive: e.target.checked })}
+                      className="rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <span>Coupon is Active and available for redemption</span>
+                  </label>
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-3 border-t border-emerald-500/15">
+                  <button
+                    type="button"
+                    onClick={() => setCouponModal(null)}
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold transition-all shadow-xs cursor-pointer"
+                  >
+                    {couponModal.mode === 'create' ? 'Create Coupon' : 'Save Changes'}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}
@@ -899,6 +1277,225 @@ export default function AdminConsolePage() {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* CREATE / EDIT COUPON MODAL */}
+        {couponModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
+            <div className="glass-modal rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between pb-3 border-b border-emerald-500/15">
+                <h3 className="font-bold text-[#17211D] text-base flex items-center gap-2">
+                  <Tag className="w-4 h-4 text-emerald-600" />
+                  <span>{couponModal.mode === 'create' ? 'Create New Coupon' : `Edit Coupon: ${couponModal.coupon.code}`}</span>
+                </h3>
+                <button
+                  onClick={() => setCouponModal(null)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-emerald-50 cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {couponActionStatus && (
+                <div className={`p-3 text-xs rounded-xl ${couponActionStatus.startsWith('Error') ? 'bg-rose-50 border border-rose-300 text-rose-800' : 'bg-emerald-50 border border-emerald-300 text-emerald-800'}`}>
+                  {couponActionStatus}
+                </div>
+              )}
+
+              <form onSubmit={handleSaveCoupon} className="space-y-4 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Coupon Code *</label>
+                    <input
+                      type="text"
+                      required
+                      value={couponForm.code}
+                      onChange={(e) => setCouponForm({ ...couponForm, code: e.target.value.toUpperCase() })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase border border-emerald-500/20"
+                      placeholder="e.g. SUMMER25"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Discount Type *</label>
+                    <select
+                      value={couponForm.discountType}
+                      onChange={(e) => setCouponForm({ ...couponForm, discountType: e.target.value as any })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20 cursor-pointer bg-white"
+                    >
+                      <option value="percentage">Percentage (%)</option>
+                      <option value="fixed">Fixed Amount (INR)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">
+                      Discount Value * {couponForm.discountType === 'percentage' ? '(%)' : '(INR)'}
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      min={1}
+                      max={couponForm.discountType === 'percentage' ? 100 : 100000}
+                      value={couponForm.discountValue}
+                      onChange={(e) => setCouponForm({ ...couponForm, discountValue: Number(e.target.value) })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold border border-emerald-500/20"
+                    />
+                  </div>
+
+                  {couponForm.discountType === 'percentage' && (
+                    <div>
+                      <label className="block text-slate-700 font-bold mb-1">Max Discount Cap (INR)</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={couponForm.maxDiscount}
+                        onChange={(e) => setCouponForm({ ...couponForm, maxDiscount: e.target.value })}
+                        className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                        placeholder="e.g. 500 (optional)"
+                      />
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Minimum Order Value (INR)</label>
+                    <input
+                      type="number"
+                      min={0}
+                      value={couponForm.minimumOrderValue}
+                      onChange={(e) => setCouponForm({ ...couponForm, minimumOrderValue: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      placeholder="e.g. 499 (optional)"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Description</label>
+                  <input
+                    type="text"
+                    value={couponForm.description}
+                    onChange={(e) => setCouponForm({ ...couponForm, description: e.target.value })}
+                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    placeholder="e.g. 20% off up to INR 500 for creator subscriptions"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Total Max Redemptions</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={couponForm.usageLimit}
+                      onChange={(e) => setCouponForm({ ...couponForm, usageLimit: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      placeholder="e.g. 500 (blank for unlimited)"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Per-User Limit</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={couponForm.perUserLimit}
+                      onChange={(e) => setCouponForm({ ...couponForm, perUserLimit: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      placeholder="e.g. 1 per customer"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Starts At Date</label>
+                    <input
+                      type="date"
+                      value={couponForm.startsAt}
+                      onChange={(e) => setCouponForm({ ...couponForm, startsAt: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-bold mb-1">Expires At Date</label>
+                    <input
+                      type="date"
+                      value={couponForm.expiresAt}
+                      onChange={(e) => setCouponForm({ ...couponForm, expiresAt: e.target.value })}
+                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Restrict Checkout Types</label>
+                  <div className="flex gap-4 pt-1">
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={couponForm.applicableTypes.includes('subscription')}
+                        onChange={(e) => {
+                          const next = e.target.checked
+                            ? [...couponForm.applicableTypes, 'subscription']
+                            : couponForm.applicableTypes.filter((t) => t !== 'subscription');
+                          setCouponForm({ ...couponForm, applicableTypes: next });
+                        }}
+                        className="rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>Subscriptions</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={couponForm.applicableTypes.includes('credit_pack')}
+                        onChange={(e) => {
+                          const next = e.target.checked
+                            ? [...couponForm.applicableTypes, 'credit_pack']
+                            : couponForm.applicableTypes.filter((t) => t !== 'credit_pack');
+                          setCouponForm({ ...couponForm, applicableTypes: next });
+                        }}
+                        className="rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>Credit Packs</span>
+                    </label>
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-1">Leave both unchecked to allow all products.</p>
+                </div>
+
+                <div className="pt-2">
+                  <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={couponForm.isActive}
+                      onChange={(e) => setCouponForm({ ...couponForm, isActive: e.target.checked })}
+                      className="rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <span>Coupon is Active and available for redemption</span>
+                  </label>
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-3 border-t border-emerald-500/15">
+                  <button
+                    type="button"
+                    onClick={() => setCouponModal(null)}
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold transition-all shadow-xs cursor-pointer"
+                  >
+                    {couponModal.mode === 'create' ? 'Create Coupon' : 'Save Changes'}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

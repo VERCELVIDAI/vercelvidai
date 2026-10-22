@@ -30,6 +30,8 @@ import {
   PaymentReceipt,
   CreditNote,
   SupplierLegalDetails,
+  Coupon,
+  CouponRedemption,
 } from '../types';
 
 interface DatabaseSchema {
@@ -59,6 +61,8 @@ interface DatabaseSchema {
   receipts: PaymentReceipt[];
   creditNotes: CreditNote[];
   billingSettings: SupplierLegalDetails;
+  coupons: Coupon[];
+  couponRedemptions: CouponRedemption[];
   passwordResetTokens?: Record<string, { token: string; expiresAt: string; email: string }>;
 }
 
@@ -835,6 +839,72 @@ function getInitialDatabase(): DatabaseSchema {
     invoices: [],
     receipts: [],
     creditNotes: [],
+    coupons: [
+      {
+        id: 'cpn_welcome10',
+        code: 'WELCOME10',
+        description: '10% Welcome Discount for creators',
+        discountType: 'percentage',
+        discountValue: 10,
+        minimumOrderValue: 499,
+        maxDiscount: 1000,
+        usageLimit: 1000,
+        perUserLimit: 1,
+        usageCount: 0,
+        isActive: true,
+        createdBy: 'usr_admin_master_1',
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'cpn_save20',
+        code: 'SAVE20',
+        description: 'Save 20% on any subscription plan or credit pack',
+        discountType: 'percentage',
+        discountValue: 20,
+        maxDiscount: 500,
+        minimumOrderValue: 499,
+        usageLimit: 500,
+        perUserLimit: 2,
+        usageCount: 0,
+        isActive: true,
+        createdBy: 'usr_admin_master_1',
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'cpn_fluvia100',
+        code: 'FLUVIA100',
+        description: 'Flat INR 100 off on all orders above INR 499',
+        discountType: 'fixed',
+        discountValue: 100,
+        minimumOrderValue: 499,
+        usageLimit: 200,
+        perUserLimit: 1,
+        usageCount: 0,
+        isActive: true,
+        createdBy: 'usr_admin_master_1',
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: 'cpn_teams500',
+        code: 'TEAMS500',
+        description: 'Flat INR 500 off on Fluvia Teams or Studio Packs',
+        discountType: 'fixed',
+        discountValue: 500,
+        minimumOrderValue: 2000,
+        applicableTypes: ['subscription', 'credit_pack'],
+        usageLimit: 100,
+        perUserLimit: 1,
+        usageCount: 0,
+        isActive: true,
+        createdBy: 'usr_admin_master_1',
+        createdAt: now,
+        updatedAt: now,
+      },
+    ],
+    couponRedemptions: [],
     billingSettings: {
       legalName: 'Fluvia Flow Technologies Private Limited',
       tradeName: 'Fluvia Flow',
@@ -859,6 +929,75 @@ class Store {
     if (!schema.receipts) schema.receipts = [];
     if (!schema.creditNotes) schema.creditNotes = [];
     if (!schema.passwordResetTokens) schema.passwordResetTokens = {};
+    if (!schema.coupons) {
+      const now = new Date().toISOString();
+      schema.coupons = [
+        {
+          id: 'cpn_welcome10',
+          code: 'WELCOME10',
+          description: '10% Welcome Discount for creators',
+          discountType: 'percentage',
+          discountValue: 10,
+          minimumOrderValue: 499,
+          maxDiscount: 1000,
+          usageLimit: 1000,
+          perUserLimit: 1,
+          usageCount: 0,
+          isActive: true,
+          createdBy: 'usr_admin_master_1',
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          id: 'cpn_save20',
+          code: 'SAVE20',
+          description: 'Save 20% on any subscription plan or credit pack',
+          discountType: 'percentage',
+          discountValue: 20,
+          maxDiscount: 500,
+          minimumOrderValue: 499,
+          usageLimit: 500,
+          perUserLimit: 2,
+          usageCount: 0,
+          isActive: true,
+          createdBy: 'usr_admin_master_1',
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          id: 'cpn_fluvia100',
+          code: 'FLUVIA100',
+          description: 'Flat INR 100 off on all orders above INR 499',
+          discountType: 'fixed',
+          discountValue: 100,
+          minimumOrderValue: 499,
+          usageLimit: 200,
+          perUserLimit: 1,
+          usageCount: 0,
+          isActive: true,
+          createdBy: 'usr_admin_master_1',
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          id: 'cpn_teams500',
+          code: 'TEAMS500',
+          description: 'Flat INR 500 off on Fluvia Teams or Studio Packs',
+          discountType: 'fixed',
+          discountValue: 500,
+          minimumOrderValue: 2000,
+          applicableTypes: ['subscription', 'credit_pack'],
+          usageLimit: 100,
+          perUserLimit: 1,
+          usageCount: 0,
+          isActive: true,
+          createdBy: 'usr_admin_master_1',
+          createdAt: now,
+          updatedAt: now,
+        },
+      ];
+    }
+    if (!schema.couponRedemptions) schema.couponRedemptions = [];
     if (!schema.billingSettings) {
       schema.billingSettings = {
         legalName: 'Fluvia Flow Technologies Private Limited',
@@ -2080,6 +2219,178 @@ class Store {
       list = list.filter((c) => c.userId === userId);
     }
     return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  // ==========================================
+  // DISCOUNT COUPONS & REDEMPTIONS
+  // ==========================================
+  getCoupons(): Coupon[] {
+    return this.load().coupons.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  getCouponById(id: string): Coupon | undefined {
+    return this.load().coupons.find((c) => c.id === id);
+  }
+
+  getCouponByCode(code: string): Coupon | undefined {
+    const normalized = (code || '').trim().toUpperCase();
+    return this.load().coupons.find((c) => c.code.toUpperCase() === normalized);
+  }
+
+  createCoupon(params: Omit<Coupon, 'id' | 'createdAt' | 'updatedAt' | 'usageCount'>): Coupon {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const code = params.code.trim().toUpperCase();
+
+    if (db.coupons.some((c) => c.code.toUpperCase() === code)) {
+      throw new Error(`Coupon code '${code}' already exists.`);
+    }
+
+    const id = 'cpn_' + Math.random().toString(36).substring(2, 11);
+    const coupon: Coupon = {
+      ...params,
+      id,
+      code,
+      usageCount: 0,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.coupons.push(coupon);
+    this.save(db);
+    return coupon;
+  }
+
+  updateCoupon(id: string, updates: Partial<Coupon>): Coupon {
+    const db = this.load();
+    const idx = db.coupons.findIndex((c) => c.id === id);
+    if (idx === -1) throw new Error('Coupon not found');
+
+    if (updates.code) {
+      const newCode = updates.code.trim().toUpperCase();
+      if (db.coupons.some((c) => c.id !== id && c.code.toUpperCase() === newCode)) {
+        throw new Error(`Coupon code '${newCode}' is already taken.`);
+      }
+      updates.code = newCode;
+    }
+
+    db.coupons[idx] = {
+      ...db.coupons[idx],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.save(db);
+    return db.coupons[idx];
+  }
+
+  deleteCoupon(id: string): boolean {
+    const db = this.load();
+    const idx = db.coupons.findIndex((c) => c.id === id);
+    if (idx === -1) return false;
+
+    db.coupons.splice(idx, 1);
+    this.save(db);
+    return true;
+  }
+
+  getCouponRedemptions(couponId?: string): CouponRedemption[] {
+    let list = this.load().couponRedemptions;
+    if (couponId) {
+      list = list.filter((r) => r.couponId === couponId);
+    }
+    return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  getUserCouponRedemptions(userId: string, couponId?: string): CouponRedemption[] {
+    let list = this.load().couponRedemptions.filter((r) => r.userId === userId);
+    if (couponId) {
+      list = list.filter((r) => r.couponId === couponId);
+    }
+    return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  reserveCouponRedemption(params: {
+    couponId: string;
+    couponCode: string;
+    userId: string;
+    orderId?: string;
+    txnid?: string;
+    discountAmount: number;
+    originalAmount: number;
+    finalAmount: number;
+    paymentType: 'subscription' | 'credit_pack';
+    itemPlanOrPackId: string;
+  }): CouponRedemption {
+    const db = this.load();
+    const now = new Date().toISOString();
+    const id = 'red_' + Math.random().toString(36).substring(2, 11);
+
+    // Cancel any previous pending reservation for the same order/txnid
+    if (params.txnid) {
+      db.couponRedemptions = db.couponRedemptions.filter(
+        (r) => !(r.txnid === params.txnid && r.status === 'reserved')
+      );
+    }
+
+    const redemption: CouponRedemption = {
+      id,
+      couponId: params.couponId,
+      couponCode: params.couponCode.toUpperCase(),
+      userId: params.userId,
+      orderId: params.orderId,
+      txnid: params.txnid,
+      discountAmount: params.discountAmount,
+      originalAmount: params.originalAmount,
+      finalAmount: params.finalAmount,
+      paymentType: params.paymentType,
+      itemPlanOrPackId: params.itemPlanOrPackId,
+      status: 'reserved',
+      createdAt: now,
+    };
+
+    db.couponRedemptions.push(redemption);
+    this.save(db);
+    return redemption;
+  }
+
+  completeCouponRedemption(txnid: string, orderId?: string): { success: boolean; redemption?: CouponRedemption } {
+    const db = this.load();
+    const now = new Date().toISOString();
+
+    const redemption = db.couponRedemptions.find(
+      (r) => (r.txnid === txnid || (orderId && r.orderId === orderId))
+    );
+
+    if (!redemption) {
+      return { success: false };
+    }
+
+    // Idempotency: if already completed, do not increment again
+    if (redemption.status === 'completed') {
+      return { success: true, redemption };
+    }
+
+    redemption.status = 'completed';
+    redemption.completedAt = now;
+
+    // Atomically increment usage count on the coupon
+    const coupon = db.coupons.find((c) => c.id === redemption.couponId);
+    if (coupon) {
+      coupon.usageCount = (coupon.usageCount || 0) + 1;
+      coupon.updatedAt = now;
+    }
+
+    this.save(db);
+    return { success: true, redemption };
+  }
+
+  cancelCouponRedemption(txnid: string): void {
+    const db = this.load();
+    const redemption = db.couponRedemptions.find((r) => r.txnid === txnid && r.status === 'reserved');
+    if (redemption) {
+      redemption.status = 'cancelled';
+      this.save(db);
+    }
   }
 }
 

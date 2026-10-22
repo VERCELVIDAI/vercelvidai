@@ -50,6 +50,9 @@ export async function POST(req: NextRequest) {
         payuPayload: payload,
       });
     } else {
+      if (status !== 'pending') {
+        dbStore.cancelCouponRedemption(txnid);
+      }
       dbStore.updatePayUOrder(txnid, {
         status: status === 'pending' ? 'pending' : 'failed',
         payuError: payload.error_Message || `Webhook notified status: ${status}`,

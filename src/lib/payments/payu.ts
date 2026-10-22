@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { dbStore } from '../db/store';
+import { validateCoupon } from '../coupons/service';
 import {
   PayUPaymentOrder,
   TaxBreakdown,
@@ -168,10 +169,13 @@ export interface CreatePayUOrderParams {
   itemPlanOrPackId: string;
   billingInterval?: 'month' | 'year';
   customerDetails: CustomerBillingDetails;
+  couponCode?: string;
 }
 
 export interface PayUOrderInitResult {
   order: PayUPaymentOrder;
+  isZeroPayment?: boolean;
+  redirectUrl?: string;
   payuParams: {
     actionUrl: string;
     key: string;
@@ -223,6 +227,125 @@ export async function createPayUPaymentOrder(
     } else {
       basePriceInr = plan.priceInr;
       productInfo = `${plan.name} - Monthly Subscription`;
+    }
+  }
+
+  // Handle server-side coupon validation & discount calculation
+  let originalBasePrice = basePriceInr;
+  let couponId: string | undefined;
+  let appliedCouponCode: string | undefined;
+  let discountAmount = 0;
+
+  if (params.couponCode && params.couponCode.trim()) {
+    const couponValidation = validateCoupon({
+      code: params.couponCode,
+      userId: params.userId,
+      paymentType: params.paymentType,
+      itemPlanOrPackId: params.itemPlanOrPackId,
+      billingInterval: params.billingInterval,
+      customerState: params.customerDetails.state,
+    });
+
+    if (!couponValidation.valid) {
+      throw new Error(couponValidation.error || 'Invalid coupon applied.');
+    }
+
+    couponId = couponValidation.coupon?.id;
+    appliedCouponCode = couponValidation.coupon?.code;
+    discountAmount = couponValidation.pricing?.discountAmount || 0;
+    basePriceInr = couponValidation.pricing?.discountedBaseAmount ?? basePriceInr;
+    productInfo = `${productInfo} (Coupon: ${appliedCouponCode} applied)`;
+
+    // Handle 100% discount / free checkout flow
+    if (couponValidation.pricing?.isZeroPayable) {
+      const txnid = `TXN_ZERO_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      const idempotencyKey = `payu_order_${txnid}`;
+      const phone = (params.customerDetails.phone || '9999999999').replace(/[^0-9]/g, '').slice(-10);
+
+      const zeroTaxBreakdown = {
+        baseAmount: 0,
+        taxRate: 18,
+        taxAmount: 0,
+        cgstRate: 0,
+        cgstAmount: 0,
+        sgstRate: 0,
+        sgstAmount: 0,
+        igstRate: 0,
+        igstAmount: 0,
+        isInterState: false,
+        placeOfSupply: params.customerDetails.state || 'Delhi',
+      };
+
+      const order = dbStore.createPayUOrder({
+        txnid,
+        userId: params.userId,
+        workspaceId: params.workspaceId,
+        paymentType: params.paymentType,
+        itemPlanOrPackId: params.itemPlanOrPackId,
+        productInfo,
+        currency: 'INR',
+        baseAmount: 0,
+        taxAmount: 0,
+        totalAmount: 0,
+        amountPaise: 0,
+        taxBreakdown: zeroTaxBreakdown,
+        customerDetails: {
+          ...params.customerDetails,
+          phone,
+        },
+        couponId,
+        couponCode: appliedCouponCode,
+        discountAmount,
+        originalBaseAmount: originalBasePrice,
+        status: 'created',
+        idempotencyKey,
+      });
+
+      if (couponId && appliedCouponCode) {
+        dbStore.reserveCouponRedemption({
+          couponId,
+          couponCode: appliedCouponCode,
+          userId: params.userId,
+          orderId: order.id,
+          txnid,
+          discountAmount,
+          originalAmount: originalBasePrice,
+          finalAmount: 0,
+          paymentType: params.paymentType,
+          itemPlanOrPackId: params.itemPlanOrPackId,
+        });
+      }
+
+      // Fulfill zero payment order immediately
+      const fulfillment = await fulfillPayUPayment({
+        txnid,
+        skipHashCheckIfAlreadyVerified: true,
+      });
+
+      const hostUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+      return {
+        order: fulfillment.order,
+        isZeroPayment: true,
+        redirectUrl: `${hostUrl}/payment/status?txnid=${encodeURIComponent(txnid)}&status=success`,
+        payuParams: {
+          actionUrl: `${hostUrl}/payment/status?txnid=${encodeURIComponent(txnid)}&status=success`,
+          key: config.merchantKey,
+          txnid,
+          amount: '0.00',
+          productinfo: productInfo,
+          firstname: (params.customerDetails.name || 'Creator').split(' ')[0] || 'Creator',
+          email: params.customerDetails.email.toLowerCase(),
+          phone,
+          surl: `${hostUrl}/api/payments/payu/callback`,
+          furl: `${hostUrl}/api/payments/payu/callback`,
+          hash: '',
+          udf1: `ord_${txnid}`,
+          udf2: params.userId,
+          udf3: params.paymentType,
+          udf4: params.itemPlanOrPackId,
+          udf5: params.workspaceId,
+        },
+      };
     }
   }
 
@@ -283,9 +406,28 @@ export async function createPayUPaymentOrder(
       ...params.customerDetails,
       phone,
     },
+    couponId,
+    couponCode: appliedCouponCode,
+    discountAmount: discountAmount > 0 ? discountAmount : undefined,
+    originalBaseAmount: discountAmount > 0 ? originalBasePrice : undefined,
     status: 'created',
     idempotencyKey,
   });
+
+  if (couponId && appliedCouponCode && discountAmount > 0) {
+    dbStore.reserveCouponRedemption({
+      couponId,
+      couponCode: appliedCouponCode,
+      userId: params.userId,
+      orderId: order.id,
+      txnid,
+      discountAmount,
+      originalAmount: originalBasePrice,
+      finalAmount: totalAmount,
+      paymentType: params.paymentType,
+      itemPlanOrPackId: params.itemPlanOrPackId,
+    });
+  }
 
   dbStore.logAudit(params.userId, 'PAYU_ORDER_CREATED', 'payment_order', order.id, {
     txnid,
@@ -551,6 +693,11 @@ export async function fulfillPayUPayment(
     }
   }
 
+  // 1.5. Complete coupon redemption atomically if coupon was applied
+  if (order.couponCode) {
+    dbStore.completeCouponRedemption(order.txnid, order.id);
+  }
+
   // 2. Generate Official Invoice
   const supplier = dbStore.getBillingSettings();
   const invoiceNumber = dbStore.getNextInvoiceNumber();
@@ -563,13 +710,17 @@ export async function fulfillPayUPayment(
     workspaceId: order.workspaceId,
     supplier,
     customer: order.customerDetails,
+    couponId: order.couponId,
+    couponCode: order.couponCode,
+    discountAmount: order.discountAmount,
+    originalBaseAmount: order.originalBaseAmount,
     items: [
       {
         id: 'itm_1',
         description: order.productInfo,
         hsnSacCode: '998314', // SAC for Information technology services
         quantity: 1,
-        unitPrice: order.baseAmount,
+        unitPrice: order.originalBaseAmount || order.baseAmount,
         taxableValue: order.baseAmount,
         gstRate: order.taxBreakdown.taxRate,
         cgstAmount: order.taxBreakdown.cgstAmount,
@@ -591,7 +742,9 @@ export async function fulfillPayUPayment(
     paymentDate: now,
     payuPaymentId: mihpayid,
     terms: 'Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.',
-    notes: 'Thank you for your business. Computer-generated tax invoice.',
+    notes: order.couponCode
+      ? `Thank you for your business. Applied Coupon: ${order.couponCode} (Discount: INR ${(order.discountAmount || 0).toFixed(2)}). Computer-generated tax invoice.`
+      : 'Thank you for your business. Computer-generated tax invoice.',
   });
 
   // 3. Generate Official Payment Receipt
@@ -606,6 +759,9 @@ export async function fulfillPayUPayment(
     workspaceId: order.workspaceId,
     customerName: order.customerDetails.name,
     customerEmail: order.customerDetails.email,
+    couponCode: order.couponCode,
+    discountAmount: order.discountAmount,
+    originalAmount: order.originalBaseAmount,
     amountReceived: order.totalAmount,
     currency: 'INR',
     paymentMethod: mode,

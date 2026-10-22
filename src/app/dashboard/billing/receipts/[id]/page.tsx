@@ -133,6 +133,14 @@ export default function ReceiptDetailPage({ params }: { params: { id: string } }
                 <span className="text-slate-500">Product / Plan Purchased:</span>
                 <strong className="text-[#17211D]">{receipt.productPurchased}</strong>
               </div>
+              {receipt.discountAmount && receipt.discountAmount > 0 && (
+                <div className="flex justify-between py-2 border-b border-emerald-500/10">
+                  <span className="text-slate-500">Discount Applied:</span>
+                  <span className="font-mono text-emerald-700 font-bold">
+                    Coupon {receipt.couponCode || 'PROMO'} (-INR {receipt.discountAmount.toFixed(2)})
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between py-2 border-b border-emerald-500/10">
                 <span className="text-slate-500">Payment Channel:</span>
                 <strong className="text-[#17211D]">{receipt.paymentMethod}</strong>

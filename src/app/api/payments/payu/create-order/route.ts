@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { paymentType, itemPlanOrPackId, billingInterval, customerDetails } = body;
+    const { paymentType, itemPlanOrPackId, billingInterval, customerDetails, couponCode } = body;
 
     if (!paymentType || !itemPlanOrPackId) {
       return NextResponse.json(
@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
       itemPlanOrPackId,
       billingInterval: billingInterval === 'year' ? 'year' : 'month',
       customerDetails: billingDetails,
+      couponCode: couponCode ? String(couponCode).trim() : undefined,
     });
 
     return NextResponse.json(orderResult, { status: 201 });

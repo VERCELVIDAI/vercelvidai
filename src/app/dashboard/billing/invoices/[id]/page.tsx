@@ -161,6 +161,21 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
             {/* Tax Calculation & Summary Box */}
             <div className="flex justify-end pt-2">
               <div className="w-full sm:w-72 bg-emerald-50/40 border border-emerald-500/15 rounded-2xl p-4 space-y-2 text-xs">
+                {invoice.discountAmount && invoice.discountAmount > 0 ? (
+                  <>
+                    {invoice.originalBaseAmount && (
+                      <div className="flex justify-between text-slate-600">
+                        <span>Original Subtotal:</span>
+                        <span className="font-mono text-slate-500 line-through">INR {invoice.originalBaseAmount.toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-emerald-700 font-medium">
+                      <span>Coupon Discount ({invoice.couponCode || 'PROMO'}):</span>
+                      <span className="font-mono">-INR {invoice.discountAmount.toFixed(2)}</span>
+                    </div>
+                  </>
+                ) : null}
+
                 <div className="flex justify-between text-slate-600">
                   <span>Base Taxable Value:</span>
                   <span className="font-mono text-[#17211D] font-semibold">INR {invoice.baseAmount.toFixed(2)}</span>

@@ -424,6 +424,10 @@ export interface PayUPaymentOrder {
   amountPaise: number;
   taxBreakdown: TaxBreakdown;
   customerDetails: CustomerBillingDetails;
+  couponId?: string;
+  couponCode?: string;
+  discountAmount?: number;
+  originalBaseAmount?: number;
   status: 'created' | 'pending' | 'success' | 'failed' | 'cancelled' | 'refunded';
   payuMihpayid?: string;
   payuBankRefNum?: string;
@@ -464,6 +468,10 @@ export interface Invoice {
   supplier: SupplierLegalDetails;
   customer: CustomerBillingDetails;
   items: InvoiceItem[];
+  couponId?: string;
+  couponCode?: string;
+  discountAmount?: number;
+  originalBaseAmount?: number;
   baseAmount: number;
   taxAmount: number;
   cgstAmount: number;
@@ -493,6 +501,9 @@ export interface PaymentReceipt {
   workspaceId: string;
   customerName: string;
   customerEmail: string;
+  couponCode?: string;
+  discountAmount?: number;
+  originalAmount?: number;
   amountReceived: number;
   currency: 'INR';
   paymentMethod: string;
@@ -536,3 +547,71 @@ export interface BillingOverviewStats {
   latestInvoices: Invoice[];
   latestReceipts: PaymentReceipt[];
 }
+
+export type DiscountType = 'percentage' | 'fixed';
+
+export interface Coupon {
+  id: string;
+  code: string;
+  description?: string;
+  discountType: DiscountType;
+  discountValue: number;
+  maxDiscount?: number;
+  minimumOrderValue?: number;
+  applicableTypes?: ('subscription' | 'credit_pack')[];
+  applicableItemIds?: string[];
+  startsAt?: string;
+  expiresAt?: string;
+  usageLimit?: number;
+  perUserLimit?: number;
+  usageCount: number;
+  isActive: boolean;
+  createdBy?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CouponRedemption {
+  id: string;
+  couponId: string;
+  couponCode: string;
+  userId: string;
+  orderId?: string;
+  txnid?: string;
+  discountAmount: number;
+  originalAmount: number;
+  finalAmount: number;
+  paymentType: 'subscription' | 'credit_pack';
+  itemPlanOrPackId: string;
+  status: 'reserved' | 'completed' | 'cancelled' | 'refunded';
+  createdAt: string;
+  completedAt?: string;
+}
+
+export interface CouponValidationResult {
+  valid: boolean;
+  error?: string;
+  coupon?: {
+    id: string;
+    code: string;
+    description?: string;
+    discountType: DiscountType;
+    discountValue: number;
+    maxDiscount?: number;
+    minimumOrderValue?: number;
+  };
+  pricing?: {
+    originalBaseAmount: number;
+    discountAmount: number;
+    discountedBaseAmount: number;
+    taxRate: number;
+    taxAmount: number;
+    cgstAmount: number;
+    sgstAmount: number;
+    igstAmount: number;
+    totalAmount: number;
+    isInterState: boolean;
+    isZeroPayable: boolean;
+  };
+}
+
