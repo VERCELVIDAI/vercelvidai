@@ -12,9 +12,9 @@ import { z } from 'zod';
 
 // Configurable model IDs
 export const GEMINI_MODELS = {
-  FLASH: process.env.GEMINI_FLASH_MODEL || 'gemini-flash-latest',
-  PRO: process.env.GEMINI_PRO_MODEL || 'gemini-flash-latest',
-  NEXT: process.env.GEMINI_NEXT_MODEL || 'gemini-flash-lite-latest',
+  FLASH: process.env.GEMINI_FLASH_MODEL || 'gemini-3.8-flash',
+  PRO: process.env.GEMINI_PRO_MODEL || 'gemini-3.8-flash',
+  NEXT: process.env.GEMINI_NEXT_MODEL || 'gemini-3.5-flash',
 } as const;
 
 // Structured Storyboard Schema
@@ -117,7 +117,7 @@ class GeminiService {
       const errMsg = primaryErr?.message || String(primaryErr);
       console.warn(`[FluviaFlow Gemini] Primary model ${primaryModel} failed: ${errMsg}`);
       // Fallback to flash-lite if primary model has demand spike (503) or quota issues
-      const fallbackModel = primaryModel === GEMINI_MODELS.NEXT ? 'gemini-flash-latest' : GEMINI_MODELS.NEXT;
+      const fallbackModel = primaryModel === GEMINI_MODELS.NEXT ? 'gemini-3.8-flash' : GEMINI_MODELS.NEXT;
       console.info(`[FluviaFlow Gemini] Retrying with fallback model ${fallbackModel}...`);
       return await client.models.generateContent({
         ...request,
