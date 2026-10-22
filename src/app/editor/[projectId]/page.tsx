@@ -207,7 +207,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
       trackId: 'trk_v1',
       type: 'video',
       title: 'B-Roll City Sunset',
-      sourceUrl: 'https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4',
+      sourceUrl: '/media/login/login-hero-preview.mp4',
       startTimeSec: timeline.durationSec || 0,
       durationSec: 5,
       volume: 1,
@@ -330,7 +330,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
   // Primary video source
   const primaryClip = timeline.clips.find((c: any) => c.type === 'video' && c.sourceUrl);
-  const videoSrc = primaryClip?.sourceUrl || 'https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4';
+  const videoSrc = primaryClip?.sourceUrl || '/media/templates/tmpl-01-cinematic-product.mp4';
 
   return (
     <div

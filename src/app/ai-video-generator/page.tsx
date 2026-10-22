@@ -73,19 +73,19 @@ export default function AIVideoGeneratorPage() {
               {
                 title: 'Urban Runner in Emerald Rain',
                 model: 'Fluvia Cinematic HD',
-                video: 'https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4',
+                video: '/media/login/login-hero-preview.mp4',
                 prompt: 'Slow motion athlete running through Tokyo crosswalk, neon reflection in puddles.',
               },
               {
                 title: 'Ocean Sunset Drone Sweep',
                 model: 'Runway Gen-3',
-                video: 'https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4',
+                video: '/media/templates/tmpl-06-travel-reel.mp4',
                 prompt: 'Golden hour drone shot descending toward breaking waves in Big Sur.',
               },
               {
                 title: 'Minimalist Perfume Reveal',
                 model: 'Luma Dream Machine Ray',
-                video: 'https://assets.mixkit.co/videos/preview/mixkit-perfume-bottle-and-flowers-42354-large.mp4',
+                video: '/media/templates/tmpl-02-luxury-perfume.mp4',
                 prompt: 'Luxury glass fragrance bottle surrounded by botanical orchids and soft mist.',
               },
             ].map((item, i) => (

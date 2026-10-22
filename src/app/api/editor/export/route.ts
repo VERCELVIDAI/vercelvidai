@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
     // Default export asset output (first valid clip or standard export)
     const primaryVideoClip = project.timeline.clips.find((c) => c.type === 'video' && c.sourceUrl);
-    const outputUrl = primaryVideoClip?.sourceUrl || 'https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4';
+    const outputUrl = primaryVideoClip?.sourceUrl || '/media/templates/tmpl-01-cinematic-product.mp4';
 
     const renderJobId = 'rnd_' + Math.random().toString(36).substring(2, 10);
 

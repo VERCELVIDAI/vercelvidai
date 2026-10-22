@@ -87,7 +87,7 @@ export function FeaturedTemplateCarousel() {
             href="/templates"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-md shadow-emerald-600/20 shrink-0"
           >
-            <span>Explore All 300+ Templates</span>
+            <span>Explore All 18 Cinematic Templates</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

@@ -30,7 +30,7 @@ export class RunwayAdapter extends BaseAIProviderAdapter {
       // Return honest Demo Mode fallback
       return {
         status: 'completed',
-        videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-futuristic-flying-car-in-a-cyberpunk-city-42618-large.mp4',
+        videoUrl: '/media/templates/tmpl-04-fashion-campaign.mp4',
         thumbnailUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80',
         progressPercent: 100,
         progressMessage: 'Demo Mode — Runway API Key not connected. Returning high-fidelity sample.',
@@ -83,7 +83,7 @@ export class RunwayAdapter extends BaseAIProviderAdapter {
         status: 'completed',
         progressPercent: 100,
         isDemoSimulated: true,
-        videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-futuristic-flying-car-in-a-cyberpunk-city-42618-large.mp4',
+        videoUrl: '/media/templates/tmpl-04-fashion-campaign.mp4',
       };
     }
 

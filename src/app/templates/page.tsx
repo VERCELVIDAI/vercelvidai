@@ -15,12 +15,13 @@ import {
 import {
   Search,
   Sparkles,
-  Layers,
   Ratio,
   SlidersHorizontal,
   Flame,
   Film,
   X,
+  Play,
+  ArrowRight,
 } from 'lucide-react';
 
 function TemplateExplorer() {
@@ -160,25 +161,25 @@ function TemplateExplorer() {
 
   return (
     <>
-      {/* 2. SEARCH & FILTER CONTROLS */}
+      {/* SEARCH & FILTER CONTROLS */}
       <div className="space-y-6 mb-10">
         {/* Search Bar + Aspect Toggle + Sorter */}
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
           {/* Search Input */}
           <div className="relative flex-1 max-w-lg">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-emerald-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by topic, brand, style (e.g. Luxury, UGC, Tech)..."
-              className="w-full bg-white dark:bg-[#11131C] text-slate-900 dark:text-white pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 text-sm shadow-sm transition-all"
+              placeholder="Search by category, style, keyword (e.g. Perfume, UGC, Fashion)..."
+              className="w-full bg-white text-[#17211D] pl-10 pr-9 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm shadow-xs transition-all placeholder:text-slate-400"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -187,8 +188,8 @@ function TemplateExplorer() {
 
           {/* Aspect Ratio Filter Pills */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1 shrink-0">
-              <Ratio className="w-3.5 h-3.5" />
+            <span className="text-xs font-semibold text-slate-600 flex items-center gap-1 shrink-0">
+              <Ratio className="w-3.5 h-3.5 text-emerald-600" />
               <span>Aspect:</span>
             </span>
             {[
@@ -201,10 +202,10 @@ function TemplateExplorer() {
                 key={a.value}
                 type="button"
                 onClick={() => setSelectedAspect(a.value)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-all cursor-pointer ${
                   selectedAspect === a.value
-                    ? 'bg-violet-600 text-white shadow-sm font-semibold'
-                    : 'bg-white dark:bg-[#11131C] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10'
+                    ? 'bg-emerald-600 text-white shadow-xs font-semibold'
+                    : 'bg-white text-slate-700 hover:text-[#17211D] border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-50/30'
                 }`}
               >
                 {a.label}
@@ -214,14 +215,14 @@ function TemplateExplorer() {
 
           {/* Sort Selector */}
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
-              <SlidersHorizontal className="w-3.5 h-3.5" />
+            <span className="text-xs font-semibold text-slate-600 flex items-center gap-1">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-600" />
               <span>Sort:</span>
             </span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-white dark:bg-[#11131C] text-slate-900 dark:text-white text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 focus:outline-none focus:border-violet-500 font-medium shadow-sm"
+              className="bg-white text-[#17211D] text-xs px-3 py-1.5 rounded-lg border border-emerald-500/20 focus:outline-none focus:border-emerald-500 font-medium shadow-xs cursor-pointer"
             >
               <option value="trending">Trending & ROI</option>
               <option value="duration">Shortest First</option>
@@ -230,7 +231,7 @@ function TemplateExplorer() {
           </div>
         </div>
 
-        {/* Category Filter Pills (All 16 Categories) */}
+        {/* Category Filter Pills (All 18 Categories) */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           {TEMPLATE_CATEGORIES.map((cat) => {
             const count =
@@ -245,19 +246,19 @@ function TemplateExplorer() {
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
                   selectedCategory === cat
-                    ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-600/25'
-                    : 'bg-white dark:bg-[#11131C] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10'
+                    ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-600/20'
+                    : 'bg-white/80 text-slate-700 hover:text-[#17211D] border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-50/40'
                 }`}
               >
-                {cat === 'Trending' && <Flame className="w-3.5 h-3.5 text-amber-300" />}
+                {cat === 'Trending' && <Flame className="w-3.5 h-3.5 text-amber-400" />}
                 <span>{cat}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                     selectedCategory === cat
                       ? 'bg-white/20 text-white'
-                      : 'bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400'
+                      : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                   }`}
                 >
                   {count}
@@ -268,15 +269,15 @@ function TemplateExplorer() {
         </div>
       </div>
 
-      {/* 3. TEMPLATE GRID */}
+      {/* TEMPLATE GRID */}
       {filteredTemplates.length === 0 ? (
-        <div className="py-20 text-center rounded-3xl bg-white dark:bg-[#11131C] border border-slate-200 dark:border-white/10 p-8 shadow-sm">
+        <div className="py-20 text-center rounded-3xl bg-white border border-emerald-500/20 p-8 shadow-sm">
           <Film className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+          <h3 className="text-lg font-bold text-[#17211D]">
             No matching templates found
           </h3>
-          <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-            Try adjusting your search query, selecting "All Templates", or resetting the aspect ratio filter.
+          <p className="mt-2 text-xs sm:text-sm text-slate-500 max-w-sm mx-auto">
+            Try adjusting your search query, selecting &quot;All Templates&quot;, or resetting the aspect ratio filter.
           </p>
           <button
             type="button"
@@ -285,7 +286,7 @@ function TemplateExplorer() {
               setSelectedAspect('all');
               setSearchQuery('');
             }}
-            className="mt-6 px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold shadow-md hover:bg-violet-500 transition-colors"
+            className="mt-6 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
           >
             Reset Filters
           </button>
@@ -305,7 +306,7 @@ function TemplateExplorer() {
         </div>
       )}
 
-      {/* 4. EXPANDED VIDEO PREVIEW MODAL */}
+      {/* EXPANDED VIDEO PREVIEW MODAL */}
       <VideoPreviewModal
         template={previewTemplate}
         onClose={() => setPreviewTemplate(null)}
@@ -319,33 +320,32 @@ function TemplateExplorer() {
 export default function TemplatesPage() {
   return (
     <div
-      className="min-h-screen flex flex-col transition-colors duration-200"
+      className="min-h-screen flex flex-col transition-colors duration-200 bg-gradient-to-b from-white via-[#F8FAFC] to-[#F0FDF4]/40"
       style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
+        color: '#17211D',
       }}
     >
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        {/* 1. HERO HEADER (Rendered immediately in SSR for immediate SEO and zero layout jump) */}
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        {/* HERO HEADER */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-600/10 dark:bg-violet-600/20 border border-violet-500/25 text-xs font-semibold text-violet-600 dark:text-violet-300 mb-6 backdrop-blur-md">
-            <Sparkles className="w-4 h-4 text-amber-500" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-500/25 text-xs font-semibold text-emerald-800 mb-6 backdrop-blur-md shadow-2xs">
+            <Sparkles className="w-4 h-4 text-emerald-600" />
             <span>Curated Creative Library</span>
-            <span className="text-slate-300 dark:text-slate-600">•</span>
-            <span>Over 300+ Verified AI Layouts</span>
+            <span className="text-emerald-300">•</span>
+            <span>18 Production-Ready Video Presets</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#17211D] tracking-tight leading-[1.14]">
             Start with a template.{' '}
-            <span className="bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-pink-600 bg-clip-text text-transparent">
               Finish with something extraordinary.
             </span>
           </h1>
 
-          <p className="mt-5 text-base sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Explore creative starting points for ads, social content, product films and stories.
+          <p className="mt-5 text-base sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
+            Explore 18 cinematic video templates for commercials, product reels, fashion campaigns, and social stories.
           </p>
         </div>
 

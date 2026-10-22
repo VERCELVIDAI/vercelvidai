@@ -29,7 +29,7 @@ export class LumaAdapter extends BaseAIProviderAdapter {
     if (!apiKey) {
       return {
         status: 'completed',
-        videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4',
+        videoUrl: '/media/templates/tmpl-05-automotive-film.mp4',
         thumbnailUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80',
         progressPercent: 100,
         progressMessage: 'Demo Mode — Luma Dream Machine API not connected. Seeded demo asset provided.',
@@ -75,7 +75,7 @@ export class LumaAdapter extends BaseAIProviderAdapter {
         status: 'completed',
         progressPercent: 100,
         isDemoSimulated: true,
-        videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4',
+        videoUrl: '/media/templates/tmpl-05-automotive-film.mp4',
       };
     }
 

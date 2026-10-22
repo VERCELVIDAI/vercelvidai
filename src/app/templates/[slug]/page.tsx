@@ -14,13 +14,12 @@ import {
   Volume2,
   VolumeX,
   Film,
-  Music,
   Clock,
-  Ratio,
-  CheckCircle2,
   Layers,
   Cpu,
   ArrowLeft,
+  AlertCircle,
+  RefreshCw,
 } from 'lucide-react';
 
 export default function TemplateDetailPage({ params }: { params: { slug: string } }) {
@@ -31,9 +30,11 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
   const [isCloning, setIsCloning] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const tmpl = getTemplateBySlug(params.slug) || getTemplateBySlug('viral-luxury-product-reel')!;
+  const tmpl = getTemplateBySlug(params.slug) || getTemplateBySlug('cinematic-product-commercial')!;
 
   const handleUseTemplate = async () => {
     setIsCloning(true);
@@ -95,9 +96,9 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
 
   const togglePlay = () => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || hasError) return;
     if (video.paused) {
-      video.play().then(() => setIsPlaying(true)).catch(() => {});
+      video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
     } else {
       video.pause();
       setIsPlaying(false);
@@ -115,10 +116,9 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
 
   return (
     <div
-      className="min-h-screen flex flex-col transition-colors duration-200"
+      className="min-h-screen flex flex-col transition-colors duration-200 bg-gradient-to-b from-white via-[#F8FAFC] to-[#F0FDF4]/30"
       style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
+        color: '#17211D',
       }}
     >
       <Header />
@@ -128,7 +128,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
         <div className="mb-6">
           <Link
             href="/templates"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-emerald-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Template Marketplace</span>
@@ -138,7 +138,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left Column (7 cols): Playable Video Preview */}
           <div className="lg:col-span-7 flex flex-col items-center">
-            <div className="w-full rounded-3xl bg-white dark:bg-[#11131C] p-3 sm:p-4 border border-slate-200 dark:border-white/10 shadow-xl overflow-hidden">
+            <div className="w-full rounded-3xl bg-white p-3 sm:p-4 border border-emerald-500/20 shadow-xl overflow-hidden">
               <div
                 className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl mx-auto ${
                   tmpl.aspect === '9:16'
@@ -148,19 +148,53 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                     : 'aspect-video'
                 }`}
               >
-                <video
-                  ref={videoRef}
-                  src={tmpl.videoPreview}
-                  playsInline
-                  loop
-                  autoPlay
-                  muted={isMuted}
-                  className="w-full h-full object-cover"
+                {/* Poster fallback */}
+                <img
+                  src={tmpl.thumbnail}
+                  alt={tmpl.title}
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${
+                    videoLoaded && !hasError ? 'opacity-0' : 'opacity-100'
+                  }`}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/media/posters/poster-product.jpg';
+                  }}
                 />
+
+                {!hasError ? (
+                  <video
+                    ref={videoRef}
+                    src={tmpl.videoPreview}
+                    playsInline
+                    loop
+                    autoPlay
+                    muted={isMuted}
+                    onLoadedData={() => setVideoLoaded(true)}
+                    onError={() => setHasError(true)}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                      videoLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center p-6 text-center text-white">
+                    <AlertCircle className="w-8 h-8 text-amber-400 mb-2" />
+                    <p className="text-sm font-semibold">Video stream loading</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHasError(false);
+                        if (videoRef.current) videoRef.current.load();
+                      }}
+                      className="mt-3 px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center gap-1.5"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      <span>Retry</span>
+                    </button>
+                  </div>
+                )}
 
                 {/* Overlaid Badges */}
                 <div className="absolute top-3 left-3 flex items-center gap-2">
-                  <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-violet-300 font-mono border border-violet-500/30">
+                  <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-emerald-300 font-mono border border-emerald-500/30">
                     {tmpl.aspectLabel}
                   </span>
                   <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-slate-300 font-mono border border-white/10">
@@ -174,14 +208,16 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                     <button
                       type="button"
                       onClick={togglePlay}
-                      className="hover:text-violet-400 transition-colors"
+                      className="hover:text-emerald-400 transition-colors cursor-pointer"
+                      aria-label={isPlaying ? 'Pause' : 'Play'}
                     >
                       {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
                     </button>
                     <button
                       type="button"
                       onClick={toggleMute}
-                      className="hover:text-violet-400 transition-colors"
+                      className="hover:text-emerald-400 transition-colors cursor-pointer"
+                      aria-label={isMuted ? 'Unmute' : 'Mute'}
                     >
                       {isMuted ? <VolumeX className="w-4 h-4 text-amber-400" /> : <Volume2 className="w-4 h-4" />}
                     </button>
@@ -194,31 +230,31 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
           {/* Right Column (5 cols): Details, Scene Breakdown & CTA */}
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-600/10 dark:bg-violet-600/20 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider mb-3">
-                <Sparkles className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs uppercase tracking-wider mb-3 border border-emerald-300">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
                 <span>{tmpl.category}</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-[#17211D] tracking-tight leading-tight">
                 {tmpl.title}
               </h1>
 
-              <p className="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p className="mt-4 text-base text-slate-600 leading-relaxed font-normal">
                 {tmpl.description}
               </p>
             </div>
 
             {/* AI Engine Pipeline */}
-            <div className="p-4 rounded-2xl bg-white dark:bg-[#11131C] border border-slate-200 dark:border-white/10 space-y-2">
-              <div className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Cpu className="w-4 h-4 text-violet-500" />
+            <div className="p-4 rounded-2xl bg-white border border-emerald-500/20 space-y-2 shadow-2xs">
+              <div className="text-xs font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1.5">
+                <Cpu className="w-4 h-4 text-emerald-600" />
                 <span>Integrated AI Pipeline</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {tmpl.aiModelsUsed.map((m) => (
                   <span
                     key={m}
-                    className="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10"
+                    className="text-xs font-mono px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium"
                   >
                     {m}
                   </span>
@@ -227,23 +263,23 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
             </div>
 
             {/* Timeline Breakdown */}
-            <div className="p-4 rounded-2xl bg-white dark:bg-[#11131C] border border-slate-200 dark:border-white/10 space-y-3">
-              <div className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Film className="w-4 h-4 text-sky-500" />
+            <div className="p-4 rounded-2xl bg-white border border-emerald-500/20 space-y-3 shadow-2xs">
+              <div className="text-xs font-bold text-[#17211D] uppercase tracking-wider flex items-center gap-1.5">
+                <Film className="w-4 h-4 text-teal-600" />
                 <span>Timeline Structure ({tmpl.duration})</span>
               </div>
               <div className="space-y-2">
                 {tmpl.scenes.map((scene, idx) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/5 text-xs flex items-start gap-3"
+                    className="p-3 rounded-xl bg-[#F8FAFC] border border-emerald-500/10 text-xs flex items-start gap-3"
                   >
-                    <span className="font-mono text-[11px] font-bold text-violet-600 dark:text-violet-400 shrink-0 mt-0.5">
+                    <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
                       {scene.time}
                     </span>
                     <div>
-                      <div className="font-bold text-slate-900 dark:text-white">{scene.title}</div>
-                      <div className="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
+                      <div className="font-bold text-[#17211D]">{scene.title}</div>
+                      <div className="text-slate-600 text-[11px] leading-relaxed mt-0.5">
                         {scene.desc}
                       </div>
                     </div>
@@ -258,7 +294,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                 type="button"
                 onClick={handleUseTemplate}
                 disabled={isCloning}
-                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 hover:from-violet-500 hover:to-sky-400 text-white font-bold text-sm shadow-xl shadow-violet-600/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-sm shadow-xl shadow-emerald-600/25 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
               >
                 {isCloning ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -269,22 +305,22 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                   </>
                 )}
               </button>
-              <p className="text-center text-xs text-slate-500 dark:text-slate-400">
-                Copies timeline, assets and subtitle presets into a new independent project.
+              <p className="text-center text-xs text-slate-500">
+                Copies timeline, assets and subtitle presets into a new independent project without deducting credits.
               </p>
             </div>
           </div>
         </div>
 
         {/* Related Templates Section */}
-        <div className="mt-20 pt-10 border-t border-slate-200 dark:border-white/10">
+        <div className="mt-20 pt-10 border-t border-emerald-500/15">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+            <h2 className="text-2xl font-black text-[#17211D] tracking-tight">
               Related Video Templates
             </h2>
             <Link
               href="/templates"
-              className="text-xs font-bold text-violet-600 dark:text-violet-400 hover:underline flex items-center gap-1"
+              className="text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline flex items-center gap-1"
             >
               <span>Explore All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -296,23 +332,26 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
               <Link
                 key={r.id}
                 href={`/templates/${r.slug}`}
-                className="group rounded-2xl bg-white dark:bg-[#11131C] border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm hover:shadow-xl hover:border-violet-500/50 transition-all flex flex-col justify-between"
+                className="group rounded-2xl bg-white border border-emerald-500/20 overflow-hidden shadow-xs hover:shadow-xl hover:border-emerald-500/40 transition-all flex flex-col justify-between"
               >
                 <div className="aspect-video relative overflow-hidden bg-slate-900">
                   <img
                     src={r.thumbnail}
                     alt={r.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/media/posters/poster-product.jpg';
+                    }}
                   />
                   <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-black/60 text-[10px] font-mono text-white">
                     {r.duration}
                   </div>
                 </div>
                 <div className="p-4">
-                  <div className="text-[10px] font-bold text-violet-600 dark:text-violet-400 uppercase tracking-wider mb-1">
+                  <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider mb-1">
                     {r.category}
                   </div>
-                  <h3 className="font-bold text-slate-900 dark:text-white text-sm group-hover:text-violet-500 transition-colors truncate">
+                  <h3 className="font-bold text-[#17211D] text-sm group-hover:text-emerald-700 transition-colors truncate">
                     {r.title}
                   </h3>
                 </div>

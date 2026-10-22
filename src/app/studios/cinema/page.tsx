@@ -63,7 +63,7 @@ export default function CinemaStudioPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeTab, setActiveTab] = useState<'single' | 'storyboard'>('single');
   const [storyboard, setStoryboard] = useState<any>(null);
-  const [previewVideo, setPreviewVideo] = useState('https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4');
+  const [previewVideo, setPreviewVideo] = useState('/media/templates/tmpl-05-automotive-film.mp4');
 
   useEffect(() => {
     fetch('/api/auth/me')

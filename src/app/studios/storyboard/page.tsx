@@ -43,7 +43,7 @@ export default function StoryboardStudioPage() {
       prompt: 'A sleek deep-sea research probe descending into dark cyan oceanic waters under thick ice sheets.',
       camera: 'Dolly in',
       narration: 'Beyond the edge of human warmth lies an ocean untouched for a billion years.',
-      previewUrl: 'https://assets.mixkit.co/videos/preview/mixkit-waterfall-in-forest-2213-large.mp4',
+      previewUrl: '/media/templates/tmpl-02-luxury-perfume.mp4',
     },
     {
       id: 'sc_2',
@@ -52,7 +52,7 @@ export default function StoryboardStudioPage() {
       prompt: 'High-intensity sonar beams sweeping past towering hydrothermal crystalline vents.',
       camera: 'Tracking shot',
       narration: 'Thermal vents pulse with alien luminescence in the perpetual darkness.',
-      previewUrl: 'https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4',
+      previewUrl: '/media/templates/tmpl-09-tech-product.mp4',
     },
     {
       id: 'sc_3',
@@ -61,7 +61,7 @@ export default function StoryboardStudioPage() {
       prompt: 'A bioluminescent organism swirling around the submarine lens with iridescent emerald tentacles.',
       camera: 'Orbit',
       narration: 'And in that darkness, life was waiting.',
-      previewUrl: 'https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4',
+      previewUrl: '/media/templates/tmpl-06-travel-reel.mp4',
     },
   ]);
 
@@ -96,7 +96,7 @@ export default function StoryboardStudioPage() {
           prompt: s.visualPrompt,
           camera: s.cameraDirection || 'Dolly in',
           narration: s.narration || '',
-          previewUrl: 'https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4',
+          previewUrl: '/media/templates/tmpl-01-cinematic-product.mp4',
         }));
         setScenes(mapped);
       }

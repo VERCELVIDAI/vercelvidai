@@ -291,6 +291,30 @@
       "role": "creator",
       "createdAt": "2026-10-22T07:49:40.085Z",
       "updatedAt": "2026-10-22T07:49:40.085Z"
+    },
+    {
+      "id": "usr_3wsva8zy",
+      "email": "payu_test_1792658688023@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T08:44:48.023Z",
+      "updatedAt": "2026-10-22T08:44:48.023Z"
+    },
+    {
+      "id": "usr_e6xnql4c",
+      "email": "test_user_1792658690422@vidai.io",
+      "displayName": "Test Runner",
+      "role": "creator",
+      "createdAt": "2026-10-22T08:44:50.429Z",
+      "updatedAt": "2026-10-22T08:44:50.429Z"
+    },
+    {
+      "id": "usr_ncxbwta6",
+      "email": "secure_1792658690543@vidai.io",
+      "displayName": "Security Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T08:44:50.543Z",
+      "updatedAt": "2026-10-22T08:44:50.543Z"
     }
   ],
   "passwords": {
@@ -326,7 +350,10 @@
     "usr_s7hf1hov": "scrypt:b5175b6a248f73e072197300059a0f05:cd66a9cbe3b34a65bce78bb44e1af0d46ab8c6ee0ca03f78e1155325f3a2db52276a64a7684e07a4d6ffea0e4502e33f0049b14ecf995af7145a871dfa64671b",
     "usr_fo6zdbce": "scrypt:0fa222ed57a9a778ffa97b5e9fb72327:15e4d494433cd5934647c8d5d469f24b470cc7d7a802475412daa34f0771de13fb4143ecdad0a3d724d1eb05c52c6281aafaa9f5f51b66c1e297520de68e226a",
     "usr_0s8erms2": "scrypt:006efb02374afeea5a226ea85a3ea0b3:7e6f181657d37cdc5b7012620ac30e41d1e69397e81ff62710371cd42136257d68c4eb158488b13c116fe7c83474a2321714aa7b500d05db29876179d2ad5714",
-    "usr_jgjt1y00": "scrypt:2dd040a017e1c1d1bb93b252a4c8784a:04fc15a277210f38291e838f9dfb1299be19050de65ee17fa6c390d2717d6ad85db7bad9ae2e9d3b8c0a4d167a4325afd034d0255cf3c446ff98c8b0599aeb08"
+    "usr_jgjt1y00": "scrypt:2dd040a017e1c1d1bb93b252a4c8784a:04fc15a277210f38291e838f9dfb1299be19050de65ee17fa6c390d2717d6ad85db7bad9ae2e9d3b8c0a4d167a4325afd034d0255cf3c446ff98c8b0599aeb08",
+    "usr_3wsva8zy": "scrypt:fc98f532d66fb5c1aa55b1fe959af792:1f23e0d22a12dcb9a4a876cb8f22d04bf9e542ad3b22d0ad3ad4685176d772a4f7a6148f049f0843bbd1fff091376dba5d9ff10c03d0209647e8f1724b40f086",
+    "usr_e6xnql4c": "scrypt:4e1bade207e50294712bdc7904e07600:18ab8de367a37f41692c532627cb4d79c08434569712aeb8b894b6764e4a9913424242eecc6d9fca18aac62ab4c0f44193d53438753853790fbdf187529e2623",
+    "usr_ncxbwta6": "scrypt:9b03e81831a3615a5c5389fed3f1e3a1:356138fa2d7cc850345fd8232e084f61a027f439230137a624ba41216af6f1f3462832aca8d026b8b57f9ca783293b809c9c977bb7fdf01f691fc18ba07ba76e"
   },
   "workspaces": [
     {
@@ -559,6 +586,27 @@
       "name": "Fintech Tester's Studio",
       "createdAt": "2026-10-22T07:49:40.085Z",
       "updatedAt": "2026-10-22T07:49:40.085Z"
+    },
+    {
+      "id": "ws_webdy0ea",
+      "ownerId": "usr_3wsva8zy",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-22T08:44:48.023Z",
+      "updatedAt": "2026-10-22T08:44:48.023Z"
+    },
+    {
+      "id": "ws_ieq8a1an",
+      "ownerId": "usr_e6xnql4c",
+      "name": "Test Runner's Studio",
+      "createdAt": "2026-10-22T08:44:50.429Z",
+      "updatedAt": "2026-10-22T08:44:50.429Z"
+    },
+    {
+      "id": "ws_nhxbxjj3",
+      "ownerId": "usr_ncxbwta6",
+      "name": "Security Tester's Studio",
+      "createdAt": "2026-10-22T08:44:50.543Z",
+      "updatedAt": "2026-10-22T08:44:50.543Z"
     }
   ],
   "workspaceMembers": [
@@ -759,14 +807,32 @@
       "userId": "usr_jgjt1y00",
       "role": "owner",
       "joinedAt": "2026-10-22T07:49:40.085Z"
+    },
+    {
+      "workspaceId": "ws_webdy0ea",
+      "userId": "usr_3wsva8zy",
+      "role": "owner",
+      "joinedAt": "2026-10-22T08:44:48.023Z"
+    },
+    {
+      "workspaceId": "ws_ieq8a1an",
+      "userId": "usr_e6xnql4c",
+      "role": "owner",
+      "joinedAt": "2026-10-22T08:44:50.429Z"
+    },
+    {
+      "workspaceId": "ws_nhxbxjj3",
+      "userId": "usr_ncxbwta6",
+      "role": "owner",
+      "joinedAt": "2026-10-22T08:44:50.543Z"
     }
   ],
   "creditAccounts": {
     "usr_creator_demo_1": {
       "userId": "usr_creator_demo_1",
-      "availableBalance": 1725,
+      "availableBalance": 2225,
       "reservedBalance": 0,
-      "updatedAt": "2026-10-22T07:49:56.305Z"
+      "updatedAt": "2026-10-22T08:44:44.885Z"
     },
     "usr_admin_master_1": {
       "userId": "usr_admin_master_1",
@@ -959,6 +1025,24 @@
       "availableBalance": 1300,
       "reservedBalance": 0,
       "updatedAt": "2026-10-22T07:49:40.749Z"
+    },
+    "usr_3wsva8zy": {
+      "userId": "usr_3wsva8zy",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T08:44:48.161Z"
+    },
+    "usr_e6xnql4c": {
+      "userId": "usr_e6xnql4c",
+      "availableBalance": 225,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T08:44:51.764Z"
+    },
+    "usr_ncxbwta6": {
+      "userId": "usr_ncxbwta6",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T08:44:50.543Z"
     }
   },
   "creditLedger": [
@@ -2502,6 +2586,165 @@
         "txnid": "TXN_1792655396294_5R0ZCQ"
       },
       "createdAt": "2026-10-22T07:49:56.305Z"
+    },
+    {
+      "id": "cld_cotjj303xu",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "subscription_grant",
+      "amount": 500,
+      "balanceAfter": 2225,
+      "paymentId": "ord_payu_hte19r0mw",
+      "idempotencyKey": "payu_sub_grant_TXN_1792658684872_8538A5",
+      "metadata": {
+        "planId": "plan_starter",
+        "billingInterval": "month",
+        "txnid": "TXN_1792658684872_8538A5"
+      },
+      "createdAt": "2026-10-22T08:44:44.885Z"
+    },
+    {
+      "id": "cld_v4p26g2tsb",
+      "userId": "usr_3wsva8zy",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_3wsva8zy",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T08:44:48.023Z"
+    },
+    {
+      "id": "cld_301d4697dl",
+      "userId": "usr_3wsva8zy",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_7eu1x601k",
+      "idempotencyKey": "payu_fulfill_TXN_1792658688149_I9QRDY",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792658688149_I9QRDY",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-22T08:44:48.161Z"
+    },
+    {
+      "id": "cld_misz14hb8h",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_e6xnql4c",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T08:44:50.429Z"
+    },
+    {
+      "id": "cld_krh75bubnc",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "generation_reserve",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792658690487",
+      "idempotencyKey": "reserve_job_test_1792658690487",
+      "metadata": {
+        "reservedAmount": 50
+      },
+      "createdAt": "2026-10-22T08:44:50.487Z"
+    },
+    {
+      "id": "cld_gtcj3vkcfg",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "generation_settle",
+      "amount": -50,
+      "balanceAfter": 50,
+      "relatedJobId": "job_test_1792658690487",
+      "idempotencyKey": "settle_job_test_1792658690487",
+      "metadata": {
+        "reserved": 50,
+        "actual": 50,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T08:44:50.494Z"
+    },
+    {
+      "id": "cld_w9au3vkf",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "generation_reserve",
+      "amount": -30,
+      "balanceAfter": 20,
+      "relatedJobId": "job_fail_1792658690500",
+      "idempotencyKey": "reserve_job_fail_1792658690500",
+      "metadata": {
+        "reservedAmount": 30
+      },
+      "createdAt": "2026-10-22T08:44:50.500Z"
+    },
+    {
+      "id": "cld_59ge9xiy4a",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "refund",
+      "amount": 30,
+      "balanceAfter": 50,
+      "relatedJobId": "job_fail_1792658690500",
+      "idempotencyKey": "refund_job_fail_1792658690500_1792658690505",
+      "metadata": {
+        "reason": "Simulated cluster timeout"
+      },
+      "createdAt": "2026-10-22T08:44:50.505Z"
+    },
+    {
+      "id": "cld_2baiih662f",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "purchase",
+      "amount": 200,
+      "balanceAfter": 250,
+      "paymentId": "pay_123",
+      "idempotencyKey": "order_test_idempotent_1792658690512",
+      "createdAt": "2026-10-22T08:44:50.512Z"
+    },
+    {
+      "id": "cld_3ctri750t2",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "generation_reserve",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_84o057x42j",
+      "idempotencyKey": "reserve_job_84o057x42j",
+      "metadata": {
+        "reservedAmount": 25
+      },
+      "createdAt": "2026-10-22T08:44:50.533Z"
+    },
+    {
+      "id": "cld_43lhroc2gg",
+      "userId": "usr_ncxbwta6",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_ncxbwta6",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T08:44:50.543Z"
+    },
+    {
+      "id": "cld_m640xbpkak",
+      "userId": "usr_e6xnql4c",
+      "transactionType": "generation_settle",
+      "amount": -25,
+      "balanceAfter": 225,
+      "relatedJobId": "job_84o057x42j",
+      "idempotencyKey": "settle_job_84o057x42j",
+      "metadata": {
+        "reserved": 25,
+        "actual": 25,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-22T08:44:51.764Z"
     }
   ],
   "plans": [
@@ -2702,10 +2945,10 @@
       "id": "sub_demo_creator",
       "userId": "usr_creator_demo_1",
       "planId": "plan_starter",
-      "providerSubscriptionId": "payu_sub_TXN_1792655396294_5R0ZCQ",
+      "providerSubscriptionId": "payu_sub_TXN_1792658684872_8538A5",
       "status": "active",
-      "currentPeriodStart": "2026-10-22T07:49:56.305Z",
-      "currentPeriodEnd": "2027-10-22T07:49:56.313Z",
+      "currentPeriodStart": "2026-10-22T08:44:44.884Z",
+      "currentPeriodEnd": "2027-10-22T08:44:44.889Z",
       "cancelAtPeriodEnd": false,
       "createdAt": "2026-10-21T06:14:19.599Z"
     }
@@ -2933,17 +3176,17 @@
           {
             "text": "Engineered for Performance",
             "duration": 5,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           },
           {
             "text": "Ultralight Ergonomic Design",
             "duration": 5,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           },
           {
             "text": "Claim 30% Off Today",
             "duration": 5,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-jogging-towards-camera-42177-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           }
         ]
       },
@@ -2963,17 +3206,17 @@
           {
             "text": "The AI Breakthrough Nobody Saw Coming",
             "duration": 6,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-41589-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           },
           {
             "text": "Here is what it means for creators",
             "duration": 7,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-mother-and-daughter-using-a-laptop-42322-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           },
           {
             "text": "Follow for daily breakdowns",
             "duration": 7,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-at-home-42318-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           }
         ]
       },
@@ -2993,17 +3236,17 @@
           {
             "text": "Elegance in Every Breath",
             "duration": 6,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-perfume-bottle-and-flowers-42354-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           },
           {
             "text": "Crafted in Grasse, France",
             "duration": 6,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-waterfall-in-forest-2213-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           },
           {
             "text": "Vercel Vidai Signature Collection",
             "duration": 6,
-            "mediaUrl": "https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4"
+            "mediaUrl": "/media/templates/tmpl-01-cinematic-product.mp4"
           }
         ]
       },
@@ -3142,7 +3385,7 @@
             "trackId": "trk_video_1",
             "type": "video",
             "title": "Opening Footwear Shot",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 0,
             "durationSec": 5,
             "volume": 1
@@ -3152,7 +3395,7 @@
             "trackId": "trk_video_1",
             "type": "video",
             "title": "Urban Sprint Cinematic",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 5,
             "durationSec": 5,
             "volume": 1
@@ -3162,7 +3405,7 @@
             "trackId": "trk_video_1",
             "type": "video",
             "title": "Hero Brand Lockup",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-jogging-towards-camera-42177-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 10,
             "durationSec": 5,
             "volume": 1
@@ -3234,7 +3477,7 @@
             "trackId": "trk_v",
             "type": "video",
             "title": "Studio Workspace",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-41589-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 0,
             "durationSec": 12
           }
@@ -3287,7 +3530,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3379,7 +3622,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Futuristic hyper-car spe",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3426,7 +3669,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Futuristic hyper-car spe",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3473,7 +3716,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Futuristic hyper-car spe",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3528,7 +3771,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3620,7 +3863,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Futuristic hyper-car spe",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3667,7 +3910,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Futuristic hyper-car spe",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3709,7 +3952,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Macro Friction Hook",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 0,
             "durationSec": 15
           }
@@ -3763,7 +4006,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3863,7 +4106,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -3963,7 +4206,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -4063,7 +4306,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -4163,7 +4406,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -4263,7 +4506,7 @@
             "trackId": "trk_v1",
             "type": "video",
             "title": "Cinematic futuristic cit",
-            "sourceUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+            "sourceUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
             "startTimeSec": 15,
             "durationSec": 5,
             "volume": 1
@@ -4318,6 +4561,146 @@
       "isFavorite": false,
       "createdAt": "2026-10-22T07:49:27.334Z",
       "updatedAt": "2026-10-22T07:49:27.334Z"
+    },
+    {
+      "id": "prj_vd0q3qe22",
+      "workspaceId": "ws_ieq8a1an",
+      "ownerId": "usr_e6xnql4c",
+      "title": "Test Timeline Project",
+      "description": "",
+      "mediaType": "video",
+      "status": "completed",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 20,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          },
+          {
+            "id": "clp_7ryyp54",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Cinematic futuristic cit",
+            "sourceUrl": "/media/login/login-hero-preview.mp4",
+            "startTimeSec": 15,
+            "durationSec": 5,
+            "volume": 1
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T08:44:50.521Z",
+      "updatedAt": "2026-10-22T08:44:51.783Z"
+    },
+    {
+      "id": "prj_d1fmwfnrj",
+      "workspaceId": "ws_ieq8a1an",
+      "ownerId": "usr_e6xnql4c",
+      "title": "Test Timeline Project (Copy)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+      "timeline": {
+        "durationSec": 15,
+        "aspectRatio": "16:9",
+        "resolution": "1080p",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video 1"
+          },
+          {
+            "id": "trk_t1",
+            "type": "text",
+            "name": "Text & Titles"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_u1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Scene 1",
+            "startTimeSec": 0,
+            "durationSec": 8
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T08:44:50.527Z",
+      "updatedAt": "2026-10-22T08:44:50.527Z"
+    },
+    {
+      "id": "prj_0nsa0i6u9",
+      "workspaceId": "ws_creator_demo_1",
+      "ownerId": "usr_creator_demo_1",
+      "title": "Botanique Rare Elixir (Project)",
+      "description": "",
+      "mediaType": "video",
+      "status": "draft",
+      "thumbnailUrl": "/media/posters/poster-product.jpg",
+      "timeline": {
+        "durationSec": 18,
+        "aspectRatio": "16:9",
+        "tracks": [
+          {
+            "id": "trk_v1",
+            "type": "video",
+            "name": "Video Scenes"
+          },
+          {
+            "id": "trk_a1",
+            "type": "audio",
+            "name": "Audio Track"
+          }
+        ],
+        "clips": [
+          {
+            "id": "clp_1",
+            "trackId": "trk_v1",
+            "type": "video",
+            "title": "Morning Mist Emergence",
+            "sourceUrl": "/media/templates/tmpl-02-luxury-perfume.mp4",
+            "startTimeSec": 0,
+            "durationSec": 18
+          }
+        ]
+      },
+      "isFavorite": false,
+      "createdAt": "2026-10-22T08:47:51.967Z",
+      "updatedAt": "2026-10-22T08:47:51.967Z"
     }
   ],
   "assets": [
@@ -4352,7 +4735,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_ugdkhpjoxg/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4369,7 +4752,7 @@
       "name": "Futuristic hyper-car speeding  (video)",
       "assetType": "video",
       "storageKey": "generated/job_thjmq46zpc/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4386,7 +4769,7 @@
       "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
       "assetType": "video",
       "storageKey": "renders/prj_xgq4ghbeb/rnd_jwec9ce2.mp4",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 18450000,
       "metadata": {
@@ -4406,7 +4789,7 @@
       "name": "Futuristic hyper-car speeding  (video)",
       "assetType": "video",
       "storageKey": "generated/job_uiy1h9p3yo/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4423,7 +4806,7 @@
       "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
       "assetType": "video",
       "storageKey": "renders/prj_iwd0du0ta/rnd_rxbnqkze.mp4",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 18450000,
       "metadata": {
@@ -4443,7 +4826,7 @@
       "name": "Futuristic hyper-car speeding  (video)",
       "assetType": "video",
       "storageKey": "generated/job_b3thm8wdrm/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4460,7 +4843,7 @@
       "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
       "assetType": "video",
       "storageKey": "renders/prj_prj9rln11/rnd_a54h7xh2.mp4",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 18450000,
       "metadata": {
@@ -4480,7 +4863,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_2dbgym5axu/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4497,7 +4880,7 @@
       "name": "Futuristic hyper-car speeding  (video)",
       "assetType": "video",
       "storageKey": "generated/job_ya6yrr70b1/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4514,7 +4897,7 @@
       "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
       "assetType": "video",
       "storageKey": "renders/prj_j5kqra5l3/rnd_6pvbr4r4.mp4",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 18450000,
       "metadata": {
@@ -4534,7 +4917,7 @@
       "name": "Futuristic hyper-car speeding  (video)",
       "assetType": "video",
       "storageKey": "generated/job_t9bd11ttja/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4551,7 +4934,7 @@
       "name": "Live Test Cyberpunk Commercial - Final Render (1080p).mp4",
       "assetType": "video",
       "storageKey": "renders/prj_h1wlwrmyy/rnd_nbn03dot.mp4",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 18450000,
       "metadata": {
@@ -4571,7 +4954,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_ixa6t0i6ep/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4588,7 +4971,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_ao4cw8mfu6/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4605,7 +4988,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_0iu5kcwtmt/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4622,7 +5005,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_ml90sbmg03/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4639,7 +5022,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_xc8lwunid9/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4656,7 +5039,7 @@
       "name": "Cinematic futuristic city stre (video)",
       "assetType": "video",
       "storageKey": "generated/job_vi3tk849hp/video",
-      "url": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+      "url": "/media/templates/tmpl-01-cinematic-product.mp4",
       "mimeType": "video/mp4",
       "fileSize": 2048000,
       "metadata": {
@@ -4665,6 +5048,23 @@
       },
       "id": "ast_iwzr1f86t",
       "createdAt": "2026-10-22T07:49:28.578Z"
+    },
+    {
+      "workspaceId": "ws_ieq8a1an",
+      "ownerId": "usr_e6xnql4c",
+      "projectId": "prj_vd0q3qe22",
+      "name": "Cinematic futuristic city stre (video)",
+      "assetType": "video",
+      "storageKey": "generated/job_84o057x42j/video",
+      "url": "/media/login/login-hero-preview.mp4",
+      "mimeType": "video/mp4",
+      "fileSize": 2048000,
+      "metadata": {
+        "jobId": "job_84o057x42j",
+        "isDemoSimulated": true
+      },
+      "id": "ast_vvmd09q4o",
+      "createdAt": "2026-10-22T08:44:51.777Z"
     }
   ],
   "generationJobs": [
@@ -4690,7 +5090,7 @@
       "createdAt": "2026-10-21T09:44:04.152Z",
       "updatedAt": "2026-10-21T09:44:05.368Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4725,7 +5125,7 @@
       "createdAt": "2026-10-21T09:42:28.210Z",
       "updatedAt": "2026-10-21T09:42:29.433Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4759,7 +5159,7 @@
       "createdAt": "2026-10-21T09:39:07.173Z",
       "updatedAt": "2026-10-21T09:39:08.390Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4794,7 +5194,7 @@
       "createdAt": "2026-10-21T09:30:42.818Z",
       "updatedAt": "2026-10-21T09:30:44.035Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4829,7 +5229,7 @@
       "createdAt": "2026-10-21T09:13:25.340Z",
       "updatedAt": "2026-10-21T09:13:26.553Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4864,7 +5264,7 @@
       "createdAt": "2026-10-21T09:12:42.137Z",
       "updatedAt": "2026-10-21T09:12:43.362Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4898,7 +5298,7 @@
       "createdAt": "2026-10-21T06:14:19.632Z",
       "updatedAt": "2026-10-21T06:14:20.847Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4928,7 +5328,7 @@
         "resolution": "1080p"
       },
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-athlete-tying-his-running-shoes-42352-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true
       },
@@ -4961,7 +5361,7 @@
       "createdAt": "2026-10-22T06:14:56.683Z",
       "updatedAt": "2026-10-22T06:14:57.903Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -4995,7 +5395,7 @@
       "createdAt": "2026-10-22T06:24:13.926Z",
       "updatedAt": "2026-10-22T06:24:15.155Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -5029,7 +5429,7 @@
       "createdAt": "2026-10-22T06:36:09.598Z",
       "updatedAt": "2026-10-22T06:36:10.819Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -5063,7 +5463,7 @@
       "createdAt": "2026-10-22T06:48:21.527Z",
       "updatedAt": "2026-10-22T06:48:22.742Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -5097,7 +5497,7 @@
       "createdAt": "2026-10-22T06:49:32.630Z",
       "updatedAt": "2026-10-22T06:49:33.851Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -5131,7 +5531,7 @@
       "createdAt": "2026-10-22T07:49:27.340Z",
       "updatedAt": "2026-10-22T07:49:28.566Z",
       "output": {
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4",
+        "videoUrl": "/media/templates/tmpl-01-cinematic-product.mp4",
         "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
         "isDemoSimulated": true,
         "metadata": {
@@ -5143,6 +5543,40 @@
       },
       "providerRequestId": "fluvia_req_job_vi3tk849hp_1792655368565",
       "completedAt": "2026-10-22T07:49:28.566Z"
+    },
+    {
+      "id": "job_84o057x42j",
+      "userId": "usr_e6xnql4c",
+      "workspaceId": "ws_ieq8a1an",
+      "projectId": "prj_vd0q3qe22",
+      "providerId": "vidai_core",
+      "modelId": "vidai-cinematic-v1",
+      "status": "completed",
+      "progressPercent": 100,
+      "progressMessage": "Generated via Fluvia Cinema Core (Production Grade)",
+      "input": {
+        "prompt": "Cinematic futuristic city street with neon lights",
+        "aspectRatio": "16:9",
+        "durationSec": 5
+      },
+      "estimatedCredits": 25,
+      "reservedCredits": 25,
+      "actualCredits": 25,
+      "createdAt": "2026-10-22T08:44:50.533Z",
+      "updatedAt": "2026-10-22T08:44:51.763Z",
+      "output": {
+        "videoUrl": "/media/login/login-hero-preview.mp4",
+        "thumbnailUrl": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80",
+        "isDemoSimulated": true,
+        "metadata": {
+          "prompt": "Cinematic futuristic city street with neon lights",
+          "aspectRatio": "16:9",
+          "durationSec": 5,
+          "engine": "Fluvia-Cinematic-v1"
+        }
+      },
+      "providerRequestId": "fluvia_req_job_84o057x42j_1792658691763",
+      "completedAt": "2026-10-22T08:44:51.763Z"
     }
   ],
   "payments": [
@@ -5254,6 +5688,18 @@
       "processingStatus": "processed",
       "receivedAt": "2026-10-22T07:49:27.498Z",
       "processedAt": "2026-10-22T07:49:27.498Z"
+    },
+    {
+      "id": "evt_replay_test_1792658690695",
+      "eventId": "evt_replay_test_1792658690695",
+      "provider": "razorpay",
+      "eventType": "payment.captured",
+      "payload": {
+        "amount": 50000
+      },
+      "processingStatus": "processed",
+      "receivedAt": "2026-10-22T08:44:50.695Z",
+      "processedAt": "2026-10-22T08:44:50.695Z"
     }
   ],
   "auditLogs": [
@@ -6751,6 +7197,94 @@
         "creditsAwarded": 500
       },
       "createdAt": "2026-10-22T07:49:56.330Z"
+    },
+    {
+      "id": "aud_symnqz6t33",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_hte19r0mw",
+      "metadata": {
+        "txnid": "TXN_1792658684872_8538A5",
+        "totalAmount": 11313.84,
+        "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)"
+      },
+      "createdAt": "2026-10-22T08:44:44.879Z"
+    },
+    {
+      "id": "aud_zkwbl5cck6",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_hte19r0mw",
+      "metadata": {
+        "txnid": "TXN_1792658684872_8538A5",
+        "totalAmount": 11313.84,
+        "invoiceNumber": "INV-2026-0018",
+        "receiptNumber": "RCP-2026-0018",
+        "creditsAwarded": 500
+      },
+      "createdAt": "2026-10-22T08:44:44.905Z"
+    },
+    {
+      "id": "aud_umknqxw37g",
+      "actorId": "usr_3wsva8zy",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_7eu1x601k",
+      "metadata": {
+        "txnid": "TXN_1792658688149_I9QRDY",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-22T08:44:48.154Z"
+    },
+    {
+      "id": "aud_juekx96aar",
+      "actorId": "usr_3wsva8zy",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_7eu1x601k",
+      "metadata": {
+        "txnid": "TXN_1792658688149_I9QRDY",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0019",
+        "receiptNumber": "RCP-2026-0019",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-22T08:44:48.183Z"
+    },
+    {
+      "id": "aud_1t5xotvbw2",
+      "actorId": "usr_3wsva8zy",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_ap7sf2ktk",
+      "metadata": {
+        "txnid": "TXN_1792658688276_FI5F79",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-22T08:44:48.283Z"
+    },
+    {
+      "id": "aud_bwcz705fwa",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-22T08:47:51.943Z"
+    },
+    {
+      "id": "aud_7g5n91lmd1",
+      "actorId": "usr_creator_demo_1",
+      "action": "PROJECT_CREATED",
+      "resourceType": "project",
+      "resourceId": "prj_0nsa0i6u9",
+      "metadata": {
+        "title": "Botanique Rare Elixir (Project)"
+      },
+      "createdAt": "2026-10-22T08:47:51.974Z"
     }
   ],
   "supportTickets": [
@@ -8264,6 +8798,134 @@
       "receiptId": "rcp_0z4fm575g",
       "receiptNumber": "RCP-2026-0017",
       "verifiedAt": "2026-10-22T07:49:56.305Z"
+    },
+    {
+      "txnid": "TXN_1792658684872_8538A5",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+      "currency": "INR",
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "totalAmount": 11313.84,
+      "amountPaise": 1131384,
+      "taxBreakdown": {
+        "baseAmount": 9588,
+        "taxRate": 18,
+        "taxAmount": 1725.84,
+        "cgstRate": 9,
+        "cgstAmount": 862.92,
+        "sgstRate": 9,
+        "sgstAmount": 862.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792658684872_8538A5",
+      "id": "ord_payu_hte19r0mw",
+      "createdAt": "2026-10-22T08:44:44.872Z",
+      "updatedAt": "2026-10-22T08:44:44.901Z",
+      "payuMihpayid": "mih_1792658684884",
+      "payuBankRefNum": "BNK_1792658684884",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_52ia47zut",
+      "invoiceNumber": "INV-2026-0018",
+      "receiptId": "rcp_jaw954m3p",
+      "receiptNumber": "RCP-2026-0018",
+      "verifiedAt": "2026-10-22T08:44:44.884Z"
+    },
+    {
+      "txnid": "TXN_1792658688149_I9QRDY",
+      "userId": "usr_3wsva8zy",
+      "workspaceId": "ws_webdy0ea",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792658688023@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792658688149_I9QRDY",
+      "id": "ord_payu_7eu1x601k",
+      "createdAt": "2026-10-22T08:44:48.150Z",
+      "updatedAt": "2026-10-22T08:44:48.178Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_j6l0hzm5t",
+      "invoiceNumber": "INV-2026-0019",
+      "receiptId": "rcp_asc7er9ew",
+      "receiptNumber": "RCP-2026-0019",
+      "verifiedAt": "2026-10-22T08:44:48.161Z"
+    },
+    {
+      "txnid": "TXN_1792658688276_FI5F79",
+      "userId": "usr_3wsva8zy",
+      "workspaceId": "ws_webdy0ea",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792658688023@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792658688276_FI5F79",
+      "id": "ord_payu_ap7sf2ktk",
+      "createdAt": "2026-10-22T08:44:48.276Z",
+      "updatedAt": "2026-10-22T08:44:48.287Z",
+      "payuError": "Response hash mismatch - potential tampering"
     }
   ],
   "invoices": [
@@ -9218,6 +9880,118 @@
       "id": "inv_45xvt7h8o",
       "createdAt": "2026-10-22T07:49:56.314Z",
       "updatedAt": "2026-10-22T07:49:56.314Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0018",
+      "orderId": "ord_payu_hte19r0mw",
+      "txnid": "TXN_1792658684872_8538A5",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 9588,
+          "taxableValue": 9588,
+          "gstRate": 18,
+          "cgstAmount": 862.92,
+          "sgstAmount": 862.92,
+          "igstAmount": 0,
+          "totalAmount": 11313.84
+        }
+      ],
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "cgstAmount": 862.92,
+      "sgstAmount": 862.92,
+      "igstAmount": 0,
+      "totalAmount": 11313.84,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T08:44:44.884Z",
+      "dueDate": "2026-10-22T08:44:44.884Z",
+      "paymentDate": "2026-10-22T08:44:44.884Z",
+      "payuPaymentId": "mih_1792658684884",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_52ia47zut",
+      "createdAt": "2026-10-22T08:44:44.889Z",
+      "updatedAt": "2026-10-22T08:44:44.889Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0019",
+      "orderId": "ord_payu_7eu1x601k",
+      "txnid": "TXN_1792658688149_I9QRDY",
+      "userId": "usr_3wsva8zy",
+      "workspaceId": "ws_webdy0ea",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792658688023@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T08:44:48.161Z",
+      "dueDate": "2026-10-22T08:44:48.161Z",
+      "paymentDate": "2026-10-22T08:44:48.161Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_j6l0hzm5t",
+      "createdAt": "2026-10-22T08:44:48.167Z",
+      "updatedAt": "2026-10-22T08:44:48.167Z"
     }
   ],
   "receipts": [
@@ -9611,6 +10385,52 @@
       "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
       "id": "rcp_0z4fm575g",
       "createdAt": "2026-10-22T07:49:56.320Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0018",
+      "orderId": "ord_payu_hte19r0mw",
+      "txnid": "TXN_1792658684872_8538A5",
+      "invoiceId": "inv_52ia47zut",
+      "invoiceNumber": "INV-2026-0018",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "customerName": "Annual Subscriber",
+      "customerEmail": "creator@vidai.io",
+      "amountReceived": 11313.84,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1792658684884",
+      "payuBankRefNum": "BNK_1792658684884",
+      "productPurchased": "Fluvia Basic - Annual Subscription (12 Months at INR 799/mo)",
+      "paymentDate": "2026-10-22T08:44:44.884Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792658684872_8538A5-MVJAP1WG",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_jaw954m3p",
+      "createdAt": "2026-10-22T08:44:44.896Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0019",
+      "orderId": "ord_payu_7eu1x601k",
+      "txnid": "TXN_1792658688149_I9QRDY",
+      "invoiceId": "inv_j6l0hzm5t",
+      "invoiceNumber": "INV-2026-0019",
+      "userId": "usr_3wsva8zy",
+      "workspaceId": "ws_webdy0ea",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792658688023@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-22T08:44:48.161Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792658688149_I9QRDY-MVJAP4FF",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_asc7er9ew",
+      "createdAt": "2026-10-22T08:44:48.171Z"
     }
   ],
   "creditNotes": [],

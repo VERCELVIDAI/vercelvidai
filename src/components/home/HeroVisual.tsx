@@ -77,7 +77,8 @@ export function HeroVisual() {
           <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-900 border border-emerald-500/20 group shadow-inner">
             <video
               className="w-full h-full object-cover"
-              src="https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4"
+              src="/media/login/login-hero-preview.mp4"
+              poster="/media/login/thumb-cyberpunk.jpg"
               playsInline
               loop
               autoPlay
