@@ -9,9 +9,16 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   href?: string;
   showTagline?: boolean;
+  darkVariant?: boolean;
 }
 
-export function Logo({ className = '', size = 'md', href = '/', showTagline = false }: LogoProps) {
+export function Logo({
+  className = '',
+  size = 'md',
+  href = '/',
+  showTagline = false,
+  darkVariant = false,
+}: LogoProps) {
   const iconSizes = {
     sm: 'w-6 h-6 sm:w-7 sm:h-7',
     md: 'w-7 h-7 sm:w-9 sm:h-9',
@@ -82,16 +89,16 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
       {/* Typography: Wordmark in Deep Forest #17211D with emerald dot */}
       <div className="flex flex-col">
         <div className="flex items-center tracking-tight leading-none">
-          <span className={`font-black text-[#17211D] tracking-tight ${textSizes[size]}`}>
+          <span className={`font-black tracking-tight ${darkVariant ? 'text-white' : 'text-[#17211D]'} ${textSizes[size]}`}>
             FLUVIA
           </span>
-          <span className={`font-light text-[#047857] ml-1.5 tracking-wider ${textSizes[size]}`}>
+          <span className={`font-light ml-1.5 tracking-wider ${darkVariant ? 'text-emerald-400' : 'text-[#047857]'} ${textSizes[size]}`}>
             FLOW
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-1 mb-2 animate-pulse" />
         </div>
         {showTagline && (
-          <span className="text-[10px] font-medium tracking-wide text-[#64748B] mt-0.5">
+          <span className={`text-[10px] font-medium tracking-wide mt-0.5 ${darkVariant ? 'text-slate-400' : 'text-[#64748B]'}`}>
             {BRAND.tagline}
           </span>
         )}
