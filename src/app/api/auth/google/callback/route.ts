@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { dbStore } from '@/lib/db/store';
 import { setSession, validateRedirectUrl } from '@/lib/auth/session';
+import { getGoogleOAuthCredentials, resolveGoogleRedirectUri } from '@/lib/auth/google-config';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,7 +36,7 @@ export async function GET(req: NextRequest) {
   const cookieStore = cookies();
   const stateCookie = cookieStore.get('fluvia_oauth_state');
 
-  let savedState: { state: string; nonce: string; returnUrl: string; createdAt: number } | null = null;
+  let savedState: { state: string; nonce?: string; returnUrl: string; redirectUri?: string; createdAt: number } | null = null;
   try {
     if (stateCookie?.value) {
       savedState = JSON.parse(stateCookie.value);
@@ -59,10 +60,9 @@ export async function GET(req: NextRequest) {
   const returnUrl = validateRedirectUrl(savedState.returnUrl, '/dashboard');
 
   // 3. Exchange authorization code for access & ID tokens
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const { clientId, clientSecret } = getGoogleOAuthCredentials();
   const currentPath = req.nextUrl.pathname;
-  const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI || `${requestOrigin}${currentPath}`;
+  const redirectUri = savedState?.redirectUri || resolveGoogleRedirectUri(requestOrigin, currentPath);
 
   if (!clientId || !clientSecret) {
     const msg = encodeURIComponent('Server configuration error: GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET is missing.');
