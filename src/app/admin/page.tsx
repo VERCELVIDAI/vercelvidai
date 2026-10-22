@@ -156,7 +156,7 @@ export default function AdminConsolePage() {
           <div className="h-5 w-px bg-white/10" />
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-amber-400" />
-            <span className="font-bold text-white text-base">Vercel Vidai • Admin Console</span>
+            <span className="font-bold text-white text-base">Fluvia Flow • Admin Console</span>
             <span className="text-[10px] bg-amber-500/20 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-500/30 uppercase">
               Super Admin
             </span>

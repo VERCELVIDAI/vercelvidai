@@ -26,7 +26,8 @@ import {
 } from 'lucide-react';
 
 const MODELS = [
-  { id: 'vidai-cinematic-v1', name: 'Vidai Cinematic HD', cost: 25, badge: 'Fastest' },
+  { id: 'fluvia-cinematic-v1', name: 'Fluvia Cinematic HD', cost: 25, badge: 'Director' },
+  { id: 'vidai-cinematic-v1', name: 'Fluvia Cinematic HD (Legacy)', cost: 25, badge: 'Fast' },
   { id: 'runway-gen3', name: 'Runway Gen-3 Alpha', cost: 50, badge: 'Ultra' },
   { id: 'luma-ray', name: 'Luma Dream Machine Ray', cost: 40, badge: 'Realistic Motion' },
   { id: 'fal-flux-pro', name: 'Flux 1.1 Pro Vision (Image)', cost: 5, badge: 'Photoreal' },
@@ -40,7 +41,7 @@ function CreateWorkspaceContent() {
   // Initial params
   const initialMode = (searchParams.get('mode') as any) || 'video';
   const initialPrompt = searchParams.get('prompt') || '';
-  const initialModel = searchParams.get('modelId') || 'vidai-cinematic-v1';
+  const initialModel = searchParams.get('modelId') || 'fluvia-cinematic-v1';
   const initialRatio = (searchParams.get('aspectRatio') as any) || '16:9';
 
   const [authData, setAuthData] = useState<any>(null);
@@ -61,13 +62,14 @@ function CreateWorkspaceContent() {
   useEffect(() => {
     if (!prompt) {
       try {
-        const saved = localStorage.getItem('vidai_pending_prompt');
+        const saved = localStorage.getItem('fluvia_pending_prompt') || localStorage.getItem('vidai_pending_prompt');
         if (saved) {
           const parsed = JSON.parse(saved);
           if (parsed.prompt) setPrompt(parsed.prompt);
           if (parsed.mode) setMode(parsed.mode);
           if (parsed.aspectRatio) setAspectRatio(parsed.aspectRatio);
           if (parsed.modelId) setModelId(parsed.modelId);
+          localStorage.removeItem('fluvia_pending_prompt');
           localStorage.removeItem('vidai_pending_prompt');
         }
       } catch (e) {}
@@ -211,7 +213,7 @@ function CreateWorkspaceContent() {
                 type="button"
                 onClick={() => {
                   setMode('video');
-                  setModelId('vidai-cinematic-v1');
+                  setModelId('fluvia-cinematic-v1');
                 }}
                 className={`flex-1 py-2 rounded-lg font-semibold flex items-center justify-center gap-1.5 transition-all ${
                   mode === 'video' ? 'bg-violet-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
@@ -507,7 +509,7 @@ function CreateWorkspaceContent() {
               </div>
 
               <div className="pt-4 border-t border-white/[0.08] text-[11px] text-slate-500 flex justify-between">
-                <span>Vercel Vidai Inference Cluster</span>
+                <span>Fluvia Flow GPU Inference Cluster</span>
                 <span>Latency: ~1.2s</span>
               </div>
             </div>

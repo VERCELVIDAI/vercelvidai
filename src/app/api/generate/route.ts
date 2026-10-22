@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Please provide a prompt or script to begin generation.' }, { status: 400 });
     }
 
-    const selectedModelId = modelId || 'vidai-cinematic-v1';
+    const selectedModelId = modelId || 'fluvia-cinematic-v1';
     const estimatedCost = calculateEstimatedCredits(selectedModelId, durationSec || 5);
 
     const creditAccount = dbStore.getCreditAccount(current.user.id);

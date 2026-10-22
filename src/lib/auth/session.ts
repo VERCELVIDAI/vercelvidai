@@ -3,8 +3,9 @@ import crypto from 'crypto';
 import { dbStore } from '../db/store';
 import { UserProfile, Workspace } from '../types';
 
-const SESSION_COOKIE_NAME = 'vidai_session';
-const SESSION_SECRET = process.env.APP_SECRET || 'vidai-production-super-secret-key-32-chars-minimum-fallback';
+const PRIMARY_COOKIE = 'fluvia_session';
+const LEGACY_COOKIE = 'vidai_session';
+const SESSION_SECRET = process.env.APP_SECRET || 'fluvia-flow-production-super-secret-key-32-chars-minimum-fallback';
 
 export interface SessionData {
   userId: string;
@@ -19,7 +20,7 @@ function signPayload(payloadStr: string): string {
 
 export async function getSession(): Promise<SessionData | null> {
   const cookieStore = cookies();
-  const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME);
+  const sessionCookie = cookieStore.get(PRIMARY_COOKIE) || cookieStore.get(LEGACY_COOKIE);
   if (!sessionCookie || !sessionCookie.value) {
     return null;
   }
@@ -68,25 +69,29 @@ export async function setSession(data: SessionData): Promise<void> {
   const signedToken = `${payloadBase64}.${signature}`;
 
   const isHttps = process.env.NEXT_PUBLIC_APP_URL?.startsWith('https');
-  cookieStore.set(SESSION_COOKIE_NAME, signedToken, {
+  const cookieOpts = {
     httpOnly: true,
     secure: isHttps ? true : false,
-    sameSite: 'lax',
+    sameSite: 'lax' as const,
     path: '/',
     maxAge: 60 * 60 * 24 * 30, // 30 days
-  });
+  };
+  cookieStore.set(PRIMARY_COOKIE, signedToken, cookieOpts);
+  cookieStore.set(LEGACY_COOKIE, signedToken, cookieOpts);
 }
 
 export async function clearSession(): Promise<void> {
   const cookieStore = cookies();
   const isHttps = process.env.NEXT_PUBLIC_APP_URL?.startsWith('https');
-  cookieStore.set(SESSION_COOKIE_NAME, '', {
+  const clearOpts = {
     httpOnly: true,
     secure: isHttps ? true : false,
-    sameSite: 'lax',
+    sameSite: 'lax' as const,
     path: '/',
     maxAge: 0,
-  });
+  };
+  cookieStore.set(PRIMARY_COOKIE, '', clearOpts);
+  cookieStore.set(LEGACY_COOKIE, '', clearOpts);
 }
 
 export async function getCurrentUser(): Promise<{ user: UserProfile; workspace: Workspace } | null> {

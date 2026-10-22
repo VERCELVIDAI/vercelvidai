@@ -1,3 +1,5 @@
+import { BRAND } from '@/lib/brand';
+
 export interface EmailTemplateData {
   customerName: string;
   customerEmail: string;
@@ -12,8 +14,8 @@ export interface EmailTemplateData {
 }
 
 export function generatePaymentSuccessEmail(data: EmailTemplateData): { subject: string; html: string; text: string } {
-  const subject = `Payment Confirmed: ${data.productName} — Vercel Vidai`;
-  const text = `Hi ${data.customerName},\n\nYour payment of INR ${data.amountInr.toFixed(2)} for ${data.productName} has been verified and settled successfully.\n\nTransaction ID: ${data.txnid}\nReceipt: ${data.receiptNumber || 'Available in Dashboard'}\nInvoice: ${data.invoiceNumber || 'Available in Dashboard'}\n\nYour creative credits are now available in your Vidai workspace.\n\nThank you,\nVercel Vidai Team`;
+  const subject = `Payment Confirmed: ${data.productName} — ${BRAND.name}`;
+  const text = `Hi ${data.customerName},\n\nYour payment of INR ${data.amountInr.toFixed(2)} for ${data.productName} has been verified and settled successfully.\n\nTransaction ID: ${data.txnid}\nReceipt: ${data.receiptNumber || 'Available in Dashboard'}\nInvoice: ${data.invoiceNumber || 'Available in Dashboard'}\n\nYour creative credits are now available in your ${BRAND.name} workspace.\n\nThank you,\n${BRAND.name} Team`;
 
   const html = `
     <!DOCTYPE html>
@@ -23,7 +25,7 @@ export function generatePaymentSuccessEmail(data: EmailTemplateData): { subject:
           <tr>
             <td>
               <div style="font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin-bottom: 24px;">
-                VERCEL <span style="color: #8b5cf6;">VIDAI</span>
+                FLUVIA <span style="color: #38bdf8;">FLOW</span>
               </div>
               <div style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 24px;">
                 <span style="color: #10b981; font-weight: 700; font-size: 14px;">✓ Payment Verified & Settled</span>
@@ -75,8 +77,8 @@ export function generatePaymentSuccessEmail(data: EmailTemplateData): { subject:
 }
 
 export function generatePaymentFailedEmail(data: EmailTemplateData): { subject: string; html: string; text: string } {
-  const subject = `Payment Unsuccessful: ${data.productName} — Vercel Vidai`;
-  const text = `Hi ${data.customerName},\n\nYour attempt to purchase ${data.productName} for INR ${data.amountInr.toFixed(2)} could not be processed.\nReason: ${data.reason || 'Transaction declined by payment network'}\n\nYou can retry anytime at vidai.io/pricing.\n\nVercel Vidai Team`;
+  const subject = `Payment Unsuccessful: ${data.productName} — ${BRAND.name}`;
+  const text = `Hi ${data.customerName},\n\nYour attempt to purchase ${data.productName} for INR ${data.amountInr.toFixed(2)} could not be processed.\nReason: ${data.reason || 'Transaction declined by payment network'}\n\nYou can retry anytime at ${BRAND.siteUrl}/pricing.\n\n${BRAND.name} Team`;
 
   const html = `
     <!DOCTYPE html>
@@ -86,7 +88,7 @@ export function generatePaymentFailedEmail(data: EmailTemplateData): { subject: 
           <tr>
             <td>
               <div style="font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 20px;">
-                VERCEL <span style="color: #8b5cf6;">VIDAI</span>
+                FLUVIA <span style="color: #38bdf8;">FLOW</span>
               </div>
               <div style="background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 24px;">
                 <span style="color: #ef4444; font-weight: 700; font-size: 14px;">✗ Payment Unsuccessful</span>

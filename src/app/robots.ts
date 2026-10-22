@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { BRAND } from '@/lib/brand';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://vidai.io';
+  const baseUrl = BRAND.siteUrl;
 
   return {
     rules: {

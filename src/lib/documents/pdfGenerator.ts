@@ -45,7 +45,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   });
 
   // Brand Name
-  page.drawText('VERCEL VIDAI', {
+  page.drawText('FLUVIA FLOW', {
     x: 40,
     y: cursorY,
     size: 20,
@@ -53,7 +53,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     color: rgb(1, 1, 1),
   });
 
-  page.drawText('AI Creative Studio & Cloud Video Infrastructure', {
+  page.drawText('AI Cinema Studio & Creative Production Platform', {
     x: 40,
     y: cursorY - 14,
     size: 8,
@@ -267,7 +267,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     color: colorLightSlate,
   });
   cursorY -= 9;
-  page.drawText('2. All transactions are governed by the Vercel Vidai Terms of Service and Refund Policy at vidai.io/terms.', {
+  page.drawText('2. All transactions are governed by the Fluvia Flow Terms of Service and Refund Policy at fluviaflow.ai/terms.', {
     x: 40,
     y: cursorY,
     size: 7,
@@ -319,7 +319,7 @@ export async function generateReceiptPdf(
     color: colorDark,
   });
 
-  page.drawText('VERCEL VIDAI', {
+  page.drawText('FLUVIA FLOW', {
     x: 40,
     y: cursorY,
     size: 20,
@@ -462,7 +462,7 @@ export async function generateReceiptPdf(
     }
   );
   cursorY -= 10;
-  page.drawText('For billing inquiries, reach out to billing@vidai.io quoting your Merchant Transaction ID.', {
+  page.drawText('For billing inquiries, reach out to billing@fluviaflow.ai quoting your Merchant Transaction ID.', {
     x: 40,
     y: cursorY,
     size: 7.5,

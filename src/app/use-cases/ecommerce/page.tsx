@@ -19,7 +19,7 @@ export default function EcommerceUseCasePage() {
             Turn product shots into high-converting commercials
           </h1>
           <p className="mt-6 text-base sm:text-xl text-slate-300 leading-relaxed">
-            Upload a flat product photo and watch Vercel Vidai place it into photorealistic 3D environments with studio lighting, camera sweeps, and motion graphics.
+            Upload a flat product photo and watch Fluvia Flow place it into photorealistic 3D environments with studio lighting, camera sweeps, and motion graphics.
           </p>
 
           <div className="mt-8">

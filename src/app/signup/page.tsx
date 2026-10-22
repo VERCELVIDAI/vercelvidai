@@ -58,7 +58,7 @@ function SignupForm() {
       }
 
       // Check if user had a pending prompt in localStorage
-      const pendingPrompt = localStorage.getItem('vidai_pending_prompt');
+      const pendingPrompt = localStorage.getItem('fluvia_pending_prompt') || localStorage.getItem('vidai_pending_prompt');
       if (pendingPrompt) {
         router.push('/create');
       } else {

@@ -54,7 +54,7 @@ export default function UseCasesIndexPage() {
             Built for Every Modern Creative Need
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-400">
-            Explore how creators, marketing teams, agencies, and brands supercharge production speed with Vercel Vidai.
+            Explore how creators, marketing teams, agencies, and brands supercharge production speed with Fluvia Flow.
           </p>
         </div>
 

@@ -13,12 +13,12 @@ export default function TermsPage() {
 
         <div className="prose prose-invert max-w-none text-slate-300 space-y-6 text-sm leading-relaxed">
           <p>
-            Welcome to <strong>Vercel Vidai</strong>. By accessing or using our website, APIs, generation tools, and editor, you agree to comply with and be bound by these Terms of Service.
+            Welcome to <strong>Fluvia Flow</strong>. By accessing or using our website, APIs, generation tools, and studios, you agree to comply with and be bound by these Terms of Service.
           </p>
 
-          <h2 className="text-xl font-bold text-white pt-4">1. Brand Independence</h2>
+          <h2 className="text-xl font-bold text-white pt-4">1. Brand & Service Ownership</h2>
           <p>
-            Vercel Vidai is an independent creative AI platform. The platform name uses &ldquo;Vercel Vidai&rdquo; as an original service identifier and has no affiliation, partnership, or sponsorship with Vercel Inc.
+            Fluvia Flow is an independent creative AI platform operated by Fluvia Flow Technologies Inc.
           </p>
 
           <h2 className="text-xl font-bold text-white pt-4">2. Commercial Use and Licensing</h2>
@@ -28,7 +28,7 @@ export default function TermsPage() {
 
           <h2 className="text-xl font-bold text-white pt-4">3. Prohibited Content and Misuse</h2>
           <p>
-            You agree not to use Vercel Vidai to generate deceptive deepfakes of public figures without consent, hate speech, non-consensual sexual content, defamatory media, or any content violating applicable laws.
+            You agree not to use Fluvia Flow to generate deceptive deepfakes of public figures without consent, hate speech, non-consensual sexual content, defamatory media, or any content violating applicable laws.
           </p>
 
           <h2 className="text-xl font-bold text-white pt-4">4. Credit Ledger & Accounting</h2>

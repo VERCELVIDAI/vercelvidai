@@ -7,9 +7,9 @@ import { Cpu, Sparkles, CheckCircle2, ArrowRight, Zap, Shield, Video, Image as I
 export default function ModelsPage() {
   const models = [
     {
-      id: 'vidai-cinematic-v1',
-      name: 'Vidai Cinematic HD',
-      provider: 'Vidai Core Neural Architecture',
+      id: 'fluvia-cinematic-v1',
+      name: 'Fluvia Cinematic HD',
+      provider: 'Fluvia Core Neural Architecture',
       type: 'video',
       resolutions: ['720p', '1080p'],
       durations: '5s, 10s',

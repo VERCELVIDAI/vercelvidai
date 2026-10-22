@@ -282,7 +282,7 @@ function CheckoutContent() {
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500"
-                    placeholder="creator@vidai.io"
+                    placeholder="creator@fluviaflow.ai"
                   />
                 </div>
               </div>

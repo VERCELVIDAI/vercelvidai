@@ -201,7 +201,7 @@ export async function createPayUPaymentOrder(
   const now = new Date().toISOString();
 
   let basePriceInr = 499;
-  let productInfo = 'Vidai Creative Credits Pack';
+  let productInfo = 'Fluvia Flow Creative Credits Pack';
 
   if (params.paymentType === 'credit_pack') {
     const pack = dbStore.getCreditPacks().find((p) => p.id === params.itemPlanOrPackId);
@@ -562,7 +562,7 @@ export async function fulfillPayUPayment(
     dueDate: now,
     paymentDate: now,
     payuPaymentId: mihpayid,
-    terms: 'Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.',
+    terms: 'Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.',
     notes: 'Thank you for your business. Computer-generated tax invoice.',
   });
 

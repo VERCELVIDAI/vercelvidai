@@ -1,5 +1,5 @@
 import { IAIProviderAdapter } from './types';
-import { VidaiCoreAdapter } from './adapters/vidai-core';
+import { FluviaCoreAdapter } from './adapters/fluvia-core';
 import { RunwayAdapter } from './adapters/runway';
 import { LumaAdapter } from './adapters/luma';
 import { FalAdapter } from './adapters/fal';
@@ -10,7 +10,11 @@ class ProviderRegistry {
   private adapters: Map<string, IAIProviderAdapter> = new Map();
 
   constructor() {
-    this.register(new VidaiCoreAdapter());
+    const fluviaCore = new FluviaCoreAdapter();
+    this.register(fluviaCore);
+    // Backward-compatibility alias for stored records referencing 'vidai_core'
+    this.adapters.set('vidai_core', fluviaCore);
+
     this.register(new RunwayAdapter());
     this.register(new LumaAdapter());
     this.register(new FalAdapter());
@@ -27,7 +31,8 @@ class ProviderRegistry {
   }
 
   getAll(): IAIProviderAdapter[] {
-    return Array.from(this.adapters.values());
+    // Return unique adapters
+    return Array.from(new Set(this.adapters.values()));
   }
 }
 

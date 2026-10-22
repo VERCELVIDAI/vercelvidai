@@ -1,19 +1,25 @@
 import { MetadataRoute } from 'next';
+import { BRAND } from '@/lib/brand';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://vidai.io';
+  const baseUrl = BRAND.siteUrl;
   const now = new Date();
 
   const routes = [
     '',
+    '/studios/cinema',
+    '/studios/marketing',
+    '/studios/storyboard',
+    '/create',
+    '/editor',
+    '/templates',
+    '/models',
+    '/pricing',
     '/features',
     '/ai-video-generator',
     '/ai-image-generator',
     '/ai-voice-generator',
     '/ai-avatar-generator',
-    '/templates',
-    '/models',
-    '/pricing',
     '/use-cases',
     '/use-cases/marketing',
     '/use-cases/youtube',

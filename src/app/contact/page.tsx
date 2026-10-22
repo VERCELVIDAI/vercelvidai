@@ -60,7 +60,7 @@ export default function ContactPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="creator@vidai.io"
+                    placeholder="creator@fluviaflow.ai"
                     className="w-full bg-[#0E1017] text-white px-4 py-3 rounded-xl border border-white/10 focus:outline-none focus:border-violet-500 text-sm"
                   />
                 </div>

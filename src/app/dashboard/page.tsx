@@ -53,7 +53,8 @@ export default function DashboardPage() {
 
       // Route first-time users to theme selection
       if (authData.user && authData.user.themePreferences?.completed !== true) {
-        const locallyCompleted = typeof window !== 'undefined' && localStorage.getItem('vidai_theme_completed') === 'true';
+        const locallyCompleted = typeof window !== 'undefined' && 
+          (localStorage.getItem('fluvia_theme_completed') === 'true' || localStorage.getItem('vidai_theme_completed') === 'true');
         if (!locallyCompleted) {
           router.push('/onboarding/theme');
           return;

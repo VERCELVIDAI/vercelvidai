@@ -13,7 +13,7 @@ export default function RefundPolicyPage() {
 
         <div className="prose prose-invert max-w-none text-slate-300 space-y-6 text-sm leading-relaxed">
           <p>
-            At <strong>Vercel Vidai</strong>, customer trust and algorithmic fairness are core values. We uphold clear, programmatic refund rules for credit accounting and subscription purchases.
+            At <strong>Fluvia Flow</strong>, customer trust and algorithmic fairness are core values. We uphold clear, programmatic refund rules for credit accounting and subscription purchases.
           </p>
 
           <h2 className="text-xl font-bold text-white pt-4">1. Programmatic AI Generation Failure Refunds</h2>
@@ -33,7 +33,7 @@ export default function RefundPolicyPage() {
 
           <h2 className="text-xl font-bold text-white pt-4">4. Submitting a Refund Request</h2>
           <p>
-            To dispute a transaction or request an administrative review, open a ticket at <a href="/contact" className="text-violet-400 underline">vidai.io/contact</a> with your order ID. Our billing team reviews all requests within 24 hours.
+            To dispute a transaction or request an administrative review, open a ticket at <a href="/contact" className="text-violet-400 underline">fluviaflow.ai/contact</a> with your order ID. Our billing team reviews all requests within 24 hours.
           </p>
         </div>
       </main>

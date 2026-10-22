@@ -17,10 +17,10 @@ export default function BlogIndexPage() {
             <span>Engineering & Design Insights</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-            The Vercel Vidai Journal
+            The Fluvia Flow Journal
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-400">
-            Technical architecture, creative workflows, AI model benchmarks, and product updates from the Vidai team.
+            Technical architecture, creative workflows, AI model benchmarks, and product updates from the Fluvia Flow team.
           </p>
         </div>
 

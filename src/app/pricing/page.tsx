@@ -48,7 +48,7 @@ export default function PricingPage() {
         '720p HD Exports',
         'Watermarked exports',
         '30 seconds max clip duration',
-        'Vidai Core & Flux AI models',
+        'Fluvia Core & Flux AI models',
         '1 GB Cloud Storage',
         'Standard Community Support',
       ],
@@ -68,7 +68,7 @@ export default function PricingPage() {
         '1080p Full HD Exports',
         'No watermark on any export',
         '60 seconds clip duration',
-        'Runway Gen-2 & Vidai Core',
+        'Runway Gen-3 & Fluvia Core',
         'ElevenLabs Voice synthesis',
         '10 GB Cloud Storage',
         'Priority email assistance',
@@ -366,8 +366,8 @@ export default function PricingPage() {
                 </tr>
                 <tr>
                   <td className="p-4 font-medium text-white">Supported AI Video Models</td>
-                  <td className="p-4">Vidai Core</td>
-                  <td className="p-4">Vidai Core & Gen-2</td>
+                  <td className="p-4">Fluvia Core</td>
+                  <td className="p-4">Fluvia Core & Gen-3</td>
                   <td className="p-4">Runway Gen-3 & Luma Ray</td>
                   <td className="p-4">All Current & Future Models</td>
                 </tr>

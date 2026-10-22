@@ -13,7 +13,7 @@ export default function PrivacyPage() {
 
         <div className="prose prose-invert max-w-none text-slate-300 space-y-6 text-sm leading-relaxed">
           <p>
-            At <strong>Vercel Vidai</strong> (&ldquo;Vidai&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), we take your privacy, proprietary creative assets, and prompt confidentiality seriously. This Privacy Policy details how we collect, process, and protect your information when utilizing our AI video creation studio.
+            At <strong>Fluvia Flow</strong> (&ldquo;Fluvia&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), we take your privacy, proprietary creative assets, and prompt confidentiality seriously. This Privacy Policy details how we collect, process, and protect your information when utilizing our AI video creation studios.
           </p>
 
           <h2 className="text-xl font-bold text-white pt-4">1. Data We Collect</h2>
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
 
           <h2 className="text-xl font-bold text-white pt-4">3. Payment Information & Security</h2>
           <p>
-            All payment transactions (UPI, credit cards, debit cards, net banking) are processed through certified PCI-DSS compliant gateways such as Razorpay. Vidai never stores full credit card numbers or banking secrets on our servers.
+            All payment transactions (UPI, credit cards, debit cards, net banking) are processed through certified PCI-DSS compliant gateways such as PayU and Razorpay. Fluvia Flow never stores full credit card numbers or banking secrets on our servers.
           </p>
 
           <h2 className="text-xl font-bold text-white pt-4">4. Account and Data Deletion</h2>

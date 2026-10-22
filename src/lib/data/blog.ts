@@ -12,7 +12,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'scaling-ai-video-generation-multi-provider',
     title: 'Architecting a Multi-Provider AI Video Generation Infrastructure',
-    summary: 'How Vercel Vidai routes prompt inference across Runway, Luma, Flux, and custom core GPU clusters with atomic credit accounting.',
+    summary: 'How Fluvia Flow routes prompt inference across Runway, Luma, Flux, and custom core GPU clusters with atomic credit accounting.',
     date: 'October 18, 2026',
     readTime: '6 min read',
     category: 'Engineering',

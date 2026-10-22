@@ -11,6 +11,7 @@ interface DashboardHeaderProps {
   role?: string;
   credits?: number;
   workspaceName?: string;
+  user?: any;
 }
 
 export function DashboardHeader({
@@ -19,7 +20,11 @@ export function DashboardHeader({
   role = 'creator',
   credits = 0,
   workspaceName = 'Personal Studio',
+  user,
 }: DashboardHeaderProps) {
+  const effectiveDisplayName = user?.displayName || displayName;
+  const effectiveRole = user?.role || role;
+  const effectiveAvatar = user?.avatarUrl || avatarUrl;
   return (
     <header
       className="h-16 border-b backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-40 transition-colors duration-200"
@@ -70,15 +75,15 @@ export function DashboardHeader({
           className="flex items-center gap-2.5 p-1 pr-3 rounded-full hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
         >
           <div className="w-8 h-8 rounded-full overflow-hidden bg-violet-600/30 border border-violet-400/40 flex items-center justify-center text-xs font-bold text-white">
-            {avatarUrl ? (
-              <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" />
+            {effectiveAvatar ? (
+              <img src={effectiveAvatar} alt={effectiveDisplayName} className="w-full h-full object-cover" />
             ) : (
-              displayName[0] || 'U'
+              effectiveDisplayName[0] || 'U'
             )}
           </div>
           <div className="text-left hidden md:block">
-            <div className="text-xs font-bold text-white leading-tight">{displayName}</div>
-            <div className="text-[10px] text-slate-400 capitalize">{role}</div>
+            <div className="text-xs font-bold text-white leading-tight">{effectiveDisplayName}</div>
+            <div className="text-[10px] text-slate-400 capitalize">{effectiveRole}</div>
           </div>
         </Link>
       </div>

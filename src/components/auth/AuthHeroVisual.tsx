@@ -62,7 +62,7 @@ export function AuthHeroVisual() {
         <Logo size="lg" />
         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs font-mono text-violet-300 backdrop-blur-md">
           <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>v2.4 Studio Engine</span>
+          <span>v3.0 Fluvia Engine</span>
         </div>
       </div>
 

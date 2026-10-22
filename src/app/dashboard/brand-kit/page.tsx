@@ -9,7 +9,7 @@ import { Palette, Plus, Check, Trash2, Sparkles, Sliders } from 'lucide-react';
 export default function BrandKitPage() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
-  const [brandName, setBrandName] = useState('Vercel Vidai Signature Brand');
+  const [brandName, setBrandName] = useState('Fluvia Flow Signature Brand');
   const [colors, setColors] = useState<string[]>(['#0B0C10', '#8B5CF6', '#38BDF8', '#FFFFFF']);
   const [fonts, setFonts] = useState<string[]>(['Inter', 'Outfit', 'Cinzel']);
   const [guidelines, setGuidelines] = useState(

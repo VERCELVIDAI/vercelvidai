@@ -38,7 +38,7 @@ export function MiniStudioPreview({ theme, mode }: MiniStudioPreviewProps) {
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
           <span className="ml-2 font-mono text-[10px]" style={{ color: palette.textMuted }}>
-            Vercel Vidai Studio • {theme.name} ({mode === 'dark' ? 'Dark' : 'Light'})
+            Fluvia Flow Studio • {theme.name} ({mode === 'dark' ? 'Dark' : 'Light'})
           </span>
         </div>
         <div
@@ -69,8 +69,8 @@ export function MiniStudioPreview({ theme, mode }: MiniStudioPreviewProps) {
             >
               <Sparkles className="w-3 h-3" />
             </div>
-            <span className="font-extrabold text-xs" style={{ color: palette.textPrimary }}>
-              Vidai
+            <span className="font-extrabold text-xs tracking-wider uppercase" style={{ color: palette.textPrimary }}>
+              Fluvia
             </span>
           </div>
 

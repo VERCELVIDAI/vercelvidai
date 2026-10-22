@@ -86,15 +86,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     let initialCompleted = false;
 
     try {
-      const savedColor = localStorage.getItem('vidai_color_theme');
+      const savedColor = localStorage.getItem('fluvia_color_theme') || localStorage.getItem('vidai_color_theme');
       if (savedColor && COLOR_THEMES.some((t) => t.id === savedColor)) {
         initialColor = savedColor;
       }
-      const savedMode = localStorage.getItem('vidai_theme') as ThemeMode;
+      const savedMode = (localStorage.getItem('fluvia_theme') || localStorage.getItem('vidai_theme')) as ThemeMode;
       if (savedMode === 'light' || savedMode === 'dark' || savedMode === 'system') {
         initialMode = savedMode;
       }
-      initialCompleted = localStorage.getItem('vidai_theme_completed') === 'true';
+      initialCompleted = (localStorage.getItem('fluvia_theme_completed') || localStorage.getItem('vidai_theme_completed')) === 'true';
     } catch (e) {}
 
     setColorThemeState(initialColor);
@@ -115,6 +115,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
             setIsCompleted(backendCompleted);
             applyThemeToDOM(backendColor, backendMode);
             try {
+              localStorage.setItem('fluvia_color_theme', backendColor);
+              localStorage.setItem('fluvia_theme', backendMode);
+              localStorage.setItem('fluvia_theme_completed', backendCompleted ? 'true' : 'false');
               localStorage.setItem('vidai_color_theme', backendColor);
               localStorage.setItem('vidai_theme', backendMode);
               localStorage.setItem('vidai_theme_completed', backendCompleted ? 'true' : 'false');
@@ -159,6 +162,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     applyThemeToDOM(valid.id, mode);
 
     try {
+      localStorage.setItem('fluvia_color_theme', valid.id);
       localStorage.setItem('vidai_color_theme', valid.id);
     } catch (e) {}
 
@@ -176,6 +180,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     applyThemeToDOM(colorTheme, newMode);
 
     try {
+      localStorage.setItem('fluvia_theme', newMode);
       localStorage.setItem('vidai_theme', newMode);
     } catch (e) {}
 
@@ -196,6 +201,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const markCompleted = async () => {
     setIsCompleted(true);
     try {
+      localStorage.setItem('fluvia_theme_completed', 'true');
       localStorage.setItem('vidai_theme_completed', 'true');
     } catch (e) {}
 

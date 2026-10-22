@@ -158,7 +158,7 @@ function getInitialDatabase(): DatabaseSchema {
       {
         id: adminWorkspaceId,
         ownerId: adminUserId,
-        name: 'Vidai Global Ops',
+        name: 'Fluvia Global Ops',
         createdAt: now,
         updatedAt: now,
       },
@@ -291,7 +291,8 @@ function getInitialDatabase(): DatabaseSchema {
       { id: 'pack_10000', name: '10,000 Credits Agency', priceInr: 5999, creditAmount: 10000, isActive: true },
     ],
     aiProviders: [
-      { id: 'vidai_core', name: 'Vidai Neural Engine (High Speed)', providerType: 'multimodal', configurationStatus: 'configured', isActive: true },
+      { id: 'fluvia_core', name: 'Fluvia Neural Engine (High Speed)', providerType: 'multimodal', configurationStatus: 'configured', isActive: true },
+      { id: 'gemini', name: 'Google Gemini 1.5/2.0 Flash & Pro', providerType: 'text', configurationStatus: 'configured', isActive: true },
       { id: 'runway', name: 'Runway Gen-3 Alpha', providerType: 'video', configurationStatus: 'configured', isActive: true },
       { id: 'luma', name: 'Luma Dream Machine Ray', providerType: 'video', configurationStatus: 'configured', isActive: true },
       { id: 'fal_ai', name: 'Fal.ai Fast Media Engine', providerType: 'multimodal', configurationStatus: 'configured', isActive: true },
@@ -300,10 +301,25 @@ function getInitialDatabase(): DatabaseSchema {
     ],
     aiModels: [
       {
+        id: 'fluvia-cinematic-v1',
+        providerId: 'fluvia_core',
+        modelIdentifier: 'fluvia-cinematic-v1',
+        displayName: 'Fluvia Cinematic HD',
+        mediaType: 'video',
+        capabilities: {
+          resolutions: ['720p', '1080p', '4k'],
+          aspectRatios: ['16:9', '9:16', '1:1', '21:9'],
+          maxDuration: 15,
+        },
+        costConfiguration: { unitCostUsd: 0.05 },
+        creditPricing: { costCredits: 25 },
+        isActive: true,
+      },
+      {
         id: 'vidai-cinematic-v1',
-        providerId: 'vidai_core',
-        modelIdentifier: 'vidai-cinematic-v1',
-        displayName: 'Vidai Cinematic HD',
+        providerId: 'fluvia_core',
+        modelIdentifier: 'fluvia-cinematic-v1',
+        displayName: 'Fluvia Cinematic HD (Legacy)',
         mediaType: 'video',
         capabilities: {
           resolutions: ['720p', '1080p'],
@@ -423,7 +439,7 @@ function getInitialDatabase(): DatabaseSchema {
           scenes: [
             { text: 'Elegance in Every Breath', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-perfume-bottle-and-flowers-42354-large.mp4' },
             { text: 'Crafted in Grasse, France', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-waterfall-in-forest-2213-large.mp4' },
-            { text: 'Vercel Vidai Signature Collection', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4' },
+            { text: 'Fluvia Flow Signature Collection', duration: 6, mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-the-ocean-1175-large.mp4' },
           ],
         },
         isPublished: true,
@@ -483,7 +499,7 @@ function getInitialDatabase(): DatabaseSchema {
       {
         id: 'bk_demo_1',
         workspaceId: demoWorkspaceId,
-        name: 'Vercel Vidai Signature Kit',
+        name: 'Fluvia Flow Signature Kit',
         colors: ['#0B0C10', '#8B5CF6', '#38BDF8', '#FFFFFF'],
         fonts: ['Inter', 'Outfit', 'Cinzel'],
         guidelinesText: 'Modern, high-energy tech visual aesthetic with violet rim lighting and dynamic pacing.',
@@ -700,14 +716,14 @@ function getInitialDatabase(): DatabaseSchema {
     receipts: [],
     creditNotes: [],
     billingSettings: {
-      legalName: 'Vercel Vidai Technologies Private Limited',
-      tradeName: 'Vercel Vidai',
-      registeredAddress: 'Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001',
+      legalName: 'Fluvia Flow Technologies Private Limited',
+      tradeName: 'Fluvia Flow',
+      registeredAddress: 'Level 4, Horizon Creative Hub, Connaught Place, New Delhi 110001',
       state: 'Delhi',
       gstin: '07AAAAA0000A1Z5',
       pan: 'AAAAA0000A',
-      supportEmail: 'billing@vidai.io',
-      website: 'https://vidai.io',
+      supportEmail: 'billing@fluviaflow.ai',
+      website: 'https://fluviaflow.ai',
       isGstRegistered: true,
     },
   };
@@ -723,14 +739,14 @@ class Store {
     if (!schema.creditNotes) schema.creditNotes = [];
     if (!schema.billingSettings) {
       schema.billingSettings = {
-        legalName: 'Vercel Vidai Technologies Private Limited',
-        tradeName: 'Vercel Vidai',
-        registeredAddress: 'Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001',
+        legalName: 'Fluvia Flow Technologies Private Limited',
+        tradeName: 'Fluvia Flow',
+        registeredAddress: 'Level 4, Horizon Creative Hub, Connaught Place, New Delhi 110001',
         state: 'Delhi',
         gstin: '07AAAAA0000A1Z5',
         pan: 'AAAAA0000A',
-        supportEmail: 'billing@vidai.io',
-        website: 'https://vidai.io',
+        supportEmail: 'billing@fluviaflow.ai',
+        website: 'https://fluviaflow.ai',
         isGstRegistered: true,
       };
     }

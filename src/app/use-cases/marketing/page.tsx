@@ -43,7 +43,7 @@ export default function MarketingUseCasePage() {
           <div className="p-6 rounded-2xl glass-panel border border-white/10">
             <h3 className="text-lg font-bold text-white mb-2">Dynamic Caption Overlays</h3>
             <p className="text-sm text-slate-400">
-              Over 80% of social users watch ads without sound. Vidai automatically embeds high-contrast kinetic karaoke subtitles.
+              Over 80% of social users watch ads without sound. Fluvia Flow automatically embeds high-contrast kinetic karaoke subtitles.
             </p>
           </div>
           <div className="p-6 rounded-2xl glass-panel border border-white/10">

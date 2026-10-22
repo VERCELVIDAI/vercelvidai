@@ -42,7 +42,7 @@ function TemplateExplorer() {
   // Load favorites from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('vidai_favorite_templates');
+      const saved = localStorage.getItem('fluvia_favorite_templates') || localStorage.getItem('vidai_favorite_templates');
       if (saved) setFavorites(JSON.parse(saved));
     } catch (e) {}
   }, []);
@@ -53,6 +53,7 @@ function TemplateExplorer() {
         ? prev.filter((id) => id !== templateId)
         : [...prev, templateId];
       try {
+        localStorage.setItem('fluvia_favorite_templates', JSON.stringify(updated));
         localStorage.setItem('vidai_favorite_templates', JSON.stringify(updated));
       } catch (e) {}
       return updated;

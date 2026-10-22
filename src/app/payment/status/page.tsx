@@ -112,7 +112,7 @@ function PaymentStatusContent() {
                 Payment Verified & Settled
               </span>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-3">
-                Welcome to Vercel Vidai
+                Welcome to Fluvia Flow
               </h1>
               <p className="mt-2 text-xs sm:text-sm text-slate-400">
                 Your payment was processed securely by PayU. Your workspace credits are ready to spend immediately.
@@ -123,7 +123,7 @@ function PaymentStatusContent() {
             <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5 text-xs text-left space-y-2.5">
               <div className="flex justify-between items-center text-slate-400">
                 <span>Product / Plan:</span>
-                <strong className="text-white font-semibold">{order?.productInfo || 'Vidai Credits'}</strong>
+                <strong className="text-white font-semibold">{order?.productInfo || 'Fluvia Flow Credits'}</strong>
               </div>
               <div className="flex justify-between items-center text-slate-400">
                 <span>Amount Paid (INR):</span>

@@ -44,7 +44,7 @@ export default function FeaturesPage() {
         {
           icon: Cpu,
           title: 'Multi-Model Provider Architecture',
-          desc: 'Switch between Vidai Core, Runway Gen-3 Alpha, Luma Dream Machine Ray, and Flux 1.1 Pro without leaving the workspace.',
+          desc: 'Switch between Fluvia Core, Runway Gen-3 Alpha, Luma Dream Machine Ray, and Flux 1.1 Pro without leaving the workspace.',
         },
       ],
     },

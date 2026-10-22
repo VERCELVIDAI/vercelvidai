@@ -72,7 +72,7 @@ export default function AIVideoGeneratorPage() {
             {[
               {
                 title: 'Urban Runner in Neon Rain',
-                model: 'Vidai Cinematic HD',
+                model: 'Fluvia Cinematic HD',
                 video: 'https://assets.mixkit.co/videos/preview/mixkit-running-through-the-city-at-sunset-41662-large.mp4',
                 prompt: 'Slow motion athlete running through Tokyo crosswalk, neon reflection in puddles.',
               },

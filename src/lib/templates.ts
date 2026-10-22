@@ -1,5 +1,5 @@
 // ==============================================================================
-// VERCEL VIDAI - TEMPLATE MARKETPLACE DATA & ENGINE
+// FLUVIA FLOW - TEMPLATE MARKETPLACE DATA & ENGINE
 // ==============================================================================
 
 export interface TemplateScene {
@@ -107,7 +107,7 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     description: 'Broadcast-quality 4K perfume commercial with volumetric glass refractions, botanical mist simulations, and orchestral strings.',
     badge: 'Featured',
     tags: ['#Perfume', '#Cinematic', '#Luxury', '#Commercial', '#Botanical'],
-    aiModelsUsed: ['Runway Gen-3 Alpha', 'Flux Pro Studio', 'Vidai Audio Core'],
+    aiModelsUsed: ['Runway Gen-3 Alpha', 'Flux Pro Studio', 'Fluvia Audio Core'],
     estimatedCredits: 60,
     scenes: [
       { time: '0:00 - 0:06', title: 'Atmospheric Dawn', desc: 'Glass flacon emerging from soft botanical morning mist' },
@@ -128,7 +128,7 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     videoPreview: 'https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-with-charts-41964-large.mp4',
     description: 'Modern software product launch teaser with timeline highlights, animated dashboard metrics, and enterprise CTAs.',
     tags: ['#SaaS', '#Explainer', '#B2B', '#SoftwareLaunch', '#Dashboard'],
-    aiModelsUsed: ['ElevenLabs Voice v2', 'Vidai Motion Graphics', 'Flux 1.1'],
+    aiModelsUsed: ['ElevenLabs Voice v2', 'Fluvia Motion Graphics', 'Flux 1.1'],
     estimatedCredits: 75,
     scenes: [
       { time: '0:00 - 0:08', title: 'Workflow Problem', desc: 'Visual chaos of tabs and spreadsheets with warning badge' },
@@ -193,7 +193,7 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     description: 'Sizzling food commercial with macro olive oil drizzles, fresh herb sprinkles, and mouthwatering restaurant branding.',
     badge: 'Trending',
     tags: ['#Foodie', '#Restaurant', '#Culinary', '#Gourmet', '#Reels'],
-    aiModelsUsed: ['Luma Dream Machine', 'Flux Realism', 'Vidai Audio Effects'],
+    aiModelsUsed: ['Luma Dream Machine', 'Flux Realism', 'Fluvia Audio Effects'],
     estimatedCredits: 40,
     scenes: [
       { time: '0:00 - 0:04', title: 'Macro Drizzle', desc: 'Virgin olive oil glistening over garden vegetables in 120fps' },
@@ -236,7 +236,7 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     videoPreview: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-credit-card-and-using-a-laptop-41838-large.mp4',
     description: 'Tactile black titanium credit card floating in zero-gravity with laser engraving sparks and cashback perks.',
     tags: ['#Fintech', '#Banking', '#CreditCard', '#MotionDesign', '#Ecommerce'],
-    aiModelsUsed: ['Luma Dream Machine', 'Flux 1.1 Pro', 'Vidai Audio FX'],
+    aiModelsUsed: ['Luma Dream Machine', 'Flux 1.1 Pro', 'Fluvia Audio FX'],
     estimatedCredits: 45,
     scenes: [
       { time: '0:00 - 0:05', title: 'Zero Gravity Flip', desc: 'Matte black metal card rotating with neon purple rim lighting' },
@@ -258,7 +258,7 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     description: 'Cyberpunk Tokyo street aesthetic with glitch transitions, neon Japanese typography, and oversized streetwear fits.',
     badge: 'Trending',
     tags: ['#Streetwear', '#Fashion', '#Cyberpunk', '#Lookbook', '#TikTok'],
-    aiModelsUsed: ['Runway Gen-3', 'Flux Realism', 'Vidai Audio Core'],
+    aiModelsUsed: ['Runway Gen-3', 'Flux Realism', 'Fluvia Audio Core'],
     estimatedCredits: 50,
     scenes: [
       { time: '0:00 - 0:05', title: 'Neon Rain Strobe', desc: 'Reflective windbreaker catching neon shop reflections' },
@@ -344,7 +344,7 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     description: 'Sun-drenched anamorphic street film following an urban skater down coastal avenues at sunset with lo-fi beats.',
     badge: 'Trending',
     tags: ['#Skate', '#Sunset', '#GoldenHour', '#Cinematic', '#Lifestyle'],
-    aiModelsUsed: ['Runway Gen-3 Alpha', 'Flux Pro', 'Vidai Lo-Fi Engine'],
+    aiModelsUsed: ['Runway Gen-3 Alpha', 'Flux Pro', 'Fluvia Lo-Fi Engine'],
     estimatedCredits: 45,
     scenes: [
       { time: '0:00 - 0:05', title: 'Low Angle Glide', desc: 'Wheels carving asphalt with warm lens flares hitting the lens' },

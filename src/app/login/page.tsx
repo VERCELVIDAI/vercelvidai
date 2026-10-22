@@ -181,7 +181,7 @@ function LoginForm() {
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <span>Sign In to Vidai</span>
+                <span>Sign In to Fluvia Flow</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

@@ -1,5 +1,5 @@
 // ==============================================================================
-// VERCEL VIDAI - APPLICATION TYPES & INTERFACES (SECTION 16)
+// FLUVIA FLOW - APPLICATION TYPES & INTERFACES
 // ==============================================================================
 
 export type UserRole = 'creator' | 'admin' | 'enterprise';

@@ -1,5 +1,5 @@
 // ==============================================================================
-// VERCEL VIDAI - PREMIUM MULTI-COLOR THEME DEFINITIONS & SYSTEM
+// FLUVIA FLOW - PREMIUM MULTI-COLOR THEME DEFINITIONS & SYSTEM
 // ==============================================================================
 
 export type ThemeMode = 'dark' | 'light' | 'system';

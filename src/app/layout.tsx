@@ -1,23 +1,35 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme/ThemeContext';
+import { BRAND } from '@/lib/brand';
 
 export const metadata: Metadata = {
-  title: 'Vercel Vidai — Next-Gen AI Video Creation Platform',
-  description: 'Turn ideas, scripts, and prompts into cinema-grade videos, commercials, Reels, and YouTube Shorts with the unified AI creative studio.',
-  keywords: ['AI Video Generator', 'Text to Video', 'AI Commercials', 'Script to Video', 'Video Editor', 'Vercel Vidai'],
+  title: `${BRAND.name} — ${BRAND.tagline}`,
+  description: BRAND.description,
+  keywords: [
+    'Fluvia Flow',
+    'AI Video Generator',
+    'Cinematic AI',
+    'Text to Video',
+    'Image to Video',
+    'Cinema Studio',
+    'Marketing Studio',
+    'Storyboard Studio',
+    'Gemini AI Studio',
+    'Video Editor',
+  ],
   openGraph: {
-    title: 'Vercel Vidai — Premium AI Video Studio',
-    description: 'Transform simple prompts into cinematic videos and high-converting advertisements.',
-    url: 'https://vidai.io',
-    siteName: 'Vercel Vidai',
+    title: `${BRAND.name} — ${BRAND.tagline}`,
+    description: BRAND.description,
+    url: BRAND.siteUrl,
+    siteName: BRAND.name,
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vercel Vidai — AI Video Creation',
-    description: 'Create cinematic videos, viral reels, and product ads with unified AI workflows.',
+    title: `${BRAND.name} — ${BRAND.tagline}`,
+    description: BRAND.description,
   },
   robots: {
     index: true,
@@ -38,8 +50,8 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var savedMode = localStorage.getItem('vidai_theme');
-                  var savedColor = localStorage.getItem('vidai_color_theme') || 'midnight-violet';
+                  var savedMode = localStorage.getItem('fluvia_theme') || localStorage.getItem('vidai_theme');
+                  var savedColor = localStorage.getItem('fluvia_color_theme') || localStorage.getItem('vidai_color_theme') || 'midnight-violet';
                   var mode = 'dark';
                   if (savedMode === 'light') {
                     mode = 'light';

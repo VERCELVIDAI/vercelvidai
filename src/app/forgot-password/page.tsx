@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="creator@vidai.io"
+                    placeholder="creator@fluviaflow.ai"
                     className="w-full bg-[#0E1017] text-white pl-10 pr-4 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-violet-500 text-sm"
                   />
                 </div>

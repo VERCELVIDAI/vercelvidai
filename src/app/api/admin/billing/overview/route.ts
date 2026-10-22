@@ -76,7 +76,7 @@ export async function GET(req: NextRequest) {
         status: 200,
         headers: {
           'Content-Type': 'text/csv',
-          'Content-Disposition': `attachment; filename="VercelVidai_Transactions_${Date.now()}.csv"`,
+          'Content-Disposition': `attachment; filename="FluviaFlow_Transactions_${Date.now()}.csv"`,
         },
       });
     }

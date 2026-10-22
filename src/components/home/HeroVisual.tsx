@@ -17,8 +17,8 @@ export function HeroVisual() {
             <div className="w-3 h-3 rounded-full bg-amber-500/80" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
           </div>
-          <span className="ml-2 font-mono text-slate-300">Vercel Vidai Studio v2.4</span>
-          <span className="text-violet-400 font-semibold">• 4K Neural Canvas</span>
+          <span className="ml-2 font-mono text-slate-300">Fluvia Flow Cinema Studio v3.0</span>
+          <span className="text-cyan-400 font-semibold">• 4K Neural Canvas</span>
         </div>
 
         <div className="flex items-center gap-3">
@@ -110,7 +110,7 @@ export function HeroVisual() {
 
               <div className="flex items-center gap-2">
                 <span className="px-2 py-0.5 rounded bg-violet-600/30 text-violet-300 text-[11px] font-medium border border-violet-500/30">
-                  Vidai Neural Engine HD
+                  Fluvia Neural Engine HD
                 </span>
               </div>
             </div>

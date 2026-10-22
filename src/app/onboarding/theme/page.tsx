@@ -148,7 +148,7 @@ function ThemeSelectionContent() {
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight" style={{ color: 'var(--app-text-primary)' }}>
-            Make Vercel Vidai Yours.
+            Make Fluvia Flow Yours.
           </h1>
 
           <p className="mt-3 text-sm sm:text-base max-w-xl mx-auto leading-relaxed" style={{ color: 'var(--app-text-secondary)' }}>

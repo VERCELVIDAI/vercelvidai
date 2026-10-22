@@ -91,7 +91,7 @@ export default function ReceiptsListPage() {
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Payment Receipts</h1>
               <p className="mt-1 text-xs sm:text-sm text-slate-400">
-                Verified payment settlement vouchers confirming funds received by Vercel Vidai via PayU India.
+                Verified payment settlement vouchers confirming funds received by Fluvia Flow via PayU India.
               </p>
             </div>
 
