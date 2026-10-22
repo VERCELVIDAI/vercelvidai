@@ -14358,6 +14358,48 @@
   },
   "coupons": [
     {
+      "id": "cpn_free100",
+      "code": "FREE100",
+      "description": "100% Full Discount - Instant Free Checkout",
+      "discountType": "percentage",
+      "discountValue": 100,
+      "usageLimit": 10000,
+      "perUserLimit": 10,
+      "usageCount": 0,
+      "isActive": true,
+      "createdBy": "usr_admin_master_1",
+      "createdAt": "2026-10-22T12:44:56.955Z",
+      "updatedAt": "2026-10-22T12:44:56.955Z"
+    },
+    {
+      "id": "cpn_creator100",
+      "code": "CREATOR100",
+      "description": "100% Free VIP Creator Pass - All Plans & Packs",
+      "discountType": "percentage",
+      "discountValue": 100,
+      "usageLimit": 10000,
+      "perUserLimit": 10,
+      "usageCount": 0,
+      "isActive": true,
+      "createdBy": "usr_admin_master_1",
+      "createdAt": "2026-10-22T12:44:56.955Z",
+      "updatedAt": "2026-10-22T12:44:56.955Z"
+    },
+    {
+      "id": "cpn_fluviavip",
+      "code": "FLUVIAVIP",
+      "description": "VIP 100% Discount - Free Creative Credits",
+      "discountType": "percentage",
+      "discountValue": 100,
+      "usageLimit": 10000,
+      "perUserLimit": 10,
+      "usageCount": 0,
+      "isActive": true,
+      "createdBy": "usr_admin_master_1",
+      "createdAt": "2026-10-22T12:44:56.955Z",
+      "updatedAt": "2026-10-22T12:44:56.955Z"
+    },
+    {
       "id": "cpn_welcome10",
       "code": "WELCOME10",
       "description": "10% Welcome Discount for creators",
