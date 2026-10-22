@@ -12,9 +12,9 @@ import { z } from 'zod';
 
 // Configurable model IDs
 export const GEMINI_MODELS = {
-  FLASH: process.env.GEMINI_FLASH_MODEL || 'gemini-1.5-flash',
-  PRO: process.env.GEMINI_PRO_MODEL || 'gemini-1.5-pro',
-  NEXT: process.env.GEMINI_NEXT_MODEL || 'gemini-2.0-flash',
+  FLASH: process.env.GEMINI_FLASH_MODEL || 'gemini-flash-latest',
+  PRO: process.env.GEMINI_PRO_MODEL || 'gemini-flash-latest',
+  NEXT: process.env.GEMINI_NEXT_MODEL || 'gemini-flash-lite-latest',
 } as const;
 
 // Structured Storyboard Schema
@@ -103,6 +103,29 @@ class GeminiService {
     }
   }
 
+  private async generateWithFallback(
+    client: GoogleGenAI,
+    request: { model?: string; contents: any }
+  ) {
+    const primaryModel = request.model || GEMINI_MODELS.FLASH;
+    try {
+      return await client.models.generateContent({
+        ...request,
+        model: primaryModel,
+      });
+    } catch (primaryErr: any) {
+      const errMsg = primaryErr?.message || String(primaryErr);
+      console.warn(`[FluviaFlow Gemini] Primary model ${primaryModel} failed: ${errMsg}`);
+      // Fallback to flash-lite if primary model has demand spike (503) or quota issues
+      const fallbackModel = primaryModel === GEMINI_MODELS.NEXT ? 'gemini-flash-latest' : GEMINI_MODELS.NEXT;
+      console.info(`[FluviaFlow Gemini] Retrying with fallback model ${fallbackModel}...`);
+      return await client.models.generateContent({
+        ...request,
+        model: fallbackModel,
+      });
+    }
+  }
+
   public isConfigured(): boolean {
     const key = process.env.GEMINI_API_KEY;
     return Boolean(key && key.trim() !== '' && !key.startsWith('your_'));
@@ -156,7 +179,7 @@ Output strictly valid JSON with keys:
   "negativePrompt": string
 }`;
 
-      const response = await client.models.generateContent({
+      const response = await this.generateWithFallback(client, {
         model: GEMINI_MODELS.FLASH,
         contents: [
           {
@@ -262,7 +285,7 @@ Output strictly valid JSON with schema:
   ]
 }`;
 
-      const response = await client.models.generateContent({
+      const response = await this.generateWithFallback(client, {
         model: GEMINI_MODELS.FLASH,
         contents: [
           {
@@ -371,7 +394,7 @@ Return strictly valid JSON matching this schema:
   ]
 }`;
 
-      const response = await client.models.generateContent({
+      const response = await this.generateWithFallback(client, {
         model: GEMINI_MODELS.FLASH,
         contents: [
           {
@@ -448,7 +471,7 @@ Output strictly valid JSON with keys:
   "targetAudienceAnalysis": string
 }`;
 
-      const response = await client.models.generateContent({
+      const response = await this.generateWithFallback(client, {
         model: GEMINI_MODELS.FLASH,
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
       });
@@ -507,7 +530,7 @@ Output strictly JSON:
   "suggestedPrompt": string | null
 }`;
 
-      const response = await client.models.generateContent({
+      const response = await this.generateWithFallback(client, {
         model: GEMINI_MODELS.FLASH,
         contents: [
           {
