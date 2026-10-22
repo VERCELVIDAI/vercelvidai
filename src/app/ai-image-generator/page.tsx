@@ -7,19 +7,19 @@ import { Image as ImageIcon, Sparkles, ArrowRight, Wand2, Palette, Shield } from
 
 export default function AIImageGeneratorPage() {
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex flex-col">
+    <div className="min-h-screen flex flex-col text-[#17211D]">
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-600/10 border border-sky-500/20 text-xs font-semibold text-sky-400 mb-4">
-            <ImageIcon className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-50 border border-pink-300 text-xs font-bold text-pink-700 mb-4 shadow-xs">
+            <ImageIcon className="w-3.5 h-3.5 text-pink-600" />
             <span>Flux 1.1 Pro & Ultra-Resolution AI Images</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
+          <h1 className="text-4xl sm:text-6xl font-black text-[#17211D] tracking-tight">
             AI Image Studio
           </h1>
-          <p className="mt-4 text-base sm:text-xl text-slate-300">
+          <p className="mt-4 text-base sm:text-xl text-slate-600">
             Generate photorealistic concept art, ecommerce product mockups, and YouTube thumbnails with prompt comprehension.
           </p>
         </div>
@@ -31,7 +31,7 @@ export default function AIImageGeneratorPage() {
 
         {/* Gallery of Flux Generated Visuals */}
         <div className="my-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#17211D] mb-8 text-center">
             Curated High-Fidelity Generations
           </h2>
 
@@ -68,7 +68,7 @@ export default function AIImageGeneratorPage() {
                 aspect: 'Cinema (16:9)',
               },
             ].map((card, idx) => (
-              <div key={idx} className="rounded-2xl glass-panel border border-white/10 overflow-hidden group">
+              <div key={idx} className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden group shadow-md hover:shadow-xl transition-all">
                 <div className="aspect-square relative overflow-hidden">
                   <img
                     src={card.image}
@@ -78,7 +78,7 @@ export default function AIImageGeneratorPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                     <Link
                       href={`/create?mode=video&ref=${encodeURIComponent(card.image)}`}
-                      className="w-full py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1.5"
+                      className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-md"
                     >
                       <span>Animate to Video</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -86,8 +86,8 @@ export default function AIImageGeneratorPage() {
                   </div>
                 </div>
                 <div className="p-4 flex items-center justify-between">
-                  <h4 className="font-semibold text-white text-sm">{card.title}</h4>
-                  <span className="text-[11px] text-slate-400 font-mono">{card.aspect}</span>
+                  <h4 className="font-bold text-[#17211D] text-sm">{card.title}</h4>
+                  <span className="text-[11px] text-slate-500 font-mono font-medium">{card.aspect}</span>
                 </div>
               </div>
             ))}

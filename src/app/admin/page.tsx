@@ -203,8 +203,8 @@ export default function AdminConsolePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#07080B] text-slate-100 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen text-[#17211D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -216,35 +216,29 @@ export default function AdminConsolePage() {
   const recentAudits = adminData?.recentAudits || [];
 
   return (
-    <div
-      className="min-h-screen flex flex-col transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
-      }}
-    >
+    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D]">
       {/* Admin Top Bar */}
-      <header className="h-16 border-b border-white/[0.08] bg-[#0A0B10] px-6 flex items-center justify-between shrink-0">
+      <header className="h-16 border-b border-emerald-500/15 glass-navbar px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"
-            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white"
+            className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-slate-700 hover:text-emerald-900 border border-emerald-300"
             title="Return to User Dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
-          <div className="h-5 w-px bg-white/10" />
+          <div className="h-5 w-px bg-emerald-500/20" />
           <div className="flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-amber-400" />
-            <span className="font-bold text-white text-base">Fluvia Flow • Admin Console</span>
-            <span className="text-[10px] bg-amber-500/20 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-500/30 uppercase">
+            <ShieldAlert className="w-5 h-5 text-amber-600" />
+            <span className="font-bold text-[#17211D] text-base">Fluvia Flow • Admin Console</span>
+            <span className="text-[10px] bg-amber-100 text-amber-900 font-mono px-2 py-0.5 rounded border border-amber-300 uppercase font-bold">
               Super Admin
             </span>
           </div>
         </div>
 
         {/* Tab navigation */}
-        <div className="flex gap-1 bg-white/5 p-1 rounded-xl text-xs font-semibold">
+        <div className="flex gap-1 glass-panel border border-emerald-500/20 p-1 rounded-xl text-xs font-bold">
           {[
             { id: 'overview', label: 'Metrics Overview' },
             { id: 'pricing', label: 'Pricing, Plans & Tax' },
@@ -257,8 +251,8 @@ export default function AdminConsolePage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === tab.id ? 'bg-amber-500 text-black font-bold' : 'text-slate-400 hover:text-white'
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                activeTab === tab.id ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
               }`}
             >
               {tab.label}
@@ -312,16 +306,16 @@ export default function AdminConsolePage() {
             </div>
 
             {/* Provider Status Quick Grid */}
-            <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-4">
-              <h3 className="font-bold text-white text-base">Configured Provider Integrations</h3>
+            <div className="p-6 rounded-3xl glass-card space-y-4 shadow-sm">
+              <h3 className="font-bold text-[#17211D] text-base">Configured Provider Integrations</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                 {providers.map((prv: any) => (
-                  <div key={prv.id} className="p-3 bg-[#0E1017] rounded-xl border border-white/5 flex items-center justify-between">
+                  <div key={prv.id} className="p-3.5 glass-card rounded-2xl flex items-center justify-between">
                     <div>
-                      <span className="font-semibold text-white block">{prv.name}</span>
-                      <span className="text-[11px] text-slate-400 capitalize">{prv.providerType} AI</span>
+                      <span className="font-semibold text-[#17211D] block">{prv.name}</span>
+                      <span className="text-[11px] text-slate-500 capitalize">{prv.providerType} AI</span>
                     </div>
-                    <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-mono px-2 py-0.5 rounded border border-emerald-500/30">
+                    <span className="text-[10px] bg-emerald-50 text-emerald-700 font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/30">
                       Live / Active
                     </span>
                   </div>
@@ -521,29 +515,29 @@ export default function AdminConsolePage() {
                           type="number"
                           defaultValue={p.priceInr}
                           id={`price_m_${p.id}`}
-                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white font-mono"
+                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-[#17211D] font-mono font-semibold"
                         />
                       </div>
                       <div>
-                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">
+                        <label className="block text-slate-500 text-[10px] uppercase font-bold mb-1">
                           Annual Rate / Mo (INR)
                         </label>
                         <input
                           type="number"
                           defaultValue={p.priceAnnualInr || Math.round(p.priceInr * 0.8)}
                           id={`price_a_${p.id}`}
-                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white font-mono"
+                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-[#17211D] font-mono font-semibold"
                         />
                       </div>
                       <div>
-                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">
+                        <label className="block text-slate-500 text-[10px] uppercase font-bold mb-1">
                           Credits / Period
                         </label>
                         <input
                           type="number"
                           defaultValue={p.creditsPerPeriod}
                           id={`credits_${p.id}`}
-                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white font-mono"
+                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-[#17211D] font-mono font-semibold"
                         />
                       </div>
                       <div>
@@ -592,21 +586,21 @@ export default function AdminConsolePage() {
 
                     <div className="space-y-2 text-xs">
                       <div>
-                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">Base Price (INR)</label>
+                        <label className="block text-slate-500 text-[10px] uppercase font-bold mb-1">Base Price (INR)</label>
                         <input
                           type="number"
                           defaultValue={pack.priceInr}
                           id={`pack_price_${pack.id}`}
-                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-2.5 py-1 text-xs text-white font-mono"
+                          className="w-full glass-input rounded-lg px-2.5 py-1 text-xs text-[#17211D] font-mono font-semibold"
                         />
                       </div>
                       <div>
-                        <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">Credits Awarded</label>
+                        <label className="block text-slate-500 text-[10px] uppercase font-bold mb-1">Credits Awarded</label>
                         <input
                           type="number"
                           defaultValue={pack.creditAmount}
                           id={`pack_credits_${pack.id}`}
-                          className="w-full bg-[#141722] border border-white/10 rounded-lg px-2.5 py-1 text-xs text-white font-mono"
+                          className="w-full glass-input rounded-lg px-2.5 py-1 text-xs text-[#17211D] font-mono font-semibold"
                         />
                       </div>
                     </div>
@@ -640,88 +634,88 @@ export default function AdminConsolePage() {
                 <form onSubmit={handleUpdateBillingConfig} className="space-y-4 text-xs">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-slate-400 font-semibold mb-1">Supplier Legal Entity Name</label>
+                      <label className="block text-slate-600 font-semibold mb-1">Supplier Legal Entity Name</label>
                       <input
                         type="text"
                         value={billingConfig.legalName || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, legalName: e.target.value })}
-                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
                         placeholder="e.g. Fluvia Flow Technologies Pvt. Ltd."
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-400 font-semibold mb-1">Trade / Brand Name</label>
+                      <label className="block text-slate-600 font-semibold mb-1">Trade / Brand Name</label>
                       <input
                         type="text"
                         value={billingConfig.tradeName || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, tradeName: e.target.value })}
-                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
                         placeholder="e.g. Fluvia Flow"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Registered Office Address</label>
+                    <label className="block text-slate-600 font-semibold mb-1">Registered Office Address</label>
                     <input
                       type="text"
                       value={billingConfig.registeredAddress || ''}
                       onChange={(e) => setBillingConfig({ ...billingConfig, registeredAddress: e.target.value })}
-                      className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                      className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
                       placeholder="e.g. Plot 42, DLF Cyber City, Phase III"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-slate-400 font-semibold mb-1">City</label>
+                      <label className="block text-slate-600 font-semibold mb-1">City</label>
                       <input
                         type="text"
                         value={billingConfig.city || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, city: e.target.value })}
-                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-400 font-semibold mb-1">State (Origin for Tax Calc)</label>
+                      <label className="block text-slate-600 font-semibold mb-1">State (Origin for Tax Calc)</label>
                       <input
                         type="text"
                         value={billingConfig.state || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, state: e.target.value })}
-                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
                         placeholder="e.g. Delhi"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-400 font-semibold mb-1">Pincode</label>
+                      <label className="block text-slate-600 font-semibold mb-1">Pincode</label>
                       <input
                         type="text"
                         value={billingConfig.pincode || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, pincode: e.target.value })}
-                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white font-mono"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D] font-mono"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-slate-400 font-semibold mb-1">Supplier GSTIN (15 characters)</label>
+                      <label className="block text-slate-600 font-semibold mb-1">Supplier GSTIN (15 characters)</label>
                       <input
                         type="text"
                         value={billingConfig.gstin || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, gstin: e.target.value.toUpperCase() })}
-                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white font-mono"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D] font-mono font-bold"
                         placeholder="07AAAAA0000A1Z5"
                         maxLength={15}
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-400 font-semibold mb-1">Billing Support Email</label>
+                      <label className="block text-slate-600 font-semibold mb-1">Billing Support Email</label>
                       <input
                         type="email"
                         value={billingConfig.supportEmail || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, supportEmail: e.target.value })}
-                        className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2 text-white"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
                         placeholder="billing@fluviaflow.ai"
                       />
                     </div>
@@ -780,17 +774,17 @@ export default function AdminConsolePage() {
             </div>
 
             {/* Gateway Integration Status Banner */}
-            <div className="p-4 rounded-xl bg-[#12141A] border border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+            <div className="p-4 rounded-2xl glass-card flex flex-col sm:flex-row justify-between items-center gap-4 text-xs shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold border border-emerald-500/20">
                   ✓
                 </div>
                 <div>
-                  <h4 className="font-bold text-white">
+                  <h4 className="font-bold text-[#17211D]">
                     {billingData?.payuIntegration?.provider || 'PayU India Hosted Checkout'}
                   </h4>
-                  <p className="text-slate-400">
-                    Mode: <strong className="text-white uppercase font-mono">{billingData?.payuIntegration?.env || 'test'}</strong> • Merchant Key: <span className="font-mono">{billingData?.payuIntegration?.merchantKeyMasked}</span>
+                  <p className="text-slate-600">
+                    Mode: <strong className="text-emerald-700 uppercase font-mono">{billingData?.payuIntegration?.env || 'test'}</strong> • Merchant Key: <span className="font-mono text-slate-800">{billingData?.payuIntegration?.merchantKeyMasked}</span>
                   </p>
                 </div>
               </div>
@@ -911,39 +905,39 @@ export default function AdminConsolePage() {
 
         {/* ADJUST CREDIT MODAL */}
         {adjModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="bg-[#12141A] border border-white/15 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-              <h3 className="font-bold text-white text-base">Adjust User Credits</h3>
-              <p className="text-xs text-slate-400">
-                Grant or revoke credits for <strong className="text-white">{adjModal.userEmail}</strong>.
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
+            <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+              <h3 className="font-bold text-[#17211D] text-base">Adjust User Credits</h3>
+              <p className="text-xs text-slate-600">
+                Grant or revoke credits for <strong className="text-[#17211D]">{adjModal.userEmail}</strong>.
               </p>
 
               {adjStatus && (
-                <div className="p-3 bg-violet-950/60 border border-violet-500/40 text-xs text-violet-300 rounded-xl">
+                <div className="p-3 bg-emerald-50 border border-emerald-500/30 text-xs text-emerald-800 rounded-xl">
                   {adjStatus}
                 </div>
               )}
 
               <form onSubmit={handleAdjustCreditSubmit} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-slate-400 uppercase font-semibold mb-1">Credit Amount (+ to grant, - to deduct)</label>
+                  <label className="block text-slate-600 font-semibold mb-1">Credit Amount (+ to grant, - to deduct)</label>
                   <input
                     type="number"
                     required
                     value={adjAmount}
                     onChange={(e) => setAdjAmount(Number(e.target.value))}
-                    className="w-full bg-[#0E1017] text-white px-3 py-2 rounded-xl border border-white/10 text-sm"
+                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-sm font-semibold"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-400 uppercase font-semibold mb-1">Audit Reason</label>
+                  <label className="block text-slate-600 font-semibold mb-1">Audit Reason</label>
                   <input
                     type="text"
                     required
                     value={adjReason}
                     onChange={(e) => setAdjReason(e.target.value)}
-                    className="w-full bg-[#0E1017] text-white px-3 py-2 rounded-xl border border-white/10 text-xs"
+                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs"
                   />
                 </div>
 

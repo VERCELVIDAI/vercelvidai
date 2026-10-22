@@ -64,28 +64,28 @@ export function FeaturedTemplateCarousel() {
   };
 
   return (
-    <section className="py-20 border-t border-slate-200 dark:border-white/5 relative overflow-hidden">
+    <section className="py-20 border-t border-emerald-500/15 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-600/10 dark:bg-violet-600/20 text-violet-600 dark:text-violet-400 font-bold text-xs uppercase tracking-wider mb-3">
-              <Flame className="w-3.5 h-3.5 text-amber-500" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-50 text-pink-700 border border-pink-200 font-bold text-xs uppercase tracking-wider mb-3">
+              <Flame className="w-3.5 h-3.5 text-pink-500" />
               <span>Trending Templates</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black text-[#17211D] tracking-tight">
               Pre-built timelines.{' '}
-              <span className="bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-pink-600 bg-clip-text text-transparent">
                 Ready for instant remix.
               </span>
             </h2>
-            <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl">
+            <p className="mt-3 text-base text-slate-600 max-w-xl">
               Hover over any card to preview the pacing, audio synchronicity, and scene composition.
             </p>
           </div>
 
           <Link
             href="/templates"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-violet-600 hover:bg-violet-500 transition-colors shadow-md shadow-violet-600/20 shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-md shadow-emerald-600/20 shrink-0"
           >
             <span>Explore All 300+ Templates</span>
             <ArrowRight className="w-4 h-4" />
@@ -99,19 +99,20 @@ export function FeaturedTemplateCarousel() {
               key={template.id}
               template={template}
               onPreview={(t) => setPreviewTemplate(t)}
-              onUseTemplate={(t) => handleUseTemplate(t)}
+              onUseTemplate={handleUseTemplate}
             />
           ))}
         </div>
       </div>
 
-      {/* Video Preview Modal */}
-      <VideoPreviewModal
-        template={previewTemplate}
-        onClose={() => setPreviewTemplate(null)}
-        onUseTemplate={(t) => handleUseTemplate(t)}
-        onSelectRelated={(r) => setPreviewTemplate(r)}
-      />
+      {previewTemplate && (
+        <VideoPreviewModal
+          template={previewTemplate}
+          onClose={() => setPreviewTemplate(null)}
+          onUseTemplate={handleUseTemplate}
+          onSelectRelated={(t) => setPreviewTemplate(t)}
+        />
+      )}
     </section>
   );
 }

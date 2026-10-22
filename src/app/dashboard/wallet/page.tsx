@@ -6,16 +6,11 @@ import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { DashboardHeader } from '@/components/dashboard/Header';
 import {
-  Wallet,
   Zap,
   ArrowUpRight,
   ArrowDownLeft,
-  Plus,
   Clock,
-  ShieldCheck,
-  CreditCard,
   AlertTriangle,
-  Sparkles,
 } from 'lucide-react';
 
 export default function CreditWalletPage() {
@@ -56,8 +51,8 @@ export default function CreditWalletPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#090A0F] text-slate-100 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen text-[#17211D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -67,13 +62,7 @@ export default function CreditWalletPage() {
   const isLowBalance = credits.availableBalance < 30;
 
   return (
-    <div
-      className="min-h-screen flex transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
-      }}
-    >
+    <div className="min-h-screen text-[#17211D] flex">
       <Sidebar userRole={user.role} credits={credits} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
@@ -87,22 +76,22 @@ export default function CreditWalletPage() {
 
         <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Credit Wallet & Ledger</h1>
-            <p className="mt-1 text-xs sm:text-sm text-slate-400">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Credit Wallet & Ledger</h1>
+            <p className="mt-1 text-xs sm:text-sm text-slate-600">
               Real-time audit log of your available balances, reservations, purchases, and refunds.
             </p>
           </div>
 
           {/* Low Balance Warning */}
           {isLowBalance && (
-            <div className="p-4 rounded-xl bg-amber-950/40 border border-amber-500/30 flex items-center justify-between text-xs text-amber-200">
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 flex items-center justify-between text-xs text-amber-900 shadow-sm">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>Your credit balance is low ({credits.availableBalance} credits remaining). Standard video generations require 25 credits.</span>
               </div>
               <Link
                 href="/pricing"
-                className="px-3 py-1.5 bg-amber-500 text-black font-bold rounded-lg shrink-0 ml-4 hover:bg-amber-400 transition-colors"
+                className="px-3 py-1.5 bg-amber-500 text-white font-bold rounded-lg shrink-0 ml-4 hover:bg-amber-600 transition-colors shadow-sm"
               >
                 Top Up Now
               </Link>
@@ -111,37 +100,37 @@ export default function CreditWalletPage() {
 
           {/* Balances Overview Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl glass-panel border border-white/10 relative overflow-hidden">
+            <div className="p-6 rounded-3xl glass-card relative overflow-hidden shadow-sm">
               <div className="flex justify-between items-start mb-4">
-                <span className="text-xs text-slate-400 font-semibold uppercase">Available Balance</span>
-                <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                <span className="text-xs text-slate-500 font-semibold uppercase">Available Balance</span>
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-500/20">
                   <Zap className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-4xl font-black text-white">{credits.availableBalance}</div>
-              <p className="mt-2 text-xs text-slate-400">Ready to spend on immediate AI jobs</p>
+              <div className="text-4xl font-black text-[#17211D]">{credits.availableBalance}</div>
+              <p className="mt-2 text-xs text-slate-500">Ready to spend on immediate AI jobs</p>
             </div>
 
-            <div className="p-6 rounded-2xl glass-panel border border-white/10">
+            <div className="p-6 rounded-3xl glass-card shadow-sm">
               <div className="flex justify-between items-start mb-4">
-                <span className="text-xs text-slate-400 font-semibold uppercase">In-Flight Reserved</span>
-                <div className="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-400 flex items-center justify-center">
+                <span className="text-xs text-slate-500 font-semibold uppercase">In-Flight Reserved</span>
+                <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-500/20">
                   <Clock className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-4xl font-black text-white">{credits.reservedBalance}</div>
-              <p className="mt-2 text-xs text-slate-400">Locked while rendering active jobs</p>
+              <div className="text-4xl font-black text-[#17211D]">{credits.reservedBalance}</div>
+              <p className="mt-2 text-xs text-slate-500">Locked while rendering active jobs</p>
             </div>
 
-            <div className="p-6 rounded-2xl glass-panel border border-white/10 flex flex-col justify-between">
+            <div className="p-6 rounded-3xl glass-card flex flex-col justify-between shadow-sm">
               <div>
-                <span className="text-xs text-slate-400 font-semibold uppercase">Top-Up Wallet</span>
-                <h3 className="font-bold text-white text-base mt-1">Need additional compute?</h3>
-                <p className="mt-1 text-xs text-slate-400">Purchase instant top-up packs via UPI or Card.</p>
+                <span className="text-xs text-slate-500 font-semibold uppercase">Top-Up Wallet</span>
+                <h3 className="font-bold text-[#17211D] text-base mt-1">Need additional compute?</h3>
+                <p className="mt-1 text-xs text-slate-600">Purchase instant top-up packs via UPI or Card.</p>
               </div>
               <Link
                 href="/pricing"
-                className="mt-4 w-full py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white rounded-xl text-xs font-bold text-center block shadow-lg shadow-violet-600/20"
+                className="mt-4 w-full py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl text-xs font-bold text-center block shadow-md shadow-emerald-500/20 transition-all"
               >
                 View Credit Packs
               </Link>
@@ -149,19 +138,19 @@ export default function CreditWalletPage() {
           </div>
 
           {/* Ledger Table */}
-          <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden">
-            <div className="p-4 border-b border-white/10 bg-white/[0.02] flex items-center justify-between">
-              <h3 className="font-bold text-white text-sm">Immutable Transaction Ledger</h3>
-              <span className="text-xs font-mono text-slate-400">{ledger.length} total entries</span>
+          <div className="rounded-3xl glass-card overflow-hidden shadow-sm">
+            <div className="p-4 border-b border-emerald-500/10 bg-emerald-50/30 flex items-center justify-between">
+              <h3 className="font-bold text-[#17211D] text-sm">Immutable Transaction Ledger</h3>
+              <span className="text-xs font-mono text-slate-500">{ledger.length} total entries</span>
             </div>
 
             {ledger.length === 0 ? (
-              <div className="p-8 text-center text-xs text-slate-400">No ledger transactions recorded yet.</div>
+              <div className="p-8 text-center text-xs text-slate-500">No ledger transactions recorded yet.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-white/10 bg-white/[0.01] text-slate-400">
+                    <tr className="border-b border-emerald-500/10 bg-emerald-50/50 text-slate-600">
                       <th className="p-3.5 font-semibold">Transaction Type</th>
                       <th className="p-3.5 font-semibold">Amount</th>
                       <th className="p-3.5 font-semibold">Balance After</th>
@@ -169,28 +158,28 @@ export default function CreditWalletPage() {
                       <th className="p-3.5 font-semibold">Timestamp</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5 text-slate-300">
+                  <tbody className="divide-y divide-emerald-500/10 text-slate-700">
                     {ledger.map((entry) => {
                       const isPositive = entry.amount > 0;
                       return (
-                        <tr key={entry.id} className="hover:bg-white/[0.02] transition-colors">
+                        <tr key={entry.id} className="hover:bg-emerald-50/40 transition-colors">
                           <td className="p-3.5 flex items-center gap-2">
                             {isPositive ? (
-                              <ArrowDownLeft className="w-4 h-4 text-emerald-400" />
+                              <ArrowDownLeft className="w-4 h-4 text-emerald-600" />
                             ) : (
-                              <ArrowUpRight className="w-4 h-4 text-rose-400" />
+                              <ArrowUpRight className="w-4 h-4 text-rose-500" />
                             )}
-                            <span className="font-semibold text-white capitalize">
+                            <span className="font-semibold text-[#17211D] capitalize">
                               {entry.transactionType.replace(/_/g, ' ')}
                             </span>
                           </td>
-                          <td className={`p-3.5 font-mono font-bold ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
+                          <td className={`p-3.5 font-mono font-bold ${isPositive ? 'text-emerald-700' : 'text-rose-600'}`}>
                             {isPositive ? `+${entry.amount}` : entry.amount} cr
                           </td>
-                          <td className="p-3.5 font-mono font-semibold text-white">
+                          <td className="p-3.5 font-mono font-semibold text-[#17211D]">
                             {entry.balanceAfter} cr
                           </td>
-                          <td className="p-3.5 font-mono text-slate-400 text-[11px]">
+                          <td className="p-3.5 font-mono text-slate-500 text-[11px]">
                             {entry.relatedJobId || entry.idempotencyKey || entry.metadata?.packName || 'System grant'}
                           </td>
                           <td className="p-3.5 font-mono text-slate-500 text-[11px]">

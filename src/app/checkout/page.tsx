@@ -208,89 +208,77 @@ function CheckoutContent() {
 
   if (isLoadingAuth) {
     return (
-      <div className="min-h-screen bg-[#07080B] text-slate-100 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div
-      className="min-h-screen flex flex-col transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
-      }}
-    >
+    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D]">
       {/* Top Header */}
-      <header
-        className="h-16 border-b px-6 flex items-center justify-between"
-        style={{
-          backgroundColor: 'var(--app-surface)',
-          borderColor: 'var(--app-card-border)',
-        }}
-      >
-        <Link href="/pricing" className="flex items-center gap-2 text-xs opacity-70 hover:opacity-100 transition-opacity">
+      <header className="h-16 glass-navbar px-6 flex items-center justify-between border-b border-emerald-500/15">
+        <Link href="/pricing" className="flex items-center gap-2 text-xs text-slate-600 hover:text-emerald-800 font-bold transition-colors">
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Pricing</span>
         </Link>
         <Logo size="sm" />
-        <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold">
-          <Lock className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-2 text-emerald-700 text-xs font-bold">
+          <Lock className="w-3.5 h-3.5 text-emerald-600" />
           <span>256-bit Encrypted PayU Checkout</span>
         </div>
       </header>
 
       {/* Main Checkout Area */}
-      <main className="flex-1 max-w-5xl mx-auto w-full p-6 sm:p-10">
+      <main className="flex-1 max-w-5xl mx-auto w-full p-6 sm:p-10 text-left">
         <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Complete Your Order</h1>
-          <p className="mt-1 text-xs sm:text-sm text-slate-400">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Complete Your Order</h1>
+          <p className="mt-1 text-xs sm:text-sm text-slate-600">
             Secure checkout powered by PayU India. Instant credit fulfillment with official GST tax invoice.
           </p>
         </div>
 
         {errorMessage && (
-          <div className="mb-6 p-4 rounded-xl bg-red-950/40 border border-red-500/30 text-red-200 text-xs flex items-center gap-3">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
-            <span>{errorMessage}</span>
+          <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-xs flex items-center gap-3">
+            <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+            <span className="font-semibold">{errorMessage}</span>
           </div>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Customer Billing Details Form */}
-          <div className="lg:col-span-7 bg-[#0E1017] border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6">
-            <div className="flex items-center gap-2 pb-4 border-b border-white/10">
-              <Building2 className="w-5 h-5 text-violet-400" />
-              <h2 className="text-base font-bold text-white">Billing Information</h2>
+          <div className="lg:col-span-7 glass-card border border-emerald-500/20 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+            <div className="flex items-center gap-2 pb-4 border-b border-emerald-500/15">
+              <Building2 className="w-5 h-5 text-emerald-700" />
+              <h2 className="text-base font-bold text-[#17211D]">Billing Information</h2>
             </div>
 
             <form onSubmit={handleSubmitPayment} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Full Name <span className="text-red-400">*</span>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    Full Name <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500"
+                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                     placeholder="e.g. Aria Vance"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Email Address <span className="text-red-400">*</span>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    Email Address <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="email"
                     required
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
-                    className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500"
+                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                     placeholder="creator@fluviaflow.ai"
                   />
                 </div>
@@ -298,30 +286,30 @@ function CheckoutContent() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Phone (PayU Mobile) <span className="text-red-400">*</span>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    Phone (PayU Mobile) <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="tel"
                     required
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500 font-mono"
+                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 font-mono"
                     placeholder="10-digit mobile"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    State / Place of Supply <span className="text-red-400">*</span>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    State / Place of Supply <span className="text-rose-500">*</span>
                   </label>
                   <select
                     value={customerState}
                     onChange={(e) => setCustomerState(e.target.value)}
-                    className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500"
+                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 cursor-pointer"
                   >
                     {INDIAN_STATES.map((s) => (
-                      <option key={s} value={s} className="bg-[#141722]">
+                      <option key={s} value={s} className="bg-white text-[#17211D]">
                         {s}
                       </option>
                     ))}
@@ -330,27 +318,27 @@ function CheckoutContent() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Billing Address <span className="text-slate-500">(Optional for Individual)</span>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Billing Address <span className="text-slate-500 font-normal">(Optional for Individual)</span>
                 </label>
                 <input
                   type="text"
                   value={customerAddress}
                   onChange={(e) => setCustomerAddress(e.target.value)}
-                  className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500"
+                  className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                   placeholder="Street address, city, pincode"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  GSTIN <span className="text-slate-500">(Optional for B2B Input Tax Credit)</span>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  GSTIN <span className="text-slate-500 font-normal">(Optional for B2B Input Tax Credit)</span>
                 </label>
                 <input
                   type="text"
                   value={customerGstin}
                   onChange={(e) => setCustomerGstin(e.target.value.toUpperCase())}
-                  className="w-full bg-[#141722] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500 font-mono"
+                  className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 font-mono"
                   placeholder="e.g. 07AAAAA0000A1Z5"
                   maxLength={15}
                 />
@@ -360,20 +348,20 @@ function CheckoutContent() {
               </div>
 
               <div className="pt-2">
-                <label className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-400">
+                <label className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-600">
                   <input
                     type="checkbox"
                     checked={agreeTerms}
                     onChange={(e) => setAgreeTerms(e.target.checked)}
-                    className="mt-0.5 rounded border-white/20 bg-white/5 text-violet-600 focus:ring-violet-500"
+                    className="mt-0.5 rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
                   />
                   <span>
                     I accept the{' '}
-                    <Link href="/terms" target="_blank" className="text-violet-400 underline">
+                    <Link href="/terms" target="_blank" className="text-emerald-700 underline font-semibold">
                       Terms of Service
                     </Link>{' '}
                     and acknowledge the{' '}
-                    <Link href="/refund-policy" target="_blank" className="text-violet-400 underline">
+                    <Link href="/refund-policy" target="_blank" className="text-emerald-700 underline font-semibold">
                       Refund Policy
                     </Link>
                     .
@@ -385,97 +373,97 @@ function CheckoutContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 px-6 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-violet-600/30 transition-all disabled:opacity-50"
+                  className="w-full py-3.5 px-6 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 cursor-pointer"
                 >
                   <Lock className="w-4 h-4" />
                   <span>{isSubmitting ? 'Connecting to PayU...' : `Continue to Pay INR ${totalAmount.toFixed(2)}`}</span>
                 </button>
               </div>
 
-              <div className="flex items-center justify-center gap-4 pt-2 text-[11px] text-slate-400">
+              <div className="flex items-center justify-center gap-4 pt-2 text-[11px] text-slate-600 font-medium">
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> UPI (GPay, PhonePe, Paytm)
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> UPI (GPay, PhonePe, Paytm)
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Credit / Debit Cards
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Credit / Debit Cards
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Net Banking
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Net Banking
                 </span>
               </div>
             </form>
           </div>
 
           {/* Right: Order Summary Card */}
-          <div className="lg:col-span-5 bg-[#0E1017] border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6">
-            <h2 className="text-base font-bold text-white pb-4 border-b border-white/10">Order Summary</h2>
+          <div className="lg:col-span-5 glass-card border border-emerald-500/20 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+            <h2 className="text-base font-bold text-[#17211D] pb-4 border-b border-emerald-500/15">Order Summary</h2>
 
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5 space-y-3">
+            <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200 space-y-3">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <h3 className="text-sm font-bold text-white">{itemDetails.name}</h3>
-                  <p className="text-xs text-slate-400 mt-0.5">{itemDetails.description}</p>
+                  <h3 className="text-sm font-bold text-[#17211D]">{itemDetails.name}</h3>
+                  <p className="text-xs text-slate-600 mt-0.5">{itemDetails.description}</p>
                 </div>
-                <div className="w-8 h-8 rounded-lg bg-violet-600/20 text-violet-400 flex items-center justify-center shrink-0">
-                  <Zap className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-300">
+                  <Zap className="w-4 h-4 text-emerald-700" />
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/5">
+              <div className="flex items-center justify-between text-xs text-slate-700 pt-2 border-t border-emerald-200/80">
                 <span>Credits Included:</span>
-                <strong className="text-violet-400 font-mono font-bold">
+                <strong className="text-emerald-800 font-mono font-bold">
                   {itemDetails.credits.toLocaleString()} Credits
                 </strong>
               </div>
 
               {itemDetails.intervalLabel && (
-                <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/5">
+                <div className="flex items-center justify-between text-xs text-slate-700 pt-2 border-t border-emerald-200/80">
                   <span>Billing Cycle:</span>
-                  <span className="text-emerald-400 font-semibold">{itemDetails.intervalLabel}</span>
+                  <span className="text-emerald-800 font-bold">{itemDetails.intervalLabel}</span>
                 </div>
               )}
             </div>
 
             {/* Price Breakdown */}
             <div className="space-y-2.5 text-xs">
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-slate-600">
                 <span>Base Plan Price:</span>
-                <span className="text-white font-mono">INR {itemDetails.basePrice.toFixed(2)}</span>
+                <span className="text-[#17211D] font-mono font-bold">INR {itemDetails.basePrice.toFixed(2)}</span>
               </div>
 
               {isInterState ? (
-                <div className="flex justify-between text-slate-400">
+                <div className="flex justify-between text-slate-600">
                   <span>IGST @ 18%:</span>
-                  <span className="text-white font-mono">INR {taxAmount.toFixed(2)}</span>
+                  <span className="text-[#17211D] font-mono font-bold">INR {taxAmount.toFixed(2)}</span>
                 </div>
               ) : (
                 <>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-slate-600">
                     <span>CGST @ 9%:</span>
-                    <span className="text-white font-mono">INR {(taxAmount / 2).toFixed(2)}</span>
+                    <span className="text-[#17211D] font-mono font-bold">INR {(taxAmount / 2).toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-slate-600">
                     <span>SGST @ 9%:</span>
-                    <span className="text-white font-mono">INR {(taxAmount / 2).toFixed(2)}</span>
+                    <span className="text-[#17211D] font-mono font-bold">INR {(taxAmount / 2).toFixed(2)}</span>
                   </div>
                 </>
               )}
 
-              <div className="pt-3 border-t border-white/10 flex justify-between items-baseline">
-                <span className="text-sm font-bold text-white">Total Payable Amount:</span>
-                <span className="text-lg font-extrabold text-violet-400 font-mono">
+              <div className="pt-3 border-t border-emerald-500/15 flex justify-between items-baseline">
+                <span className="text-sm font-bold text-[#17211D]">Total Payable Amount:</span>
+                <span className="text-lg font-extrabold text-emerald-700 font-mono">
                   INR {totalAmount.toFixed(2)}
                 </span>
               </div>
             </div>
 
             {/* Satisfaction / Guarantee info */}
-            <div className="p-4 rounded-xl bg-violet-950/20 border border-violet-500/20 text-xs text-violet-200 space-y-1.5">
-              <div className="flex items-center gap-1.5 font-bold text-white">
-                <ShieldCheck className="w-4 h-4 text-violet-400" />
+            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 space-y-1.5 shadow-xs">
+              <div className="flex items-center gap-1.5 font-bold text-emerald-900">
+                <ShieldCheck className="w-4 h-4 text-emerald-700" />
                 <span>Instant Crediting & GST Tax Invoice</span>
               </div>
-              <p className="text-[11px] text-slate-300">
+              <p className="text-[11px] text-slate-700 leading-relaxed">
                 Your credits are added to your wallet automatically upon confirmation. You will be able to download your
                 official GST invoice and payment receipt immediately.
               </p>
@@ -491,8 +479,8 @@ export default function CheckoutPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#07080B] text-slate-100 flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

@@ -44,7 +44,7 @@ export class OpenAIAdapter extends BaseAIProviderAdapter {
           {
             sceneNumber: 3,
             visualPrompt: `High-energy concluding shot with radiant lighting and prominent brand CTA overlay.`,
-            narration: 'Start creating the future today with Vercel Vidai.',
+            narration: 'Start creating the future today with Fluvia Flow.',
             durationSec: 5,
           },
         ],

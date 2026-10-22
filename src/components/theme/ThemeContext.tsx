@@ -1,18 +1,18 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { ColorTheme, ThemeMode, COLOR_THEMES, getThemeById, getDefaultTheme } from '@/lib/themes';
+import { ColorTheme, ThemeMode, COLOR_THEMES, getThemeById, getDefaultTheme, FLUVIA_PALETTE } from '@/lib/themes';
 
-export type ResolvedMode = 'dark' | 'light';
+export type ResolvedMode = 'light';
 
 interface ThemeContextType {
   colorTheme: string;
   themeDetails: ColorTheme;
-  mode: ThemeMode;
-  resolvedMode: ResolvedMode;
+  mode: 'light';
+  resolvedMode: 'light';
   isCompleted: boolean;
   setColorTheme: (themeId: string, persistToBackend?: boolean) => void;
-  setMode: (mode: ThemeMode, persistToBackend?: boolean) => void;
+  setMode: (mode: any, persistToBackend?: boolean) => void;
   toggleMode: () => void;
   markCompleted: () => Promise<void>;
   resetToDefault: () => void;
@@ -21,42 +21,24 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [colorTheme, setColorThemeState] = useState<string>('midnight-violet');
-  const [mode, setModeState] = useState<ThemeMode>('dark');
-  const [resolvedMode, setResolvedMode] = useState<ResolvedMode>('dark');
-  const [isCompleted, setIsCompleted] = useState<boolean>(false);
-  const [mounted, setMounted] = useState<boolean>(false);
+  const [colorTheme] = useState<string>('fluvia-emerald');
+  const [mode] = useState<'light'>('light');
+  const [resolvedMode] = useState<'light'>('light');
+  const [isCompleted, setIsCompleted] = useState<boolean>(true);
 
   // Apply CSS variables to document.documentElement
-  const applyThemeToDOM = useCallback((themeId: string, activeMode: ThemeMode) => {
+  const applyThemeToDOM = useCallback(() => {
     if (typeof window === 'undefined') return;
 
-    const theme = getThemeById(themeId);
-    let resolved: ResolvedMode = 'dark';
-    if (activeMode === 'system') {
-      resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    } else {
-      resolved = activeMode;
-    }
-
-    setResolvedMode(resolved);
     const root = document.documentElement;
-
-    // Set attributes for CSS selectors
-    root.setAttribute('data-color-theme', theme.id);
-    root.setAttribute('data-theme', resolved);
-    root.style.colorScheme = resolved;
-
-    if (resolved === 'dark') {
-      root.classList.add('dark');
-      root.classList.remove('light');
-    } else {
-      root.classList.add('light');
-      root.classList.remove('dark');
-    }
+    root.setAttribute('data-color-theme', 'fluvia-emerald');
+    root.setAttribute('data-theme', 'light');
+    root.style.colorScheme = 'light';
+    root.classList.remove('dark');
+    root.classList.add('light');
 
     // Apply Palette Variables
-    const palette = resolved === 'dark' ? theme.dark : theme.light;
+    const palette = FLUVIA_PALETTE;
     root.style.setProperty('--app-bg', palette.bg);
     root.style.setProperty('--app-surface', palette.surface);
     root.style.setProperty('--app-sidebar', palette.sidebar);
@@ -79,153 +61,44 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty('--app-glow', palette.glow);
   }, []);
 
-  // Initialize from localStorage and check backend for authenticated user
+  // Permanently migrate localStorage on mount
   useEffect(() => {
-    let initialColor = 'midnight-violet';
-    let initialMode: ThemeMode = 'dark';
-    let initialCompleted = false;
-
     try {
-      const savedColor = localStorage.getItem('fluvia_color_theme') || localStorage.getItem('vidai_color_theme');
-      if (savedColor && COLOR_THEMES.some((t) => t.id === savedColor)) {
-        initialColor = savedColor;
-      }
-      const savedMode = (localStorage.getItem('fluvia_theme') || localStorage.getItem('vidai_theme')) as ThemeMode;
-      if (savedMode === 'light' || savedMode === 'dark' || savedMode === 'system') {
-        initialMode = savedMode;
-      }
-      initialCompleted = (localStorage.getItem('fluvia_theme_completed') || localStorage.getItem('vidai_theme_completed')) === 'true';
-    } catch (e) {}
+      localStorage.setItem('fluvia_theme', 'light');
+      localStorage.setItem('fluvia_color_theme', 'fluvia-emerald');
+      localStorage.removeItem('vidai_theme');
+      localStorage.removeItem('vidai_color_theme');
+    } catch {}
 
-    setColorThemeState(initialColor);
-    setModeState(initialMode);
-    setIsCompleted(initialCompleted);
-    applyThemeToDOM(initialColor, initialMode);
-    setMounted(true);
-
-    // Fetch authoritative backend settings if user is logged in
-    fetch('/api/user/theme')
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data?.themePreferences) {
-          const { colorTheme: backendColor, mode: backendMode, completed: backendCompleted } = data.themePreferences;
-          if (backendColor && COLOR_THEMES.some((t) => t.id === backendColor)) {
-            setColorThemeState(backendColor);
-            setModeState(backendMode);
-            setIsCompleted(backendCompleted);
-            applyThemeToDOM(backendColor, backendMode);
-            try {
-              localStorage.setItem('fluvia_color_theme', backendColor);
-              localStorage.setItem('fluvia_theme', backendMode);
-              localStorage.setItem('fluvia_theme_completed', backendCompleted ? 'true' : 'false');
-              localStorage.setItem('vidai_color_theme', backendColor);
-              localStorage.setItem('vidai_theme', backendMode);
-              localStorage.setItem('vidai_theme_completed', backendCompleted ? 'true' : 'false');
-            } catch (e) {}
-          }
-        }
-      })
-      .catch(() => {});
+    applyThemeToDOM();
   }, [applyThemeToDOM]);
 
-  // Cross-tab synchronization
-  useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'vidai_color_theme' && e.newValue) {
-        setColorThemeState(e.newValue);
-        applyThemeToDOM(e.newValue, mode);
-      } else if (e.key === 'vidai_theme' && e.newValue) {
-        const newMode = e.newValue as ThemeMode;
-        setModeState(newMode);
-        applyThemeToDOM(colorTheme, newMode);
-      }
-    };
-
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, [colorTheme, mode, applyThemeToDOM]);
-
-  // System mode change listener
-  useEffect(() => {
-    if (mode !== 'system') return;
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const listener = () => {
-      applyThemeToDOM(colorTheme, 'system');
-    };
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
-  }, [mode, colorTheme, applyThemeToDOM]);
-
-  const setColorTheme = (themeId: string, persistToBackend = true) => {
-    const valid = getThemeById(themeId);
-    setColorThemeState(valid.id);
-    applyThemeToDOM(valid.id, mode);
-
-    try {
-      localStorage.setItem('fluvia_color_theme', valid.id);
-      localStorage.setItem('vidai_color_theme', valid.id);
-    } catch (e) {}
-
-    if (persistToBackend) {
-      fetch('/api/user/theme', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ colorTheme: valid.id, mode }),
-      }).catch(() => {});
-    }
+  const setColorTheme = () => {
+    applyThemeToDOM();
   };
 
-  const setMode = (newMode: ThemeMode, persistToBackend = true) => {
-    setModeState(newMode);
-    applyThemeToDOM(colorTheme, newMode);
-
-    try {
-      localStorage.setItem('fluvia_theme', newMode);
-      localStorage.setItem('vidai_theme', newMode);
-    } catch (e) {}
-
-    if (persistToBackend) {
-      fetch('/api/user/theme', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ colorTheme, mode: newMode }),
-      }).catch(() => {});
-    }
+  const setMode = () => {
+    applyThemeToDOM();
   };
 
   const toggleMode = () => {
-    const next = resolvedMode === 'dark' ? 'light' : 'dark';
-    setMode(next);
+    // Single light theme enforced
+    applyThemeToDOM();
   };
 
   const markCompleted = async () => {
     setIsCompleted(true);
-    try {
-      localStorage.setItem('fluvia_theme_completed', 'true');
-      localStorage.setItem('vidai_theme_completed', 'true');
-    } catch (e) {}
-
-    try {
-      await fetch('/api/user/theme', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ colorTheme, mode, completed: true }),
-      });
-    } catch (e) {}
   };
 
   const resetToDefault = () => {
-    setColorTheme('midnight-violet');
-    setMode('dark');
+    applyThemeToDOM();
   };
-
-  const themeDetails = getThemeById(colorTheme);
 
   return (
     <ThemeContext.Provider
       value={{
         colorTheme,
-        themeDetails,
+        themeDetails: COLOR_THEMES[0],
         mode,
         resolvedMode,
         isCompleted,

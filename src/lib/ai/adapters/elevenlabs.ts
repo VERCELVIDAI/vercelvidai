@@ -27,7 +27,7 @@ export class ElevenLabsAdapter extends BaseAIProviderAdapter {
       return {
         status: 'completed',
         audioUrl: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=synthwave-80s-110045.mp3',
-        transcript: input.prompt || input.scriptText || 'Welcome to Vercel Vidai. Powered by next-generation creative intelligence.',
+        transcript: input.prompt || input.scriptText || 'Welcome to Fluvia Flow. Powered by next-generation creative intelligence.',
         progressPercent: 100,
         progressMessage: 'Demo Mode — ElevenLabs API not configured. High-quality demonstration voice track provided.',
         isDemoSimulated: true,

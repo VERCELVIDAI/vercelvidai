@@ -46,7 +46,6 @@ export function TemplateCard({
         .play()
         .then(() => setIsPlaying(true))
         .catch(() => {
-          // Browser prevented autoplay or invalid network, fallback safely
           setIsPlaying(false);
         });
     } else {
@@ -81,7 +80,7 @@ export function TemplateCard({
       ref={cardRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative rounded-2xl bg-white dark:bg-[#11131C] border border-slate-200/80 dark:border-white/10 overflow-hidden shadow-sm hover:shadow-xl hover:border-violet-500/50 dark:hover:border-violet-500/50 transition-all duration-300 flex flex-col justify-between"
+      className="group relative rounded-2xl glass-card border border-emerald-500/20 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col justify-between text-left"
     >
       {/* Video & Thumbnail Container */}
       <div className="relative aspect-[16/10] overflow-hidden bg-slate-900 select-none">
@@ -115,11 +114,11 @@ export function TemplateCard({
         {/* Top Badges: Category & Aspect Ratio */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
           <div className="flex items-center gap-1.5">
-            <span className="px-2.5 py-1 rounded-lg bg-black/60 dark:bg-black/70 backdrop-blur-md text-[10px] font-bold text-violet-300 border border-white/10">
+            <span className="px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[10px] font-bold text-emerald-300 border border-white/10">
               {template.category}
             </span>
             {template.badge && (
-              <span className="px-2 py-0.5 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 text-[10px] font-bold text-white shadow-sm">
+              <span className="px-2 py-0.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 text-[10px] font-bold text-white shadow-sm">
                 {template.badge}
               </span>
             )}
@@ -152,7 +151,7 @@ export function TemplateCard({
             {template.aspectLabel}
           </span>
           <div className="flex items-center gap-1 text-[10px] font-mono font-medium text-white/90 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
-            <Clock className="w-3 h-3 text-violet-400" />
+            <Clock className="w-3 h-3 text-emerald-400" />
             <span>{template.duration}</span>
           </div>
         </div>
@@ -162,9 +161,9 @@ export function TemplateCard({
           <button
             type="button"
             onClick={() => onPreview(template)}
-            className="pointer-events-auto px-4 py-2 rounded-xl bg-white/90 hover:bg-white text-slate-900 font-bold text-xs shadow-xl flex items-center gap-1.5 transition-all transform hover:scale-105"
+            className="pointer-events-auto px-4 py-2 rounded-xl bg-white/95 hover:bg-white text-slate-900 font-bold text-xs shadow-xl flex items-center gap-1.5 transition-all transform hover:scale-105"
           >
-            <Maximize2 className="w-3.5 h-3.5 text-violet-600" />
+            <Maximize2 className="w-3.5 h-3.5 text-emerald-700" />
             <span>Watch Preview</span>
           </button>
         </div>
@@ -174,11 +173,11 @@ export function TemplateCard({
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
           <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors line-clamp-1">
+            <h3 className="font-bold text-[#17211D] text-base group-hover:text-emerald-700 transition-colors line-clamp-1">
               {template.title}
             </h3>
           </div>
-          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4">
+          <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4">
             {template.description}
           </p>
 
@@ -187,7 +186,7 @@ export function TemplateCard({
             {template.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded"
+                className="text-[10px] font-mono text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200"
               >
                 {tag}
               </span>
@@ -196,11 +195,11 @@ export function TemplateCard({
         </div>
 
         {/* Action Bottom Row */}
-        <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between gap-2">
+        <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between gap-2">
           <button
             type="button"
             onClick={() => onPreview(template)}
-            className="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors flex items-center gap-1"
+            className="text-xs font-semibold text-slate-600 hover:text-emerald-700 transition-colors flex items-center gap-1"
           >
             <Play className="w-3.5 h-3.5" />
             <span>Preview</span>
@@ -209,7 +208,7 @@ export function TemplateCard({
           <button
             type="button"
             onClick={() => onUseTemplate(template)}
-            className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-violet-600/20 hover:shadow-violet-600/40 transition-all"
+            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-emerald-600/20 hover:shadow-emerald-600/40 transition-all"
           >
             <span>Use Template</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

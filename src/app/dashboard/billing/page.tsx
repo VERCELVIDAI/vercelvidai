@@ -58,8 +58,8 @@ export default function BillingOverviewPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#090A0F] text-slate-100 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -73,13 +73,7 @@ export default function BillingOverviewPage() {
   const latestReceipts = billing?.latestReceipts || [];
 
   return (
-    <div
-      className="min-h-screen flex transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
-      }}
-    >
+    <div className="min-h-screen flex transition-colors duration-200 text-[#17211D]">
       <Sidebar userRole={user.role} credits={credits} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
@@ -91,12 +85,12 @@ export default function BillingOverviewPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8">
+        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8 text-left">
           {/* Header Title & Subnavigation */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Billing & Financial Management</h1>
-              <p className="mt-1 text-xs sm:text-sm text-slate-400">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Billing & Financial Management</h1>
+              <p className="mt-1 text-xs sm:text-sm text-slate-600">
                 Manage your subscription plans, PayU India transactions, official GST tax invoices, and receipts.
               </p>
             </div>
@@ -104,15 +98,15 @@ export default function BillingOverviewPage() {
             <div className="flex items-center gap-2.5">
               <Link
                 href="/checkout?type=pack&id=pack_1200"
-                className="px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-violet-600/25 flex items-center gap-1.5 transition-all"
+                className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center gap-1.5 transition-all cursor-pointer"
               >
-                <Zap className="w-3.5 h-3.5" />
+                <Zap className="w-3.5 h-3.5 text-emerald-100" />
                 <span>Buy Credits</span>
               </Link>
 
               <Link
                 href="/pricing"
-                className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl text-xs font-bold transition-all"
+                className="px-4 py-2 glass-card hover:bg-emerald-50 text-slate-800 border border-emerald-500/20 rounded-xl text-xs font-bold transition-all shadow-xs"
               >
                 Upgrade Plan
               </Link>
@@ -120,71 +114,71 @@ export default function BillingOverviewPage() {
           </div>
 
           {/* Subnavigation Pills */}
-          <div className="flex items-center gap-2 border-b border-white/10 pb-3 overflow-x-auto text-xs font-semibold">
+          <div className="flex items-center gap-2 border-b border-emerald-500/15 pb-3 overflow-x-auto text-xs font-bold">
             <Link
               href="/dashboard/billing"
-              className="px-3.5 py-1.5 bg-violet-600 text-white rounded-lg shadow-sm"
+              className="px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg shadow-xs"
             >
               Overview
             </Link>
             <Link
               href="/dashboard/billing/invoices"
-              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
             >
               Invoices ({latestInvoices.length})
             </Link>
             <Link
               href="/dashboard/billing/receipts"
-              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
             >
               Payment Receipts ({latestReceipts.length})
             </Link>
             <Link
               href="/dashboard/billing/transactions"
-              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
             >
               Transactions History
             </Link>
             <Link
               href="/dashboard/billing/subscription"
-              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
             >
               Subscription Details
             </Link>
           </div>
 
           {/* Subscription & Active Plan Banner */}
-          <div className="p-6 rounded-2xl bg-gradient-to-r from-[#141622] to-[#12141F] border border-white/10 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-pink-50/50 border border-emerald-500/25 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-lg">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase text-violet-400 bg-violet-950/80 px-2.5 py-0.5 rounded-full border border-violet-500/30 font-bold">
+                <span className="text-[10px] font-mono uppercase text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300 font-bold">
                   Active Subscription
                 </span>
-                <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                <span className="text-xs text-emerald-700 font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Auto-Renewal Active
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-white">
-                {plan?.name || 'Studio Creator Plan'}
+              <h2 className="text-xl sm:text-2xl font-black text-[#17211D]">
+                {plan?.name || 'Fluvia Pro Plan'}
               </h2>
-              <p className="text-xs text-slate-400 max-w-xl">
-                Priority GPU queue, 1080p rendering, access to Runway Gen-3, Luma Ray, Fal Flux, and ElevenLabs voices.
+              <p className="text-xs text-slate-600 max-w-xl">
+                Priority GPU queue, 4K rendering, access to Runway Gen-3, Luma Ray, Fal Flux, and ElevenLabs voices.
               </p>
             </div>
 
             <div className="flex items-center gap-4 shrink-0">
               <div className="text-right">
-                <div className="text-xs text-slate-400">Monthly Billing</div>
-                <div className="text-xl font-extrabold text-white font-mono">
+                <div className="text-xs text-slate-500 font-medium">Monthly Billing</div>
+                <div className="text-xl font-extrabold text-[#17211D] font-mono">
                   INR {plan?.priceInr || 2499}
-                  <span className="text-xs text-slate-400 font-normal"> / mo</span>
+                  <span className="text-xs text-slate-500 font-normal"> / mo</span>
                 </div>
               </div>
 
               <Link
                 href="/pricing"
-                className="px-4 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-violet-600/30 transition-all"
+                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
               >
                 Change Plan
               </Link>
@@ -193,59 +187,59 @@ export default function BillingOverviewPage() {
 
           {/* Financial Overview Metrics Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-[#12141A] border border-white/10 space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
                 <span>Available Compute</span>
-                <Zap className="w-4 h-4 text-amber-400" />
+                <Zap className="w-4 h-4 text-emerald-600" />
               </div>
-              <div className="text-3xl font-black text-white font-mono">
+              <div className="text-3xl font-black text-[#17211D] font-mono">
                 {billing?.availableCredits ?? credits.availableBalance}
               </div>
-              <p className="text-[11px] text-slate-500">Live spendable credits</p>
+              <p className="text-[11px] text-slate-500 font-medium">Live spendable credits</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#12141A] border border-white/10 space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
                 <span>Purchased Credits</span>
-                <TrendingUp className="w-4 h-4 text-violet-400" />
+                <TrendingUp className="w-4 h-4 text-teal-700" />
               </div>
-              <div className="text-3xl font-black text-white font-mono">
+              <div className="text-3xl font-black text-[#17211D] font-mono">
                 {billing?.purchasedCredits ?? 0}
               </div>
-              <p className="text-[11px] text-slate-500">Total top-ups & plan allowances</p>
+              <p className="text-[11px] text-slate-500 font-medium">Total top-ups & plan allowances</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#12141A] border border-white/10 space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
                 <span>Total Spent (INR)</span>
-                <CreditCard className="w-4 h-4 text-emerald-400" />
+                <CreditCard className="w-4 h-4 text-emerald-600" />
               </div>
-              <div className="text-3xl font-black text-emerald-400 font-mono">
+              <div className="text-3xl font-black text-emerald-700 font-mono">
                 ₹{billing?.totalSpentInr?.toFixed(2) ?? '0.00'}
               </div>
-              <p className="text-[11px] text-slate-500">Paid via PayU India</p>
+              <p className="text-[11px] text-slate-500 font-medium">Paid via PayU India</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#12141A] border border-white/10 space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-400 font-semibold">
+            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
                 <span>Successful Orders</span>
-                <ShieldCheck className="w-4 h-4 text-sky-400" />
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
               </div>
-              <div className="text-3xl font-black text-white font-mono">
+              <div className="text-3xl font-black text-[#17211D] font-mono">
                 {billing?.totalSuccessfulPayments ?? 0}
               </div>
-              <p className="text-[11px] text-slate-500">Verified transactions on ledger</p>
+              <p className="text-[11px] text-slate-500 font-medium">Verified transactions on ledger</p>
             </div>
           </div>
 
           {/* Quick Credit Packs Section */}
-          <div className="rounded-2xl bg-[#12141A] border border-white/10 p-6 space-y-4">
+          <div className="rounded-2xl glass-card border border-emerald-500/20 p-6 space-y-4 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-white">Instant Credit Top-Up Packs</h3>
-                <p className="text-xs text-slate-400">Never let rendering stop. Instant delivery via PayU UPI & Cards.</p>
+                <h3 className="text-base font-bold text-[#17211D]">Instant Credit Top-Up Packs</h3>
+                <p className="text-xs text-slate-600">Never let rendering stop. Instant delivery via PayU UPI & Cards.</p>
               </div>
-              <Link href="/pricing" className="text-xs text-violet-400 hover:text-violet-300 font-semibold flex items-center gap-1">
+              <Link href="/pricing" className="text-xs text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1">
                 <span>View All Packs</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
@@ -260,23 +254,23 @@ export default function BillingOverviewPage() {
               ].map((pack) => (
                 <div
                   key={pack.id}
-                  className="p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-violet-500/50 transition-all flex flex-col justify-between"
+                  className="p-4 rounded-xl glass-card border border-emerald-500/20 hover:border-emerald-500/50 hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-[10px] font-mono font-bold text-violet-400 bg-violet-950/60 px-2 py-0.5 rounded">
+                      <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-200">
                         {pack.tag}
                       </span>
                     </div>
-                    <div className="font-bold text-white text-base mt-2">{pack.name}</div>
-                    <div className="text-sm font-extrabold text-slate-200 mt-1 font-mono">
+                    <div className="font-bold text-[#17211D] text-base mt-2">{pack.name}</div>
+                    <div className="text-sm font-extrabold text-[#17211D] mt-1 font-mono">
                       INR {pack.price} <span className="text-[10px] text-slate-500 font-normal">+ 18% GST</span>
                     </div>
                   </div>
 
                   <Link
                     href={`/checkout?type=pack&id=${pack.id}`}
-                    className="mt-4 w-full py-2 bg-white/5 hover:bg-violet-600 text-white rounded-lg text-xs font-bold text-center block transition-colors"
+                    className="mt-4 w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold text-center block transition-colors shadow-xs"
                   >
                     Purchase Pack
                   </Link>
@@ -286,15 +280,15 @@ export default function BillingOverviewPage() {
           </div>
 
           {/* Recent Transactions & Invoices Table */}
-          <div className="rounded-2xl bg-[#12141A] border border-white/10 overflow-hidden">
-            <div className="p-5 border-b border-white/10 flex items-center justify-between">
+          <div className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden shadow-sm">
+            <div className="p-5 border-b border-emerald-500/15 flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-white text-sm">Recent PayU Transactions</h3>
-                <p className="text-xs text-slate-400">Latest orders processed with immediate settlement</p>
+                <h3 className="font-bold text-[#17211D] text-sm">Recent PayU Transactions</h3>
+                <p className="text-xs text-slate-600">Latest orders processed with immediate settlement</p>
               </div>
               <Link
                 href="/dashboard/billing/transactions"
-                className="text-xs text-violet-400 hover:text-violet-300 font-semibold"
+                className="text-xs text-emerald-700 hover:text-emerald-800 font-bold"
               >
                 View Full Ledger →
               </Link>
@@ -302,15 +296,15 @@ export default function BillingOverviewPage() {
 
             <div className="overflow-x-auto">
               {recentTransactions.length === 0 ? (
-                <div className="p-10 text-center text-slate-400 text-xs space-y-2">
+                <div className="p-10 text-center text-slate-500 text-xs space-y-2">
                   <p>No transactions recorded yet in this workspace.</p>
-                  <Link href="/checkout?type=pack&id=pack_1200" className="text-violet-400 font-bold underline">
+                  <Link href="/checkout?type=pack&id=pack_1200" className="text-emerald-700 font-bold underline">
                     Make your first credit purchase
                   </Link>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-white/[0.02] text-slate-400 border-b border-white/5 uppercase text-[10px] font-mono">
+                  <thead className="bg-emerald-50/50 text-slate-600 border-b border-emerald-500/15 uppercase text-[10px] font-mono font-bold">
                     <tr>
                       <th className="py-3 px-4">Transaction ID</th>
                       <th className="py-3 px-4">Item</th>
@@ -320,34 +314,34 @@ export default function BillingOverviewPage() {
                       <th className="py-3 px-4 text-right">Documents</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5 text-slate-300">
+                  <tbody className="divide-y divide-emerald-500/10 text-slate-700">
                     {recentTransactions.map((tx: any) => (
-                      <tr key={tx.id} className="hover:bg-white/[0.02] transition-colors">
-                        <td className="py-3.5 px-4 font-mono font-semibold text-white">
-                          <Link href={`/dashboard/billing/transactions/${tx.id}`} className="hover:text-violet-400 underline">
+                      <tr key={tx.id} className="hover:bg-emerald-50/40 transition-colors">
+                        <td className="py-3.5 px-4 font-mono font-bold text-[#17211D]">
+                          <Link href={`/dashboard/billing/transactions/${tx.id}`} className="hover:text-emerald-700 underline">
                             {tx.txnid}
                           </Link>
                         </td>
-                        <td className="py-3.5 px-4 font-medium text-white max-w-xs truncate">
+                        <td className="py-3.5 px-4 font-semibold text-[#17211D] max-w-xs truncate">
                           {tx.productInfo}
                         </td>
-                        <td className="py-3.5 px-4 font-mono font-bold text-white">
+                        <td className="py-3.5 px-4 font-mono font-bold text-[#17211D]">
                           INR {tx.totalAmount.toFixed(2)}
                         </td>
                         <td className="py-3.5 px-4">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold ${
                               tx.status === 'success'
-                                ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30'
+                                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                                 : tx.status === 'pending'
-                                ? 'bg-amber-950/80 text-amber-400 border border-amber-500/30'
-                                : 'bg-red-950/80 text-red-400 border border-red-500/30'
+                                ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                                : 'bg-rose-100 text-rose-800 border border-rose-300'
                             }`}
                           >
                             {tx.status}
                           </span>
                         </td>
-                        <td className="py-3.5 px-4 text-slate-400">
+                        <td className="py-3.5 px-4 text-slate-500 font-medium">
                           {new Date(tx.createdAt).toLocaleDateString('en-IN', {
                             month: 'short',
                             day: 'numeric',
@@ -361,10 +355,10 @@ export default function BillingOverviewPage() {
                                 href={`/api/billing/receipts/${tx.receiptId}/pdf`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-1.5 rounded-lg bg-white/5 hover:bg-emerald-600 text-slate-300 hover:text-white transition-colors"
+                                className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 transition-colors inline-block"
                                 title="Download Receipt PDF"
                               >
-                                <Receipt className="w-3.5 h-3.5 text-emerald-400" />
+                                <Receipt className="w-3.5 h-3.5 text-emerald-700" />
                               </a>
                             )}
                             {tx.invoiceId && (
@@ -372,10 +366,10 @@ export default function BillingOverviewPage() {
                                 href={`/api/billing/invoices/${tx.invoiceId}/pdf`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-1.5 rounded-lg bg-white/5 hover:bg-sky-600 text-slate-300 hover:text-white transition-colors"
+                                className="p-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-300 transition-colors inline-block"
                                 title="Download Tax Invoice PDF"
                               >
-                                <FileText className="w-3.5 h-3.5 text-sky-400" />
+                                <FileText className="w-3.5 h-3.5 text-teal-700" />
                               </a>
                             )}
                           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
-import { HelpCircle, Search, Sparkles, BookOpen, CreditCard, Film, Shield, ArrowRight } from 'lucide-react';
+import { HelpCircle, Search, BookOpen, CreditCard, Film, Shield, ArrowRight } from 'lucide-react';
 
 export default function HelpPage() {
   const categories = [
@@ -13,8 +13,8 @@ export default function HelpPage() {
     },
     {
       icon: CreditCard,
-      title: 'Credits, Billing & Razorpay',
-      desc: 'Credit usage calculation, monthly allowances, refunds, and INR payment receipts.',
+      title: 'Credits, Billing & PayU India',
+      desc: 'Credit usage calculation, monthly allowances, refunds, and official GST tax invoices.',
     },
     {
       icon: BookOpen,
@@ -24,24 +24,24 @@ export default function HelpPage() {
     {
       icon: Shield,
       title: 'Account & Security',
-      desc: 'Two-factor authentication, workspace management, and data deletion workflows.',
+      desc: 'Multi-factor authentication, workspace management, and data deletion workflows.',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex flex-col">
+    <div className="min-h-screen text-[#17211D] flex flex-col">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-600/10 border border-violet-500/20 text-xs font-semibold text-violet-400 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-500/20 text-xs font-semibold text-emerald-700 mb-4">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Support & Documentation</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-black text-[#17211D] tracking-tight">
             How can we help you create?
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-slate-600">
             Search our knowledge base or browse help guides below.
           </p>
 
@@ -50,7 +50,7 @@ export default function HelpPage() {
             <input
               type="text"
               placeholder="Search guides (e.g. 4K export, refund policy, credit costs)..."
-              className="w-full bg-[#12141A] text-white pl-12 pr-4 py-3.5 rounded-xl border border-white/10 focus:outline-none focus:border-violet-500 text-sm"
+              className="w-full glass-input text-[#17211D] pl-12 pr-4 py-3.5 rounded-2xl text-sm"
             />
           </div>
         </div>
@@ -59,25 +59,25 @@ export default function HelpPage() {
           {categories.map((cat, idx) => {
             const Icon = cat.icon;
             return (
-              <div key={idx} className="p-6 rounded-2xl glass-panel border border-white/10 hover:border-violet-500/40 transition-all flex gap-4">
-                <div className="w-12 h-12 rounded-xl bg-violet-600/20 text-violet-400 flex items-center justify-center shrink-0">
+              <div key={idx} className="p-6 rounded-3xl glass-card hover:border-emerald-500/40 transition-all flex gap-4 shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-500/20">
                   <Icon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg">{cat.title}</h3>
-                  <p className="mt-1 text-sm text-slate-400 leading-relaxed">{cat.desc}</p>
+                  <h3 className="font-bold text-[#17211D] text-lg">{cat.title}</h3>
+                  <p className="mt-1 text-sm text-slate-600 leading-relaxed">{cat.desc}</p>
                 </div>
               </div>
             );
           })}
         </div>
 
-        <div className="text-center p-8 rounded-2xl bg-white/[0.02] border border-white/5">
-          <h3 className="text-xl font-bold text-white">Need personal assistance?</h3>
-          <p className="mt-2 text-sm text-slate-400">Our engineering & creator support team is available 24/7.</p>
+        <div className="text-center p-8 rounded-3xl glass-card shadow-sm">
+          <h3 className="text-xl font-bold text-[#17211D]">Need personal assistance?</h3>
+          <p className="mt-2 text-sm text-slate-600">Our engineering & creator support team is available 24/7.</p>
           <Link
             href="/contact"
-            className="mt-5 inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white"
+            className="mt-5 inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-500/20 transition-all"
           >
             <span>Open Support Ticket</span>
             <ArrowRight className="w-4 h-4" />

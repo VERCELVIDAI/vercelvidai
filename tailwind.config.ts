@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,82 +10,91 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "#FFFFFF",
+        foreground: "#17211D",
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "rgba(255, 255, 255, 0.72)",
+          foreground: "#17211D",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "rgba(255, 255, 255, 0.85)",
+          foreground: "#17211D",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          50: "#f5f3ff",
-          100: "#ede9fe",
-          500: "#8b5cf6",
-          600: "#7c3aed",
-          700: "#6d28d9",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#10B981", // Primary Emerald Green
+          foreground: "#FFFFFF",
+          50: "#ECFDF5",
+          100: "#D1FAE5", // Light mint
+          200: "#A7F3D0",
+          400: "#34D399",
+          500: "#10B981",
+          600: "#059669",
+          700: "#047857", // Deep emerald
+          800: "#065F46",
+          900: "#064E3B",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#EC4899", // Accent pink
+          foreground: "#FFFFFF",
+          50: "#FFF1F7", // Soft rose
+          100: "#FCE7F3", // Soft pink
+          200: "#FBCFE8",
+          400: "#F472B6",
+          500: "#EC4899",
+          600: "#DB2777",
+          700: "#BE185D",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        fluvia: {
+          bg: "#FFFFFF",
+          softBg: "#F8FAFC",
+          secondaryBg: "#F0FDF4",
+          emerald: "#10B981",
+          deepEmerald: "#047857",
+          mint: "#D1FAE5",
+          softPink: "#FCE7F3",
+          accentPink: "#EC4899",
+          rose: "#FFF1F7",
+          textPrimary: "#17211D",
+          textSecondary: "#64748B",
+          border: "rgba(16, 185, 129, 0.16)",
+          glass: "rgba(255, 255, 255, 0.68)",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        surface: {
-          900: "#090A0F",
-          850: "#0E1017",
-          800: "#131620",
-          750: "#181C2A",
-          700: "#1E2335",
-          600: "#2B324B",
-          500: "#3E4766",
-        },
-        brand: {
-          violet: "#8B5CF6",
-          indigo: "#6366F1",
-          electric: "#38BDF8",
-          glow: "rgba(139, 92, 246, 0.35)",
-        }
+        border: "rgba(16, 185, 129, 0.16)",
+        input: "rgba(16, 185, 129, 0.2)",
+        ring: "#10B981",
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "1rem",
+        md: "0.75rem",
+        sm: "0.5rem",
+        xl: "1.25rem",
+        "2xl": "1.5rem",
+        "3xl": "2rem",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        display: ["var(--font-plus-jakarta)", '"Plus Jakarta Sans"', "Manrope", "system-ui", "sans-serif"],
+        heading: ["var(--font-plus-jakarta)", '"Plus Jakarta Sans"', "Manrope", "sans-serif"],
       },
       keyframes: {
-        "shimmer": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
+        "float-slow": {
+          "0%, 100%": { transform: "translateY(0) scale(1)" },
+          "50%": { transform: "translateY(-12px) scale(1.02)" },
         },
-        "pulse-subtle": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.6" },
+        "flow-ribbon": {
+          "0%": { transform: "translate3d(-5%, -5%, 0) rotate(0deg) scale(1)" },
+          "50%": { transform: "translate3d(5%, 8%, 0) rotate(6deg) scale(1.05)" },
+          "100%": { transform: "translate3d(-5%, -5%, 0) rotate(0deg) scale(1)" },
+        },
+        "pulse-glass": {
+          "0%, 100%": { opacity: "0.7" },
+          "50%": { opacity: "0.95" },
         },
       },
       animation: {
-        shimmer: "shimmer 2.5s infinite linear",
-        "pulse-subtle": "pulse-subtle 3s ease-in-out infinite",
+        "float-slow": "float-slow 8s ease-in-out infinite",
+        "flow-ribbon": "flow-ribbon 24s ease-in-out infinite",
+        "pulse-glass": "pulse-glass 6s ease-in-out infinite",
       },
     },
   },

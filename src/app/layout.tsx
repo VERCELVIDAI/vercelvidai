@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme/ThemeContext';
+import { FluviaMotionBackground } from '@/components/brand/FluviaMotionBackground';
 import { BRAND } from '@/lib/brand';
 
 export const metadata: Metadata = {
@@ -43,25 +44,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="light" data-theme="light" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  var savedMode = localStorage.getItem('fluvia_theme') || localStorage.getItem('vidai_theme');
-                  var savedColor = localStorage.getItem('fluvia_color_theme') || localStorage.getItem('vidai_color_theme') || 'midnight-violet';
-                  var mode = 'dark';
-                  if (savedMode === 'light') {
-                    mode = 'light';
-                  } else if (savedMode === 'system') {
-                    mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                  }
-                  document.documentElement.classList.add(mode);
-                  document.documentElement.setAttribute('data-theme', mode);
-                  document.documentElement.setAttribute('data-color-theme', savedColor);
-                  document.documentElement.style.colorScheme = mode;
+                  // Permanent Migration to Fluvia Emerald Light Theme
+                  localStorage.setItem('fluvia_theme', 'light');
+                  localStorage.setItem('fluvia_color_theme', 'fluvia-emerald');
+                  localStorage.removeItem('vidai_theme');
+                  localStorage.removeItem('vidai_color_theme');
+                  document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  document.documentElement.setAttribute('data-color-theme', 'fluvia-emerald');
+                  document.documentElement.style.colorScheme = 'light';
                 } catch(e) {}
               })();
             `,
@@ -69,12 +74,9 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased min-h-screen transition-colors duration-200"
-        style={{
-          backgroundColor: 'var(--app-bg)',
-          color: 'var(--app-text-primary)',
-        }}
+        className="antialiased min-h-screen text-[#17211D] bg-white relative selection:bg-emerald-100 selection:text-emerald-900"
       >
+        <FluviaMotionBackground />
         <ThemeProvider>
           {children}
         </ThemeProvider>

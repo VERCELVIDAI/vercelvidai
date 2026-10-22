@@ -19,7 +19,7 @@ export function ThemeCard({
   onSelect,
   onPreviewHover,
 }: ThemeCardProps) {
-  const palette = activeMode === 'dark' ? theme.dark : theme.light;
+  const palette = theme.light;
 
   return (
     <div

@@ -93,42 +93,36 @@ const CREATIVE_SHOWCASE_ITEMS = [
 
 export default function HomePage() {
   return (
-    <div
-      className="min-h-screen flex flex-col transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
-      }}
-    >
+    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D]">
       <Header />
 
       <main className="flex-1">
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION (Higgsfield Aesthetic) */}
+        {/* 1. HERO SECTION (White + Emerald Green + Soft Pink Glassmorphism) */}
         {/* ========================================================================= */}
         <section className="relative pt-16 pb-20 md:pt-24 md:pb-32 overflow-hidden text-center">
           {/* Ambient Lighting Spheres */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-violet-600/25 via-indigo-600/15 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none -z-10" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-pink-400/15 rounded-full blur-[140px] pointer-events-none -z-10" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-xs font-semibold text-cyan-300 mb-8 backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-emerald-500/25 text-xs font-semibold text-emerald-800 mb-8 backdrop-blur-md shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
               <span>Powered by Google Gemini & Multi-Model Inference</span>
-              <span className="text-white/30">•</span>
-              <span className="text-zinc-300">Runway, Luma & Fluvia Core</span>
+              <span className="text-slate-300">•</span>
+              <span className="text-slate-600">Runway, Luma & Fluvia Core</span>
             </div>
 
             {/* Official Headline */}
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white max-w-5xl mx-auto leading-[1.05] uppercase">
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-[#17211D] max-w-5xl mx-auto leading-[1.05] uppercase">
               Your imagination.{' '}
-              <span className="bg-gradient-to-r from-violet-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-pink-600 bg-clip-text text-transparent">
                 In motion.
               </span>
             </h1>
 
             {/* Supporting Copy */}
-            <p className="mt-6 text-base sm:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
+            <p className="mt-6 text-base sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
               Create cinematic videos, striking visuals and campaign-ready content with AI — all inside one creative studio.
             </p>
 
@@ -136,7 +130,7 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/create"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 hover:opacity-95 shadow-xl shadow-violet-600/30 transition-all text-sm uppercase tracking-wider group"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 shadow-xl shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider group"
               >
                 <span>Start Creating</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -144,7 +138,7 @@ export default function HomePage() {
 
               <Link
                 href="#gallery"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl font-semibold text-zinc-200 bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl font-bold text-slate-700 bg-white/80 hover:bg-white border border-emerald-500/20 shadow-sm transition-colors text-sm"
               >
                 <span>Explore Creations</span>
               </Link>
@@ -161,18 +155,18 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 2. PRODUCTION STUDIOS SHOWCASE (Phase 4 & 6 & 7) */}
+        {/* 2. PRODUCTION STUDIOS SHOWCASE */}
         {/* ========================================================================= */}
-        <section className="py-24 border-t border-white/[0.08] bg-[#07090F]">
+        <section className="py-24 border-t border-emerald-500/15 bg-emerald-50/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-[11px] uppercase tracking-widest text-cyan-400 font-mono font-bold mb-3 block">
+              <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-3 block">
                 Fluvia Flow Studios
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17211D] tracking-tight">
                 Specialized Environments for Every Creative Workflow
               </h2>
-              <p className="mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed">
+              <p className="mt-4 text-slate-600 text-sm sm:text-base leading-relaxed">
                 Move seamlessly from raw concept to scripted storyboard, camera choreographies, and timeline finishing.
               </p>
             </div>
@@ -181,26 +175,26 @@ export default function HomePage() {
               {/* Studio 1: Cinema Studio */}
               <Link
                 href="/studios/cinema"
-                className="p-8 rounded-3xl bg-[#0D101A] border border-white/[0.08] hover:border-cyan-400/50 transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden"
+                className="p-8 rounded-3xl glass-card border border-emerald-500/20 hover:border-emerald-500/50 hover:shadow-xl transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden text-left"
               >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-violet-600/20 text-violet-400 border border-violet-500/20 flex items-center justify-center">
-                    <Film className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center">
+                    <Film className="w-6 h-6 text-emerald-700" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    <h3 className="text-xl font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
                       Cinema Studio
                     </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 font-mono font-bold border border-cyan-500/20">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono font-bold border border-emerald-300">
                       Director
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
+                  <p className="text-xs text-slate-600 leading-relaxed">
                     Camera trajectory controls (Dolly, Orbit, Crane, Handheld), 35mm anamorphic optical simulation, and Kodak 2383 color grading.
                   </p>
                 </div>
-                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-semibold text-cyan-400">
+                <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-emerald-700">
                   <span>Open Cinema Studio</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -209,26 +203,26 @@ export default function HomePage() {
               {/* Studio 2: Marketing Studio */}
               <Link
                 href="/studios/marketing"
-                className="p-8 rounded-3xl bg-[#0D101A] border border-white/[0.08] hover:border-violet-500/50 transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden"
+                className="p-8 rounded-3xl glass-card border border-emerald-500/20 hover:border-pink-500/40 hover:shadow-xl transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden text-left"
               >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-48 h-48 bg-pink-400/10 rounded-full blur-3xl pointer-events-none" />
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-600/20 text-cyan-400 border border-cyan-500/20 flex items-center justify-center">
-                    <Megaphone className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 border border-pink-300 flex items-center justify-center">
+                    <Megaphone className="w-6 h-6 text-pink-600" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold text-white group-hover:text-violet-300 transition-colors">
+                    <h3 className="text-xl font-bold text-[#17211D] group-hover:text-pink-600 transition-colors">
                       Marketing Studio
                     </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300 font-mono font-bold border border-violet-500/20">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-700 font-mono font-bold border border-pink-300">
                       Brand & Ecom
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
+                  <p className="text-xs text-slate-600 leading-relaxed">
                     Product commercials, viral UGC hooks, ecom showcases, and platform-tailored ad briefs engineered with Gemini Marketing Copilot.
                   </p>
                 </div>
-                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-semibold text-violet-400">
+                <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-pink-600">
                   <span>Open Marketing Studio</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -237,26 +231,26 @@ export default function HomePage() {
               {/* Studio 3: Storyboard Studio */}
               <Link
                 href="/studios/storyboard"
-                className="p-8 rounded-3xl bg-[#0D101A] border border-white/[0.08] hover:border-indigo-500/50 transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden"
+                className="p-8 rounded-3xl glass-card border border-emerald-500/20 hover:border-teal-500/40 hover:shadow-xl transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden text-left"
               >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-48 h-48 bg-teal-400/10 rounded-full blur-3xl pointer-events-none" />
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/20 flex items-center justify-center">
-                    <Layers className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-800 border border-teal-300 flex items-center justify-center">
+                    <Layers className="w-6 h-6 text-teal-700" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">
+                    <h3 className="text-xl font-bold text-[#17211D] group-hover:text-teal-700 transition-colors">
                       Storyboard Studio
                     </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 font-mono font-bold border border-indigo-500/20">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 font-mono font-bold border border-teal-300">
                       Gemini Copilot
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
+                  <p className="text-xs text-slate-600 leading-relaxed">
                     Automated multi-shot scene sequencing, timing breakdown, narration voiceover sync, and seamless export to the Creative Canvas.
                   </p>
                 </div>
-                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-semibold text-indigo-400">
+                <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-teal-700">
                   <span>Open Storyboard Studio</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -266,24 +260,24 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 3. PLAYABLE VIDEO & IMAGE GALLERY (Phase 5) */}
+        {/* 3. PLAYABLE VIDEO & IMAGE GALLERY */}
         {/* ========================================================================= */}
-        <section id="gallery" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="gallery" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-              <span className="text-[11px] uppercase tracking-widest text-cyan-400 font-mono font-bold mb-2 block">
+              <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-2 block">
                 Creator Gallery
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#17211D] tracking-tight">
                 Playable Video Showcase & Presets
               </h2>
-              <p className="text-xs text-zinc-400 mt-2">
+              <p className="text-xs text-slate-600 mt-2">
                 Hover to preview video motion. Click any preset to replicate lighting, camera motion, and aesthetics.
               </p>
             </div>
             <Link
               href="/templates"
-              className="mt-4 md:mt-0 text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider"
+              className="mt-4 md:mt-0 text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 uppercase tracking-wider"
             >
               <span>Explore All Templates</span>
               <ArrowRight className="w-4 h-4" />
@@ -294,10 +288,10 @@ export default function HomePage() {
             {CREATIVE_SHOWCASE_ITEMS.map((item) => (
               <div
                 key={item.id}
-                className="rounded-3xl bg-[#0D101A] border border-white/[0.08] overflow-hidden group hover:border-cyan-400/40 transition-all flex flex-col justify-between"
+                className="rounded-3xl glass-card border border-emerald-500/20 overflow-hidden group hover:border-emerald-500/40 hover:shadow-xl transition-all flex flex-col justify-between"
               >
                 {/* Playable Video Card Container */}
-                <div className="relative aspect-video bg-black overflow-hidden">
+                <div className="relative aspect-video bg-slate-900 overflow-hidden">
                   <video
                     src={item.videoUrl}
                     poster={item.posterUrl}
@@ -311,13 +305,13 @@ export default function HomePage() {
 
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-zinc-200 border border-white/10">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-white border border-white/10">
                       {item.aspect} • {item.camera}
                     </span>
                   </div>
 
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-violet-600/80 backdrop-blur-md text-white">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-600/90 backdrop-blur-md text-white">
                       {item.modelBadge}
                     </span>
                   </div>
@@ -326,23 +320,23 @@ export default function HomePage() {
                 {/* Card Body */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-cyan-400 font-bold">{item.category}</span>
-                    <h3 className="font-bold text-white text-sm mt-1 group-hover:text-cyan-300 transition-colors">
+                    <span className="text-[10px] font-mono uppercase text-emerald-700 font-bold">{item.category}</span>
+                    <h3 className="font-bold text-[#17211D] text-sm mt-1 group-hover:text-emerald-700 transition-colors">
                       {item.title}
                     </h3>
                   </div>
 
-                  <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
+                  <div className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs">
                     <Link
                       href={`/create?prompt=${encodeURIComponent(item.title)}&mode=video`}
-                      className="text-zinc-300 hover:text-white font-semibold flex items-center gap-1"
+                      className="text-slate-700 hover:text-emerald-800 font-semibold flex items-center gap-1"
                     >
-                      <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                       <span>Use Preset</span>
                     </Link>
                     <Link
                       href="/studios/cinema"
-                      className="text-cyan-400 hover:underline font-bold"
+                      className="text-emerald-700 hover:underline font-bold"
                     >
                       Open in Studio →
                     </Link>
@@ -359,17 +353,17 @@ export default function HomePage() {
         <FeaturedTemplateCarousel />
 
         {/* ========================================================================= */}
-        {/* 5. PRICING & CREDIT MONETIZATION (Phase 13) */}
+        {/* 5. PRICING & CREDIT MONETIZATION */}
         {/* ========================================================================= */}
-        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/[0.08]">
+        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-emerald-500/15 text-left">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-[11px] uppercase tracking-widest text-violet-400 font-mono font-bold mb-3 block">
+            <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-3 block">
               Transparent Credit-Based Pricing
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17211D] tracking-tight">
               Pay in INR with Full Flexibility
             </h2>
-            <p className="mt-4 text-zinc-400 text-sm">
+            <p className="mt-4 text-slate-600 text-sm">
               Official PayU India Hosted Checkout & UPI integration. Instant GST tax invoicing & settlement receipts.
             </p>
           </div>
@@ -387,62 +381,62 @@ export default function HomePage() {
                 href: '/signup',
               },
               {
-                name: 'Starter Creator',
+                name: 'Fluvia Basic',
                 price: '₹999',
                 period: 'per month',
                 credits: '500 credits / month',
                 features: ['1080p HD Exports', 'No Watermark', 'Runway & Fluvia Core', '10 GB Cloud Storage'],
-                cta: 'Upgrade to Starter',
+                cta: 'Upgrade to Basic',
                 popular: false,
                 href: '/pricing',
               },
               {
-                name: 'Pro Creator',
+                name: 'Fluvia Pro',
                 price: '₹2,499',
                 period: 'per month',
                 credits: '1,600 credits / month',
                 features: ['4K Ultra HD Exports', 'Runway Gen-3 & Luma Ray', 'Gemini Storyboards', '50 GB Cloud Storage'],
-                cta: 'Get Pro Creator',
+                cta: 'Get Fluvia Pro',
                 popular: true,
                 href: '/pricing',
               },
               {
-                name: 'Studio Agency',
-                price: '₹6,999',
+                name: 'Fluvia Teams',
+                price: '₹9,999',
                 period: 'per month',
-                credits: '5,000 credits / month',
-                features: ['Full Multi-Model Access', 'Dedicated GPU Rendering', '250 GB Storage', 'Multi-Brand Kits'],
-                cta: 'Get Studio Agency',
+                credits: '10,000 credits / month',
+                features: ['Full Multi-Model Access', '10 Member Team Seats', '500 GB Storage', 'Custom GST Invoicing'],
+                cta: 'Get Fluvia Teams',
                 popular: false,
                 href: '/pricing',
               },
             ].map((plan, i) => (
               <div
                 key={i}
-                className={`p-6 rounded-3xl bg-[#0D101A] border flex flex-col justify-between relative ${
-                  plan.popular ? 'border-cyan-400 shadow-xl shadow-cyan-500/20' : 'border-white/[0.08]'
+                className={`p-6 rounded-3xl glass-card border flex flex-col justify-between relative shadow-lg ${
+                  plan.popular ? 'border-emerald-500 ring-2 ring-emerald-500/20 shadow-emerald-500/10' : 'border-emerald-500/20'
                 }`}
               >
                 {plan.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-cyan-500 text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
                     Most Popular
                   </span>
                 )}
 
                 <div>
-                  <h3 className="font-bold text-white text-base">{plan.name}</h3>
+                  <h3 className="font-bold text-[#17211D] text-base">{plan.name}</h3>
                   <div className="mt-4 flex items-baseline gap-1">
-                    <span className="text-3xl font-extrabold text-white">{plan.price}</span>
-                    <span className="text-xs text-zinc-400">/{plan.period}</span>
+                    <span className="text-3xl font-extrabold text-[#17211D]">{plan.price}</span>
+                    <span className="text-xs text-slate-500">/{plan.period}</span>
                   </div>
-                  <div className="mt-2 text-xs font-semibold text-cyan-300 bg-cyan-950/40 p-2 rounded-xl border border-cyan-800/40">
+                  <div className="mt-2 text-xs font-bold text-emerald-800 bg-emerald-50 p-2 rounded-xl border border-emerald-200">
                     {plan.credits}
                   </div>
 
-                  <ul className="mt-6 space-y-3 text-xs text-zinc-300">
+                  <ul className="mt-6 space-y-3 text-xs text-slate-600">
                     {plan.features.map((f, fi) => (
                       <li key={fi} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                         <span>{f}</span>
                       </li>
                     ))}
@@ -453,8 +447,8 @@ export default function HomePage() {
                   href={plan.href}
                   className={`mt-8 w-full py-3 rounded-xl text-center text-xs font-bold uppercase tracking-wider transition-all ${
                     plan.popular
-                      ? 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-lg shadow-cyan-500/20'
-                      : 'bg-white/10 hover:bg-white/15 text-white'
+                      ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20'
+                      : 'bg-white/80 hover:bg-emerald-50 text-[#17211D] border border-emerald-500/20'
                   }`}
                 >
                   {plan.cta}
@@ -467,11 +461,11 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* 6. FAQ SECTION */}
         {/* ========================================================================= */}
-        <section className="py-20 border-t border-white/[0.08] bg-[#07090F]">
+        <section className="py-20 border-t border-emerald-500/15 bg-emerald-50/20 text-left">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <span className="text-[11px] uppercase tracking-widest text-violet-400 font-mono font-bold mb-2 block">FAQ</span>
-              <h2 className="text-3xl font-bold text-white">Frequently Asked Questions</h2>
+              <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-2 block">FAQ</span>
+              <h2 className="text-3xl font-bold text-[#17211D]">Frequently Asked Questions</h2>
             </div>
 
             <div className="space-y-4">
@@ -497,12 +491,12 @@ export default function HomePage() {
                   a: 'Yes! All content generated on paid plans carries full commercial usage rights for marketing, advertising, YouTube monetization, and client deliverables.',
                 },
               ].map((item, idx) => (
-                <div key={idx} className="p-5 rounded-2xl bg-[#0D101A] border border-white/[0.08]">
-                  <h3 className="font-semibold text-white text-sm flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-cyan-400 shrink-0" />
+                <div key={idx} className="p-5 rounded-2xl glass-card border border-emerald-500/20 shadow-sm">
+                  <h3 className="font-bold text-[#17211D] text-sm flex items-center gap-2">
+                    <HelpCircle className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>{item.q}</span>
                   </h3>
-                  <p className="mt-2.5 text-xs text-zinc-400 pl-6 leading-relaxed">{item.a}</p>
+                  <p className="mt-2.5 text-xs text-slate-600 pl-6 leading-relaxed">{item.a}</p>
                 </div>
               ))}
             </div>
@@ -514,16 +508,16 @@ export default function HomePage() {
         {/* ========================================================================= */}
         <section className="py-24 relative overflow-hidden text-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4">
-            <h2 className="text-4xl sm:text-6xl font-black text-white tracking-tight uppercase">
+            <h2 className="text-4xl sm:text-6xl font-black text-[#17211D] tracking-tight uppercase">
               Ready to create your next cinematic masterpiece?
             </h2>
-            <p className="text-base text-zinc-300 max-w-xl mx-auto">
+            <p className="text-base text-slate-600 max-w-xl mx-auto">
               Join thousands of creators, agencies, and brands producing high-impact videos in minutes with Fluvia Flow.
             </p>
             <div className="pt-6">
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 hover:opacity-95 shadow-xl shadow-violet-600/30 text-sm uppercase tracking-wider"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 shadow-xl shadow-emerald-500/25 text-sm uppercase tracking-wider"
               >
                 <span>Get Started with Free Credits</span>
                 <ArrowRight className="w-4 h-4" />

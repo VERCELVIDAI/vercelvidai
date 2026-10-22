@@ -110,13 +110,13 @@ export function HeroComposer() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-[#090B12]/90 backdrop-blur-2xl p-5 sm:p-7 shadow-2xl border border-white/[0.12] relative overflow-hidden text-left">
+    <div className="w-full max-w-4xl mx-auto rounded-3xl glass-card p-5 sm:p-7 relative overflow-hidden text-left shadow-2xl border border-emerald-500/20">
       {/* Background ambient lighting */}
-      <div className="absolute -top-32 -right-32 w-80 h-80 bg-violet-600/20 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-cyan-500/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -top-32 -right-32 w-80 h-80 bg-emerald-400/15 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-pink-400/15 rounded-full blur-[90px] pointer-events-none" />
 
       {/* Mode Selector Tabs */}
-      <div className="flex items-center justify-between mb-4 border-b border-white/[0.08] pb-3.5">
+      <div className="flex items-center justify-between mb-4 border-b border-emerald-500/15 pb-3.5">
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -126,11 +126,11 @@ export function HeroComposer() {
             }}
             className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               mode === 'video'
-                ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-600/30'
-                : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25'
+                : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/70'
             }`}
           >
-            <Video className="w-4 h-4 text-cyan-400" />
+            <Video className="w-4 h-4" />
             <span>AI Video</span>
           </button>
 
@@ -142,8 +142,8 @@ export function HeroComposer() {
             }}
             className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               mode === 'image'
-                ? 'bg-cyan-500 text-black shadow-md shadow-cyan-500/30'
-                : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                ? 'bg-pink-500 text-white shadow-md shadow-pink-500/25'
+                : 'text-slate-600 hover:text-[#17211D] hover:bg-pink-50/70'
             }`}
           >
             <ImageIcon className="w-4 h-4" />
@@ -157,8 +157,8 @@ export function HeroComposer() {
             }}
             className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               mode === 'audio'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                ? 'bg-teal-700 text-white shadow-md shadow-teal-700/25'
+                : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/70'
             }`}
           >
             <Mic className="w-4 h-4" />
@@ -171,9 +171,9 @@ export function HeroComposer() {
           type="button"
           onClick={handleEnhanceWithGemini}
           disabled={isEnhancing}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600/20 to-cyan-500/20 border border-cyan-500/30 text-cyan-300 hover:brightness-125 text-xs font-semibold transition-all disabled:opacity-50"
+          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-pink-50/90 border border-pink-200/90 text-pink-700 hover:bg-pink-100 text-xs font-semibold transition-all disabled:opacity-50 shadow-sm"
         >
-          <Sparkles className={`w-3.5 h-3.5 ${isEnhancing ? 'animate-spin' : ''}`} />
+          <Sparkles className={`w-3.5 h-3.5 text-pink-600 ${isEnhancing ? 'animate-spin' : ''}`} />
           <span>{isEnhancing ? 'Gemini Enhancing...' : 'Enhance with Gemini'}</span>
         </button>
       </div>
@@ -191,18 +191,18 @@ export function HeroComposer() {
               ? 'Describe the visual composition, texture, and light...'
               : 'Enter script to synthesize with high-definition neural voice...'
           }
-          className="w-full bg-[#0E111B]/90 text-white placeholder-zinc-500 rounded-2xl p-4 text-sm sm:text-base border border-white/[0.1] focus:outline-none focus:border-cyan-400 transition-colors resize-none font-mono text-[13px] leading-relaxed"
+          className="w-full bg-white/90 text-[#17211D] placeholder-slate-400 rounded-2xl p-4 text-sm sm:text-base border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all resize-none font-mono text-[13px] leading-relaxed shadow-inner"
         />
 
         {/* Suggestion Chips */}
         <div className="mt-3 flex flex-wrap gap-2 items-center">
-          <span className="text-xs text-zinc-500 font-medium">Inspiration:</span>
+          <span className="text-xs text-slate-500 font-semibold">Inspiration:</span>
           {EXAMPLE_PROMPTS.slice(0, 3).map((ex, i) => (
             <button
               key={i}
               type="button"
               onClick={() => setPrompt(ex)}
-              className="text-xs text-zinc-400 hover:text-cyan-300 bg-white/[0.04] hover:bg-white/[0.08] px-3 py-1 rounded-full transition-all border border-white/5 truncate max-w-[220px] sm:max-w-xs"
+              className="text-xs text-slate-700 hover:text-emerald-800 bg-white/80 hover:bg-emerald-50/80 px-3 py-1 rounded-full transition-all border border-emerald-500/15 truncate max-w-[220px] sm:max-w-xs shadow-xs"
             >
               {ex}
             </button>
@@ -211,10 +211,10 @@ export function HeroComposer() {
       </div>
 
       {/* Advanced Quick Settings Row */}
-      <div className="mt-5 pt-4 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+      <div className="mt-5 pt-4 border-t border-emerald-500/15 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
         <div className="flex flex-wrap items-center gap-3">
           {/* Aspect Ratio Selector */}
-          <div className="flex items-center gap-1 bg-[#121422] p-1 rounded-xl border border-white/[0.06]">
+          <div className="flex items-center gap-1 bg-white/80 p-1 rounded-xl border border-emerald-500/20 shadow-xs">
             {[
               { id: '21:9', label: '21:9' },
               { id: '16:9', label: '16:9' },
@@ -226,7 +226,7 @@ export function HeroComposer() {
                 type="button"
                 onClick={() => setAspectRatio(ar.id as any)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                  aspectRatio === ar.id ? 'bg-cyan-500 text-black' : 'text-zinc-400 hover:text-white'
+                  aspectRatio === ar.id ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
                 }`}
               >
                 {ar.label}
@@ -236,15 +236,15 @@ export function HeroComposer() {
 
           {/* Camera Motion Selector */}
           {mode === 'video' && (
-            <div className="flex items-center gap-1.5 bg-[#121422] px-3 py-1.5 rounded-xl border border-white/[0.06] text-zinc-300">
-              <Camera className="w-3.5 h-3.5 text-violet-400" />
+            <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-xl border border-emerald-500/20 text-slate-700 shadow-xs">
+              <Camera className="w-3.5 h-3.5 text-emerald-600" />
               <select
                 value={camera}
                 onChange={(e) => setCamera(e.target.value)}
-                className="bg-transparent text-white font-medium text-xs focus:outline-none cursor-pointer"
+                className="bg-transparent text-[#17211D] font-semibold text-xs focus:outline-none cursor-pointer"
               >
                 {CAMERA_PRESETS.map((c) => (
-                  <option key={c} value={c} className="bg-[#121422] text-white">
+                  <option key={c} value={c} className="bg-white text-[#17211D]">
                     {c}
                   </option>
                 ))}
@@ -253,15 +253,15 @@ export function HeroComposer() {
           )}
 
           {/* Model Selector */}
-          <div className="flex items-center gap-1.5 bg-[#121422] px-3 py-1.5 rounded-xl border border-white/[0.06] text-zinc-300">
-            <span className="text-zinc-500 text-xs">Model:</span>
+          <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-xl border border-emerald-500/20 text-slate-700 shadow-xs">
+            <span className="text-slate-500 text-xs">Model:</span>
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              className="bg-transparent text-cyan-400 font-bold text-xs focus:outline-none cursor-pointer"
+              className="bg-transparent text-emerald-700 font-bold text-xs focus:outline-none cursor-pointer"
             >
               {MODELS.map((m) => (
-                <option key={m.id} value={m.id} className="bg-[#121422] text-white">
+                <option key={m.id} value={m.id} className="bg-white text-[#17211D]">
                   {m.name} ({m.cost} cr)
                 </option>
               ))}
@@ -271,8 +271,8 @@ export function HeroComposer() {
 
         {/* Action Button & Cost Estimate */}
         <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
-          <div className="flex items-center gap-1.5 text-xs text-zinc-400 font-mono">
-            <Zap className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex items-center gap-1.5 text-xs text-slate-600 font-mono font-semibold">
+            <Zap className="w-3.5 h-3.5 text-emerald-600" />
             <span>{estimatedCredits} credits</span>
           </div>
 
@@ -280,12 +280,12 @@ export function HeroComposer() {
             type="button"
             onClick={handleGenerate}
             disabled={isSubmitting || !prompt.trim()}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 hover:opacity-95 shadow-lg shadow-violet-600/30 disabled:opacity-50 transition-all cursor-pointer text-xs uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 shadow-lg shadow-emerald-500/25 disabled:opacity-50 transition-all cursor-pointer text-xs uppercase tracking-wider"
           >
             {isSubmitting ? (
               <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
-              <Sparkles className="w-4 h-4 text-cyan-300" />
+              <Sparkles className="w-4 h-4 text-emerald-100" />
             )}
             <span>Generate Video</span>
             <ArrowRight className="w-4 h-4" />

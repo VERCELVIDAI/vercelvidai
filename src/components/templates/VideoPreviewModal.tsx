@@ -10,12 +10,9 @@ import {
   VolumeX,
   Maximize,
   ArrowRight,
-  Clock,
   Sparkles,
-  Layers,
   Cpu,
   Film,
-  CheckCircle2,
 } from 'lucide-react';
 
 interface VideoPreviewModalProps {
@@ -127,15 +124,15 @@ export function VideoPreviewModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto bg-white dark:bg-[#0E1017] border border-slate-200 dark:border-white/10 rounded-3xl shadow-2xl flex flex-col text-slate-900 dark:text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto glass-modal border border-emerald-500/20 rounded-3xl shadow-2xl flex flex-col text-[#17211D]">
         {/* Modal Header */}
-        <div className="sticky top-0 z-30 p-4 sm:p-5 border-b border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0E1017]/90 backdrop-blur-md flex items-center justify-between">
+        <div className="sticky top-0 z-30 p-4 sm:p-5 border-b border-emerald-500/10 bg-white/90 backdrop-blur-md flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="px-2.5 py-1 rounded-lg bg-violet-600/10 dark:bg-violet-600/20 text-violet-600 dark:text-violet-300 text-xs font-bold border border-violet-500/20">
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-500/20">
               {template.category}
             </span>
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+            <span className="text-xs font-mono text-slate-500">
               {template.aspectLabel} • {template.duration}
             </span>
           </div>
@@ -144,7 +141,7 @@ export function VideoPreviewModal({
             type="button"
             onClick={onClose}
             aria-label="Close template preview"
-            className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors"
+            className="p-2 rounded-xl glass-button text-slate-600 hover:text-[#17211D] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -156,7 +153,7 @@ export function VideoPreviewModal({
             {/* Left 7 Columns: Video Player */}
             <div className="lg:col-span-7 flex flex-col items-center">
               <div
-                className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-black/10 dark:border-white/10 ${
+                className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-black/10 ${
                   template.aspect === '9:16'
                     ? 'aspect-[9/16] max-w-xs'
                     : template.aspect === '1:1'
@@ -185,7 +182,7 @@ export function VideoPreviewModal({
                     className="h-1.5 w-full bg-white/20 hover:h-2 rounded-full cursor-pointer relative transition-all"
                   >
                     <div
-                      className="h-full bg-violet-500 rounded-full"
+                      className="h-full bg-emerald-500 rounded-full"
                       style={{
                         width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%`,
                       }}
@@ -198,7 +195,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={togglePlay}
-                        className="p-1 hover:text-violet-400 transition-colors"
+                        className="p-1 hover:text-emerald-400 transition-colors"
                         aria-label={isPlaying ? 'Pause' : 'Play'}
                       >
                         {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
@@ -207,7 +204,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={toggleMute}
-                        className="p-1 hover:text-violet-400 transition-colors"
+                        className="p-1 hover:text-emerald-400 transition-colors"
                         aria-label={isMuted ? 'Unmute' : 'Mute'}
                       >
                         {isMuted ? <VolumeX className="w-4 h-4 text-amber-400" /> : <Volume2 className="w-4 h-4" />}
@@ -222,7 +219,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={handleFullscreen}
-                        className="p-1 hover:text-violet-400 transition-colors"
+                        className="p-1 hover:text-emerald-400 transition-colors"
                         aria-label="Fullscreen"
                       >
                         <Maximize className="w-4 h-4" />
@@ -236,24 +233,24 @@ export function VideoPreviewModal({
             {/* Right 5 Columns: Metadata, Scenes & CTA */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17211D] leading-tight">
                   {template.title}
                 </h2>
-                <p className="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="mt-3 text-sm text-slate-600 leading-relaxed">
                   {template.description}
                 </p>
 
                 {/* AI Models Used */}
-                <div className="mt-5 p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 space-y-1.5">
-                  <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-violet-500" />
+                <div className="mt-5 p-3 rounded-2xl bg-emerald-50/40 border border-emerald-500/15 space-y-1.5">
+                  <div className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-emerald-600" />
                     <span>AI Engine Pipeline</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {template.aiModelsUsed.map((m) => (
                       <span
                         key={m}
-                        className="text-[11px] font-mono px-2 py-0.5 rounded bg-white dark:bg-white/10 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10"
+                        className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-white text-emerald-800 border border-emerald-500/20 font-medium"
                       >
                         {m}
                       </span>
@@ -263,22 +260,22 @@ export function VideoPreviewModal({
 
                 {/* Scene Timeline Structure */}
                 <div className="mt-6 space-y-2.5">
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                    <Film className="w-3.5 h-3.5 text-sky-500" />
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#17211D] flex items-center gap-1.5">
+                    <Film className="w-3.5 h-3.5 text-teal-600" />
                     <span>Timeline Scene Breakdown</span>
                   </div>
                   <div className="space-y-2">
                     {template.scenes.map((scene, idx) => (
                       <div
                         key={idx}
-                        className="p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/5 flex items-start gap-3 text-xs"
+                        className="p-2.5 rounded-xl bg-white/70 border border-emerald-500/10 flex items-start gap-3 text-xs shadow-sm"
                       >
-                        <span className="font-mono text-[11px] font-bold text-violet-600 dark:text-violet-400 shrink-0 mt-0.5">
+                        <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
                           {scene.time}
                         </span>
                         <div>
-                          <div className="font-semibold text-slate-900 dark:text-white">{scene.title}</div>
-                          <div className="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
+                          <div className="font-semibold text-[#17211D]">{scene.title}</div>
+                          <div className="text-slate-600 text-[11px] leading-relaxed">
                             {scene.desc}
                           </div>
                         </div>
@@ -289,12 +286,12 @@ export function VideoPreviewModal({
               </div>
 
               {/* Primary Action Button */}
-              <div className="pt-4 border-t border-slate-200 dark:border-white/10">
+              <div className="pt-4 border-t border-emerald-500/10">
                 <button
                   type="button"
                   onClick={handleCloneClick}
                   disabled={isCloning}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 hover:from-violet-500 hover:to-sky-400 text-white font-bold text-sm shadow-xl shadow-violet-600/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-sm shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
                 >
                   {isCloning ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -305,7 +302,7 @@ export function VideoPreviewModal({
                     </>
                   )}
                 </button>
-                <p className="mt-2 text-center text-[11px] text-slate-500 dark:text-slate-400">
+                <p className="mt-2 text-center text-[11px] text-slate-500">
                   Creates an independent editable project in your workspace.
                 </p>
               </div>
@@ -313,9 +310,9 @@ export function VideoPreviewModal({
           </div>
 
           {/* Related Templates Carousel / Grid */}
-          <div className="pt-8 border-t border-slate-200 dark:border-white/10">
-            <h3 className="font-bold text-slate-900 dark:text-white text-base mb-4 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-violet-500" />
+          <div className="pt-8 border-t border-emerald-500/10">
+            <h3 className="font-bold text-[#17211D] text-base mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-emerald-600" />
               <span>More Templates in this Style</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -323,7 +320,7 @@ export function VideoPreviewModal({
                 <div
                   key={r.id}
                   onClick={() => onSelectRelated(r)}
-                  className="group cursor-pointer rounded-xl p-2 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 hover:border-violet-500/40 transition-all flex items-center gap-3"
+                  className="group cursor-pointer rounded-2xl p-2.5 glass-card border-emerald-500/15 hover:border-emerald-500/40 transition-all flex items-center gap-3 shadow-sm"
                 >
                   <img
                     src={r.thumbnail}
@@ -331,7 +328,7 @@ export function VideoPreviewModal({
                     className="w-16 h-12 rounded-lg object-cover group-hover:scale-105 transition-transform"
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="font-bold text-xs text-slate-900 dark:text-white truncate group-hover:text-violet-500 transition-colors">
+                    <div className="font-bold text-xs text-[#17211D] truncate group-hover:text-emerald-700 transition-colors">
                       {r.title}
                     </div>
                     <div className="text-[10px] text-slate-500 font-mono">

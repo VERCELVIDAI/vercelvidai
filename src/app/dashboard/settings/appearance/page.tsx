@@ -6,38 +6,20 @@ import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { DashboardHeader } from '@/components/dashboard/Header';
 import { useTheme } from '@/components/theme/ThemeContext';
-import { COLOR_THEMES, ColorTheme, ThemeTone } from '@/lib/themes';
-import { ThemeCard } from '@/components/theme/ThemeCard';
 import { MiniStudioPreview } from '@/components/theme/MiniStudioPreview';
 import {
   Palette,
-  Sun,
-  Moon,
-  Laptop,
-  Check,
-  RotateCcw,
-  Sparkles,
-  ArrowLeft,
   CheckCircle2,
+  ArrowLeft,
+  Sparkles,
 } from 'lucide-react';
 
 export default function AppearanceSettingsPage() {
   const router = useRouter();
   const [userData, setUserData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [toastMsg, setToastMsg] = useState<string | null>(null);
-  const [activeTone, setActiveTone] = useState<string>('all');
-  const [isSaving, setIsSaving] = useState(false);
 
-  const {
-    colorTheme,
-    themeDetails,
-    mode,
-    resolvedMode,
-    setColorTheme,
-    setMode,
-    resetToDefault,
-  } = useTheme();
+  const { themeDetails, mode } = useTheme();
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -49,45 +31,10 @@ export default function AppearanceSettingsPage() {
       .finally(() => setIsLoading(false));
   }, [router]);
 
-  const showToast = (msg: string) => {
-    setToastMsg(msg);
-    setTimeout(() => setToastMsg(null), 3000);
-  };
-
-  const handleSelectTheme = (theme: ColorTheme) => {
-    setColorTheme(theme.id);
-    showToast(`Switched workspace theme to ${theme.name}`);
-  };
-
-  const handleSave = async () => {
-    setIsSaving(true);
-    try {
-      const res = await fetch('/api/user/theme', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ colorTheme, mode, completed: true }),
-      });
-      if (res.ok) {
-        showToast('Appearance preferences saved to your account.');
-      } else {
-        throw new Error('Could not save theme preference');
-      }
-    } catch (e: any) {
-      showToast('Preference updated locally.');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleReset = () => {
-    resetToDefault();
-    showToast('Reset to default Midnight Violet theme.');
-  };
-
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center font-mono text-xs" style={{ backgroundColor: 'var(--app-bg)', color: 'var(--app-text-muted)' }}>
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen text-[#17211D] flex items-center justify-center font-mono text-xs">
+        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -95,13 +42,8 @@ export default function AppearanceSettingsPage() {
   const user = userData?.user || {};
   const credits = userData?.credits || { availableBalance: 0, reservedBalance: 0 };
 
-  const filteredThemes = COLOR_THEMES.filter((t) => {
-    if (activeTone === 'all') return true;
-    return t.tone === activeTone;
-  });
-
   return (
-    <div className="min-h-screen flex transition-colors duration-200" style={{ backgroundColor: 'var(--app-bg)', color: 'var(--app-text-primary)' }}>
+    <div className="min-h-screen text-[#17211D] flex">
       <Sidebar userRole={user.role} credits={credits} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
@@ -119,203 +61,105 @@ export default function AppearanceSettingsPage() {
             <div className="flex items-center gap-2">
               <Link
                 href="/dashboard/settings"
-                className="text-xs font-semibold hover:underline flex items-center gap-1"
-                style={{ color: 'var(--app-text-muted)' }}
+                className="text-xs font-semibold hover:underline flex items-center gap-1 text-slate-500 hover:text-emerald-700"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Account Settings</span>
               </Link>
-              <span style={{ color: 'var(--app-card-border)' }}>/</span>
-              <span className="text-xs font-bold" style={{ color: 'var(--app-primary)' }}>
+              <span className="text-slate-400">/</span>
+              <span className="text-xs font-bold text-emerald-700">
                 Appearance & Workspace Themes
               </span>
             </div>
+          </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handleReset}
-                className="px-3 py-1.5 rounded-xl text-xs font-semibold border flex items-center gap-1.5 transition-colors"
-                style={{
-                  backgroundColor: 'var(--app-card)',
-                  borderColor: 'var(--app-card-border)',
-                  color: 'var(--app-text-secondary)',
-                }}
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Reset to Default</span>
-              </button>
+          {/* Header Title Section */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-emerald-500/10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-500/20 text-xs font-semibold text-emerald-700 mb-2">
+                <Palette className="w-3.5 h-3.5" />
+                <span>Official Design System</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">
+                Fluvia Flow Signature Theme
+              </h1>
+              <p className="mt-1 text-xs sm:text-sm text-slate-600">
+                White + Emerald Green + Soft Pink Glassmorphism with fluid animated motion ribbons.
+              </p>
+            </div>
 
-              <button
-                type="button"
-                onClick={handleSave}
-                disabled={isSaving}
-                className="px-4 py-1.5 rounded-xl text-xs font-bold text-white shadow-md flex items-center gap-1.5 transition-all"
-                style={{
-                  backgroundImage: 'var(--app-gradient-primary)',
-                }}
-              >
-                <Check className="w-3.5 h-3.5" />
-                <span>{isSaving ? 'Saving...' : 'Save Theme'}</span>
-              </button>
+            <div className="p-2 rounded-2xl glass-card flex items-center gap-2 border border-emerald-500/20">
+              <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs font-mono font-bold text-emerald-800">Permanent Single Theme Active</span>
             </div>
           </div>
 
-          {/* Heading */}
-          <div className="rounded-2xl p-6 border" style={{ backgroundColor: 'var(--app-card)', borderColor: 'var(--app-card-border)' }}>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div>
-                <div
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 border"
-                  style={{
-                    backgroundColor: 'var(--app-badge-bg)',
-                    color: 'var(--app-badge-text)',
-                    borderColor: 'var(--app-badge-border)',
-                  }}
-                >
-                  <Palette className="w-3.5 h-3.5" />
-                  <span>Color Personalization</span>
+          {/* Theme Palette Card */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="p-6 sm:p-8 rounded-3xl glass-card space-y-6 shadow-sm">
+                <h3 className="text-lg font-bold text-[#17211D] flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-emerald-600" />
+                  <span>Official Design Tokens</span>
+                </h3>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 space-y-1 shadow-sm">
+                    <div className="w-full h-8 rounded-xl bg-white border border-slate-200" />
+                    <span className="font-bold text-[#17211D] block">Primary White</span>
+                    <span className="font-mono text-[10px] text-slate-500">#FFFFFF</span>
+                  </div>
+
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 space-y-1 shadow-sm">
+                    <div className="w-full h-8 rounded-xl bg-[#10B981]" />
+                    <span className="font-bold text-[#17211D] block">Emerald Green</span>
+                    <span className="font-mono text-[10px] text-slate-500">#10B981</span>
+                  </div>
+
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 space-y-1 shadow-sm">
+                    <div className="w-full h-8 rounded-xl bg-[#047857]" />
+                    <span className="font-bold text-[#17211D] block">Deep Emerald</span>
+                    <span className="font-mono text-[10px] text-slate-500">#047857</span>
+                  </div>
+
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 space-y-1 shadow-sm">
+                    <div className="w-full h-8 rounded-xl bg-[#FCE7F3]" />
+                    <span className="font-bold text-[#17211D] block">Soft Pink</span>
+                    <span className="font-mono text-[10px] text-slate-500">#FCE7F3</span>
+                  </div>
+
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 space-y-1 shadow-sm">
+                    <div className="w-full h-8 rounded-xl bg-[#EC4899]" />
+                    <span className="font-bold text-[#17211D] block">Accent Pink</span>
+                    <span className="font-mono text-[10px] text-slate-500">#EC4899</span>
+                  </div>
+
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 space-y-1 shadow-sm">
+                    <div className="w-full h-8 rounded-xl bg-[#17211D]" />
+                    <span className="font-bold text-[#17211D] block">Primary Text</span>
+                    <span className="font-mono text-[10px] text-slate-500">#17211D</span>
+                  </div>
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight" style={{ color: 'var(--app-text-primary)' }}>
-                  Workspace Appearance
-                </h1>
-                <p className="mt-1 text-xs sm:text-sm" style={{ color: 'var(--app-text-secondary)' }}>
-                  Customize your video creation studio with bespoke accent palettes and light/dark modes.
-                </p>
-              </div>
 
-              {/* Mode Switcher */}
-              <div
-                className="p-1 rounded-xl flex items-center gap-1 border shrink-0"
-                style={{
-                  backgroundColor: 'var(--app-surface)',
-                  borderColor: 'var(--app-card-border)',
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setMode('dark')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                    mode === 'dark' ? 'text-white shadow-sm' : 'opacity-70 hover:opacity-100'
-                  }`}
-                  style={{
-                    backgroundColor: mode === 'dark' ? 'var(--app-primary)' : 'transparent',
-                    color: mode === 'dark' ? '#FFFFFF' : 'var(--app-text-primary)',
-                  }}
-                >
-                  <Moon className="w-3.5 h-3.5" />
-                  <span>Dark</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setMode('light')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                    mode === 'light' ? 'text-white shadow-sm' : 'opacity-70 hover:opacity-100'
-                  }`}
-                  style={{
-                    backgroundColor: mode === 'light' ? 'var(--app-primary)' : 'transparent',
-                    color: mode === 'light' ? '#FFFFFF' : 'var(--app-text-primary)',
-                  }}
-                >
-                  <Sun className="w-3.5 h-3.5" />
-                  <span>Light</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setMode('system')}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                    mode === 'system' ? 'text-white shadow-sm' : 'opacity-70 hover:opacity-100'
-                  }`}
-                  style={{
-                    backgroundColor: mode === 'system' ? 'var(--app-primary)' : 'transparent',
-                    color: mode === 'system' ? '#FFFFFF' : 'var(--app-text-primary)',
-                  }}
-                >
-                  <Laptop className="w-3.5 h-3.5" />
-                  <span>Auto</span>
-                </button>
+                <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-500/20 text-xs text-slate-700 space-y-1">
+                  <div className="font-bold text-emerald-900 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>Permanent Design Standard</span>
+                  </div>
+                  <p>
+                    All workspaces, public studio landing pages, editors, billing invoices, receipts, and dashboards consistently apply this signature light glassmorphism visual identity.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Interactive Live Mini Studio Preview */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--app-text-muted)' }}>
-              <span>Live Studio Mockup Preview</span>
-              <span className="font-mono text-[11px]" style={{ color: 'var(--app-primary)' }}>
-                Active: {themeDetails.name} ({resolvedMode})
-              </span>
+            {/* Live Studio Mockup */}
+            <div className="lg:col-span-5 sticky top-6">
+              <MiniStudioPreview theme={themeDetails} mode={mode} />
             </div>
-            <MiniStudioPreview theme={themeDetails} mode={resolvedMode} />
-          </div>
-
-          {/* Tone Filters */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
-            <span className="text-xs font-bold uppercase tracking-wider mr-1" style={{ color: 'var(--app-text-muted)' }}>
-              Filter Themes:
-            </span>
-            {[
-              { id: 'all', label: 'All 10 Themes' },
-              { id: 'vibrant', label: 'Vibrant' },
-              { id: 'cool', label: 'Cool Tones' },
-              { id: 'warm', label: 'Warm Accents' },
-              { id: 'minimal', label: 'Minimalist' },
-            ].map((f) => (
-              <button
-                key={f.id}
-                type="button"
-                onClick={() => setActiveTone(f.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all border ${
-                  activeTone === f.id ? 'text-white shadow-sm' : 'opacity-70 hover:opacity-100'
-                }`}
-                style={{
-                  backgroundColor: activeTone === f.id ? 'var(--app-primary)' : 'var(--app-card)',
-                  borderColor: 'var(--app-card-border)',
-                  color: activeTone === f.id ? '#FFFFFF' : 'var(--app-text-primary)',
-                }}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-
-          {/* 10 Theme Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5">
-            {filteredThemes.map((t) => (
-              <ThemeCard
-                key={t.id}
-                theme={t}
-                isSelected={colorTheme === t.id}
-                activeMode={resolvedMode}
-                onSelect={handleSelectTheme}
-              />
-            ))}
           </div>
         </main>
       </div>
-
-      {/* Confirmation Toast Notification */}
-      {toastMsg && (
-        <div
-          className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl border shadow-2xl flex items-center gap-3 animate-in slide-in-from-bottom-3 duration-200"
-          style={{
-            backgroundColor: 'var(--app-surface)',
-            borderColor: 'var(--app-card-border)',
-            boxShadow: `0 20px 40px -10px var(--app-glow)`,
-            color: 'var(--app-text-primary)',
-          }}
-        >
-          <div
-            className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            style={{ backgroundColor: 'var(--app-primary)' }}
-          >
-            ✓
-          </div>
-          <span className="text-xs font-semibold">{toastMsg}</span>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 // ==============================================================================
-// VERCEL VIDAI - AI PROVIDER ARCHITECTURE INTERFACES (SECTION 9)
+// FLUVIA FLOW - AI PROVIDER ARCHITECTURE INTERFACES (SECTION 9)
 // ==============================================================================
 
 export interface AIProviderCapabilities {

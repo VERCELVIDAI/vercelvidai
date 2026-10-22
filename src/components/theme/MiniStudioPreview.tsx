@@ -19,8 +19,8 @@ interface MiniStudioPreviewProps {
   mode: ResolvedMode;
 }
 
-export function MiniStudioPreview({ theme, mode }: MiniStudioPreviewProps) {
-  const palette = mode === 'dark' ? theme.dark : theme.light;
+export function MiniStudioPreview({ theme }: MiniStudioPreviewProps) {
+  const palette = theme.light;
 
   return (
     <div
@@ -38,7 +38,7 @@ export function MiniStudioPreview({ theme, mode }: MiniStudioPreviewProps) {
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
           <span className="ml-2 font-mono text-[10px]" style={{ color: palette.textMuted }}>
-            Fluvia Flow Studio • {theme.name} ({mode === 'dark' ? 'Dark' : 'Light'})
+            Fluvia Flow Studio • {theme.name} (Light Glassmorphism)
           </span>
         </div>
         <div
@@ -160,7 +160,7 @@ export function MiniStudioPreview({ theme, mode }: MiniStudioPreviewProps) {
             <div
               className="aspect-video rounded-xl overflow-hidden relative border flex items-center justify-center"
               style={{
-                backgroundColor: mode === 'dark' ? '#000000' : '#E2E8F0',
+                backgroundColor: '#F1F5F9',
                 borderColor: palette.cardBorder,
               }}
             >

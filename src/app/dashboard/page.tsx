@@ -51,16 +51,6 @@ export default function DashboardPage() {
       const authData = await authRes.json();
       setData(authData);
 
-      // Route first-time users to theme selection
-      if (authData.user && authData.user.themePreferences?.completed !== true) {
-        const locallyCompleted = typeof window !== 'undefined' && 
-          (localStorage.getItem('fluvia_theme_completed') === 'true' || localStorage.getItem('vidai_theme_completed') === 'true');
-        if (!locallyCompleted) {
-          router.push('/onboarding/theme');
-          return;
-        }
-      }
-
       const [projRes, jobsRes] = await Promise.all([
         fetch('/api/projects'),
         fetch('/api/jobs'),
@@ -141,10 +131,10 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#090A0F] text-slate-100 flex items-center justify-center">
+      <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-slate-400 font-mono">Loading creative workspace...</span>
+          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-slate-500 font-mono">Loading creative workspace...</span>
         </div>
       </div>
     );
@@ -155,13 +145,7 @@ export default function DashboardPage() {
   const plan = data?.subscription?.plan || { name: 'Free Explorer' };
 
   return (
-    <div
-      className="min-h-screen flex transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
-      }}
-    >
+    <div className="min-h-screen flex transition-colors duration-200 text-[#17211D]">
       {/* Sidebar */}
       <Sidebar userRole={user.role} credits={credits} />
 
@@ -175,50 +159,50 @@ export default function DashboardPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-10">
+        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-10 text-left">
           {/* Greeting Banner & Available Credits */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-violet-950/40 via-indigo-950/30 to-[#0E1017] p-6 rounded-2xl border border-violet-500/20 relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-50 via-teal-50/50 to-pink-50/40 p-6 rounded-2xl border border-emerald-500/20 relative overflow-hidden shadow-sm">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider">
+                <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
                   Creative Studio
                 </span>
-                <span className="text-slate-500">•</span>
-                <span className="text-xs text-slate-400">{plan.name} Tier</span>
+                <span className="text-slate-400">•</span>
+                <span className="text-xs text-slate-600 font-medium">{plan.name} Tier</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">
                 Welcome back, {user.displayName || 'Creator'}!
               </h1>
-              <p className="mt-1 text-xs sm:text-sm text-slate-300">
-                You have <strong className="text-white">{credits.availableBalance}</strong> credits available. Turn ideas into video moments.
+              <p className="mt-1 text-xs sm:text-sm text-slate-600">
+                You have <strong className="text-emerald-800 font-bold">{credits.availableBalance}</strong> credits available. Turn ideas into video moments.
               </p>
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
               <Link
                 href="/pricing"
-                className="px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs shadow-lg shadow-violet-600/30 transition-all flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all flex items-center gap-1.5 cursor-pointer"
               >
-                <Zap className="w-4 h-4 text-amber-300" />
+                <Zap className="w-4 h-4 text-emerald-100" />
                 <span>Buy Credits / Upgrade</span>
               </Link>
             </div>
           </div>
 
           {/* Large "Create with AI" Quick Composer */}
-          <div className="p-6 rounded-2xl glass-panel border border-white/10 shadow-xl">
+          <div className="p-6 rounded-2xl glass-card border border-emerald-500/20 shadow-xl">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-violet-400" />
+              <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-emerald-600" />
                 <span>Instant AI Composer</span>
               </span>
 
-              <div className="flex gap-1 bg-white/5 p-1 rounded-lg border border-white/5 text-xs">
+              <div className="flex gap-1 bg-white/80 p-1 rounded-lg border border-emerald-500/15 text-xs shadow-2xs">
                 <button
                   type="button"
                   onClick={() => setQuickMode('video')}
-                  className={`px-3 py-1 rounded font-medium transition-all ${
-                    quickMode === 'video' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-white'
+                  className={`px-3 py-1 rounded font-bold transition-all ${
+                    quickMode === 'video' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
                   }`}
                 >
                   Video
@@ -226,8 +210,8 @@ export default function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setQuickMode('image')}
-                  className={`px-3 py-1 rounded font-medium transition-all ${
-                    quickMode === 'image' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-white'
+                  className={`px-3 py-1 rounded font-bold transition-all ${
+                    quickMode === 'image' ? 'bg-pink-500 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
                   }`}
                 >
                   Image
@@ -235,8 +219,8 @@ export default function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setQuickMode('audio')}
-                  className={`px-3 py-1 rounded font-medium transition-all ${
-                    quickMode === 'audio' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-white'
+                  className={`px-3 py-1 rounded font-bold transition-all ${
+                    quickMode === 'audio' ? 'bg-teal-700 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
                   }`}
                 >
                   Voice
@@ -251,18 +235,18 @@ export default function DashboardPage() {
                 onChange={(e) => setQuickPrompt(e.target.value)}
                 placeholder={
                   quickMode === 'video'
-                    ? 'E.g. Create a vertical Instagram product reveal with neon reflections...'
+                    ? 'E.g. Create a vertical Instagram product reveal with emerald reflections...'
                     : quickMode === 'image'
-                    ? 'E.g. Photorealistic futuristic sneaker floating in water...'
+                    ? 'E.g. Photorealistic futuristic sneaker floating in crystalline water...'
                     : 'E.g. Enter voice narration dialogue...'
                 }
-                className="flex-1 bg-[#0E1017] text-white px-4 py-3 rounded-xl border border-white/10 focus:outline-none focus:border-violet-500 text-sm"
+                className="flex-1 glass-input text-[#17211D] px-4 py-3 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm shadow-xs"
               />
 
               <button
                 type="button"
                 onClick={handleQuickCreate}
-                className="px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-violet-600/30 shrink-0"
+                className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 shrink-0 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Open in Studio</span>
@@ -273,31 +257,31 @@ export default function DashboardPage() {
 
           {/* Quick-Start Workflow Tiles */}
           <div>
-            <h2 className="text-base font-bold text-white mb-4">Quick Workflows</h2>
+            <h2 className="text-base font-bold text-[#17211D] mb-4">Quick Workflows</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { title: 'Text to Video', desc: 'Direct prompt to cinematic cut', icon: Video, color: 'text-violet-400', href: '/create?mode=video' },
-                { title: 'Script to Storyboard', desc: 'Paste text or article URL', icon: Sparkles, color: 'text-sky-400', href: '/create?mode=video&preset=script' },
-                { title: 'Product Commercial', desc: 'Animate uploaded image shot', icon: ImageIcon, color: 'text-pink-400', href: '/create?mode=video&preset=product' },
-                { title: 'Voiceover & Captions', desc: 'Neural voice in 29+ languages', icon: Mic, color: 'text-emerald-400', href: '/create?mode=audio' },
+                { title: 'Text to Video', desc: 'Direct prompt to cinematic cut', icon: Video, color: 'text-emerald-700', bg: 'bg-emerald-100', href: '/create?mode=video' },
+                { title: 'Script to Storyboard', desc: 'Paste text or article URL', icon: Sparkles, color: 'text-teal-700', bg: 'bg-teal-100', href: '/create?mode=video&preset=script' },
+                { title: 'Product Commercial', desc: 'Animate uploaded image shot', icon: ImageIcon, color: 'text-pink-600', bg: 'bg-pink-100', href: '/create?mode=video&preset=product' },
+                { title: 'Voiceover & Captions', desc: 'Neural voice in 29+ languages', icon: Mic, color: 'text-emerald-800', bg: 'bg-emerald-100', href: '/create?mode=audio' },
               ].map((wf, idx) => {
                 const Icon = wf.icon;
                 return (
                   <Link
                     key={idx}
                     href={wf.href}
-                    className="p-4 rounded-xl glass-panel border border-white/5 hover:border-violet-500/40 transition-all group flex flex-col justify-between"
+                    className="p-4 rounded-xl glass-card border border-emerald-500/20 hover:border-emerald-500/40 hover:shadow-md transition-all group flex flex-col justify-between"
                   >
                     <div>
-                      <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center mb-3">
+                      <div className={`w-9 h-9 rounded-lg ${wf.bg} flex items-center justify-center mb-3`}>
                         <Icon className={`w-5 h-5 ${wf.color}`} />
                       </div>
-                      <h3 className="font-bold text-white text-sm group-hover:text-violet-300 transition-colors">
+                      <h3 className="font-bold text-[#17211D] text-sm group-hover:text-emerald-700 transition-colors">
                         {wf.title}
                       </h3>
-                      <p className="mt-1 text-xs text-slate-400">{wf.desc}</p>
+                      <p className="mt-1 text-xs text-slate-600">{wf.desc}</p>
                     </div>
-                    <span className="mt-4 text-[11px] font-semibold text-violet-400 flex items-center gap-1">
+                    <span className="mt-4 text-[11px] font-bold text-emerald-700 flex items-center gap-1">
                       <span>Launch</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </span>
@@ -311,12 +295,12 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-white">Recent Projects</h2>
+                <h2 className="text-base font-bold text-[#17211D]">Recent Projects</h2>
                 <span className="text-xs font-mono text-slate-500">({projects.length})</span>
               </div>
               <Link
                 href="/create"
-                className="text-xs font-bold text-violet-400 hover:text-violet-300 flex items-center gap-1"
+                className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>New Project</span>
@@ -324,15 +308,15 @@ export default function DashboardPage() {
             </div>
 
             {projects.length === 0 ? (
-              <div className="p-12 text-center rounded-2xl glass-panel border border-white/5">
-                <Video className="w-10 h-10 text-slate-500 mx-auto mb-3" />
-                <h3 className="font-bold text-white text-base">No projects created yet</h3>
-                <p className="mt-1 text-xs text-slate-400 max-w-sm mx-auto">
+              <div className="p-12 text-center rounded-2xl glass-card border border-emerald-500/20 shadow-sm">
+                <Video className="w-10 h-10 text-emerald-600 mx-auto mb-3" />
+                <h3 className="font-bold text-[#17211D] text-base">No projects created yet</h3>
+                <p className="mt-1 text-xs text-slate-600 max-w-sm mx-auto">
                   Start from a text prompt or select one of our curated templates to generate your first scene.
                 </p>
                 <Link
                   href="/create"
-                  className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-violet-600 text-white rounded-xl text-xs font-bold"
+                  className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-sm"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Create First Video</span>
@@ -343,7 +327,7 @@ export default function DashboardPage() {
                 {projects.map((proj) => (
                   <div
                     key={proj.id}
-                    className="rounded-2xl glass-panel border border-white/10 overflow-hidden group hover:border-violet-500/40 transition-all flex flex-col justify-between"
+                    className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden group hover:border-emerald-500/40 hover:shadow-lg transition-all flex flex-col justify-between"
                   >
                     <div>
                       {/* Thumbnail / Video Preview */}
@@ -357,11 +341,11 @@ export default function DashboardPage() {
 
                         {/* Top badges */}
                         <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono bg-black/60 backdrop-blur-md px-2 py-0.5 rounded text-violet-300 border border-violet-500/30 uppercase">
+                          <span className="text-[10px] font-mono bg-black/60 backdrop-blur-md px-2 py-0.5 rounded text-emerald-300 border border-emerald-400/30 uppercase font-bold">
                             {proj.mediaType}
                           </span>
-                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded capitalize ${
-                            proj.status === 'completed' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/30' : 'bg-amber-950/80 text-amber-300 border border-amber-500/30'
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded capitalize font-bold ${
+                            proj.status === 'completed' ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-amber-100 text-amber-900 border border-amber-300'
                           }`}>
                             {proj.status}
                           </span>
@@ -372,7 +356,7 @@ export default function DashboardPage() {
                           type="button"
                           onClick={() => handleToggleFavorite(proj.id, proj.isFavorite)}
                           className={`absolute top-2.5 right-2.5 p-1.5 rounded-lg backdrop-blur-md transition-colors ${
-                            proj.isFavorite ? 'bg-amber-500 text-black' : 'bg-black/60 text-slate-300 hover:text-white'
+                            proj.isFavorite ? 'bg-amber-500 text-black' : 'bg-black/60 text-white hover:text-amber-300'
                           }`}
                           aria-label={proj.isFavorite ? 'Unfavorite project' : 'Favorite project'}
                         >
@@ -384,7 +368,7 @@ export default function DashboardPage() {
                           href={`/editor/${proj.id}`}
                           className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]"
                         >
-                          <div className="w-12 h-12 rounded-full bg-violet-600 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                          <div className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
                             <Play className="w-5 h-5 fill-current ml-0.5" />
                           </div>
                         </Link>
@@ -392,32 +376,32 @@ export default function DashboardPage() {
 
                       {/* Content details */}
                       <div className="p-4">
-                        <h3 className="font-bold text-white text-sm truncate">{proj.title}</h3>
-                        <p className="mt-1 text-xs text-slate-400 line-clamp-2">
+                        <h3 className="font-bold text-[#17211D] text-sm truncate">{proj.title}</h3>
+                        <p className="mt-1 text-xs text-slate-600 line-clamp-2">
                           {proj.description || 'Timeline configured for multi-track editing.'}
                         </p>
                         <div className="mt-3 flex items-center gap-2 text-[11px] text-slate-500 font-mono">
-                          <Clock className="w-3 h-3" />
+                          <Clock className="w-3 h-3 text-emerald-600" />
                           <span>Updated {new Date(proj.updatedAt).toLocaleDateString()}</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Action Bar */}
-                    <div className="p-3 border-t border-white/5 bg-[#0C0E14] flex items-center justify-between text-xs">
+                    <div className="p-3 border-t border-emerald-500/15 bg-white/60 flex items-center justify-between text-xs">
                       <Link
                         href={`/editor/${proj.id}`}
-                        className="text-violet-400 font-semibold hover:underline flex items-center gap-1 text-[11px]"
+                        className="text-emerald-700 font-bold hover:underline flex items-center gap-1 text-[11px]"
                       >
                         <FolderOpen className="w-3.5 h-3.5" />
                         <span>Open Studio</span>
                       </Link>
 
-                      <div className="flex items-center gap-2 text-slate-400">
+                      <div className="flex items-center gap-2 text-slate-500">
                         <button
                           type="button"
                           onClick={() => setRenameModal({ id: proj.id, title: proj.title })}
-                          className="hover:text-white p-1"
+                          className="hover:text-emerald-700 p-1"
                           title="Rename"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
@@ -425,7 +409,7 @@ export default function DashboardPage() {
                         <button
                           type="button"
                           onClick={() => handleDuplicate(proj.id)}
-                          className="hover:text-white p-1"
+                          className="hover:text-emerald-700 p-1"
                           title="Duplicate"
                         >
                           <Copy className="w-3.5 h-3.5" />
@@ -433,7 +417,7 @@ export default function DashboardPage() {
                         <button
                           type="button"
                           onClick={() => setDeleteModal({ id: proj.id, title: proj.title })}
-                          className="hover:text-rose-400 p-1"
+                          className="hover:text-rose-600 p-1"
                           title="Delete"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -448,36 +432,36 @@ export default function DashboardPage() {
 
           {/* Recent AI Generations Ledger / Queue */}
           <div>
-            <h2 className="text-base font-bold text-white mb-4">Recent Generation Jobs</h2>
-            <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden">
+            <h2 className="text-base font-bold text-[#17211D] mb-4">Recent Generation Jobs</h2>
+            <div className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden shadow-sm">
               {jobs.length === 0 ? (
-                <div className="p-8 text-center text-xs text-slate-400">No jobs submitted yet.</div>
+                <div className="p-8 text-center text-xs text-slate-500">No jobs submitted yet.</div>
               ) : (
-                <div className="divide-y divide-white/5">
+                <div className="divide-y divide-emerald-500/10">
                   {jobs.slice(0, 5).map((job) => (
                     <div key={job.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                           job.status === 'completed'
-                            ? 'bg-emerald-500/20 text-emerald-400'
+                            ? 'bg-emerald-100 text-emerald-800'
                             : job.status === 'failed'
-                            ? 'bg-rose-500/20 text-rose-400'
-                            : 'bg-violet-500/20 text-violet-400 animate-pulse'
+                            ? 'bg-rose-100 text-rose-800'
+                            : 'bg-emerald-100 text-emerald-800 animate-pulse'
                         }`}>
                           <Sparkles className="w-4 h-4" />
                         </div>
                         <div>
-                          <p className="font-semibold text-white line-clamp-1 max-w-md">
+                          <p className="font-bold text-[#17211D] line-clamp-1 max-w-md">
                             {job.input?.prompt || 'AI Generation Task'}
                           </p>
-                          <div className="flex items-center gap-2 text-slate-400 text-[11px] mt-0.5">
-                            <span>{job.modelId}</span>
+                          <div className="flex items-center gap-2 text-slate-500 text-[11px] mt-0.5">
+                            <span className="font-mono font-medium">{job.modelId}</span>
                             <span>•</span>
                             <span>{job.actualCredits || job.estimatedCredits} credits</span>
                             <span>•</span>
-                            <span className="capitalize">{job.status}</span>
+                            <span className="capitalize font-bold text-emerald-800">{job.status}</span>
                             {job.output?.isDemoSimulated && (
-                              <span className="text-[10px] bg-amber-500/20 text-amber-300 px-1 rounded">Demo Mode</span>
+                              <span className="text-[10px] bg-amber-100 text-amber-900 border border-amber-300 px-1 rounded font-bold">Demo Mode</span>
                             )}
                           </div>
                         </div>
@@ -489,7 +473,7 @@ export default function DashboardPage() {
                             href={job.output.videoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white font-medium flex items-center gap-1.5 text-xs"
+                            className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold flex items-center gap-1.5 text-xs border border-emerald-200"
                           >
                             <Play className="w-3.5 h-3.5" />
                             <span>Preview</span>
@@ -498,7 +482,7 @@ export default function DashboardPage() {
                         {job.projectId && (
                           <Link
                             href={`/editor/${job.projectId}`}
-                            className="px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-medium text-xs"
+                            className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-xs"
                           >
                             Open Editor
                           </Link>
@@ -515,27 +499,27 @@ export default function DashboardPage() {
 
       {/* RENAME MODAL */}
       {renameModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-[#12141A] border border-white/15 rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <h3 className="font-bold text-white text-base">Rename Project</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="glass-modal rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-left border border-emerald-500/30">
+            <h3 className="font-bold text-[#17211D] text-base">Rename Project</h3>
             <input
               type="text"
               value={renameModal.title}
               onChange={(e) => setRenameModal({ ...renameModal, title: e.target.value })}
-              className="w-full bg-[#0E1017] text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-violet-500 text-sm"
+              className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 text-sm shadow-xs"
             />
             <div className="flex gap-2 justify-end">
               <button
                 type="button"
                 onClick={() => setRenameModal(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300"
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleRenameConfirm}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer shadow-xs"
               >
                 Save
               </button>
@@ -546,24 +530,24 @@ export default function DashboardPage() {
 
       {/* DELETE MODAL */}
       {deleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-[#12141A] border border-white/15 rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <h3 className="font-bold text-white text-base">Delete Project</h3>
-            <p className="text-xs text-slate-400">
-              Are you sure you want to delete <strong className="text-white">{deleteModal.title}</strong>? You can restore it from trash within 30 days.
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="glass-modal rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-left border border-emerald-500/30">
+            <h3 className="font-bold text-[#17211D] text-base">Delete Project</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Are you sure you want to delete <strong className="text-[#17211D]">{deleteModal.title}</strong>? You can restore it from trash within 30 days.
             </p>
             <div className="flex gap-2 justify-end">
               <button
                 type="button"
                 onClick={() => setDeleteModal(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300"
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleDeleteConfirm}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white cursor-pointer shadow-xs"
               >
                 Confirm Delete
               </button>

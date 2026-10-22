@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Logo } from '../brand/Logo';
-import { ThemeToggle } from '../theme/ThemeToggle';
 import {
   Home,
   Film,
@@ -59,21 +58,14 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     { label: 'Brand Kit', href: '/dashboard/brand-kit', icon: Palette },
     { label: 'Credit Wallet', href: '/dashboard/wallet', icon: Wallet },
     { label: 'Billing & Plans', href: '/dashboard/billing', icon: CreditCard },
-    { label: 'Appearance', href: '/dashboard/settings/appearance', icon: Palette },
     { label: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
 
   return (
-    <aside
-      className="w-64 flex flex-col justify-between shrink-0 h-screen sticky top-0 select-none border-r transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-sidebar)',
-        borderColor: 'var(--app-card-border)',
-      }}
-    >
+    <aside className="w-64 flex flex-col justify-between shrink-0 h-screen sticky top-0 select-none border-r border-emerald-500/15 glass-sidebar transition-colors duration-200 text-[#17211D]">
       <div className="flex flex-col flex-1 overflow-y-auto">
         {/* Brand header */}
-        <div className="p-4 border-b" style={{ borderColor: 'var(--app-card-border)' }}>
+        <div className="p-4 border-b border-emerald-500/15">
           <Logo size="sm" showTagline={false} />
         </div>
 
@@ -81,34 +73,31 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
         <div className="p-3">
           <Link
             href="/create"
-            className="w-full py-2.5 px-3 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg transition-all"
-            style={{
-              backgroundImage: 'var(--app-gradient-primary)',
-            }}
+            className="w-full py-2.5 px-3 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 transition-all cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-cyan-300" />
+            <Sparkles className="w-4 h-4 text-emerald-100" />
             <span>New Creation</span>
           </Link>
         </div>
 
         {/* Navigation Sections */}
-        <div className="px-3 space-y-4 py-1">
+        <div className="px-3 space-y-4 py-1 text-left">
           {/* Main */}
           <Link
             href="/dashboard"
             className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
               pathname === '/dashboard'
-                ? 'font-bold bg-white/[0.08] text-white border-white/[0.1]'
-                : 'border-transparent text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300 shadow-xs'
+                : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
             }`}
           >
-            <Home className="w-4 h-4 text-zinc-400" />
+            <Home className="w-4 h-4 text-slate-500" />
             <span>Dashboard Overview</span>
           </Link>
 
           {/* Studios Section */}
           <div className="space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 px-3">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3">
               Production Studios
             </span>
             {studioItems.map((item) => {
@@ -120,16 +109,16 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                   href={item.href}
                   className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
                     isActive
-                      ? 'font-bold bg-violet-600/20 text-violet-300 border-violet-500/40 shadow-sm'
-                      : 'border-transparent text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                      ? 'font-bold bg-emerald-100 text-emerald-950 border-emerald-300 shadow-xs'
+                      : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-zinc-500'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-500'}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-300 font-mono font-bold">
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-200 text-emerald-900 font-mono font-bold">
                       {item.badge}
                     </span>
                   )}
@@ -140,7 +129,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
 
           {/* Creative Tools */}
           <div className="space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 px-3">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3">
               Generative Tools
             </span>
             {creationItems.map((item) => {
@@ -152,11 +141,11 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                   href={item.href}
                   className={`flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
                     isActive
-                      ? 'font-bold bg-white/[0.08] text-white'
-                      : 'border-transparent text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                      ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300'
+                      : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-zinc-500" />
+                  <Icon className="w-3.5 h-3.5 text-slate-500" />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -165,7 +154,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
 
           {/* Management */}
           <div className="space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 px-3">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3">
               Workspace & Billing
             </span>
             {managementItems.map((item) => {
@@ -177,11 +166,11 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                   href={item.href}
                   className={`flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
                     isActive
-                      ? 'font-bold bg-white/[0.08] text-white'
-                      : 'border-transparent text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                      ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300'
+                      : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-zinc-500" />
+                  <Icon className="w-3.5 h-3.5 text-slate-500" />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -194,8 +183,8 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               href="/admin"
               className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all mt-2 ${
                 pathname.startsWith('/admin')
-                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                  : 'text-amber-400 hover:bg-amber-500/10'
+                  ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold'
+                  : 'text-amber-700 hover:bg-amber-50'
               }`}
             >
               <ShieldAlert className="w-4 h-4" />
@@ -206,32 +195,31 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
       </div>
 
       {/* Credit Wallet Widget & Footer Profile */}
-      <div className="p-3 border-t border-white/[0.08] space-y-2">
+      <div className="p-3 border-t border-emerald-500/15 space-y-2">
         <Link
           href="/dashboard/wallet"
-          className="p-3 bg-white/[0.03] hover:bg-white/[0.06] rounded-xl border border-white/5 flex items-center justify-between transition-colors block"
+          className="p-3 bg-emerald-50/90 hover:bg-emerald-100/80 rounded-xl border border-emerald-300/80 flex items-center justify-between transition-colors block text-left shadow-xs"
         >
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
-              <Zap className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-emerald-200 text-emerald-800 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-emerald-700" />
             </div>
             <div>
-              <div className="text-[10px] text-zinc-400 font-medium">Available Credits</div>
-              <div className="text-sm font-black text-white">{credits.availableBalance}</div>
+              <div className="text-[10px] text-slate-500 font-medium">Available Credits</div>
+              <div className="text-sm font-black text-[#17211D]">{credits.availableBalance}</div>
             </div>
           </div>
-          <span className="text-[10px] text-cyan-400 font-bold hover:underline">Top Up</span>
+          <span className="text-[10px] text-emerald-700 font-bold hover:underline">Top Up</span>
         </Link>
 
-        <div className="flex items-center justify-between text-xs text-zinc-400 px-1 pt-1">
-          <ThemeToggle variant="icon" />
-          <Link href="/help" className="hover:text-white flex items-center gap-1 text-[11px]">
+        <div className="flex items-center justify-between text-xs text-slate-500 px-1 pt-1">
+          <Link href="/help" className="hover:text-emerald-800 flex items-center gap-1 text-[11px] font-medium">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Support</span>
           </Link>
           <button
             onClick={handleLogout}
-            className="hover:text-rose-400 flex items-center gap-1 text-[11px]"
+            className="hover:text-rose-600 flex items-center gap-1 text-[11px] font-medium cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
