@@ -6,7 +6,10 @@ import { setSession, validateRedirectUrl } from '@/lib/auth/session';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
-  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000').replace(/\/+$/, '');
+  const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
+  const proto = req.headers.get('x-forwarded-proto') || (req.nextUrl.protocol ? req.nextUrl.protocol.replace(':', '') : 'http');
+  const requestOrigin = host ? `${proto}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin || 'http://localhost:3000').replace(/\/+$/, '');
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || requestOrigin).replace(/\/+$/, '');
   const { searchParams } = new URL(req.url);
 
   const code = searchParams.get('code');
@@ -58,7 +61,7 @@ export async function GET(req: NextRequest) {
   // 3. Exchange authorization code for access & ID tokens
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI || `${appUrl}/api/auth/google/callback`;
+  const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI || `${requestOrigin}/api/auth/google/callback`;
 
   if (!clientId || !clientSecret) {
     const msg = encodeURIComponent('Server configuration error: GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET is missing.');

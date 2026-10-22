@@ -471,6 +471,38 @@
       "role": "creator",
       "createdAt": "2026-10-22T09:21:20.192Z",
       "updatedAt": "2026-10-22T09:21:20.192Z"
+    },
+    {
+      "id": "usr_71qklx6y",
+      "email": "tester_1792663793848@fluviaflow.ai",
+      "displayName": "Fluvia Test Creator",
+      "role": "creator",
+      "createdAt": "2026-10-22T10:09:53.864Z",
+      "updatedAt": "2026-10-22T10:09:54.157Z",
+      "googleId": "goog_1792663793848",
+      "authProvider": "google",
+      "emailVerified": true,
+      "avatarUrl": "https://lh3.googleusercontent.com/a/sample_avatar"
+    },
+    {
+      "id": "usr_irg6u8d9",
+      "email": "google_new_1792663793848@fluviaflow.ai",
+      "displayName": "Google Onboarded Artist",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/sample_avatar_new",
+      "role": "creator",
+      "authProvider": "google",
+      "googleId": "goog_new_1792663793848",
+      "emailVerified": true,
+      "createdAt": "2026-10-22T10:09:54.163Z",
+      "updatedAt": "2026-10-22T10:09:54.163Z"
+    },
+    {
+      "id": "usr_xz5zzzov",
+      "email": "admin_1792663793848@fluviaflow.ai",
+      "displayName": "Fluvia Security Admin",
+      "role": "admin",
+      "createdAt": "2026-10-22T10:09:54.172Z",
+      "updatedAt": "2026-10-22T10:09:54.172Z"
     }
   ],
   "passwords": {
@@ -524,7 +556,9 @@
     "usr_07p8f7e2": "scrypt:169e629f135cd0733dbeb27d269a12b1:49f66a6104e58e3b4fc298261d9a0b021c8c5ebb0d5c7b0f78d80fc06b9765dd728f6379496d2e072fb9c8aafa5799eb7877e3e3952cc72497a4735f4f3516e6",
     "usr_7xf8s62e": "scrypt:78e30b7d98a8f8c5a9227c8bf711e555:ebd93552addad87c31ac57fcd38c3e31c429c25b570edc9a9ea4d448ac075b8332b5dbedb1e372a3e4f0fd53b552ce9bfe23754f64710f397a3b62a819441300",
     "usr_7f4k7htr": "scrypt:921874c1955d3939a1cd942ef94edae2:6e3457ea3b151f3cab58c61dcd7e9413e686331477742b0b7573d3b4d9b3bfc97ca7027cb4d6d263a05d89fc1600bbb62fe7985268142b887cca2a42fe26fa6a",
-    "usr_wlnfttji": "scrypt:a3d1a41c6957fce01bd8e719fd13a007:50a7b49aabdd43c392b84ba26e7f049fafe7deb3499b07f944be9fb1044fc3d3630990e495b42b8feb36f79ff97a3ef9edcc47d26fa6b8d4d74567b4d4aec5a6"
+    "usr_wlnfttji": "scrypt:a3d1a41c6957fce01bd8e719fd13a007:50a7b49aabdd43c392b84ba26e7f049fafe7deb3499b07f944be9fb1044fc3d3630990e495b42b8feb36f79ff97a3ef9edcc47d26fa6b8d4d74567b4d4aec5a6",
+    "usr_71qklx6y": "scrypt:566ac51c35e051fe603d8395cccde204:f4b043e508d34418330291ed81806577e308c0e4ecaf7a7d37275251a39e0e2f9f81e1d41138eedf5cb963cad4815598d9ac9298642a58ae9171cc57cfc1ba4c",
+    "usr_xz5zzzov": "scrypt:abcb96c1653c6b444095b8a8a4845173:f887200699b4f51a959b36bd5a4b7d21e04118ad04219fd3854403974ed3caab9efe95d14758e80ef622a483ab07a4320a42c94245da5333ac1db296915a113c"
   },
   "workspaces": [
     {
@@ -946,6 +980,34 @@
       "name": "Node Verified User's Studio",
       "createdAt": "2026-10-22T09:21:20.192Z",
       "updatedAt": "2026-10-22T09:21:20.192Z"
+    },
+    {
+      "id": "ws_ub6qrnca",
+      "ownerId": "orphan_1792663793848",
+      "name": "Orphan Tester's Studio",
+      "createdAt": "2026-10-22T10:09:53.855Z",
+      "updatedAt": "2026-10-22T10:09:53.855Z"
+    },
+    {
+      "id": "ws_b4ilgbjk",
+      "ownerId": "usr_71qklx6y",
+      "name": "Fluvia Test Creator's Studio",
+      "createdAt": "2026-10-22T10:09:53.864Z",
+      "updatedAt": "2026-10-22T10:09:53.864Z"
+    },
+    {
+      "id": "ws_uz9wmr8j",
+      "ownerId": "usr_irg6u8d9",
+      "name": "Google Onboarded Artist's Studio",
+      "createdAt": "2026-10-22T10:09:54.163Z",
+      "updatedAt": "2026-10-22T10:09:54.163Z"
+    },
+    {
+      "id": "ws_fc8eio7o",
+      "ownerId": "usr_xz5zzzov",
+      "name": "Fluvia Security Admin's Studio",
+      "createdAt": "2026-10-22T10:09:54.172Z",
+      "updatedAt": "2026-10-22T10:09:54.172Z"
     }
   ],
   "workspaceMembers": [
@@ -1308,6 +1370,30 @@
       "userId": "usr_wlnfttji",
       "role": "owner",
       "joinedAt": "2026-10-22T09:21:20.192Z"
+    },
+    {
+      "workspaceId": "ws_ub6qrnca",
+      "userId": "orphan_1792663793848",
+      "role": "owner",
+      "joinedAt": "2026-10-22T10:09:53.855Z"
+    },
+    {
+      "workspaceId": "ws_b4ilgbjk",
+      "userId": "usr_71qklx6y",
+      "role": "owner",
+      "joinedAt": "2026-10-22T10:09:53.864Z"
+    },
+    {
+      "workspaceId": "ws_uz9wmr8j",
+      "userId": "usr_irg6u8d9",
+      "role": "owner",
+      "joinedAt": "2026-10-22T10:09:54.163Z"
+    },
+    {
+      "workspaceId": "ws_fc8eio7o",
+      "userId": "usr_xz5zzzov",
+      "role": "owner",
+      "joinedAt": "2026-10-22T10:09:54.172Z"
     }
   ],
   "creditAccounts": {
@@ -1628,6 +1714,24 @@
       "availableBalance": 100,
       "reservedBalance": 0,
       "updatedAt": "2026-10-22T09:21:20.192Z"
+    },
+    "usr_71qklx6y": {
+      "userId": "usr_71qklx6y",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T10:09:53.864Z"
+    },
+    "usr_irg6u8d9": {
+      "userId": "usr_irg6u8d9",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T10:09:54.163Z"
+    },
+    "usr_xz5zzzov": {
+      "userId": "usr_xz5zzzov",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T10:09:54.172Z"
     }
   },
   "creditLedger": [
@@ -3657,6 +3761,42 @@
         "note": "Welcome signup allowance"
       },
       "createdAt": "2026-10-22T09:21:20.192Z"
+    },
+    {
+      "id": "cld_jsu0k3i7k4",
+      "userId": "usr_71qklx6y",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_71qklx6y",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T10:09:53.864Z"
+    },
+    {
+      "id": "cld_nf5g2321yq",
+      "userId": "usr_irg6u8d9",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "google_signup_grant_usr_irg6u8d9",
+      "metadata": {
+        "note": "Welcome Google signup allowance"
+      },
+      "createdAt": "2026-10-22T10:09:54.163Z"
+    },
+    {
+      "id": "cld_cvww9rxuoz",
+      "userId": "usr_xz5zzzov",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_xz5zzzov",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T10:09:54.172Z"
     }
   ],
   "plans": [
@@ -8545,6 +8685,28 @@
         "authProvider": "password"
       },
       "createdAt": "2026-10-22T09:21:43.215Z"
+    },
+    {
+      "id": "aud_ncj1zrune4",
+      "actorId": "usr_71qklx6y",
+      "action": "USER_SIGNUP",
+      "resourceType": "profile",
+      "resourceId": "usr_71qklx6y",
+      "metadata": {
+        "method": "email_password"
+      },
+      "createdAt": "2026-10-22T10:09:54.222Z"
+    },
+    {
+      "id": "aud_gao3v7j1hx",
+      "actorId": "usr_71qklx6y",
+      "action": "GOOGLE_LINKED",
+      "resourceType": "profile",
+      "resourceId": "usr_71qklx6y",
+      "metadata": {
+        "googleId": "goog_1792663793848"
+      },
+      "createdAt": "2026-10-22T10:09:54.227Z"
     }
   ],
   "supportTickets": [

@@ -13,8 +13,11 @@ export async function GET(req: NextRequest) {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
-  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000').replace(/\/+$/, '');
-  const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI || `${appUrl}/api/auth/google/callback`;
+  const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
+  const proto = req.headers.get('x-forwarded-proto') || (req.nextUrl.protocol ? req.nextUrl.protocol.replace(':', '') : 'http');
+  const requestOrigin = host ? `${proto}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin || 'http://localhost:3000').replace(/\/+$/, '');
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || requestOrigin).replace(/\/+$/, '');
+  const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI || `${requestOrigin}/api/auth/google/callback`;
 
   // Informative fallback if credentials are not configured yet
   if (!clientId || !clientSecret) {
@@ -35,12 +38,12 @@ export async function GET(req: NextRequest) {
     createdAt: Date.now(),
   });
 
-  const isHttps = process.env.NODE_ENV === 'production' || appUrl.startsWith('https');
+  const isHttps = appUrl.startsWith('https://') || (process.env.NODE_ENV === 'production' && !appUrl.includes('localhost'));
 
   const cookieStore = cookies();
   cookieStore.set('fluvia_oauth_state', oauthStatePayload, {
     httpOnly: true,
-    secure: isHttps ? true : false,
+    secure: isHttps,
     sameSite: 'lax',
     path: '/',
     maxAge: 60 * 15, // 15 minutes
