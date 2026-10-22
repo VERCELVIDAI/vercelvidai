@@ -139,6 +139,14 @@
       "role": "creator",
       "createdAt": "2026-10-21T12:42:35.831Z",
       "updatedAt": "2026-10-21T12:42:35.831Z"
+    },
+    {
+      "id": "usr_r5jmjczw",
+      "email": "payu_test_1792644447118@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "createdAt": "2026-10-22T04:47:27.118Z",
+      "updatedAt": "2026-10-22T04:47:27.118Z"
     }
   ],
   "passwords": {
@@ -155,7 +163,8 @@
     "usr_2ofu0hbt": "scrypt:c0946a61e8d135b58a18aad51b71d610:d1859806598360a5b725a1e35f79afe6b2f1346a1a388cb2f7433e1853956e5909ff1df406341932a7b4f8ac51862ea9b1d1c23172a5de4d2d10e2504c379eb2",
     "usr_febhs4vq": "scrypt:d5a59ca77a66bebbe3f38a35f9fb6f54:56fe4ca82bd4053b53014520b1c5c2bdcd9beacd011dd6295386349017e5691f5e4ba71ed5ddcb1c848d644d9a6b22f1e3b7382e705ce5368dd13acea07efe58",
     "usr_alzrl7nc": "scrypt:007871c8c2c6c7393a2c997b1e92105d:e72a70487063b9e9e1804fa57ea445f7c38584de6bf673f50a83c7d4479f3c74476e490554ed5f4f02d28a5ec0446b57dea3c1c94aa4db82950a27f51237f934",
-    "usr_nqxfoxpb": "scrypt:2b3609ea3e79e4a994e7ee95aad1cdff:4501e612cf569015b2fbe7bd81be816ad4225a81e672dc1b01ab35d133cabb711ea8c766119b835b127ff1d0bbfcc9c4a22f100ec5bd8f1c68c546d0d5abb882"
+    "usr_nqxfoxpb": "scrypt:2b3609ea3e79e4a994e7ee95aad1cdff:4501e612cf569015b2fbe7bd81be816ad4225a81e672dc1b01ab35d133cabb711ea8c766119b835b127ff1d0bbfcc9c4a22f100ec5bd8f1c68c546d0d5abb882",
+    "usr_r5jmjczw": "scrypt:f03f494dc23a82c1e8568993e942864c:b1febbacbd36430b82265a02911936df08ed9dd5db393cfdc87546801c3e6f4e9fd17adc232b70d2424a15cd530b0dccc551e5e77d1e3299e634f6e3d70bb0a8"
   },
   "workspaces": [
     {
@@ -255,6 +264,13 @@
       "name": "Fintech Tester's Studio",
       "createdAt": "2026-10-21T12:42:35.831Z",
       "updatedAt": "2026-10-21T12:42:35.831Z"
+    },
+    {
+      "id": "ws_dhetbsw7",
+      "ownerId": "usr_r5jmjczw",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-22T04:47:27.118Z",
+      "updatedAt": "2026-10-22T04:47:27.118Z"
     }
   ],
   "workspaceMembers": [
@@ -341,6 +357,12 @@
       "userId": "usr_nqxfoxpb",
       "role": "owner",
       "joinedAt": "2026-10-21T12:42:35.831Z"
+    },
+    {
+      "workspaceId": "ws_dhetbsw7",
+      "userId": "usr_r5jmjczw",
+      "role": "owner",
+      "joinedAt": "2026-10-22T04:47:27.118Z"
     }
   ],
   "creditAccounts": {
@@ -427,6 +449,12 @@
       "availableBalance": 1300,
       "reservedBalance": 0,
       "updatedAt": "2026-10-21T12:42:36.019Z"
+    },
+    "usr_r5jmjczw": {
+      "userId": "usr_r5jmjczw",
+      "availableBalance": 1300,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-22T04:47:27.305Z"
     }
   },
   "creditLedger": [
@@ -1033,6 +1061,34 @@
         "amountInr": 1178.82
       },
       "createdAt": "2026-10-21T12:42:36.019Z"
+    },
+    {
+      "id": "cld_59b62eh91i",
+      "userId": "usr_r5jmjczw",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_r5jmjczw",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-22T04:47:27.118Z"
+    },
+    {
+      "id": "cld_4d76y5qpu5",
+      "userId": "usr_r5jmjczw",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_bqz2mkwfo",
+      "idempotencyKey": "payu_fulfill_TXN_1792644447296_P2AN9N",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1792644447296_P2AN9N",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-22T04:47:27.305Z"
     }
   ],
   "plans": [
@@ -3810,6 +3866,47 @@
         "productInfo": "500 Credits Boost (500 Credits)"
       },
       "createdAt": "2026-10-21T12:42:36.147Z"
+    },
+    {
+      "id": "aud_meecfngump",
+      "actorId": "usr_r5jmjczw",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_bqz2mkwfo",
+      "metadata": {
+        "txnid": "TXN_1792644447296_P2AN9N",
+        "totalAmount": 1178.82,
+        "productInfo": "1,200 Credits Studio (1,200 Credits)"
+      },
+      "createdAt": "2026-10-22T04:47:27.300Z"
+    },
+    {
+      "id": "aud_wheivspdvh",
+      "actorId": "usr_r5jmjczw",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_bqz2mkwfo",
+      "metadata": {
+        "txnid": "TXN_1792644447296_P2AN9N",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0008",
+        "receiptNumber": "RCP-2026-0008",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-22T04:47:27.318Z"
+    },
+    {
+      "id": "aud_q5pmysz34l",
+      "actorId": "usr_r5jmjczw",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_uazvfd9h9",
+      "metadata": {
+        "txnid": "TXN_1792644447424_DHOCE6",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost (500 Credits)"
+      },
+      "createdAt": "2026-10-22T04:47:27.427Z"
     }
   ],
   "supportTickets": [
@@ -4570,6 +4667,89 @@
       "createdAt": "2026-10-21T12:42:36.141Z",
       "updatedAt": "2026-10-21T12:42:36.150Z",
       "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1792644447296_P2AN9N",
+      "userId": "usr_r5jmjczw",
+      "workspaceId": "ws_dhetbsw7",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1,200 Credits Studio (1,200 Credits)",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792644447118@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792644447296_P2AN9N",
+      "id": "ord_payu_bqz2mkwfo",
+      "createdAt": "2026-10-22T04:47:27.296Z",
+      "updatedAt": "2026-10-22T04:47:27.315Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_mjhplt9nn",
+      "invoiceNumber": "INV-2026-0008",
+      "receiptId": "rcp_xbmescu6c",
+      "receiptNumber": "RCP-2026-0008",
+      "verifiedAt": "2026-10-22T04:47:27.305Z"
+    },
+    {
+      "txnid": "TXN_1792644447424_DHOCE6",
+      "userId": "usr_r5jmjczw",
+      "workspaceId": "ws_dhetbsw7",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost (500 Credits)",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792644447118@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1792644447424_DHOCE6",
+      "id": "ord_payu_uazvfd9h9",
+      "createdAt": "2026-10-22T04:47:27.424Z",
+      "updatedAt": "2026-10-22T04:47:27.431Z",
+      "payuError": "Response hash mismatch - potential tampering"
     }
   ],
   "invoices": [
@@ -4964,6 +5144,62 @@
       "id": "inv_braj7tk91",
       "createdAt": "2026-10-21T12:42:36.022Z",
       "updatedAt": "2026-10-21T12:42:36.022Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0008",
+      "orderId": "ord_payu_bqz2mkwfo",
+      "txnid": "TXN_1792644447296_P2AN9N",
+      "userId": "usr_r5jmjczw",
+      "workspaceId": "ws_dhetbsw7",
+      "supplier": {
+        "legalName": "Vercel Vidai Technologies Private Limited",
+        "tradeName": "Vercel Vidai",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@vidai.io",
+        "website": "https://vidai.io",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1792644447118@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1,200 Credits Studio (1,200 Credits)",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-22T04:47:27.305Z",
+      "dueDate": "2026-10-22T04:47:27.305Z",
+      "paymentDate": "2026-10-22T04:47:27.305Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at vidai.io/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_mjhplt9nn",
+      "createdAt": "2026-10-22T04:47:27.308Z",
+      "updatedAt": "2026-10-22T04:47:27.308Z"
     }
   ],
   "receipts": [
@@ -5127,6 +5363,29 @@
       "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
       "id": "rcp_oldsljkyq",
       "createdAt": "2026-10-21T12:42:36.026Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0008",
+      "orderId": "ord_payu_bqz2mkwfo",
+      "txnid": "TXN_1792644447296_P2AN9N",
+      "invoiceId": "inv_mjhplt9nn",
+      "invoiceNumber": "INV-2026-0008",
+      "userId": "usr_r5jmjczw",
+      "workspaceId": "ws_dhetbsw7",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1792644447118@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1,200 Credits Studio (1,200 Credits)",
+      "paymentDate": "2026-10-22T04:47:27.305Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792644447296_P2AN9N-MVJ27W40",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_xbmescu6c",
+      "createdAt": "2026-10-22T04:47:27.312Z"
     }
   ],
   "creditNotes": [],
