@@ -967,6 +967,68 @@ class Store {
 
   private ensureCollections(schema: DatabaseSchema): void {
     if (!schema.passwords) schema.passwords = {};
+
+    // Ensure primary demo and admin accounts exist for both Fluvia Flow and legacy domains
+    const defaultAccounts = [
+      {
+        id: 'usr_creator_demo_1',
+        email: 'creator@fluviaflow.ai',
+        displayName: 'Aria Vance',
+        role: 'creator' as const,
+        pass: 'Demo1234!',
+      },
+      {
+        id: 'usr_creator_demo_1',
+        email: 'creator@vidai.io',
+        displayName: 'Aria Vance',
+        role: 'creator' as const,
+        pass: 'Demo1234!',
+      },
+      {
+        id: 'usr_admin_master_1',
+        email: 'admin@fluviaflow.ai',
+        displayName: 'System Administrator',
+        role: 'admin' as const,
+        pass: 'Admin1234!',
+      },
+      {
+        id: 'usr_admin_master_1',
+        email: 'admin@vidai.io',
+        displayName: 'System Administrator',
+        role: 'admin' as const,
+        pass: 'Admin1234!',
+      },
+    ];
+
+    const now = new Date().toISOString();
+    for (const acc of defaultAccounts) {
+      const cleanEmail = acc.email.toLowerCase().trim();
+      let p = schema.profiles.find((x) => x.email?.toLowerCase().trim() === cleanEmail);
+      if (!p) {
+        p = {
+          id: acc.id,
+          email: cleanEmail,
+          displayName: acc.displayName,
+          role: acc.role,
+          createdAt: now,
+          updatedAt: now,
+        };
+        schema.profiles.push(p);
+      }
+      const hashed = hashPassword(acc.pass);
+      schema.passwords[p.id] = schema.passwords[p.id] || hashed;
+      schema.passwords[cleanEmail] = schema.passwords[cleanEmail] || hashed;
+
+      if (!schema.creditAccounts[p.id]) {
+        schema.creditAccounts[p.id] = {
+          userId: p.id,
+          availableBalance: 350,
+          reservedBalance: 0,
+          updatedAt: now,
+        };
+      }
+    }
+
     if (schema.profiles) {
       for (const p of schema.profiles) {
         if (p.email && p.id && schema.passwords[p.id]) {

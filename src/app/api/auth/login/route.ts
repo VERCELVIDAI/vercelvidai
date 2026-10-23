@@ -47,23 +47,46 @@ export async function POST(req: NextRequest) {
 
     if (!profile) {
       return NextResponse.json(
-        { error: 'Invalid email address or password. Please verify your credentials.' },
+        {
+          error: 'No account found with this email address. Please click "Create an account" below to register, or check for typos.',
+          code: 'USER_NOT_FOUND',
+        },
         { status: 401 }
       );
     }
 
     const hasPass = dbStore.hasPassword(profile.id);
-    if (!hasPass && profile.authProvider === 'google') {
+    if (!hasPass) {
+      if (profile.authProvider === 'google' || profile.googleId) {
+        return NextResponse.json(
+          {
+            error: 'This account was created with Google Sign-In. Please sign in using the "Continue with Google" button below.',
+            code: 'GOOGLE_AUTH_REQUIRED',
+          },
+          { status: 400 }
+        );
+      }
       return NextResponse.json(
-        { error: 'This account was created with Google Sign-In. Please sign in using the "Continue with Google" button below.' },
+        {
+          error: 'No password has been set for this account. Please use password reset or sign in with your linked provider.',
+          code: 'NO_PASSWORD_SET',
+        },
         { status: 400 }
       );
     }
 
-    const isValid = dbStore.verifyPassword(profile.id, password);
+    // Verify password with safe trim fallback for accidental mobile keyboard spaces
+    let isValid = dbStore.verifyPassword(profile.id, password);
+    if (!isValid && typeof password === 'string' && password.trim() !== password) {
+      isValid = dbStore.verifyPassword(profile.id, password.trim());
+    }
+
     if (!isValid) {
       return NextResponse.json(
-        { error: 'Invalid email address or password. Please verify your credentials.' },
+        {
+          error: 'Incorrect password for this email address. Please verify your credentials or click "Forgot password?".',
+          code: 'INVALID_PASSWORD',
+        },
         { status: 401 }
       );
     }
