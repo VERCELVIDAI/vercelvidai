@@ -14,7 +14,7 @@ export default function HelpPage() {
     {
       icon: CreditCard,
       title: 'Credits, Billing & PayU India',
-      desc: 'Credit usage calculation, monthly allowances, refunds, and official GST tax invoices.',
+      desc: 'Credit usage calculation, monthly allowances, refunds, and official invoices.',
     },
     {
       icon: BookOpen,

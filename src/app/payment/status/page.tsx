@@ -143,7 +143,7 @@ function PaymentStatusContent() {
               )}
               {invoice?.invoiceNumber && (
                 <div className="flex justify-between items-center text-slate-600">
-                  <span>GST Tax Invoice:</span>
+                  <span>Invoice Number:</span>
                   <span className="font-mono text-teal-700 font-semibold">{invoice.invoiceNumber}</span>
                 </div>
               )}

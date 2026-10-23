@@ -96,7 +96,7 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
 
               <div className="text-right">
                 <span className="text-xs font-mono uppercase font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-md border border-emerald-500/30">
-                  {invoice.supplier.isGstRegistered ? 'GST Tax Invoice' : 'Commercial Invoice'}
+                  Official Invoice
                 </span>
                 <h1 className="text-xl font-black text-[#17211D] mt-2 font-mono">{invoice.invoiceNumber}</h1>
                 <p className="text-xs text-slate-500 mt-1">
@@ -112,9 +112,6 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
                 <h3 className="font-bold text-[#17211D] text-sm">{invoice.supplier.legalName}</h3>
                 <p className="text-slate-600 leading-relaxed">{invoice.supplier.registeredAddress}</p>
                 <p className="text-slate-600">State: {invoice.supplier.state}</p>
-                {invoice.supplier.gstin && (
-                  <p className="font-mono text-slate-700 font-medium">GSTIN: {invoice.supplier.gstin}</p>
-                )}
                 <p className="text-slate-600">Email: {invoice.supplier.supportEmail}</p>
               </div>
 
@@ -124,9 +121,6 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
                 <p className="text-slate-600">{invoice.customer.email}</p>
                 {invoice.customer.address && <p className="text-slate-600">{invoice.customer.address}</p>}
                 <p className="text-slate-600">Place of Supply: {invoice.customer.state || 'Delhi'}</p>
-                {invoice.customer.gstin && (
-                  <p className="font-mono text-emerald-700 font-bold">GSTIN: {invoice.customer.gstin}</p>
-                )}
               </div>
             </div>
 
@@ -136,9 +130,8 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
                 <thead className="bg-emerald-50/60 text-slate-600 border-b border-emerald-500/10 uppercase text-[10px] font-mono">
                   <tr>
                     <th className="py-3 px-4">Item Description</th>
-                    <th className="py-3 px-4">SAC Code</th>
-                    <th className="py-3 px-4">Taxable Value</th>
-                    <th className="py-3 px-4">GST Rate</th>
+                    <th className="py-3 px-4">Qty</th>
+                    <th className="py-3 px-4">Unit Price</th>
                     <th className="py-3 px-4 text-right">Total (INR)</th>
                   </tr>
                 </thead>
@@ -146,9 +139,8 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
                   {invoice.items.map((item: any) => (
                     <tr key={item.id}>
                       <td className="py-3 px-4 font-bold text-[#17211D]">{item.description}</td>
-                      <td className="py-3 px-4 font-mono text-slate-500">{item.hsnSacCode}</td>
-                      <td className="py-3 px-4 font-mono">INR {item.taxableValue.toFixed(2)}</td>
-                      <td className="py-3 px-4 font-mono">{item.gstRate}%</td>
+                      <td className="py-3 px-4 font-mono">{item.quantity || 1}</td>
+                      <td className="py-3 px-4 font-mono">INR {(item.unitPrice || item.taxableValue).toFixed(2)}</td>
                       <td className="py-3 px-4 text-right font-mono font-bold text-[#17211D]">
                         INR {item.totalAmount.toFixed(2)}
                       </td>
@@ -158,7 +150,7 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
               </table>
             </div>
 
-            {/* Tax Calculation & Summary Box */}
+            {/* Calculation & Summary Box */}
             <div className="flex justify-end pt-2">
               <div className="w-full sm:w-72 bg-emerald-50/40 border border-emerald-500/15 rounded-2xl p-4 space-y-2 text-xs">
                 {invoice.discountAmount && invoice.discountAmount > 0 ? (
@@ -177,30 +169,19 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
                 ) : null}
 
                 <div className="flex justify-between text-slate-600">
-                  <span>Base Taxable Value:</span>
+                  <span>Subtotal:</span>
                   <span className="font-mono text-[#17211D] font-semibold">INR {invoice.baseAmount.toFixed(2)}</span>
                 </div>
 
-                {invoice.cgstAmount > 0 ? (
-                  <>
-                    <div className="flex justify-between text-slate-600">
-                      <span>CGST (9%):</span>
-                      <span className="font-mono text-[#17211D]">INR {invoice.cgstAmount.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-slate-600">
-                      <span>SGST (9%):</span>
-                      <span className="font-mono text-[#17211D]">INR {invoice.sgstAmount.toFixed(2)}</span>
-                    </div>
-                  </>
-                ) : (
+                {invoice.taxAmount && invoice.taxAmount > 0 ? (
                   <div className="flex justify-between text-slate-600">
-                    <span>IGST (18%):</span>
-                    <span className="font-mono text-[#17211D]">INR {invoice.igstAmount.toFixed(2)}</span>
+                    <span>Taxes & Fees:</span>
+                    <span className="font-mono text-[#17211D]">INR {invoice.taxAmount.toFixed(2)}</span>
                   </div>
-                )}
+                ) : null}
 
                 <div className="pt-2 border-t border-emerald-500/10 flex justify-between items-baseline font-bold">
-                  <span className="text-[#17211D] text-sm">Grand Total:</span>
+                  <span className="text-[#17211D] text-sm">Total Amount:</span>
                   <span className="text-emerald-700 text-base font-mono">
                     INR {invoice.totalAmount.toFixed(2)}
                   </span>
@@ -214,7 +195,7 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
                 <strong>Payment Settlement:</strong> Settled via PayU India Hosted Checkout. Merchant Txn ID:{' '}
                 <span className="font-mono text-slate-700">{invoice.txnid}</span>
               </p>
-              <p>This is a computer-generated tax invoice and requires no physical signature.</p>
+              <p>This is a computer-generated invoice and requires no physical signature.</p>
             </div>
           </div>
         </main>

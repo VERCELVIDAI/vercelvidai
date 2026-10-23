@@ -91,7 +91,7 @@ export default function BillingOverviewPage() {
             <div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Billing & Financial Management</h1>
               <p className="mt-1 text-xs sm:text-sm text-slate-600">
-                Manage your subscription plans, PayU India transactions, official GST tax invoices, and receipts.
+                Manage your subscription plans, PayU India transactions, official invoices, and receipts.
               </p>
             </div>
 
@@ -264,7 +264,7 @@ export default function BillingOverviewPage() {
                     </div>
                     <div className="font-bold text-[#17211D] text-base mt-2">{pack.name}</div>
                     <div className="text-sm font-extrabold text-[#17211D] mt-1 font-mono">
-                      INR {pack.price} <span className="text-[10px] text-slate-500 font-normal">+ 18% GST</span>
+                      INR {pack.price}
                     </div>
                   </div>
 

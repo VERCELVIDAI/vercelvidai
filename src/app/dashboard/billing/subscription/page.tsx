@@ -95,7 +95,7 @@ export default function SubscriptionManagementPage() {
                   INR {plan?.priceInr || 2499}
                   <span className="text-xs text-slate-500 font-normal"> / month</span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">+ 18% GST (SAC 998314)</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">All standard platform features included</p>
               </div>
             </div>
 

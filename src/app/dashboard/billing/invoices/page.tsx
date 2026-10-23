@@ -87,9 +87,9 @@ export default function InvoicesListPage() {
                 <span>/</span>
                 <span className="text-[#17211D]">Invoices</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Tax Invoices</h1>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Invoices</h1>
               <p className="mt-1 text-xs sm:text-sm text-slate-600">
-                Official GST-compliant tax invoices for all creative subscriptions and credit purchases.
+                Official billing invoices for all creative subscriptions and credit purchases.
               </p>
             </div>
 
@@ -147,8 +147,8 @@ export default function InvoicesListPage() {
                       <th className="py-3 px-4">Invoice Number</th>
                       <th className="py-3 px-4">Date</th>
                       <th className="py-3 px-4">Description</th>
-                      <th className="py-3 px-4">Taxable Value</th>
-                      <th className="py-3 px-4">GST (18%)</th>
+                      <th className="py-3 px-4">Subtotal</th>
+                      <th className="py-3 px-4">Taxes</th>
                       <th className="py-3 px-4">Total Amount</th>
                       <th className="py-3 px-4">Status</th>
                       <th className="py-3 px-4 text-right">Actions</th>

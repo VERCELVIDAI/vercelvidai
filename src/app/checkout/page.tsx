@@ -375,7 +375,7 @@ function CheckoutContent() {
         <div className="mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-black text-[#17211D]">Complete Your Order</h1>
           <p className="mt-1 text-xs sm:text-sm text-slate-600">
-            Secure checkout powered by PayU India. Instant credit fulfillment with official GST tax invoice.
+            Secure checkout powered by PayU India. Instant credit fulfillment with official invoice.
           </p>
         </div>
 
@@ -473,18 +473,18 @@ function CheckoutContent() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  GSTIN <span className="text-slate-500 font-normal">(Optional for B2B Input Tax Credit)</span>
+                  Tax ID / Business ID <span className="text-slate-500 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={customerGstin}
                   onChange={(e) => setCustomerGstin(e.target.value.toUpperCase())}
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 font-mono"
-                  placeholder="e.g. 07AAAAA0000A1Z5"
+                  placeholder="e.g. TAX-ID-12345"
                   maxLength={15}
                 />
                 <p className="mt-1 text-[11px] text-slate-500">
-                  Provide your 15-character GSTIN to receive an official B2B tax invoice.
+                  Optional business identification or registration number.
                 </p>
               </div>
 
@@ -535,7 +535,7 @@ function CheckoutContent() {
                       disabled={isSubmitting}
                       className="text-[11px] text-emerald-700 hover:text-emerald-900 underline font-semibold transition-colors cursor-pointer"
                     >
-                      Developer Sandbox: Test Immediate Fulfillment & GST Invoice Clearance →
+                      Developer Sandbox: Test Immediate Fulfillment & Invoice Clearance →
                     </button>
                   </div>
                 )}
@@ -697,22 +697,11 @@ function CheckoutContent() {
                 </>
               )}
 
-              {isInterState ? (
+              {taxAmount > 0 && (
                 <div className="flex justify-between text-slate-600">
-                  <span>IGST @ 18%:</span>
+                  <span>Taxes & Fees:</span>
                   <span className="text-[#17211D] font-mono font-bold">INR {taxAmount.toFixed(2)}</span>
                 </div>
-              ) : (
-                <>
-                  <div className="flex justify-between text-slate-600">
-                    <span>CGST @ 9%:</span>
-                    <span className="text-[#17211D] font-mono font-bold">INR {(taxAmount / 2).toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between text-slate-600">
-                    <span>SGST @ 9%:</span>
-                    <span className="text-[#17211D] font-mono font-bold">INR {(taxAmount / 2).toFixed(2)}</span>
-                  </div>
-                </>
               )}
 
               <div className="pt-3 border-t border-emerald-500/15 flex justify-between items-baseline">
@@ -727,11 +716,11 @@ function CheckoutContent() {
             <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 space-y-1.5 shadow-xs">
               <div className="flex items-center gap-1.5 font-bold text-emerald-900">
                 <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                <span>Instant Crediting & GST Tax Invoice</span>
+                <span>Instant Crediting & Official Invoice</span>
               </div>
               <p className="text-[11px] text-slate-700 leading-relaxed">
                 Your credits are added to your wallet automatically upon confirmation. You will be able to download your
-                official GST invoice and payment receipt immediately.
+                official invoice and payment receipt immediately.
               </p>
             </div>
           </div>

@@ -163,7 +163,7 @@ export default function ReceiptDetailPage({ params }: { params: { id: string } }
               )}
               {receipt.invoiceNumber && (
                 <div className="flex justify-between py-2 border-b border-emerald-500/10">
-                  <span className="text-slate-500">Linked GST Tax Invoice:</span>
+                  <span className="text-slate-500">Linked Invoice:</span>
                   <Link
                     href={`/dashboard/billing/invoices/${receipt.invoiceId || receipt.invoiceNumber}`}
                     className="font-mono text-teal-700 font-semibold hover:underline"

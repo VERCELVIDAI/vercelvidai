@@ -153,7 +153,7 @@ export default function TransactionsListPage() {
                       <th className="py-3 px-4">Merchant Txn ID</th>
                       <th className="py-3 px-4">Description</th>
                       <th className="py-3 px-4">Base (INR)</th>
-                      <th className="py-3 px-4">GST (18%)</th>
+                      <th className="py-3 px-4">Taxes (INR)</th>
                       <th className="py-3 px-4">Total (INR)</th>
                       <th className="py-3 px-4">Status</th>
                       <th className="py-3 px-4">Date</th>

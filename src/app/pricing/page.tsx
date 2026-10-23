@@ -133,7 +133,7 @@ export default function PricingPage() {
         'Multi-track timeline editor (2 tracks)',
         '10 GB High-Speed cloud storage',
         'Commercial usage rights included',
-        'Official SAC 998314 GST Invoices',
+        'Official downloadable invoices',
       ],
       featureGroups: [
         {
@@ -160,7 +160,7 @@ export default function PricingPage() {
             '10 GB High-Speed cloud storage',
             'Standard email support',
             'Commercial license for all renders',
-            'GSTIN B2B input tax credit supported',
+            'Full commercial usage license',
           ],
         },
       ],
@@ -219,7 +219,7 @@ export default function PricingPage() {
             '50 GB High-Speed cloud storage',
             'Priority creator support',
             '10% discount on credit top-ups',
-            'Commercial rights & B2B GST ITC',
+            'Commercial rights & official invoices',
           ],
         },
       ],
@@ -277,7 +277,7 @@ export default function PricingPage() {
             '150 GB High-Speed cloud storage',
             'VIP 24/7 priority support',
             '20% discount on credit top-ups',
-            'Commercial rights & B2B GST ITC',
+            'Commercial rights & official invoices',
           ],
         },
       ],
@@ -306,7 +306,7 @@ export default function PricingPage() {
         'Unlimited Brand Kits & Templates',
         '500 GB Shared Team Storage',
         'Dedicated Account Director',
-        'Custom B2B GST Invoicing & SLA',
+        'Custom B2B Invoicing & SLA',
       ],
       featureGroups: [
         {
@@ -335,7 +335,7 @@ export default function PricingPage() {
             'Up to 10 Team member seats included',
             '500 GB Shared cloud storage',
             'Dedicated Account Director',
-            'Custom B2B GST Invoicing & 99.9% SLA',
+            'Custom B2B Invoicing & 99.9% SLA',
           ],
         },
       ],
@@ -472,7 +472,7 @@ export default function PricingPage() {
           {/* Top Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-300 text-xs font-semibold text-emerald-800 mb-4 shadow-xs">
             <Zap className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span className="truncate">PayU India Verified • 18% GST Compliant • Instant GPU Allocation</span>
+            <span className="truncate">PayU India Verified • Instant Token Delivery • 256-bit Secure Gateway</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-[#17211D] tracking-tight">
@@ -1022,7 +1022,7 @@ export default function PricingPage() {
                     <td className="py-3 px-4 text-teal-700 font-semibold">Concurrent Nodes</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-6 text-slate-700 font-medium">Official GST Invoices & B2B ITC</td>
+                    <td className="py-3 px-6 text-slate-700 font-medium">Official Invoices & Receipts</td>
                     <td className="py-3 px-4 text-emerald-600"><Check className="w-4 h-4" /></td>
                     <td className="py-3 px-4 text-emerald-600"><Check className="w-4 h-4" /></td>
                     <td className="py-3 px-4 text-emerald-600"><Check className="w-4 h-4" /></td>
@@ -1215,11 +1215,10 @@ export default function PricingPage() {
                   <div className="mt-4 flex items-baseline gap-1">
                     <span className="text-xs text-slate-500 font-medium">INR</span>
                     <span className="text-2xl font-black text-[#17211D]">₹{pack.priceInr.toLocaleString()}</span>
-                    <span className="text-[11px] text-slate-500 font-semibold">+ 18% GST</span>
                   </div>
 
                   <p className="text-[11px] text-slate-500 mt-1">
-                    Total: <strong className="text-slate-800">₹{pack.totalInr.toFixed(2)}</strong> (incl. taxes)
+                    Total: <strong className="text-slate-800">₹{pack.totalInr.toFixed(2)}</strong>
                   </p>
 
                   <div className="mt-4 p-2.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
@@ -1255,9 +1254,9 @@ export default function PricingPage() {
             <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center mb-3">
               <ShieldCheck className="w-4 h-4 text-emerald-700" />
             </div>
-            <h4 className="text-sm font-bold text-[#17211D]">Official Tax Invoices & B2B ITC</h4>
+            <h4 className="text-sm font-bold text-[#17211D]">Official Invoices & Receipts</h4>
             <p className="mt-1 text-xs text-slate-600 leading-relaxed">
-              Every settled transaction generates a downloadable PDF Tax Invoice (SAC 998314) and official payment receipt. GSTIN input tax credits are fully supported.
+              Every settled transaction generates a downloadable PDF invoice and official payment receipt. All purchases are cryptographically confirmed.
             </p>
           </div>
 

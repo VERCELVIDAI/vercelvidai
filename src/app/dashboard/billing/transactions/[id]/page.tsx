@@ -136,30 +136,15 @@ export default function TransactionDetailPage({ params }: { params: { id: string
                   <strong className="text-[#17211D]">{order.productInfo}</strong>
                 </div>
                 <div className="flex justify-between text-slate-700">
-                  <span>Base Taxable Amount:</span>
+                  <span>Subtotal:</span>
                   <span className="font-mono text-[#17211D]">INR {order.baseAmount.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-slate-700">
-                  <span>GST Rate:</span>
-                  <span className="font-mono text-[#17211D]">{order.taxBreakdown?.taxRate || 18}%</span>
-                </div>
-                {order.taxBreakdown?.cgstAmount > 0 ? (
-                  <>
-                    <div className="flex justify-between text-slate-700">
-                      <span>CGST (9%):</span>
-                      <span className="font-mono text-[#17211D]">INR {order.taxBreakdown.cgstAmount.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-slate-700">
-                      <span>SGST (9%):</span>
-                      <span className="font-mono text-[#17211D]">INR {order.taxBreakdown.sgstAmount.toFixed(2)}</span>
-                    </div>
-                  </>
-                ) : (
+                {order.taxAmount && order.taxAmount > 0 ? (
                   <div className="flex justify-between text-slate-700">
-                    <span>IGST (18%):</span>
+                    <span>Taxes & Fees:</span>
                     <span className="font-mono text-[#17211D]">INR {order.taxAmount.toFixed(2)}</span>
                   </div>
-                )}
+                ) : null}
                 <div className="flex justify-between text-[#17211D] font-bold pt-2 border-t border-emerald-500/10">
                   <span>Total Amount Paid:</span>
                   <span className="font-mono text-emerald-700 text-sm">INR {order.totalAmount.toFixed(2)}</span>
@@ -211,7 +196,7 @@ export default function TransactionDetailPage({ params }: { params: { id: string
               </div>
               {order.customerDetails?.gstin && (
                 <div className="pt-2 text-[11px] text-slate-600">
-                  <span>Customer GSTIN for Input Tax Credit: </span>
+                  <span>Customer Business / Tax ID: </span>
                   <strong className="text-emerald-700 font-mono">{order.customerDetails.gstin}</strong>
                 </div>
               )}

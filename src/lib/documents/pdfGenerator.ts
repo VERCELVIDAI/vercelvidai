@@ -110,7 +110,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     color: colorEmerald,
   });
 
-  page.drawText('fluviaflow.ai | Official Tax Document', {
+  page.drawText('fluviaflow.ai | Official Billing Document', {
     x: 40,
     y: cursorY - 26,
     size: 7.5,
@@ -119,8 +119,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   });
 
   // Right: Document Title & Invoice Number
-  const isGstCompliant = Boolean(invoice.supplier.gstin && invoice.supplier.isGstRegistered);
-  const docTitle = isGstCompliant ? 'TAX INVOICE' : 'COMMERCIAL INVOICE';
+  const docTitle = 'INVOICE';
   drawRightText(page, docTitle, width - 40, cursorY + 2, fontBold, 17, colorDark);
   drawRightText(page, `#${invoice.invoiceNumber}`, width - 40, cursorY - 14, fontBold, 11, colorEmeraldDark);
 
@@ -214,12 +213,8 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   supY -= 12;
   page.drawText(invoice.supplier.registeredAddress.slice(0, 48), { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
   supY -= 11;
-  page.drawText(`State: ${invoice.supplier.state} | PAN: ${invoice.supplier.pan}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
-  supY -= 11;
-  if (invoice.supplier.gstin) {
-    page.drawText(`GSTIN: ${invoice.supplier.gstin}`, { x: 52, y: supY, size: 8, font: fontBold, color: colorDark });
-    supY -= 11;
-  }
+  page.drawText(`State: ${invoice.supplier.state}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
+  supY -= 12;
   page.drawText(`Support: ${invoice.supplier.supportEmail}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
 
   // Right Card: Customer Box
@@ -248,20 +243,14 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     font: fontRegular,
     color: colorSlate,
   });
-  custY -= 11;
-  page.drawText(`Place of Supply: ${invoice.customer.state || invoice.supplier.state}`, {
+  custY -= 12;
+  page.drawText(`Place of Supply: ${invoice.customer.state || invoice.supplier.state || 'India'}`, {
     x: custX + 12,
     y: custY,
     size: 7.5,
     font: fontRegular,
     color: colorSlate,
   });
-  custY -= 11;
-  if (invoice.customer.gstin) {
-    page.drawText(`Customer GSTIN: ${invoice.customer.gstin}`, { x: custX + 12, y: custY, size: 8, font: fontBold, color: colorDark });
-  } else {
-    page.drawText('Category: Consumer (B2C Unregistered)', { x: custX + 12, y: custY, size: 7.5, font: fontRegular, color: colorLightSlate });
-  }
 
   cursorY -= cardHeight + 20;
 
@@ -279,20 +268,14 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   });
 
   const colDescX = 52;
-  const colSacX = 245;
-  const colQtyX = 295;
-  const colRateRight = 360;
-  const colTaxableRight = 430;
-  const colGstX = 450;
+  const colQtyX = 330;
+  const colRateRight = 430;
   const colTotalRight = width - 52;
 
   page.drawText('ITEM DESCRIPTION', { x: colDescX, y: cursorY - 14, size: 7.5, font: fontBold, color: colorWhite });
-  page.drawText('SAC', { x: colSacX, y: cursorY - 14, size: 7.5, font: fontBold, color: colorWhite });
   page.drawText('QTY', { x: colQtyX, y: cursorY - 14, size: 7.5, font: fontBold, color: colorWhite });
-  drawRightText(page, 'RATE (INR)', colRateRight, cursorY - 14, fontBold, 7.5, colorWhite);
-  drawRightText(page, 'TAXABLE (INR)', colTaxableRight, cursorY - 14, fontBold, 7.5, colorWhite);
-  page.drawText('GST', { x: colGstX, y: cursorY - 14, size: 7.5, font: fontBold, color: colorWhite });
-  drawRightText(page, 'TOTAL (INR)', colTotalRight, cursorY - 14, fontBold, 7.5, colorWhite);
+  drawRightText(page, 'UNIT PRICE (INR)', colRateRight, cursorY - 14, fontBold, 7.5, colorWhite);
+  drawRightText(page, 'TOTAL AMOUNT (INR)', colTotalRight, cursorY - 14, fontBold, 7.5, colorWhite);
 
   cursorY -= thHeight;
 
@@ -312,12 +295,9 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     });
 
     const itemDesc = item.description || 'Creative Credits / Subscription';
-    page.drawText(itemDesc.slice(0, 36), { x: colDescX, y: cursorY - 16, size: 8.5, font: fontBold, color: colorDark });
-    page.drawText(item.hsnSacCode || '998314', { x: colSacX, y: cursorY - 16, size: 7.5, font: fontRegular, color: colorSlate });
+    page.drawText(itemDesc.slice(0, 45), { x: colDescX, y: cursorY - 16, size: 8.5, font: fontBold, color: colorDark });
     page.drawText(String(item.quantity || 1), { x: colQtyX, y: cursorY - 16, size: 8, font: fontRegular, color: colorSlate });
     drawRightText(page, (item.unitPrice || item.taxableValue).toFixed(2), colRateRight, cursorY - 16, fontRegular, 8, colorDark);
-    drawRightText(page, item.taxableValue.toFixed(2), colTaxableRight, cursorY - 16, fontRegular, 8, colorDark);
-    page.drawText(`${item.gstRate || 18}%`, { x: colGstX, y: cursorY - 16, size: 8, font: fontRegular, color: colorSlate });
     drawRightText(page, item.totalAmount.toFixed(2), colTotalRight, cursorY - 16, fontBold, 8.5, colorDark);
 
     cursorY -= rowHeight;
@@ -325,11 +305,12 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
 
   cursorY -= 16;
 
-  // 6. TOTALS & TAX BREAKDOWN (RIGHT-ALIGNED CARD)
+  // 6. TOTALS & SUMMARY (RIGHT-ALIGNED CARD)
   const summaryBoxWidth = 230;
   const summaryBoxX = width - 40 - summaryBoxWidth;
   const hasDiscount = Boolean(invoice.discountAmount && invoice.discountAmount > 0);
-  const summaryBoxHeight = hasDiscount ? 130 : 108;
+  const hasTaxes = Boolean(invoice.taxAmount && invoice.taxAmount > 0);
+  const summaryBoxHeight = hasDiscount ? (hasTaxes ? 115 : 95) : (hasTaxes ? 95 : 75);
 
   page.drawRectangle({
     x: summaryBoxX,
@@ -357,20 +338,13 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     sumY -= 14;
   }
 
-  page.drawText('Taxable Value:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
+  page.drawText('Subtotal:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
   drawRightText(page, `INR ${invoice.baseAmount.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
   sumY -= 15;
 
-  if (invoice.cgstAmount > 0) {
-    page.drawText('CGST @ 9%:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
-    drawRightText(page, `INR ${invoice.cgstAmount.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
-    sumY -= 13;
-    page.drawText('SGST @ 9%:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
-    drawRightText(page, `INR ${invoice.sgstAmount.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
-    sumY -= 15;
-  } else {
-    page.drawText('IGST @ 18%:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
-    drawRightText(page, `INR ${invoice.igstAmount.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
+  if (hasTaxes) {
+    page.drawText('Taxes & Fees:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
+    drawRightText(page, `INR ${invoice.taxAmount.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
     sumY -= 15;
   }
 
@@ -382,7 +356,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     color: colorBorder,
   });
 
-  page.drawText('Grand Total:', { x: labelX, y: sumY - 11, size: 10, font: fontBold, color: colorDark });
+  page.drawText('Total Amount:', { x: labelX, y: sumY - 11, size: 10, font: fontBold, color: colorDark });
   drawRightText(page, `INR ${invoice.totalAmount.toFixed(2)}`, valRight, sumY - 11, fontBold, 11, colorEmeraldDark);
 
   // Left Note Beside Totals
@@ -400,11 +374,11 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   let noteY = cursorY - 18;
   page.drawText('PAYMENT SETTLEMENT & CLEARANCE NOTE', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorEmeraldDark });
   noteY -= 14;
-  page.drawText('- Payment processed through PayU Payments Private Limited.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
+  page.drawText('- Payment processed securely through PayU Payments Private Limited.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
   noteY -= 11;
   page.drawText('- Creative generative tokens and compute units active on account.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
   noteY -= 11;
-  page.drawText(`- Linked PayU Merchant Ref: ${invoice.txnid.slice(0, 24)}`, { x: 52, y: noteY, size: 7, font: fontBold, color: colorDark });
+  page.drawText(`- Linked Merchant Ref: ${invoice.txnid.slice(0, 24)}`, { x: 52, y: noteY, size: 7, font: fontBold, color: colorDark });
   noteY -= 13;
   page.drawText('[VERIFIED] DIGITAL CERTIFICATION: PAID IN FULL', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorEmeraldDark });
 
@@ -422,17 +396,17 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   page.drawText('STATUTORY DECLARATIONS & TERMS:', { x: 40, y: cursorY, size: 7, font: fontBold, color: colorSlate });
   cursorY -= 10;
   page.drawText(
-    '1. This is a computer-generated tax invoice issued in accordance with the Central Goods and Services Tax Act, 2017. No physical signature is required.',
+    '1. This is a computer-generated invoice for cloud software services and creative credits. No physical signature is required.',
     { x: 40, y: cursorY, size: 6.8, font: fontRegular, color: colorLightSlate }
   );
   cursorY -= 9;
   page.drawText(
-    '2. Services covered under SAC 998314 (Information technology software and AI cloud generative services). Supplies are non-transferable.',
+    '2. Cloud generative AI tokens and compute subscriptions are delivered digitally upon payment confirmation.',
     { x: 40, y: cursorY, size: 6.8, font: fontRegular, color: colorLightSlate }
   );
   cursorY -= 9;
   page.drawText(
-    '3. For disputes, billing queries, or corporate invoicing support, please email billing@fluviaflow.ai citing your Invoice and Merchant Txn ID.',
+    '3. For disputes, billing queries, or corporate invoicing support, please email billing@fluviaflow.ai citing your Invoice ID.',
     { x: 40, y: cursorY, size: 6.8, font: fontRegular, color: colorLightSlate }
   );
 
@@ -644,7 +618,7 @@ export async function generateReceiptPdf(
     { label: 'Customer Name:', val: receipt.customerName || 'Fluvia Flow Creator' },
     { label: 'Customer Email:', val: receipt.customerEmail },
     { label: 'Product Purchased:', val: receipt.productPurchased || 'Creative Credits / Pack' },
-    { label: 'Linked Tax Invoice:', val: receipt.invoiceNumber || invoice?.invoiceNumber || 'INV-AVAILABLE' },
+    { label: 'Linked Invoice:', val: receipt.invoiceNumber || invoice?.invoiceNumber || 'INV-AVAILABLE' },
     { label: 'Order Identifier:', val: receipt.orderId || receipt.txnid },
     { label: 'Cryptographic Auth:', val: 'Verified Server HMAC' },
   ];

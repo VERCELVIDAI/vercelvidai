@@ -364,7 +364,7 @@ export default function HomePage() {
               Pay in INR with Full Flexibility
             </h2>
             <p className="mt-4 text-slate-600 text-sm">
-              Official PayU India Hosted Checkout & UPI integration. Instant GST tax invoicing & settlement receipts.
+              Official PayU India Hosted Checkout & UPI integration. Instant billing invoicing & settlement receipts.
             </p>
           </div>
 
@@ -405,7 +405,7 @@ export default function HomePage() {
                 price: '₹9,999',
                 period: 'per month',
                 credits: '10,000 credits / month',
-                features: ['Full Multi-Model Access', '10 Member Team Seats', '500 GB Storage', 'Custom GST Invoicing'],
+                features: ['Full Multi-Model Access', '10 Member Team Seats', '500 GB Storage', 'Custom Billing Invoicing'],
                 cta: 'Get Fluvia Teams',
                 popular: false,
                 href: '/pricing',
@@ -484,7 +484,7 @@ export default function HomePage() {
                 },
                 {
                   q: 'Can I pay using Indian Payment Methods (UPI, Netbanking, Cards)?',
-                  a: 'Yes! Fluvia Flow supports direct INR billing through official PayU India Hosted Checkout, allowing UPI, debit/credit cards, and corporate netbanking with automatic GST invoices and receipts.',
+                  a: 'Yes! Fluvia Flow supports direct INR billing through official PayU India Hosted Checkout, allowing UPI, debit/credit cards, and corporate netbanking with automatic invoices and receipts.',
                 },
                 {
                   q: 'Do I own commercial rights to videos created on Fluvia Flow?',
