@@ -91,6 +91,15 @@ function SignupForm() {
         return;
       }
 
+      if (typeof window !== 'undefined') {
+        try {
+          if (data.vaultToken) {
+            localStorage.setItem('fluvia_vault', data.vaultToken);
+          }
+          localStorage.setItem('fluvia_last_email', email.trim().toLowerCase());
+        } catch {}
+      }
+
       // Check if user had a pending prompt in localStorage
       const pendingPrompt =
         typeof window !== 'undefined'

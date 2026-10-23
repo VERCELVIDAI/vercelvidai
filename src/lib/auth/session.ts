@@ -7,6 +7,7 @@ import { getSupabaseServerClient } from '../supabase/server';
 
 const PRIMARY_COOKIE = 'fluvia_session';
 const LEGACY_COOKIE = 'vidai_session';
+export const VAULT_COOKIE = 'fluvia_vault';
 const SESSION_SECRET = process.env.APP_SECRET || 'fluvia-flow-production-super-secret-key-32-chars-minimum-fallback';
 
 export interface SessionData {
@@ -14,6 +15,16 @@ export interface SessionData {
   email: string;
   role: 'creator' | 'admin' | 'enterprise';
   workspaceId: string;
+}
+
+export interface VaultAccountData {
+  userId: string;
+  email: string;
+  displayName: string;
+  role: 'creator' | 'admin' | 'enterprise';
+  passwordHash?: string;
+  workspaceId?: string;
+  createdAt?: string;
 }
 
 function getSessionSecret(): string {
@@ -94,6 +105,63 @@ export function parseSignedSessionToken(token: string): SessionData | null {
   }
 }
 
+export function createSignedVaultToken(data: VaultAccountData): string {
+  const payload = Buffer.from(JSON.stringify(data)).toString('base64url');
+  const signature = signPayload(payload);
+  return `${payload}.${signature}`;
+}
+
+export function parseSignedVaultToken(token: string): VaultAccountData | null {
+  try {
+    if (!token || typeof token !== 'string') return null;
+    let clean = token.trim();
+    if (clean.startsWith('"') && clean.endsWith('"')) {
+      clean = clean.slice(1, -1);
+    }
+
+    const dotIndex = clean.lastIndexOf('.');
+    if (dotIndex === -1) return null;
+
+    const payload = clean.substring(0, dotIndex);
+    const signature = clean.substring(dotIndex + 1);
+
+    const expectedSig = signPayload(payload);
+    let isValid = false;
+
+    if (signature.length === expectedSig.length) {
+      if (crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
+        isValid = true;
+      }
+    }
+
+    if (!isValid) return null;
+
+    let jsonStr = Buffer.from(payload, 'base64url').toString('utf-8');
+    if (!jsonStr.startsWith('{')) {
+      jsonStr = Buffer.from(payload, 'base64').toString('utf-8');
+    }
+    return JSON.parse(jsonStr) as VaultAccountData;
+  } catch {
+    return null;
+  }
+}
+
+export async function setVaultCookie(data: VaultAccountData): Promise<string> {
+  const cookieStore = cookies();
+  const token = createSignedVaultToken(data);
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+  const isHttps = appUrl.startsWith('https://');
+  const cookieOpts = {
+    httpOnly: true,
+    secure: isHttps,
+    sameSite: 'lax' as const,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 365, // 1 year persistence across instances
+  };
+  cookieStore.set(VAULT_COOKIE, token, cookieOpts);
+  return token;
+}
+
 export async function getSession(): Promise<SessionData | null> {
   const cookieStore = cookies();
   const sessionCookie = cookieStore.get(PRIMARY_COOKIE) || cookieStore.get(LEGACY_COOKIE);
@@ -104,7 +172,24 @@ export async function getSession(): Promise<SessionData | null> {
   const parsed = parseSignedSessionToken(sessionCookie.value);
   if (!parsed || !parsed.userId) return null;
 
-  const profile = dbStore.getProfileById(parsed.userId);
+  let profile = dbStore.getProfileById(parsed.userId);
+  if (!profile) {
+    // Attempt vault rehydration if running on serverless / fresh cold start container
+    const vaultCookie = cookieStore.get(VAULT_COOKIE);
+    if (vaultCookie?.value) {
+      const vaultData = parseSignedVaultToken(vaultCookie.value);
+      if (vaultData && (vaultData.userId === parsed.userId || vaultData.email.toLowerCase() === parsed.email.toLowerCase())) {
+        const rehydrated = dbStore.rehydrateFromVault(vaultData);
+        profile = rehydrated.profile;
+      }
+    }
+    // Direct verified session rehydration fallback
+    if (!profile) {
+      const rehydrated = dbStore.rehydrateFromSession(parsed);
+      profile = rehydrated.profile;
+    }
+  }
+
   if (!profile) return null;
 
   // Securely ensure role and email match the canonical database record to prevent privilege escalation
@@ -150,7 +235,11 @@ export async function getCurrentUser(): Promise<{ user: UserProfile; workspace: 
   // 1. Check direct signed session cookie
   const session = await getSession();
   if (session) {
-    const user = dbStore.getProfileById(session.userId);
+    let user = dbStore.getProfileById(session.userId);
+    if (!user) {
+      const rehydrated = dbStore.rehydrateFromSession(session);
+      user = rehydrated.profile;
+    }
     if (user) {
       const workspace = dbStore.ensureUserWorkspace(user.id, user.displayName);
       return { user, workspace };

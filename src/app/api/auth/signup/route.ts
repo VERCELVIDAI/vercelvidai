@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/db/store';
-import { setSession } from '@/lib/auth/session';
+import { setSession, setVaultCookie } from '@/lib/auth/session';
 import { isSupabaseAuthEnabled, supabaseSignUp } from '@/lib/auth/supabaseAuth';
 
 export const dynamic = 'force-dynamic';
@@ -105,6 +105,17 @@ export async function POST(req: NextRequest) {
       workspaceId: workspace.id,
     });
 
+    const hashedPassword = dbStore.getPasswordHash(profile.id);
+    const vaultToken = await setVaultCookie({
+      userId: profile.id,
+      email: profile.email,
+      displayName: profile.displayName,
+      role: profile.role,
+      passwordHash: hashedPassword,
+      workspaceId: workspace.id,
+      createdAt: profile.createdAt,
+    });
+
     dbStore.logAudit(profile.id, 'USER_SIGNUP', 'profile', profile.id, {
       email: normalizedEmail,
       authProvider: 'password',
@@ -115,6 +126,7 @@ export async function POST(req: NextRequest) {
       requiresEmailVerification: false,
       user: profile,
       workspace,
+      vaultToken,
       message: 'Account successfully registered with 100 free generative credits!',
     });
   } catch (err: any) {

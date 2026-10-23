@@ -12,8 +12,15 @@ export function FeaturedTemplateCarousel() {
   const router = useRouter();
   const [previewTemplate, setPreviewTemplate] = useState<VideoTemplate | null>(null);
 
-  // Take top 6 trending templates
-  const featured = TEMPLATES_DATA.slice(0, 6);
+  // Curate top trending and new featured templates including vegetable video demo
+  const featured = [
+    TEMPLATES_DATA.find((t) => t.id === 'tmpl_19'),
+    TEMPLATES_DATA.find((t) => t.id === 'tmpl_01'),
+    TEMPLATES_DATA.find((t) => t.id === 'tmpl_20'),
+    TEMPLATES_DATA.find((t) => t.id === 'tmpl_02'),
+    TEMPLATES_DATA.find((t) => t.id === 'tmpl_23'),
+    TEMPLATES_DATA.find((t) => t.id === 'tmpl_03'),
+  ].filter((t): t is VideoTemplate => Boolean(t));
 
   const handleUseTemplate = async (template: VideoTemplate) => {
     try {

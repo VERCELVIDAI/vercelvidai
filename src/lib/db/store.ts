@@ -1311,6 +1311,96 @@ class Store {
     return isValid;
   }
 
+  getPasswordHash(userIdOrEmail: string): string | undefined {
+    if (!userIdOrEmail) return undefined;
+    const db = this.load();
+    const cleanKey = userIdOrEmail.trim().toLowerCase();
+    let stored = db.passwords[userIdOrEmail] || db.passwords[cleanKey];
+    if (!stored) {
+      const profile = db.profiles.find(
+        (p) => p.id === userIdOrEmail || (p.email && p.email.trim().toLowerCase() === cleanKey)
+      );
+      if (profile) {
+        stored = db.passwords[profile.id] || (profile.email && db.passwords[profile.email.trim().toLowerCase()]);
+      }
+    }
+    return stored;
+  }
+
+  rehydrateFromVault(data: {
+    userId: string;
+    email: string;
+    displayName?: string;
+    role?: 'creator' | 'admin' | 'enterprise';
+    passwordHash?: string;
+    workspaceId?: string;
+    createdAt?: string;
+  }): { profile: UserProfile; workspace: Workspace } {
+    const db = this.load();
+    const cleanEmail = (data.email || '').trim().toLowerCase();
+    const cleanDisplayName = (data.displayName || '').trim() || cleanEmail.split('@')[0] || 'Creator';
+    const now = data.createdAt || new Date().toISOString();
+
+    let profile = db.profiles.find((p) => p.id === data.userId || (p.email && p.email.toLowerCase() === cleanEmail));
+    if (!profile) {
+      profile = {
+        id: data.userId,
+        email: cleanEmail,
+        displayName: cleanDisplayName,
+        role: (data.role as any) || 'creator',
+        createdAt: now,
+        updatedAt: new Date().toISOString(),
+      };
+      db.profiles.push(profile);
+    } else {
+      if (data.displayName && !profile.displayName) profile.displayName = cleanDisplayName;
+      if (data.role && !profile.role) profile.role = data.role as any;
+    }
+
+    if (data.passwordHash) {
+      db.passwords[profile.id] = data.passwordHash;
+      db.passwords[cleanEmail] = data.passwordHash;
+    }
+
+    const ws = this.ensureUserWorkspace(profile.id, profile.displayName);
+
+    if (!db.creditAccounts[profile.id]) {
+      db.creditAccounts[profile.id] = {
+        userId: profile.id,
+        availableBalance: 100,
+        reservedBalance: 0,
+        updatedAt: now,
+      };
+      db.creditLedger.push({
+        id: 'cld_' + Math.random().toString(36).substring(2, 12),
+        userId: profile.id,
+        transactionType: 'signup_bonus',
+        amount: 100,
+        balanceAfter: 100,
+        idempotencyKey: `vault_signup_${profile.id}`,
+        metadata: { note: 'Welcome allowance' },
+        createdAt: now,
+      });
+    }
+
+    this.save(db);
+    return { profile, workspace: ws };
+  }
+
+  rehydrateFromSession(data: {
+    userId: string;
+    email: string;
+    role: 'creator' | 'admin' | 'enterprise';
+    workspaceId?: string;
+  }): { profile: UserProfile; workspace: Workspace } {
+    return this.rehydrateFromVault({
+      userId: data.userId,
+      email: data.email,
+      role: data.role,
+      workspaceId: data.workspaceId,
+    });
+  }
+
   createProfile(params: { email: string; displayName: string; passwordPlainText: string; role?: 'creator' | 'admin' }): { profile: UserProfile; workspace: Workspace } {
     const db = this.load();
     const now = new Date().toISOString();

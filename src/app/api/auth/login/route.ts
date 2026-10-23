@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/db/store';
-import { setSession } from '@/lib/auth/session';
+import { setSession, setVaultCookie, parseSignedVaultToken, VAULT_COOKIE } from '@/lib/auth/session';
 import { isSupabaseAuthEnabled, supabaseSignIn } from '@/lib/auth/supabaseAuth';
 
 export const dynamic = 'force-dynamic';
@@ -43,7 +43,21 @@ export async function POST(req: NextRequest) {
 
     // 2. Verified fallback mode (Local dbStore with scrypt verification)
     dbStore.forceReload();
-    const profile = dbStore.getProfileByEmail(normalizedEmail);
+    let profile = dbStore.getProfileByEmail(normalizedEmail);
+
+    // If profile not found in local disk (e.g. serverless container separation), check signed vault cookie or header
+    if (!profile) {
+      const vaultCookie = req.cookies.get(VAULT_COOKIE)?.value;
+      const vaultHeader = req.headers.get('x-fluvia-vault');
+      const token = vaultCookie || vaultHeader;
+      if (token) {
+        const vaultData = parseSignedVaultToken(token);
+        if (vaultData && vaultData.email.toLowerCase().trim() === normalizedEmail) {
+          const rehydrated = dbStore.rehydrateFromVault(vaultData);
+          profile = rehydrated.profile;
+        }
+      }
+    }
 
     if (!profile) {
       return NextResponse.json(
@@ -55,7 +69,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const hasPass = dbStore.hasPassword(profile.id);
+    let hasPass = dbStore.hasPassword(profile.id);
+    if (!hasPass) {
+      // Check vault for password hash if container has missing credentials
+      const vaultCookie = req.cookies.get(VAULT_COOKIE)?.value || req.headers.get('x-fluvia-vault');
+      if (vaultCookie) {
+        const vaultData = parseSignedVaultToken(vaultCookie);
+        if (vaultData?.passwordHash) {
+          dbStore.rehydrateFromVault(vaultData);
+          hasPass = dbStore.hasPassword(profile.id);
+        }
+      }
+    }
+
     if (!hasPass) {
       if (profile.authProvider === 'google' || profile.googleId) {
         return NextResponse.json(
@@ -101,6 +127,20 @@ export async function POST(req: NextRequest) {
       workspaceId: workspace.id,
     });
 
+    const storedHash = dbStore.getPasswordHash(profile.id);
+    let vaultToken: string | undefined;
+    if (storedHash) {
+      vaultToken = await setVaultCookie({
+        userId: profile.id,
+        email: profile.email,
+        displayName: profile.displayName,
+        role: profile.role,
+        passwordHash: storedHash,
+        workspaceId: workspace.id,
+        createdAt: profile.createdAt,
+      });
+    }
+
     dbStore.logAudit(profile.id, 'USER_LOGIN', 'profile', profile.id, {
       email: profile.email,
       authProvider: 'password',
@@ -110,6 +150,7 @@ export async function POST(req: NextRequest) {
       success: true,
       user: profile,
       workspaceId: workspace.id,
+      vaultToken,
     });
   } catch (err: any) {
     console.error('[Login API Error]:', err);

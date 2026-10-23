@@ -231,7 +231,7 @@ function TemplateExplorer() {
           </div>
         </div>
 
-        {/* Category Filter Pills (All 18 Categories) */}
+        {/* Category Filter Pills (All Categories) */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           {TEMPLATE_CATEGORIES.map((cat) => {
             const count =
@@ -334,7 +334,7 @@ export default function TemplatesPage() {
             <Sparkles className="w-4 h-4 text-emerald-600" />
             <span>Curated Creative Library</span>
             <span className="text-emerald-300">•</span>
-            <span>18 Production-Ready Video Presets</span>
+            <span>26+ Production-Ready Video Presets</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#17211D] tracking-tight leading-[1.14]">
@@ -345,7 +345,7 @@ export default function TemplatesPage() {
           </h1>
 
           <p className="mt-5 text-base sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-            Explore 18 cinematic video templates for commercials, product reels, fashion campaigns, and social stories.
+            Explore 26+ cinematic video templates for organic vegetables, commercials, food demos, fashion campaigns, and social stories.
           </p>
         </div>
 

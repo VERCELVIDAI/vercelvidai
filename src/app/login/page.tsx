@@ -37,6 +37,14 @@ function LoginForm() {
   useEffect(() => {
     if (queryError) setError(queryError);
     if (queryMessage) setSuccessMessage(queryMessage);
+
+    // Pre-fill previously registered or used email
+    if (typeof window !== 'undefined' && !email) {
+      try {
+        const remembered = localStorage.getItem('fluvia_last_email');
+        if (remembered) setEmail(remembered);
+      } catch {}
+    }
   }, [queryError, queryMessage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,16 +58,29 @@ function LoginForm() {
     setError(null);
 
     try {
+      const vaultToken = typeof window !== 'undefined' ? localStorage.getItem('fluvia_vault') || '' : '';
       const res = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-fluvia-vault': vaultToken,
+        },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
         throw new Error(data.error || 'Failed to sign in. Please verify your credentials.');
+      }
+
+      if (typeof window !== 'undefined') {
+        try {
+          if (data.vaultToken) {
+            localStorage.setItem('fluvia_vault', data.vaultToken);
+          }
+          localStorage.setItem('fluvia_last_email', email.trim().toLowerCase());
+        } catch {}
       }
 
       if (useTemplate === 'true' && returnUrl.startsWith('/templates/')) {
@@ -122,7 +143,17 @@ function LoginForm() {
           <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
             <div className="flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
-              <span className="font-semibold leading-relaxed">{error}</span>
+              <div className="leading-relaxed">
+                <span className="font-semibold">{error}</span>
+                {error.includes('Create an account') && (
+                  <Link
+                    href={`/signup?returnUrl=${encodeURIComponent(returnUrl)}`}
+                    className="ml-1.5 underline font-bold text-emerald-800 hover:text-emerald-950 inline-flex items-center gap-0.5"
+                  >
+                    <span>Register now &rarr;</span>
+                  </Link>
+                )}
+              </div>
             </div>
             <button
               type="button"

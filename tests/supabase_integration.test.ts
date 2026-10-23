@@ -8,8 +8,8 @@ import fs from 'fs';
 import path from 'path';
 import { isSupabaseConfigured, getSupabaseUrl } from '../src/lib/supabase/config';
 import { getSupabaseBrowserClient } from '../src/lib/supabase/client';
-import { dbStore } from '../src/lib/db/store';
-import { createSignedSessionToken, parseSignedSessionToken } from '../src/lib/auth/session';
+import { dbStore, hashPassword } from '../src/lib/db/store';
+import { createSignedSessionToken, parseSignedSessionToken, createSignedVaultToken, parseSignedVaultToken } from '../src/lib/auth/session';
 import { isSupabaseAuthEnabled } from '../src/lib/auth/supabaseAuth';
 
 function runTests() {
@@ -105,6 +105,27 @@ function runTests() {
     envExampleContent.includes('NEXT_PUBLIC_SUPABASE_ANON_KEY') &&
     envExampleContent.includes('SUPABASE_SERVICE_ROLE_KEY')
   );
+
+  // 7. Ephemeral Instance & Vault Rehydration Tests
+  console.log('\n7. Testing Vault Token Signing & Rehydration Resilience...');
+  const vaultUser = {
+    userId: 'usr_vault_' + Math.random().toString(36).substring(2, 10),
+    email: `vault_user_${Date.now()}@fluviaflow.ai`,
+    displayName: 'Vault Resilient Artist',
+    role: 'creator' as const,
+    passwordHash: hashPassword('VaultPass123!'),
+  };
+
+  const vaultToken = createSignedVaultToken(vaultUser);
+  assert('Vault token is generated as signed two-part token', typeof vaultToken === 'string' && vaultToken.includes('.'));
+  
+  const parsedVault = parseSignedVaultToken(vaultToken);
+  assert('Vault token parsed successfully', parsedVault !== null && parsedVault.email === vaultUser.email);
+
+  const rehydrated = dbStore.rehydrateFromVault(vaultUser);
+  assert('User successfully rehydrated into dbStore', rehydrated.profile.id === vaultUser.userId);
+  assert('Rehydrated user password verifies accurately', dbStore.verifyPassword(vaultUser.userId, 'VaultPass123!'));
+  assert('Rehydrated user has 100 welcome credits', dbStore.getCreditAccount(vaultUser.userId).availableBalance === 100);
 
   console.log('\n================================================================');
   console.log(`TEST SUMMARY: ${passed} passed, ${failed} failed`);
