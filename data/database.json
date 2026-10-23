@@ -723,6 +723,32 @@
       "role": "creator",
       "createdAt": "2026-10-23T05:35:25.102Z",
       "updatedAt": "2026-10-23T05:35:25.102Z"
+    },
+    {
+      "id": "e82b7f02-a1b2-4c3d-8e9f-5yi1tf3ozsp",
+      "email": "creator_1792734440463@fluviaflow.ai",
+      "displayName": "Supabase Creator",
+      "avatarUrl": "https://fluvia.io/avatar.png",
+      "role": "creator",
+      "createdAt": "2026-10-23T05:47:20.476Z",
+      "updatedAt": "2026-10-23T05:47:20.476Z"
+    },
+    {
+      "id": "e82b7f02-a1b2-4c3d-8e9f-1jku2eiwe5r",
+      "email": "creator_1792734471643@fluviaflow.ai",
+      "displayName": "Supabase Creator",
+      "avatarUrl": "https://fluvia.io/avatar.png",
+      "role": "creator",
+      "createdAt": "2026-10-23T05:47:51.654Z",
+      "updatedAt": "2026-10-23T05:47:51.654Z"
+    },
+    {
+      "id": "usr_64vdx6za",
+      "email": "maya_1792734560362@fluviaflow.ai",
+      "displayName": "Maya Lin",
+      "role": "creator",
+      "createdAt": "2026-10-23T05:49:20.393Z",
+      "updatedAt": "2026-10-23T05:49:20.393Z"
     }
   ],
   "passwords": {
@@ -863,7 +889,9 @@
     "usr_pmy68h7s": "scrypt:3a660b1bf29d821422781d5e68169536:451b938064e0a8fd6cbf14a637900a6ff082dea678de30ab5629e46dee729ab277147a11b9d48b1c1584421cedff4e0f18837658f25ac597f3ceff08572b3a67",
     "payu_test_1792733717980@vidai.io": "scrypt:3a660b1bf29d821422781d5e68169536:451b938064e0a8fd6cbf14a637900a6ff082dea678de30ab5629e46dee729ab277147a11b9d48b1c1584421cedff4e0f18837658f25ac597f3ceff08572b3a67",
     "usr_ked26bqs": "scrypt:5177bdf5d2ca71c92ce6fc2b06ab4d2e:84ecaf4849855c8634e70627e1247b484221926496795a8f4a5e8a2ad833751abf08e7ca48dc0371bb878d66a1270a7fd3d7e7cce8a55ea50609cf07f7541e39",
-    "e2e_creator_1792733725015@fluviaflow.ai": "scrypt:5177bdf5d2ca71c92ce6fc2b06ab4d2e:84ecaf4849855c8634e70627e1247b484221926496795a8f4a5e8a2ad833751abf08e7ca48dc0371bb878d66a1270a7fd3d7e7cce8a55ea50609cf07f7541e39"
+    "e2e_creator_1792733725015@fluviaflow.ai": "scrypt:5177bdf5d2ca71c92ce6fc2b06ab4d2e:84ecaf4849855c8634e70627e1247b484221926496795a8f4a5e8a2ad833751abf08e7ca48dc0371bb878d66a1270a7fd3d7e7cce8a55ea50609cf07f7541e39",
+    "usr_64vdx6za": "scrypt:e4a1b97547b418c87898dc8389d4c1e7:237d0d292ba54b6322fd46967311671129acbecb37fe34e4aa5254ca4da522d72ff7b17cc8b9cadb365f4f290868596bfd331230ea661f9272c37c3e6c473425",
+    "maya_1792734560362@fluviaflow.ai": "scrypt:e4a1b97547b418c87898dc8389d4c1e7:237d0d292ba54b6322fd46967311671129acbecb37fe34e4aa5254ca4da522d72ff7b17cc8b9cadb365f4f290868596bfd331230ea661f9272c37c3e6c473425"
   },
   "workspaces": [
     {
@@ -1495,6 +1523,27 @@
       "name": "E2E Creator 1792733725015's Studio",
       "createdAt": "2026-10-23T05:35:25.102Z",
       "updatedAt": "2026-10-23T05:35:25.102Z"
+    },
+    {
+      "id": "ws_e82b7f02a1",
+      "ownerId": "e82b7f02-a1b2-4c3d-8e9f-5yi1tf3ozsp",
+      "name": "Supabase Creator's Studio",
+      "createdAt": "2026-10-23T05:47:20.476Z",
+      "updatedAt": "2026-10-23T05:47:20.476Z"
+    },
+    {
+      "id": "ws_e82b7f02a1",
+      "ownerId": "e82b7f02-a1b2-4c3d-8e9f-1jku2eiwe5r",
+      "name": "Supabase Creator's Studio",
+      "createdAt": "2026-10-23T05:47:51.654Z",
+      "updatedAt": "2026-10-23T05:47:51.654Z"
+    },
+    {
+      "id": "ws_n8fyeblt",
+      "ownerId": "usr_64vdx6za",
+      "name": "Maya Lin's Studio",
+      "createdAt": "2026-10-23T05:49:20.393Z",
+      "updatedAt": "2026-10-23T05:49:20.393Z"
     }
   ],
   "workspaceMembers": [
@@ -2013,6 +2062,24 @@
       "userId": "usr_ked26bqs",
       "role": "owner",
       "joinedAt": "2026-10-23T05:35:25.102Z"
+    },
+    {
+      "workspaceId": "ws_e82b7f02a1",
+      "userId": "e82b7f02-a1b2-4c3d-8e9f-5yi1tf3ozsp",
+      "role": "owner",
+      "joinedAt": "2026-10-23T05:47:20.476Z"
+    },
+    {
+      "workspaceId": "ws_e82b7f02a1",
+      "userId": "e82b7f02-a1b2-4c3d-8e9f-1jku2eiwe5r",
+      "role": "owner",
+      "joinedAt": "2026-10-23T05:47:51.654Z"
+    },
+    {
+      "workspaceId": "ws_n8fyeblt",
+      "userId": "usr_64vdx6za",
+      "role": "owner",
+      "joinedAt": "2026-10-23T05:49:20.393Z"
     }
   ],
   "creditAccounts": {
@@ -2537,6 +2604,24 @@
       "availableBalance": 100,
       "reservedBalance": 0,
       "updatedAt": "2026-10-23T05:35:25.102Z"
+    },
+    "e82b7f02-a1b2-4c3d-8e9f-5yi1tf3ozsp": {
+      "userId": "e82b7f02-a1b2-4c3d-8e9f-5yi1tf3ozsp",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-23T05:47:20.476Z"
+    },
+    "e82b7f02-a1b2-4c3d-8e9f-1jku2eiwe5r": {
+      "userId": "e82b7f02-a1b2-4c3d-8e9f-1jku2eiwe5r",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-23T05:47:51.654Z"
+    },
+    "usr_64vdx6za": {
+      "userId": "usr_64vdx6za",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-23T05:49:20.393Z"
     }
   },
   "creditLedger": [
@@ -5455,6 +5540,42 @@
         "note": "Welcome signup allowance"
       },
       "createdAt": "2026-10-23T05:35:25.102Z"
+    },
+    {
+      "id": "cld_15yjyckpjz",
+      "userId": "e82b7f02-a1b2-4c3d-8e9f-5yi1tf3ozsp",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "supabase_signup_e82b7f02-a1b2-4c3d-8e9f-5yi1tf3ozsp",
+      "metadata": {
+        "note": "Supabase welcome allowance"
+      },
+      "createdAt": "2026-10-23T05:47:20.476Z"
+    },
+    {
+      "id": "cld_re523rdr1y",
+      "userId": "e82b7f02-a1b2-4c3d-8e9f-1jku2eiwe5r",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "supabase_signup_e82b7f02-a1b2-4c3d-8e9f-1jku2eiwe5r",
+      "metadata": {
+        "note": "Supabase welcome allowance"
+      },
+      "createdAt": "2026-10-23T05:47:51.654Z"
+    },
+    {
+      "id": "cld_kuu2xsh91t",
+      "userId": "usr_64vdx6za",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_64vdx6za",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-23T05:49:20.393Z"
     }
   ],
   "plans": [
@@ -12001,6 +12122,38 @@
         "authProvider": "password"
       },
       "createdAt": "2026-10-23T05:35:25.502Z"
+    },
+    {
+      "id": "aud_0t9tzujyux",
+      "actorId": "usr_64vdx6za",
+      "action": "USER_SIGNUP",
+      "resourceType": "profile",
+      "resourceId": "usr_64vdx6za",
+      "metadata": {
+        "email": "maya_1792734560362@fluviaflow.ai",
+        "authProvider": "password"
+      },
+      "createdAt": "2026-10-23T05:49:20.456Z"
+    },
+    {
+      "id": "aud_q5r6yiwjv1",
+      "actorId": "usr_64vdx6za",
+      "action": "USER_LOGOUT",
+      "resourceType": "profile",
+      "resourceId": "usr_64vdx6za",
+      "createdAt": "2026-10-23T05:49:20.495Z"
+    },
+    {
+      "id": "aud_39azbds78j",
+      "actorId": "usr_64vdx6za",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_64vdx6za",
+      "metadata": {
+        "email": "maya_1792734560362@fluviaflow.ai",
+        "authProvider": "password"
+      },
+      "createdAt": "2026-10-23T05:49:20.571Z"
     }
   ],
   "supportTickets": [

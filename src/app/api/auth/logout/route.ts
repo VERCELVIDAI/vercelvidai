@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { clearSession, getCurrentUser } from '@/lib/auth/session';
+import { getCurrentUser } from '@/lib/auth/session';
+import { supabaseSignOut } from '@/lib/auth/supabaseAuth';
 import { dbStore } from '@/lib/db/store';
 
 export async function POST() {
@@ -7,6 +8,6 @@ export async function POST() {
   if (current) {
     dbStore.logAudit(current.user.id, 'USER_LOGOUT', 'profile', current.user.id);
   }
-  await clearSession();
+  await supabaseSignOut();
   return NextResponse.json({ success: true });
 }

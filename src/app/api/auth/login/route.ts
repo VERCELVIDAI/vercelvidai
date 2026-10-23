@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/db/store';
 import { setSession } from '@/lib/auth/session';
+import { isSupabaseAuthEnabled, supabaseSignIn } from '@/lib/auth/supabaseAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,8 +16,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    dbStore.forceReload();
     const normalizedEmail = (email || '').toLowerCase().trim();
+
+    // 1. Supabase Auth if configured
+    if (isSupabaseAuthEnabled()) {
+      const result = await supabaseSignIn({
+        email: normalizedEmail,
+        password,
+      });
+
+      if (result.isConfigured) {
+        if (!result.success) {
+          return NextResponse.json(
+            { error: result.error, code: result.code },
+            { status: result.status || 400 }
+          );
+        }
+
+        return NextResponse.json({
+          success: true,
+          user: result.user,
+          workspaceId: result.workspaceId,
+        });
+      }
+    }
+
+    // 2. Verified fallback mode (Local dbStore with scrypt verification)
+    dbStore.forceReload();
     const profile = dbStore.getProfileByEmail(normalizedEmail);
 
     if (!profile) {

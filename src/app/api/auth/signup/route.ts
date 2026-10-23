@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/db/store';
 import { setSession } from '@/lib/auth/session';
+import { isSupabaseAuthEnabled, supabaseSignUp } from '@/lib/auth/supabaseAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,10 +48,41 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    dbStore.forceReload();
     const normalizedEmail = email.toLowerCase().trim();
     const cleanDisplayName = displayName.trim();
 
+    // 1. Supabase Auth if configured
+    if (isSupabaseAuthEnabled()) {
+      const result = await supabaseSignUp({
+        email: normalizedEmail,
+        password,
+        displayName: cleanDisplayName,
+      });
+
+      if (result.isConfigured) {
+        if (!result.success) {
+          return NextResponse.json(
+            { error: result.error || 'Failed to create your account.' },
+            { status: result.status || 400 }
+          );
+        }
+
+        return NextResponse.json({
+          success: true,
+          requiresEmailVerification: result.requiresEmailVerification ?? false,
+          user: result.user,
+          workspace: result.workspace,
+          message:
+            result.message ||
+            (result.requiresEmailVerification
+              ? 'Account registered successfully! Please check your email inbox to verify your address before signing in.'
+              : 'Account successfully registered with 100 free generative credits!'),
+        });
+      }
+    }
+
+    // 2. Verified fallback mode (Local dbStore with scrypt hash)
+    dbStore.forceReload();
     const existing = dbStore.getProfileByEmail(normalizedEmail);
     if (existing) {
       return NextResponse.json(
@@ -80,6 +112,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      requiresEmailVerification: false,
       user: profile,
       workspace,
       message: 'Account successfully registered with 100 free generative credits!',

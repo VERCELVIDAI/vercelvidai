@@ -2,6 +2,8 @@ import { cookies } from 'next/headers';
 import crypto from 'crypto';
 import { dbStore } from '../db/store';
 import { UserProfile, Workspace } from '../types';
+import { isSupabaseConfigured } from '../supabase/config';
+import { getSupabaseServerClient } from '../supabase/server';
 
 const PRIMARY_COOKIE = 'fluvia_session';
 const LEGACY_COOKIE = 'vidai_session';
@@ -145,15 +147,44 @@ export async function clearSession(): Promise<void> {
 }
 
 export async function getCurrentUser(): Promise<{ user: UserProfile; workspace: Workspace } | null> {
+  // 1. Check direct signed session cookie
   const session = await getSession();
-  if (!session) return null;
+  if (session) {
+    const user = dbStore.getProfileById(session.userId);
+    if (user) {
+      const workspace = dbStore.ensureUserWorkspace(user.id, user.displayName);
+      return { user, workspace };
+    }
+  }
 
-  const user = dbStore.getProfileById(session.userId);
-  if (!user) return null;
+  // 2. Fallback to active Supabase Auth token if configured
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = getSupabaseServerClient();
+      if (supabase) {
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
 
-  const workspace = dbStore.ensureUserWorkspace(user.id, user.displayName);
+        if (!error && user) {
+          const metadata = user.user_metadata || {};
+          const displayName = metadata.display_name || metadata.full_name || user.email?.split('@')[0] || 'Creator';
+          const { profile, workspace } = dbStore.syncSupabaseProfile({
+            userId: user.id,
+            email: user.email || '',
+            displayName,
+            avatarUrl: metadata.avatar_url,
+          });
+          return { user: profile, workspace };
+        }
+      }
+    } catch {
+      // Graceful fallback
+    }
+  }
 
-  return { user, workspace };
+  return null;
 }
 
 /**

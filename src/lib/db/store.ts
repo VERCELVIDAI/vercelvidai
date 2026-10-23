@@ -1313,6 +1313,88 @@ class Store {
     return { profile, workspace };
   }
 
+  syncSupabaseProfile(params: {
+    userId: string;
+    email: string;
+    displayName?: string;
+    avatarUrl?: string;
+    role?: 'creator' | 'admin' | 'enterprise';
+    authProvider?: string;
+  }): { profile: UserProfile; workspace: Workspace } {
+    const db = this.load();
+    const cleanEmail = (params.email || '').trim().toLowerCase();
+    const cleanDisplayName = (params.displayName || '').trim() || cleanEmail.split('@')[0] || 'Creator';
+    const now = new Date().toISOString();
+
+    // Check if profile exists by ID or by email
+    let profile = db.profiles.find((p) => p.id === params.userId || p.email.toLowerCase() === cleanEmail);
+
+    if (profile) {
+      profile.id = params.userId; // Ensure exact Supabase user UUID
+      profile.email = cleanEmail;
+      if (params.displayName) profile.displayName = cleanDisplayName;
+      if (params.avatarUrl) profile.avatarUrl = params.avatarUrl;
+      if (params.role) profile.role = params.role as any;
+      profile.updatedAt = now;
+    } else {
+      profile = {
+        id: params.userId,
+        email: cleanEmail,
+        displayName: cleanDisplayName,
+        avatarUrl: params.avatarUrl,
+        role: (params.role as any) || 'creator',
+        createdAt: now,
+        updatedAt: now,
+      };
+      db.profiles.push(profile);
+    }
+
+    // Ensure Workspace exists
+    let workspace = db.workspaces.find((w) => w.ownerId === params.userId);
+    if (!workspace) {
+      const workspaceId = 'ws_' + params.userId.replace(/[^a-zA-Z0-9]/g, '').substring(0, 10);
+      workspace = {
+        id: workspaceId,
+        ownerId: params.userId,
+        name: `${cleanDisplayName}'s Studio`,
+        createdAt: now,
+        updatedAt: now,
+      };
+      db.workspaces.push(workspace);
+
+      db.workspaceMembers.push({
+        workspaceId,
+        userId: params.userId,
+        role: 'owner',
+        joinedAt: now,
+      });
+    }
+
+    // Ensure Credit Account exists with 100 free credits
+    if (!db.creditAccounts[params.userId]) {
+      db.creditAccounts[params.userId] = {
+        userId: params.userId,
+        availableBalance: 100,
+        reservedBalance: 0,
+        updatedAt: now,
+      };
+
+      db.creditLedger.push({
+        id: 'cld_' + Math.random().toString(36).substring(2, 12),
+        userId: params.userId,
+        transactionType: 'signup_bonus',
+        amount: 100,
+        balanceAfter: 100,
+        idempotencyKey: `supabase_signup_${params.userId}`,
+        metadata: { note: 'Supabase welcome allowance' },
+        createdAt: now,
+      });
+    }
+
+    this.save(db);
+    return { profile, workspace };
+  }
+
   updateProfile(id: string, updates: Partial<UserProfile>): UserProfile {
     const db = this.load();
     const idx = db.profiles.findIndex((p) => p.id === id);

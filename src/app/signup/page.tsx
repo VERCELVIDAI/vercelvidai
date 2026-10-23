@@ -33,6 +33,8 @@ function SignupForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState('');
 
   // Client-side validations
   const passwordsMatch = password.length > 0 && confirmPassword.length > 0 && password === confirmPassword;
@@ -83,6 +85,12 @@ function SignupForm() {
         throw new Error(data.error || 'Failed to create your account.');
       }
 
+      if (data.requiresEmailVerification) {
+        setVerificationSent(true);
+        setRegisteredEmail(email.trim().toLowerCase());
+        return;
+      }
+
       // Check if user had a pending prompt in localStorage
       const pendingPrompt =
         typeof window !== 'undefined'
@@ -100,6 +108,43 @@ function SignupForm() {
       setIsLoading(false);
     }
   };
+
+  if (verificationSent) {
+    return (
+      <div className="w-full max-w-md relative z-10 mx-auto text-left py-6 px-4 sm:px-0">
+        <div className="flex items-center justify-between mb-6">
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Logo size="md" />
+          </Link>
+        </div>
+
+        <div className="p-6 sm:p-8 rounded-3xl glass-card border border-emerald-500/20 shadow-xl bg-white/90 text-center">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600 shadow-xs">
+            <Mail className="w-7 h-7" />
+          </div>
+          <h2 className="text-xl font-extrabold text-[#17211D]">Check your email</h2>
+          <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+            We&apos;ve sent a verification link to <strong className="text-[#17211D]">{registeredEmail}</strong>. Please click the link to confirm your account and claim your 100 free credits.
+          </p>
+          <div className="mt-6 flex flex-col gap-3">
+            <Link
+              href={`/login?returnUrl=${encodeURIComponent(returnUrl)}`}
+              className="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 text-sm text-center transition-all"
+            >
+              Go to Sign In
+            </Link>
+            <button
+              type="button"
+              onClick={() => setVerificationSent(false)}
+              className="text-xs text-slate-500 hover:text-slate-800 font-medium py-1"
+            >
+              Didn&apos;t receive it or want to change your email?
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-md relative z-10 mx-auto text-left py-6 px-4 sm:px-0">
