@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    dbStore.forceReload();
     const normalizedEmail = email.toLowerCase().trim();
     const cleanDisplayName = displayName.trim();
 

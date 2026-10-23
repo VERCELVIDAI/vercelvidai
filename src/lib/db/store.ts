@@ -966,6 +966,17 @@ class Store {
   private lastMtime: number = 0;
 
   private ensureCollections(schema: DatabaseSchema): void {
+    if (!schema.passwords) schema.passwords = {};
+    if (schema.profiles) {
+      for (const p of schema.profiles) {
+        if (p.email && p.id && schema.passwords[p.id]) {
+          const emailKey = p.email.trim().toLowerCase();
+          if (!schema.passwords[emailKey]) {
+            schema.passwords[emailKey] = schema.passwords[p.id];
+          }
+        }
+      }
+    }
     if (!schema.payuOrders) schema.payuOrders = [];
     if (!schema.invoices) schema.invoices = [];
     if (!schema.receipts) schema.receipts = [];
@@ -1097,6 +1108,12 @@ class Store {
     }
   }
 
+  public forceReload(): DatabaseSchema {
+    this.db = null;
+    this.lastMtime = 0;
+    return this.load();
+  }
+
   private load(): DatabaseSchema {
     ensureDataDir();
 
@@ -1107,8 +1124,8 @@ class Store {
       }
     } catch (e) {}
 
-    // Return in-memory cache if file has not been modified by another process
-    if (this.db && fileMtime > 0 && fileMtime <= this.lastMtime) {
+    // Return in-memory cache ONLY IF file exists, has valid mtime, and exactly matches our last loaded mtime
+    if (this.db && fileMtime > 0 && this.lastMtime > 0 && fileMtime === this.lastMtime) {
       return this.db;
     }
 
@@ -1116,7 +1133,7 @@ class Store {
       try {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
         this.db = JSON.parse(raw);
-        this.lastMtime = fileMtime;
+        this.lastMtime = fileMtime || fs.statSync(DB_FILE).mtimeMs;
         this.ensureCollections(this.db!);
         return this.db!;
       } catch (err) {
@@ -1181,26 +1198,52 @@ class Store {
   // USERS & AUTH
   // ==========================================
   getProfileById(id: string): UserProfile | undefined {
-    return this.load().profiles.find((p) => p.id === id);
+    if (!id) return undefined;
+    const clean = id.trim();
+    return this.load().profiles.find((p) => p.id === clean);
   }
 
   getProfileByEmail(email: string): UserProfile | undefined {
-    return this.load().profiles.find((p) => p.email.toLowerCase() === email.toLowerCase());
+    if (!email) return undefined;
+    const normalized = email.trim().toLowerCase();
+    return this.load().profiles.find((p) => (p.email || '').trim().toLowerCase() === normalized);
   }
 
-  hasPassword(userId: string): boolean {
+  hasPassword(userIdOrEmail: string): boolean {
+    if (!userIdOrEmail) return false;
     const db = this.load();
-    return Boolean(db.passwords && db.passwords[userId]);
+    const cleanKey = userIdOrEmail.trim().toLowerCase();
+    if (db.passwords && (db.passwords[userIdOrEmail] || db.passwords[cleanKey])) return true;
+    const profile = db.profiles.find((p) => p.id === userIdOrEmail || (p.email && p.email.trim().toLowerCase() === cleanKey));
+    if (profile) {
+      return Boolean(db.passwords && (db.passwords[profile.id] || (profile.email && db.passwords[profile.email.trim().toLowerCase()])));
+    }
+    return false;
   }
 
-  verifyPassword(userId: string, plainText: string): boolean {
+  verifyPassword(userIdOrEmail: string, plainText: string): boolean {
+    if (!userIdOrEmail || !plainText) return false;
     const db = this.load();
-    const stored = db.passwords[userId];
+    const cleanKey = userIdOrEmail.trim().toLowerCase();
+
+    let stored = db.passwords[userIdOrEmail] || db.passwords[cleanKey];
+
+    if (!stored) {
+      const profile = db.profiles.find(
+        (p) => p.id === userIdOrEmail || (p.email && p.email.trim().toLowerCase() === cleanKey)
+      );
+      if (profile) {
+        stored = db.passwords[profile.id] || (profile.email && db.passwords[profile.email.trim().toLowerCase()]);
+      }
+    }
+
     if (!stored) return false;
     const isValid = verifyPasswordHash(plainText, stored);
     // If authenticated via legacy plaintext password, upgrade in-place to salted scrypt
     if (isValid && !stored.startsWith('scrypt:')) {
-      db.passwords[userId] = hashPassword(plainText);
+      const hashed = hashPassword(plainText);
+      db.passwords[userIdOrEmail] = hashed;
+      if (cleanKey.includes('@')) db.passwords[cleanKey] = hashed;
       this.save(db);
     }
     return isValid;
@@ -1211,11 +1254,13 @@ class Store {
     const now = new Date().toISOString();
     const userId = 'usr_' + Math.random().toString(36).substring(2, 10);
     const workspaceId = 'ws_' + Math.random().toString(36).substring(2, 10);
+    const cleanEmail = (params.email || '').trim().toLowerCase();
+    const cleanDisplayName = (params.displayName || '').trim();
 
     const profile: UserProfile = {
       id: userId,
-      email: params.email.toLowerCase(),
-      displayName: params.displayName,
+      email: cleanEmail,
+      displayName: cleanDisplayName,
       role: params.role || 'creator',
       createdAt: now,
       updatedAt: now,
@@ -1224,7 +1269,7 @@ class Store {
     const workspace: Workspace = {
       id: workspaceId,
       ownerId: userId,
-      name: `${params.displayName}'s Studio`,
+      name: `${cleanDisplayName}'s Studio`,
       createdAt: now,
       updatedAt: now,
     };
@@ -1255,8 +1300,10 @@ class Store {
       createdAt: now,
     };
 
+    const hashedPassword = hashPassword(params.passwordPlainText);
     db.profiles.push(profile);
-    db.passwords[userId] = hashPassword(params.passwordPlainText);
+    db.passwords[userId] = hashedPassword;
+    db.passwords[cleanEmail] = hashedPassword; // Dual-index for immediate lookup
     db.workspaces.push(workspace);
     db.workspaceMembers.push(member);
     db.creditAccounts[userId] = creditAccount;
@@ -1281,8 +1328,12 @@ class Store {
 
   deleteProfile(id: string): boolean {
     const db = this.load();
+    const profile = db.profiles.find((p) => p.id === id);
     db.profiles = db.profiles.filter((p) => p.id !== id);
     delete db.passwords[id];
+    if (profile?.email) {
+      delete db.passwords[profile.email.trim().toLowerCase()];
+    }
     delete db.creditAccounts[id];
     db.projects = db.projects.filter((p) => p.ownerId !== id);
     db.assets = db.assets.filter((a) => a.ownerId !== id);
@@ -1444,7 +1495,11 @@ class Store {
     const user = this.getProfileByEmail(email);
     if (!user) return false;
 
-    db.passwords[user.id] = hashPassword(newPasswordPlainText);
+    const hashed = hashPassword(newPasswordPlainText);
+    db.passwords[user.id] = hashed;
+    if (user.email) {
+      db.passwords[user.email.trim().toLowerCase()] = hashed;
+    }
     delete db.passwordResetTokens![user.id];
     user.updatedAt = new Date().toISOString();
     this.save(db);

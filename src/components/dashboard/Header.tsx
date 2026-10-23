@@ -1,8 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { User, Bell, Sparkles, Zap, ShieldCheck, Menu } from 'lucide-react';
+import {
+  User,
+  Bell,
+  Sparkles,
+  Zap,
+  ShieldCheck,
+  Menu,
+  LogOut,
+  Settings,
+  CreditCard,
+  ChevronDown,
+} from 'lucide-react';
 
 interface DashboardHeaderProps {
   displayName?: string;
@@ -21,6 +32,7 @@ export function DashboardHeader({
   workspaceName = 'Personal Studio',
   user,
 }: DashboardHeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const effectiveDisplayName = user?.displayName || displayName;
   const effectiveRole = user?.role || role;
   const effectiveAvatar = user?.avatarUrl || avatarUrl;
@@ -29,6 +41,13 @@ export function DashboardHeader({
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('fluvia-toggle-mobile-sidebar'));
     }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (e) {}
+    window.location.href = '/login';
   };
 
   return (
@@ -54,7 +73,7 @@ export function DashboardHeader({
         </div>
       </div>
 
-      <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
+      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
         {/* Credit Quick Display */}
         <Link
           href="/dashboard/wallet"
@@ -64,25 +83,88 @@ export function DashboardHeader({
           <span>{credits} <span className="hidden xs:inline">Credits</span></span>
         </Link>
 
-        {/* User Profile Pill */}
-        <Link
-          href="/dashboard/settings"
-          className="flex items-center gap-2.5 p-1 pr-3 rounded-full hover:bg-emerald-50/70 transition-colors border border-emerald-500/15"
+        {/* User Account Menu with Logout */}
+        <div
+          className="relative"
+          onMouseEnter={() => setMenuOpen(true)}
+          onMouseLeave={() => setMenuOpen(false)}
         >
-          <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-emerald-500 to-teal-700 p-[1.5px] shadow-xs">
-            <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-xs font-black text-emerald-800">
-              {effectiveAvatar ? (
-                <img src={effectiveAvatar} alt={effectiveDisplayName} className="w-full h-full object-cover rounded-full" />
-              ) : (
-                effectiveDisplayName[0] || 'U'
-              )}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="User account options"
+            className="flex items-center gap-2 p-1 pr-2.5 rounded-full hover:bg-emerald-50/80 transition-all border border-emerald-500/20 bg-white/70 shadow-2xs cursor-pointer"
+          >
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-emerald-500 to-teal-700 p-[1.5px] shadow-xs">
+              <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-xs font-black text-emerald-800">
+                {effectiveAvatar ? (
+                  <img src={effectiveAvatar} alt={effectiveDisplayName} className="w-full h-full object-cover rounded-full" />
+                ) : (
+                  (effectiveDisplayName[0] || 'U').toUpperCase()
+                )}
+              </div>
             </div>
-          </div>
-          <div className="text-left hidden md:block">
-            <div className="text-xs font-bold text-[#17211D] leading-tight">{effectiveDisplayName}</div>
-            <div className="text-[10px] text-slate-500 capitalize font-medium">{effectiveRole}</div>
-          </div>
-        </Link>
+            <div className="text-left hidden md:block">
+              <div className="text-xs font-bold text-[#17211D] leading-tight max-w-[110px] truncate">{effectiveDisplayName}</div>
+              <div className="text-[10px] text-slate-500 capitalize font-medium">{effectiveRole}</div>
+            </div>
+            <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {menuOpen && (
+            <div className="absolute right-0 top-full w-56 pt-2 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+              <div className="p-2 rounded-2xl glass-modal shadow-xl space-y-1 text-left border border-emerald-500/20 bg-white/95 backdrop-blur-md">
+                <div className="px-3 py-2 border-b border-emerald-500/15">
+                  <div className="text-xs font-bold text-[#17211D] truncate">{effectiveDisplayName}</div>
+                  {user?.email && (
+                    <div className="text-[11px] text-slate-500 truncate mt-0.5">{user.email}</div>
+                  )}
+                  <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wide mt-1">
+                    Role: {effectiveRole}
+                  </div>
+                </div>
+
+                <Link
+                  href="/dashboard/settings"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#17211D] hover:bg-emerald-50 transition-colors"
+                >
+                  <Settings className="w-4 h-4 text-emerald-600" />
+                  <span>Account Settings</span>
+                </Link>
+
+                <Link
+                  href="/dashboard/billing"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#17211D] hover:bg-emerald-50 transition-colors"
+                >
+                  <CreditCard className="w-4 h-4 text-emerald-600" />
+                  <span>Billing & Invoices</span>
+                </Link>
+
+                <Link
+                  href="/create"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#17211D] hover:bg-emerald-50 transition-colors"
+                >
+                  <Sparkles className="w-4 h-4 text-emerald-600" />
+                  <span>Creative Studio</span>
+                </Link>
+
+                <div className="pt-1 border-t border-emerald-500/15">
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer text-left"
+                  >
+                    <LogOut className="w-4 h-4 text-rose-500" />
+                    <span>Log out</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

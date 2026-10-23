@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    dbStore.forceReload();
     const normalizedEmail = (email || '').toLowerCase().trim();
     const profile = dbStore.getProfileByEmail(normalizedEmail);
 
