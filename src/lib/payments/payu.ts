@@ -19,9 +19,33 @@ export interface PayUConfig {
 }
 
 export function getPayUConfig(): PayUConfig {
-  const env = (process.env.PAYU_ENV || 'test') as 'test' | 'prod';
-  const merchantKey = process.env.PAYU_MERCHANT_KEY || 'gtKFFx'; // Official PayU sandbox test key fallback
-  const merchantSalt = process.env.PAYU_MERCHANT_SALT || 'eCwWELxi'; // Official PayU sandbox test salt fallback
+  const envRaw = (process.env.PAYU_ENV || 'test').replace(/^['"]|['"]$/g, '').trim().toLowerCase();
+  const env: 'test' | 'prod' = envRaw === 'prod' ? 'prod' : 'test';
+
+  const rawKey = (process.env.PAYU_MERCHANT_KEY || '').replace(/^['"]|['"]$/g, '').trim();
+  const rawSalt = (process.env.PAYU_MERCHANT_SALT || '').replace(/^['"]|['"]$/g, '').trim();
+
+  // Active verified test credentials for PayU Sandbox:
+  // Key: gtKFFx pairs with active salt: 4R38IvwiV57FwVpsgOvTXBdLE4tHUXFW
+  const TEST_KEY = 'gtKFFx';
+  const ACTIVE_TEST_SALT = '4R38IvwiV57FwVpsgOvTXBdLE4tHUXFW';
+
+  let merchantKey = rawKey;
+  let merchantSalt = rawSalt;
+
+  if (env === 'test') {
+    merchantKey = rawKey || TEST_KEY;
+    // If using default test key gtKFFx, ensure active salt is used even if old eCwWELxi was provided
+    if (merchantKey === TEST_KEY && (!merchantSalt || merchantSalt === 'eCwWELxi')) {
+      merchantSalt = ACTIVE_TEST_SALT;
+    } else if (!merchantSalt) {
+      merchantSalt = ACTIVE_TEST_SALT;
+    }
+  } else {
+    // Production mode (PAYU_ENV="prod")
+    merchantKey = rawKey;
+    merchantSalt = rawSalt;
+  }
 
   const paymentUrl =
     env === 'prod'
@@ -194,6 +218,113 @@ export function verifyPayUResponseHash(
   return false;
 }
 
+export interface CanonicalPayUPayload {
+  actionUrl: string;
+  key: string;
+  txnid: string;
+  amount: string;
+  productinfo: string;
+  firstname: string;
+  email: string;
+  phone: string;
+  surl: string;
+  furl: string;
+  hash: string;
+  udf1: string;
+  udf2: string;
+  udf3: string;
+  udf4: string;
+  udf5: string;
+}
+
+/**
+ * Single trusted server-side canonical builder:
+ * Formats and normalizes all fields, calculates the SHA-512 request hash,
+ * and returns the exact matching payload to submit to PayU.
+ */
+export function buildCanonicalPayUPayload(params: {
+  config: PayUConfig;
+  txnid: string;
+  amount: number | string;
+  productInfo: string;
+  customerDetails: {
+    name?: string;
+    email?: string;
+    phone?: string;
+  };
+  surl: string;
+  furl: string;
+  udf1?: string;
+  udf2?: string;
+  udf3?: string;
+  udf4?: string;
+  udf5?: string;
+}): CanonicalPayUPayload {
+  const { config, txnid, customerDetails, surl, furl } = params;
+
+  // 1. Amount: Formatted to 2 decimal places e.g. "56625.84"
+  const numAmount = typeof params.amount === 'number' ? params.amount : parseFloat(params.amount);
+  const amount = Number.isFinite(numAmount) ? numAmount.toFixed(2) : '0.00';
+
+  // 2. Product Info: Sanitized ASCII alphanumeric, spaces, hyphens, and underscores only
+  const productinfo = sanitizePayUProductInfo(params.productInfo);
+
+  // 3. First Name: Alphanumeric characters only, first token of customer name
+  const rawFirstName = (customerDetails.name || 'Creator').trim().split(/\s+/)[0] || 'Creator';
+  const firstname = rawFirstName.replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Creator';
+
+  // 4. Email: Trimmed and lowercased
+  const email = (customerDetails.email || 'creator@fluviaflow.ai').toLowerCase().trim();
+
+  // 5. Phone: 10 digit number
+  let phone = (customerDetails.phone || '9999999999').replace(/[^0-9]/g, '');
+  if (phone.length < 10) phone = phone.padStart(10, '9');
+  else if (phone.length > 10) phone = phone.slice(-10);
+
+  // 6. UDF 1 to 5: Cleaned and normalized
+  const udf1 = (params.udf1 || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100);
+  const udf2 = (params.udf2 || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100);
+  const udf3 = (params.udf3 || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100);
+  const udf4 = (params.udf4 || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100);
+  const udf5 = (params.udf5 || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100);
+
+  // 7. Request Hash:
+  // sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
+  const hash = generatePayURequestHash({
+    key: config.merchantKey,
+    txnid,
+    amount,
+    productinfo,
+    firstname,
+    email,
+    udf1,
+    udf2,
+    udf3,
+    udf4,
+    udf5,
+    salt: config.merchantSalt,
+  });
+
+  return {
+    actionUrl: config.paymentUrl,
+    key: config.merchantKey,
+    txnid,
+    amount,
+    productinfo,
+    firstname,
+    email,
+    phone,
+    surl,
+    furl,
+    hash,
+    udf1,
+    udf2,
+    udf3,
+    udf4,
+    udf5,
+  };
+}
+
 export interface CreatePayUOrderParams {
   userId: string;
   workspaceId: string;
@@ -202,30 +333,14 @@ export interface CreatePayUOrderParams {
   billingInterval?: 'month' | 'year';
   customerDetails: CustomerBillingDetails;
   couponCode?: string;
+  requestOrigin?: string;
 }
 
 export interface PayUOrderInitResult {
   order: PayUPaymentOrder;
   isZeroPayment?: boolean;
   redirectUrl?: string;
-  payuParams: {
-    actionUrl: string;
-    key: string;
-    txnid: string;
-    amount: string;
-    productinfo: string;
-    firstname: string;
-    email: string;
-    phone: string;
-    surl: string;
-    furl: string;
-    hash: string;
-    udf1: string;
-    udf2: string;
-    udf3: string;
-    udf4: string;
-    udf5: string;
-  };
+  payuParams: CanonicalPayUPayload;
 }
 
 /**
@@ -400,39 +515,28 @@ export async function createPayUPaymentOrder(
   const txnid = `TXN_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
   const idempotencyKey = `payu_order_${txnid}`;
 
-  const hostUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  const surl = `${hostUrl}/api/payments/payu/callback`;
-  const furl = `${hostUrl}/api/payments/payu/callback`;
+  const cleanHost = (params.requestOrigin || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000').replace(/\/+$/, '');
+  const surl = `${cleanHost}/api/payments/payu/callback`;
+  const furl = `${cleanHost}/api/payments/payu/callback`;
 
-  const rawFirstName = (params.customerDetails.name || 'Creator').trim().split(/\s+/)[0] || 'Creator';
-  const firstname = rawFirstName.replace(/[^a-zA-Z]/g, '') || 'Creator';
-  const email = (params.customerDetails.email || 'creator@fluviaflow.ai').toLowerCase().trim();
-  let phone = (params.customerDetails.phone || '9999999999').replace(/[^0-9]/g, '');
-  if (phone.length < 10) phone = phone.padStart(10, '9');
-  else if (phone.length > 10) phone = phone.slice(-10);
-
-  const cleanProductInfo = sanitizePayUProductInfo(productInfo);
-
-  const udf1 = `ord_${txnid}`;
-  const udf2 = params.userId;
-  const udf3 = params.paymentType;
-  const udf4 = params.itemPlanOrPackId;
-  const udf5 = params.workspaceId;
-
-  // Generate SHA-512 Hash
-  const hash = generatePayURequestHash({
-    key: config.merchantKey,
+  // Build canonical payload & authoritative SHA-512 request hash
+  const canonicalPayload = buildCanonicalPayUPayload({
+    config,
     txnid,
-    amount: amountStr,
-    productinfo: cleanProductInfo,
-    firstname,
-    email,
-    udf1,
-    udf2,
-    udf3,
-    udf4,
-    udf5,
-    salt: config.merchantSalt,
+    amount: totalAmount,
+    productInfo,
+    customerDetails: {
+      name: params.customerDetails.name,
+      email: params.customerDetails.email,
+      phone: params.customerDetails.phone,
+    },
+    surl,
+    furl,
+    udf1: `ord_${txnid}`,
+    udf2: params.userId,
+    udf3: params.paymentType,
+    udf4: params.itemPlanOrPackId,
+    udf5: params.workspaceId,
   });
 
   const order = dbStore.createPayUOrder({
@@ -441,7 +545,7 @@ export async function createPayUPaymentOrder(
     workspaceId: params.workspaceId,
     paymentType: params.paymentType,
     itemPlanOrPackId: params.itemPlanOrPackId,
-    productInfo: cleanProductInfo,
+    productInfo: canonicalPayload.productinfo,
     currency: 'INR',
     baseAmount: basePriceInr,
     taxAmount: taxBreakdown.taxAmount,
@@ -450,8 +554,8 @@ export async function createPayUPaymentOrder(
     taxBreakdown,
     customerDetails: {
       ...params.customerDetails,
-      phone,
-      email,
+      phone: canonicalPayload.phone,
+      email: canonicalPayload.email,
     },
     couponId,
     couponCode: appliedCouponCode,
@@ -479,29 +583,12 @@ export async function createPayUPaymentOrder(
   dbStore.logAudit(params.userId, 'PAYU_ORDER_CREATED', 'payment_order', order.id, {
     txnid,
     totalAmount,
-    productInfo: cleanProductInfo,
+    productInfo: canonicalPayload.productinfo,
   });
 
   return {
     order,
-    payuParams: {
-      actionUrl: config.paymentUrl,
-      key: config.merchantKey,
-      txnid,
-      amount: amountStr,
-      productinfo: cleanProductInfo,
-      firstname,
-      email,
-      phone,
-      surl,
-      furl,
-      hash,
-      udf1,
-      udf2,
-      udf3,
-      udf4,
-      udf5,
-    },
+    payuParams: canonicalPayload,
   };
 }
 

@@ -30,6 +30,10 @@ export async function POST(req: NextRequest) {
       gstin: customerDetails?.gstin || '',
     };
 
+    const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
+    const proto = req.headers.get('x-forwarded-proto') || (req.nextUrl.protocol ? req.nextUrl.protocol.replace(':', '') : 'http');
+    const requestOrigin = host ? `${proto}://${host}` : undefined;
+
     const orderResult = await createPayUPaymentOrder({
       userId: current.user.id,
       workspaceId: current.workspace.id,
@@ -38,6 +42,7 @@ export async function POST(req: NextRequest) {
       billingInterval: billingInterval === 'year' ? 'year' : 'month',
       customerDetails: billingDetails,
       couponCode: couponCode ? String(couponCode).trim() : undefined,
+      requestOrigin,
     });
 
     return NextResponse.json(orderResult, { status: 201 });
