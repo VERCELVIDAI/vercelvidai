@@ -1,6 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
+import { BRAND } from '@/lib/brand';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'How Fluvia Flow protects creator privacy, manages data security, and handles personal information.',
+  alternates: {
+    canonical: `${BRAND.siteUrl}/privacy`,
+  },
+};
 
 export default function PrivacyPage() {
   return (

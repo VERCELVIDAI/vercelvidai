@@ -1,7 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
+import { BRAND } from '@/lib/brand';
+
+export const metadata: Metadata = {
+  title: 'Refund & Credit Policy',
+  description: 'Understand Fluvia Flow refund, billing disputes, and credit rollover policies.',
+  alternates: {
+    canonical: `${BRAND.siteUrl}/refund-policy`,
+  },
+};
 
 export default function RefundPolicyPage() {
   return (

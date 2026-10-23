@@ -1,6 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
+import { BRAND } from '@/lib/brand';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'Terms and conditions governing the use of Fluvia Flow creative software platform and API services.',
+  alternates: {
+    canonical: `${BRAND.siteUrl}/terms`,
+  },
+};
 
 export default function TermsPage() {
   return (

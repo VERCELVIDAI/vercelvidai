@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
+import { BRAND } from '@/lib/brand';
 import {
   Video,
   Image as ImageIcon,
@@ -14,6 +16,29 @@ import {
   Subtitles,
   Smartphone,
 } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'AI Creative Features & Generation Tools',
+  description:
+    'Discover Fluvia Flow powerful features: Cinema Studio camera controls, Marketing Studio briefs, Storyboard AI copilot, and 4K cloud rendering.',
+  alternates: {
+    canonical: `${BRAND.siteUrl}/features`,
+  },
+  openGraph: {
+    title: 'Fluvia Flow Features — Powerful AI Video & Content Studio',
+    description:
+      'Discover Fluvia Flow powerful features: Cinema Studio camera controls, Marketing Studio briefs, and Storyboard AI copilot.',
+    url: `${BRAND.siteUrl}/features`,
+    images: [
+      {
+        url: BRAND.ogImageAbsolute,
+        width: 1200,
+        height: 630,
+        alt: 'Fluvia Flow Features',
+      },
+    ],
+  },
+};
 
 export default function FeaturesPage() {
   const features = [

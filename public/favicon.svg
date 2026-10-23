@@ -1,0 +1,26 @@
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fluviaEmeraldGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10B981" />
+      <stop offset="0.6" stop-color="#047857" />
+      <stop offset="1" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="fluviaPinkGrad" x1="12" y1="8" x2="24" y2="22" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EC4899" />
+      <stop offset="1" stop-color="#F472B6" />
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#F0FDF4" />
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10B981" />
+      <stop offset="0.5" stop-color="#14B8A6" />
+      <stop offset="1" stop-color="#EC4899" />
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="30" height="30" rx="9" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="1.5" />
+  <path d="M7 16C7 11.0294 11.0294 7 16 7C20.05 7 23.2 9.25 24.55 12.4C22.75 11.05 20.5 10.6 18.25 11.05C14.65 11.95 12.4 15.1 10.6 18.25C9.25 20.95 7 21.4 7 16Z" fill="url(#fluviaEmeraldGrad)" fill-opacity="0.85" />
+  <path d="M25 16C25 20.9706 20.9706 25 16 25C11.95 25 8.8 22.75 7.45 19.6C9.25 20.95 11.5 21.4 13.75 20.95C17.35 20.05 19.6 16.9 21.4 13.75C22.75 11.05 25 10.6 25 16Z" fill="url(#fluviaPinkGrad)" fill-opacity="0.85" />
+  <polygon points="14.5,12 20.5,16 14.5,20" fill="#047857" />
+</svg>

@@ -1,40 +1,85 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme/ThemeContext';
 import { FluviaMotionBackground } from '@/components/brand/FluviaMotionBackground';
 import { BRAND } from '@/lib/brand';
 
+export const viewport: Viewport = {
+  themeColor: '#059669',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: `${BRAND.name} — ${BRAND.tagline}`,
+  metadataBase: new URL(BRAND.siteUrl),
+  title: {
+    default: BRAND.title,
+    template: `%s | ${BRAND.name}`,
+  },
   description: BRAND.description,
+  applicationName: BRAND.name,
   keywords: [
     'Fluvia Flow',
     'AI Video Generator',
-    'Cinematic AI',
+    'Cinematic AI Videos',
+    'AI Image Generator',
     'Text to Video',
     'Image to Video',
+    'Farm Fresh Video Templates',
     'Cinema Studio',
     'Marketing Studio',
     'Storyboard Studio',
-    'Gemini AI Studio',
-    'Video Editor',
+    'Creative Studio',
   ],
+  alternates: {
+    canonical: `${BRAND.siteUrl}/`,
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: ['/favicon.ico'],
+  },
+  manifest: '/site.webmanifest',
   openGraph: {
-    title: `${BRAND.name} — ${BRAND.tagline}`,
+    title: BRAND.title,
     description: BRAND.description,
-    url: BRAND.siteUrl,
+    url: `${BRAND.siteUrl}/`,
     siteName: BRAND.name,
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: BRAND.ogImageAbsolute,
+        width: 1200,
+        height: 630,
+        alt: 'Fluvia Flow — Your imagination. In motion. AI Video & Creative Studio',
+        type: 'image/jpeg',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${BRAND.name} — ${BRAND.tagline}`,
+    title: BRAND.title,
     description: BRAND.description,
+    images: [BRAND.ogImageAbsolute],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth/session';
 import { dbStore } from '@/lib/db/store';
+import { getPayUConfig } from '@/lib/payments/payu';
 
 export async function GET(req: NextRequest) {
   try {
@@ -89,6 +90,7 @@ export async function GET(req: NextRequest) {
     const failedOrders = orders.filter((o) => o.status === 'failed' || o.status === 'cancelled');
 
     const supplierSettings = dbStore.getBillingSettings();
+    const payuConfig = getPayUConfig();
 
     return NextResponse.json({
       metrics: {
@@ -107,9 +109,10 @@ export async function GET(req: NextRequest) {
       supplierSettings,
       payuIntegration: {
         provider: 'PayU India Hosted Checkout',
-        env: process.env.PAYU_ENV || 'test',
-        merchantKeyMasked: (process.env.PAYU_MERCHANT_KEY || 'gtKFFx').slice(0, 2) + '••••' + (process.env.PAYU_MERCHANT_KEY || 'gtKFFx').slice(-2),
-        saltConfigured: !!(process.env.PAYU_MERCHANT_SALT || 'eCwWELxi'),
+        env: payuConfig.env,
+        paymentUrl: payuConfig.paymentUrl,
+        merchantKeyMasked: payuConfig.merchantKey ? payuConfig.merchantKey.slice(0, 2) + '••••' + payuConfig.merchantKey.slice(-2) : 'Not Configured',
+        saltConfigured: !!payuConfig.merchantSalt,
       },
     });
   } catch (err: any) {

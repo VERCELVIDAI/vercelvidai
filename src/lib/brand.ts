@@ -7,21 +7,24 @@
 
 export const BRAND = {
   name: 'Fluvia Flow',
-  shortName: 'Fluvia',
+  shortName: 'Fluvia Flow',
   legalName: 'Fluvia Flow Technologies Inc.',
   tagline: 'Your imagination. In motion.',
+  title: 'Fluvia Flow — AI Video, Image & Creative Studio',
   description:
-    'Create cinematic videos, striking visuals and campaign-ready content with AI — all inside one unified creative studio.',
-  domain: 'fluviaflow.ai',
-  supportEmail: 'support@fluviaflow.ai',
-  contactEmail: 'hello@fluviaflow.ai',
-  billingEmail: 'billing@fluviaflow.ai',
+    'Create cinematic AI videos, stunning images and creative content with Fluvia Flow. Explore AI-powered tools for visual storytelling and content creation.',
+  domain: 'fluviaflow.online',
+  supportEmail: 'support@fluviaflow.online',
+  contactEmail: 'hello@fluviaflow.online',
+  billingEmail: 'billing@fluviaflow.online',
   twitterHandle: '@fluviaflow',
   githubOrg: 'fluviaflow',
 
   // SEO & Social
-  siteUrl: process.env.NEXT_PUBLIC_APP_URL || 'https://fluviaflow.ai',
-  ogImage: '/images/fluvia-og.jpg',
+  siteUrl: 'https://fluviaflow.online',
+  ogImage: '/images/fluvia-flow-social-banner.jpg',
+  ogImageAbsolute: 'https://fluviaflow.online/images/fluvia-flow-social-banner.jpg',
+  themeColor: '#059669',
 
   // Studios taxonomy
   studios: [

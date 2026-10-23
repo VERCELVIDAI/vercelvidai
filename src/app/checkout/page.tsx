@@ -526,9 +526,17 @@ function CheckoutContent() {
                   </span>
                 </button>
 
-                {/* Local Sandbox / Demo Test Simulator */}
+                {/* Gateway Production Status Banner */}
                 {!isZeroPayable && (
-                  <div className="mt-2.5 text-center">
+                  <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-emerald-800 font-semibold bg-emerald-50/80 border border-emerald-500/25 rounded-xl py-2 px-3 shadow-2xs">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>PayU Live Production Gateway • 256-Bit SSL Encrypted</span>
+                  </div>
+                )}
+
+                {/* Local Sandbox / Demo Test Simulator (Visible only if explicitly set to test mode) */}
+                {!isZeroPayable && process.env.NEXT_PUBLIC_PAYU_ENV === 'test' && (
+                  <div className="mt-2 text-center">
                     <button
                       type="button"
                       onClick={handleSimulatePayment}

@@ -19,8 +19,9 @@ export interface PayUConfig {
 }
 
 export function getPayUConfig(): PayUConfig {
-  const envRaw = (process.env.PAYU_ENV || 'test').replace(/^['"]|['"]$/g, '').trim().toLowerCase();
-  const env: 'test' | 'prod' = envRaw === 'prod' ? 'prod' : 'test';
+  const envRaw = (process.env.PAYU_ENV || process.env.NEXT_PUBLIC_PAYU_ENV || 'prod').replace(/^['"]|['"]$/g, '').trim().toLowerCase();
+  const isExplicitTest = envRaw === 'test' || envRaw === 'sandbox' || envRaw === 'dev';
+  const env: 'test' | 'prod' = isExplicitTest ? 'test' : 'prod';
 
   const rawKey = (process.env.PAYU_MERCHANT_KEY || '').replace(/^['"]|['"]$/g, '').trim();
   const rawSalt = (process.env.PAYU_MERCHANT_SALT || '').replace(/^['"]|['"]$/g, '').trim();
