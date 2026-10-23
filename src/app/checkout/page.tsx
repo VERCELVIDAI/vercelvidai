@@ -291,6 +291,62 @@ function CheckoutContent() {
     }
   };
 
+  const handleSimulatePayment = async () => {
+    if (!customerName || !customerEmail || !customerPhone) {
+      setErrorMessage('Please fill in your name, email, and mobile phone number.');
+      return;
+    }
+    setIsSubmitting(true);
+    setErrorMessage('');
+    try {
+      const res = await fetch('/api/payments/payu/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentType: itemType === 'pack' ? 'credit_pack' : 'subscription',
+          itemPlanOrPackId: itemId,
+          billingInterval: interval,
+          customerDetails: {
+            name: customerName,
+            email: customerEmail,
+            phone: customerPhone,
+            state: customerState,
+            address: customerAddress,
+            gstin: customerGstin,
+          },
+          couponCode: appliedCoupon?.code,
+        }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || 'Failed to initialize payment order');
+      }
+
+      const orderData = await res.json();
+      if (orderData.isZeroPayment && orderData.redirectUrl) {
+        window.location.href = orderData.redirectUrl;
+        return;
+      }
+
+      const simRes = await fetch('/api/payments/payu/simulate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ txnid: orderData.order.txnid }),
+      });
+
+      if (!simRes.ok) {
+        const simData = await simRes.json();
+        throw new Error(simData.error || 'Simulation failed');
+      }
+
+      window.location.href = `/payment/status?txnid=${encodeURIComponent(orderData.order.txnid)}&status=success`;
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Payment simulation failed.');
+      setIsSubmitting(false);
+    }
+  };
+
   if (isLoadingAuth) {
     return (
       <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
@@ -469,6 +525,20 @@ function CheckoutContent() {
                       : `Continue to Pay INR ${totalAmount.toFixed(2)}`}
                   </span>
                 </button>
+
+                {/* Local Sandbox / Demo Test Simulator */}
+                {!isZeroPayable && (
+                  <div className="mt-2.5 text-center">
+                    <button
+                      type="button"
+                      onClick={handleSimulatePayment}
+                      disabled={isSubmitting}
+                      className="text-[11px] text-emerald-700 hover:text-emerald-900 underline font-semibold transition-colors cursor-pointer"
+                    >
+                      Developer Sandbox: Test Immediate Fulfillment & GST Invoice Clearance →
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 pt-2 text-[11px] text-slate-600 font-medium">

@@ -5,11 +5,6 @@ import { verifyPaymentWithPayU, fulfillPayUPayment } from '@/lib/payments/payu';
 
 export async function POST(req: NextRequest) {
   try {
-    const current = await getCurrentUser();
-    if (!current) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { txnid } = await req.json();
     if (!txnid) {
       return NextResponse.json({ error: 'Missing transaction identifier (txnid).' }, { status: 400 });
@@ -20,15 +15,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Order not found.' }, { status: 404 });
     }
 
-    // Verify ownership
-    const isOwner = order.userId === current.user.id;
-    const isWorkspace = order.workspaceId === current.workspace.id;
-    const isAdmin = current.user.role === 'admin';
-    if (!isOwner && !isWorkspace && !isAdmin) {
-      return NextResponse.json({ error: 'Forbidden: Access denied to this order.' }, { status: 403 });
-    }
-
-    // If already fulfilled
+    // 1. If order is already settled & fulfilled (e.g. via PayU callback or zero-payment flow),
+    // return verified details safely so receipt/invoice is always viewable on the status page
     if (order.status === 'success') {
       const invoice = order.invoiceId ? dbStore.getInvoiceById(order.invoiceId) : undefined;
       const receipt = order.receiptId ? dbStore.getReceiptById(order.receiptId) : undefined;
@@ -39,6 +27,20 @@ export async function POST(req: NextRequest) {
         invoice,
         receipt,
       });
+    }
+
+    // 2. For unfulfilled or pending orders, require authenticated ownership before re-verifying with upstream PayU
+    const current = await getCurrentUser();
+    if (!current) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Verify ownership
+    const isOwner = order.userId === current.user.id;
+    const isWorkspace = order.workspaceId === current.workspace.id;
+    const isAdmin = current.user.role === 'admin';
+    if (!isOwner && !isWorkspace && !isAdmin) {
+      return NextResponse.json({ error: 'Forbidden: Access denied to this order.' }, { status: 403 });
     }
 
     // If order was created or pending, recheck with official PayU API

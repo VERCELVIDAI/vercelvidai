@@ -90,6 +90,21 @@ export function calculateGstBreakdown(basePriceInr: number, customerState?: stri
 }
 
 /**
+ * Clean and sanitize productinfo for PayU Hosted Checkout:
+ * PayU requires productinfo to be clean ASCII alphanumeric characters, spaces, hyphens, and underscores only.
+ * Strips brackets, colons, commas, semicolons, quotes, and non-ASCII characters to prevent SHA-512 hash mismatches.
+ */
+export function sanitizePayUProductInfo(raw: string): string {
+  if (!raw) return 'Fluvia Flow AI Creative Studio';
+  const cleaned = raw
+    .replace(/,/g, '')
+    .replace(/[^a-zA-Z0-9\s_-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return cleaned.slice(0, 100) || 'Fluvia Flow AI Plan';
+}
+
+/**
  * Generate official PayU SHA-512 Request Hash:
  * sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
  */
@@ -134,7 +149,7 @@ export function verifyPayUResponseHash(
   const key = payload.key || '';
   const txnid = payload.txnid || '';
   const amount = payload.amount || '';
-  const productinfo = payload.productinfo || '';
+  const rawProductinfo = payload.productinfo || '';
   const firstname = payload.firstname || '';
   const email = payload.email || '';
   const status = payload.status || '';
@@ -145,21 +160,38 @@ export function verifyPayUResponseHash(
   const udf5 = payload.udf5 || '';
   const additionalCharges = payload.additionalCharges;
 
-  let hashSequence = '';
-  if (additionalCharges) {
-    hashSequence = `${additionalCharges}|${salt}|${status}||||||${udf5}|${udf4}|${udf3}|${udf2}|${udf1}|${email}|${firstname}|${productinfo}|${amount}|${txnid}|${key}`;
-  } else {
-    hashSequence = `${salt}|${status}||||||${udf5}|${udf4}|${udf3}|${udf2}|${udf1}|${email}|${firstname}|${productinfo}|${amount}|${txnid}|${key}`;
-  }
-
-  const expectedHash = crypto.createHash('sha512').update(hashSequence).digest('hex').toLowerCase();
   const receivedHash = payload.hash.toString().toLowerCase();
 
-  // Timing safe comparison
-  const expBuf = Buffer.from(expectedHash);
-  const recBuf = Buffer.from(receivedHash);
-  if (expBuf.length !== recBuf.length) return false;
-  return crypto.timingSafeEqual(expBuf, recBuf);
+  const computeHashFor = (pInfo: string) => {
+    let hashSeq = '';
+    if (additionalCharges) {
+      hashSeq = `${additionalCharges}|${salt}|${status}||||||${udf5}|${udf4}|${udf3}|${udf2}|${udf1}|${email}|${firstname}|${pInfo}|${amount}|${txnid}|${key}`;
+    } else {
+      hashSeq = `${salt}|${status}||||||${udf5}|${udf4}|${udf3}|${udf2}|${udf1}|${email}|${firstname}|${pInfo}|${amount}|${txnid}|${key}`;
+    }
+    return crypto.createHash('sha512').update(hashSeq).digest('hex').toLowerCase();
+  };
+
+  const safeCompare = (expected: string) => {
+    if (expected.length !== receivedHash.length) return false;
+    return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(receivedHash));
+  };
+
+  // 1. Check with raw received productinfo
+  if (safeCompare(computeHashFor(rawProductinfo))) return true;
+
+  // 2. Check with sanitized productinfo
+  if (safeCompare(computeHashFor(sanitizePayUProductInfo(rawProductinfo)))) return true;
+
+  // 3. Check with URL-decoded productinfo if received with percent encoding
+  try {
+    const decoded = decodeURIComponent(rawProductinfo);
+    if (decoded !== rawProductinfo && safeCompare(computeHashFor(decoded))) {
+      return true;
+    }
+  } catch {}
+
+  return false;
 }
 
 export interface CreatePayUOrderParams {
@@ -260,7 +292,15 @@ export async function createPayUPaymentOrder(
     if (couponValidation.pricing?.isZeroPayable) {
       const txnid = `TXN_ZERO_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       const idempotencyKey = `payu_order_${txnid}`;
-      const phone = (params.customerDetails.phone || '9999999999').replace(/[^0-9]/g, '').slice(-10);
+      
+      let cleanPhone = (params.customerDetails.phone || '9999999999').replace(/[^0-9]/g, '');
+      if (cleanPhone.length < 10) cleanPhone = cleanPhone.padStart(10, '9');
+      else if (cleanPhone.length > 10) cleanPhone = cleanPhone.slice(-10);
+
+      const rawFirstName = (params.customerDetails.name || 'Creator').trim().split(/\s+/)[0] || 'Creator';
+      const cleanFirstname = rawFirstName.replace(/[^a-zA-Z]/g, '') || 'Creator';
+      const cleanEmail = (params.customerDetails.email || 'creator@fluviaflow.ai').toLowerCase().trim();
+      const cleanProductInfo = sanitizePayUProductInfo(productInfo);
 
       const zeroTaxBreakdown = {
         baseAmount: 0,
@@ -282,7 +322,7 @@ export async function createPayUPaymentOrder(
         workspaceId: params.workspaceId,
         paymentType: params.paymentType,
         itemPlanOrPackId: params.itemPlanOrPackId,
-        productInfo,
+        productInfo: cleanProductInfo,
         currency: 'INR',
         baseAmount: 0,
         taxAmount: 0,
@@ -291,7 +331,8 @@ export async function createPayUPaymentOrder(
         taxBreakdown: zeroTaxBreakdown,
         customerDetails: {
           ...params.customerDetails,
-          phone,
+          phone: cleanPhone,
+          email: cleanEmail,
         },
         couponId,
         couponCode: appliedCouponCode,
@@ -322,22 +363,22 @@ export async function createPayUPaymentOrder(
         skipHashCheckIfAlreadyVerified: true,
       });
 
-      const hostUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+      const relativeRedirectUrl = `/payment/status?txnid=${encodeURIComponent(txnid)}&status=success`;
       return {
         order: fulfillment.order,
         isZeroPayment: true,
-        redirectUrl: `${hostUrl}/payment/status?txnid=${encodeURIComponent(txnid)}&status=success`,
+        redirectUrl: relativeRedirectUrl,
         payuParams: {
-          actionUrl: `${hostUrl}/payment/status?txnid=${encodeURIComponent(txnid)}&status=success`,
+          actionUrl: relativeRedirectUrl,
           key: config.merchantKey,
           txnid,
           amount: '0.00',
-          productinfo: productInfo,
-          firstname: (params.customerDetails.name || 'Creator').split(' ')[0] || 'Creator',
-          email: params.customerDetails.email.toLowerCase(),
-          phone,
-          surl: `${hostUrl}/api/payments/payu/callback`,
-          furl: `${hostUrl}/api/payments/payu/callback`,
+          productinfo: cleanProductInfo,
+          firstname: cleanFirstname,
+          email: cleanEmail,
+          phone: cleanPhone,
+          surl: `/api/payments/payu/callback`,
+          furl: `/api/payments/payu/callback`,
           hash: '',
           udf1: `ord_${txnid}`,
           udf2: params.userId,
@@ -363,9 +404,14 @@ export async function createPayUPaymentOrder(
   const surl = `${hostUrl}/api/payments/payu/callback`;
   const furl = `${hostUrl}/api/payments/payu/callback`;
 
-  const firstname = (params.customerDetails.name || 'Creator').split(' ')[0] || 'Creator';
-  const email = params.customerDetails.email.toLowerCase();
-  const phone = (params.customerDetails.phone || '9999999999').replace(/[^0-9]/g, '').slice(-10);
+  const rawFirstName = (params.customerDetails.name || 'Creator').trim().split(/\s+/)[0] || 'Creator';
+  const firstname = rawFirstName.replace(/[^a-zA-Z]/g, '') || 'Creator';
+  const email = (params.customerDetails.email || 'creator@fluviaflow.ai').toLowerCase().trim();
+  let phone = (params.customerDetails.phone || '9999999999').replace(/[^0-9]/g, '');
+  if (phone.length < 10) phone = phone.padStart(10, '9');
+  else if (phone.length > 10) phone = phone.slice(-10);
+
+  const cleanProductInfo = sanitizePayUProductInfo(productInfo);
 
   const udf1 = `ord_${txnid}`;
   const udf2 = params.userId;
@@ -378,7 +424,7 @@ export async function createPayUPaymentOrder(
     key: config.merchantKey,
     txnid,
     amount: amountStr,
-    productinfo: productInfo,
+    productinfo: cleanProductInfo,
     firstname,
     email,
     udf1,
@@ -395,7 +441,7 @@ export async function createPayUPaymentOrder(
     workspaceId: params.workspaceId,
     paymentType: params.paymentType,
     itemPlanOrPackId: params.itemPlanOrPackId,
-    productInfo,
+    productInfo: cleanProductInfo,
     currency: 'INR',
     baseAmount: basePriceInr,
     taxAmount: taxBreakdown.taxAmount,
@@ -405,6 +451,7 @@ export async function createPayUPaymentOrder(
     customerDetails: {
       ...params.customerDetails,
       phone,
+      email,
     },
     couponId,
     couponCode: appliedCouponCode,
@@ -432,7 +479,7 @@ export async function createPayUPaymentOrder(
   dbStore.logAudit(params.userId, 'PAYU_ORDER_CREATED', 'payment_order', order.id, {
     txnid,
     totalAmount,
-    productInfo,
+    productInfo: cleanProductInfo,
   });
 
   return {
@@ -442,7 +489,7 @@ export async function createPayUPaymentOrder(
       key: config.merchantKey,
       txnid,
       amount: amountStr,
-      productinfo: productInfo,
+      productinfo: cleanProductInfo,
       firstname,
       email,
       phone,

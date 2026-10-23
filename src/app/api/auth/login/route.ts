@@ -25,6 +25,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const hasPass = dbStore.hasPassword(profile.id);
+    if (!hasPass && profile.authProvider === 'google') {
+      return NextResponse.json(
+        { error: 'This account was created with Google Sign-In. Please sign in using the "Continue with Google" button below.' },
+        { status: 400 }
+      );
+    }
+
     const isValid = dbStore.verifyPassword(profile.id, password);
     if (!isValid) {
       return NextResponse.json(

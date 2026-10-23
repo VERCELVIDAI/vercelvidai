@@ -63,9 +63,9 @@ function LoginForm() {
       }
 
       if (useTemplate === 'true' && returnUrl.startsWith('/templates/')) {
-        router.push(`${returnUrl}?autoUse=true`);
+        window.location.href = `${returnUrl}?autoUse=true`;
       } else {
-        router.push(returnUrl);
+        window.location.href = returnUrl;
       }
     } catch (err: any) {
       setError(err.message);

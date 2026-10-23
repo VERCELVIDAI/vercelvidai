@@ -90,9 +90,9 @@ function SignupForm() {
           : null;
 
       if (pendingPrompt) {
-        router.push('/create');
+        window.location.href = '/create';
       } else {
-        router.push(returnUrl);
+        window.location.href = returnUrl;
       }
     } catch (err: any) {
       setError(err.message);

@@ -1144,9 +1144,31 @@ class Store {
     this.db = data;
     try {
       ensureDataDir();
-      const tempFile = `${DB_FILE}.${Date.now()}.${Math.random().toString(36).substring(2, 7)}.tmp`;
-      fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf-8');
-      fs.renameSync(tempFile, DB_FILE);
+      const content = JSON.stringify(data, null, 2);
+      let written = false;
+
+      // 1. Try atomic rename via temp file
+      try {
+        const tempFile = `${DB_FILE}.${Date.now()}.${Math.random().toString(36).substring(2, 7)}.tmp`;
+        fs.writeFileSync(tempFile, content, 'utf-8');
+        try {
+          fs.renameSync(tempFile, DB_FILE);
+          written = true;
+        } catch {
+          // On Windows, renameSync can fail with EPERM/EBUSY if the destination file is open
+          try {
+            fs.copyFileSync(tempFile, DB_FILE);
+            written = true;
+          } catch {}
+          try { fs.unlinkSync(tempFile); } catch {}
+        }
+      } catch {}
+
+      // 2. Direct write fallback if atomic rename/copy encountered permission or locking lock
+      if (!written) {
+        fs.writeFileSync(DB_FILE, content, 'utf-8');
+      }
+
       try {
         this.lastMtime = fs.statSync(DB_FILE).mtimeMs;
       } catch (e) {}
@@ -1164,6 +1186,11 @@ class Store {
 
   getProfileByEmail(email: string): UserProfile | undefined {
     return this.load().profiles.find((p) => p.email.toLowerCase() === email.toLowerCase());
+  }
+
+  hasPassword(userId: string): boolean {
+    const db = this.load();
+    return Boolean(db.passwords && db.passwords[userId]);
   }
 
   verifyPassword(userId: string, plainText: string): boolean {

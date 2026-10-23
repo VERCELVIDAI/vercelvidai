@@ -117,7 +117,7 @@ export async function setSession(data: SessionData): Promise<void> {
   const signedToken = createSignedSessionToken(data);
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
-  const isHttps = appUrl.startsWith('https://') || (process.env.NODE_ENV === 'production' && !appUrl.includes('localhost'));
+  const isHttps = appUrl.startsWith('https://');
   const cookieOpts = {
     httpOnly: true,
     secure: isHttps,
@@ -132,7 +132,7 @@ export async function setSession(data: SessionData): Promise<void> {
 export async function clearSession(): Promise<void> {
   const cookieStore = cookies();
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
-  const isHttps = appUrl.startsWith('https://') || (process.env.NODE_ENV === 'production' && !appUrl.includes('localhost'));
+  const isHttps = appUrl.startsWith('https://');
   const clearOpts = {
     httpOnly: true,
     secure: isHttps,

@@ -2,7 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { fulfillPayUPayment } from '@/lib/payments/payu';
 import { dbStore } from '@/lib/db/store';
 
+export const dynamic = 'force-dynamic';
+
+function getAppUrl(req: NextRequest): string {
+  const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
+  const proto = req.headers.get('x-forwarded-proto') || 'http';
+  return host ? `${proto}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
+}
+
 export async function POST(req: NextRequest) {
+  const hostUrl = getAppUrl(req);
   try {
     const contentType = req.headers.get('content-type') || '';
     let payload: Record<string, any> = {};
@@ -18,7 +27,6 @@ export async function POST(req: NextRequest) {
 
     const txnid = payload.txnid;
     const status = (payload.status || '').toLowerCase();
-    const hostUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
     if (!txnid) {
       return NextResponse.redirect(`${hostUrl}/payment/status?status=failed&error=Missing+transaction+identifier`, 303);
@@ -58,7 +66,22 @@ export async function POST(req: NextRequest) {
     }
   } catch (err: any) {
     console.error('Fatal PayU callback exception:', err);
-    const hostUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     return NextResponse.redirect(`${hostUrl}/payment/status?status=failed&error=Unexpected+callback+error`, 303);
   }
+}
+
+export async function GET(req: NextRequest) {
+  const hostUrl = getAppUrl(req);
+  const { searchParams } = new URL(req.url);
+  const txnid = searchParams.get('txnid') || '';
+  const status = (searchParams.get('status') || '').toLowerCase();
+
+  if (txnid) {
+    return NextResponse.redirect(
+      `${hostUrl}/payment/status?txnid=${encodeURIComponent(txnid)}&status=${encodeURIComponent(status || 'pending')}`,
+      303
+    );
+  }
+
+  return NextResponse.redirect(`${hostUrl}/dashboard/billing`, 303);
 }
