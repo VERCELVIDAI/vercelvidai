@@ -1021,6 +1021,14 @@
       "role": "creator",
       "createdAt": "2026-10-23T10:45:45.699Z",
       "updatedAt": "2026-10-23T10:45:45.699Z"
+    },
+    {
+      "id": "usr_bjhjgn8m",
+      "email": "payu_1792753107465@fluvia.io",
+      "displayName": "PayU Test Creator",
+      "role": "creator",
+      "createdAt": "2026-10-23T10:58:27.466Z",
+      "updatedAt": "2026-10-23T10:58:27.466Z"
     }
   ],
   "passwords": {
@@ -1205,7 +1213,9 @@
     "usr_vault_vdorrqbl": "scrypt:6772d260317900487b0b484a8f541599:cf435b5a973db33c77bb56759b3712ddbd6ed0de66392a64e9f8ba9e3159e735be656a8f1279849b2fa9025ea0348f649cc6d2f34528a32ec03d0b37a1a96ab7",
     "vault_user_1792752339416@fluviaflow.ai": "scrypt:6772d260317900487b0b484a8f541599:cf435b5a973db33c77bb56759b3712ddbd6ed0de66392a64e9f8ba9e3159e735be656a8f1279849b2fa9025ea0348f649cc6d2f34528a32ec03d0b37a1a96ab7",
     "usr_g3p2yor6": "scrypt:72b3830ca5e2b9f349eba0653b16fc98:58c90e8a283facbb4bf8c0794d42e7c5661debb9b533b88f37efadd2f46957ed9d497cd82089358e823964172434aa342cea99db9547c3f6cc7561a98469eb68",
-    "payu_1792752345699@fluvia.io": "scrypt:72b3830ca5e2b9f349eba0653b16fc98:58c90e8a283facbb4bf8c0794d42e7c5661debb9b533b88f37efadd2f46957ed9d497cd82089358e823964172434aa342cea99db9547c3f6cc7561a98469eb68"
+    "payu_1792752345699@fluvia.io": "scrypt:72b3830ca5e2b9f349eba0653b16fc98:58c90e8a283facbb4bf8c0794d42e7c5661debb9b533b88f37efadd2f46957ed9d497cd82089358e823964172434aa342cea99db9547c3f6cc7561a98469eb68",
+    "usr_bjhjgn8m": "scrypt:780eeae843c78a27355d57482c39b7b5:8abe9f1fb0196fb0944eb0f0cbd3dd1e0a3f175be50c25e5e32b21b0fe44cccfb1f2c93f8d354fe961a3fa43965861bbcca6a26464dc3f1490dabd1c90d3f067",
+    "payu_1792753107465@fluvia.io": "scrypt:780eeae843c78a27355d57482c39b7b5:8abe9f1fb0196fb0944eb0f0cbd3dd1e0a3f175be50c25e5e32b21b0fe44cccfb1f2c93f8d354fe961a3fa43965861bbcca6a26464dc3f1490dabd1c90d3f067"
   },
   "workspaces": [
     {
@@ -2075,6 +2085,13 @@
       "name": "PayU Test Creator's Studio",
       "createdAt": "2026-10-23T10:45:45.699Z",
       "updatedAt": "2026-10-23T10:45:45.699Z"
+    },
+    {
+      "id": "ws_ovuy1tv9",
+      "ownerId": "usr_bjhjgn8m",
+      "name": "PayU Test Creator's Studio",
+      "createdAt": "2026-10-23T10:58:27.466Z",
+      "updatedAt": "2026-10-23T10:58:27.466Z"
     }
   ],
   "workspaceMembers": [
@@ -2797,6 +2814,12 @@
       "userId": "usr_g3p2yor6",
       "role": "owner",
       "joinedAt": "2026-10-23T10:45:45.699Z"
+    },
+    {
+      "workspaceId": "ws_ovuy1tv9",
+      "userId": "usr_bjhjgn8m",
+      "role": "owner",
+      "joinedAt": "2026-10-23T10:58:27.466Z"
     }
   ],
   "creditAccounts": {
@@ -3585,6 +3608,18 @@
       "availableBalance": 4000,
       "reservedBalance": 0,
       "updatedAt": "2026-10-23T10:45:45.783Z"
+    },
+    "usr_bjhjgn8m": {
+      "userId": "usr_bjhjgn8m",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-23T10:58:27.466Z"
+    },
+    "usr_payu_test_1792753107465": {
+      "userId": "usr_payu_test_1792753107465",
+      "availableBalance": 4000,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-23T10:58:27.563Z"
     }
   },
   "creditLedger": [
@@ -7126,6 +7161,33 @@
         "txnid": "TXN_1792752345762_AZ71MW"
       },
       "createdAt": "2026-10-23T10:45:45.783Z"
+    },
+    {
+      "id": "cld_luezf6wfih",
+      "userId": "usr_bjhjgn8m",
+      "transactionType": "signup_bonus",
+      "amount": 100,
+      "balanceAfter": 100,
+      "idempotencyKey": "signup_grant_usr_bjhjgn8m",
+      "metadata": {
+        "note": "Welcome signup allowance"
+      },
+      "createdAt": "2026-10-23T10:58:27.466Z"
+    },
+    {
+      "id": "cld_x464nwzh4j",
+      "userId": "usr_payu_test_1792753107465",
+      "transactionType": "subscription_grant",
+      "amount": 4000,
+      "balanceAfter": 4000,
+      "paymentId": "ord_payu_puuyw0sho",
+      "idempotencyKey": "payu_sub_grant_TXN_1792753107536_B2E26F",
+      "metadata": {
+        "planId": "plan_max",
+        "billingInterval": "month",
+        "txnid": "TXN_1792753107536_B2E26F"
+      },
+      "createdAt": "2026-10-23T10:58:27.563Z"
     }
   ],
   "plans": [
@@ -7508,6 +7570,17 @@
       "cancelAtPeriodEnd": false,
       "id": "sub_2hc9d02ng",
       "createdAt": "2026-10-23T10:45:45.797Z"
+    },
+    {
+      "userId": "usr_payu_test_1792753107465",
+      "planId": "plan_max",
+      "providerSubscriptionId": "payu_sub_TXN_1792753107536_B2E26F",
+      "status": "active",
+      "currentPeriodStart": "2026-10-23T10:58:27.563Z",
+      "currentPeriodEnd": "2027-10-23T10:58:27.576Z",
+      "cancelAtPeriodEnd": false,
+      "id": "sub_xrxcsqu0m",
+      "createdAt": "2026-10-23T10:58:27.576Z"
     }
   ],
   "creditPacks": [
@@ -14326,6 +14399,34 @@
         "creditsAwarded": 4000
       },
       "createdAt": "2026-10-23T10:45:45.837Z"
+    },
+    {
+      "id": "aud_kk3urmvfz3",
+      "actorId": "usr_payu_test_1792753107465",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_puuyw0sho",
+      "metadata": {
+        "txnid": "TXN_1792753107536_B2E26F",
+        "totalAmount": 56625.84,
+        "productInfo": "Fluvia Max - Annual Subscription 12 Months at INR 3999 mo"
+      },
+      "createdAt": "2026-10-23T10:58:27.551Z"
+    },
+    {
+      "id": "aud_xsaneql2lh",
+      "actorId": "usr_payu_test_1792753107465",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_puuyw0sho",
+      "metadata": {
+        "txnid": "TXN_1792753107536_B2E26F",
+        "totalAmount": 56625.84,
+        "invoiceNumber": "INV-2026-0071",
+        "receiptNumber": "RCP-2026-0071",
+        "creditsAwarded": 4000
+      },
+      "createdAt": "2026-10-23T10:58:27.618Z"
     }
   ],
   "supportTickets": [
@@ -19525,6 +19626,51 @@
       "receiptId": "rcp_81ptdp0tq",
       "receiptNumber": "RCP-2026-0070",
       "verifiedAt": "2026-10-23T10:45:45.783Z"
+    },
+    {
+      "txnid": "TXN_1792753107536_B2E26F",
+      "userId": "usr_payu_test_1792753107465",
+      "workspaceId": "ws_payu_test_1792753107465",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_max",
+      "productInfo": "Fluvia Max - Annual Subscription 12 Months at INR 3999 mo",
+      "currency": "INR",
+      "baseAmount": 47988,
+      "taxAmount": 8637.84,
+      "totalAmount": 56625.84,
+      "amountPaise": 5662584,
+      "taxBreakdown": {
+        "baseAmount": 47988,
+        "taxRate": 18,
+        "taxAmount": 8637.84,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 8637.84,
+        "isInterState": true,
+        "placeOfSupply": "Maharashtra"
+      },
+      "customerDetails": {
+        "name": "PayU Test Creator",
+        "email": "payu_1792753107534@fluvia.io",
+        "phone": "9876543210",
+        "state": "Maharashtra"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1792753107536_B2E26F",
+      "id": "ord_payu_puuyw0sho",
+      "createdAt": "2026-10-23T10:58:27.537Z",
+      "updatedAt": "2026-10-23T10:58:27.605Z",
+      "payuMihpayid": "mih_1792753107563",
+      "payuBankRefNum": "BNK_1792753107563",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_jucynofpe",
+      "invoiceNumber": "INV-2026-0071",
+      "receiptId": "rcp_piw1euovl",
+      "receiptNumber": "RCP-2026-0071",
+      "verifiedAt": "2026-10-23T10:58:27.563Z"
     }
   ],
   "invoices": [
@@ -23585,6 +23731,62 @@
       "id": "inv_pre3hnu22",
       "createdAt": "2026-10-23T10:45:45.807Z",
       "updatedAt": "2026-10-23T10:45:45.807Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0071",
+      "orderId": "ord_payu_puuyw0sho",
+      "txnid": "TXN_1792753107536_B2E26F",
+      "userId": "usr_payu_test_1792753107465",
+      "workspaceId": "ws_payu_test_1792753107465",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "PayU Test Creator",
+        "email": "payu_1792753107534@fluvia.io",
+        "phone": "9876543210",
+        "state": "Maharashtra"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Max - Annual Subscription 12 Months at INR 3999 mo",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 47988,
+          "taxableValue": 47988,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 8637.84,
+          "totalAmount": 56625.84
+        }
+      ],
+      "baseAmount": 47988,
+      "taxAmount": 8637.84,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 8637.84,
+      "totalAmount": 56625.84,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-23T10:58:27.563Z",
+      "dueDate": "2026-10-23T10:58:27.563Z",
+      "paymentDate": "2026-10-23T10:58:27.563Z",
+      "payuPaymentId": "mih_1792753107563",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_jucynofpe",
+      "createdAt": "2026-10-23T10:58:27.586Z",
+      "updatedAt": "2026-10-23T10:58:27.586Z"
     }
   ],
   "receipts": [
@@ -25281,6 +25483,29 @@
       "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
       "id": "rcp_81ptdp0tq",
       "createdAt": "2026-10-23T10:45:45.817Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0071",
+      "orderId": "ord_payu_puuyw0sho",
+      "txnid": "TXN_1792753107536_B2E26F",
+      "invoiceId": "inv_jucynofpe",
+      "invoiceNumber": "INV-2026-0071",
+      "userId": "usr_payu_test_1792753107465",
+      "workspaceId": "ws_payu_test_1792753107465",
+      "customerName": "PayU Test Creator",
+      "customerEmail": "payu_1792753107534@fluvia.io",
+      "amountReceived": 56625.84,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1792753107563",
+      "payuBankRefNum": "BNK_1792753107563",
+      "productPurchased": "Fluvia Max - Annual Subscription 12 Months at INR 3999 mo",
+      "paymentDate": "2026-10-23T10:58:27.563Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1792753107536_B2E26F-MVKUWUX8",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_piw1euovl",
+      "createdAt": "2026-10-23T10:58:27.596Z"
     }
   ],
   "creditNotes": [],

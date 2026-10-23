@@ -23,8 +23,8 @@ export function getPayUConfig(): PayUConfig {
   const isExplicitTest = envRaw === 'test' || envRaw === 'sandbox' || envRaw === 'dev';
   const env: 'test' | 'prod' = isExplicitTest ? 'test' : 'prod';
 
-  const rawKey = (process.env.PAYU_MERCHANT_KEY || '').replace(/^['"]|['"]$/g, '').trim();
-  const rawSalt = (process.env.PAYU_MERCHANT_SALT || '').replace(/^['"]|['"]$/g, '').trim();
+  const rawKey = (process.env.PAYU_MERCHANT_KEY || process.env.PAYU_KEY || '').replace(/^['"]|['"]$/g, '').trim();
+  const rawSalt = (process.env.PAYU_MERCHANT_SALT || process.env.PAYU_SALT || '').replace(/^['"]|['"]$/g, '').trim();
 
   // Active verified test credentials for PayU Sandbox:
   // Key: gtKFFx pairs with active salt: 4R38IvwiV57FwVpsgOvTXBdLE4tHUXFW
