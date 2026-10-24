@@ -50,7 +50,21 @@ export function FloatingPromptComposer({
   const [showModelPicker, setShowModelPicker] = useState(false);
   const [showGoogleVidsModal, setShowGoogleVidsModal] = useState(false);
   const [copiedVidsPrompt, setCopiedVidsPrompt] = useState(false);
+  const [vidsPromptOverride, setVidsPromptOverride] = useState<string | null>(null);
   const [availableCredits, setAvailableCredits] = useState<number>(userCredits);
+
+  const GOOGLE_VIDS_STARTER_TEMPLATES = [
+    { id: 'auto', label: 'Hypercar Ad', emoji: '🏎️', prompt: 'Hyper-realistic commercial launch film of an aerodynamic concept hypercar in a wind tunnel, laser grid reflections, smoke trails over carbon fiber bodywork, glowing carbon-ceramic brakes, anamorphic lens flares, ultra-smooth tracking shot, photorealistic 8k 60fps.' },
+    { id: 'watch', label: 'Luxury Watch', emoji: '⌚', prompt: 'Ultra-luxury watch commercial, seamless macro camera sweep across a brushed titanium bezel and obsidian skeleton dial. Floating chronograph hands, sapphire crystal reflection, dramatic volumetric rim lighting, micro mechanical gear movement, photorealistic 8k render.' },
+    { id: 'cyber', label: 'Cyberpunk Drive', emoji: '⚡', prompt: 'Cinematic first-person perspective night drive through rain-slicked neon Shibuya streets. Hyper-reflective puddles, towering holographic billboards, purple-teal neon trails, ultra-smooth motion blur, cinematic color grade, 4k 60fps.' },
+    { id: 'saas', label: 'AI Agent Swarm', emoji: '🤖', prompt: 'Futuristic corporate visual of multi-agent autonomous AI swarm executing coordinated data operations. Glowing holographic network nodes pulsing with emerald-teal light, data pipelines morphing into animated bar charts, executive control dashboard floating in dark glass workspace, photorealistic UI 8k.' },
+    { id: 'beauty', label: 'Hydration Serum', emoji: '🧴', prompt: 'High-end skincare beauty commercial, macro slow-motion droplet of golden hydration serum falling onto a frosted glass podium. Floating water molecules, iridescent botanical refraction, soft natural sunlight, luxury cosmetic aesthetic, 4k 60fps.' },
+    { id: 'food', label: 'Torched Wagyu', emoji: '🥩', prompt: 'Gourmet culinary commercial, macro close-up of an A5 Japanese Wagyu steak being torched with an intense blue-orange blowtorch flame. Sizzling rendered marbling, rising aromatic smoke, sea salt crystals catching ambient warm candlelight, golden-brown crust sear, 4k 60fps.' },
+  ];
+
+  const getActiveVidsPrompt = () => {
+    return vidsPromptOverride || prompt.trim() || selectedTemplate?.prompt || 'Create a cinematic product commercial with dynamic lighting';
+  };
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const pollingRef = useRef<NodeJS.Timeout | null>(null);
@@ -195,7 +209,7 @@ export function FloatingPromptComposer({
   };
 
   const handleCopyVidsPrompt = () => {
-    navigator.clipboard.writeText(prompt.trim() || selectedTemplate?.prompt || 'A cinematic product commercial');
+    navigator.clipboard.writeText(getActiveVidsPrompt());
     setCopiedVidsPrompt(true);
     setTimeout(() => setCopiedVidsPrompt(false), 2000);
   };
@@ -316,10 +330,41 @@ export function FloatingPromptComposer({
               </div>
             </div>
 
+            {/* Cool Templates Selector for Google Vids */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] text-white/70 font-semibold flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Cool Starter Templates for Google Vids:</span>
+                </span>
+                <span className="text-[10px] text-cyan-300 font-mono">1-Click Apply</span>
+              </label>
+              <div className="grid grid-cols-3 gap-1.5">
+                {GOOGLE_VIDS_STARTER_TEMPLATES.map((tmpl) => {
+                  const isSelected = vidsPromptOverride === tmpl.prompt;
+                  return (
+                    <button
+                      key={tmpl.id}
+                      type="button"
+                      onClick={() => setVidsPromptOverride(tmpl.prompt)}
+                      className={`px-2 py-1.5 rounded-xl text-[11px] font-medium border flex items-center gap-1.5 transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-blue-600/30 text-blue-200 border-blue-400/60 shadow-xs'
+                          : 'bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border-white/10'
+                      }`}
+                    >
+                      <span>{tmpl.emoji}</span>
+                      <span className="truncate">{tmpl.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="space-y-1.5">
               <label className="text-[11px] text-white/60 font-semibold">Your Prompt for Google Vids:</label>
-              <div className="relative p-3 rounded-xl bg-black/50 border border-white/10 text-xs text-white/90 font-mono">
-                {prompt.trim() || selectedTemplate?.prompt || 'Create a cinematic product commercial with dynamic lighting'}
+              <div className="relative p-3 rounded-xl bg-black/50 border border-white/10 text-xs text-white/90 font-mono select-all">
+                {getActiveVidsPrompt()}
               </div>
             </div>
 

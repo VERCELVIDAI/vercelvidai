@@ -271,6 +271,17 @@ function CreateWorkspaceContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Auto-load template if provided in URL params
+  useEffect(() => {
+    const templateParam = searchParams.get('template');
+    if (templateParam) {
+      const found = TEMPLATES_DATA.find((t) => t.id === templateParam || t.slug === templateParam);
+      if (found) {
+        handleLoadTemplate(found);
+      }
+    }
+  }, [searchParams]);
+
   // Copy prompt & handoff to Google Vids
   const handleCopyAndLaunchGoogleVids = () => {
     if (prompt.trim()) {

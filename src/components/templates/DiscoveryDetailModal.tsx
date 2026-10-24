@@ -57,11 +57,13 @@ export function DiscoveryDetailModal({
   const [copiedVidsPrompt, setCopiedVidsPrompt] = useState(false);
   const [isCreatingProject, setIsCreatingProject] = useState(false);
   const [showVidsHandoff, setShowVidsHandoff] = useState(false);
+  const [activeVidsPrompt, setActiveVidsPrompt] = useState<string | null>(null);
 
   useEffect(() => {
     // Reset play state when template changes
     setIsPlaying(true);
     setCopiedPrompt(false);
+    setActiveVidsPrompt(null);
   }, [template]);
 
   if (!template) return null;
@@ -486,10 +488,46 @@ export function DiscoveryDetailModal({
               </div>
             </div>
 
+            {/* Featured Cool Templates Quick Switcher */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] text-white/70 font-semibold flex items-center justify-between">
+                <span>Featured Cool Video Templates:</span>
+                <span className="text-[10px] text-blue-400 font-mono">0 cr handoff</span>
+              </label>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[
+                  { title: 'Current: ' + template.title, prompt: template.prompt || template.description, emoji: '✨' },
+                  { title: 'AeroGT Hypercar', prompt: 'Hyper-realistic commercial launch film of an aerodynamic concept hypercar in a wind tunnel, laser grid reflections, smoke trails over carbon fiber bodywork, glowing carbon-ceramic brakes, anamorphic lens flares, ultra-smooth tracking shot, photorealistic 8k 60fps.', emoji: '🏎️' },
+                  { title: 'Midnight Chrono', prompt: 'Ultra-luxury watch commercial, seamless macro camera sweep across a brushed titanium bezel and obsidian skeleton dial. Floating chronograph hands, sapphire crystal reflection, dramatic volumetric rim lighting, micro mechanical gear movement, photorealistic 8k render.', emoji: '⌚' },
+                  { title: 'Cyberpunk Drive', prompt: 'Cinematic first-person perspective night drive through rain-slicked neon Shibuya streets. Hyper-reflective puddles, towering holographic billboards, purple-teal neon trails, ultra-smooth motion blur, cinematic color grade, 4k 60fps.', emoji: '⚡' },
+                  { title: 'AI Agent Swarm', prompt: 'Futuristic corporate visual of multi-agent autonomous AI swarm executing coordinated data operations. Glowing holographic network nodes pulsing with emerald-teal light, data pipelines morphing into animated bar charts, executive control dashboard floating in dark glass workspace, photorealistic UI 8k.', emoji: '🤖' },
+                  { title: 'Hydration Serum', prompt: 'High-end skincare beauty commercial, macro slow-motion droplet of golden hydration serum falling onto a frosted glass podium. Floating water molecules, iridescent botanical refraction, soft natural sunlight, luxury cosmetic aesthetic, 4k 60fps.', emoji: '🧴' },
+                ].map((tmpl, idx) => {
+                  const currentEffective = activeVidsPrompt || template.prompt || template.description;
+                  const isSelected = currentEffective === tmpl.prompt;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveVidsPrompt(tmpl.prompt)}
+                      className={`px-2 py-1.5 rounded-xl text-[11px] font-medium border flex items-center gap-1.5 transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-blue-600/30 text-blue-200 border-blue-400/60 shadow-xs'
+                          : 'bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border-white/10'
+                      }`}
+                    >
+                      <span>{tmpl.emoji}</span>
+                      <span className="truncate">{tmpl.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="space-y-1.5">
               <label className="text-[11px] text-white/60 font-semibold">Template Prompt:</label>
               <div className="relative p-3 rounded-xl bg-black/50 border border-white/10 text-xs text-white/90 font-mono select-all">
-                {template.prompt || template.description}
+                {activeVidsPrompt || template.prompt || template.description}
               </div>
             </div>
 
@@ -497,7 +535,7 @@ export function DiscoveryDetailModal({
               <button
                 type="button"
                 onClick={() => {
-                  navigator.clipboard.writeText(template.prompt || template.description);
+                  navigator.clipboard.writeText(activeVidsPrompt || template.prompt || template.description);
                   setCopiedVidsPrompt(true);
                   setTimeout(() => setCopiedVidsPrompt(false), 2000);
                 }}

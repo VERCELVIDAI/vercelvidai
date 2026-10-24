@@ -29,10 +29,15 @@ export function GoogleVidsCard() {
         {/* Left Column: Copy & Badges */}
         <div className="space-y-4 max-w-xl min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 border border-emerald-300 text-emerald-800 text-xs font-black tracking-wider uppercase">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-google-vids-popup'))}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 hover:bg-emerald-200 border border-emerald-300 text-emerald-800 text-xs font-black tracking-wider uppercase transition-colors cursor-pointer"
+              title="Click to view Cool Templates popup"
+            >
               <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
               <span>GOOGLE VIDS</span>
-            </div>
+            </button>
             <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/80 border border-emerald-200 text-emerald-700 text-[11px] font-bold font-mono">
               <Zap className="w-3 h-3 text-emerald-600 fill-emerald-500" />
               15 credits per video
@@ -79,6 +84,15 @@ export function GoogleVidsCard() {
               <Layers className="w-4 h-4 text-emerald-600" />
               <span>Browse 26 Templates</span>
             </Link>
+
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-google-vids-popup'))}
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-emerald-50 hover:bg-emerald-100/80 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Cool Templates Popup</span>
+            </button>
           </div>
         </div>
 
