@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -18,6 +18,7 @@ import {
   Tag,
   X,
   Loader2,
+  Clock,
 } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 
@@ -63,7 +64,24 @@ function CheckoutContent() {
   const [agreeTerms, setAgreeTerms] = useState(true);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Handle countdown for rate-limit cooldown
+  useEffect(() => {
+    if (cooldownSeconds <= 0) return;
+    const intervalId = setInterval(() => {
+      setCooldownSeconds((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalId);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [cooldownSeconds]);
 
   // Coupon state
   const [couponInput, setCouponInput] = useState('');
@@ -217,6 +235,12 @@ function CheckoutContent() {
 
   const handleSubmitPayment = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Prevent double-clicks, burst submissions, or submissions during cooldown
+    if (isSubmittingRef.current || isSubmitting || cooldownSeconds > 0) {
+      return;
+    }
+
     if (!customerName || !customerEmail || !customerPhone) {
       setErrorMessage('Please fill in your name, email, and mobile phone number.');
       return;
@@ -226,6 +250,7 @@ function CheckoutContent() {
       return;
     }
 
+    isSubmittingRef.current = true;
     setIsSubmitting(true);
     setErrorMessage('');
 
@@ -250,7 +275,15 @@ function CheckoutContent() {
       });
 
       if (!res.ok) {
-        const errData = await res.json();
+        const errData = await res.json().catch(() => ({}));
+        if (res.status === 429 || errData.code === 'RATE_LIMITED' || errData.retryAfter) {
+          const waitTime = errData.retryAfter || 60;
+          setCooldownSeconds(waitTime);
+          throw new Error(
+            errData.error ||
+            `Sorry, we are unable to process your payment due to Too many Requests. Please try after ${waitTime} seconds.`
+          );
+        }
         throw new Error(errData.error || 'Failed to initialize payment order');
       }
 
@@ -284,9 +317,11 @@ function CheckoutContent() {
 
       document.body.appendChild(form);
       form.submit();
+      // Keep isSubmitting true and lock held while navigating to PayU
     } catch (err: any) {
-      console.error(err);
+      console.error('Payment initiation error:', err);
       setErrorMessage(err.message || 'Payment initiation failed.');
+      isSubmittingRef.current = false;
       setIsSubmitting(false);
     }
   };
@@ -511,19 +546,48 @@ function CheckoutContent() {
               </div>
 
               <div className="pt-4">
+                {cooldownSeconds > 0 && (
+                  <div className="mb-3 p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-start gap-2.5 shadow-xs">
+                    <Clock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5 animate-pulse" />
+                    <div>
+                      <p className="font-bold">Rate Limit Protection Active</p>
+                      <p className="text-[11px] text-amber-800 mt-0.5">
+                        Please wait{' '}
+                        <span className="font-mono font-bold text-amber-950 bg-amber-200/80 px-1.5 py-0.5 rounded">
+                          {cooldownSeconds}s
+                        </span>{' '}
+                        before attempting payment again to prevent PayU gateway throttling.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3.5 px-6 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 cursor-pointer"
+                  disabled={isSubmitting || cooldownSeconds > 0}
+                  className="w-full py-3.5 px-6 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
-                  <Lock className="w-4 h-4" />
-                  <span>
-                    {isSubmitting
-                      ? 'Processing Order...'
-                      : isZeroPayable
-                      ? 'Claim Free Order (INR 0.00)'
-                      : `Continue to Pay INR ${totalAmount.toFixed(2)}`}
-                  </span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Connecting to PayU Secure Gateway...</span>
+                    </>
+                  ) : cooldownSeconds > 0 ? (
+                    <>
+                      <Clock className="w-4 h-4 animate-spin" />
+                      <span>Retry Available in {cooldownSeconds}s</span>
+                    </>
+                  ) : isZeroPayable ? (
+                    <>
+                      <Lock className="w-4 h-4" />
+                      <span>Claim Free Order (INR 0.00)</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-4 h-4" />
+                      <span>Continue to Pay INR {totalAmount.toFixed(2)}</span>
+                    </>
+                  )}
                 </button>
 
                 {/* Gateway Production Status Banner */}

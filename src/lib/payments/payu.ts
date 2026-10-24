@@ -10,6 +10,8 @@ import {
   SupplierLegalDetails,
 } from '../types';
 
+export type PayUEnvironment = 'production' | 'test' | 'prod';
+
 export interface PayUConfig {
   merchantKey: string;
   merchantSalt: string;
@@ -18,10 +20,30 @@ export interface PayUConfig {
   postServiceUrl: string;
 }
 
+/**
+ * Validates PAYU_ENV and ensures only "production" or "test" (with recognized aliases) are accepted.
+ */
+export function validatePayUEnvironment(envInput?: string): 'production' | 'test' {
+  const raw = (envInput || process.env.PAYU_ENV || process.env.NEXT_PUBLIC_PAYU_ENV || 'production')
+    .replace(/^['"]|['"]$/g, '')
+    .trim()
+    .toLowerCase();
+
+  if (raw === 'production' || raw === 'prod') {
+    return 'production';
+  }
+  if (raw === 'test' || raw === 'sandbox' || raw === 'dev') {
+    return 'test';
+  }
+
+  throw new Error(
+    `Invalid PAYU_ENV: "${envInput || process.env.PAYU_ENV}". Only "production" or "test" are accepted.`
+  );
+}
+
 export function getPayUConfig(): PayUConfig {
-  const envRaw = (process.env.PAYU_ENV || process.env.NEXT_PUBLIC_PAYU_ENV || 'prod').replace(/^['"]|['"]$/g, '').trim().toLowerCase();
-  const isExplicitTest = envRaw === 'test' || envRaw === 'sandbox' || envRaw === 'dev';
-  const env: 'test' | 'prod' = isExplicitTest ? 'test' : 'prod';
+  const validatedEnv = validatePayUEnvironment();
+  const env: 'test' | 'prod' = validatedEnv === 'test' ? 'test' : 'prod';
 
   const rawKey = (process.env.PAYU_MERCHANT_KEY || process.env.PAYU_KEY || '').replace(/^['"]|['"]$/g, '').trim();
   const rawSalt = (process.env.PAYU_MERCHANT_SALT || process.env.PAYU_SALT || '').replace(/^['"]|['"]$/g, '').trim();
@@ -31,30 +53,43 @@ export function getPayUConfig(): PayUConfig {
   const TEST_KEY = 'gtKFFx';
   const ACTIVE_TEST_SALT = '4R38IvwiV57FwVpsgOvTXBdLE4tHUXFW';
 
-  let merchantKey = rawKey;
-  let merchantSalt = rawSalt;
+  let merchantKey: string;
+  let merchantSalt: string;
 
-  if (env === 'test') {
-    merchantKey = rawKey || TEST_KEY;
-    // If using default test key gtKFFx, ensure active salt is used even if old eCwWELxi was provided
-    if (merchantKey === TEST_KEY && (!merchantSalt || merchantSalt === 'eCwWELxi')) {
-      merchantSalt = ACTIVE_TEST_SALT;
-    } else if (!merchantSalt) {
-      merchantSalt = ACTIVE_TEST_SALT;
+  if (validatedEnv === 'production') {
+    // Fail safely with clear configuration error if production credentials are missing
+    if (!rawKey || !rawSalt) {
+      throw new Error(
+        'PayU production credentials missing. PAYU_MERCHANT_KEY and PAYU_MERCHANT_SALT must be configured in environment for production mode.'
+      );
     }
-  } else {
-    // Production mode (PAYU_ENV="prod")
+    // Never mix test key with production endpoints
+    if (rawKey === TEST_KEY) {
+      throw new Error(
+        'PayU configuration error: Test merchant key "gtKFFx" cannot be used with production endpoints.'
+      );
+    }
     merchantKey = rawKey;
     merchantSalt = rawSalt;
+  } else {
+    // Test mode
+    merchantKey = rawKey || TEST_KEY;
+    if (merchantKey === TEST_KEY && (!rawSalt || rawSalt === 'eCwWELxi')) {
+      merchantSalt = ACTIVE_TEST_SALT;
+    } else if (!rawSalt) {
+      merchantSalt = ACTIVE_TEST_SALT;
+    } else {
+      merchantSalt = rawSalt;
+    }
   }
 
   const paymentUrl =
-    env === 'prod'
+    validatedEnv === 'production'
       ? 'https://secure.payu.in/_payment'
       : 'https://test.payu.in/_payment';
 
   const postServiceUrl =
-    env === 'prod'
+    validatedEnv === 'production'
       ? 'https://info.payu.in/merchant/postservice?form=2'
       : 'https://test.payu.in/merchant/postservice?form=2';
 
@@ -335,6 +370,7 @@ export interface CreatePayUOrderParams {
   customerDetails: CustomerBillingDetails;
   couponCode?: string;
   requestOrigin?: string;
+  forceNew?: boolean;
 }
 
 export interface PayUOrderInitResult {
@@ -346,12 +382,60 @@ export interface PayUOrderInitResult {
 
 /**
  * Initialize a secure PayU Payment Order with server-side amount and tax calculation.
+ * Implements server-side idempotency to reuse existing pending order for duplicate rapid initiation.
  */
 export async function createPayUPaymentOrder(
   params: CreatePayUOrderParams
 ): Promise<PayUOrderInitResult> {
   const config = getPayUConfig();
   const now = new Date().toISOString();
+
+  // Server-side Idempotency: Reuse recent pending order (within 30 seconds) for the exact same cart
+  if (!params.forceNew) {
+    const IDEMPOTENCY_WINDOW_MS = 30_000;
+    const existingOrders = dbStore.getPayUOrders();
+    const recentPending = existingOrders.find((o) => {
+      if (o.userId !== params.userId) return false;
+      if (o.status !== 'created') return false;
+      if (o.paymentType !== params.paymentType) return false;
+      if (o.itemPlanOrPackId !== params.itemPlanOrPackId) return false;
+      const cleanParamCoupon = (params.couponCode || '').trim().toLowerCase();
+      const cleanOrderCoupon = (o.couponCode || '').trim().toLowerCase();
+      if (cleanParamCoupon !== cleanOrderCoupon) return false;
+      const ageMs = Date.now() - new Date(o.createdAt).getTime();
+      return ageMs < IDEMPOTENCY_WINDOW_MS;
+    });
+
+    if (recentPending) {
+      const cleanHost = (params.requestOrigin || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000').replace(/\/+$/, '');
+      const surl = `${cleanHost}/api/payments/payu/callback`;
+      const furl = `${cleanHost}/api/payments/payu/callback`;
+
+      const canonicalPayload = buildCanonicalPayUPayload({
+        config,
+        txnid: recentPending.txnid,
+        amount: recentPending.totalAmount,
+        productInfo: recentPending.productInfo,
+        customerDetails: {
+          name: params.customerDetails.name,
+          email: params.customerDetails.email,
+          phone: params.customerDetails.phone,
+        },
+        surl,
+        furl,
+        udf1: `ord_${recentPending.txnid}`,
+        udf2: params.userId,
+        udf3: params.paymentType,
+        udf4: params.itemPlanOrPackId,
+        udf5: params.workspaceId,
+      });
+
+      return {
+        order: recentPending,
+        payuParams: canonicalPayload,
+      };
+    }
+  }
 
   let basePriceInr = 499;
   let productInfo = 'Fluvia Flow Creative Credits Pack';
@@ -626,36 +710,56 @@ export async function verifyPaymentWithPayU(txnid: string): Promise<PayUVerifica
   formData.append('var1', txnid);
   formData.append('hash', hash);
 
-  try {
-    const res = await fetch(config.postServiceUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString(),
-    });
+  const MAX_RETRIES = 2;
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const res = await fetch(config.postServiceUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString(),
+      });
 
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.status === 1 && data.transaction_details && data.transaction_details[txnid]) {
-        const txn = data.transaction_details[txnid];
-        const isSuccess = txn.status === 'success';
-        const isPending = txn.status === 'pending';
+      if (res.status === 429) {
+        // PayU server throttled verification request
+        const retryHeader = res.headers.get('retry-after');
+        const waitSec = retryHeader ? Math.min(5, parseInt(retryHeader, 10) || 2) : 2;
+        if (attempt < MAX_RETRIES) {
+          await new Promise((r) => setTimeout(r, waitSec * 1000));
+          continue;
+        }
+      }
 
-        return {
-          verified: isSuccess,
-          status: isSuccess ? 'success' : isPending ? 'pending' : 'failure',
-          mihpayid: txn.mihpayid,
-          bankRefNum: txn.bank_ref_num,
-          paymentMode: txn.mode || txn.bankcode,
-          amount: parseFloat(txn.amt || txn.transaction_amount || '0'),
-          message: txn.error_Message || 'PayU verified',
-          rawResponse: txn,
-        };
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.status === 1 && data.transaction_details && data.transaction_details[txnid]) {
+          const txn = data.transaction_details[txnid];
+          const isSuccess = txn.status === 'success';
+          const isPending = txn.status === 'pending';
+
+          return {
+            verified: isSuccess,
+            status: isSuccess ? 'success' : isPending ? 'pending' : 'failure',
+            mihpayid: txn.mihpayid,
+            bankRefNum: txn.bank_ref_num,
+            paymentMode: txn.mode || txn.bankcode,
+            amount: parseFloat(txn.amt || txn.transaction_amount || '0'),
+            message: txn.error_Message || 'PayU verified',
+            rawResponse: txn,
+          };
+        }
+      }
+      break;
+    } catch (err: any) {
+      if (attempt < MAX_RETRIES) {
+        // Exponential backoff with jitter (500ms, 1000ms + random 0..200ms)
+        const delay = Math.min(2000, 500 * Math.pow(2, attempt) + Math.random() * 200);
+        await new Promise((r) => setTimeout(r, delay));
+      } else {
+        console.warn(`PayU server postservice verification check error: ${err.message}`);
       }
     }
-  } catch (err: any) {
-    console.warn(`PayU server postservice verification check error: ${err.message}`);
   }
 
   // Fallback check: If order was already completed or verified locally via verified response hash
@@ -836,6 +940,7 @@ export async function fulfillPayUPayment(
   // 2. Generate Official Invoice
   const supplier = dbStore.getBillingSettings();
   const invoiceNumber = dbStore.getNextInvoiceNumber();
+  const taxBreakdown = order.taxBreakdown || calculateGstBreakdown(order.baseAmount, order.customerDetails?.state);
 
   const invoice = dbStore.createInvoice({
     invoiceNumber,
@@ -857,18 +962,18 @@ export async function fulfillPayUPayment(
         quantity: 1,
         unitPrice: order.originalBaseAmount || order.baseAmount,
         taxableValue: order.baseAmount,
-        gstRate: order.taxBreakdown.taxRate,
-        cgstAmount: order.taxBreakdown.cgstAmount,
-        sgstAmount: order.taxBreakdown.sgstAmount,
-        igstAmount: order.taxBreakdown.igstAmount,
+        gstRate: taxBreakdown.taxRate,
+        cgstAmount: taxBreakdown.cgstAmount,
+        sgstAmount: taxBreakdown.sgstAmount,
+        igstAmount: taxBreakdown.igstAmount,
         totalAmount: order.totalAmount,
       },
     ],
     baseAmount: order.baseAmount,
     taxAmount: order.taxAmount,
-    cgstAmount: order.taxBreakdown.cgstAmount,
-    sgstAmount: order.taxBreakdown.sgstAmount,
-    igstAmount: order.taxBreakdown.igstAmount,
+    cgstAmount: taxBreakdown.cgstAmount,
+    sgstAmount: taxBreakdown.sgstAmount,
+    igstAmount: taxBreakdown.igstAmount,
     totalAmount: order.totalAmount,
     currency: 'INR',
     status: 'paid',

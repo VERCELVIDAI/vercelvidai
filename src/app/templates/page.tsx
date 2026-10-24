@@ -1,360 +1,592 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, Suspense } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback, Suspense } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Header } from '@/components/navigation/Header';
-import { Footer } from '@/components/navigation/Footer';
-import { TemplateCard } from '@/components/templates/TemplateCard';
-import { VideoPreviewModal } from '@/components/templates/VideoPreviewModal';
-import {
-  TEMPLATES_DATA,
-  TEMPLATE_CATEGORIES,
-  VideoTemplate,
-  TemplateCategory,
-} from '@/lib/templates';
 import {
   Search,
   Sparkles,
+  Flame,
+  Users,
+  Trophy,
+  Upload,
+  X,
   Ratio,
   SlidersHorizontal,
-  Flame,
   Film,
-  X,
-  Play,
+  Zap,
   ArrowRight,
+  LogOut,
+  User as UserIcon,
+  ChevronDown,
+  Lock,
 } from 'lucide-react';
+import { Logo } from '@/components/brand/Logo';
+import { DiscoveryCard } from '@/components/templates/DiscoveryCard';
+import { FloatingPromptComposer } from '@/components/templates/FloatingPromptComposer';
+import { DiscoveryDetailModal } from '@/components/templates/DiscoveryDetailModal';
+import { PublishTemplateModal } from '@/components/templates/PublishTemplateModal';
+import { EventsView } from '@/components/templates/EventsView';
+import { TEMPLATES_DATA, TEMPLATE_CATEGORIES, VideoTemplate } from '@/lib/templates';
 
-function TemplateExplorer() {
+const DISCOVERY_CATEGORIES = [
+  'All',
+  'Cinematic Commercial',
+  'Automotive Cinematic Film',
+  'AI Influencer & UGC',
+  'Anime & Fantasy',
+  '3D Cartoon & Characters',
+  'Pet & Wildlife',
+  'Travel & Landscapes',
+  'Fashion Campaign',
+  'Farm Fresh Vegetables & Organic Food',
+  'Food Commercial',
+  'Tech Product Launch',
+  'Storytelling & Viral Shorts',
+];
+
+function DiscoveryFeedContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // URL state support
-  const initialCategory = (searchParams.get('category') as TemplateCategory) || 'All Templates';
-  const initialAspect = searchParams.get('aspect') || 'all';
+  // Tab state: 'recommended' | 'following' | 'events'
+  const initialTab = (searchParams.get('tab') as 'recommended' | 'following' | 'events') || 'recommended';
+  const [activeTab, setActiveTab] = useState<'recommended' | 'following' | 'events'>(initialTab);
 
-  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
-  const [selectedAspect, setSelectedAspect] = useState<string>(initialAspect);
+  // Filter state
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedAspect, setSelectedAspect] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortBy, setSortBy] = useState<'trending' | 'duration' | 'name'>('trending');
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [previewTemplate, setPreviewTemplate] = useState<VideoTemplate | null>(null);
-  const [isCloning, setIsCloning] = useState<string | null>(null);
+  const [debouncedQuery, setDebouncedQuery] = useState<string>('');
 
-  // Load favorites from localStorage
+  // Data state
+  const [templates, setTemplates] = useState<VideoTemplate[]>(TEMPLATES_DATA);
+  const [isLoading, setIsLoading] = useState(false);
+  const [suggestedCreators, setSuggestedCreators] = useState<any[]>([]);
+
+  // User state
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [userLikes, setUserLikes] = useState<Set<string>>(new Set());
+  const [userFollows, setUserFollows] = useState<Set<string>>(new Set());
+
+  // Interactive UI state
+  const [activePlayingId, setActivePlayingId] = useState<string | null>(null);
+  const [selectedTemplateForModal, setSelectedTemplateForModal] = useState<VideoTemplate | null>(null);
+  const [composerTemplate, setComposerTemplate] = useState<VideoTemplate | null>(null);
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+
+  // Debounce search input
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('fluvia_favorite_templates') || localStorage.getItem('vidai_favorite_templates');
-      if (saved) setFavorites(JSON.parse(saved));
-    } catch (e) {}
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery.trim());
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Load current user profile & wallet credits
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.authenticated) {
+          setCurrentUser(data.user);
+        }
+      })
+      .catch(() => {});
   }, []);
 
-  const toggleFavorite = (templateId: string) => {
-    setFavorites((prev) => {
-      const updated = prev.includes(templateId)
-        ? prev.filter((id) => id !== templateId)
-        : [...prev, templateId];
-      try {
-        localStorage.setItem('fluvia_favorite_templates', JSON.stringify(updated));
-        localStorage.setItem('vidai_favorite_templates', JSON.stringify(updated));
-      } catch (e) {}
-      return updated;
-    });
-  };
+  // Fetch templates data from API based on tab, category, aspect, and search query
+  const fetchFeed = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.set('tab', activeTab);
+      if (selectedCategory !== 'All') params.set('category', selectedCategory);
+      if (selectedAspect !== 'all') params.set('aspect', selectedAspect);
+      if (debouncedQuery) params.set('search', debouncedQuery);
 
-  // Filter and Sort templates
-  const filteredTemplates = useMemo(() => {
-    return TEMPLATES_DATA.filter((tmpl) => {
-      // Category filter
-      if (selectedCategory === 'Trending') {
-        if (tmpl.badge !== 'Trending' && tmpl.badge !== 'Hot') return false;
-      } else if (selectedCategory !== 'All Templates' && tmpl.category !== selectedCategory) {
-        return false;
-      }
-
-      // Aspect ratio filter
-      if (selectedAspect !== 'all' && tmpl.aspect !== selectedAspect) {
-        return false;
-      }
-
-      // Search query filter
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        const matchesTitle = tmpl.title.toLowerCase().includes(q);
-        const matchesDesc = tmpl.description.toLowerCase().includes(q);
-        const matchesCategory = tmpl.category.toLowerCase().includes(q);
-        const matchesTags = tmpl.tags.some((t) => t.toLowerCase().includes(q));
-        if (!matchesTitle && !matchesDesc && !matchesCategory && !matchesTags) {
-          return false;
+      const res = await fetch(`/api/templates?${params.toString()}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.templates) {
+          setTemplates(data.templates);
+        }
+        if (data.userLikes) {
+          setUserLikes(new Set(data.userLikes));
+        }
+        if (data.userFollows) {
+          setUserFollows(new Set(data.userFollows));
+        }
+        if (data.suggestedCreators) {
+          setSuggestedCreators(data.suggestedCreators);
         }
       }
+    } catch (err) {
+      console.error('Failed to fetch templates:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [activeTab, selectedCategory, selectedAspect, debouncedQuery]);
 
-      return true;
-    }).sort((a, b) => {
-      if (sortBy === 'duration') return a.durationSec - b.durationSec;
-      if (sortBy === 'name') return a.title.localeCompare(b.title);
-      // 'trending'
-      const aWeight = a.badge === 'Trending' ? 2 : a.badge === 'Hot' ? 1 : 0;
-      const bWeight = b.badge === 'Trending' ? 2 : b.badge === 'Hot' ? 1 : 0;
-      return bWeight - aWeight;
-    });
-  }, [selectedCategory, selectedAspect, searchQuery, sortBy]);
+  useEffect(() => {
+    fetchFeed();
+  }, [fetchFeed]);
 
-  // Working "Use Template" Flow
-  const handleUseTemplate = async (template: VideoTemplate) => {
-    setIsCloning(template.id);
-    try {
-      // 1. Check authentication status
-      const authRes = await fetch('/api/auth/me');
-      if (!authRes.ok) {
-        // Unauthenticated: preserve intent in returnUrl
-        router.push(
-          `/login?returnUrl=${encodeURIComponent(`/templates/${template.slug}`)}&useTemplate=true`
-        );
-        return;
+  // Pause playback when tab becomes hidden
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setActivePlayingId(null);
       }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
 
-      // 2. Instantiate independent new project from template
-      const res = await fetch('/api/projects', {
+  // Handle Like Toggle
+  const handleToggleLike = async (templateId: string) => {
+    // Check if user is signed in
+    if (!currentUser) {
+      router.push(`/login?redirect=/templates&likeIntent=${templateId}`);
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/templates/like', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: `${template.title} (Project)`,
-          mediaType: 'video',
-          thumbnailUrl: template.thumbnail,
-          timeline: {
-            durationSec: template.durationSec,
-            aspectRatio: template.aspect,
-            resolution: '1080p',
-            tracks: [
-              { id: 'trk_v1', type: 'video', name: 'Video Scenes' },
-              { id: 'trk_t1', type: 'text', name: 'Subtitles & Captions' },
-              { id: 'trk_a1', type: 'audio', name: 'Soundtrack & Voice' },
-            ],
-            clips: [
-              {
-                id: `clp_v_${Date.now()}_1`,
-                trackId: 'trk_v1',
-                type: 'video',
-                title: template.scenes[0]?.title || 'Opening Hook',
-                sourceUrl: template.videoPreview,
-                startTimeSec: 0,
-                durationSec: template.durationSec,
-                volume: 1,
-              },
-            ],
-          },
-        }),
+        body: JSON.stringify({ templateId }),
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to create project from template');
-      }
+      if (res.ok) {
+        const data = await res.json();
+        setUserLikes((prev) => {
+          const next = new Set(prev);
+          if (data.liked) next.add(templateId);
+          else next.delete(templateId);
+          return next;
+        });
 
-      const data = await res.json();
-      // 3. Open project directly in the multi-track editor
-      router.push(`/editor/${data.project.id}`);
-    } catch (err: any) {
-      alert(`Error initializing template: ${err.message}`);
-      setIsCloning(null);
+        // Update local state count
+        setTemplates((prev) =>
+          prev.map((t) =>
+            t.id === templateId
+              ? { ...t, likesCount: data.likeCount, isLiked: data.liked }
+              : t
+          )
+        );
+      }
+    } catch (e) {
+      console.error('Like error:', e);
     }
   };
 
+  // Handle Creator Follow Toggle
+  const handleToggleFollow = async (creatorId: string) => {
+    if (!currentUser) {
+      router.push(`/login?redirect=/templates&followIntent=${creatorId}`);
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/templates/follow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creatorId }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setUserFollows((prev) => {
+          const next = new Set(prev);
+          if (data.following) next.add(creatorId);
+          else next.delete(creatorId);
+          return next;
+        });
+
+        // If on following tab and unfollowed, re-fetch feed
+        if (activeTab === 'following' && !data.following) {
+          fetchFeed();
+        }
+      }
+    } catch (e) {
+      console.error('Follow error:', e);
+    }
+  };
+
+  // Handle "Use Template" click: Populates the Floating AI Prompt Composer!
+  const handleUseTemplate = (template: VideoTemplate) => {
+    setComposerTemplate(template);
+  };
+
+  // Handle joining a challenge from Events tab
+  const handleJoinChallenge = (prompt: string, category: string) => {
+    setActiveTab('recommended');
+    setComposerTemplate({
+      id: 'challenge_prompt',
+      slug: 'challenge-entry',
+      title: 'Challenge Entry',
+      category,
+      aspect: '16:9',
+      aspectLabel: '16:9 Landscape',
+      durationSec: 15,
+      duration: '15s',
+      thumbnail: '',
+      videoPreview: '',
+      description: prompt,
+      prompt,
+      creatorId: 'usr_event',
+      creatorName: '@fluvia_arena',
+      creatorAvatar: '',
+      likesCount: 0,
+      tags: ['#ChallengeEntry'],
+      scenes: [],
+      aiModelsUsed: ['Fluvia Cinematic v1'],
+      estimatedCredits: 25,
+    });
+  };
+
+  // Filter templates on client as well for instant responsiveness
+  const displayedTemplates = useMemo(() => {
+    if (activeTab === 'events') return [];
+    return templates;
+  }, [templates, activeTab]);
+
   return (
-    <>
-      {/* SEARCH & FILTER CONTROLS */}
-      <div className="space-y-6 mb-10">
-        {/* Search Bar + Aspect Toggle + Sorter */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-          {/* Search Input */}
-          <div className="relative flex-1 max-w-lg">
-            <Search className="w-4 h-4 text-emerald-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by category, style, keyword (e.g. Perfume, UGC, Fashion)..."
-              className="w-full bg-white text-[#17211D] pl-10 pr-9 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm shadow-xs transition-all placeholder:text-slate-400"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+    <div className="min-h-screen bg-[#080B0A] text-white flex flex-col selection:bg-emerald-500/30 selection:text-emerald-200">
+      {/* ============================================================== */}
+      {/* 1. TOP STICKY DISCOVERY NAVIGATION BAR */}
+      {/* ============================================================== */}
+      <header className="sticky top-0 z-40 w-full bg-[#080B0A]/90 backdrop-blur-2xl border-b border-white/10 transition-all">
+        <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3 sm:gap-6">
+          {/* Left: Brand Logo & Discovery Tag */}
+          <div className="flex items-center gap-3 shrink-0">
+            <Link href="/" className="flex items-center gap-2 group">
+              <Logo size="sm" />
+              <span className="hidden sm:inline-flex text-[11px] font-bold font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                Discovery Feed
+              </span>
+            </Link>
+          </div>
+
+          {/* Center: Tabs (Recommended, Following, Events) */}
+          <nav className="flex items-center bg-white/5 border border-white/10 rounded-full p-1 shrink-0">
+            <button
+              type="button"
+              onClick={() => setActiveTab('recommended')}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                activeTab === 'recommended'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Recommended</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('following')}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                activeTab === 'following'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Following</span>
+              {userFollows.size > 0 && (
+                <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full font-mono">
+                  {userFollows.size}
+                </span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('events')}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                activeTab === 'events'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              <Trophy className="w-3.5 h-3.5 text-amber-400" />
+              <span>Events</span>
+            </button>
+          </nav>
+
+          {/* Search Input Bar (Center/Right on desktop) */}
+          {activeTab !== 'events' && (
+            <div className="relative hidden md:block flex-1 max-w-md">
+              <Search className="w-4 h-4 text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search templates by prompt, creator, category..."
+                className="w-full bg-white/5 border border-white/10 text-white text-xs pl-10 pr-9 py-2 rounded-full focus:outline-none focus:border-emerald-500/80 focus:bg-white/10 transition-all placeholder:text-white/35 font-normal"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white p-0.5"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Right: Publish Button + Auth State */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                if (!currentUser) {
+                  router.push('/login?redirect=/templates&action=publish');
+                } else {
+                  setIsPublishModalOpen(true);
+                }
+              }}
+              className="px-3 sm:px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-white font-bold text-xs flex items-center gap-1.5 border border-white/15 shadow-sm transition-all hover:border-emerald-500/40 cursor-pointer"
+            >
+              <Upload className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Publish</span>
+            </button>
+
+            {currentUser ? (
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 p-1 pl-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
               >
-                <X className="w-4 h-4" />
-              </button>
+                <span className="hidden sm:inline-flex text-[11px] font-mono font-medium text-emerald-400">
+                  Dashboard
+                </span>
+                <img
+                  src={currentUser.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
+                  alt={currentUser.displayName || 'User'}
+                  className="w-7 h-7 rounded-full object-cover ring-1 ring-emerald-500/50"
+                />
+              </Link>
+            ) : (
+              <Link
+                href="/login?redirect=/templates"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-950/60 transition-all"
+              >
+                Sign In
+              </Link>
             )}
           </div>
+        </div>
 
-          {/* Aspect Ratio Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-            <span className="text-xs font-semibold text-slate-600 flex items-center gap-1 shrink-0">
-              <Ratio className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Aspect:</span>
-            </span>
-            {[
-              { label: 'All', value: 'all' },
-              { label: '16:9 Landscape', value: '16:9' },
-              { label: '9:16 Vertical', value: '9:16' },
-              { label: '1:1 Square', value: '1:1' },
-            ].map((a) => (
-              <button
-                key={a.value}
-                type="button"
-                onClick={() => setSelectedAspect(a.value)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-all cursor-pointer ${
-                  selectedAspect === a.value
-                    ? 'bg-emerald-600 text-white shadow-xs font-semibold'
-                    : 'bg-white text-slate-700 hover:text-[#17211D] border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-50/30'
-                }`}
-              >
-                {a.label}
-              </button>
+        {/* Category Horizontal Filter Strip (for Recommended & Following) */}
+        {activeTab !== 'events' && (
+          <div className="border-t border-white/5 bg-[#080B0A]/70 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto scrollbar-none flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2 shrink-0">
+              {DISCOVERY_CATEGORIES.map((cat) => {
+                const isActive = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-emerald-500 text-black shadow-xs font-bold'
+                        : 'bg-white/5 text-white/70 hover:text-white hover:bg-white/10 border border-white/10'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Aspect Ratio Filter Selector on Right */}
+            <div className="hidden lg:flex items-center gap-2 shrink-0 pl-4 border-l border-white/10">
+              <span className="text-xs text-white/50 flex items-center gap-1 font-mono">
+                <Ratio className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Aspect:</span>
+              </span>
+              <div className="flex items-center gap-1">
+                {[
+                  { label: 'All', value: 'all' },
+                  { label: '16:9', value: '16:9' },
+                  { label: '9:16', value: '9:16' },
+                  { label: '1:1', value: '1:1' },
+                  { label: '4:5', value: '4:5' },
+                  { label: '2.39:1', value: '2.39:1' },
+                ].map((a) => (
+                  <button
+                    key={a.value}
+                    type="button"
+                    onClick={() => setSelectedAspect(a.value)}
+                    className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+                      selectedAspect === a.value
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    {a.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* ============================================================== */}
+      {/* 2. MAIN DISCOVERY CONTENT AREA */}
+      {/* ============================================================== */}
+      <main className="flex-1 max-w-[1700px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-32">
+        {activeTab === 'events' ? (
+          /* EVENTS TAB VIEW */
+          <EventsView onJoinChallenge={handleJoinChallenge} />
+        ) : activeTab === 'following' && displayedTemplates.length === 0 ? (
+          /* FOLLOWING EMPTY STATE WITH SUGGESTED CREATORS */
+          <div className="py-16 text-center max-w-2xl mx-auto space-y-6">
+            <div className="w-16 h-16 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mx-auto">
+              <Users className="w-8 h-8" />
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-white">Your Following Feed is Empty</h3>
+              <p className="text-xs sm:text-sm text-white/60 mt-1 max-w-md mx-auto">
+                Follow top AI video creators, cinematic directors, and VFX artists to see their latest generation templates here.
+              </p>
+            </div>
+
+            {/* Suggested Top Creators Grid */}
+            <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+              {suggestedCreators.map((creator) => (
+                <div
+                  key={creator.id}
+                  className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3 hover:border-emerald-500/30 transition-colors"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img
+                      src={creator.avatar}
+                      alt={creator.name}
+                      className="w-10 h-10 rounded-full object-cover ring-1 ring-emerald-500/40 shrink-0"
+                    />
+                    <div className="min-w-0">
+                      <h4 className="text-xs font-bold text-white truncate">{creator.name}</h4>
+                      <p className="text-[11px] text-white/50 truncate">{creator.bio}</p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleToggleFollow(creator.id)}
+                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shrink-0 shadow-sm"
+                  >
+                    Follow
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('recommended')}
+              className="mt-6 text-xs text-emerald-400 hover:underline font-semibold"
+            >
+              ← Back to Recommended Feed
+            </button>
+          </div>
+        ) : displayedTemplates.length === 0 ? (
+          /* EMPTY SEARCH / FILTER RESULTS */
+          <div className="py-24 text-center max-w-md mx-auto space-y-4">
+            <Film className="w-12 h-12 text-white/30 mx-auto" />
+            <h3 className="text-lg font-bold text-white">No Templates Found</h3>
+            <p className="text-xs text-white/60">
+              We couldn&apos;t find any video templates matching your filter criteria. Try resetting the category or search keywords.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('All');
+                setSelectedAspect('all');
+                setSearchQuery('');
+              }}
+              className="px-4 py-2 rounded-full bg-emerald-500 text-black text-xs font-bold shadow-md hover:bg-emerald-400 transition-colors"
+            >
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          /* ============================================================== */
+          /* 3. DENSE MULTI-COLUMN PINTEREST-STYLE MASONRY GRID */
+          /* ============================================================== */
+          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 2xl:columns-6 gap-4 space-y-4">
+            {displayedTemplates.map((template) => (
+              <DiscoveryCard
+                key={template.id}
+                template={template}
+                isActivePlaying={activePlayingId === template.id}
+                onHoverStart={(id) => setActivePlayingId(id)}
+                onHoverEnd={() => setActivePlayingId(null)}
+                onSelect={(tmpl) => setSelectedTemplateForModal(tmpl)}
+                onUseTemplate={(tmpl) => handleUseTemplate(tmpl)}
+                onToggleLike={handleToggleLike}
+                onToggleFollow={handleToggleFollow}
+                isLiked={userLikes.has(template.id)}
+                isFollowing={userFollows.has(template.creatorId)}
+              />
             ))}
           </div>
+        )}
+      </main>
 
-          {/* Sort Selector */}
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs font-semibold text-slate-600 flex items-center gap-1">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Sort:</span>
-            </span>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-white text-[#17211D] text-xs px-3 py-1.5 rounded-lg border border-emerald-500/20 focus:outline-none focus:border-emerald-500 font-medium shadow-xs cursor-pointer"
-            >
-              <option value="trending">Trending & ROI</option>
-              <option value="duration">Shortest First</option>
-              <option value="name">Alphabetical</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Category Filter Pills (All Categories) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {TEMPLATE_CATEGORIES.map((cat) => {
-            const count =
-              cat === 'All Templates'
-                ? TEMPLATES_DATA.length
-                : cat === 'Trending'
-                ? TEMPLATES_DATA.filter((t) => t.badge === 'Trending' || t.badge === 'Hot').length
-                : TEMPLATES_DATA.filter((t) => t.category === cat).length;
-
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
-                  selectedCategory === cat
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-600/20'
-                    : 'bg-white/80 text-slate-700 hover:text-[#17211D] border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-50/40'
-                }`}
-              >
-                {cat === 'Trending' && <Flame className="w-3.5 h-3.5 text-amber-400" />}
-                <span>{cat}</span>
-                <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
-                    selectedCategory === cat
-                      ? 'bg-white/20 text-white'
-                      : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                  }`}
-                >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* TEMPLATE GRID */}
-      {filteredTemplates.length === 0 ? (
-        <div className="py-20 text-center rounded-3xl bg-white border border-emerald-500/20 p-8 shadow-sm">
-          <Film className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-          <h3 className="text-lg font-bold text-[#17211D]">
-            No matching templates found
-          </h3>
-          <p className="mt-2 text-xs sm:text-sm text-slate-500 max-w-sm mx-auto">
-            Try adjusting your search query, selecting &quot;All Templates&quot;, or resetting the aspect ratio filter.
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedCategory('All Templates');
-              setSelectedAspect('all');
-              setSearchQuery('');
-            }}
-            className="mt-6 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
-          >
-            Reset Filters
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredTemplates.map((template) => (
-            <TemplateCard
-              key={template.id}
-              template={template}
-              onPreview={(t) => setPreviewTemplate(t)}
-              onUseTemplate={(t) => handleUseTemplate(t)}
-              isFavorited={favorites.includes(template.id)}
-              onToggleFavorite={toggleFavorite}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* EXPANDED VIDEO PREVIEW MODAL */}
-      <VideoPreviewModal
-        template={previewTemplate}
-        onClose={() => setPreviewTemplate(null)}
-        onUseTemplate={(t) => handleUseTemplate(t)}
-        onSelectRelated={(r) => setPreviewTemplate(r)}
+      {/* ============================================================== */}
+      {/* 4. FLOATING AI PROMPT COMPOSER AT BOTTOM CENTER */}
+      {/* ============================================================== */}
+      <FloatingPromptComposer
+        selectedTemplate={composerTemplate}
+        onClearTemplate={() => setComposerTemplate(null)}
+        userCredits={currentUser?.credits || 100}
       />
-    </>
+
+      {/* ============================================================== */}
+      {/* 5. EXPANDED DETAIL VIEW MODAL */}
+      {/* ============================================================== */}
+      <DiscoveryDetailModal
+        template={selectedTemplateForModal}
+        onClose={() => setSelectedTemplateForModal(null)}
+        onUseInComposer={(tmpl) => handleUseTemplate(tmpl)}
+        onToggleLike={handleToggleLike}
+        onToggleFollow={handleToggleFollow}
+        isLiked={selectedTemplateForModal ? userLikes.has(selectedTemplateForModal.id) : false}
+        isFollowing={selectedTemplateForModal ? userFollows.has(selectedTemplateForModal.creatorId) : false}
+      />
+
+      {/* ============================================================== */}
+      {/* 6. PUBLISH TEMPLATE MODAL */}
+      {/* ============================================================== */}
+      <PublishTemplateModal
+        isOpen={isPublishModalOpen}
+        onClose={() => setIsPublishModalOpen(false)}
+        onPublished={(newTmpl) => {
+          setTemplates((prev) => [newTmpl, ...prev]);
+        }}
+      />
+    </div>
   );
 }
 
 export default function TemplatesPage() {
   return (
-    <div
-      className="min-h-screen flex flex-col transition-colors duration-200 bg-gradient-to-b from-white via-[#F8FAFC] to-[#F0FDF4]/40"
-      style={{
-        color: '#17211D',
-      }}
-    >
-      <Header />
-
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        {/* HERO HEADER */}
-        <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-500/25 text-xs font-semibold text-emerald-800 mb-6 backdrop-blur-md shadow-2xs">
-            <Sparkles className="w-4 h-4 text-emerald-600" />
-            <span>Curated Creative Library</span>
-            <span className="text-emerald-300">•</span>
-            <span>26+ Production-Ready Video Presets</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#17211D] tracking-tight leading-[1.14]">
-            Start with a template.{' '}
-            <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-pink-600 bg-clip-text text-transparent">
-              Finish with something extraordinary.
-            </span>
-          </h1>
-
-          <p className="mt-5 text-base sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-            Explore 26+ cinematic video templates for organic vegetables, commercials, food demos, fashion campaigns, and social stories.
-          </p>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#080B0A] flex items-center justify-center text-white">
+          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
         </div>
-
-        <Suspense fallback={<div className="py-20 text-center font-mono text-xs text-slate-400">Loading interactive template catalog...</div>}>
-          <TemplateExplorer />
-        </Suspense>
-      </main>
-
-      <Footer />
-    </div>
+      }
+    >
+      <DiscoveryFeedContent />
+    </Suspense>
   );
 }

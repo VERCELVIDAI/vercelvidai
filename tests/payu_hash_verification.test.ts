@@ -5,6 +5,28 @@
  * idempotency, and server payload consistency.
  */
 
+import fs from 'fs';
+import path from 'path';
+
+// Load .env.local into process.env for standalone test runner
+try {
+  const envPath = path.resolve(process.cwd(), '.env.local');
+  if (fs.existsSync(envPath)) {
+    const lines = fs.readFileSync(envPath, 'utf8').split('\n');
+    for (const line of lines) {
+      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (match) {
+        const key = match[1];
+        let val = (match[2] || '').trim();
+        if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+        if (!process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    }
+  }
+} catch {}
+
 import crypto from 'crypto';
 import {
   generatePayURequestHash,

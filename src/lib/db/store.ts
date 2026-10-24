@@ -64,6 +64,9 @@ interface DatabaseSchema {
   coupons: Coupon[];
   couponRedemptions: CouponRedemption[];
   passwordResetTokens?: Record<string, { token: string; expiresAt: string; email: string }>;
+  templateLikes?: Record<string, string[]>;
+  creatorFollows?: Record<string, string[]>;
+  publishedTemplates?: any[];
 }
 
 // Determine writable data directory (handles Vercel / serverless read-only filesystem gracefully)
@@ -2338,6 +2341,122 @@ class Store {
 
   getTemplateBySlug(slug: string): Template | undefined {
     return this.load().templates.find((t) => t.slug === slug);
+  }
+
+  // ==========================================
+  // DISCOVERY ENGAGEMENT & SOCIAL INTERACTIONS
+  // ==========================================
+  getTemplateLikes(): Record<string, string[]> {
+    const db = this.load();
+    return db.templateLikes || {};
+  }
+
+  getTemplateLikeCount(templateId: string, baseCount = 0): number {
+    const db = this.load();
+    const likes = db.templateLikes?.[templateId] || [];
+    return baseCount + likes.length;
+  }
+
+  isTemplateLiked(templateId: string, userId: string): boolean {
+    if (!userId) return false;
+    const db = this.load();
+    const likes = db.templateLikes?.[templateId] || [];
+    return likes.includes(userId);
+  }
+
+  toggleTemplateLike(templateId: string, userId: string, baseCount = 0): { liked: boolean; likeCount: number } {
+    const db = this.load();
+    if (!db.templateLikes) db.templateLikes = {};
+    if (!db.templateLikes[templateId]) db.templateLikes[templateId] = [];
+
+    const index = db.templateLikes[templateId].indexOf(userId);
+    let liked = false;
+    if (index === -1) {
+      db.templateLikes[templateId].push(userId);
+      liked = true;
+    } else {
+      db.templateLikes[templateId].splice(index, 1);
+      liked = false;
+    }
+    this.save(db);
+    return {
+      liked,
+      likeCount: baseCount + db.templateLikes[templateId].length,
+    };
+  }
+
+  getCreatorFollows(): Record<string, string[]> {
+    const db = this.load();
+    return db.creatorFollows || {};
+  }
+
+  isFollowingCreator(creatorId: string, userId: string): boolean {
+    if (!userId) return false;
+    const db = this.load();
+    const followers = db.creatorFollows?.[creatorId] || [];
+    return followers.includes(userId);
+  }
+
+  toggleFollowCreator(creatorId: string, userId: string): { following: boolean; followerCount: number } {
+    const db = this.load();
+    if (!db.creatorFollows) db.creatorFollows = {};
+    if (!db.creatorFollows[creatorId]) db.creatorFollows[creatorId] = [];
+
+    const index = db.creatorFollows[creatorId].indexOf(userId);
+    let following = false;
+    if (index === -1) {
+      db.creatorFollows[creatorId].push(userId);
+      following = true;
+    } else {
+      db.creatorFollows[creatorId].splice(index, 1);
+      following = false;
+    }
+    this.save(db);
+    return {
+      following,
+      followerCount: db.creatorFollows[creatorId].length,
+    };
+  }
+
+  getPublishedTemplates(): any[] {
+    const db = this.load();
+    return db.publishedTemplates || [];
+  }
+
+  publishCustomTemplate(params: any): any {
+    const db = this.load();
+    if (!db.publishedTemplates) db.publishedTemplates = [];
+    const id = `tmpl_pub_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const newTemplate = {
+      id,
+      slug: (params.title || 'custom-template').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      title: params.title,
+      description: params.description || '',
+      prompt: params.prompt,
+      category: params.category || 'Product Commercial',
+      aspect: params.aspect || '16:9',
+      aspectLabel: params.aspect === '9:16' ? '9:16 Vertical' : params.aspect === '1:1' ? '1:1 Square' : '16:9 Landscape',
+      durationSec: params.durationSec || 15,
+      duration: `${params.durationSec || 15}s`,
+      thumbnail: params.thumbnail || 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80',
+      videoPreview: params.videoPreview || '/media/templates/tmpl-01-cinematic-product.mp4',
+      badge: 'New',
+      tags: params.tags || ['#FluviaCommunity', '#AIVideo', '#CustomTemplate'],
+      aiModelsUsed: ['Fluvia Cinematic v1', 'Gemini Flash'],
+      estimatedCredits: 25,
+      creatorId: params.creatorId || 'usr_creator',
+      creatorName: params.creatorName || '@creative_mind',
+      creatorAvatar: params.creatorAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+      likesCount: 1,
+      createdAt: new Date().toISOString(),
+      scenes: [
+        { time: '0:00 - 0:05', title: 'Opening Scene', desc: params.prompt ? params.prompt.slice(0, 80) : 'Opening visual' },
+        { time: '0:05 - 0:15', title: 'Dynamic Climax & CTA', desc: 'Fluid particle transition with logo reveal' },
+      ],
+    };
+    db.publishedTemplates.unshift(newTemplate);
+    this.save(db);
+    return newTemplate;
   }
 
   // ==========================================

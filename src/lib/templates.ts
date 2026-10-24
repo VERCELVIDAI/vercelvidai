@@ -13,19 +13,100 @@ export interface VideoTemplate {
   slug: string;
   title: string;
   category: string;
-  aspect: '9:16' | '16:9' | '1:1';
+  aspect: '9:16' | '16:9' | '1:1' | '4:5' | '2.39:1';
   aspectLabel: string;
   durationSec: number;
   duration: string;
   thumbnail: string;
   videoPreview: string;
   description: string;
+  prompt: string;
+  creatorId: string;
+  creatorName: string;
+  creatorAvatar: string;
+  likesCount: number;
   badge?: 'Trending' | 'Hot' | 'New' | 'Featured' | 'High ROI';
   tags: string[];
   scenes: TemplateScene[];
   aiModelsUsed: string[];
   estimatedCredits: number;
+  createdAt?: string;
+  isPublished?: boolean;
 }
+
+export interface TemplateEvent {
+  id: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  category: string;
+  bannerImage: string;
+  prizePool: string;
+  deadline: string;
+  participantsCount: number;
+  featuredPrompt: string;
+  rules: string[];
+  sampleTemplateIds: string[];
+}
+
+export const TEMPLATE_EVENTS: TemplateEvent[] = [
+  {
+    id: 'evt_autumn_cinema_2026',
+    title: 'Autumn Cinema Challenge 2026',
+    subtitle: 'Capture breathtaking golden hour volumetric light, falling amber leaves, and cinematic autumn narratives.',
+    badge: 'Active Challenge',
+    category: 'Cinematic Film',
+    bannerImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&auto=format&fit=crop&q=80',
+    prizePool: '10,000 Credits + Fluvia Pro 1-Year',
+    deadline: 'Ends Nov 15, 2026',
+    participantsCount: 1420,
+    featuredPrompt: 'Cinematic 8k anamorphic film of golden autumn forest at misty dawn, volumetric sunlight beam filtering through amber leaves, 35mm lens, hyper-realistic depth of field, slow dolly forward',
+    rules: ['Use Fluvia Cinematic v1 or Gemini Storyboard', 'Duration between 5s to 25s', 'Original prompts only'],
+    sampleTemplateIds: ['tmpl_05', 'tmpl_06', 'tmpl_16'],
+  },
+  {
+    id: 'evt_cyber_metropolis_2026',
+    title: 'Cyberpunk Metropolis 2099',
+    subtitle: 'Design high-octane futuristic neon cityscapes, holographic flying traffic, and hyper-detailed rainy streets.',
+    badge: 'Trending Contest',
+    category: 'Anime & Fantasy',
+    bannerImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&auto=format&fit=crop&q=80',
+    prizePool: '5,000 Credits',
+    deadline: 'Ends Nov 05, 2026',
+    participantsCount: 980,
+    featuredPrompt: 'Cyberpunk Tokyo 2099 night alley with vibrant neon reflections on rain puddles, holographic glowing billboard, flying sleek hovercar zooming above, Unreal Engine 5 cinematic render',
+    rules: ['Must feature neon and futuristic aesthetics', 'Include aspect ratio in title', 'Minimum 1080p resolution'],
+    sampleTemplateIds: ['tmpl_09', 'tmpl_26', 'tmpl_10'],
+  },
+  {
+    id: 'evt_organic_farm_harvest',
+    title: 'Farm Fresh Organic Showcase Sprint',
+    subtitle: 'Celebrate local farm agriculture, glistening dew on organic vegetables, and mouth-watering slow-mo culinary reels.',
+    badge: 'Sponsored Sprint',
+    category: 'Farm Fresh Vegetables & Organic Food',
+    bannerImage: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=1200&auto=format&fit=crop&q=80',
+    prizePool: '3,000 Credits',
+    deadline: 'Ends Oct 31, 2026',
+    participantsCount: 654,
+    featuredPrompt: 'Ultra-macro 4k slow-motion water splash over crisp organic bell peppers and farm-fresh heirloom tomatoes, sunlight catching crystalline water droplets, vibrant culinary colors, appetizing commercial lighting',
+    rules: ['Feature fresh vegetables or organic produce', 'Vertical 9:16 format preferred for social reels'],
+    sampleTemplateIds: ['tmpl_19', 'tmpl_20', 'tmpl_21', 'tmpl_23'],
+  },
+  {
+    id: 'evt_ai_avatar_fashion',
+    title: 'AI Runway & High Fashion Week',
+    subtitle: 'Generate cutting-edge virtual couture, lifelike digital models, and avant-garde editorial magazine movements.',
+    badge: 'Creator Spotlight',
+    category: 'Fashion & Lifestyle',
+    bannerImage: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&auto=format&fit=crop&q=80',
+    prizePool: '7,500 Credits',
+    deadline: 'Ends Nov 20, 2026',
+    participantsCount: 1120,
+    featuredPrompt: 'Paris Fashion Week high-fashion model walking sleek minimalist runway, flowing iridescent silk dress billowing in gentle breeze, dramatic rim lighting, vogue editorial aesthetic, 8k slow motion',
+    rules: ['Must highlight virtual textiles and wardrobe physics', 'Portrait 9:16 or 4:5 aspect ratio'],
+    sampleTemplateIds: ['tmpl_04', 'tmpl_02', 'tmpl_03'],
+  },
+];
 
 export const TEMPLATE_CATEGORIES = [
   'All Templates',
@@ -61,8 +142,8 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     slug: 'cinematic-product-commercial',
     title: 'Aura Chrono Minimalist Watch',
     category: 'Cinematic Product Commercial',
-    aspect: '16:9',
-    aspectLabel: '16:9 Landscape',
+    aspect: '2.39:1',
+    aspectLabel: '2.39:1 Anamorphic Cinema',
     durationSec: 15,
     duration: '15s',
     thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80',
@@ -72,6 +153,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#ProductCommercial', '#Luxury', '#MacroLens', '#3DRender', '#Cinematic'],
     aiModelsUsed: ['Gemini 2.5 Flash Storyboard', 'Flux Pro Studio', 'Fluvia Audio Core'],
     estimatedCredits: 45,
+    prompt: "Precision macro 8k commercial of Aura Chrono minimalist titanium watch, sweeping volumetric studio rim lighting, shallow depth of field, slow dolly clockwise, photorealistic reflection, ambient particle drift, masterpiece quality",
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1045,
     scenes: [
       { time: '0:00 - 0:05', title: 'Macro Bevel Sweep', desc: 'Symmetrical slow dolly across sapphire glass face' },
       { time: '0:05 - 0:10', title: 'Gear Assembly Detach', desc: 'Exploded internal mechanical gears with gold accent lighting' },
@@ -83,8 +169,8 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     slug: 'luxury-perfume-advertisement',
     title: 'Botanique Rare Elixir',
     category: 'Luxury Perfume Advertisement',
-    aspect: '16:9',
-    aspectLabel: '16:9 Landscape',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square',
     durationSec: 18,
     duration: '18s',
     thumbnail: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&auto=format&fit=crop&q=80',
@@ -94,6 +180,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Perfume', '#Luxury', '#VolumetricFog', '#Botanical', '#HighFashion'],
     aiModelsUsed: ['Runway Gen-3 Alpha', 'Gemini Storyboard', 'Flux 1.1 Pro'],
     estimatedCredits: 60,
+    prompt: "Volumetric mist refractions drifting around luxury glass perfume bottle backlit by warm amber dawn light, floating delicate white jasmine petals swirling in slow motion, orchestral strings ambience, commercial grade 4k",
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1240,
     scenes: [
       { time: '0:00 - 0:06', title: 'Morning Mist Emergence', desc: 'Glass flacon backlit by dawn rim lighting' },
       { time: '0:06 - 0:12', title: 'Botanical Vortex', desc: 'Organic petals swirling through mineral droplets' },
@@ -105,8 +196,8 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     slug: 'skincare-product-reel',
     title: 'HydraGlow Moisture Serum Reel',
     category: 'Skincare Product Reel',
-    aspect: '9:16',
-    aspectLabel: '9:16 Vertical',
+    aspect: '4:5',
+    aspectLabel: '4:5 Social Portrait',
     durationSec: 15,
     duration: '15s',
     thumbnail: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop&q=80',
@@ -116,6 +207,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Skincare', '#BeautyReel', '#Hydration', '#CleanAesthetic', '#Glow'],
     aiModelsUsed: ['ElevenLabs Voice v2', 'Flux Realism', 'Fluvia Motion'],
     estimatedCredits: 40,
+    prompt: "High-speed vertical beauty reel of viscous hydrating serum landing on illuminated glass mirror, crystalline micro-droplets dispersing with radiant skin sheen effect, clean aesthetic lighting, 9:16 portrait",
+    creatorId: 'usr_c3',
+    creatorName: '@luna_story',
+    creatorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1435,
     scenes: [
       { time: '0:00 - 0:04', title: 'Texture Swatch Hook', desc: 'Viscous serum drop landing on illuminated mirror surface' },
       { time: '0:04 - 0:10', title: 'Active Ingredients Callout', desc: 'Hyaluronic acid 2% and Niacinamide floating pills' },
@@ -127,8 +223,8 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     slug: 'fashion-campaign',
     title: 'Avant-Garde Milan Runways',
     category: 'Fashion Campaign',
-    aspect: '9:16',
-    aspectLabel: '9:16 Vertical',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square',
     durationSec: 20,
     duration: '20s',
     thumbnail: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop&q=80',
@@ -138,6 +234,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Fashion', '#Editorial', '#Runway', '#HauteCouture', '#KineticCuts'],
     aiModelsUsed: ['Runway Gen-3 Alpha', 'Gemini Flash Director', 'Flux Studio'],
     estimatedCredits: 55,
+    prompt: "Editorial high fashion Paris runway campaign, elegant model in billowing emerald silk evening gown, dramatic chiaroscuro spotlighting, Vogue magazine cover aesthetic, slow tracking motion 4:5",
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1630,
     scenes: [
       { time: '0:00 - 0:06', title: 'Architectural Shadow Walk', desc: 'Model silhouette emerging from sharp architectural beam' },
       { time: '0:06 - 0:14', title: 'Fabric Dynamics', desc: 'Silk organza floating in slow motion under strobe light' },
@@ -149,8 +250,8 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     slug: 'automotive-cinematic-film',
     title: 'Apex GT Pure Electric Reveal',
     category: 'Automotive Cinematic Film',
-    aspect: '16:9',
-    aspectLabel: '16:9 Landscape',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square',
     durationSec: 25,
     duration: '25s',
     thumbnail: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop&q=80',
@@ -160,6 +261,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Automotive', '#EV', '#Anamorphic', '#DroneTracking', '#Supercar'],
     aiModelsUsed: ['Luma Dream Machine', 'Flux Pro', 'Fluvia SFX Engine'],
     estimatedCredits: 70,
+    prompt: "Ultra-wide 2.39:1 anamorphic cinema of sleek electric hypercar carving through foggy alpine mountain pass at twilight, aggressive aerodynamic LED headlights cutting through mist, cinematic lens flare",
+    creatorId: 'usr_c5',
+    creatorName: '@nature_organic',
+    creatorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1825,
     scenes: [
       { time: '0:00 - 0:08', title: 'Alpine Switchback Glide', desc: 'Low-slung headlights slicing through blue twilight mist' },
       { time: '0:08 - 0:18', title: 'Aero Aero Wake & Caliper', desc: 'Carbon ceramic brakes glowing orange into high-speed corner' },
@@ -171,8 +277,8 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     slug: 'travel-cinematic-reel',
     title: 'Nordic Fjords Expedition',
     category: 'Travel Cinematic Reel',
-    aspect: '9:16',
-    aspectLabel: '9:16 Vertical',
+    aspect: '4:5',
+    aspectLabel: '4:5 Social Portrait',
     durationSec: 15,
     duration: '15s',
     thumbnail: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80',
@@ -182,6 +288,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#TravelReel', '#Nordic', '#Drone', '#Wanderlust', '#Nature'],
     aiModelsUsed: ['ElevenLabs Voice', 'Flux Realism', 'Fluvia Audio Core'],
     estimatedCredits: 40,
+    prompt: "FPV cinematic drone descending through misty emerald fjords in Norway at sunrise, crystal clear turquoise water refractions, ethereal ambient soundtrack, 9:16 vertical travel viral reel",
+    creatorId: 'usr_c6',
+    creatorName: '@neo_anime',
+    creatorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2020,
     scenes: [
       { time: '0:00 - 0:05', title: 'Glacial Reflection Dive', desc: 'Drone plunging toward mirror-calm fjord water' },
       { time: '0:05 - 0:10', title: 'Cliffside Perspective', desc: 'Solo hiker framed against monumental granite peak' },
@@ -193,8 +304,8 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     slug: 'food-commercial',
     title: 'Artisanal Neapolitan Pizza',
     category: 'Food Commercial',
-    aspect: '16:9',
-    aspectLabel: '16:9 Landscape',
+    aspect: '2.39:1',
+    aspectLabel: '2.39:1 Anamorphic Cinema',
     durationSec: 15,
     duration: '15s',
     thumbnail: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop&q=80',
@@ -203,6 +314,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#FoodCommercial', '#Gastronomy', '#MacroFood', '#Culinary', '#SlowMo'],
     aiModelsUsed: ['Flux Realism', 'Gemini Storyboard', 'Fluvia Motion'],
     estimatedCredits: 45,
+    prompt: "Macro culinary sizzle reel of gourmet wagyu smash burger on cast iron grill, bubbling cheddar cheese melting in slow motion, caramelized shallots, appetizing warm steam rising, commercial broadcast 4k",
+    creatorId: 'usr_c7',
+    creatorName: '@pixel_craft',
+    creatorAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2215,
     scenes: [
       { time: '0:00 - 0:05', title: 'Wood Fire Embers', desc: 'Flames licking stone hearth oven at 900 degrees' },
       { time: '0:05 - 0:10', title: 'The Cheese Pull Hook', desc: 'Macro pull showing stretching bubbling buffalo mozzarella' },
@@ -225,6 +341,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#RealEstate', '#Architecture', '#LuxuryLiving', '#DroneTour', '#PropertyAd'],
     aiModelsUsed: ['Luma Dream Machine', 'ElevenLabs Adam', 'Fluvia Audio'],
     estimatedCredits: 65,
+    prompt: "Architectural luxury modern villa tour with floor-to-ceiling glass walls overlooking calm Mediterranean sea at blue hour, warm interior architectural accent lighting, smooth steadycam gliding",
+    creatorId: 'usr_c8',
+    creatorName: '@paws_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2410,
     scenes: [
       { time: '0:00 - 0:08', title: 'Sunset Pool Horizon', desc: 'Golden hour drone drift across cantilevered infinity edge' },
       { time: '0:08 - 0:20', title: 'Great Room Volume', desc: 'Double-height ceilings and automated glass pocket doors' },
@@ -247,6 +368,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#TechLaunch', '#Earbuds', '#3DExploded', '#AudioTech', '#Hardware'],
     aiModelsUsed: ['Runway Gen-3', 'Gemini Flash', 'Flux Studio'],
     estimatedCredits: 55,
+    prompt: "Isometric 3D render of holographic spatial computing glass device floating in minimalist cyber studio, soft ambient occlusion, frosted glass refractions, neon cyan and violet highlights 1:1",
+    creatorId: 'usr_c9',
+    creatorName: '@sophia_vogue',
+    creatorAvatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2605,
     scenes: [
       { time: '0:00 - 0:06', title: 'Floating Acoustic Pod', desc: 'Matte black case sliding open with cyan LED indicator' },
       { time: '0:06 - 0:14', title: 'Acoustic Driver Diagram', desc: 'Beryllium diaphragm pulsing with visible sound ripples' },
@@ -269,6 +395,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Ecommerce', '#SquareAd', '#Backpack', '#MetaAds', '#Conversion'],
     aiModelsUsed: ['Fluvia Motion Graphics', 'Flux Realism', 'ElevenLabs Voice'],
     estimatedCredits: 35,
+    prompt: "Dynamic high-energy sneaker commercial, futuristic running shoe bursting through floating neon particle cloud, hyper-detailed rubber tread macro, dynamic camera rotation, 9:16 reel",
+    creatorId: 'usr_c10',
+    creatorName: '@soundwave_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2800,
     scenes: [
       { time: '0:00 - 0:04', title: 'Water Repellency Test', desc: 'High-speed water beads rolling off ballistic nylon weave' },
       { time: '0:04 - 0:10', title: 'Organized Compartments', desc: '16-inch laptop and accessories slotting into dedicated pouches' },
@@ -291,6 +422,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#UGC', '#TikTokAds', '#CreatorStyle', '#HonestReview', '#ViralHook'],
     aiModelsUsed: ['ElevenLabs Voice', 'OpenAI Whisper', 'Fluvia Motion'],
     estimatedCredits: 40,
+    prompt: "Relatable UGC creator in sunlit modern studio holding luxury skincare serum, authentic smile, unboxing reaction, natural morning light, crystal clear 4k phone camera aesthetic 9:16",
+    creatorId: 'usr_c11',
+    creatorName: '@chef_antonio',
+    creatorAvatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2995,
     scenes: [
       { time: '0:00 - 0:05', title: 'The Hook: "Stop doing this"', desc: 'Creator holding product to camera with animated warning badge' },
       { time: '0:05 - 0:15', title: 'Real Application Proof', desc: 'Smoothing texture onto cheek with instant skin glow effect' },
@@ -313,6 +449,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#YouTubeIntro', '#Branding', '#GlitchVFX', '#BassDrop', '#CreatorToolkit'],
     aiModelsUsed: ['Fluvia SFX Engine', 'Flux Studio', 'Gemini Flash'],
     estimatedCredits: 25,
+    prompt: "High-octane YouTube gaming channel intro, neon cybernetic logo exploding into liquid chrome particles, intense bass impact, futuristic HUD holographic telemetry, 16:9 60fps",
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 3190,
     scenes: [
       { time: '0:00 - 0:04', title: 'Glow Glitch Build-Up', desc: 'Neon particles accelerating into center vortex' },
       { time: '0:04 - 0:08', title: 'Channel Name Shockwave', desc: 'Logo slam with screen shake and sub-bass impact' },
@@ -335,6 +476,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Explainer', '#YouTube', '#TechEducation', '#AIAgents', '#MotionGraphics'],
     aiModelsUsed: ['ElevenLabs Adam', 'Gemini Flash Script', 'Fluvia Motion'],
     estimatedCredits: 60,
+    prompt: "Educational AI science explainer visual, animated 3D neural network synapses firing glowing pulses across cosmic nebula backdrop, clean motion design, Vox documentary aesthetic 16:9",
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 3385,
     scenes: [
       { time: '0:00 - 0:08', title: 'The Problem Statement', desc: 'Animated node chart showing workflow bottleneck' },
       { time: '0:08 - 0:20', title: 'Neural Agent Orchestration', desc: 'Autonomous tasks communicating via color-coded streams' },
@@ -357,6 +503,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#InstagramReel', '#Fitness', '#Motivation', '#KineticType', '#Workout'],
     aiModelsUsed: ['Fluvia Audio Core', 'Flux Realism', 'Runway Gen-3'],
     estimatedCredits: 40,
+    prompt: "Fast-paced cyber aesthetic Instagram reel, glitch typography transitions over moody neon city lights, dark electronic beat sync, vertical 9:16 viral short",
+    creatorId: 'usr_c3',
+    creatorName: '@luna_story',
+    creatorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+    likesCount: 3580,
     scenes: [
       { time: '0:00 - 0:04', title: 'Chalk Cloud Clap', desc: 'Explosive chalk dust slow-motion with bass hit' },
       { time: '0:04 - 0:10', title: 'Intensity Reps & Cuts', desc: 'Fast rhythmic cuts tracking barbell ascent' },
@@ -379,6 +530,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Festival', '#EDM', '#Lasers', '#Aftermovie', '#EventPromo'],
     aiModelsUsed: ['Runway Gen-3', 'Fluvia SFX Engine', 'Flux Pro'],
     estimatedCredits: 55,
+    prompt: "Festive golden fireworks exploding into glowing floral mandala patterns, shimmering gold sparkles, celebratory ambient glow, Diwali & holiday festival promo 1:1",
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 3775,
     scenes: [
       { time: '0:00 - 0:06', title: 'Mainstage Pyro Drop', desc: 'Massive fireworks burst lighting ocean of dancing fans' },
       { time: '0:06 - 0:14', title: 'Headliner Lineup Scroll', desc: 'Laser graphics drawing DJ names across stadium' },
@@ -401,6 +557,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#BrandStory', '#Documentary', '#CoffeeRoastery', '#Sustainability', '#Cinematic'],
     aiModelsUsed: ['Gemini Storyboard', 'ElevenLabs Voice v2', 'Flux Realism'],
     estimatedCredits: 75,
+    prompt: "Epic 2.39:1 brand heritage film, master craftsman shaping glowing molten crystal in century-old Venetian atelier, golden sparks flying in slow motion, Hans Zimmer orchestral swell",
+    creatorId: 'usr_c5',
+    creatorName: '@nature_organic',
+    creatorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    likesCount: 3970,
     scenes: [
       { time: '0:00 - 0:10', title: 'Highland Mist Harvesting', desc: 'Sunlight filtering through coffee cherries in cloud forest' },
       { time: '0:10 - 0:22', title: 'The Master Roasting Craft', desc: 'Beans tumbling inside glowing cast-iron drum with steam' },
@@ -423,6 +584,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#FitnessPromo', '#GymStudio', '#HIIT', '#MembershipDrive', '#SpecialOffer'],
     aiModelsUsed: ['Fluvia Motion Graphics', 'Flux Realism', 'ElevenLabs Voice'],
     estimatedCredits: 40,
+    prompt: "High-intensity athletic gym workout montage, athlete performing kettlebell snatches with sweat droplets flying in slow motion, dramatic high-contrast gym spotlighting, 9:16 motivational short",
+    creatorId: 'usr_c6',
+    creatorName: '@neo_anime',
+    creatorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+    likesCount: 4165,
     scenes: [
       { time: '0:00 - 0:05', title: 'Studio Ambience & Beat', desc: 'Neon red lighting pulsing with synchronized rowers' },
       { time: '0:05 - 0:12', title: 'Trainer Coaching & Metrics', desc: 'Heart rate zones displayed on smart studio screens' },
@@ -445,6 +611,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Corporate', '#ESGReport', '#Enterprise', '#ExecutiveBrief', '#Sustainability'],
     aiModelsUsed: ['Gemini Flash Script', 'ElevenLabs Voice v2', 'Fluvia Motion'],
     estimatedCredits: 60,
+    prompt: "Polished corporate annual presentation opener, sleek glass corporate headquarters aerial tracking into high-tech boardroom hologram, minimalist typography, Fortune 500 aesthetic 16:9",
+    creatorId: 'usr_c7',
+    creatorName: '@pixel_craft',
+    creatorAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80',
+    likesCount: 4360,
     scenes: [
       { time: '0:00 - 0:08', title: 'Carbon Neutrality Progress', desc: 'Clean kinetic chart showing 42% emissions reduction' },
       { time: '0:08 - 0:20', title: 'Global Clean Infrastructure', desc: 'Cinematic drone sweep across offshore wind installations' },
@@ -467,6 +638,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#OrganicVegetables', '#FarmFresh', '#CrispProduce', '#FoodCommercial', '#FarmToTable'],
     aiModelsUsed: ['Fluvia Realism Core', 'Gemini 3.8 Flash Storyboard', 'Fluvia Audio Engine'],
     estimatedCredits: 45,
+    prompt: "Hyper-realistic ultra-macro slow motion water droplets splashing over fresh crisp organic bell peppers and heirloom tomatoes, crystalline water splash, vibrant farm-to-table natural morning light, 9:16",
+    creatorId: 'usr_c8',
+    creatorName: '@paws_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80',
+    likesCount: 4555,
     scenes: [
       { time: '0:00 - 0:05', title: 'Dewdrop Harvest Awakening', desc: 'Slow-motion macro glide across heirloom vine tomatoes and crisp romaine leaves glistening with morning water droplets' },
       { time: '0:05 - 0:10', title: 'Rustic Wooden Basket Bounty', desc: 'Handcrafted wicker crate filled with rainbow carrots, crunchy bell peppers, and freshly harvested rosemary sprigs' },
@@ -489,6 +665,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#SaladReel', '#HealthyEating', '#GreenBowl', '#VegetablePower', '#InstagramReel'],
     aiModelsUsed: ['Runway Gen-3 Alpha', 'ElevenLabs Voice v2', 'Flux Realism'],
     estimatedCredits: 40,
+    prompt: "Top-down artisan culinary reel of crisp Mediterranean salad bowl, drizzling golden extra virgin olive oil in slow motion, toasted pine nuts and crumbled feta falling gracefully 1:1",
+    creatorId: 'usr_c9',
+    creatorName: '@sophia_vogue',
+    creatorAvatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&auto=format&fit=crop&q=80',
+    likesCount: 4750,
     scenes: [
       { time: '0:00 - 0:04', title: 'The ASMR Knife Chop', desc: 'Rapid precision knife cuts through crunchy cucumbers, radish coins, and purple cabbage with sharp acoustic audio' },
       { time: '0:04 - 0:10', title: 'Citrus Vinaigrette Drizzle', desc: 'Golden cold-pressed olive oil cascading in slow-motion over baby spinach and toasted pumpkin seeds' },
@@ -511,6 +692,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Hydroponics', '#VerticalFarming', '#AgriTech', '#SustainableGreens', '#SmartFarming'],
     aiModelsUsed: ['Luma Dream Machine', 'Gemini Flash Script', 'Fluvia Audio Core'],
     estimatedCredits: 55,
+    prompt: "Futuristic vertical hydroponic farm with glowing purple LED grow lights, automated robotic arm gently inspecting crisp butterhead lettuce leaves, clean sustainable agritech 16:9",
+    creatorId: 'usr_c10',
+    creatorName: '@soundwave_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 4945,
     scenes: [
       { time: '0:00 - 0:06', title: 'Vertical Canopy Tracking', desc: 'Smooth camera glide beneath purple-spectrum LED illumination over cascading green oakleaf lettuce' },
       { time: '0:06 - 0:14', title: 'Aeroponic Root Mist & Growth', desc: 'Precision nutrient fog swirling around healthy pristine roots with micro-climate sensor telemetry' },
@@ -533,6 +719,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#GroceryDelivery', '#QuickCommerce', '#VeggieBox', '#MetaAds', '#DiscountOffer'],
     aiModelsUsed: ['Fluvia Motion Graphics', 'Flux Realism', 'ElevenLabs Voice'],
     estimatedCredits: 35,
+    prompt: "High-speed quick commerce grocery delivery commercial, fresh avocado and sourdough bread packed smoothly into craft paper bag, dynamic whip pan transition to doorstep, 9:16 vertical ad",
+    creatorId: 'usr_c11',
+    creatorName: '@chef_antonio',
+    creatorAvatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80',
+    likesCount: 5140,
     scenes: [
       { time: '0:00 - 0:04', title: 'Chilled Produce Splash Hook', desc: 'High-velocity water splash over crisp broccoli florets with bold "10-Min Delivery" headline' },
       { time: '0:04 - 0:10', title: 'Farm Box Unboxing Delight', desc: 'Customer opening insulated eco-friendly kraft bag filled with fresh carrots, coriander, and lemons' },
@@ -555,6 +746,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#WokSizzle', '#StirFry', '#AsianCulinary', '#ChefSpecials', '#FoodCinematography'],
     aiModelsUsed: ['Flux Realism', 'Fluvia SFX Engine', 'Gemini Storyboard'],
     estimatedCredits: 45,
+    prompt: "Master chef tossing sizzling fresh vegetables in traditional wok with vibrant roaring fire burst, crispy snap peas and shiitake mushrooms dancing in flame, authentic Asian culinary 16:9",
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1035,
     scenes: [
       { time: '0:00 - 0:05', title: 'Wok Flame Toss Sensation', desc: 'Dramatic slow-motion toss of snap peas, shiitake mushrooms, and red bell peppers leaping over seasoned carbon steel flame' },
       { time: '0:05 - 0:10', title: 'Glossy Garlic Soy Glaze Sizzle', desc: 'Rich savory ginger-soy reduction bubbling as toasted sesame seeds sprinkle across green scallions' },
@@ -577,6 +773,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#GreenJuice', '#Detox', '#ImmunityBooster', '#ColdPressed', '#WellnessReel'],
     aiModelsUsed: ['Flux Studio', 'ElevenLabs Voice', 'Fluvia Motion'],
     estimatedCredits: 40,
+    prompt: "Vibrant organic cold-pressed juice bottle surrounded by fresh sliced citrus oranges and ginger root on wet marble slate, refreshing moisture condensation, 9:16 wellness reel",
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1230,
     scenes: [
       { time: '0:00 - 0:05', title: 'The Cold Press Extraction', desc: 'Hydraulic cold-press auger crushing crisp stalks of celery and baby spinach into rich emerald liquid' },
       { time: '0:05 - 0:10', title: 'Chilled Condensation Bottle', desc: 'Ice-cold condensation bead trickling down glass amber bottle under golden morning counter light' },
@@ -599,6 +800,11 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#CoffeeReel', '#LatteArt', '#Barista', '#MorningCoffee', '#CafeVibes'],
     aiModelsUsed: ['Flux Realism', 'Fluvia Audio Core', 'ElevenLabs Voice'],
     estimatedCredits: 40,
+    prompt: "Artisan specialty coffee barista pouring velvety steamed microfoam into ceramic cup, intricate tulip latte art blooming on crema surface, warm coffee shop atmosphere 4:5",
+    creatorId: 'usr_c3',
+    creatorName: '@luna_story',
+    creatorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1425,
     scenes: [
       { time: '0:00 - 0:05', title: 'Crema Extraction Slow-Mo', desc: 'Bottomless portafilter dispensing rich hazelnut espresso stream' },
       { time: '0:05 - 0:10', title: 'Silky Rosette Free-Pour', desc: 'Steamed oat milk forming delicate symmetrical leaves across espresso surface' },
@@ -621,14 +827,122 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#SaaS', '#CloudPlatform', '#DevTools', '#ProductDemo', '#TechPromo'],
     aiModelsUsed: ['Gemini Flash Script', 'Fluvia Motion Graphics', 'ElevenLabs Adam'],
     estimatedCredits: 60,
+    prompt: "Sleek dark-mode cloud AI platform interactive demo, animated 3D interface cards floating with real-time WebSocket telemetry, developer CLI terminal execution, 16:9 tech demo",
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1620,
     scenes: [
       { time: '0:00 - 0:08', title: 'Global Network Mesh', desc: 'Interactive globe visualization showing real-time edge node orchestration' },
       { time: '0:08 - 0:18', title: 'Zero-Latency Pipeline', desc: 'Real-time WebSocket throughput chart with instant streaming preview' },
       { time: '0:18 - 0:25', title: 'Start Free Trial CTA', desc: 'Command line npm install widget with "Deploy in 60 Seconds" CTA' },
     ],
   },
+  {
+    id: 'tmpl_27',
+    slug: 'cyberpunk-neon-katana-duel',
+    title: 'Cyberpunk Neon Katana Rain Duel',
+    category: 'Anime & Fantasy',
+    aspect: '9:16',
+    aspectLabel: '9:16 Vertical',
+    durationSec: 15,
+    duration: '15s',
+    thumbnail: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80',
+    videoPreview: '/media/templates/tmpl-sintel.mp4',
+    description: 'High-octane anime combat on rain-slicked Neo-Tokyo rooftop with magenta plasma katana and volumetric electricity.',
+    badge: 'Trending',
+    tags: ['#Anime', '#Cyberpunk', '#Katana', '#Sakuga', '#Ufotable'],
+    aiModelsUsed: ['Fluvia Anime Engine', 'Gemini Storyboard', 'Flux Anime Studio'],
+    estimatedCredits: 45,
+    prompt: 'Anime 4k animation of cybernetic warrior with glowing magenta katana on rain drenched neo-tokyo rooftop, electric sparks, volumetric streetlights, Ufotable sakuga aesthetic',
+    creatorId: 'usr_c6',
+    creatorName: '@neo_anime',
+    creatorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+    likesCount: 3820,
+    scenes: [
+      { time: '0:00 - 0:05', title: 'Rooftop Draw', desc: 'Slow motion rain droplets slicing across illuminated plasma blade' },
+      { time: '0:05 - 0:15', title: 'Dash Strike', desc: 'Electrifying dash leaving neon trail across reflective puddle' },
+    ],
+  },
+  {
+    id: 'tmpl_28',
+    slug: 'whimsical-3d-forest-bunny',
+    title: 'Whimsical 3D Forest Explorer Bunny',
+    category: '3D Cartoon & Characters',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square',
+    durationSec: 12,
+    duration: '12s',
+    thumbnail: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=800&auto=format&fit=crop&q=80',
+    videoPreview: '/media/templates/tmpl-bunny.mp4',
+    description: 'Heartwarming Pixar-style animated bunny in brass aviator goggles discovering a bioluminescent mushroom grove.',
+    badge: 'Hot',
+    tags: ['#3DAnimation', '#PixarStyle', '#CuteBunny', '#FantasyForest', '#FamilyFriendly'],
+    aiModelsUsed: ['Flux 3D Studio', 'Fluvia Motion Graphics'],
+    estimatedCredits: 35,
+    prompt: 'Pixar 3D animation of cute fluffy bunny wearing aviator goggles discovering a glowing magical mushroom in enchanted twilight woods, soft fur shader, Disney aesthetic',
+    creatorId: 'usr_c7',
+    creatorName: '@pixel_craft',
+    creatorAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2940,
+    scenes: [
+      { time: '0:00 - 0:06', title: 'Curious Sniff', desc: 'Bunny twitching nose as glowing spore particles drift by' },
+      { time: '0:06 - 0:12', title: 'Wonder Hop', desc: 'Gentle hop illuminating surrounding moss in cyan bioluminescence' },
+    ],
+  },
+  {
+    id: 'tmpl_29',
+    slug: 'golden-retriever-beach-sunset',
+    title: 'Golden Retriever Sunset Shoreline Sprint',
+    category: 'Pet & Wildlife',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape',
+    durationSec: 15,
+    duration: '15s',
+    thumbnail: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&auto=format&fit=crop&q=80',
+    videoPreview: '/media/templates/tmpl-friday.mp4',
+    description: 'Joyful slow-motion golden retriever galloping along glistening wet shoreline during warm golden hour sunset.',
+    badge: 'Featured',
+    tags: ['#Pets', '#GoldenRetriever', '#BeachSunset', '#SlowMotion', '#Joy'],
+    aiModelsUsed: ['Fluvia Cinematic Realism', 'Fluvia Audio Core'],
+    estimatedCredits: 40,
+    prompt: 'Hyper-realistic slow motion cinematic of joyful golden retriever running along wet beach sand during golden hour sunset, water droplets spraying in sunlight, 35mm master film',
+    creatorId: 'usr_c8',
+    creatorName: '@paws_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80',
+    likesCount: 4610,
+    scenes: [
+      { time: '0:00 - 0:07', title: 'Golden Hour Gallop', desc: 'Low angle tracking shot of paws splashing through incoming surf' },
+      { time: '0:07 - 0:15', title: 'Sunlit Smile', desc: 'Happy dog turning toward camera backlit by blinding orange sunset' },
+    ],
+  },
+  {
+    id: 'tmpl_30',
+    slug: 'bioluminescent-deep-sea-jellyfish',
+    title: 'Deep Sea Neon Jellyfish Dreamscape',
+    category: 'Travel & Landscapes',
+    aspect: '4:5',
+    aspectLabel: '4:5 Social Portrait',
+    durationSec: 18,
+    duration: '18s',
+    thumbnail: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop&q=80',
+    videoPreview: '/media/templates/tmpl-jellyfish.mp4',
+    description: 'Hypnotic bioluminescent jellyfish pulsating through deep abyss with neon cyan tentacles and calming ambient soundscape.',
+    badge: 'Trending',
+    tags: ['#DeepSea', '#Jellyfish', '#Bioluminescent', '#Ambient', '#NatureCinema'],
+    aiModelsUsed: ['Fluvia Macro Core', 'Gemini Ambient Storyboard'],
+    estimatedCredits: 45,
+    prompt: 'Ethereal deep-sea neon jellyfish pulsing translucent tentacles through dark indigo ocean water, bioluminescent cyan and violet sparkles, BBC Planet Earth cinematic',
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 5120,
+    scenes: [
+      { time: '0:00 - 0:09', title: 'Abyssal Pulse', desc: 'Translucent bell expanding and contracting in rhythm' },
+      { time: '0:09 - 0:18', title: 'Ribbon Float', desc: 'Delicate glowing tentacles drifting slowly through marine snow' },
+    ],
+  },
 ];
-
 export function getTemplateById(id: string): VideoTemplate | undefined {
   return TEMPLATES_DATA.find((t) => t.id === id);
 }

@@ -114,7 +114,7 @@ async function runSeoTests() {
   // 5. PayU Production Gateway Configuration
   console.log('\n5. Testing PayU Production Gateway Setup...');
   const payu = getPayUConfig();
-  assert('PayU environment is "prod"', payu.env === 'prod');
+  assert('PayU environment is production', payu.env === 'production' || payu.env === 'prod');
   assert('PayU paymentUrl is "https://secure.payu.in/_payment"', payu.paymentUrl === 'https://secure.payu.in/_payment');
   assert('PayU postServiceUrl is "https://info.payu.in/merchant/postservice?form=2"', payu.postServiceUrl === 'https://info.payu.in/merchant/postservice?form=2');
   assert('PayU merchantKey is configured', Boolean(payu.merchantKey && payu.merchantKey.length > 2));

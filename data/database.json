@@ -27609,5 +27609,55 @@
       "createdAt": "2026-10-23T05:35:11.024Z",
       "completedAt": "2026-10-23T05:35:11.052Z"
     }
+  ],
+  "templateLikes": {
+    "tmpl_01": []
+  },
+  "creatorFollows": {
+    "usr_c1": []
+  },
+  "publishedTemplates": [
+    {
+      "id": "tmpl_pub_1792817974412_zcc2",
+      "slug": "neon-cyber-drift-2099",
+      "title": "Neon Cyber Drift 2099",
+      "description": "Ultra-fast drift through futuristic Shibuya rain",
+      "prompt": "Hyper-realistic anime cyberpunk drift car leaving glowing cyan light trails, reflective rainy asphalt, 8k 60fps",
+      "category": "Cinematic Automotive",
+      "aspect": "16:9",
+      "aspectLabel": "16:9 Landscape",
+      "durationSec": 15,
+      "duration": "15s",
+      "thumbnail": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80",
+      "videoPreview": "/media/templates/tmpl-01-cinematic-product.mp4",
+      "badge": "New",
+      "tags": [
+        "#FluviaCommunity",
+        "#AIVideo",
+        "#CustomTemplate"
+      ],
+      "aiModelsUsed": [
+        "Fluvia Cinematic v1",
+        "Gemini Flash"
+      ],
+      "estimatedCredits": 25,
+      "creatorId": "usr_test_liker_1792817974170",
+      "creatorName": "@cyber_pilot",
+      "creatorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+      "likesCount": 1,
+      "createdAt": "2026-10-24T04:59:34.413Z",
+      "scenes": [
+        {
+          "time": "0:00 - 0:05",
+          "title": "Opening Scene",
+          "desc": "Hyper-realistic anime cyberpunk drift car leaving glowing cyan light trails, ref"
+        },
+        {
+          "time": "0:05 - 0:15",
+          "title": "Dynamic Climax & CTA",
+          "desc": "Fluid particle transition with logo reveal"
+        }
+      ]
+    }
   ]
 }
