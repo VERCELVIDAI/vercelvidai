@@ -1,6 +1,9 @@
 // ==============================================================================
-// FLUVIA FLOW - 18 CINEMATIC AI VIDEO TEMPLATES & TEMPLATE MARKETPLACE ENGINE
+// FLUVIA FLOW - PREMIUM CREATIVE TEMPLATE MARKETPLACE ENGINE
+// Curated Video (26), Image Generation (15), and Text Animation (12) Templates
 // ==============================================================================
+
+export type TemplateType = 'video' | 'image' | 'text-animation';
 
 export interface TemplateScene {
   time: string;
@@ -8,17 +11,36 @@ export interface TemplateScene {
   desc: string;
 }
 
-export interface VideoTemplate {
+export interface EditableTextField {
+  key: string;
+  label: string;
+  defaultValue: string;
+  placeholder?: string;
+  maxLength?: number;
+}
+
+export interface AnimationSettings {
+  preset: string;
+  fontFamily: string;
+  textColor: string;
+  accentColor: string;
+  speed: number;
+  direction?: 'horizontal' | 'vertical' | 'radial';
+  delay?: number;
+}
+
+export interface CreativeTemplate {
   id: string;
+  type?: TemplateType;
   slug: string;
   title: string;
   category: string;
   aspect: '9:16' | '16:9' | '1:1' | '4:5' | '2.39:1';
   aspectLabel: string;
-  durationSec: number;
-  duration: string;
+  durationSec?: number;
+  duration?: string;
   thumbnail: string;
-  videoPreview: string;
+  videoPreview?: string;
   description: string;
   prompt: string;
   creatorId: string;
@@ -27,12 +49,19 @@ export interface VideoTemplate {
   likesCount: number;
   badge?: 'Trending' | 'Hot' | 'New' | 'Featured' | 'High ROI' | 'Enterprise' | 'Dev Choice' | 'Viral' | string;
   tags: string[];
-  scenes: TemplateScene[];
+  scenes?: TemplateScene[];
   aiModelsUsed: string[];
   estimatedCredits: number;
+  generationWorkflow?: 'video_gemini' | 'image_gemini' | 'text_renderer';
+  textFields?: EditableTextField[];
+  animationSettings?: AnimationSettings;
+  status?: 'published' | 'draft' | 'archived';
   createdAt?: string;
   isPublished?: boolean;
 }
+
+// Backward compatible alias
+export type VideoTemplate = CreativeTemplate;
 
 export interface TemplateEvent {
   id: string;
@@ -830,27 +859,845 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     ],
   },
 ];
-export function getTemplateById(id: string): VideoTemplate | undefined {
-  return TEMPLATES_DATA.find((t) => t.id === id);
+
+// ==========================================
+// 15 PREMIUM IMAGE GENERATION TEMPLATES
+// ==========================================
+export const IMAGE_TEMPLATES: CreativeTemplate[] = [
+  {
+    id: 'img_tmpl_01',
+    type: 'image',
+    slug: 'aura-flacon-luxury-perfume-photo',
+    title: 'Aura Flacon Luxury Fragrance',
+    category: 'Product Commercials & Product Showcase Ads',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square (1200×1200)',
+    thumbnail: '/media/image-templates/img-01-luxury-perfume.jpg',
+    description: 'High-end commercial luxury product photography of a geometric emerald-green crystal perfume flacon with anamorphic prism caustic dispersion.',
+    prompt: 'Commercial luxury product photography of a geometric emerald-green crystal perfume flacon resting on polished white Carrara marble. Anamorphic prism light refraction casting caustic reflections across the surface. Soft volumetric mist swirling in background, studio rim lighting, 8k resolution, Hasselblad medium format color grading, ultra-sharp details, zero noise.',
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1480,
+    badge: 'Trending',
+    tags: ['#LuxuryPhoto', '#Perfume', '#Hasselblad', '#MacroCommercial', '#PrismCaustics'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_02',
+    type: 'image',
+    slug: 'sonic-aero-headset-ecommerce-hero',
+    title: 'Sonic Aero X Headset Plinth',
+    category: 'E-commerce Product Ads',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    thumbnail: '/media/image-templates/img-02-ecommerce-audio.jpg',
+    description: 'Minimalist ecommerce hero banner of matte dark-graphite studio headphones hovering weightlessly above a textured basalt plinth.',
+    prompt: 'Clean minimalist ecommerce hero shot of matte dark-graphite over-ear wireless studio headphones hovering weightlessly above an elevated textured basalt stone plinth. Diffused top softbox illumination, subtle cyan edge lighting, sharp textural contrast between metal chassis and soft memory foam ear cushions, commercial hero banner framing.',
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1210,
+    badge: 'Featured',
+    tags: ['#EcommerceHero', '#AudioHardware', '#StudioLighting', '#CleanModern', '#Banner'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_03',
+    type: 'image',
+    slug: 'hydraglow-botanical-dew-serum',
+    title: 'HydraGlow Botanical Dew Serum',
+    category: 'Fashion, Beauty & Lifestyle Campaigns',
+    aspect: '4:5',
+    aspectLabel: '4:5 Social Portrait (1080×1350)',
+    thumbnail: '/media/image-templates/img-03-skincare-serum.jpg',
+    description: 'Editorial beauty and skincare advertising photography of a frosted glass dropper bottle with suspended golden lipid micro-spheres.',
+    prompt: 'Editorial beauty and skincare advertising photography of a frosted glass dropper bottle with suspended golden lipid micro-spheres. Fresh water droplets and micro-condensation clinging to glass, soft morning sunlight casting organic leaf shadows on warm blush background, editorial Vogue beauty aesthetic, photorealistic texture.',
+    creatorId: 'usr_c3',
+    creatorName: '@luna_story',
+    creatorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1890,
+    badge: 'Hot',
+    tags: ['#BeautyEditorial', '#Skincare', '#GlowSerum', '#DewDrop', '#MacroPhotography'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_04',
+    type: 'image',
+    slug: 'apex-gt-evoluzione-automotive-poster',
+    title: 'Apex GT Evoluzione Launch Poster',
+    category: 'Cinematic Automotive & Vehicle Ads',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    thumbnail: '/media/image-templates/img-04-automotive-poster.jpg',
+    description: 'High-contrast commercial automotive poster of a matte titanium electric hypercar parked inside a brutalist concrete tunnel.',
+    prompt: 'High-contrast commercial automotive poster of a matte titanium electric hypercar parked inside a brutalist concrete architectural tunnel. Razor-sharp LED headlight glow reflecting on wet asphalt, subtle horizontal motion-blur streaks in ambient background, dramatic cinematic rim lighting, 8k automotive keynote composition.',
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2150,
+    badge: 'High ROI',
+    tags: ['#AutomotivePoster', '#Hypercar', '#BrutalistArchitecture', '#Keynote', '#CinematicLighting'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_05',
+    type: 'image',
+    slug: 'titan-75-mechanical-keyboard-launch',
+    title: 'Titan 75 CNC Keyboard Flatlay',
+    category: 'Product Commercials & Product Showcase Ads',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square (1200×1200)',
+    thumbnail: '/media/image-templates/img-05-mechanical-keyboard.jpg',
+    description: 'Minimalist product launch hero shot of a custom anodized aluminum 75% mechanical keyboard with dark dye-sub keycaps.',
+    prompt: 'Minimalist product launch hero shot of a custom anodized aluminum 75% mechanical keyboard with dark PBT dye-sub keycaps. Warm copper edge illumination reflecting off beveled chamfers, artisan brass knob detail, perfectly composed top-down geometric flatlay, clean studio backdrop, zero clutter.',
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 970,
+    badge: 'Dev Choice',
+    tags: ['#HardwareLaunch', '#MechanicalKeyboard', '#Flatlay', '#Minimalist', '#StudioShot'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_06',
+    type: 'image',
+    slug: 'origin-craft-espresso-extraction-poster',
+    title: 'Origin Single-Origin Espresso Extraction',
+    category: 'Food, Beverage & Restaurant Commercials',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square (1200×1200)',
+    thumbnail: '/media/image-templates/img-06-espresso-commercial.jpg',
+    description: 'Cinematic brand poster capturing rich golden-hazelnut espresso crema pouring smoothly from a bottomless polished brass portafilter.',
+    prompt: 'Cinematic commercial brand poster capturing rich golden-hazelnut espresso crema pouring smoothly from a bottomless polished brass portafilter into a double-walled glass cup. Fine micro-steam rising through warm morning ray shafts, dark moody wooden roastery background, high-speed photography capturing liquid viscosity.',
+    creatorId: 'usr_c5',
+    creatorName: '@nature_organic',
+    creatorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1340,
+    badge: 'Featured',
+    tags: ['#EspressoExtraction', '#SpecialtyCoffee', '#MacroFood', '#CommercialPoster', '#Crema'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_07',
+    type: 'image',
+    slug: 'solaris-sparkling-citrus-social-creative',
+    title: 'Solaris Sparkling Citrus Social Ad',
+    category: 'Social Media Reels & Viral Short Videos',
+    aspect: '9:16',
+    aspectLabel: '9:16 Vertical Story (1080×1920)',
+    thumbnail: '/media/image-templates/img-07-hydration-drink.jpg',
+    description: 'Vibrant high-energy social media commercial ad creative for a chilled sparkling citrus wellness can with splash freeze-frame.',
+    prompt: 'Vibrant high-energy social media commercial ad creative for a chilled sparkling citrus wellness can. Heavy condensation droplets sliding down matte printed aluminum, surrounded by floating ruby blood orange slices and crystalline ice cubes against an electric lime gradient background, crisp studio splash freeze-frame.',
+    creatorId: 'usr_c3',
+    creatorName: '@luna_story',
+    creatorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1760,
+    badge: 'Viral',
+    tags: ['#SocialCreative', '#BeverageAd', '#SplashFreeze', '#SummerRefreshment', '#ViralCTR'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_08',
+    type: 'image',
+    slug: 'pro-creator-curved-oled-desk-setup',
+    title: 'Pro Creator Curved OLED Desk Setup',
+    category: 'Technology & SaaS Product Explainers',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1280×720)',
+    thumbnail: '/media/image-templates/img-08-youtube-workspace.jpg',
+    description: 'Professional YouTube thumbnail and tech keynote creative featuring an ultra-clean executive desk setup with curved OLED monitor.',
+    prompt: 'Professional YouTube thumbnail and tech keynote creative featuring an ultra-clean minimalist executive desk setup. Massive 49-inch curved ultrawide OLED monitor displaying dark-mode code and analytics, warm amber rear bias lighting, solid walnut wood tabletop, studio reference monitors, high-contrast crisp aesthetic.',
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2310,
+    badge: 'High ROI',
+    tags: ['#YouTubeThumbnail', '#DeskSetup', '#UltrawideOLED', '#CreatorWorkspace', '#HighCTR'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_09',
+    type: 'image',
+    slug: 'maison-emeraude-structural-trench',
+    title: 'Maison Émeraude Structural Trench',
+    category: 'Fashion, Beauty & Lifestyle Campaigns',
+    aspect: '4:5',
+    aspectLabel: '4:5 Social Portrait (1080×1350)',
+    thumbnail: '/media/image-templates/img-09-haute-couture.jpg',
+    description: 'High-fashion editorial campaign photograph of an architectural emerald-green silk structural trench coat in a brutalist courtyard.',
+    prompt: 'High-fashion editorial campaign photograph of a model in an architectural emerald-green silk structural trench coat standing inside a minimalist brutalist concrete courtyard. Strong directional daylight creating bold geometric cast shadows, elegant fluid fabric drape, high-fashion magazine cover framing.',
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1650,
+    badge: 'Featured',
+    tags: ['#HauteCouture', '#VogueEditorial', '#ArchitecturalFashion', '#EmeraldSilk', '#ParisRunway'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_10',
+    type: 'image',
+    slug: 'ferment-and-oak-wild-sourdough',
+    title: 'Ferment & Oak Wild Sourdough',
+    category: 'Food, Beverage & Restaurant Commercials',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square (1200×1200)',
+    thumbnail: '/media/image-templates/img-10-artisanal-sourdough.jpg',
+    description: 'Artisanal bakery commercial poster of a blistered dark-crust sourdough loaf split open with melting Normandy butter and steam.',
+    prompt: 'Artisanal bakery commercial poster of a blistered dark-crust sourdough loaf split open to reveal airy open crumb. A pat of golden Normandy salted butter melting into warm steam, dusted with flaky sea salt and raw flour, rustic dark oak board backdrop, soft natural window light.',
+    creatorId: 'usr_c5',
+    creatorName: '@nature_organic',
+    creatorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1180,
+    badge: 'New',
+    tags: ['#ArtisanalBakery', '#WildSourdough', '#CulinaryArt', '#RusticFood', '#CommercialFood'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_11',
+    type: 'image',
+    slug: 'synapse-3d-glass-analytics-cloud',
+    title: 'Synapse 3D Glass Analytics Cloud',
+    category: 'Technology & SaaS Product Explainers',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    thumbnail: '/media/image-templates/img-11-saas-isometric.jpg',
+    description: 'SaaS product launch graphic featuring multi-layered translucent 3D isometric glass interface cards in dark digital space.',
+    prompt: 'SaaS product launch graphic featuring multi-layered translucent 3D isometric glass interface cards floating in dark digital space. Glowing neon emerald telemetry graphs, holographic user nodes, clean typography badges, frosted glass blur, enterprise software keynote hero visual.',
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1940,
+    badge: 'Enterprise',
+    tags: ['#SaaSKeynote', '#IsometricGlass', '#Glassmorphism', '#EnterpriseAnalytics', '#TechVisual'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_12',
+    type: 'image',
+    slug: 'modernist-swiss-fluid-chrome-typography',
+    title: 'Modernist Swiss Fluid Chrome Typography',
+    category: 'Cinematic Logo Reveals & Brand Intros',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square (1200×1200)',
+    thumbnail: '/media/image-templates/img-12-fluid-typography.jpg',
+    description: 'Avant-garde typography-led brand poster combining strict Swiss modernist grid layout with organic molten chrome ribbons.',
+    prompt: 'Avant-garde typography-led brand poster combining strict Swiss modernist grid layout with organic molten chrome ribbons weaving through crisp sans-serif letterforms. Monochromatic silver and deep obsidian contrast, studio specular highlights, graphic design biennial award aesthetic.',
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1530,
+    badge: 'Trending',
+    tags: ['#SwissGrid', '#FluidChrome', '#TypographicArt', '#ModernistDesign', '#PosterDesign'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_13',
+    type: 'image',
+    slug: 'terra-noir-sustainable-brand-moodboard',
+    title: 'Terra Noir Sustainable Brand Moodboard',
+    category: 'Brand Promotion & Advertising Films',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square (1200×1200)',
+    thumbnail: '/media/image-templates/img-13-minimalist-moodboard.jpg',
+    description: 'Curated luxury brand identity moodboard with raw linen swatch, black basalt stone, travertine, and fresh olive branch.',
+    prompt: 'Curated luxury brand identity moodboard and physical flatlay. Unbleached raw linen fabric swatch, polished black volcanic basalt stone, natural travertine sample, matte dark-glazed ceramic disk, and a single fresh Mediterranean olive branch. Neutral warm studio lighting, tactile organic textures.',
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1290,
+    badge: 'Featured',
+    tags: ['#BrandMoodboard', '#TactileMaterials', '#SustainableLuxury', '#IdentityDesign', '#Travertine'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_14',
+    type: 'image',
+    slug: 'aurora-autumn-cashmere-collection',
+    title: 'Aurora Autumn Cashmere Collection',
+    category: 'Fashion, Beauty & Lifestyle Campaigns',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    thumbnail: '/media/image-templates/img-14-autumn-cashmere.jpg',
+    description: 'Seasonal luxury fashion campaign layout showcasing folded ribbed cashmere sweaters on natural wood pedestal with sunbeams.',
+    prompt: 'Seasonal luxury fashion campaign layout showcasing folded ribbed cashmere sweaters in oatmeal, camel, and deep espresso tones resting on a minimalist blonde wood pedestal. Golden-hour sunlight streaming through floor-to-ceiling glass, ultra-soft tactile micro-fibers in crisp focus.',
+    creatorId: 'usr_c3',
+    creatorName: '@luna_story',
+    creatorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1420,
+    badge: 'New',
+    tags: ['#AutumnCampaign', '#CashmereKnitwear', '#GoldenHour', '#LuxuryLifestyle', '#CommercialFashion'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+  {
+    id: 'img_tmpl_15',
+    type: 'image',
+    slug: 'serenity-zen-mineral-facial-balm',
+    title: 'Serenity Zen Mineral Facial Balm',
+    category: 'Product Commercials & Product Showcase Ads',
+    aspect: '1:1',
+    aspectLabel: '1:1 Square (1200×1200)',
+    thumbnail: '/media/image-templates/img-15-ceramic-zen-cosmetic.jpg',
+    description: 'Clean studio product photography of a matte sage-green ceramic cosmetic jar balanced symmetrically on dark river stones with mist.',
+    prompt: 'Clean studio product photography of a matte sage-green ceramic cosmetic jar balanced symmetrically atop smooth dark river stones. Fine atmospheric mist drifting across tranquil still water surface, soft diffused skylight, serene Japanese wabi-sabi cosmetic aesthetic.',
+    creatorId: 'usr_c5',
+    creatorName: '@nature_organic',
+    creatorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1610,
+    badge: 'Featured',
+    tags: ['#ZenAesthetic', '#CleanBeauty', '#WabiSabi', '#OrganicCosmetics', '#MineralSkincare'],
+    aiModelsUsed: ['Google Gemini Imagen (gemini-3.1-flash-image)'],
+    estimatedCredits: 5,
+    generationWorkflow: 'image_gemini',
+    status: 'published',
+  },
+];
+
+// ==========================================
+// 12 PREMIUM TEXT ANIMATION TEMPLATES
+// ==========================================
+export const TEXT_ANIMATION_TEMPLATES: CreativeTemplate[] = [
+  {
+    id: 'txt_tmpl_01',
+    type: 'text-animation',
+    slug: 'cinematic-3d-chrome-title',
+    title: 'Cinematic 3D Chrome Title',
+    category: 'Cinematic Logo Reveals & Brand Intros',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 6,
+    duration: '6s',
+    thumbnail: '/media/text-templates/txt-01-chrome-title.jpg',
+    description: 'Heavy reflective 3D chrome typography with deep beveled edges, specular flare, and cinematic slow anamorphic camera dolly.',
+    prompt: 'Heavy reflective 3D chrome typography with deep beveled edges and specular highlights. Anamorphic lens flare sweeping horizontally across letterforms with slow cinematic camera dolly. 60fps blockbuster movie title intro.',
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2450,
+    badge: 'Trending',
+    tags: ['#Chrome3D', '#BlockbusterTitle', '#SpecularBevel', '#CinemaIntro', '#60fps'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'CSS 3D Transform'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Primary Title', defaultValue: 'CHROME 3D', placeholder: 'Enter main title...' },
+      { key: 'subtitle', label: 'Tagline', defaultValue: 'BLOCKBUSTER TITLE SEQUENCE', placeholder: 'Enter subtitle...' },
+    ],
+    animationSettings: {
+      preset: 'chrome-3d',
+      fontFamily: 'Montserrat, sans-serif',
+      textColor: '#ffffff',
+      accentColor: '#94a3b8',
+      speed: 1.0,
+      direction: 'horizontal',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_02',
+    type: 'text-animation',
+    slug: 'liquid-metal-typography-morph',
+    title: 'Liquid Metal Typography Morph',
+    category: 'Cinematic Logo Reveals & Brand Intros',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 8,
+    duration: '8s',
+    thumbnail: '/media/text-templates/txt-02-liquid-metal.jpg',
+    description: 'Viscous organic liquid mercury drops dropping and coalescing smoothly into razor-sharp luxury serif typography.',
+    prompt: 'Viscous organic liquid mercury drops dropping and coalescing smoothly into razor-sharp luxury serif typography. Fluid physics surface tension, liquid metallic sheen, high-end commercial fashion typography reveal.',
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1980,
+    badge: 'Featured',
+    tags: ['#LiquidMercury', '#FluidType', '#OrganicMotion', '#MetallicSheen', '#SerifLuxury'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'SVG Fluid Filter'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Serif Brand Name', defaultValue: 'Fluidum', placeholder: 'Brand name...' },
+      { key: 'subtitle', label: 'Collection Subline', defaultValue: 'HAUTE COUTURE ÉDITION', placeholder: 'Subline...' },
+    ],
+    animationSettings: {
+      preset: 'liquid-metal',
+      fontFamily: 'Playfair Display, serif',
+      textColor: '#e2e8f0',
+      accentColor: '#cbd5e1',
+      speed: 1.2,
+      direction: 'vertical',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_03',
+    type: 'text-animation',
+    slug: 'emerald-glass-refraction-reveal',
+    title: 'Emerald Glass Text Reveal',
+    category: 'Brand Promotion & Advertising Films',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 6,
+    duration: '6s',
+    thumbnail: '/media/text-templates/txt-03-emerald-glass.jpg',
+    description: 'Refractive frosted emerald glass typography emerging with internal caustic light dispersion and signature Fluvia theme glow.',
+    prompt: 'Refractive frosted emerald glass typography emerging through darkness with internal caustic light dispersion and glowing green volumetric backlighting. Fluvia Flow luxury signature identity aesthetic.',
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2890,
+    badge: 'Signature',
+    tags: ['#EmeraldGlass', '#FluviaTheme', '#Caustics', '#FrostedRefraction', '#LuxuryReveal'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'Glassmorphism Shader'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Brand Name', defaultValue: 'EMERALD', placeholder: 'Brand name...' },
+      { key: 'subtitle', label: 'Product Subtitle', defaultValue: 'PURE INTELLIGENCE IN MOTION', placeholder: 'Subtitle...' },
+    ],
+    animationSettings: {
+      preset: 'emerald-glass',
+      fontFamily: 'Inter, sans-serif',
+      textColor: '#34d399',
+      accentColor: '#10b981',
+      speed: 1.0,
+      direction: 'radial',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_04',
+    type: 'text-animation',
+    slug: 'kinetic-ad-spring-typography',
+    title: 'Kinetic Typography for Ads',
+    category: 'Social Media Reels & Viral Short Videos',
+    aspect: '9:16',
+    aspectLabel: '9:16 Vertical Story (1080×1920)',
+    durationSec: 5,
+    duration: '5s',
+    thumbnail: '/media/text-templates/txt-04-kinetic-ads.jpg',
+    description: 'High-energy staggered vertical slide-up kinetic typography with bouncy spring damping physics for mobile reels.',
+    prompt: 'High-energy staggered vertical slide-up kinetic typography with bouncy spring damping physics. Bold contrast color blocks, rapid word-by-word visual hook designed for 9:16 viral short reels.',
+    creatorId: 'usr_c3',
+    creatorName: '@luna_story',
+    creatorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+    likesCount: 3120,
+    badge: 'Viral',
+    tags: ['#KineticAds', '#ViralHook', '#SpringPhysics', '#ReelsMotion', '#HighConversion'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'Spring Physics'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Hook Word 1', defaultValue: 'STOP', placeholder: 'Hook 1...' },
+      { key: 'subtitle', label: 'Hook Word 2', defaultValue: 'SCROLLING', placeholder: 'Hook 2...' },
+      { key: 'tagline', label: 'Offer Line', defaultValue: 'START CREATING WITH AI TODAY', placeholder: 'Offer line...' },
+    ],
+    animationSettings: {
+      preset: 'kinetic-spring',
+      fontFamily: 'Impact, Arial Black, sans-serif',
+      textColor: '#ffffff',
+      accentColor: '#f43f5e',
+      speed: 1.4,
+      direction: 'vertical',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_05',
+    type: 'text-animation',
+    slug: 'cyberpunk-neon-gas-tube-reveal',
+    title: 'Neon Light Title Reveal',
+    category: 'Cinematic Logo Reveals & Brand Intros',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 7,
+    duration: '7s',
+    thumbnail: '/media/text-templates/txt-05-neon-light.jpg',
+    description: 'Realistic flickering gas-tube illumination with neon hum flare and wet asphalt reflection.',
+    prompt: 'Flickering high-voltage magenta and cyan neon glass tube letters illuminating in sequence with authentic electric buzzing hum, soft volumetric bloom, and wet city pavement reflection.',
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2240,
+    badge: 'Hot',
+    tags: ['#NeonTitle', '#Cyberpunk', '#GasTube', '#NeonBloom', '#DarkVibe'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'SVG Neon Glow Filter'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Neon Sign Text', defaultValue: 'NIGHT CITY', placeholder: 'Sign text...' },
+      { key: 'subtitle', label: 'Sub-Sign Text', defaultValue: 'CYBERNETIC COUTURE', placeholder: 'Sub-sign...' },
+    ],
+    animationSettings: {
+      preset: 'neon-flicker',
+      fontFamily: 'Arial, sans-serif',
+      textColor: '#f0abfc',
+      accentColor: '#e879f9',
+      speed: 1.0,
+      direction: 'horizontal',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_06',
+    type: 'text-animation',
+    slug: 'luxury-minimalist-brand-intro',
+    title: 'Luxury Minimalist Brand Intro',
+    category: 'Brand Promotion & Advertising Films',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 8,
+    duration: '8s',
+    thumbnail: '/media/text-templates/txt-06-luxury-minimalist.jpg',
+    description: 'Ultra-wide tracked-out serif typography expanding outward with understated quiet luxury elegance.',
+    prompt: 'Ultra-wide letter-spacing typography slowly expanding outward with subtle gradient opacity fade. Quiet luxury aesthetic, restrained editorial timing, high-fashion brand introduction.',
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1820,
+    badge: 'Featured',
+    tags: ['#QuietLuxury', '#MinimalistIntro', '#WideTracking', '#HighEndBrand', '#Understated'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'Letter-Spacing Tween'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Brand Name', defaultValue: 'VALENCE', placeholder: 'Brand name...' },
+      { key: 'subtitle', label: 'Brand Descriptor', defaultValue: 'SWISS HOROLOGY • GENÈVE', placeholder: 'Descriptor...' },
+    ],
+    animationSettings: {
+      preset: 'luxury-tracking',
+      fontFamily: 'Cinzel, Garamond, serif',
+      textColor: '#f8fafc',
+      accentColor: '#94a3b8',
+      speed: 0.8,
+      direction: 'horizontal',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_07',
+    type: 'text-animation',
+    slug: 'bold-editorial-headline-animation',
+    title: 'Bold Editorial Headline Animation',
+    category: 'Brand Promotion & Advertising Films',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 5,
+    duration: '5s',
+    thumbnail: '/media/text-templates/txt-07-editorial-headline.jpg',
+    description: 'Brutalist split-block mask slide with horizontal contrast wipe and rapid reveal.',
+    prompt: 'Brutalist split-block mask slide with horizontal contrast wipe. Heavy black and yellow inversion, punchy magazine headline reveal with razor-sharp vector precision.',
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1470,
+    badge: 'New',
+    tags: ['#EditorialMotion', '#BrutalistHeadline', '#SplitBlock', '#ContrastWipe', '#BoldType'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'CSS Mask-Image'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Main Headline', defaultValue: 'DISRUPT', placeholder: 'Headline...' },
+      { key: 'subtitle', label: 'Kicker Line', defaultValue: 'THE NEW ARCHITECTURE OF MOTION', placeholder: 'Kicker line...' },
+    ],
+    animationSettings: {
+      preset: 'editorial-mask',
+      fontFamily: 'Helvetica, Arial Black, sans-serif',
+      textColor: '#000000',
+      accentColor: '#facc15',
+      speed: 1.3,
+      direction: 'horizontal',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_08',
+    type: 'text-animation',
+    slug: 'glitch-typography-shift',
+    title: 'Glitch Typography Disruption',
+    category: 'Technology & SaaS Product Explainers',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 6,
+    duration: '6s',
+    thumbnail: '/media/text-templates/txt-08-glitch-typography.jpg',
+    description: 'Digital chromatic RGB channel separation with high-frequency scanline jitter and phase snap.',
+    prompt: 'Digital chromatic aberration separating RGB channels with high-frequency scanline jitter, cybernetic frame distortion, and abrupt phase alignment into sharp typography.',
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2630,
+    badge: 'Trending',
+    tags: ['#GlitchVFX', '#CyberDisruption', '#RGBChannelShift', '#Scanlines', '#TechVibe'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'Chromatic Shift Shader'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Glitch Word', defaultValue: 'SYNTAX', placeholder: 'Target word...' },
+      { key: 'subtitle', label: 'Status Subtext', defaultValue: 'NEURAL PROTOCOL INITIALIZED', placeholder: 'Subtext...' },
+    ],
+    animationSettings: {
+      preset: 'digital-glitch',
+      fontFamily: 'Courier New, monospace',
+      textColor: '#ffffff',
+      accentColor: '#06b6d4',
+      speed: 1.5,
+      direction: 'horizontal',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_09',
+    type: 'text-animation',
+    slug: 'smooth-mask-curtain-wipe',
+    title: 'Smooth Mask and Wipe Reveal',
+    category: 'Technology & SaaS Product Explainers',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 6,
+    duration: '6s',
+    thumbnail: '/media/text-templates/txt-09-smooth-mask-wipe.jpg',
+    description: 'Diagonal gradient curtain wipe with feathered translucent soft edge unveiling keynote typography.',
+    prompt: 'Diagonal 45-degree gradient curtain wipe with feathered translucent soft edge gliding across screen to unveil crisp enterprise typography. Keynote presentation intro style.',
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1720,
+    badge: 'Enterprise',
+    tags: ['#CurtainWipe', '#KeynoteTitle', '#FeatheredMask', '#SmoothMotion', '#SiliconValley'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'Gradient Wipe ClipPath'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Company / Platform', defaultValue: 'STREAMLINE', placeholder: 'Platform name...' },
+      { key: 'subtitle', label: 'Value Proposition', defaultValue: 'AUTOMATED INFRASTRUCTURE AT SCALE', placeholder: 'Value prop...' },
+    ],
+    animationSettings: {
+      preset: 'smooth-wipe',
+      fontFamily: 'Inter, system-ui, sans-serif',
+      textColor: '#e0f2fe',
+      accentColor: '#38bdf8',
+      speed: 1.0,
+      direction: 'horizontal',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_10',
+    type: 'text-animation',
+    slug: 'golden-particle-typography-swarm',
+    title: 'Particle Typography Swarm',
+    category: 'Professional Storytelling & Promotional Videos',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 8,
+    duration: '8s',
+    thumbnail: '/media/text-templates/txt-10-particle-typography.jpg',
+    description: 'Golden stardust particle swarm coalescing into razor-sharp vector typography with radiant ambient glow.',
+    prompt: 'Swarm of three thousand shimmering golden stardust particles converging through 3D space to form razor-sharp vector typography with radiant ambient glow.',
+    creatorId: 'usr_c2',
+    creatorName: '@elena_vfx',
+    creatorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2790,
+    badge: 'Featured',
+    tags: ['#ParticleText', '#GoldStardust', '#AwardShow', '#RadiantGlow', '#Blockbuster'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'HTML5 Canvas Particle Mesh'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Hero Name', defaultValue: 'COSMOS', placeholder: 'Hero name...' },
+      { key: 'subtitle', label: 'Award Category', defaultValue: 'GLOBAL CREATIVE EXCELLENCE 2026', placeholder: 'Category...' },
+    ],
+    animationSettings: {
+      preset: 'particle-swarm',
+      fontFamily: 'Cinzel, Georgia, serif',
+      textColor: '#fef3c7',
+      accentColor: '#fbbf24',
+      speed: 1.1,
+      direction: 'radial',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_11',
+    type: 'text-animation',
+    slug: 'typewriter-storytelling-cadence',
+    title: 'Typewriter Storytelling',
+    category: 'Professional Storytelling & Promotional Videos',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 8,
+    duration: '8s',
+    thumbnail: '/media/text-templates/txt-11-typewriter-story.jpg',
+    description: 'Monospace editorial terminal with rhythmic typewriter cursor cadence and subtle ink bleed.',
+    prompt: 'Rhythmic mechanical typewriter typography appearing character-by-character with realistic blinking monospace cursor, tactile mechanical cadence, and subtle ink bleed.',
+    creatorId: 'usr_c4',
+    creatorName: '@marcus_ai',
+    creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+    likesCount: 1640,
+    badge: 'Dev Choice',
+    tags: ['#Typewriter', '#MonospaceStory', '#TerminalCadence', '#BlinkingCaret', '#EssayMotion'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'Typing Interval Sequencer'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Code / Story Line', defaultValue: 'const future = new Vision();', placeholder: 'Code line...' },
+      { key: 'subtitle', label: 'Commentary Subline', defaultValue: '// The only limit is what you dare to prompt.', placeholder: 'Commentary...' },
+    ],
+    animationSettings: {
+      preset: 'typewriter-cadence',
+      fontFamily: 'Courier New, monospace',
+      textColor: '#34d399',
+      accentColor: '#10b981',
+      speed: 1.2,
+      direction: 'horizontal',
+    },
+    status: 'published',
+  },
+  {
+    id: 'txt_tmpl_12',
+    type: 'text-animation',
+    slug: 'premium-logo-and-tagline-reveal',
+    title: 'Premium Logo & Tagline Reveal',
+    category: 'Cinematic Logo Reveals & Brand Intros',
+    aspect: '16:9',
+    aspectLabel: '16:9 Landscape (1600×900)',
+    durationSec: 6,
+    duration: '6s',
+    thumbnail: '/media/text-templates/txt-12-logo-tagline.jpg',
+    description: 'Center monogram vector stroke draw with synchronized subline fade-in and emerald accent dot.',
+    prompt: 'Smooth SVG stroke-dashoffset vector path drawing out modern minimalist logo icon followed by synchronized letter-by-letter tagline fade-in with emerald accent dot.',
+    creatorId: 'usr_c1',
+    creatorName: '@alex_cinema',
+    creatorAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+    likesCount: 2980,
+    badge: 'Signature',
+    tags: ['#LogoReveal', '#StrokeDraw', '#SVGPathAnimation', '#BrandOutro', '#ModernLogo'],
+    aiModelsUsed: ['Fluvia Deterministic Typography Engine', 'SVG StrokeDashOffset'],
+    estimatedCredits: 0,
+    generationWorkflow: 'text_renderer',
+    textFields: [
+      { key: 'headline', label: 'Brand Name', defaultValue: 'FLUVIA', placeholder: 'Brand name...' },
+      { key: 'subtitle', label: 'Official Tagline', defaultValue: 'CREATIVE INTELLIGENCE', placeholder: 'Official tagline...' },
+    ],
+    animationSettings: {
+      preset: 'vector-draw',
+      fontFamily: 'Inter, Montserrat, sans-serif',
+      textColor: '#ffffff',
+      accentColor: '#10b981',
+      speed: 1.0,
+      direction: 'radial',
+    },
+    status: 'published',
+  },
+];
+
+// Alias VIDEO_TEMPLATES with explicit type assignment
+export const VIDEO_TEMPLATES: CreativeTemplate[] = TEMPLATES_DATA.map((t) => ({
+  ...t,
+  type: 'video' as const,
+  generationWorkflow: 'video_gemini' as const,
+}));
+
+// Master Curated Registry: 53 Genuine High-Quality Templates
+export const ALL_CURATED_TEMPLATES: CreativeTemplate[] = [
+  ...VIDEO_TEMPLATES,
+  ...IMAGE_TEMPLATES,
+  ...TEXT_ANIMATION_TEMPLATES,
+];
+
+export const TEMPLATE_FORMATS = [
+  { id: 'all', label: 'All Formats', count: ALL_CURATED_TEMPLATES.length },
+  { id: 'video', label: '🎬 AI Video', count: VIDEO_TEMPLATES.length },
+  { id: 'image', label: '🎨 AI Image', count: IMAGE_TEMPLATES.length },
+  { id: 'text-animation', label: '✨ Text Animation', count: TEXT_ANIMATION_TEMPLATES.length },
+] as const;
+
+export function getAllTemplates(): CreativeTemplate[] {
+  return ALL_CURATED_TEMPLATES;
 }
 
-export function getTemplateBySlug(slug: string): VideoTemplate | undefined {
-  return TEMPLATES_DATA.find((t) => t.slug === slug);
+export function getTemplatesByType(type: 'all' | 'video' | 'image' | 'text-animation'): CreativeTemplate[] {
+  if (type === 'all') return ALL_CURATED_TEMPLATES;
+  return ALL_CURATED_TEMPLATES.filter((t) => (t.type || 'video') === type);
 }
 
-export function getRelatedTemplates(currentSlug: string, count = 3): VideoTemplate[] {
+export function getTemplateById(id: string): CreativeTemplate | undefined {
+  return ALL_CURATED_TEMPLATES.find((t) => t.id === id) || TEMPLATES_DATA.find((t) => t.id === id);
+}
+
+export function getTemplateBySlug(slug: string): CreativeTemplate | undefined {
+  return ALL_CURATED_TEMPLATES.find((t) => t.slug === slug) || TEMPLATES_DATA.find((t) => t.slug === slug);
+}
+
+export function isVideoTemplate(template: CreativeTemplate): boolean {
+  return (template.type || 'video') === 'video';
+}
+
+export function isImageTemplate(template: CreativeTemplate): boolean {
+  return template.type === 'image';
+}
+
+export function isTextAnimationTemplate(template: CreativeTemplate): boolean {
+  return template.type === 'text-animation';
+}
+
+export function getRelatedTemplates(currentSlug: string, count = 3): CreativeTemplate[] {
   const current = getTemplateBySlug(currentSlug);
-  if (!current) return TEMPLATES_DATA.slice(0, count);
+  if (!current) return ALL_CURATED_TEMPLATES.slice(0, count);
 
-  const sameCategory = TEMPLATES_DATA.filter(
-    (t) => t.slug !== currentSlug && t.category === current.category
+  const sameCategory = ALL_CURATED_TEMPLATES.filter(
+    (t) => t.slug !== currentSlug && (t.category === current.category || t.type === current.type)
   );
 
   if (sameCategory.length >= count) {
     return sameCategory.slice(0, count);
   }
 
-  const remainder = TEMPLATES_DATA.filter(
+  const remainder = ALL_CURATED_TEMPLATES.filter(
     (t) => t.slug !== currentSlug && t.category !== current.category
   );
 

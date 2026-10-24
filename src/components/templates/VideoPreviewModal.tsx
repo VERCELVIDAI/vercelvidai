@@ -289,7 +289,7 @@ export function VideoPreviewModal({
                       </button>
 
                       <span className="font-mono text-[11px] text-slate-300">
-                        {formatTime(currentTime)} / {formatTime(duration || template.durationSec)}
+                        {formatTime(currentTime)} / {formatTime(duration || template.durationSec || 15)}
                       </span>
                     </div>
 
@@ -337,30 +337,32 @@ export function VideoPreviewModal({
                 </div>
 
                 {/* Scene Timeline Structure */}
-                <div className="mt-6 space-y-2.5">
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#17211D] flex items-center gap-1.5">
-                    <Film className="w-3.5 h-3.5 text-teal-600" />
-                    <span>Timeline Scene Breakdown</span>
-                  </div>
-                  <div className="space-y-2">
-                    {template.scenes.map((scene, idx) => (
-                      <div
-                        key={idx}
-                        className="p-3 rounded-xl bg-white border border-emerald-500/15 flex items-start gap-3 text-xs shadow-2xs"
-                      >
-                        <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
-                          {scene.time}
-                        </span>
-                        <div>
-                          <div className="font-semibold text-[#17211D]">{scene.title}</div>
-                          <div className="text-slate-600 text-[11px] leading-relaxed mt-0.5">
-                            {scene.desc}
+                {template.scenes && template.scenes.length > 0 && (
+                  <div className="mt-6 space-y-2.5">
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#17211D] flex items-center gap-1.5">
+                      <Film className="w-3.5 h-3.5 text-teal-600" />
+                      <span>Timeline Scene Breakdown</span>
+                    </div>
+                    <div className="space-y-2">
+                      {template.scenes.map((scene, idx) => (
+                        <div
+                          key={idx}
+                          className="p-3 rounded-xl bg-white border border-emerald-500/15 flex items-start gap-3 text-xs shadow-2xs"
+                        >
+                          <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
+                            {scene.time}
+                          </span>
+                          <div>
+                            <div className="font-semibold text-[#17211D]">{scene.title}</div>
+                            <div className="text-slate-600 text-[11px] leading-relaxed mt-0.5">
+                              {scene.desc}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {/* Primary Action Button */}

@@ -21,11 +21,11 @@ import {
   Pause,
   ChevronDown,
 } from 'lucide-react';
-import { VideoTemplate } from '@/lib/templates';
+import { CreativeTemplate, VideoTemplate } from '@/lib/templates';
 
 interface FloatingPromptComposerProps {
   initialPrompt?: string;
-  selectedTemplate?: VideoTemplate | null;
+  selectedTemplate?: CreativeTemplate | null;
   onClearTemplate?: () => void;
   userCredits?: number;
   onGenerationComplete?: (job: any) => void;

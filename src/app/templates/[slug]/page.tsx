@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
-import { getTemplateBySlug, getRelatedTemplates, VideoTemplate } from '@/lib/templates';
+import { getTemplateBySlug, getRelatedTemplates, CreativeTemplate, VideoTemplate } from '@/lib/templates';
+import { TextAnimationPreview } from '@/components/templates/TextAnimationPreview';
 import {
   Sparkles,
   ArrowRight,
@@ -20,6 +21,9 @@ import {
   ArrowLeft,
   AlertCircle,
   RefreshCw,
+  Image as ImageIcon,
+  Type,
+  Wand2,
 } from 'lucide-react';
 
 export default function TemplateDetailPage({ params }: { params: { slug: string } }) {
@@ -67,10 +71,10 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                 id: `clp_v_${Date.now()}_1`,
                 trackId: 'trk_v1',
                 type: 'video',
-                title: tmpl.scenes[0]?.title || 'Opening Hook',
-                sourceUrl: tmpl.videoPreview,
+                title: tmpl.scenes?.[0]?.title || tmpl.title || 'Creative Scene',
+                sourceUrl: tmpl.videoPreview || tmpl.thumbnail,
                 startTimeSec: 0,
-                durationSec: tmpl.durationSec,
+                durationSec: tmpl.durationSec || 15,
                 volume: 1,
               },
             ],
@@ -136,98 +140,111 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Left Column (7 cols): Playable Video Preview */}
+          {/* Left Column (7 cols): Media Preview by Type */}
           <div className="lg:col-span-7 flex flex-col items-center">
             <div className="w-full rounded-3xl bg-white p-3 sm:p-4 border border-emerald-500/20 shadow-xl overflow-hidden">
-              <div
-                className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl mx-auto ${
-                  tmpl.aspect === '9:16'
-                    ? 'aspect-[9/16] max-w-xs'
-                    : tmpl.aspect === '1:1'
-                    ? 'aspect-square max-w-md'
-                    : 'aspect-video'
-                }`}
-              >
-                {/* Poster fallback */}
-                <img
-                  src={tmpl.thumbnail}
-                  alt={tmpl.title}
-                  className={`w-full h-full object-cover transition-opacity duration-300 ${
-                    videoLoaded && !hasError ? 'opacity-0' : 'opacity-100'
-                  }`}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/media/posters/poster-product.jpg';
-                  }}
-                />
-
-                {!hasError ? (
-                  <video
-                    ref={videoRef}
-                    src={tmpl.videoPreview}
-                    playsInline
-                    loop
-                    autoPlay
-                    muted={isMuted}
-                    onLoadedData={() => setVideoLoaded(true)}
-                    onError={() => setHasError(true)}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-                      videoLoaded ? 'opacity-100' : 'opacity-0'
-                    }`}
+              {tmpl.type === 'image' ? (
+                /* Static High-Res Image Lightbox */
+                <div className="relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl flex items-center justify-center p-2">
+                  <img
+                    src={tmpl.thumbnail}
+                    alt={tmpl.title}
+                    className="max-h-[600px] w-auto object-contain rounded-xl"
                   />
-                ) : (
-                  <div className="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center p-6 text-center text-white">
-                    <AlertCircle className="w-8 h-8 text-amber-400 mb-2" />
-                    <p className="text-sm font-semibold">Video stream loading</p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setHasError(false);
-                        if (videoRef.current) videoRef.current.load();
-                      }}
-                      className="mt-3 px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center gap-1.5"
-                    >
-                      <RefreshCw className="w-3.5 h-3.5" />
-                      <span>Retry</span>
-                    </button>
-                  </div>
-                )}
-
-                {/* Overlaid Badges */}
-                <div className="absolute top-3 left-3 flex items-center gap-2">
-                  <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-emerald-300 font-mono border border-emerald-500/30">
-                    {tmpl.aspectLabel}
-                  </span>
-                  <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-slate-300 font-mono border border-white/10">
-                    {tmpl.duration}
-                  </span>
-                </div>
-
-                {/* Video Controls Overlay */}
-                <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-white text-xs">
-                  <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
-                    <button
-                      type="button"
-                      onClick={togglePlay}
-                      className="hover:text-emerald-400 transition-colors cursor-pointer"
-                      aria-label={isPlaying ? 'Pause' : 'Play'}
-                    >
-                      {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={toggleMute}
-                      className="hover:text-emerald-400 transition-colors cursor-pointer"
-                      aria-label={isMuted ? 'Unmute' : 'Mute'}
-                    >
-                      {isMuted ? <VolumeX className="w-4 h-4 text-amber-400" /> : <Volume2 className="w-4 h-4" />}
-                    </button>
+                  <div className="absolute top-3 left-3 flex items-center gap-2">
+                    <span className="bg-pink-950/80 backdrop-blur-md px-2.5 py-1 rounded text-xs text-pink-300 font-mono border border-pink-500/40 flex items-center gap-1">
+                      <ImageIcon className="w-3.5 h-3.5 text-pink-400" />
+                      <span>{tmpl.aspectLabel || tmpl.aspect}</span>
+                    </span>
                   </div>
                 </div>
-              </div>
+              ) : tmpl.type === 'text-animation' ? (
+                /* Interactive Deterministic Typography Engine Preview */
+                <TextAnimationPreview
+                  template={tmpl}
+                  onOpenInEditor={() => handleUseTemplate()}
+                />
+              ) : (
+                /* Real Playable Video Preview */
+                <div
+                  className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl mx-auto ${
+                    tmpl.aspect === '9:16'
+                      ? 'aspect-[9/16] max-w-xs'
+                      : tmpl.aspect === '1:1'
+                      ? 'aspect-square max-w-md'
+                      : 'aspect-video'
+                  }`}
+                >
+                  {/* Poster fallback */}
+                  <img
+                    src={tmpl.thumbnail}
+                    alt={tmpl.title}
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                      videoLoaded && !hasError ? 'opacity-0' : 'opacity-100'
+                    }`}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/media/posters/poster-product.jpg';
+                    }}
+                  />
+
+                  {!hasError && tmpl.videoPreview ? (
+                    <video
+                      ref={videoRef}
+                      src={tmpl.videoPreview}
+                      playsInline
+                      loop
+                      autoPlay
+                      muted={isMuted}
+                      onLoadedData={() => setVideoLoaded(true)}
+                      onError={() => setHasError(true)}
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                        videoLoaded ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center p-6 text-center text-white">
+                      <AlertCircle className="w-8 h-8 text-amber-400 mb-2" />
+                      <p className="text-sm font-semibold">Video preview ready in studio</p>
+                    </div>
+                  )}
+
+                  {/* Overlaid Badges */}
+                  <div className="absolute top-3 left-3 flex items-center gap-2">
+                    <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-emerald-300 font-mono border border-emerald-500/30">
+                      {tmpl.aspectLabel || tmpl.aspect}
+                    </span>
+                    <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-slate-300 font-mono border border-white/10">
+                      {tmpl.duration || '15s'}
+                    </span>
+                  </div>
+
+                  {/* Video Controls Overlay */}
+                  <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-white text-xs">
+                    <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
+                      <button
+                        type="button"
+                        onClick={togglePlay}
+                        className="hover:text-emerald-400 transition-colors cursor-pointer"
+                        aria-label={isPlaying ? 'Pause' : 'Play'}
+                      >
+                        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={toggleMute}
+                        className="hover:text-emerald-400 transition-colors cursor-pointer"
+                        aria-label={isMuted ? 'Unmute' : 'Mute'}
+                      >
+                        {isMuted ? <VolumeX className="w-4 h-4 text-amber-400" /> : <Volume2 className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Right Column (5 cols): Details, Scene Breakdown & CTA */}
+          {/* Right Column (5 cols): Details & CTA */}
           <div className="lg:col-span-5 space-y-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs uppercase tracking-wider mb-3 border border-emerald-300">
@@ -251,7 +268,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                 <span>Integrated AI Pipeline</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {tmpl.aiModelsUsed.map((m) => (
+                {(tmpl.aiModelsUsed || ['Google Gemini (gemini-omni-1.1-flash)']).map((m) => (
                   <span
                     key={m}
                     className="text-xs font-mono px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium"
@@ -262,31 +279,33 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
               </div>
             </div>
 
-            {/* Timeline Breakdown */}
-            <div className="p-4 rounded-2xl bg-white border border-emerald-500/20 space-y-3 shadow-2xs">
-              <div className="text-xs font-bold text-[#17211D] uppercase tracking-wider flex items-center gap-1.5">
-                <Film className="w-4 h-4 text-teal-600" />
-                <span>Timeline Structure ({tmpl.duration})</span>
-              </div>
-              <div className="space-y-2">
-                {tmpl.scenes.map((scene, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-xl bg-[#F8FAFC] border border-emerald-500/10 text-xs flex items-start gap-3"
-                  >
-                    <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
-                      {scene.time}
-                    </span>
-                    <div>
-                      <div className="font-bold text-[#17211D]">{scene.title}</div>
-                      <div className="text-slate-600 text-[11px] leading-relaxed mt-0.5">
-                        {scene.desc}
+            {/* Timeline Breakdown (If Scenes Defined) */}
+            {tmpl.scenes && tmpl.scenes.length > 0 && (
+              <div className="p-4 rounded-2xl bg-white border border-emerald-500/20 space-y-3 shadow-2xs">
+                <div className="text-xs font-bold text-[#17211D] uppercase tracking-wider flex items-center gap-1.5">
+                  <Film className="w-4 h-4 text-teal-600" />
+                  <span>Timeline Structure ({tmpl.duration})</span>
+                </div>
+                <div className="space-y-2">
+                  {tmpl.scenes.map((scene, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3 rounded-xl bg-[#F8FAFC] border border-emerald-500/10 text-xs flex items-start gap-3"
+                    >
+                      <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
+                        {scene.time}
+                      </span>
+                      <div>
+                        <div className="font-bold text-[#17211D]">{scene.title}</div>
+                        <div className="text-slate-600 text-[11px] leading-relaxed mt-0.5">
+                          {scene.desc}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Use Template CTA */}
             <div className="space-y-2 pt-2">
@@ -300,13 +319,19 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
-                    <span>Use Template — Open in Editor</span>
+                    <span>
+                      {tmpl.type === 'image'
+                        ? 'Generate in Image Studio (5 cr)'
+                        : tmpl.type === 'text-animation'
+                        ? 'Use Typography in Video Editor (0 cr)'
+                        : 'Use Template — Open in Editor'}
+                    </span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </button>
               <p className="text-center text-xs text-slate-500">
-                Copies timeline, assets and subtitle presets into a new independent project without deducting credits.
+                Copies settings, creative prompts, and presets into your workspace with zero credit risk.
               </p>
             </div>
           </div>

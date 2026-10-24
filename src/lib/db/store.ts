@@ -2707,6 +2707,95 @@ class Store {
     return db.publishedTemplates || [];
   }
 
+  // ==========================================
+  // TEMPLATE QUALITY CURATION & AUDIT
+  // ==========================================
+  getTemplateAuditReport(): {
+    totalTemplates: number;
+    videoTemplates: number;
+    imageTemplates: number;
+    textAnimationTemplates: number;
+    verifiedPhysicalAssetsCount: number;
+    missingAssets: string[];
+    duplicatePrompts: string[];
+    duplicateTitles: string[];
+  } {
+    // Dynamic import to avoid circular dependency
+    const { ALL_CURATED_TEMPLATES } = require('../templates');
+    const pubDir = path.join(process.cwd(), 'public');
+    const missingAssets: string[] = [];
+    const seenPrompts = new Map<string, string>();
+    const duplicatePrompts: string[] = [];
+    const seenTitles = new Map<string, string>();
+    const duplicateTitles: string[] = [];
+    let verifiedCount = 0;
+
+    let videoCount = 0;
+    let imageCount = 0;
+    let textCount = 0;
+
+    for (const tmpl of ALL_CURATED_TEMPLATES) {
+      const type = tmpl.type || 'video';
+      if (type === 'video') videoCount++;
+      else if (type === 'image') imageCount++;
+      else if (type === 'text-animation') textCount++;
+
+      // Check duplicates
+      const pNorm = (tmpl.prompt || '').trim().toLowerCase();
+      if (pNorm) {
+        if (seenPrompts.has(pNorm)) {
+          duplicatePrompts.push(`${tmpl.id} duplicates ${seenPrompts.get(pNorm)}`);
+        } else {
+          seenPrompts.set(pNorm, tmpl.id);
+        }
+      }
+
+      const tNorm = (tmpl.title || '').trim().toLowerCase();
+      if (tNorm) {
+        if (seenTitles.has(tNorm)) {
+          duplicateTitles.push(`${tmpl.id} duplicates ${seenTitles.get(tNorm)}`);
+        } else {
+          seenTitles.set(tNorm, tmpl.id);
+        }
+      }
+
+      // Check preview file existence
+      const targetAsset = tmpl.videoPreview || tmpl.thumbnail;
+      if (targetAsset && (targetAsset.startsWith('/') || targetAsset.startsWith('media/'))) {
+        const rel = targetAsset.startsWith('/') ? targetAsset.slice(1) : targetAsset;
+        const abs = path.join(pubDir, rel);
+        if (fs.existsSync(abs)) {
+          verifiedCount++;
+        } else {
+          missingAssets.push(`${tmpl.id}: ${targetAsset}`);
+        }
+      }
+    }
+
+    return {
+      totalTemplates: ALL_CURATED_TEMPLATES.length,
+      videoTemplates: videoCount,
+      imageTemplates: imageCount,
+      textAnimationTemplates: textCount,
+      verifiedPhysicalAssetsCount: verifiedCount,
+      missingAssets,
+      duplicatePrompts,
+      duplicateTitles,
+    };
+  }
+
+  updateTemplateStatus(templateId: string, status: 'published' | 'draft' | 'archived'): boolean {
+    const db = this.load();
+    if (!db.publishedTemplates) db.publishedTemplates = [];
+    const tmpl = db.publishedTemplates.find((t: any) => t.id === templateId);
+    if (tmpl) {
+      tmpl.status = status;
+      this.save(db);
+      return true;
+    }
+    return false;
+  }
+
   publishCustomTemplate(params: any): any {
     const db = this.load();
     if (!db.publishedTemplates) db.publishedTemplates = [];

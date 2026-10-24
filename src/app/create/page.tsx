@@ -265,7 +265,8 @@ function CreateWorkspaceContent() {
     if (template.aspect === '16:9' || template.aspect === '9:16' || template.aspect === '1:1') {
       setAspectRatio(template.aspect);
     }
-    setDurationSec(template.durationSec <= 15 ? template.durationSec : 15);
+    const dur = template.durationSec ?? 15;
+    setDurationSec(dur <= 15 ? dur : 15);
     setActiveTab('studio');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

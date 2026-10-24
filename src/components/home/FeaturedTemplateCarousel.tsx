@@ -51,7 +51,7 @@ export function FeaturedTemplateCarousel() {
                 id: `clp_feat_${Date.now()}`,
                 trackId: 'trk_v1',
                 type: 'video',
-                title: template.scenes[0]?.title || 'Opening Hook',
+                title: template.scenes?.[0]?.title || 'Opening Hook',
                 sourceUrl: template.videoPreview,
                 startTimeSec: 0,
                 durationSec: template.durationSec,

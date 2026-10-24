@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth/session';
 import { dbStore } from '@/lib/db/store';
-import { TEMPLATES_DATA, TEMPLATE_EVENTS, VideoTemplate } from '@/lib/templates';
+import {
+  ALL_CURATED_TEMPLATES,
+  TEMPLATES_DATA,
+  TEMPLATE_EVENTS,
+  CreativeTemplate,
+} from '@/lib/templates';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,18 +14,23 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const tab = searchParams.get('tab') || 'recommended'; // 'recommended' | 'following' | 'events'
+    const type = searchParams.get('type') || 'all'; // 'all' | 'video' | 'image' | 'text-animation'
     const category = searchParams.get('category') || 'All';
     const aspect = searchParams.get('aspect') || 'all';
     const query = (searchParams.get('q') || searchParams.get('search') || '').trim().toLowerCase();
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-    const limit = Math.max(1, Math.min(50, parseInt(searchParams.get('limit') || '24', 10)));
+    const limit = Math.max(1, Math.min(100, parseInt(searchParams.get('limit') || '50', 10)));
 
     const currentUser = await getCurrentUser();
     const currentUserId = currentUser?.user?.id || '';
 
-    // Merge static curated templates with community published templates from dbStore
-    const publishedCustom = dbStore.getPublishedTemplates();
-    const allTemplates: VideoTemplate[] = [...publishedCustom, ...TEMPLATES_DATA];
+    // Merge static curated templates (53) with community published templates from dbStore
+    const publishedCustom: CreativeTemplate[] = dbStore.getPublishedTemplates().map((t: any) => ({
+      ...t,
+      type: t.type || 'video',
+      generationWorkflow: t.generationWorkflow || 'video_gemini',
+    }));
+    const allTemplates: CreativeTemplate[] = [...publishedCustom, ...ALL_CURATED_TEMPLATES];
 
     // Compute live like counts and liked status for each template
     const userLikes = new Set<string>();
@@ -47,6 +57,11 @@ export async function GET(req: NextRequest) {
 
     let filtered = allTemplates;
 
+    // Filter by creative format type (video, image, text-animation)
+    if (type && type !== 'all') {
+      filtered = filtered.filter((t) => (t.type || 'video') === type);
+    }
+
     // Following tab filtering
     if (tab === 'following') {
       if (currentUserId && userFollows.size > 0) {
@@ -71,6 +86,12 @@ export async function GET(req: NextRequest) {
           followingCount: 0,
           userLikes: Array.from(userLikes),
           userFollows: Array.from(userFollows),
+          counts: {
+            all: allTemplates.length,
+            video: allTemplates.filter((t) => (t.type || 'video') === 'video').length,
+            image: allTemplates.filter((t) => t.type === 'image').length,
+            textAnimation: allTemplates.filter((t) => t.type === 'text-animation').length,
+          },
         });
       }
     }
@@ -99,7 +120,8 @@ export async function GET(req: NextRequest) {
         const promptMatch = t.prompt?.toLowerCase().includes(query);
         const creatorMatch = t.creatorName?.toLowerCase().includes(query);
         const tagMatch = t.tags?.some((tag) => tag.toLowerCase().includes(query));
-        return titleMatch || descMatch || promptMatch || creatorMatch || tagMatch;
+        const typeMatch = (t.type || 'video').toLowerCase().includes(query);
+        return titleMatch || descMatch || promptMatch || creatorMatch || tagMatch || typeMatch;
       });
     }
 
@@ -130,6 +152,12 @@ export async function GET(req: NextRequest) {
       hasMore: page < totalPages,
       userLikes: Array.from(userLikes),
       userFollows: Array.from(userFollows),
+      counts: {
+        all: allTemplates.length,
+        video: allTemplates.filter((t) => (t.type || 'video') === 'video').length,
+        image: allTemplates.filter((t) => t.type === 'image').length,
+        textAnimation: allTemplates.filter((t) => t.type === 'text-animation').length,
+      },
     });
   } catch (err: any) {
     console.error('Error fetching templates feed:', err);

@@ -20,6 +20,10 @@ import {
   User as UserIcon,
   ChevronDown,
   Lock,
+  Image as ImageIcon,
+  Type,
+  Layers,
+  Wand2,
 } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 import { DiscoveryCard } from '@/components/templates/DiscoveryCard';
@@ -27,10 +31,16 @@ import { FloatingPromptComposer } from '@/components/templates/FloatingPromptCom
 import { DiscoveryDetailModal } from '@/components/templates/DiscoveryDetailModal';
 import { PublishTemplateModal } from '@/components/templates/PublishTemplateModal';
 import { EventsView } from '@/components/templates/EventsView';
-import { TEMPLATES_DATA, TEMPLATE_CATEGORIES, VideoTemplate } from '@/lib/templates';
+import {
+  ALL_CURATED_TEMPLATES,
+  TEMPLATES_DATA,
+  TEMPLATE_CATEGORIES,
+  CreativeTemplate,
+  VideoTemplate,
+} from '@/lib/templates';
 
 const DISCOVERY_CATEGORIES = [
-  'All',
+  'All Categories',
   'Product Commercials & Product Showcase Ads',
   'E-commerce Product Ads',
   'Cinematic Automotive & Vehicle Ads',
@@ -45,22 +55,46 @@ const DISCOVERY_CATEGORIES = [
   'Professional Storytelling & Promotional Videos',
 ];
 
+interface FormatTab {
+  id: 'all' | 'video' | 'image' | 'text-animation';
+  label: string;
+  icon: any;
+  badge?: string;
+}
+
+const FORMAT_TABS: FormatTab[] = [
+  { id: 'all', label: 'All Formats', icon: Layers },
+  { id: 'video', label: 'AI Video', icon: Film, badge: '15 cr' },
+  { id: 'image', label: 'AI Image', icon: ImageIcon, badge: '5 cr' },
+  { id: 'text-animation', label: 'Text Animation', icon: Type, badge: 'Free' },
+];
+
 function DiscoveryFeedContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Tab state: 'recommended' | 'following' | 'events'
+  // Feed Tab state: 'recommended' | 'following' | 'events'
   const initialTab = (searchParams.get('tab') as 'recommended' | 'following' | 'events') || 'recommended';
   const [activeTab, setActiveTab] = useState<'recommended' | 'following' | 'events'>(initialTab);
 
+  // Creative Format state: 'all' | 'video' | 'image' | 'text-animation'
+  const initialType = (searchParams.get('type') as 'all' | 'video' | 'image' | 'text-animation') || 'all';
+  const [selectedType, setSelectedType] = useState<'all' | 'video' | 'image' | 'text-animation'>(initialType);
+
   // Filter state
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All Categories');
   const [selectedAspect, setSelectedAspect] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [debouncedQuery, setDebouncedQuery] = useState<string>('');
 
   // Data state
-  const [templates, setTemplates] = useState<VideoTemplate[]>(TEMPLATES_DATA);
+  const [templates, setTemplates] = useState<CreativeTemplate[]>(ALL_CURATED_TEMPLATES);
+  const [formatCounts, setFormatCounts] = useState({
+    all: 53,
+    video: 26,
+    image: 15,
+    textAnimation: 12,
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedCreators, setSuggestedCreators] = useState<any[]>([]);
 
@@ -71,15 +105,15 @@ function DiscoveryFeedContent() {
 
   // Interactive UI state
   const [activePlayingId, setActivePlayingId] = useState<string | null>(null);
-  const [selectedTemplateForModal, setSelectedTemplateForModal] = useState<VideoTemplate | null>(null);
-  const [composerTemplate, setComposerTemplate] = useState<VideoTemplate | null>(null);
+  const [selectedTemplateForModal, setSelectedTemplateForModal] = useState<CreativeTemplate | null>(null);
+  const [composerTemplate, setComposerTemplate] = useState<CreativeTemplate | null>(null);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
 
   // Debounce search input
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery.trim());
-    }, 250);
+    }, 200);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
@@ -95,13 +129,16 @@ function DiscoveryFeedContent() {
       .catch(() => {});
   }, []);
 
-  // Fetch templates data from API based on tab, category, aspect, and search query
+  // Fetch templates from API
   const fetchFeed = useCallback(async () => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
       params.set('tab', activeTab);
-      if (selectedCategory !== 'All') params.set('category', selectedCategory);
+      if (selectedType !== 'all') params.set('type', selectedType);
+      if (selectedCategory !== 'All Categories' && selectedCategory !== 'All') {
+        params.set('category', selectedCategory);
+      }
       if (selectedAspect !== 'all') params.set('aspect', selectedAspect);
       if (debouncedQuery) params.set('search', debouncedQuery);
 
@@ -120,24 +157,25 @@ function DiscoveryFeedContent() {
         if (data.suggestedCreators) {
           setSuggestedCreators(data.suggestedCreators);
         }
+        if (data.counts) {
+          setFormatCounts(data.counts);
+        }
       }
     } catch (err) {
       console.error('Failed to fetch templates:', err);
     } finally {
       setIsLoading(false);
     }
-  }, [activeTab, selectedCategory, selectedAspect, debouncedQuery]);
+  }, [activeTab, selectedType, selectedCategory, selectedAspect, debouncedQuery]);
 
   useEffect(() => {
     fetchFeed();
   }, [fetchFeed]);
 
-  // Pause playback when tab becomes hidden
+  // Pause playback when tab is backgrounded
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setActivePlayingId(null);
-      }
+      if (document.hidden) setActivePlayingId(null);
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
@@ -145,7 +183,6 @@ function DiscoveryFeedContent() {
 
   // Handle Like Toggle
   const handleToggleLike = async (templateId: string) => {
-    // Check if user is signed in
     if (!currentUser) {
       router.push(`/login?redirect=/templates&likeIntent=${templateId}`);
       return;
@@ -167,7 +204,6 @@ function DiscoveryFeedContent() {
           return next;
         });
 
-        // Update local state count
         setTemplates((prev) =>
           prev.map((t) =>
             t.id === templateId
@@ -204,7 +240,6 @@ function DiscoveryFeedContent() {
           return next;
         });
 
-        // If on following tab and unfollowed, re-fetch feed
         if (activeTab === 'following' && !data.following) {
           fetchFeed();
         }
@@ -214,18 +249,25 @@ function DiscoveryFeedContent() {
     }
   };
 
-  // Handle "Use Template" click: Populates the Floating AI Prompt Composer!
-  const handleUseTemplate = (template: VideoTemplate) => {
-    setComposerTemplate(template);
+  // Handle "Use Template" click: Smart Routing based on Template Type
+  const handleUseTemplate = (template: CreativeTemplate) => {
+    if (template.type === 'image') {
+      router.push(`/ai-image-generator?prompt=${encodeURIComponent(template.prompt)}&aspect=${encodeURIComponent(template.aspect)}`);
+    } else if (template.type === 'text-animation') {
+      setSelectedTemplateForModal(template);
+    } else {
+      setComposerTemplate(template);
+    }
   };
 
   // Handle joining a challenge from Events tab
   const handleJoinChallenge = (prompt: string, category: string) => {
     setActiveTab('recommended');
+    setSelectedType('video');
     setComposerTemplate({
       id: 'challenge_prompt',
       slug: 'challenge-entry',
-      title: 'Challenge Entry',
+      title: 'Challenge Entry Spot',
       category,
       aspect: '16:9',
       aspectLabel: '16:9 Landscape',
@@ -241,12 +283,13 @@ function DiscoveryFeedContent() {
       likesCount: 0,
       tags: ['#ChallengeEntry'],
       scenes: [],
-      aiModelsUsed: ['Fluvia Cinematic v1'],
-      estimatedCredits: 25,
+      aiModelsUsed: ['Google Gemini (gemini-omni-1.1-flash)'],
+      estimatedCredits: 15,
+      type: 'video',
+      generationWorkflow: 'video_gemini',
     });
   };
 
-  // Filter templates on client as well for instant responsiveness
   const displayedTemplates = useMemo(() => {
     if (activeTab === 'events') return [];
     return templates;
@@ -255,26 +298,27 @@ function DiscoveryFeedContent() {
   return (
     <div className="min-h-screen bg-[#080B0A] text-white flex flex-col selection:bg-emerald-500/30 selection:text-emerald-200">
       {/* ============================================================== */}
-      {/* 1. TOP STICKY DISCOVERY NAVIGATION BAR */}
+      {/* 1. TOP STICKY DISCOVERY HEADER & FORMAT NAVIGATION */}
       {/* ============================================================== */}
-      <header className="sticky top-0 z-40 w-full bg-[#080B0A]/90 backdrop-blur-2xl border-b border-white/10 transition-all">
+      <header className="sticky top-0 z-40 w-full bg-[#080B0A]/95 backdrop-blur-2xl border-b border-white/10 transition-all">
+        {/* Main Navigation Row */}
         <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3 sm:gap-6">
           {/* Left: Brand Logo & Discovery Tag */}
           <div className="flex items-center gap-3 shrink-0">
             <Link href="/" className="flex items-center gap-2 group">
               <Logo size="sm" />
               <span className="hidden sm:inline-flex text-[11px] font-bold font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 rounded-full">
-                Discovery Feed
+                Creative Studio Feed
               </span>
             </Link>
           </div>
 
-          {/* Center: Tabs (Recommended, Following, Events) */}
+          {/* Center: Feed Stream Tabs (Recommended, Following, Events) */}
           <nav className="flex items-center bg-white/5 border border-white/10 rounded-full p-1 shrink-0">
             <button
               type="button"
               onClick={() => setActiveTab('recommended')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'recommended'
                   ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
                   : 'text-white/70 hover:text-white'
@@ -287,7 +331,7 @@ function DiscoveryFeedContent() {
             <button
               type="button"
               onClick={() => setActiveTab('following')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'following'
                   ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
                   : 'text-white/70 hover:text-white'
@@ -305,7 +349,7 @@ function DiscoveryFeedContent() {
             <button
               type="button"
               onClick={() => setActiveTab('events')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'events'
                   ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
                   : 'text-white/70 hover:text-white'
@@ -316,7 +360,7 @@ function DiscoveryFeedContent() {
             </button>
           </nav>
 
-          {/* Search Input Bar (Center/Right on desktop) */}
+          {/* Search Input Bar (Desktop) */}
           {activeTab !== 'events' && (
             <div className="relative hidden md:block flex-1 max-w-md">
               <Search className="w-4 h-4 text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -324,7 +368,7 @@ function DiscoveryFeedContent() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search templates by prompt, creator, category..."
+                placeholder="Search by prompt, style, format, creator..."
                 className="w-full bg-white/5 border border-white/10 text-white text-xs pl-10 pr-9 py-2 rounded-full focus:outline-none focus:border-emerald-500/80 focus:bg-white/10 transition-all placeholder:text-white/35 font-normal"
               />
               {searchQuery && (
@@ -339,7 +383,7 @@ function DiscoveryFeedContent() {
             </div>
           )}
 
-          {/* Right: Publish Button + Auth State */}
+          {/* Right: Publish CTA + User Avatar */}
           <div className="flex items-center gap-2.5 shrink-0">
             <button
               type="button"
@@ -381,43 +425,78 @@ function DiscoveryFeedContent() {
           </div>
         </div>
 
-        {/* Category Horizontal Filter Strip (for Recommended & Following) */}
+        {/* Format Selector Bar: Video, Image, Text Animation */}
         {activeTab !== 'events' && (
-          <div className="border-t border-white/5 bg-[#080B0A]/70 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto scrollbar-none flex items-center justify-between gap-4">
+          <div className="border-t border-white/10 bg-[#060807] px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
+            {/* Format Pill Switcher */}
             <div className="flex items-center gap-2 shrink-0">
-              {DISCOVERY_CATEGORIES.map((cat) => {
-                const isActive = selectedCategory === cat;
+              {FORMAT_TABS.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = selectedType === tab.id;
+                const count =
+                  tab.id === 'all'
+                    ? formatCounts.all
+                    : tab.id === 'video'
+                    ? formatCounts.video
+                    : tab.id === 'image'
+                    ? formatCounts.image
+                    : formatCounts.textAnimation;
+
                 return (
                   <button
-                    key={cat}
+                    key={tab.id}
                     type="button"
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-3 py-1 rounded-full text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+                    onClick={() => setSelectedType(tab.id as any)}
+                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-emerald-500 text-black shadow-xs font-bold'
+                        ? tab.id === 'image'
+                          ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-md shadow-pink-950/60'
+                          : tab.id === 'text-animation'
+                          ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-md shadow-cyan-950/60'
+                          : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-950/60'
                         : 'bg-white/5 text-white/70 hover:text-white hover:bg-white/10 border border-white/10'
                     }`}
                   >
-                    {cat}
+                    <Icon className="w-3.5 h-3.5" />
+                    <span>{tab.label}</span>
+                    <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-md bg-black/40 text-white/90">
+                      {count}
+                    </span>
+                    {tab.badge && (
+                      <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-white/15 text-white/90">
+                        {tab.badge}
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Aspect Ratio Filter Selector on Right */}
-            <div className="hidden lg:flex items-center gap-2 shrink-0 pl-4 border-l border-white/10">
-              <span className="text-xs text-white/50 flex items-center gap-1 font-mono">
-                <Ratio className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Aspect:</span>
-              </span>
-              <div className="flex items-center gap-1">
+            {/* Category Dropdown Selector */}
+            <div className="flex items-center gap-2 shrink-0">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="bg-white/5 border border-white/10 text-white text-xs px-3 py-1.5 rounded-xl focus:outline-none focus:border-emerald-500 font-medium cursor-pointer"
+              >
+                {DISCOVERY_CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat} className="bg-[#121915] text-white">
+                    {cat}
+                  </option>
+                ))}
+              </select>
+
+              {/* Aspect Ratio Filter Selector on Right */}
+              <div className="hidden lg:flex items-center gap-1 pl-2 border-l border-white/10">
+                <span className="text-xs text-white/50 flex items-center gap-1 font-mono">
+                  <Ratio className="w-3 h-3 text-emerald-400" />
+                </span>
                 {[
                   { label: 'All', value: 'all' },
                   { label: '16:9', value: '16:9' },
                   { label: '9:16', value: '9:16' },
                   { label: '1:1', value: '1:1' },
                   { label: '4:5', value: '4:5' },
-                  { label: '2.39:1', value: '2.39:1' },
                 ].map((a) => (
                   <button
                     key={a.value}
@@ -439,9 +518,47 @@ function DiscoveryFeedContent() {
       </header>
 
       {/* ============================================================== */}
-      {/* 2. MAIN DISCOVERY CONTENT AREA */}
+      {/* 2. MAIN CREATIVE GALLERY CONTENT AREA */}
       {/* ============================================================== */}
       <main className="flex-1 max-w-[1700px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-32">
+        {/* Spotlight Showcase Banner for Curated Collections */}
+        {activeTab === 'recommended' && !searchQuery && selectedCategory === 'All Categories' && (
+          <div className="mb-8 p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-emerald-950/40 via-teal-950/20 to-black/60 border border-emerald-500/20 relative overflow-hidden shadow-2xl">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold">
+                  <Sparkles className="w-3 h-3" />
+                  <span>Curated Commercial Production Suite</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  53 Production-Grade Creative Templates
+                </h2>
+                <p className="text-xs sm:text-sm text-white/70 max-w-2xl">
+                  Curated across <strong>AI Video</strong> (Gemini Omni Flash • 15 cr), <strong>AI Image</strong> (Gemini Imagen • 5 cr), and <strong>Deterministic Text Animation</strong> (Free Live Engine).
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 self-start md:self-auto">
+                <Link
+                  href="/create"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-emerald-950/60 transition-all hover:scale-[1.02]"
+                >
+                  <Film className="w-3.5 h-3.5" />
+                  <span>Open Video Studio</span>
+                </Link>
+                <Link
+                  href="/ai-image-generator"
+                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center gap-1.5 border border-white/10 transition-colors"
+                >
+                  <Wand2 className="w-3.5 h-3.5 text-pink-400" />
+                  <span>AI Image Studio</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab Body */}
         {activeTab === 'events' ? (
           /* EVENTS TAB VIEW */
           <EventsView onJoinChallenge={handleJoinChallenge} />
@@ -455,7 +572,7 @@ function DiscoveryFeedContent() {
             <div>
               <h3 className="text-2xl font-bold text-white">Your Following Feed is Empty</h3>
               <p className="text-xs sm:text-sm text-white/60 mt-1 max-w-md mx-auto">
-                Follow top AI video creators, cinematic directors, and VFX artists to see their latest generation templates here.
+                Follow top AI creators, commercial directors, and motion designers to see their latest generation templates here.
               </p>
             </div>
 
@@ -503,12 +620,13 @@ function DiscoveryFeedContent() {
             <Film className="w-12 h-12 text-white/30 mx-auto" />
             <h3 className="text-lg font-bold text-white">No Templates Found</h3>
             <p className="text-xs text-white/60">
-              We couldn&apos;t find any video templates matching your filter criteria. Try resetting the category or search keywords.
+              We couldn&apos;t find any templates matching your filter criteria. Try resetting the category, format, or search keywords.
             </p>
             <button
               type="button"
               onClick={() => {
-                setSelectedCategory('All');
+                setSelectedType('all');
+                setSelectedCategory('All Categories');
                 setSelectedAspect('all');
                 setSearchQuery('');
               }}
