@@ -17,14 +17,29 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Please provide a prompt or script to begin generation.' }, { status: 400 });
     }
 
-    const selectedModelId = modelId || 'fluvia-cinematic-v1';
-    const estimatedCost = calculateEstimatedCredits(selectedModelId, durationSec || 5);
+    const selectedModelId = modelId || 'gemini-omni-1.1-flash';
+
+    // Enforcement: Gemini is the ONLY active model. All other models must be Coming Soon.
+    const allowedModels = ['gemini-omni-1.1-flash', 'gemini-omni-flash', 'gemini'];
+    if (!allowedModels.includes(selectedModelId)) {
+      return NextResponse.json(
+        {
+          error: `Model '${selectedModelId}' is currently Coming Soon. Google Gemini (gemini-omni-1.1-flash) is the only active generation engine in Fluvia Flow.`,
+          isComingSoon: true,
+          activeModel: 'gemini-omni-1.1-flash',
+        },
+        { status: 400 }
+      );
+    }
+
+    // Fluvia Flow Requirement: Exactly 15 credits per video generation
+    const estimatedCost = calculateEstimatedCredits(selectedModelId, durationSec || 5); // 15 credits
 
     const creditAccount = dbStore.getCreditAccount(current.user.id);
     if (creditAccount.availableBalance < estimatedCost) {
       return NextResponse.json(
         {
-          error: `Insufficient credits. You need ${estimatedCost} credits for this generation, but have ${creditAccount.availableBalance} available.`,
+          error: `Insufficient credits. You need ${estimatedCost} credits to generate an AI video, but currently have ${creditAccount.availableBalance} credits available.`,
           requiredCredits: estimatedCost,
           availableBalance: creditAccount.availableBalance,
         },
@@ -36,13 +51,13 @@ export async function POST(req: NextRequest) {
       userId: current.user.id,
       workspaceId: current.workspace.id,
       projectId,
-      modelId: selectedModelId,
+      modelId: 'gemini-omni-1.1-flash',
       input: {
-        prompt,
-        negativePrompt,
+        prompt: prompt?.trim(),
+        negativePrompt: negativePrompt?.trim(),
         aspectRatio: aspectRatio || '16:9',
         durationSec: durationSec || 5,
-        resolution: resolution || '1080p',
+        resolution: resolution || '720p',
         referenceImageUrl,
         scriptText,
         voiceId,
@@ -50,7 +65,7 @@ export async function POST(req: NextRequest) {
     });
 
     dbStore.logAudit(current.user.id, 'GENERATION_JOB_DISPATCHED', 'generation_job', job.id, {
-      modelId: selectedModelId,
+      modelId: 'gemini-omni-1.1-flash',
       estimatedCredits: estimatedCost,
     });
 

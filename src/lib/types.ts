@@ -286,6 +286,9 @@ export interface AIModel {
     costCredits: number;
   };
   isActive: boolean;
+  isComingSoon?: boolean;
+  comingSoonBadge?: string;
+  costCredits?: number;
 }
 
 export interface Template {

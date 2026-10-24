@@ -254,9 +254,119 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      case 'generate-video': {
+        const current = await getCurrentUser();
+        if (!current) {
+          return NextResponse.json(
+            { error: 'Please sign in to generate videos with Gemini.' },
+            { status: 401 }
+          );
+        }
+
+        const { prompt, aspectRatio, durationSec, referenceImageUrl, model } = body;
+        if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
+          return NextResponse.json(
+            { error: 'A creative prompt is required for video generation.' },
+            { status: 400 }
+          );
+        }
+
+        const trimmedPrompt = prompt.trim();
+        // Fixed 15 credits per video requirement
+        const creditCost = 15;
+        const creditAccount = dbStore.getCreditAccount(current.user.id);
+        if (creditAccount.availableBalance < creditCost) {
+          return NextResponse.json(
+            {
+              error: `Insufficient credits. You need ${creditCost} credits for Gemini video generation, but currently have ${creditAccount.availableBalance} available.`,
+              requiredCredits: creditCost,
+              availableBalance: creditAccount.availableBalance,
+            },
+            { status: 402 }
+          );
+        }
+
+        const reservationId = `gemini_vid_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+        dbStore.reserveCredits(current.user.id, creditCost, reservationId);
+
+        try {
+          const genResult = await geminiService.generateVideo({
+            prompt: trimmedPrompt,
+            aspectRatio: aspectRatio || '16:9',
+            durationSec: Number(durationSec) || 5,
+            referenceImageUrl,
+            model: model || 'gemini-omni-1.1-flash',
+            jobId: reservationId,
+          });
+
+          if (!genResult.success || !genResult.videoUrl) {
+            // Immediate refund on failure
+            dbStore.refundCredits(
+              current.user.id,
+              creditCost,
+              `Gemini Video Error: ${genResult.errorCode || 'FAILED'} - ${genResult.error}`,
+              reservationId
+            );
+
+            const httpStatus = genResult.errorCode === 'QUOTA_EXHAUSTED' ? 429 : 502;
+            return NextResponse.json(
+              {
+                success: false,
+                error: genResult.error || 'Gemini video generation failed.',
+                errorCode: genResult.errorCode || 'PROVIDER_ERROR',
+                rawDetails: genResult.rawDetails,
+                preservedPrompt: trimmedPrompt,
+                modelUsed: genResult.modelUsed,
+                refundedCredits: creditCost,
+              },
+              { status: httpStatus }
+            );
+          }
+
+          // Settle the reserved credits
+          dbStore.settleCredits(current.user.id, reservationId, creditCost, creditCost);
+
+          const updatedAccount = dbStore.getCreditAccount(current.user.id);
+
+          return NextResponse.json({
+            success: true,
+            videoUrl: genResult.videoUrl,
+            thumbnailUrl: genResult.thumbnailUrl,
+            prompt: trimmedPrompt,
+            aspectRatio: genResult.aspectRatio,
+            durationSec: genResult.durationSec,
+            modelUsed: genResult.modelUsed,
+            creditsDeducted: creditCost,
+            availableBalance: updatedAccount.availableBalance,
+          });
+        } catch (execErr: any) {
+          try {
+            dbStore.refundCredits(
+              current.user.id,
+              creditCost,
+              `Unexpected failure: ${execErr.message}`,
+              reservationId
+            );
+          } catch (refundErr) {
+            console.error('[Fluvia Gemini Video] Refund failed:', refundErr);
+          }
+
+          return NextResponse.json(
+            {
+              success: false,
+              error: execErr.message || 'Video generation processing failed.',
+              errorCode: 'PROVIDER_ERROR',
+              preservedPrompt: trimmedPrompt,
+              refundedCredits: creditCost,
+            },
+            { status: 500 }
+          );
+        }
+      }
+
       default:
         return NextResponse.json(
-          { error: `Unknown action: "${action}". Supported: generate-image, enhance-prompt, generate-script, generate-storyboard, marketing-copilot, assistant, status.` },
+          { error: `Unknown action: "${action}". Supported: generate-video, generate-image, enhance-prompt, generate-script, generate-storyboard, marketing-copilot, assistant, status.` },
           { status: 400 }
         );
     }

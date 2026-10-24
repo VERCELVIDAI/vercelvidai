@@ -2325,7 +2325,50 @@ class Store {
   }
 
   getModelById(id: string): AIModel | undefined {
-    return this.load().aiModels.find((m) => m.id === id);
+    const list = this.load().aiModels || [];
+    if (id === 'gemini-omni-1.1-flash' || id === 'gemini') {
+      const gem = list.find((m) => m.id === 'gemini-omni-1.1-flash');
+      if (gem) return gem;
+      return {
+        id: 'gemini-omni-1.1-flash',
+        providerId: 'gemini',
+        modelIdentifier: 'gemini-omni-1.1-flash',
+        displayName: 'Google Gemini Omni 1.1 Flash',
+        mediaType: 'video',
+        capabilities: {
+          resolutions: ['360p', '720p', '1080p', '4k'],
+          aspectRatios: ['16:9', '9:16', '1:1'],
+          maxDuration: 10,
+        },
+        costConfiguration: { unitCostUsd: 0.05 },
+        creditPricing: { costCredits: 15 },
+        isActive: true,
+        isComingSoon: false,
+      };
+    }
+    if (id === 'fluvia-cinematic-v1' || id === 'vidai-cinematic-v1') {
+      const existing = list.find((m) => m.id === 'fluvia-cinematic-v1' || m.id === 'vidai-cinematic-v1');
+      if (existing) {
+        return { ...existing, isActive: false, isComingSoon: true, comingSoonBadge: 'Coming Soon' };
+      }
+      return {
+        id: 'fluvia-cinematic-v1',
+        providerId: 'fluvia_core',
+        modelIdentifier: 'fluvia-cinematic-v1',
+        displayName: 'Fluvia Cinematic Core',
+        mediaType: 'video',
+        capabilities: {
+          resolutions: ['720p', '1080p'],
+          aspectRatios: ['16:9', '9:16', '1:1'],
+          maxDuration: 10,
+        },
+        costConfiguration: { unitCostUsd: 0.05 },
+        creditPricing: { costCredits: 25 },
+        isActive: false,
+        isComingSoon: true,
+      };
+    }
+    return list.find((m) => m.id === id);
   }
 
   // ==========================================

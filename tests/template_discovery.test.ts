@@ -42,16 +42,17 @@ async function runTemplateDiscoveryTests() {
   assert('Templates include 4:5 Social Portrait', aspects.has('4:5'));
   assert('Templates include 2.39:1 Anamorphic Cinema', aspects.has('2.39:1'));
 
-  // 3. Category Coverage
-  console.log('\n3. Testing Category Representation...');
+  // 3. Category Coverage - 12 Curated Commercial Categories
+  console.log('\n3. Testing Commercial Category Representation...');
   const categories = TEMPLATES_DATA.map((t) => t.category.toLowerCase());
   assert('Includes Automotive category', categories.some((c) => c.includes('automotive')));
   assert('Includes AI Influencer/UGC category', categories.some((c) => c.includes('influencer') || c.includes('ugc')));
-  assert('Includes Product Commercial category', categories.some((c) => c.includes('commercial') || c.includes('product')));
-  assert('Includes Anime/Fantasy category', categories.some((c) => c.includes('anime') || c.includes('fantasy')));
-  assert('Includes 3D Cartoon category', categories.some((c) => c.includes('3d') || c.includes('cartoon')));
-  assert('Includes Pet/Wildlife category', categories.some((c) => c.includes('pet') || c.includes('wildlife')));
-  assert('Includes Farm Fresh Vegetables & Organic Food category', categories.some((c) => c.includes('vegetable') || c.includes('organic')));
+  assert('Includes Product Commercial category', categories.some((c) => c.includes('product') || c.includes('commercial')));
+  assert('Includes Food, Beverage & Restaurant category', categories.some((c) => c.includes('food') || c.includes('beverage')));
+  assert('Includes Real Estate & Architecture category', categories.some((c) => c.includes('real estate') || c.includes('architecture')));
+  assert('Includes Technology & SaaS Explainer category', categories.some((c) => c.includes('technology') || c.includes('saas')));
+  assert('Includes Fashion, Beauty & Lifestyle category', categories.some((c) => c.includes('fashion') || c.includes('beauty')));
+  assert('Generic filler categories (pets, cartoons, arbitrary anime) completely removed', !categories.some((c) => c === 'pets & wildlife' || c === '3d cartoon & animation'));
 
   // 4. Creative Events & Challenges
   console.log('\n4. Testing Creative Challenges & Seasonal Events...');

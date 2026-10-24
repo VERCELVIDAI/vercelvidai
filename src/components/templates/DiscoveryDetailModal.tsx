@@ -48,7 +48,9 @@ export function DiscoveryDetailModal({
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
+  const [copiedVidsPrompt, setCopiedVidsPrompt] = useState(false);
   const [isCreatingProject, setIsCreatingProject] = useState(false);
+  const [showVidsHandoff, setShowVidsHandoff] = useState(false);
 
   useEffect(() => {
     // Reset play state when template changes
@@ -280,14 +282,21 @@ export function DiscoveryDetailModal({
                 <strong className="text-white font-mono">{template.aspectLabel || template.aspect}</strong>
               </div>
               <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
-                <span className="text-[10px] text-white/50 block">Estimated Cost</span>
-                <strong className="text-emerald-400 font-mono">25 Credits</strong>
+                <span className="text-[10px] text-white/50 block">Generation Cost</span>
+                <strong className="text-emerald-400 font-mono">15 Credits</strong>
+              </div>
+              <div className="col-span-2 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/20 flex items-center justify-between">
+                <span className="text-[10px] text-emerald-300/80">AI Model Engine</span>
+                <span className="text-xs font-semibold text-emerald-300 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Google Gemini (gemini-omni-1.1-flash)
+                </span>
               </div>
             </div>
           </div>
 
           {/* Action CTAs */}
-          <div className="pt-4 border-t border-white/10 space-y-2.5">
+          <div className="pt-4 border-t border-white/10 space-y-2">
             <button
               type="button"
               onClick={() => {
@@ -297,14 +306,23 @@ export function DiscoveryDetailModal({
               className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/80 transition-all hover:scale-[1.01] cursor-pointer"
             >
               <Sparkles className="w-4 h-4" />
-              <span>Use in AI Prompt Composer</span>
+              <span>Use in AI Prompt Composer (15 cr)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowVidsHandoff(true)}
+              className="w-full py-2.5 px-4 rounded-2xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 hover:text-white border border-blue-500/30 font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
+              <span>Create in Google Vids Workspace (0 cr)</span>
             </button>
 
             <button
               type="button"
               onClick={handleOpenInEditor}
               disabled={isCreatingProject}
-              className="w-full py-3 px-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs flex items-center justify-center gap-2 border border-white/10 transition-colors"
+              className="w-full py-2.5 px-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white/90 font-medium text-xs flex items-center justify-center gap-2 border border-white/10 transition-colors"
             >
               <Film className="w-3.5 h-3.5 text-emerald-400" />
               <span>{isCreatingProject ? 'Creating project...' : 'Open Multi-Track Studio Timeline'}</span>
@@ -312,6 +330,84 @@ export function DiscoveryDetailModal({
           </div>
         </div>
       </div>
+
+      {/* Google Vids Handoff Modal */}
+      {showVidsHandoff && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in">
+          <div className="relative w-full max-w-lg rounded-3xl bg-[#0F1412] border border-blue-500/40 p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-sm">
+                  G
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-base">Google Vids Studio</h3>
+                  <p className="text-[11px] text-blue-400 font-mono">Google Workspace App (vids.new)</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowVidsHandoff(false)}
+                className="text-white/60 hover:text-white p-1"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
+              <p className="text-white/90 leading-relaxed">
+                <strong>Google Vids</strong> is an interactive AI video workspace application within Google Workspace.
+                Storyboards, voiceover, and scenes are composed directly in your Google account.
+              </p>
+              <div className="p-2.5 rounded-xl bg-blue-950/40 border border-blue-500/20 text-[11px] text-blue-200">
+                💡 <strong>0 Credits Deducted:</strong> Because video generation occurs externally inside your Google Workspace, Fluvia Flow does not charge any credits for this handoff.
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[11px] text-white/60 font-semibold">Template Prompt:</label>
+              <div className="relative p-3 rounded-xl bg-black/50 border border-white/10 text-xs text-white/90 font-mono select-all">
+                {template.prompt || template.description}
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(template.prompt || template.description);
+                  setCopiedVidsPrompt(true);
+                  setTimeout(() => setCopiedVidsPrompt(false), 2000);
+                }}
+                className="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs flex items-center justify-center gap-2 border border-white/10"
+              >
+                {copiedVidsPrompt ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-400">Prompt Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    <span>Copy Prompt</span>
+                  </>
+                )}
+              </button>
+
+              <a
+                href="https://workspace.google.com/intl/en_in/products/vids/?from=gafb-drive_6806271-def-en_in"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setShowVidsHandoff(false)}
+                className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-950/60"
+              >
+                <span>Launch Google Vids</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

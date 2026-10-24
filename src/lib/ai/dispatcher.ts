@@ -3,14 +3,11 @@ import { aiProviderRegistry } from './registry';
 import { GenerationInputPayload } from './types';
 import { GenerationJob } from '../types';
 
-export function calculateEstimatedCredits(modelId: string, durationSec: number = 5): number {
-  const model = dbStore.getModelById(modelId);
-  const baseCost = model?.creditPricing?.costCredits ?? 25;
-  if (model?.mediaType === 'video' && durationSec > 5) {
-    // Pro-rate longer video generations
-    return Math.round(baseCost * (durationSec / 5));
-  }
-  return baseCost;
+/**
+ * Fluvia Flow Pricing Requirement: Exactly 15 credits per generated video.
+ */
+export function calculateEstimatedCredits(modelId?: string, durationSec: number = 5): number {
+  return 15;
 }
 
 export async function dispatchGenerationJob(params: {
@@ -20,14 +17,19 @@ export async function dispatchGenerationJob(params: {
   modelId: string;
   input: GenerationInputPayload;
 }): Promise<GenerationJob> {
-  const model = dbStore.getModelById(params.modelId);
-  if (!model) {
-    throw new Error(`AI Model '${params.modelId}' not found in registry.`);
+  const selectedModelId = params.modelId || 'gemini-omni-1.1-flash';
+
+  // Enforcement: Gemini is the ONLY active model in this implementation
+  const allowedActiveModels = ['gemini-omni-1.1-flash', 'gemini-omni-flash', 'gemini'];
+  if (!allowedActiveModels.includes(selectedModelId)) {
+    throw new Error(
+      `Model '${params.modelId}' is currently Coming Soon. Only Google Gemini (gemini-omni-1.1-flash) is active for video generation.`
+    );
   }
 
-  const provider = aiProviderRegistry.get(model.providerId);
+  const provider = aiProviderRegistry.get('gemini');
   if (!provider) {
-    throw new Error(`Provider '${model.providerId}' adapter not registered.`);
+    throw new Error("Provider 'gemini' adapter not registered.");
   }
 
   // Pre-flight validation
@@ -36,75 +38,56 @@ export async function dispatchGenerationJob(params: {
     throw new Error(validation.error || 'Invalid generation parameters.');
   }
 
-  // Calculate required credits
-  const duration = params.input.durationSec || 5;
-  const estimatedCredits = calculateEstimatedCredits(params.modelId, duration);
+  // Fluvia Flow requirement: Exactly 15 credits per video
+  const requiredCredits = 15;
+  const creditAccount = dbStore.getCreditAccount(params.userId);
+  if (creditAccount.availableBalance < requiredCredits) {
+    throw new Error(
+      `Insufficient credits. Video generation requires ${requiredCredits} credits, but you have ${creditAccount.availableBalance} available.`
+    );
+  }
 
-  // Check user balance and create job (this atomically reserves the credits in store)
+  // Check user balance and create job (this atomically reserves the 15 credits in dbStore)
   const job = dbStore.createGenerationJob({
     userId: params.userId,
     workspaceId: params.workspaceId,
     projectId: params.projectId,
-    providerId: model.providerId,
-    modelId: params.modelId,
+    providerId: 'gemini',
+    modelId: 'gemini-omni-1.1-flash',
     input: params.input,
-    estimatedCredits,
+    estimatedCredits: requiredCredits,
   });
 
   // Background execution without blocking caller
   setTimeout(async () => {
     try {
       dbStore.updateJobStatus(job.id, 'processing', {
-        progressPercent: 30,
-        progressMessage: 'Synthesizing neural latent space & conditioning prompt...',
+        progressPercent: 35,
+        progressMessage: 'Connecting to Google Gemini Omni 1.1 Flash inference pipeline...',
       });
 
-      // Provider call
+      // Provider call (real Gemini Interactions API)
       const result = await provider.startGeneration(params.input, job.id);
 
-      if (result.status === 'processing') {
-        // If async polling is needed
-        dbStore.updateJobStatus(job.id, 'processing', {
-          progressPercent: 65,
-          progressMessage: 'Refining motion vectors and temporal coherency...',
-          providerRequestId: result.providerRequestId,
-        });
-
-        // Polling simulation / check
-        setTimeout(async () => {
-          try {
-            const finalStatus = await provider.checkStatus(result.providerRequestId || '', job.id);
-            if (finalStatus.status === 'completed') {
-              finishJobSuccess(job, finalStatus);
-            } else if (finalStatus.status === 'failed') {
-              dbStore.updateJobStatus(job.id, 'failed', {
-                progressPercent: 0,
-                errorMessage: finalStatus.error || 'Provider generation failed.',
-              });
-            }
-          } catch (err: any) {
-            dbStore.updateJobStatus(job.id, 'failed', {
-              progressPercent: 0,
-              errorMessage: err.message || 'Worker polling failed',
-            });
-          }
-        }, 3000);
-      } else if (result.status === 'completed') {
+      if (result.status === 'completed') {
         finishJobSuccess(job, result);
       } else {
+        // Automatically triggers dbStore.refundCredits for the 15 reserved credits
         dbStore.updateJobStatus(job.id, 'failed', {
           progressPercent: 0,
           errorMessage: result.error || 'Generation failed.',
+          errorCode: result.metadata?.errorCode,
         });
       }
     } catch (err: any) {
-      console.error('Job execution error:', err);
+      console.error('[Dispatcher] Job execution error:', err);
+      // Automatically triggers dbStore.refundCredits for the 15 reserved credits
       dbStore.updateJobStatus(job.id, 'failed', {
         progressPercent: 0,
-        errorMessage: err.message || 'An unexpected worker failure occurred.',
+        errorMessage: err.message || 'An unexpected inference failure occurred.',
       });
     }
-  }, 1200);
+  }, 300);
 
   return job;
 }
@@ -119,10 +102,10 @@ function finishJobSuccess(job: GenerationJob, result: any) {
       audioUrl: result.audioUrl,
       thumbnailUrl: result.thumbnailUrl,
       transcript: result.transcript,
-      isDemoSimulated: result.isDemoSimulated,
+      isDemoSimulated: false,
       metadata: result.metadata,
     },
-    actualCredits: job.estimatedCredits,
+    actualCredits: 15, // Fixed 15 credits
     providerRequestId: result.providerRequestId,
   });
 
@@ -131,7 +114,7 @@ function finishJobSuccess(job: GenerationJob, result: any) {
     const assetType = result.videoUrl ? 'video' : result.imageUrl ? 'image' : 'audio';
     const mediaUrl = result.videoUrl || result.imageUrl || result.audioUrl;
 
-    const newAsset = dbStore.createAsset({
+    dbStore.createAsset({
       workspaceId: job.workspaceId,
       ownerId: job.userId,
       projectId: job.projectId,
@@ -141,7 +124,7 @@ function finishJobSuccess(job: GenerationJob, result: any) {
       url: mediaUrl,
       mimeType: assetType === 'video' ? 'video/mp4' : assetType === 'image' ? 'image/png' : 'audio/mpeg',
       fileSize: 2048000,
-      metadata: { jobId: job.id, isDemoSimulated: result.isDemoSimulated },
+      metadata: { jobId: job.id, isDemoSimulated: false },
     });
 
     if (job.projectId) {
@@ -173,3 +156,8 @@ function finishJobSuccess(job: GenerationJob, result: any) {
     }
   }
 }
+
+export const aiDispatcher = {
+  calculateEstimatedCredits,
+  dispatchGenerationJob,
+};

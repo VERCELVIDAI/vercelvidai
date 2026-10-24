@@ -23,17 +23,18 @@ import {
   UploadCloud,
   Film,
   Download,
+  ExternalLink,
 } from 'lucide-react';
 
 const MODELS = [
-  { id: 'fluvia-cinematic-v1', name: 'Fluvia Cinematic HD', cost: 25, badge: 'Director' },
-  { id: 'vidai-cinematic-v1', name: 'Fluvia Cinematic HD (Legacy)', cost: 25, badge: 'Fast' },
-  { id: 'runway-gen3', name: 'Runway Gen-3 Alpha', cost: 50, badge: 'Ultra' },
-  { id: 'luma-ray', name: 'Luma Dream Machine Ray', cost: 40, badge: 'Realistic Motion' },
-  { id: 'gemini-3.1-flash-image', name: 'Google Gemini 3.1 Flash Image', cost: 5, badge: 'Official Google' },
-  { id: 'gemini-3-pro-image', name: 'Google Gemini 3 Pro Image (Ultra)', cost: 10, badge: 'Ultra' },
-  { id: 'fal-flux-pro', name: 'Flux 1.1 Pro Vision (Image)', cost: 5, badge: 'Photoreal' },
-  { id: 'eleven-multilingual', name: 'ElevenLabs Voice HD', cost: 10, badge: 'Voiceover' },
+  { id: 'gemini-omni-1.1-flash', name: 'Google Gemini Omni 1.1 Flash', cost: 15, badge: 'Active Engine', active: true },
+  { id: 'runway-gen3', name: 'Runway Gen-3 Alpha', cost: 50, badge: 'Coming Soon', active: false },
+  { id: 'luma-ray', name: 'Luma Dream Machine Ray', cost: 40, badge: 'Coming Soon', active: false },
+  { id: 'fluvia-cinematic-v1', name: 'Fluvia Cinematic Core', cost: 25, badge: 'Coming Soon', active: false },
+  { id: 'gemini-3.1-flash-image', name: 'Google Gemini 3.1 Flash Image', cost: 5, badge: 'Official Google', active: true },
+  { id: 'gemini-3-pro-image', name: 'Google Gemini 3 Pro Image (Ultra)', cost: 10, badge: 'Ultra', active: true },
+  { id: 'fal-flux-pro', name: 'Flux 1.1 Pro Vision (Image)', cost: 5, badge: 'Photoreal', active: true },
+  { id: 'eleven-multilingual', name: 'ElevenLabs Voice HD', cost: 10, badge: 'Voiceover', active: true },
 ];
 
 function CreateWorkspaceContent() {
@@ -43,7 +44,7 @@ function CreateWorkspaceContent() {
   // Initial params
   const initialMode = (searchParams.get('mode') as any) || 'video';
   const initialPrompt = searchParams.get('prompt') || '';
-  const initialModel = searchParams.get('modelId') || 'fluvia-cinematic-v1';
+  const initialModel = searchParams.get('modelId') || 'gemini-omni-1.1-flash';
   const initialRatio = (searchParams.get('aspectRatio') as any) || '16:9';
 
   const [authData, setAuthData] = useState<any>(null);
@@ -115,11 +116,13 @@ function CreateWorkspaceContent() {
 
   const selectedModelObj = MODELS.find((m) => m.id === modelId) || MODELS[0];
   const estimatedCost =
-    mode === 'image'
-      ? 5
+    mode === 'video'
+      ? 15
+      : mode === 'image'
+      ? (selectedModelObj.cost || 5)
       : mode === 'audio'
       ? 10
-      : Math.round(selectedModelObj.cost * (durationSec / 5));
+      : 15;
 
   const handleStartGeneration = async () => {
     if (!prompt.trim()) {
@@ -207,7 +210,7 @@ function CreateWorkspaceContent() {
                 type="button"
                 onClick={() => {
                   setMode('video');
-                  setModelId('fluvia-cinematic-v1');
+                  setModelId('gemini-omni-1.1-flash');
                 }}
                 className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   mode === 'video' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
@@ -288,8 +291,13 @@ function CreateWorkspaceContent() {
                     className="w-full glass-input text-[#17211D] px-3 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 text-xs cursor-pointer"
                   >
                     {MODELS.map((m) => (
-                      <option key={m.id} value={m.id} className="bg-white text-[#17211D]">
-                        {m.name} ({m.cost} credits)
+                      <option
+                        key={m.id}
+                        value={m.id}
+                        disabled={!m.active}
+                        className={`bg-white ${m.active ? 'text-[#17211D]' : 'text-slate-400 italic'}`}
+                      >
+                        {m.name} {!m.active ? '(Coming Soon)' : `(${m.cost} credits)`}
                       </option>
                     ))}
                   </select>
@@ -387,6 +395,28 @@ function CreateWorkspaceContent() {
                 <span>Dispatch Generation</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Google Vids Alternative Option */}
+            <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200/80 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-black text-xs flex items-center justify-center">
+                  G
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800">Google Vids Studio Workspace</p>
+                  <p className="text-[11px] text-slate-600">Compose video in Google Workspace • 0 Fluvia credits</p>
+                </div>
+              </div>
+              <a
+                href="https://workspace.google.com/intl/en_in/products/vids/?from=gafb-drive_6806271-def-en_in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] flex items-center gap-1.5 transition-colors"
+              >
+                <span>Launch Vids</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
 

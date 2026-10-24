@@ -21,10 +21,9 @@ const EXAMPLE_PROMPTS = [
 ];
 
 const MODELS = [
-  { id: 'fluvia-cinematic-v1', name: 'Fluvia Cinematic HD', cost: 25, badge: 'Director' },
-  { id: 'runway-gen3', name: 'Runway Gen-3 Alpha', cost: 50, badge: 'Ultra' },
-  { id: 'luma-ray', name: 'Luma Dream Machine Ray', cost: 40, badge: 'Motion' },
-  { id: 'fal-flux-pro', name: 'Flux 1.1 Pro Vision', cost: 5, badge: 'Photoreal' },
+  { id: 'gemini-omni-1.1-flash', name: 'Google Gemini Omni 1.1 Flash', cost: 15, badge: 'Active Engine', active: true },
+  { id: 'runway-gen3', name: 'Runway Gen-3 Alpha', cost: 50, badge: 'Coming Soon', active: false },
+  { id: 'luma-ray', name: 'Luma Dream Machine Ray', cost: 40, badge: 'Coming Soon', active: false },
 ];
 
 const CAMERA_PRESETS = ['Dolly in', 'Orbit', 'Tracking shot', 'Crane movement', 'Aerial movement', 'Static'];
@@ -35,19 +34,19 @@ export function HeroComposer() {
   const [mode, setMode] = useState<'video' | 'image' | 'audio'>('video');
   const [aspectRatio, setAspectRatio] = useState<'21:9' | '16:9' | '9:16' | '1:1'>('21:9');
   const [durationSec, setDurationSec] = useState<number>(5);
-  const [selectedModel, setSelectedModel] = useState<string>('fluvia-cinematic-v1');
+  const [selectedModel, setSelectedModel] = useState<string>('gemini-omni-1.1-flash');
   const [camera, setCamera] = useState<string>('Dolly in');
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Calculate estimated credit cost
+  // Calculate estimated credit cost (15 credits fixed for Gemini video generation)
   const currentModelObj = MODELS.find((m) => m.id === selectedModel) || MODELS[0];
   const estimatedCredits =
     mode === 'image'
       ? 5
       : mode === 'audio'
       ? 10
-      : Math.round(currentModelObj.cost * (durationSec / 5));
+      : 15;
 
   // Gemini Prompt Enhancement on Hero
   const handleEnhanceWithGemini = async () => {
@@ -262,8 +261,13 @@ export function HeroComposer() {
               className="bg-transparent text-emerald-700 font-bold text-xs focus:outline-none cursor-pointer"
             >
               {MODELS.map((m) => (
-                <option key={m.id} value={m.id} className="bg-white text-[#17211D]">
-                  {m.name} ({m.cost} cr)
+                <option
+                  key={m.id}
+                  value={m.id}
+                  disabled={!m.active}
+                  className={`bg-white ${m.active ? 'text-[#17211D]' : 'text-slate-400 italic'}`}
+                >
+                  {m.name} {!m.active ? '(Coming Soon)' : `(${m.cost} cr)`}
                 </option>
               ))}
             </select>

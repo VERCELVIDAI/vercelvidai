@@ -7,7 +7,7 @@ export class FluviaCoreAdapter extends BaseAIProviderAdapter {
   readonly type = 'multimodal' as const;
 
   isConfigured(): boolean {
-    return true; // Built-in cinematic engine with curated high-fidelity fallbacks
+    return false;
   }
 
   getCapabilities(): AIProviderCapabilities {
@@ -24,53 +24,23 @@ export class FluviaCoreAdapter extends BaseAIProviderAdapter {
   }
 
   async startGeneration(input: GenerationInputPayload, jobId: string): Promise<GenerationResultPayload> {
-    const isExternalConfigured = !!process.env.FLUVIA_GPU_CLUSTER_URL;
-
-    // High quality showcase media matching varied user prompts
-    const promptLower = (input.prompt || '').toLowerCase();
-    let videoUrl = '/media/templates/tmpl-01-cinematic-product.mp4';
-    let thumbnailUrl = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80';
-
-    if (promptLower.includes('city') || promptLower.includes('urban') || promptLower.includes('night') || promptLower.includes('cyber')) {
-      videoUrl = '/media/login/login-hero-preview.mp4';
-      thumbnailUrl = 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80';
-    } else if (promptLower.includes('tech') || promptLower.includes('laptop') || promptLower.includes('saas') || promptLower.includes('code')) {
-      videoUrl = '/media/templates/tmpl-09-tech-product.mp4';
-      thumbnailUrl = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80';
-    } else if (promptLower.includes('nature') || promptLower.includes('water') || promptLower.includes('forest') || promptLower.includes('sun')) {
-      videoUrl = '/media/templates/tmpl-06-travel-reel.mp4';
-      thumbnailUrl = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80';
-    } else if (promptLower.includes('perfume') || promptLower.includes('luxury') || promptLower.includes('cosmetic')) {
-      videoUrl = '/media/templates/tmpl-02-luxury-perfume.mp4';
-      thumbnailUrl = 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&auto=format&fit=crop&q=80';
-    }
-
     return {
-      status: 'completed',
-      videoUrl,
-      thumbnailUrl,
-      progressPercent: 100,
-      progressMessage: isExternalConfigured ? 'Generated via Fluvia GPU cluster' : 'Generated via Fluvia Cinema Core (Production Grade)',
-      isDemoSimulated: !isExternalConfigured,
-      providerRequestId: `fluvia_req_${jobId}_${Date.now()}`,
-      metadata: {
-        prompt: input.prompt,
-        aspectRatio: input.aspectRatio || '16:9',
-        durationSec: input.durationSec || 5,
-        engine: 'Fluvia-Cinematic-v1',
-      },
+      status: 'failed',
+      progressPercent: 0,
+      isDemoSimulated: false,
+      error: 'Fluvia Cinematic Core is currently Coming Soon. Google Gemini (gemini-omni-1.1-flash) is the only active generation model.',
     };
   }
 
   async checkStatus(providerRequestId: string, jobId: string): Promise<GenerationResultPayload> {
     return {
-      status: 'completed',
-      progressPercent: 100,
-      isDemoSimulated: true,
-      providerRequestId,
+      status: 'failed',
+      progressPercent: 0,
+      isDemoSimulated: false,
+      error: 'Fluvia Cinematic Core is currently Coming Soon.',
     };
   }
 }
 
-// Backward-compatibility alias
+export const fluviaCoreAdapter = new FluviaCoreAdapter();
 export const VidaiCoreAdapter = FluviaCoreAdapter;

@@ -7,6 +7,19 @@ import { Cpu, ArrowRight, Zap } from 'lucide-react';
 export default function ModelsPage() {
   const models = [
     {
+      id: 'gemini-omni-1.1-flash',
+      name: 'Google Gemini Omni 1.1 Flash',
+      provider: 'Google DeepMind & Gemini Video Engine',
+      type: 'video',
+      resolutions: ['720p', '1080p HD'],
+      durations: '5s, 10s',
+      aspectRatios: ['16:9', '9:16', '1:1'],
+      costCredits: 15,
+      badge: 'Active Engine',
+      isComingSoon: false,
+      desc: 'Official active video generation engine. Real-time inference for commercial ads, automotive showcases, cinematic lighting, and product promotions.',
+    },
+    {
       id: 'gemini-creative-flash',
       name: 'Google Gemini 2.5 Flash Copilot',
       provider: 'Google DeepMind & Gemini Neural Engine',
@@ -16,19 +29,8 @@ export default function ModelsPage() {
       aspectRatios: ['Multimodal Analysis'],
       costCredits: 2,
       badge: 'Integrated Copilot',
+      isComingSoon: false,
       desc: 'Real-time creative director that enhances video prompts, constructs narrative storyboards, and scores viral retention angles.',
-    },
-    {
-      id: 'fluvia-cinematic-v1',
-      name: 'Fluvia Cinematic HD',
-      provider: 'Fluvia Core Neural Architecture',
-      type: 'video',
-      resolutions: ['720p', '1080p'],
-      durations: '5s, 10s',
-      aspectRatios: ['16:9', '9:16', '1:1'],
-      costCredits: 25,
-      badge: 'Ultra Fast',
-      desc: 'Optimized for high-speed video inference with physically accurate illumination and zero queue wait times.',
     },
     {
       id: 'runway-gen3',
@@ -39,7 +41,8 @@ export default function ModelsPage() {
       durations: '5s, 10s, 15s',
       aspectRatios: ['16:9', '9:16'],
       costCredits: 50,
-      badge: 'Cinema Quality',
+      badge: 'Coming Soon',
+      isComingSoon: true,
       desc: 'Industry benchmark for dramatic human motion, realistic camera kinetics, and complex narrative choreography.',
     },
     {
@@ -51,8 +54,22 @@ export default function ModelsPage() {
       durations: '5s, 10s',
       aspectRatios: ['16:9', '9:16', '1:1'],
       costCredits: 40,
-      badge: 'Fluid Physics',
+      badge: 'Coming Soon',
+      isComingSoon: true,
       desc: 'Excels at rapid action sports, fluid dynamics, car commercials, and 3D environment fly-throughs.',
+    },
+    {
+      id: 'fluvia-cinematic-v1',
+      name: 'Fluvia Cinematic HD Core',
+      provider: 'Fluvia Neural Architecture',
+      type: 'video',
+      resolutions: ['720p', '1080p'],
+      durations: '5s, 10s',
+      aspectRatios: ['16:9', '9:16', '1:1'],
+      costCredits: 25,
+      badge: 'Coming Soon',
+      isComingSoon: true,
+      desc: 'Proprietary cinematic engine currently in private tuning for physically accurate studio illumination.',
     },
     {
       id: 'fal-flux-pro',
@@ -64,6 +81,7 @@ export default function ModelsPage() {
       aspectRatios: ['1:1', '16:9', '9:16'],
       costCredits: 5,
       badge: 'Photoreal Images',
+      isComingSoon: false,
       desc: 'State-of-the-art prompt fidelity and typographic rendering for hyper-detailed commercial product photos.',
     },
     {
@@ -132,13 +150,19 @@ export default function ModelsPage() {
                   <span className="text-[11px] text-slate-500">per generation</span>
                 </div>
 
-                <Link
-                  href={`/create?modelId=${m.id}`}
-                  className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-500/20 flex items-center gap-1.5"
-                >
-                  <span>Select Model</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                {m.isComingSoon ? (
+                  <span className="px-5 py-2.5 bg-slate-100 text-slate-400 border border-slate-200 rounded-xl text-xs font-bold cursor-not-allowed">
+                    Coming Soon
+                  </span>
+                ) : (
+                  <Link
+                    href={`/create?modelId=${m.id}`}
+                    className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-500/20 flex items-center gap-1.5"
+                  >
+                    <span>Select Model</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                )}
               </div>
             </div>
           ))}

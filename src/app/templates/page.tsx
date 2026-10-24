@@ -31,18 +31,18 @@ import { TEMPLATES_DATA, TEMPLATE_CATEGORIES, VideoTemplate } from '@/lib/templa
 
 const DISCOVERY_CATEGORIES = [
   'All',
-  'Cinematic Commercial',
-  'Automotive Cinematic Film',
-  'AI Influencer & UGC',
-  'Anime & Fantasy',
-  '3D Cartoon & Characters',
-  'Pet & Wildlife',
-  'Travel & Landscapes',
-  'Fashion Campaign',
-  'Farm Fresh Vegetables & Organic Food',
-  'Food Commercial',
-  'Tech Product Launch',
-  'Storytelling & Viral Shorts',
+  'Product Commercials & Product Showcase Ads',
+  'E-commerce Product Ads',
+  'Cinematic Automotive & Vehicle Ads',
+  'Brand Promotion & Advertising Films',
+  'Social Media Reels & Viral Short Videos',
+  'AI Influencer & UGC-Style Ads',
+  'Fashion, Beauty & Lifestyle Campaigns',
+  'Food, Beverage & Restaurant Commercials',
+  'Technology & SaaS Product Explainers',
+  'Real Estate & Architecture Videos',
+  'Cinematic Logo Reveals & Brand Intros',
+  'Professional Storytelling & Promotional Videos',
 ];
 
 function DiscoveryFeedContent() {

@@ -55,10 +55,10 @@ export async function GET(req: NextRequest) {
         // If not following anyone yet, return top creators suggestions
         const creators = [
           { id: 'usr_c1', name: '@alex_cinema', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80', bio: 'Cinematic commercials, macro luxury & automotive', followersCount: 18400 },
-          { id: 'usr_c2', name: '@elena_vfx', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', bio: 'High-fashion editorial & bioluminescent VFX', followersCount: 24100 },
-          { id: 'usr_c5', name: '@nature_organic', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', bio: 'Farm-fresh organic agriculture & macro produce', followersCount: 12900 },
-          { id: 'usr_c6', name: '@neo_anime', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', bio: 'Cyberpunk worldbuilding & sakuga anime battles', followersCount: 31200 },
-          { id: 'usr_c7', name: '@pixel_craft', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80', bio: 'Pixar-inspired 3D character animation & whimsy', followersCount: 16800 },
+          { id: 'usr_c2', name: '@elena_vfx', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', bio: 'High-fashion editorial & perfume campaigns', followersCount: 24100 },
+          { id: 'usr_c3', name: '@luna_story', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80', bio: 'Viral TikTok hooks, skincare & social reels', followersCount: 21500 },
+          { id: 'usr_c4', name: '@marcus_ai', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80', bio: 'SaaS platforms, devtools & tech explainers', followersCount: 19800 },
+          { id: 'usr_c5', name: '@nature_organic', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', bio: 'Farm-fresh organic agriculture & culinary reels', followersCount: 12900 },
         ];
 
         return NextResponse.json({

@@ -7,6 +7,8 @@
  * Cinematic Director Guidance, Marketing Copilot, and Workspace AI Assistant.
  */
 
+import fs from 'fs';
+import path from 'path';
 import { GoogleGenAI } from '@google/genai';
 import { z } from 'zod';
 
@@ -18,6 +20,7 @@ export const GEMINI_MODELS = {
   IMAGE_FLASH: process.env.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image',
   IMAGE_PRO: 'gemini-3-pro-image',
   IMAGE_FALLBACK: 'gemini-2.5-flash-image',
+  VIDEO_OMNI_FLASH: process.env.GEMINI_VIDEO_MODEL || 'gemini-omni-1.1-flash',
 } as const;
 
 // Structured Storyboard Schema
@@ -692,6 +695,193 @@ Output strictly JSON:
       errorCode,
       rawDetails: errText,
     };
+  }
+
+  /**
+   * Capability: Native Gemini Omni Flash Video Generation via Interactions API
+   * Endpoint: https://generativelanguage.googleapis.com/v1beta/interactions
+   * Model: gemini-omni-1.1-flash
+   */
+  async generateVideo(params: {
+    prompt: string;
+    aspectRatio?: '16:9' | '9:16' | '1:1' | '4:5' | '2.39:1';
+    durationSec?: number;
+    referenceImageUrl?: string;
+    model?: string;
+    jobId?: string;
+  }): Promise<{
+    success: boolean;
+    videoUrl?: string;
+    thumbnailUrl?: string;
+    modelUsed: string;
+    prompt: string;
+    aspectRatio: string;
+    durationSec: number;
+    error?: string;
+    errorCode?: 'QUOTA_EXHAUSTED' | 'INVALID_KEY' | 'UNCONFIGURED' | 'PROVIDER_ERROR' | 'UNSUPPORTED_TIER';
+    rawDetails?: string;
+  }> {
+    const key = process.env.GEMINI_API_KEY;
+    const modelUsed = params.model || process.env.GEMINI_VIDEO_MODEL || 'gemini-omni-1.1-flash';
+    const ratio = params.aspectRatio === '9:16' || params.aspectRatio === '1:1' ? params.aspectRatio : '16:9';
+    const duration = params.durationSec || 5;
+
+    if (!key || key.trim() === '' || key.startsWith('your_')) {
+      return {
+        success: false,
+        modelUsed,
+        prompt: params.prompt,
+        aspectRatio: ratio,
+        durationSec: duration,
+        error: 'Gemini API key is not configured. Please supply a valid GEMINI_API_KEY in the server environment (.env.local).',
+        errorCode: 'UNCONFIGURED',
+      };
+    }
+
+    try {
+      let inputPayload: any = params.prompt;
+      if (params.referenceImageUrl) {
+        inputPayload = [
+          {
+            type: 'image',
+            uri: params.referenceImageUrl,
+          },
+          {
+            type: 'text',
+            text: params.prompt,
+          },
+        ];
+      }
+
+      const requestPayload = {
+        model: modelUsed,
+        input: inputPayload,
+        response_format: {
+          type: 'video',
+          delivery: 'uri',
+          aspect_ratio: ratio,
+        },
+      };
+
+      console.log(`[Fluvia Gemini Video] Dispatching video request to Interactions API with model: ${modelUsed}`);
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/interactions?key=${key}`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestPayload),
+      });
+
+      const rawText = await response.text();
+      let responseData: any = {};
+      try {
+        responseData = JSON.parse(rawText);
+      } catch {
+        responseData = { error: { message: rawText } };
+      }
+
+      if (!response.ok) {
+        const errorMsg = String(responseData?.error?.message || responseData?.error || rawText || `HTTP ${response.status}`);
+        console.warn(`[Fluvia Gemini Video] API responded with error ${response.status}:`, errorMsg);
+
+        let errorCode: 'QUOTA_EXHAUSTED' | 'INVALID_KEY' | 'UNCONFIGURED' | 'PROVIDER_ERROR' | 'UNSUPPORTED_TIER' = 'PROVIDER_ERROR';
+        let userFacingError = errorMsg;
+
+        if (
+          errorMsg.includes('Free Tier') ||
+          errorMsg.includes('limit: 0') ||
+          errorMsg.includes('rate-limit') ||
+          errorMsg.includes('Rate limit exceeded') ||
+          response.status === 429
+        ) {
+          errorCode = 'QUOTA_EXHAUSTED';
+          userFacingError =
+            'Google Gemini video generation quota is currently not enabled for this API key tier. In Google AI Studio, video generation models (gemini-omni-1.1-flash) require an attached billing account / Pay-As-You-Go plan (https://ai.google.dev/pricing). Reserved 15 credits have been automatically refunded to your wallet.';
+        } else if (
+          errorMsg.includes('API_KEY_INVALID') ||
+          errorMsg.includes('403') ||
+          errorMsg.includes('401') ||
+          response.status === 401 ||
+          response.status === 403
+        ) {
+          errorCode = 'INVALID_KEY';
+          userFacingError = 'Invalid or unauthorized Gemini API key. Please check your GEMINI_API_KEY setting.';
+        }
+
+        return {
+          success: false,
+          modelUsed,
+          prompt: params.prompt,
+          aspectRatio: ratio,
+          durationSec: duration,
+          error: userFacingError,
+          errorCode,
+          rawDetails: errorMsg,
+        };
+      }
+
+      const outputVideo = responseData?.output_video || responseData?.interaction?.output_video || responseData?.output;
+      const videoUri = outputVideo?.uri || outputVideo?.url;
+
+      if (!videoUri) {
+        return {
+          success: false,
+          modelUsed,
+          prompt: params.prompt,
+          aspectRatio: ratio,
+          durationSec: duration,
+          error: 'Gemini Interactions API completed without returning a video payload.',
+          errorCode: 'PROVIDER_ERROR',
+          rawDetails: JSON.stringify(responseData),
+        };
+      }
+
+      // Persist the generated video asset to public/uploads/generated
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+
+      const filename = `gemini_${params.jobId || 'vid'}_${Date.now()}.mp4`;
+      const localFilePath = path.join(uploadsDir, filename);
+
+      try {
+        const downloadRes = await fetch(videoUri);
+        if (downloadRes.ok) {
+          const arrayBuffer = await downloadRes.arrayBuffer();
+          fs.writeFileSync(localFilePath, Buffer.from(arrayBuffer));
+        }
+      } catch (dlErr: any) {
+        console.warn('[Fluvia Gemini Video] Could not write local video file, referencing remote URI directly:', dlErr.message);
+      }
+
+      const publicVideoUrl = fs.existsSync(localFilePath)
+        ? `/uploads/generated/${filename}`
+        : videoUri;
+
+      return {
+        success: true,
+        videoUrl: publicVideoUrl,
+        thumbnailUrl: params.referenceImageUrl || '/images/fluvia-flow-social-banner.jpg',
+        modelUsed,
+        prompt: params.prompt,
+        aspectRatio: ratio,
+        durationSec: duration,
+      };
+    } catch (err: any) {
+      console.error('[Fluvia Gemini Video] Unexpected exception:', err);
+      return {
+        success: false,
+        modelUsed,
+        prompt: params.prompt,
+        aspectRatio: ratio,
+        durationSec: duration,
+        error: err.message || 'An unexpected error occurred while communicating with Gemini API.',
+        errorCode: 'PROVIDER_ERROR',
+        rawDetails: String(err),
+      };
+    }
   }
 }
 
