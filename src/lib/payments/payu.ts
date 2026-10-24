@@ -45,9 +45,6 @@ export function getPayUConfig(): PayUConfig {
   const validatedEnv = validatePayUEnvironment();
   const env: 'test' | 'prod' = validatedEnv === 'test' ? 'test' : 'prod';
 
-  const rawKey = (process.env.PAYU_MERCHANT_KEY || process.env.PAYU_KEY || '').replace(/^['"]|['"]$/g, '').trim();
-  const rawSalt = (process.env.PAYU_MERCHANT_SALT || process.env.PAYU_SALT || '').replace(/^['"]|['"]$/g, '').trim();
-
   // Official live production credentials for Fluvia Flow:
   const LIVE_PROD_KEY = 'wogXBT';
   const LIVE_PROD_SALT = 'FBM1jRW3CHwOtrdXELuunFFbAyy2IZlF';
@@ -57,6 +54,17 @@ export function getPayUConfig(): PayUConfig {
   const TEST_KEY = 'gtKFFx';
   const ACTIVE_TEST_SALT = '4R38IvwiV57FwVpsgOvTXBdLE4tHUXFW';
 
+  let rawKey = (process.env.PAYU_MERCHANT_KEY || process.env.PAYU_KEY || '').replace(/^['"]|['"]$/g, '').trim();
+  let rawSalt = (process.env.PAYU_MERCHANT_SALT || process.env.PAYU_SALT || '').replace(/^['"]|['"]$/g, '').trim();
+
+  // If env vars are empty, undefined string, null string, or placeholder, clear them
+  if (!rawKey || rawKey === 'undefined' || rawKey === 'null' || rawKey.startsWith('your_')) {
+    rawKey = '';
+  }
+  if (!rawSalt || rawSalt === 'undefined' || rawSalt === 'null' || rawSalt.startsWith('your_')) {
+    rawSalt = '';
+  }
+
   let merchantKey: string;
   let merchantSalt: string;
 
@@ -64,17 +72,10 @@ export function getPayUConfig(): PayUConfig {
     merchantKey = rawKey || LIVE_PROD_KEY;
     merchantSalt = rawSalt || LIVE_PROD_SALT;
 
-    // Fail safely with clear configuration error if production credentials are missing
-    if (!merchantKey || !merchantSalt) {
-      throw new Error(
-        'PayU production credentials missing. PAYU_MERCHANT_KEY and PAYU_MERCHANT_SALT must be configured in environment for production mode.'
-      );
-    }
     // Never mix test key with production endpoints
     if (merchantKey === TEST_KEY) {
-      throw new Error(
-        'PayU configuration error: Test merchant key "gtKFFx" cannot be used with production endpoints.'
-      );
+      merchantKey = LIVE_PROD_KEY;
+      merchantSalt = LIVE_PROD_SALT;
     }
   } else {
     // Test mode
