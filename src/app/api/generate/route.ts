@@ -11,7 +11,8 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { modelId, prompt, negativePrompt, aspectRatio, durationSec, resolution, referenceImageUrl, scriptText, voiceId, projectId } = body;
+    const { modelId, prompt, negativePrompt, aspectRatio, durationSec, resolution, scriptText, voiceId, projectId } = body;
+    const referenceImageUrl = body.referenceImageUrl || body.referenceUrl;
 
     if (!prompt && !scriptText && !referenceImageUrl) {
       return NextResponse.json({ error: 'Please provide a prompt or script to begin generation.' }, { status: 400 });

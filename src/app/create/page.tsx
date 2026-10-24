@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { DashboardHeader } from '@/components/dashboard/Header';
+import { TEMPLATES_DATA, VideoTemplate } from '@/lib/templates';
 import {
   Sparkles,
   Video,
@@ -24,6 +25,15 @@ import {
   Film,
   Download,
   ExternalLink,
+  Copy,
+  Check,
+  History,
+  X,
+  ChevronRight,
+  Info,
+  ShieldCheck,
+  Flame,
+  LayoutGrid,
 } from 'lucide-react';
 
 const MODELS = [
@@ -37,9 +47,24 @@ const MODELS = [
   { id: 'eleven-multilingual', name: 'ElevenLabs Voice HD', cost: 10, badge: 'Voiceover', active: true },
 ];
 
+// Curated high-conversion productive templates for quick load in the studio
+const PRODUCTIVE_PRESETS = [
+  'tmpl_19', // Enterprise Cloud Security & Zero-Trust Shield
+  'tmpl_20', // AI Agent Swarm & Autonomous Workflow Orchestrator
+  'tmpl_21', // Global B2B Fintech & Automated Cross-Border Settlements
+  'tmpl_22', // High-Conversion Mobile App Showcase & Onboarding Reel
+  'tmpl_23', // Real-Time Executive Analytics & Big Data Command Center
+  'tmpl_24', // Spatial Computing & Holographic Glass AR Experience
+  'tmpl_25', // Developer CLI & Serverless Container Infrastructure
+  'tmpl_26', // Next-Gen Cloud AI Platform Feature Tour
+  'tmpl_01', // Cinematic Hyper-Car Launch
+  'tmpl_09', // High-Tech Smartphone Unboxing & Feature Reveal
+];
+
 function CreateWorkspaceContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initial params
   const initialMode = (searchParams.get('mode') as any) || 'video';
@@ -48,20 +73,30 @@ function CreateWorkspaceContent() {
   const initialRatio = (searchParams.get('aspectRatio') as any) || '16:9';
 
   const [authData, setAuthData] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<'studio' | 'history' | 'templates'>('studio');
   const [mode, setMode] = useState<'video' | 'image' | 'audio' | 'script'>(initialMode);
+  const [videoInputType, setVideoInputType] = useState<'text' | 'image'>('text');
   const [prompt, setPrompt] = useState(initialPrompt);
   const [modelId, setModelId] = useState(initialModel);
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '1:1' | '4:3'>(initialRatio);
   const [durationSec, setDurationSec] = useState<number>(5);
-  const [referenceUrl, setReferenceUrl] = useState('');
+  const [referenceImageUrl, setReferenceImageUrl] = useState('');
+  const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
+  const [uploadedImageName, setUploadedImageName] = useState<string | null>(null);
   const [negativePrompt, setNegativePrompt] = useState('');
 
-  // Active Job State
+  // Active Job & History State
   const [activeJob, setActiveJob] = useState<any>(null);
+  const [userJobs, setUserJobs] = useState<any[]>([]);
+  const [isLoadingJobs, setIsLoadingJobs] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isEnhancing, setIsEnhancing] = useState(false);
+  const [enhancementApplied, setEnhancementApplied] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [copiedVids, setCopiedVids] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
-  // Check saved draft from localStorage if empty
+  // Load auth & pending draft
   useEffect(() => {
     if (!prompt) {
       try {
@@ -82,9 +117,27 @@ function CreateWorkspaceContent() {
       .then((res) => (res.ok ? res.json() : null))
       .then((d) => {
         if (!d) router.push('/login?returnUrl=/create');
-        else setAuthData(d);
+        else {
+          setAuthData(d);
+          fetchUserJobs();
+        }
       });
   }, []);
+
+  const fetchUserJobs = async () => {
+    try {
+      setIsLoadingJobs(true);
+      const res = await fetch('/api/jobs');
+      if (res.ok) {
+        const data = await res.json();
+        setUserJobs(data.jobs || []);
+      }
+    } catch (err) {
+      console.error('Failed to load user jobs', err);
+    } finally {
+      setIsLoadingJobs(false);
+    }
+  };
 
   // Poll active job while status is queued or processing
   useEffect(() => {
@@ -97,13 +150,14 @@ function CreateWorkspaceContent() {
           const d = await res.json();
           setActiveJob(d.job);
 
-          // Update user credits balance if completed
-          if (d.job.status === 'completed') {
+          // Update user credits balance and history if completed or failed
+          if (d.job.status === 'completed' || d.job.status === 'failed') {
             fetch('/api/auth/me')
               .then((r) => r.json())
               .then((fresh) => {
                 if (fresh) setAuthData(fresh);
               });
+            fetchUserJobs();
           }
         }
       } catch (e) {
@@ -124,9 +178,112 @@ function CreateWorkspaceContent() {
       ? 10
       : 15;
 
-  const handleStartGeneration = async () => {
+  // Handle Image Upload for Image-to-Video
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setErrorMsg('Please select a valid image file (PNG, JPG, WEBP).');
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMsg('Image size exceeds 10MB limit.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64Data = event.target?.result as string;
+      setUploadedImagePreview(base64Data);
+      setUploadedImageName(file.name);
+      setReferenceImageUrl(base64Data);
+      setVideoInputType('image');
+      setErrorMsg(null);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleClearImage = () => {
+    setUploadedImagePreview(null);
+    setUploadedImageName(null);
+    setReferenceImageUrl('');
+    setVideoInputType('text');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  // Enhance prompt via Gemini AI Copilot
+  const handleEnhancePrompt = async () => {
     if (!prompt.trim()) {
-      setErrorMsg('Please enter a creative prompt.');
+      setErrorMsg('Enter a prompt draft first before enhancing with Gemini.');
+      return;
+    }
+
+    setIsEnhancing(true);
+    setErrorMsg(null);
+
+    try {
+      const res = await fetch('/api/ai/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'enhance-prompt',
+          prompt: prompt.trim(),
+          aspectRatio,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.enhancedPrompt) {
+        setPrompt(data.enhancedPrompt);
+        if (data.suggestedAspectRatio) {
+          const ratio = data.suggestedAspectRatio as any;
+          if (['16:9', '9:16', '1:1', '4:3'].includes(ratio)) {
+            setAspectRatio(ratio);
+          }
+        }
+        setEnhancementApplied(true);
+        setTimeout(() => setEnhancementApplied(false), 4000);
+      } else {
+        throw new Error(data.error || 'Could not enhance prompt');
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Gemini prompt enhancement unavailable.');
+    } finally {
+      setIsEnhancing(false);
+    }
+  };
+
+  // Quick load template
+  const handleLoadTemplate = (template: VideoTemplate) => {
+    setPrompt(template.prompt);
+    setMode('video');
+    setModelId('gemini-omni-1.1-flash');
+    if (template.aspect === '16:9' || template.aspect === '9:16' || template.aspect === '1:1') {
+      setAspectRatio(template.aspect);
+    }
+    setDurationSec(template.durationSec <= 15 ? template.durationSec : 15);
+    setActiveTab('studio');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Copy prompt & handoff to Google Vids
+  const handleCopyAndLaunchGoogleVids = () => {
+    if (prompt.trim()) {
+      navigator.clipboard.writeText(prompt);
+    }
+    setCopiedVids(true);
+    setTimeout(() => setCopiedVids(false), 3500);
+    window.open('https://workspace.google.com/intl/en_in/products/vids/?from=gafb-drive_6806271-def-en_in', '_blank');
+  };
+
+  // Dispatch Generation to Backend
+  const handleStartGeneration = async () => {
+    if (!prompt.trim() && !referenceImageUrl) {
+      setErrorMsg('Please enter a creative prompt or upload a reference frame.');
       return;
     }
 
@@ -139,12 +296,12 @@ function CreateWorkspaceContent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           mode,
-          prompt,
-          modelId,
+          prompt: prompt.trim(),
+          modelId: 'gemini-omni-1.1-flash',
           aspectRatio,
           durationSec,
-          negativePrompt,
-          referenceUrl,
+          negativePrompt: negativePrompt.trim(),
+          referenceImageUrl: referenceImageUrl || undefined,
         }),
       });
 
@@ -155,6 +312,14 @@ function CreateWorkspaceContent() {
       }
 
       setActiveJob(data.job);
+      setActiveTab('studio');
+
+      // Refresh credits balance immediately after reservation
+      fetch('/api/auth/me')
+        .then((r) => r.json())
+        .then((fresh) => {
+          if (fresh) setAuthData(fresh);
+        });
     } catch (err: any) {
       setErrorMsg(err.message);
     } finally {
@@ -162,7 +327,23 @@ function CreateWorkspaceContent() {
     }
   };
 
+  // Download Video directly
+  const handleDownloadVideo = (videoUrl: string, filename = 'fluvia-flow-creation.mp4') => {
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   const credits = authData?.credits || { availableBalance: 0 };
+  const hasEnoughCredits = credits.availableBalance >= estimatedCost;
+
+  // Curate active productive templates
+  const productiveTemplates = TEMPLATES_DATA.filter((t) =>
+    PRODUCTIVE_PRESETS.includes(t.id)
+  );
 
   return (
     <div className="min-h-screen flex transition-colors duration-200 text-[#17211D]">
@@ -177,376 +358,842 @@ function CreateWorkspaceContent() {
           workspaceName={authData?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left">
-          {/* LEFT: Composer Controls & Parameters (7 cols) */}
-          <div className="lg:col-span-7 space-y-6">
+        <main className="flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full space-y-6 text-left">
+          {/* Top Title & Studio Navigation Tabs */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-emerald-500/15">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Unified Creation Studio</h1>
-              <p className="mt-1 text-xs sm:text-sm text-slate-600">
-                Transform text scripts, visual references and camera motion into high-fidelity AI media.
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-600 text-white shadow-2xs">
+                  Native Studio
+                </span>
+                <span className="text-xs text-slate-500 font-medium">Google Gemini Omni 1.1 Flash Engine</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-[#17211D] tracking-tight mt-1">
+                AI Video Creation Studio
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600">
+                Generate high-fidelity AI video commercials, product reels, and SaaS demos in-app with real-time inference.
               </p>
             </div>
 
-            {errorMsg && (
-              <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-xs flex items-center justify-between gap-3 shadow-xs">
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                  <span className="font-semibold">{errorMsg}</span>
-                </div>
-                {errorMsg.toLowerCase().includes('insufficient') && (
-                  <Link
-                    href="/pricing"
-                    className="px-2.5 py-1 bg-emerald-600 text-white font-bold rounded text-[11px] shrink-0"
-                  >
-                    Top Up
-                  </Link>
-                )}
-              </div>
-            )}
-
-            {/* Mode Tabs */}
-            <div className="flex items-center gap-1.5 p-1 glass-panel rounded-xl border border-emerald-500/20 text-xs shadow-xs">
+            {/* Navigation Tabs */}
+            <div className="flex items-center gap-1.5 p-1 bg-white/80 rounded-xl border border-emerald-500/20 shadow-xs self-start sm:self-auto">
+              <button
+                type="button"
+                onClick={() => setActiveTab('studio')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  activeTab === 'studio'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-[#17211D]'
+                }`}
+              >
+                <Film className="w-3.5 h-3.5" />
+                <span>Studio Viewport</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('templates')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  activeTab === 'templates'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-[#17211D]'
+                }`}
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span>Live Templates ({productiveTemplates.length})</span>
+              </button>
               <button
                 type="button"
                 onClick={() => {
-                  setMode('video');
-                  setModelId('gemini-omni-1.1-flash');
+                  setActiveTab('history');
+                  fetchUserJobs();
                 }}
-                className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                  mode === 'video' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  activeTab === 'history'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-[#17211D]'
                 }`}
               >
-                <Video className="w-3.5 h-3.5" />
-                <span>Text-to-Video</span>
+                <History className="w-3.5 h-3.5" />
+                <span>History ({userJobs.length})</span>
               </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMode('image');
-                  setModelId('gemini-3.1-flash-image');
-                }}
-                className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                  mode === 'image' ? 'bg-pink-500 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
-                }`}
-              >
-                <ImageIcon className="w-3.5 h-3.5" />
-                <span>AI Image (Gemini)</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMode('audio');
-                  setModelId('eleven-multilingual');
-                }}
-                className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                  mode === 'audio' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
-                }`}
-              >
-                <Mic className="w-3.5 h-3.5" />
-                <span>Voice & Speech</span>
-              </button>
-            </div>
-
-            {/* Prompt Box */}
-            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-4 shadow-md">
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                  Creative Prompt
-                </label>
-                <textarea
-                  rows={4}
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Describe your scene lighting, cinematography, camera movements, subject, and atmosphere..."
-                  className="w-full glass-input text-[#17211D] p-4 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm leading-relaxed resize-none shadow-inner"
-                />
-              </div>
-
-              {/* Advanced optional negative prompt */}
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-                  Negative Prompt (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={negativePrompt}
-                  onChange={(e) => setNegativePrompt(e.target.value)}
-                  placeholder="blurry, distorted face, low resolution, watermark..."
-                  className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl border border-emerald-500/15 focus:outline-none focus:border-emerald-500 text-xs"
-                />
-              </div>
-            </div>
-
-            {/* Model & Setting Pickers */}
-            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-4 text-xs shadow-md">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Model Selector */}
-                <div>
-                  <label className="block text-slate-700 uppercase font-bold mb-1.5">Foundation Model</label>
-                  <select
-                    value={modelId}
-                    onChange={(e) => setModelId(e.target.value)}
-                    className="w-full glass-input text-[#17211D] px-3 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 text-xs cursor-pointer"
-                  >
-                    {MODELS.map((m) => (
-                      <option
-                        key={m.id}
-                        value={m.id}
-                        disabled={!m.active}
-                        className={`bg-white ${m.active ? 'text-[#17211D]' : 'text-slate-400 italic'}`}
-                      >
-                        {m.name} {!m.active ? '(Coming Soon)' : `(${m.cost} credits)`}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Aspect Ratio */}
-                <div>
-                  <label className="block text-slate-700 uppercase font-bold mb-1.5">Aspect Ratio</label>
-                  <div className="grid grid-cols-4 gap-1 bg-white/80 p-1 rounded-xl border border-emerald-500/20 shadow-2xs">
-                    <button
-                      type="button"
-                      onClick={() => setAspectRatio('16:9')}
-                      className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                        aspectRatio === '16:9' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
-                      }`}
-                    >
-                      16:9
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setAspectRatio('9:16')}
-                      className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                        aspectRatio === '9:16' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
-                      }`}
-                    >
-                      9:16
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setAspectRatio('1:1')}
-                      className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                        aspectRatio === '1:1' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
-                      }`}
-                    >
-                      1:1
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setAspectRatio('4:3')}
-                      className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                        aspectRatio === '4:3' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
-                      }`}
-                    >
-                      4:3
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Duration Slider if video */}
-              {mode === 'video' && (
-                <div>
-                  <div className="flex justify-between items-center mb-1.5">
-                    <label className="text-slate-700 uppercase font-bold">Duration: {durationSec} seconds</label>
-                    <span className="text-[11px] text-slate-500 font-mono font-medium">Max 15s</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={5}
-                    max={15}
-                    step={5}
-                    value={durationSec}
-                    onChange={(e) => setDurationSec(Number(e.target.value))}
-                    className="w-full accent-emerald-600 cursor-pointer"
-                  />
-                  <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-1 font-semibold">
-                    <span>5s Standard</span>
-                    <span>10s Extended</span>
-                    <span>15s Narrative</span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Submit Action Bar */}
-            <div className="flex items-center justify-between p-4 rounded-2xl glass-card border border-emerald-500/20 shadow-md">
-              <div className="flex items-center gap-2 text-xs text-slate-600">
-                <Zap className="w-4 h-4 text-emerald-600" />
-                <span>Estimated Cost:</span>
-                <span className="font-extrabold text-[#17211D] text-sm">{estimatedCost} Credits</span>
-                <span className="text-[11px] text-slate-500 font-medium">({credits.availableBalance} available)</span>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleStartGeneration}
-                disabled={isSubmitting || !prompt.trim()}
-                className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 cursor-pointer"
-              >
-                {isSubmitting ? (
-                  <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <Sparkles className="w-4 h-4" />
-                )}
-                <span>Dispatch Generation</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Google Vids Alternative Option */}
-            <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200/80 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-black text-xs flex items-center justify-center">
-                  G
-                </div>
-                <div>
-                  <p className="font-bold text-slate-800">Google Vids Studio Workspace</p>
-                  <p className="text-[11px] text-slate-600">Compose video in Google Workspace • 0 Fluvia credits</p>
-                </div>
-              </div>
-              <a
-                href="https://workspace.google.com/intl/en_in/products/vids/?from=gafb-drive_6806271-def-en_in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] flex items-center gap-1.5 transition-colors"
-              >
-                <span>Launch Vids</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
             </div>
           </div>
 
-          {/* RIGHT: Active Job Status & Cinema Viewport (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="p-6 rounded-2xl glass-card border border-emerald-500/20 min-h-[460px] flex flex-col justify-between shadow-xl">
-              <div>
-                <div className="flex items-center justify-between border-b border-emerald-500/15 pb-3 mb-4">
-                  <h3 className="font-bold text-[#17211D] text-sm flex items-center gap-2">
-                    <Film className="w-4 h-4 text-emerald-700" />
-                    <span>Inference Monitor</span>
-                  </h3>
-                  {activeJob && (
-                    <span className="text-[11px] font-mono text-slate-500 uppercase font-bold">
-                      ID: {activeJob.id.slice(0, 8)}
+          {/* Error / Alert Banner */}
+          {errorMsg && (
+            <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-xs flex items-center justify-between gap-3 shadow-xs">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                <span className="font-semibold">{errorMsg}</span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                {errorMsg.toLowerCase().includes('insufficient') && (
+                  <Link
+                    href="/pricing"
+                    className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs shadow-2xs"
+                  >
+                    Top Up Credits
+                  </Link>
+                )}
+                <button
+                  onClick={() => setErrorMsg(null)}
+                  className="p-1 text-rose-600 hover:text-rose-900 rounded cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 1: STUDIO VIEWPORT (MAIN CREATION WORKSPACE) */}
+          {activeTab === 'studio' && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* LEFT: Composer Controls & Parameters (7 cols) */}
+              <div className="lg:col-span-7 space-y-5">
+                {/* Mode Selector */}
+                <div className="flex items-center gap-1.5 p-1 glass-panel rounded-xl border border-emerald-500/20 text-xs shadow-xs">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('video');
+                      setModelId('gemini-omni-1.1-flash');
+                    }}
+                    className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                      mode === 'video' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
+                    }`}
+                  >
+                    <Video className="w-3.5 h-3.5" />
+                    <span>AI Video (Gemini Omni)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('image');
+                      setModelId('gemini-3.1-flash-image');
+                    }}
+                    className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                      mode === 'image' ? 'bg-pink-500 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
+                    }`}
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" />
+                    <span>AI Image (Gemini)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('audio');
+                      setModelId('eleven-multilingual');
+                    }}
+                    className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                      mode === 'audio' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D]'
+                    }`}
+                  >
+                    <Mic className="w-3.5 h-3.5" />
+                    <span>Voiceover HD</span>
+                  </button>
+                </div>
+
+                {/* Video Generation Mode Toggle (Text-to-Video vs Image-to-Video) */}
+                {mode === 'video' && (
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                    <span className="font-bold text-slate-700 pl-2">Input Workflow:</span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => setVideoInputType('text')}
+                        className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                          videoInputType === 'text'
+                            ? 'bg-white text-emerald-700 shadow-2xs border border-emerald-500/20'
+                            : 'text-slate-600 hover:text-[#17211D]'
+                        }`}
+                      >
+                        Text-to-Video
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setVideoInputType('image')}
+                        className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                          videoInputType === 'image'
+                            ? 'bg-white text-emerald-700 shadow-2xs border border-emerald-500/20'
+                            : 'text-slate-600 hover:text-[#17211D]'
+                        }`}
+                      >
+                        Image-to-Video
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Image-to-Video Uploader Area */}
+                {mode === 'video' && videoInputType === 'image' && (
+                  <div className="p-4 rounded-2xl glass-card border border-emerald-500/20 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                        <UploadCloud className="w-4 h-4 text-emerald-600" />
+                        <span>Source Reference Frame</span>
+                      </label>
+                      <span className="text-[11px] text-slate-500 font-medium">PNG, JPG, WEBP • Max 10MB</span>
+                    </div>
+
+                    {!uploadedImagePreview ? (
+                      <div
+                        onClick={() => fileInputRef.current?.click()}
+                        className="border-2 border-dashed border-emerald-500/30 hover:border-emerald-500/60 rounded-xl p-6 text-center cursor-pointer transition-colors bg-white/50 hover:bg-emerald-50/30"
+                      >
+                        <ImageIcon className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
+                        <p className="text-xs font-bold text-slate-800">
+                          Click to upload initial keyframe or drop image here
+                        </p>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Gemini Omni Flash will bring this image to life with cinematographic motion
+                        </p>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/png,image/jpeg,image/webp"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                        />
+                      </div>
+                    ) : (
+                      <div className="relative rounded-xl overflow-hidden border border-emerald-500/30 bg-slate-900 aspect-video max-h-48 flex items-center justify-center group">
+                        <img
+                          src={uploadedImagePreview}
+                          alt="Uploaded Keyframe"
+                          className="w-full h-full object-contain"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleClearImage}
+                            className="px-3 py-1.5 rounded-lg bg-rose-600 text-white font-bold text-xs flex items-center gap-1.5 shadow"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                            <span>Remove</span>
+                          </button>
+                        </div>
+                        <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 text-white text-[10px] font-mono">
+                          {uploadedImageName}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Prompt Box & Gemini Enhancer */}
+                <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-4 shadow-md">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Creative Direction Prompt</span>
+                    </label>
+
+                    <button
+                      type="button"
+                      onClick={handleEnhancePrompt}
+                      disabled={isEnhancing || !prompt.trim()}
+                      className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[11px] flex items-center gap-1 transition-all disabled:opacity-40 cursor-pointer"
+                    >
+                      {isEnhancing ? (
+                        <span className="w-3 h-3 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <Sparkles className="w-3 h-3 text-emerald-600" />
+                      )}
+                      <span>{isEnhancing ? 'Enhancing...' : 'Gemini AI Enhance'}</span>
+                    </button>
+                  </div>
+
+                  {enhancementApplied && (
+                    <div className="p-2 rounded-lg bg-emerald-100 text-emerald-800 text-[11px] font-semibold flex items-center gap-1.5 border border-emerald-300">
+                      <Check className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                      <span>Prompt expanded with cinematic camera movement, lighting cues, and optical fidelity.</span>
+                    </div>
+                  )}
+
+                  <textarea
+                    rows={4}
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder={
+                      videoInputType === 'image'
+                        ? 'Describe camera motion and animation for your image (e.g. slow cinematic dolly push forward, volumetric lighting, gentle wind motion)...'
+                        : 'Describe your video scene: subject, environment, lighting, camera motion, cinematic aesthetic (e.g. 16:9 4K commercial)...'
+                    }
+                    className="w-full glass-input text-[#17211D] p-3.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-xs sm:text-sm leading-relaxed resize-none shadow-inner"
+                  />
+
+                  {/* Quick Style Chips */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mr-1">
+                      Quick Tags:
                     </span>
+                    {[
+                      '3D Glassmorphism',
+                      'Holographic Telemetry',
+                      'Cinematic Drone Orbit',
+                      'Volumetric Studio Light',
+                      'Macro Detail 8K',
+                      'SaaS Tech Explainer',
+                      'Fintech Gold Glow',
+                    ].map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => {
+                          if (!prompt.includes(tag)) {
+                            setPrompt((prev) => (prev ? `${prev}, ${tag}` : tag));
+                          }
+                        }}
+                        className="px-2 py-0.5 rounded-md bg-white/70 hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 border border-slate-200 hover:border-emerald-300 text-[10px] font-medium transition-colors cursor-pointer"
+                      >
+                        +{tag}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Negative Prompt */}
+                  <div className="pt-2 border-t border-slate-100">
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                      Negative Prompt (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={negativePrompt}
+                      onChange={(e) => setNegativePrompt(e.target.value)}
+                      placeholder="blurry, low resolution, warped text, distorted hands, watermark..."
+                      className="w-full glass-input text-[#17211D] px-3 py-1.5 rounded-xl border border-emerald-500/15 focus:outline-none focus:border-emerald-500 text-xs"
+                    />
+                  </div>
+                </div>
+
+                {/* Model & Settings Parameters */}
+                <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-4 text-xs shadow-md">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Model Selector */}
+                    <div>
+                      <div className="flex justify-between items-center mb-1.5">
+                        <label className="text-slate-700 uppercase font-bold">Active Engine</label>
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
+                          15 Credits
+                        </span>
+                      </div>
+                      <select
+                        value={modelId}
+                        onChange={(e) => setModelId(e.target.value)}
+                        className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 text-xs cursor-pointer"
+                      >
+                        {MODELS.map((m) => (
+                          <option
+                            key={m.id}
+                            value={m.id}
+                            disabled={!m.active}
+                            className={`bg-white ${m.active ? 'text-[#17211D] font-bold' : 'text-slate-400 italic'}`}
+                          >
+                            {m.name} {!m.active ? '(Coming Soon)' : `(${m.cost} credits)`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Aspect Ratio */}
+                    <div>
+                      <label className="block text-slate-700 uppercase font-bold mb-1.5">Aspect Ratio</label>
+                      <div className="grid grid-cols-4 gap-1 bg-white/80 p-1 rounded-xl border border-emerald-500/20 shadow-2xs">
+                        {(['16:9', '9:16', '1:1', '4:3'] as const).map((r) => (
+                          <button
+                            key={r}
+                            type="button"
+                            onClick={() => setAspectRatio(r)}
+                            className={`py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                              aspectRatio === r
+                                ? 'bg-emerald-600 text-white shadow-2xs'
+                                : 'text-slate-600 hover:text-[#17211D]'
+                            }`}
+                          >
+                            {r}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Duration Slider (if video mode) */}
+                  {mode === 'video' && (
+                    <div className="pt-2 border-t border-slate-100">
+                      <div className="flex justify-between items-center mb-1.5">
+                        <label className="text-slate-700 uppercase font-bold">Duration: {durationSec} seconds</label>
+                        <span className="text-[11px] text-slate-500 font-mono font-medium">Standard 5s / Extended 15s</span>
+                      </div>
+                      <input
+                        type="range"
+                        min={5}
+                        max={15}
+                        step={5}
+                        value={durationSec}
+                        onChange={(e) => setDurationSec(Number(e.target.value))}
+                        className="w-full accent-emerald-600 cursor-pointer"
+                      />
+                      <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-1 font-semibold">
+                        <span>5s Standard</span>
+                        <span>10s Commercial</span>
+                        <span>15s Narrative</span>
+                      </div>
+                    </div>
                   )}
                 </div>
 
-                {!activeJob ? (
-                  <div className="py-24 text-center">
-                    <Video className="w-12 h-12 text-emerald-600 mx-auto mb-3 animate-float" />
-                    <h4 className="font-bold text-[#17211D] text-sm">Ready to Generate</h4>
-                    <p className="mt-1 text-xs text-slate-500 max-w-xs mx-auto">
-                      Configure your prompt on the left and click Dispatch to initiate the neural pipeline.
-                    </p>
+                {/* Generation Action Bar */}
+                <div className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl glass-card border border-emerald-500/20 shadow-md gap-3">
+                  <div className="flex items-center gap-2 text-xs text-slate-600 self-start sm:self-auto">
+                    <Zap className="w-4 h-4 text-emerald-600" />
+                    <span>Fixed Generation Cost:</span>
+                    <span className="font-extrabold text-[#17211D] text-sm">{estimatedCost} Credits</span>
+                    <span className="text-[11px] text-slate-500 font-medium">
+                      ({credits.availableBalance} in wallet)
+                    </span>
                   </div>
-                ) : activeJob.status === 'queued' || activeJob.status === 'processing' ? (
-                  <div className="py-16 text-center space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-emerald-100 border-2 border-emerald-500 border-t-transparent mx-auto animate-spin" />
-                    <div>
-                      <h4 className="font-bold text-[#17211D] text-base">
-                        {activeJob.status === 'queued' ? 'Dispatched to Queue' : 'Synthesizing Neural Scene'}
-                      </h4>
-                      <p className="mt-1 text-xs text-slate-600 max-w-xs mx-auto">
-                        {activeJob.progressMessage || 'Processing frame latent variables...'}
-                      </p>
-                    </div>
 
-                    <div className="max-w-xs mx-auto">
-                      <div className="flex justify-between text-[11px] font-mono text-slate-500 mb-1 font-semibold">
-                        <span>Progress</span>
-                        <span>{activeJob.progressPercent || 30}%</span>
-                      </div>
-                      <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-emerald-500 to-teal-600 transition-all duration-500"
-                          style={{ width: `${activeJob.progressPercent || 30}%` }}
-                        />
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    {!hasEnoughCredits && (
+                      <Link
+                        href="/pricing"
+                        className="px-3 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-all shadow-xs"
+                      >
+                        Top Up
+                      </Link>
+                    )}
 
-                    <div className="text-[11px] font-mono text-emerald-800 bg-emerald-50 p-2 rounded-lg border border-emerald-300 inline-block font-bold">
-                      Atomic Reservation: {activeJob.reservedCredits} credits locked
-                    </div>
-                  </div>
-                ) : activeJob.status === 'completed' ? (
-                  <div className="space-y-4">
-                    {/* Cinema Result Player */}
-                    <div className="aspect-video rounded-xl overflow-hidden bg-slate-900 relative border border-emerald-500/20 group shadow-xl">
-                      {activeJob.output?.videoUrl ? (
-                        <video
-                          src={activeJob.output.videoUrl}
-                          controls
-                          autoPlay
-                          playsInline
-                          className="w-full h-full object-cover"
-                        />
-                      ) : activeJob.output?.imageUrl ? (
-                        <img
-                          src={activeJob.output.imageUrl}
-                          alt="Generated Image"
-                          className="w-full h-full object-cover"
-                        />
+                    <button
+                      type="button"
+                      onClick={handleStartGeneration}
+                      disabled={isSubmitting || (!prompt.trim() && !referenceImageUrl) || !hasEnoughCredits}
+                      className="flex-1 sm:flex-initial px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 cursor-pointer"
+                    >
+                      {isSubmitting ? (
+                        <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs text-slate-400 p-4">
-                          Audio narration generated and registered to project.
-                        </div>
+                        <Sparkles className="w-4 h-4" />
                       )}
+                      <span>
+                        {!hasEnoughCredits
+                          ? 'Insufficient Credits'
+                          : isSubmitting
+                          ? 'Dispatching Inference...'
+                          : 'Dispatch AI Generation'}
+                      </span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
 
-                      {/* Demo Mode Badge if simulated */}
-                      {activeJob.output?.isDemoSimulated && (
-                        <span className="absolute top-2.5 left-2.5 bg-amber-400 text-amber-950 text-[10px] font-black px-2 py-0.5 rounded shadow">
-                          Demo Mode — AI provider not connected
+                {/* Google Vids Alternative Option Card */}
+                <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 text-xs space-y-2">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-black text-xs flex items-center justify-center shrink-0">
+                        G
+                      </div>
+                      <div>
+                        <p className="font-bold text-slate-800 text-xs">
+                          Google Vids Studio Workspace (External Handoff)
+                        </p>
+                        <p className="text-[11px] text-slate-600">
+                          Google Vids operates as a web-first Google Workspace tool without a public developer API. Refine your prompt here, then launch Google Vids in 1 click.
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleCopyAndLaunchGoogleVids}
+                      className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer"
+                    >
+                      {copiedVids ? <Check className="w-3 h-3" /> : <ExternalLink className="w-3 h-3" />}
+                      <span>{copiedVids ? 'Copied & Opening...' : 'Copy & Open Vids'}</span>
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-[10px] text-blue-800 bg-blue-100/60 px-2 py-1 rounded font-semibold">
+                    <ShieldCheck className="w-3.5 h-3.5 text-blue-700" />
+                    <span>0 Fluvia Credits Charged for Google Vids handoff. All credits remain in your wallet.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT: Active Job Status & Cinema Viewport (5 cols) */}
+              <div className="lg:col-span-5 space-y-5">
+                <div className="p-6 rounded-2xl glass-card border border-emerald-500/20 min-h-[480px] flex flex-col justify-between shadow-xl">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-emerald-500/15 pb-3 mb-4">
+                      <h3 className="font-bold text-[#17211D] text-sm flex items-center gap-2">
+                        <Film className="w-4 h-4 text-emerald-700" />
+                        <span>Live Cinema Viewport</span>
+                      </h3>
+                      {activeJob && (
+                        <span className="text-[11px] font-mono text-slate-500 uppercase font-bold">
+                          Job: {activeJob.id.slice(0, 8)}
                         </span>
                       )}
                     </div>
 
-                    <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs space-y-1">
-                      <div className="flex justify-between font-bold text-[#17211D]">
-                        <span>Generation Succeeded</span>
-                        <span className="text-emerald-700 font-mono">✓ Settled {activeJob.actualCredits} cr</span>
+                    {/* Viewport Content State */}
+                    {!activeJob ? (
+                      <div className="py-24 text-center">
+                        <Video className="w-12 h-12 text-emerald-600 mx-auto mb-3 animate-float" />
+                        <h4 className="font-bold text-[#17211D] text-sm">Studio Ready to Render</h4>
+                        <p className="mt-1 text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
+                          Enter your prompt or load one of our live productive templates on the left to dispatch a 15-credit generation.
+                        </p>
                       </div>
-                      <p className="text-slate-600 text-[11px] line-clamp-2">
-                        {activeJob.progressMessage || 'Finished with temporal consistency.'}
+                    ) : activeJob.status === 'queued' || activeJob.status === 'processing' ? (
+                      <div className="py-16 text-center space-y-4">
+                        <div className="w-16 h-16 rounded-full bg-emerald-100 border-2 border-emerald-500 border-t-transparent mx-auto animate-spin" />
+                        <div>
+                          <h4 className="font-bold text-[#17211D] text-base">
+                            {activeJob.status === 'queued' ? 'Dispatched to Queue' : 'Synthesizing Neural Frames'}
+                          </h4>
+                          <p className="mt-1 text-xs text-slate-600 max-w-xs mx-auto">
+                            {activeJob.progressMessage || 'Processing latent motion tensors with Gemini Omni 1.1 Flash...'}
+                          </p>
+                        </div>
+
+                        <div className="max-w-xs mx-auto">
+                          <div className="flex justify-between text-[11px] font-mono text-slate-500 mb-1 font-semibold">
+                            <span>Inference Progress</span>
+                            <span>{activeJob.progressPercent || 35}%</span>
+                          </div>
+                          <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-emerald-500 to-teal-600 transition-all duration-500"
+                              style={{ width: `${activeJob.progressPercent || 35}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="text-[11px] font-mono text-emerald-800 bg-emerald-50 p-2 rounded-lg border border-emerald-300 inline-block font-bold">
+                          Atomic Reservation: {activeJob.reservedCredits} credits locked
+                        </div>
+                      </div>
+                    ) : activeJob.status === 'completed' ? (
+                      <div className="space-y-4">
+                        {/* Cinema Result Video Player */}
+                        <div className="aspect-video rounded-xl overflow-hidden bg-slate-900 relative border border-emerald-500/20 group shadow-xl">
+                          {activeJob.output?.videoUrl ? (
+                            <video
+                              src={activeJob.output.videoUrl}
+                              controls
+                              autoPlay
+                              loop
+                              playsInline
+                              className="w-full h-full object-cover"
+                            />
+                          ) : activeJob.output?.imageUrl ? (
+                            <img
+                              src={activeJob.output.imageUrl}
+                              alt="Generated Image"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-xs text-slate-400 p-4">
+                              Generated audio narration registered to timeline.
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Success Settlement Badge */}
+                        <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs space-y-1">
+                          <div className="flex justify-between font-bold text-[#17211D]">
+                            <span className="flex items-center gap-1.5 text-emerald-800">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                              <span>Generation Succeeded</span>
+                            </span>
+                            <span className="text-emerald-700 font-mono">
+                              ✓ Settled {activeJob.actualCredits || 15} cr
+                            </span>
+                          </div>
+                          <p className="text-slate-600 text-[11px]">
+                            {activeJob.progressMessage || 'Rendered with high optical fidelity via Google Gemini Omni 1.1 Flash.'}
+                          </p>
+                        </div>
+
+                        {/* Action Buttons: Download Video, Remix, Edit */}
+                        <div className="grid grid-cols-2 gap-2 pt-1">
+                          {activeJob.output?.videoUrl && (
+                            <button
+                              type="button"
+                              onClick={() => handleDownloadVideo(activeJob.output.videoUrl)}
+                              className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20 cursor-pointer transition-colors"
+                            >
+                              <Download className="w-3.5 h-3.5" />
+                              <span>Download MP4</span>
+                            </button>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (activeJob.input?.prompt) setPrompt(activeJob.input.prompt);
+                              if (activeJob.input?.aspectRatio) setAspectRatio(activeJob.input.aspectRatio);
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer transition-colors"
+                          >
+                            <RotateCcw className="w-3.5 h-3.5 text-slate-600" />
+                            <span>Remix Prompt</span>
+                          </button>
+                        </div>
+
+                        {/* Editor CTA button */}
+                        {activeJob.projectId && (
+                          <Link
+                            href={`/editor/${activeJob.projectId}`}
+                            className="w-full py-2.5 bg-slate-900 hover:bg-black text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow transition-all"
+                          >
+                            <Film className="w-3.5 h-3.5" />
+                            <span>Open in Studio Timeline Editor</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="py-16 text-center space-y-3">
+                        <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
+                        <h4 className="font-bold text-[#17211D] text-base">Generation Failed</h4>
+                        <p className="text-xs text-slate-600 max-w-xs mx-auto leading-relaxed">
+                          {activeJob.errorMessage || 'An error occurred during GPU inference.'}
+                        </p>
+                        <div className="text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-lg border border-emerald-300 inline-block font-bold">
+                          Compensating Refund Applied: +{activeJob.reservedCredits || 15} credits returned to wallet
+                        </div>
+                        <div className="pt-2">
+                          <button
+                            type="button"
+                            onClick={handleStartGeneration}
+                            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs cursor-pointer shadow-xs"
+                          >
+                            Retry Generation
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-4 border-t border-emerald-500/15 text-[11px] text-slate-500 flex justify-between font-medium">
+                    <span>Fluvia Flow GPU Inference Cluster</span>
+                    <span>15 Cr / Render</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: LIVE TEMPLATES DISCOVERY GALLERY */}
+          {activeTab === 'templates' && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-black text-[#17211D]">Productive Business & SaaS Video Templates</h2>
+                  <p className="text-xs text-slate-600">
+                    Click any live template below to load its exact cinematic prompts, aspect ratio, and model settings into the studio.
+                  </p>
+                </div>
+                <Link
+                  href="/templates"
+                  className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
+                >
+                  <span>Explore Full Feed</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {productiveTemplates.map((template) => (
+                  <div
+                    key={template.id}
+                    className="p-3.5 rounded-2xl glass-card border border-emerald-500/20 flex flex-col justify-between hover:shadow-lg transition-all group"
+                  >
+                    <div>
+                      <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-900 mb-3">
+                        <img
+                          src={template.thumbnail}
+                          alt={template.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <span className="absolute top-2 left-2 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                          {template.aspect}
+                        </span>
+                        <span className="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                          15 Cr
+                        </span>
+                      </div>
+
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 block mb-1">
+                        {template.category}
+                      </span>
+                      <h4 className="font-black text-sm text-[#17211D] line-clamp-1 mb-1">
+                        {template.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-600 line-clamp-2 leading-relaxed mb-3">
+                        {template.description}
                       </p>
                     </div>
 
-                    {/* Editor CTA button */}
-                    {activeJob.projectId && (
-                      <Link
-                        href={`/editor/${activeJob.projectId}`}
-                        className="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25"
-                      >
-                        <Film className="w-4 h-4" />
-                        <span>Open & Edit in Studio Timeline</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleLoadTemplate(template)}
+                      className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow transition-all cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Use This Template</span>
+                    </button>
                   </div>
-                ) : (
-                  <div className="py-16 text-center space-y-3">
-                    <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
-                    <h4 className="font-bold text-[#17211D] text-base">Generation Failed</h4>
-                    <p className="text-xs text-slate-500 max-w-xs mx-auto">
-                      {activeJob.errorMessage || 'An error occurred during GPU inference.'}
-                    </p>
-                    <div className="text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-lg border border-emerald-300 inline-block font-bold">
-                      Compensating Refund Applied: +{activeJob.reservedCredits} credits returned to wallet
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="pt-4 border-t border-emerald-500/15 text-[11px] text-slate-500 flex justify-between font-medium">
-                <span>Fluvia Flow GPU Inference Cluster</span>
-                <span>Latency: ~1.2s</span>
+                ))}
               </div>
             </div>
-          </div>
+          )}
+
+          {/* TAB 3: GENERATION HISTORY */}
+          {activeTab === 'history' && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-black text-[#17211D]">Your Generation History</h2>
+                  <p className="text-xs text-slate-600">
+                    Review and download all video jobs rendered under your account.
+                  </p>
+                </div>
+                <button
+                  onClick={fetchUserJobs}
+                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-2xs cursor-pointer flex items-center gap-1"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Refresh</span>
+                </button>
+              </div>
+
+              {isLoadingJobs ? (
+                <div className="py-16 text-center">
+                  <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                  <p className="text-xs text-slate-500">Loading your generation history...</p>
+                </div>
+              ) : userJobs.length === 0 ? (
+                <div className="py-20 text-center glass-card rounded-2xl border border-emerald-500/20 p-8">
+                  <Film className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                  <h4 className="font-bold text-[#17211D] text-sm">No Generations Dispatched Yet</h4>
+                  <p className="text-xs text-slate-500 max-w-xs mx-auto mt-1 mb-4">
+                    Head to the Studio Viewport or choose a template to create your first AI video.
+                  </p>
+                  <button
+                    onClick={() => setActiveTab('studio')}
+                    className="px-4 py-2 bg-emerald-600 text-white font-bold rounded-xl text-xs shadow"
+                  >
+                    Launch Studio
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {userJobs.map((job) => (
+                    <div
+                      key={job.id}
+                      className="p-4 rounded-2xl glass-card border border-emerald-500/20 flex flex-col justify-between space-y-3 shadow-xs"
+                    >
+                      <div>
+                        {/* Video / Image preview */}
+                        <div className="aspect-video rounded-xl overflow-hidden bg-slate-900 relative border border-slate-200 mb-2">
+                          {job.output?.videoUrl ? (
+                            <video
+                              src={job.output.videoUrl}
+                              controls
+                              playsInline
+                              className="w-full h-full object-cover"
+                            />
+                          ) : job.output?.imageUrl ? (
+                            <img
+                              src={job.output.imageUrl}
+                              alt="Generated output"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
+                              {job.status === 'processing' ? 'Generating...' : job.status}
+                            </div>
+                          )}
+
+                          <span
+                            className={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded shadow ${
+                              job.status === 'completed'
+                                ? 'bg-emerald-600 text-white'
+                                : job.status === 'failed'
+                                ? 'bg-rose-600 text-white'
+                                : 'bg-amber-500 text-white'
+                            }`}
+                          >
+                            {job.status.toUpperCase()}
+                          </span>
+
+                          <span className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-md text-white text-[10px] font-mono px-1.5 py-0.5 rounded">
+                            {job.input?.aspectRatio || '16:9'}
+                          </span>
+                        </div>
+
+                        <p className="text-xs font-semibold text-[#17211D] line-clamp-2 leading-relaxed">
+                          {job.input?.prompt || 'No prompt provided'}
+                        </p>
+
+                        <div className="flex items-center justify-between text-[10px] text-slate-400 mt-2 font-mono">
+                          <span>{new Date(job.createdAt).toLocaleDateString()}</span>
+                          <span>{job.actualCredits || job.estimatedCredits || 15} Credits</span>
+                        </div>
+                      </div>
+
+                      {/* History actions */}
+                      <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                        {job.output?.videoUrl && (
+                          <button
+                            type="button"
+                            onClick={() => handleDownloadVideo(job.output.videoUrl)}
+                            className="flex-1 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
+                          >
+                            <Download className="w-3 h-3" />
+                            <span>Download</span>
+                          </button>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveJob(job);
+                            setActiveTab('studio');
+                          }}
+                          className="flex-1 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
+                        >
+                          <Play className="w-3 h-3" />
+                          <span>View</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (job.input?.prompt) setPrompt(job.input.prompt);
+                            if (job.input?.aspectRatio) setAspectRatio(job.input.aspectRatio);
+                            setActiveTab('studio');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] cursor-pointer"
+                          title="Remix prompt"
+                        >
+                          <RotateCcw className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </main>
       </div>
     </div>
@@ -555,11 +1202,13 @@ function CreateWorkspaceContent() {
 
 export default function CreateWorkspacePage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
       <CreateWorkspaceContent />
     </Suspense>
   );

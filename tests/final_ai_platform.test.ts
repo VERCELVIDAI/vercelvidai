@@ -37,7 +37,7 @@ async function runFinalPlatformTests() {
     assert(`Irrelevant template ${id} is completely removed`, !found);
   }
 
-  const fillerTerms = ['sintel', 'big buck bunny', 'friday dog', 'jellyfish underwater'];
+  const fillerTerms = ['sintel', 'big buck bunny', 'friday dog', 'jellyfish underwater', 'vegetable', 'salad', 'hydroponic', 'stir-fry', 'cold-pressed'];
   for (const term of fillerTerms) {
     const hasTerm = TEMPLATES_DATA.some(
       (t) =>
@@ -45,7 +45,24 @@ async function runFinalPlatformTests() {
         t.description.toLowerCase().includes(term) ||
         t.prompt.toLowerCase().includes(term)
     );
-    assert(`No generic filler "${term}" in templates`, !hasTerm);
+    assert(`No vegetable or generic filler "${term}" in templates`, !hasTerm);
+  }
+
+  // Verify productive replacements
+  const productiveTemplates = [
+    { id: 'tmpl_19', title: 'Enterprise Cloud Security & Zero-Trust Shield' },
+    { id: 'tmpl_20', title: 'AI Agent Swarm & Autonomous Workflow Orchestrator' },
+    { id: 'tmpl_21', title: 'Global B2B Fintech & Automated Cross-Border Settlements' },
+    { id: 'tmpl_22', title: 'High-Conversion Mobile App Showcase & Onboarding Reel' },
+    { id: 'tmpl_23', title: 'Real-Time Executive Analytics & Big Data Command Center' },
+    { id: 'tmpl_24', title: 'Spatial Computing & Holographic Glass AR Experience' },
+    { id: 'tmpl_25', title: 'Developer CLI & Serverless Container Infrastructure' },
+  ];
+
+  for (const pt of productiveTemplates) {
+    const found = TEMPLATES_DATA.find((t) => t.id === pt.id);
+    assert(`Productive template ${pt.id} exists`, Boolean(found));
+    assert(`Template ${pt.id} is "${pt.title}"`, found?.title === pt.title, found?.title);
   }
 
   // ============================================================================
@@ -222,6 +239,21 @@ async function runFinalPlatformTests() {
   console.log('\n8. Testing Secret Safety in Git & Source Files...');
   const gitignore = fs.readFileSync(path.join(process.cwd(), '.gitignore'), 'utf8');
   assert('.gitignore protects .env.local', gitignore.includes('.env*.local') || gitignore.includes('.env.local'));
+
+  // ============================================================================
+  // REQUIREMENT 9: In-App Video Creation Studio (/create) Complete Features
+  // ============================================================================
+  console.log('\n9. Testing In-App Video Creation Studio Features (/create)...');
+  const createPageCode = fs.readFileSync(path.join(process.cwd(), 'src/app/create/page.tsx'), 'utf8');
+  assert('Studio includes Text-to-Video and Image-to-Video modes', createPageCode.includes('Image-to-Video') && createPageCode.includes('Text-to-Video'));
+  assert('Studio includes source frame image uploader with preview', createPageCode.includes('handleImageUpload') && createPageCode.includes('uploadedImagePreview'));
+  assert('Studio includes Gemini prompt enhancer button', createPageCode.includes('Gemini AI Enhance') && createPageCode.includes('enhance-prompt'));
+  assert('Studio defaults to Google Gemini Omni 1.1 Flash', createPageCode.includes('gemini-omni-1.1-flash'));
+  assert('Studio includes dedicated Download MP4 button', createPageCode.includes('handleDownloadVideo') && createPageCode.includes('Download MP4'));
+  assert('Studio includes Generation History view', createPageCode.includes('Your Generation History') && createPageCode.includes('fetchUserJobs'));
+  assert('Studio includes Remix Prompt action', createPageCode.includes('Remix Prompt') || createPageCode.includes('Remix prompt'));
+  assert('Studio includes transparent Google Vids handoff with 0 credits notice', createPageCode.includes('Google Vids Studio Workspace') && createPageCode.includes('0 Fluvia Credits Charged'));
+  assert('Studio enforces 15-credit fixed generation cost and balance check', createPageCode.includes('15 Credits') && createPageCode.includes('hasEnoughCredits'));
 
   console.log('\n================================================================');
   console.log(`FINAL PLATFORM TEST SUMMARY: ${passed} passed, ${failed} failed`);

@@ -4,14 +4,14 @@ import { BRAND } from '@/lib/brand';
 export const metadata: Metadata = {
   title: 'Video Templates & Preset Timelines',
   description:
-    'Explore 26+ cinematic AI video templates for farm fresh vegetables, commercials, luxury brand films, skincare reels, and social media campaigns.',
+    'Explore 26+ cinematic AI video templates for enterprise SaaS, fintech commercials, luxury brand films, mobile reels, and cloud tech campaigns.',
   alternates: {
     canonical: `${BRAND.siteUrl}/templates`,
   },
   openGraph: {
     title: 'Fluvia Flow Video Templates — Pre-built Timelines Ready for Remix',
     description:
-      'Browse professional multi-track video templates for commercials, product showcases, organic vegetables, and social reels.',
+      'Browse professional multi-track video templates for enterprise SaaS, product showcases, fintech commercials, and social reels.',
     url: `${BRAND.siteUrl}/templates`,
     images: [
       {

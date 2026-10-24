@@ -149,7 +149,7 @@ export function PublishTemplateModal({
                 <option value="Pet & Wildlife">Pet & Wildlife</option>
                 <option value="Travel & Landscapes">Travel & Landscapes</option>
                 <option value="Fashion & Lifestyle">Fashion & Lifestyle</option>
-                <option value="Farm Fresh Vegetables & Organic Food">Farm Fresh Vegetables & Organic Food</option>
+                <option value="Enterprise Cloud & SaaS Infrastructure">Enterprise Cloud & SaaS Infrastructure</option>
                 <option value="Storytelling & Viral Shorts">Storytelling & Viral Shorts</option>
               </select>
             </div>

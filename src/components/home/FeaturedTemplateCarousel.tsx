@@ -12,7 +12,7 @@ export function FeaturedTemplateCarousel() {
   const router = useRouter();
   const [previewTemplate, setPreviewTemplate] = useState<VideoTemplate | null>(null);
 
-  // Curate top trending and new featured templates including vegetable video demo
+  // Curate top trending and new featured templates including enterprise SaaS & fintech demos
   const featured = [
     TEMPLATES_DATA.find((t) => t.id === 'tmpl_19'),
     TEMPLATES_DATA.find((t) => t.id === 'tmpl_01'),
