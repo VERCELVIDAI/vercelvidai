@@ -48,10 +48,10 @@ export default function SubscriptionManagementPage() {
   const subscription = billing?.subscription;
 
   return (
-    <div className="min-h-screen text-[#17211D] flex">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-[#17211D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}

@@ -42,6 +42,17 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     return () => window.removeEventListener('fluvia-toggle-mobile-sidebar', handleToggle);
   }, []);
 
+  // Lock background scrolling when mobile drawer is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [isMobileOpen]);
+
   // Close drawer on route change
   useEffect(() => {
     setIsMobileOpen(false);
@@ -76,7 +87,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
 
   const renderContent = (isDrawer: boolean) => (
     <>
-      <div className="flex flex-col flex-1 overflow-y-auto">
+      <div className="flex flex-col flex-1 overflow-y-auto overscroll-contain">
         {/* Brand header */}
         <div className="p-4 border-b border-emerald-500/15 flex items-center justify-between">
           <Logo size="sm" showTagline={false} />
@@ -266,7 +277,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
   return (
     <>
       {/* Desktop Persistent Sidebar */}
-      <aside className="hidden md:flex w-64 flex-col justify-between shrink-0 h-screen sticky top-0 select-none border-r border-emerald-500/15 glass-sidebar transition-colors duration-200 text-[#17211D]">
+      <aside className="hidden md:flex w-64 flex-col justify-between shrink-0 h-full select-none border-r border-emerald-500/15 glass-sidebar transition-colors duration-200 text-[#17211D]">
         {renderContent(false)}
       </aside>
 

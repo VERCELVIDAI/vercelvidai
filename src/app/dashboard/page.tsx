@@ -94,6 +94,18 @@ export default function DashboardPage() {
     fetchDashboardData();
   }, []);
 
+  // Lock background scrolling when rename or delete modal is active
+  useEffect(() => {
+    const isModalOpen = Boolean(renameModal || deleteModal);
+    if (isModalOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [renameModal, deleteModal]);
+
   const handleQuickCreate = () => {
     if (!quickPrompt.trim()) {
       router.push(`/create?mode=${quickMode}`);
@@ -162,9 +174,9 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex text-[#17211D]">
+      <div className="h-screen h-[100dvh] w-full bg-[#F8FAFC] flex text-[#17211D] overflow-hidden">
         {/* Placeholder sidebar */}
-        <div className="hidden md:block w-64 border-r border-emerald-500/15 bg-white/70 p-4 space-y-4">
+        <div className="hidden md:block w-64 h-full shrink-0 border-r border-emerald-500/15 bg-white/70 p-4 space-y-4">
           <div className="h-8 w-32 bg-emerald-100/60 rounded-lg animate-pulse" />
           <div className="space-y-2 pt-6">
             <div className="h-4 w-24 bg-slate-200/70 rounded animate-pulse" />
@@ -175,7 +187,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Placeholder content */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 h-full flex flex-col min-w-0 overflow-hidden">
           <div className="h-16 border-b border-emerald-500/15 bg-white/60 px-6 flex items-center justify-between">
             <div className="h-6 w-32 bg-slate-200/70 rounded-md animate-pulse" />
             <div className="h-8 w-24 bg-emerald-100/60 rounded-full animate-pulse" />
@@ -183,7 +195,7 @@ export default function DashboardPage() {
           <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
             <div className="h-28 rounded-3xl bg-emerald-50/50 border border-emerald-500/20 animate-pulse" />
             <div className="h-32 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 min-w-0">
               <div className="h-64 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
               <div className="h-64 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
               <div className="h-64 rounded-2xl bg-white border border-emerald-500/15 animate-pulse" />
@@ -230,12 +242,12 @@ export default function DashboardPage() {
   const plan = data?.subscription?.plan || { name: 'Free Explorer' };
 
   return (
-    <div className="min-h-screen flex transition-colors duration-200 text-[#17211D]">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-[#17211D] relative">
       {/* Sidebar */}
       <Sidebar userRole={user.role} credits={credits} />
 
       {/* Main content viewport */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -244,9 +256,9 @@ export default function DashboardPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-4 sm:p-8 max-w-7xl mx-auto w-full space-y-8 sm:space-y-10 text-left">
+        <main className="flex-1 p-4 sm:p-8 max-w-7xl mx-auto w-full space-y-8 sm:space-y-10 text-left min-w-0">
           {/* Greeting Banner & Available Credits */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-50 via-teal-50/50 to-pink-50/40 p-5 sm:p-6 rounded-3xl border border-emerald-500/20 relative overflow-hidden shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-50 via-teal-50/50 to-pink-50/40 p-5 sm:p-6 rounded-3xl border border-emerald-500/20 relative overflow-hidden shadow-sm min-w-0">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
@@ -275,7 +287,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Large "Create with AI" Quick Composer */}
-          <div className="p-6 rounded-2xl glass-card border border-emerald-500/20 shadow-xl">
+          <div className="p-4 sm:p-6 rounded-2xl glass-card border border-emerald-500/20 shadow-xl min-w-0">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-emerald-600" />
@@ -313,7 +325,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 min-w-0">
               <input
                 type="text"
                 value={quickPrompt}
@@ -325,7 +337,7 @@ export default function DashboardPage() {
                     ? 'E.g. Photorealistic futuristic sneaker floating in crystalline water...'
                     : 'E.g. Enter voice narration dialogue...'
                 }
-                className="flex-1 glass-input text-[#17211D] px-4 py-3 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm shadow-xs"
+                className="flex-1 min-w-0 glass-input text-[#17211D] px-4 py-3 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm shadow-xs"
               />
 
               <button
@@ -343,7 +355,7 @@ export default function DashboardPage() {
           {/* Quick-Start Workflow Tiles */}
           <div>
             <h2 className="text-base font-bold text-[#17211D] mb-4">Quick Workflows</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 min-w-0">
               {[
                 { title: 'Text to Video', desc: 'Direct prompt to cinematic cut', icon: Video, color: 'text-emerald-700', bg: 'bg-emerald-100', href: '/create?mode=video' },
                 { title: 'Script to Storyboard', desc: 'Paste text or article URL', icon: Sparkles, color: 'text-teal-700', bg: 'bg-teal-100', href: '/create?mode=video&preset=script' },
@@ -524,8 +536,8 @@ export default function DashboardPage() {
               ) : (
                 <div className="divide-y divide-emerald-500/10">
                   {jobs.slice(0, 5).map((job) => (
-                    <div key={job.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                      <div className="flex items-center gap-3">
+                    <div key={job.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs min-w-0">
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                           job.status === 'completed'
                             ? 'bg-emerald-100 text-emerald-800'
@@ -535,8 +547,8 @@ export default function DashboardPage() {
                         }`}>
                           <Sparkles className="w-4 h-4" />
                         </div>
-                        <div>
-                          <p className="font-bold text-[#17211D] line-clamp-1 max-w-md">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-bold text-[#17211D] line-clamp-1">
                             {job.input?.prompt || 'AI Generation Task'}
                           </p>
                           <div className="flex items-center gap-2 text-slate-500 text-[11px] mt-0.5">

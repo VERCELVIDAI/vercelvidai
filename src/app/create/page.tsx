@@ -346,10 +346,10 @@ function CreateWorkspaceContent() {
   );
 
   return (
-    <div className="min-h-screen flex transition-colors duration-200 text-[#17211D]">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-[#17211D] relative">
       <Sidebar credits={credits} userRole={authData?.user?.role} />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative">
         <DashboardHeader
           displayName={authData?.user?.displayName}
           avatarUrl={authData?.user?.avatarUrl}

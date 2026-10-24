@@ -51,8 +51,8 @@ export function DashboardHeader({
   };
 
   return (
-    <header className="h-16 glass-navbar border-b border-emerald-500/15 px-3 sm:px-6 flex items-center justify-between gap-2 sticky top-0 z-40 transition-colors duration-200 text-[#17211D]">
-      <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
+    <header className="h-16 glass-navbar border-b border-emerald-500/15 px-3 sm:px-6 flex items-center justify-between gap-2 sticky top-0 z-40 shrink-0 w-full transition-colors duration-200 text-[#17211D]">
+      <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1">
         {/* Mobile Sidebar Hamburger Trigger */}
         <button
           type="button"
@@ -67,9 +67,9 @@ export function DashboardHeader({
           {workspaceName}
         </span>
         <span className="hidden sm:inline-block opacity-40">•</span>
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-emerald-700 font-semibold">
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-emerald-700 font-semibold min-w-0 truncate">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>All AI Inference Nodes Operational</span>
+          <span className="truncate">All AI Inference Nodes Operational</span>
         </div>
       </div>
 
