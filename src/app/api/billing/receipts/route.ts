@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('search')?.toLowerCase() || '';
 
+    dbStore.recoverMissingPurchaseDocuments();
     let receipts = dbStore.getReceipts(current.user.id, current.workspace.id);
 
     if (search) {

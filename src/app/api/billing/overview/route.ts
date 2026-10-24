@@ -26,6 +26,11 @@ export async function GET() {
       .reduce((sum, l) => sum + Math.abs(l.amount), 0);
 
     const orders = dbStore.getPayUOrders(user.id, workspace.id);
+    for (const o of orders) {
+      if (o.status === 'success' && (!o.invoiceId || !o.receiptId)) {
+        dbStore.ensureInvoiceAndReceiptForOrder(o);
+      }
+    }
     const successfulOrders = orders.filter((o) => o.status === 'success');
     const totalSpentInr = successfulOrders.reduce((sum, o) => sum + o.totalAmount, 0);
 

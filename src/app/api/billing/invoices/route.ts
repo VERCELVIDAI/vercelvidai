@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get('search')?.toLowerCase() || '';
     const status = searchParams.get('status') || '';
 
+    dbStore.recoverMissingPurchaseDocuments();
     let invoices = dbStore.getInvoices(current.user.id, current.workspace.id);
 
     if (status && status !== 'all') {

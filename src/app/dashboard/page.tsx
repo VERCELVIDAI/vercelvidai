@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { DashboardHeader } from '@/components/dashboard/Header';
+import { GoogleVidsCard } from '@/components/dashboard/GoogleVidsCard';
+import { GoogleVidsPromoPopup } from '@/components/dashboard/GoogleVidsPromoPopup';
 import {
   Sparkles,
   Video,
@@ -285,6 +287,9 @@ export default function DashboardPage() {
               </Link>
             </div>
           </div>
+
+          {/* Featured Google Vids Studio Card */}
+          <GoogleVidsCard />
 
           {/* Large "Create with AI" Quick Composer */}
           <div className="p-4 sm:p-6 rounded-2xl glass-card border border-emerald-500/20 shadow-xl min-w-0">
@@ -652,6 +657,9 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Google Vids Promotional Popup */}
+      <GoogleVidsPromoPopup />
     </div>
   );
 }

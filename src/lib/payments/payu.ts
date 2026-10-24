@@ -920,11 +920,13 @@ export async function fulfillPayUPayment(
 
     const existingSub = dbStore.getUserSubscription(order.userId).subscription;
     if (existingSub) {
-      existingSub.planId = order.itemPlanOrPackId;
-      existingSub.status = 'active';
-      existingSub.providerSubscriptionId = `payu_sub_${order.txnid}`;
-      existingSub.currentPeriodStart = now;
-      existingSub.currentPeriodEnd = periodEnd;
+      dbStore.updateSubscription(existingSub.id, {
+        planId: order.itemPlanOrPackId,
+        status: 'active',
+        providerSubscriptionId: `payu_sub_${order.txnid}`,
+        currentPeriodStart: now,
+        currentPeriodEnd: periodEnd,
+      });
     } else {
       dbStore.createSubscription({
         userId: order.userId,
@@ -937,6 +939,17 @@ export async function fulfillPayUPayment(
       });
     }
   }
+
+  // 1.4. Record payment in universal payments table
+  dbStore.createPayment({
+    userId: order.userId,
+    orderId: order.id,
+    providerPaymentId: mihpayid,
+    amountInr: order.totalAmount,
+    currency: 'INR',
+    status: 'success',
+    paymentType: order.paymentType,
+  });
 
   // 1.5. Complete coupon redemption atomically if coupon was applied
   if (order.couponCode) {

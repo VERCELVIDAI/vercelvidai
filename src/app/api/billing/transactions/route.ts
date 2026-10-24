@@ -18,6 +18,11 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10', 10);
 
     let orders = dbStore.getPayUOrders(current.user.id, current.workspace.id);
+    for (const o of orders) {
+      if (o.status === 'success' && (!o.invoiceId || !o.receiptId)) {
+        dbStore.ensureInvoiceAndReceiptForOrder(o);
+      }
+    }
 
     if (status && status !== 'all') {
       orders = orders.filter((o) => o.status === status);

@@ -1171,6 +1171,233 @@ class Store {
         isGstRegistered: true,
       };
     }
+
+    // Recover and verify document integrity for historical and new purchases
+    this.ensurePurchaseDocumentIntegrity(schema);
+  }
+
+  private ensurePurchaseDocumentIntegrity(schema: DatabaseSchema): void {
+    if (!schema.invoices) schema.invoices = [];
+    if (!schema.receipts) schema.receipts = [];
+
+    // 1. Recover missing invoices & receipts for verified PayU orders
+    for (const order of schema.payuOrders || []) {
+      if (order.status === 'success') {
+        let inv = order.invoiceId ? schema.invoices.find((i) => i.id === order.invoiceId) : undefined;
+        if (!inv) {
+          inv = schema.invoices.find((i) => i.orderId === order.id || (order.txnid && i.txnid === order.txnid));
+        }
+
+        if (!inv) {
+          const supplier = schema.billingSettings;
+          const invoiceNumber = `INV-${new Date().getFullYear()}-${(schema.invoices.length + 1).toString().padStart(4, '0')}`;
+          const now = order.verifiedAt || order.updatedAt || order.createdAt || new Date().toISOString();
+          const taxBreakdown = order.taxBreakdown || {
+            baseAmount: order.baseAmount,
+            taxRate: 18,
+            taxAmount: order.taxAmount,
+            cgstRate: 9,
+            cgstAmount: order.taxAmount / 2,
+            sgstRate: 9,
+            sgstAmount: order.taxAmount / 2,
+            igstRate: 0,
+            igstAmount: 0,
+            isInterState: false,
+            placeOfSupply: order.customerDetails?.state || 'Delhi',
+          };
+
+          const newInv: Invoice = {
+            id: 'inv_' + Math.random().toString(36).substring(2, 11),
+            invoiceNumber,
+            orderId: order.id,
+            txnid: order.txnid,
+            userId: order.userId,
+            workspaceId: order.workspaceId,
+            supplier,
+            customer: order.customerDetails || {
+              name: 'Valued Customer',
+              email: 'creator@fluviaflow.online',
+              phone: '9999999999',
+              state: 'Delhi',
+            },
+            couponId: order.couponId,
+            couponCode: order.couponCode,
+            discountAmount: order.discountAmount,
+            originalBaseAmount: order.originalBaseAmount,
+            items: [
+              {
+                id: 'itm_1',
+                description: order.productInfo || 'Fluvia Flow Subscription / Creative Credits',
+                hsnSacCode: '998314',
+                quantity: 1,
+                unitPrice: order.originalBaseAmount || order.baseAmount,
+                taxableValue: order.baseAmount,
+                gstRate: taxBreakdown.taxRate,
+                cgstAmount: taxBreakdown.cgstAmount,
+                sgstAmount: taxBreakdown.sgstAmount,
+                igstAmount: taxBreakdown.igstAmount,
+                totalAmount: order.totalAmount,
+              },
+            ],
+            baseAmount: order.baseAmount,
+            taxAmount: order.taxAmount,
+            cgstAmount: taxBreakdown.cgstAmount,
+            sgstAmount: taxBreakdown.sgstAmount,
+            igstAmount: taxBreakdown.igstAmount,
+            totalAmount: order.totalAmount,
+            currency: 'INR',
+            status: 'paid',
+            issueDate: now,
+            dueDate: now,
+            paymentDate: now,
+            payuPaymentId: order.payuMihpayid,
+            terms: 'Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.',
+            notes: order.couponCode
+              ? `Thank you for your business. Applied Coupon: ${order.couponCode}. Computer-generated tax invoice.`
+              : 'Thank you for your business. Computer-generated tax invoice.',
+            createdAt: now,
+            updatedAt: now,
+          };
+          schema.invoices.push(newInv);
+          inv = newInv;
+        }
+
+        order.invoiceId = inv.id;
+        order.invoiceNumber = inv.invoiceNumber;
+
+        let rcp = order.receiptId ? schema.receipts.find((r) => r.id === order.receiptId) : undefined;
+        if (!rcp) {
+          rcp = schema.receipts.find((r) => r.orderId === order.id || (order.txnid && r.txnid === order.txnid));
+        }
+
+        if (!rcp) {
+          const receiptNumber = `RCP-${new Date().getFullYear()}-${(schema.receipts.length + 1).toString().padStart(4, '0')}`;
+          const now = order.verifiedAt || order.updatedAt || order.createdAt || new Date().toISOString();
+          const newRcp: PaymentReceipt = {
+            id: 'rcp_' + Math.random().toString(36).substring(2, 11),
+            receiptNumber,
+            orderId: order.id,
+            txnid: order.txnid,
+            invoiceId: inv.id,
+            invoiceNumber: inv.invoiceNumber,
+            userId: order.userId,
+            workspaceId: order.workspaceId,
+            customerName: order.customerDetails?.name || 'Valued Customer',
+            customerEmail: order.customerDetails?.email || 'creator@fluviaflow.online',
+            couponCode: order.couponCode,
+            discountAmount: order.discountAmount,
+            originalAmount: order.originalBaseAmount,
+            amountReceived: order.totalAmount,
+            currency: 'INR',
+            paymentMethod: order.payuPaymentMode || 'UPI / Card',
+            payuMihpayid: order.payuMihpayid,
+            payuBankRefNum: order.payuBankRefNum,
+            productPurchased: order.productInfo || 'Fluvia Flow Subscription / Creative Credits',
+            paymentDate: now,
+            paymentStatus: 'verified_success',
+            verificationReference: `PAYU-VERIFIED-${order.txnid}`,
+            footerNotice: 'Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.',
+            createdAt: now,
+          };
+          schema.receipts.push(newRcp);
+          rcp = newRcp;
+        }
+
+        order.receiptId = rcp.id;
+        order.receiptNumber = rcp.receiptNumber;
+      }
+    }
+
+    // 2. Recover missing documents for legacy payments (e.g. pay_starter_1)
+    for (const payment of schema.payments || []) {
+      if (payment.status === 'success') {
+        let inv = schema.invoices.find((i) => i.orderId === payment.orderId || i.id === payment.orderId);
+        if (!inv) {
+          const supplier = schema.billingSettings;
+          const invoiceNumber = `INV-${new Date().getFullYear()}-${(schema.invoices.length + 1).toString().padStart(4, '0')}`;
+          const now = payment.createdAt || new Date().toISOString();
+          const user = schema.profiles?.find((p) => p.id === payment.userId);
+          const newInv: Invoice = {
+            id: 'inv_' + Math.random().toString(36).substring(2, 11),
+            invoiceNumber,
+            orderId: payment.orderId || payment.id,
+            txnid: payment.providerPaymentId || `TXN_${payment.id}`,
+            userId: payment.userId,
+            workspaceId: 'ws_creator_demo_1',
+            supplier,
+            customer: {
+              name: user?.displayName || 'Aria Vance',
+              email: user?.email || 'creator@fluviaflow.online',
+              phone: '9999999999',
+              state: 'Delhi',
+            },
+            items: [
+              {
+                id: 'itm_1',
+                description: payment.paymentType === 'subscription' ? 'Fluvia Starter Plan Subscription' : 'Creative Credits',
+                hsnSacCode: '998314',
+                quantity: 1,
+                unitPrice: payment.amountInr,
+                taxableValue: payment.amountInr,
+                gstRate: 0,
+                cgstAmount: 0,
+                sgstAmount: 0,
+                igstAmount: 0,
+                totalAmount: payment.amountInr,
+              },
+            ],
+            baseAmount: payment.amountInr,
+            taxAmount: 0,
+            cgstAmount: 0,
+            sgstAmount: 0,
+            igstAmount: 0,
+            totalAmount: payment.amountInr,
+            currency: 'INR',
+            status: 'paid',
+            issueDate: now,
+            dueDate: now,
+            paymentDate: now,
+            payuPaymentId: payment.providerPaymentId,
+            terms: 'Payment received. Subject to terms at fluviaflow.ai/terms.',
+            notes: 'Thank you for your business. Official tax invoice.',
+            createdAt: now,
+            updatedAt: now,
+          };
+          schema.invoices.push(newInv);
+          inv = newInv;
+        }
+
+        let rcp = schema.receipts.find((r) => r.orderId === payment.orderId || r.id === payment.orderId);
+        if (!rcp && inv) {
+          const receiptNumber = `RCP-${new Date().getFullYear()}-${(schema.receipts.length + 1).toString().padStart(4, '0')}`;
+          const now = payment.createdAt || new Date().toISOString();
+          const user = schema.profiles?.find((p) => p.id === payment.userId);
+          const newRcp: PaymentReceipt = {
+            id: 'rcp_' + Math.random().toString(36).substring(2, 11),
+            receiptNumber,
+            orderId: payment.orderId || payment.id,
+            txnid: payment.providerPaymentId || `TXN_${payment.id}`,
+            invoiceId: inv.id,
+            invoiceNumber: inv.invoiceNumber,
+            userId: payment.userId,
+            workspaceId: inv.workspaceId,
+            customerName: user?.displayName || 'Aria Vance',
+            customerEmail: user?.email || 'creator@fluviaflow.online',
+            amountReceived: payment.amountInr,
+            currency: 'INR',
+            paymentMethod: 'Online Payment',
+            payuMihpayid: payment.providerPaymentId,
+            productPurchased: payment.paymentType === 'subscription' ? 'Fluvia Starter Plan Subscription' : 'Creative Credits',
+            paymentDate: now,
+            paymentStatus: 'verified_success',
+            verificationReference: `VERIFIED-${payment.id}`,
+            footerNotice: 'Official payment receipt.',
+            createdAt: now,
+          };
+          schema.receipts.push(newRcp);
+        }
+      }
+    }
   }
 
   public forceReload(): DatabaseSchema {
@@ -2275,6 +2502,20 @@ class Store {
     return db.creditPacks[idx];
   }
 
+  updateSubscription(id: string, updates: Partial<Subscription>): Subscription {
+    const db = this.load();
+    const idx = db.subscriptions.findIndex((s) => s.id === id);
+    if (idx === -1) {
+      throw new Error(`Subscription ${id} not found`);
+    }
+    db.subscriptions[idx] = {
+      ...db.subscriptions[idx],
+      ...updates,
+    };
+    this.save(db);
+    return db.subscriptions[idx];
+  }
+
   getUserSubscription(userId: string): { subscription?: Subscription; plan?: Plan } {
     const db = this.load();
     const sub = db.subscriptions.find((s) => s.userId === userId && s.status === 'active');
@@ -2637,10 +2878,11 @@ class Store {
 
   getPayUOrders(userId?: string, workspaceId?: string): PayUPaymentOrder[] {
     let list = this.load().payuOrders;
-    if (userId) {
+    if (userId && workspaceId) {
+      list = list.filter((o) => o.userId === userId || o.workspaceId === workspaceId);
+    } else if (userId) {
       list = list.filter((o) => o.userId === userId);
-    }
-    if (workspaceId) {
+    } else if (workspaceId) {
       list = list.filter((o) => o.workspaceId === workspaceId);
     }
     return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -2687,10 +2929,11 @@ class Store {
 
   getInvoices(userId?: string, workspaceId?: string): Invoice[] {
     let list = this.load().invoices;
-    if (userId) {
+    if (userId && workspaceId) {
+      list = list.filter((i) => i.userId === userId || i.workspaceId === workspaceId);
+    } else if (userId) {
       list = list.filter((i) => i.userId === userId);
-    }
-    if (workspaceId) {
+    } else if (workspaceId) {
       list = list.filter((i) => i.workspaceId === workspaceId);
     }
     return list.sort((a, b) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime());
@@ -2736,10 +2979,11 @@ class Store {
 
   getReceipts(userId?: string, workspaceId?: string): PaymentReceipt[] {
     let list = this.load().receipts;
-    if (userId) {
+    if (userId && workspaceId) {
+      list = list.filter((r) => r.userId === userId || r.workspaceId === workspaceId);
+    } else if (userId) {
       list = list.filter((r) => r.userId === userId);
-    }
-    if (workspaceId) {
+    } else if (workspaceId) {
       list = list.filter((r) => r.workspaceId === workspaceId);
     }
     return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -2747,6 +2991,284 @@ class Store {
 
   getAllReceipts(): PaymentReceipt[] {
     return this.load().receipts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  // ==========================================
+  // PURCHASE RECOVERY & DOCUMENT INTEGRITY
+  // ==========================================
+  ensureInvoiceAndReceiptForOrder(order: PayUPaymentOrder): { invoice?: Invoice; receipt?: PaymentReceipt } {
+    if (order.status !== 'success') {
+      return {};
+    }
+
+    const db = this.load();
+    let updated = false;
+
+    // 1. Resolve or generate Invoice
+    let invoice = order.invoiceId ? db.invoices.find((i) => i.id === order.invoiceId) : undefined;
+    if (!invoice) {
+      invoice = db.invoices.find((i) => i.orderId === order.id || (order.txnid && i.txnid === order.txnid));
+    }
+
+    if (!invoice) {
+      const supplier = this.getBillingSettings();
+      const invoiceNumber = this.getNextInvoiceNumber();
+      const now = order.verifiedAt || order.updatedAt || order.createdAt || new Date().toISOString();
+      const taxBreakdown = order.taxBreakdown || {
+        baseAmount: order.baseAmount,
+        taxRate: 18,
+        taxAmount: order.taxAmount,
+        cgstRate: 9,
+        cgstAmount: order.taxAmount / 2,
+        sgstRate: 9,
+        sgstAmount: order.taxAmount / 2,
+        igstRate: 0,
+        igstAmount: 0,
+        isInterState: false,
+        placeOfSupply: order.customerDetails?.state || 'Delhi',
+      };
+
+      const newInv: Invoice = {
+        id: 'inv_' + Math.random().toString(36).substring(2, 11),
+        invoiceNumber,
+        orderId: order.id,
+        txnid: order.txnid,
+        userId: order.userId,
+        workspaceId: order.workspaceId,
+        supplier,
+        customer: order.customerDetails || {
+          name: 'Valued Customer',
+          email: 'creator@fluviaflow.online',
+          phone: '9999999999',
+          state: 'Delhi',
+        },
+        couponId: order.couponId,
+        couponCode: order.couponCode,
+        discountAmount: order.discountAmount,
+        originalBaseAmount: order.originalBaseAmount,
+        items: [
+          {
+            id: 'itm_1',
+            description: order.productInfo || 'Fluvia Flow Subscription / Creative Credits',
+            hsnSacCode: '998314',
+            quantity: 1,
+            unitPrice: order.originalBaseAmount || order.baseAmount,
+            taxableValue: order.baseAmount,
+            gstRate: taxBreakdown.taxRate,
+            cgstAmount: taxBreakdown.cgstAmount,
+            sgstAmount: taxBreakdown.sgstAmount,
+            igstAmount: taxBreakdown.igstAmount,
+            totalAmount: order.totalAmount,
+          },
+        ],
+        baseAmount: order.baseAmount,
+        taxAmount: order.taxAmount,
+        cgstAmount: taxBreakdown.cgstAmount,
+        sgstAmount: taxBreakdown.sgstAmount,
+        igstAmount: taxBreakdown.igstAmount,
+        totalAmount: order.totalAmount,
+        currency: 'INR',
+        status: 'paid',
+        issueDate: now,
+        dueDate: now,
+        paymentDate: now,
+        payuPaymentId: order.payuMihpayid,
+        terms: 'Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.',
+        notes: order.couponCode
+          ? `Thank you for your business. Applied Coupon: ${order.couponCode}. Computer-generated tax invoice.`
+          : 'Thank you for your business. Computer-generated tax invoice.',
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      db.invoices.push(newInv);
+      invoice = newInv;
+      updated = true;
+    }
+
+    if (order.invoiceId !== invoice.id || order.invoiceNumber !== invoice.invoiceNumber) {
+      order.invoiceId = invoice.id;
+      order.invoiceNumber = invoice.invoiceNumber;
+      updated = true;
+    }
+
+    // 2. Resolve or generate Receipt
+    let receipt = order.receiptId ? db.receipts.find((r) => r.id === order.receiptId) : undefined;
+    if (!receipt) {
+      receipt = db.receipts.find((r) => r.orderId === order.id || (order.txnid && r.txnid === order.txnid));
+    }
+
+    if (!receipt) {
+      const receiptNumber = this.getNextReceiptNumber();
+      const now = order.verifiedAt || order.updatedAt || order.createdAt || new Date().toISOString();
+      const newRcp: PaymentReceipt = {
+        id: 'rcp_' + Math.random().toString(36).substring(2, 11),
+        receiptNumber,
+        orderId: order.id,
+        txnid: order.txnid,
+        invoiceId: invoice.id,
+        invoiceNumber: invoice.invoiceNumber,
+        userId: order.userId,
+        workspaceId: order.workspaceId,
+        customerName: order.customerDetails?.name || 'Valued Customer',
+        customerEmail: order.customerDetails?.email || 'creator@fluviaflow.online',
+        couponCode: order.couponCode,
+        discountAmount: order.discountAmount,
+        originalAmount: order.originalBaseAmount,
+        amountReceived: order.totalAmount,
+        currency: 'INR',
+        paymentMethod: order.payuPaymentMode || 'UPI / Card',
+        payuMihpayid: order.payuMihpayid,
+        payuBankRefNum: order.payuBankRefNum,
+        productPurchased: order.productInfo || 'Fluvia Flow Subscription / Creative Credits',
+        paymentDate: now,
+        paymentStatus: 'verified_success',
+        verificationReference: `PAYU-VERIFIED-${order.txnid}`,
+        footerNotice: 'Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.',
+        createdAt: now,
+      };
+
+      db.receipts.push(newRcp);
+      receipt = newRcp;
+      updated = true;
+    }
+
+    if (order.receiptId !== receipt.id || order.receiptNumber !== receipt.receiptNumber) {
+      order.receiptId = receipt.id;
+      order.receiptNumber = receipt.receiptNumber;
+      updated = true;
+    }
+
+    if (updated) {
+      const idx = db.payuOrders.findIndex((o) => o.id === order.id);
+      if (idx !== -1) {
+        db.payuOrders[idx] = { ...order };
+      }
+      this.save(db);
+    }
+
+    return { invoice, receipt };
+  }
+
+  recoverMissingPurchaseDocuments(): { invoicesRecovered: number; receiptsRecovered: number } {
+    const db = this.load();
+    let invoicesRecovered = 0;
+    let receiptsRecovered = 0;
+
+    // 1. Recover successful payuOrders
+    for (const order of db.payuOrders) {
+      if (order.status === 'success') {
+        const invBefore = db.invoices.length;
+        const rcpBefore = db.receipts.length;
+        this.ensureInvoiceAndReceiptForOrder(order);
+        if (db.invoices.length > invBefore) invoicesRecovered++;
+        if (db.receipts.length > rcpBefore) receiptsRecovered++;
+      }
+    }
+
+    // 2. Recover legacy successful payments (e.g. pay_starter_1)
+    for (const payment of db.payments) {
+      if (payment.status === 'success') {
+        let inv = db.invoices.find((i) => i.orderId === payment.orderId || i.id === payment.orderId);
+        let rcp = db.receipts.find((r) => r.orderId === payment.orderId || r.id === payment.orderId);
+
+        if (!inv) {
+          const supplier = this.getBillingSettings();
+          const invoiceNumber = this.getNextInvoiceNumber();
+          const now = payment.createdAt || new Date().toISOString();
+          const user = db.profiles.find((p) => p.id === payment.userId);
+          const workspace = this.ensureUserWorkspace(payment.userId, user?.displayName);
+
+          const newInv: Invoice = {
+            id: 'inv_' + Math.random().toString(36).substring(2, 11),
+            invoiceNumber,
+            orderId: payment.orderId || payment.id,
+            txnid: payment.providerPaymentId || `TXN_${payment.id}`,
+            userId: payment.userId,
+            workspaceId: workspace.id,
+            supplier,
+            customer: {
+              name: user?.displayName || 'Aria Vance',
+              email: user?.email || 'creator@fluviaflow.online',
+              phone: '9999999999',
+              state: 'Delhi',
+            },
+            items: [
+              {
+                id: 'itm_1',
+                description: payment.paymentType === 'subscription' ? 'Fluvia Starter Plan Subscription' : 'Creative Credits',
+                hsnSacCode: '998314',
+                quantity: 1,
+                unitPrice: payment.amountInr,
+                taxableValue: payment.amountInr,
+                gstRate: 0,
+                cgstAmount: 0,
+                sgstAmount: 0,
+                igstAmount: 0,
+                totalAmount: payment.amountInr,
+              },
+            ],
+            baseAmount: payment.amountInr,
+            taxAmount: 0,
+            cgstAmount: 0,
+            sgstAmount: 0,
+            igstAmount: 0,
+            totalAmount: payment.amountInr,
+            currency: 'INR',
+            status: 'paid',
+            issueDate: now,
+            dueDate: now,
+            paymentDate: now,
+            payuPaymentId: payment.providerPaymentId,
+            terms: 'Payment received. Subject to terms at fluviaflow.ai/terms.',
+            notes: 'Thank you for your business. Official tax invoice.',
+            createdAt: now,
+            updatedAt: now,
+          };
+          db.invoices.push(newInv);
+          inv = newInv;
+          invoicesRecovered++;
+        }
+
+        if (!rcp && inv) {
+          const receiptNumber = this.getNextReceiptNumber();
+          const now = payment.createdAt || new Date().toISOString();
+          const user = db.profiles.find((p) => p.id === payment.userId);
+          const workspace = this.ensureUserWorkspace(payment.userId, user?.displayName);
+
+          const newRcp: PaymentReceipt = {
+            id: 'rcp_' + Math.random().toString(36).substring(2, 11),
+            receiptNumber,
+            orderId: payment.orderId || payment.id,
+            txnid: payment.providerPaymentId || `TXN_${payment.id}`,
+            invoiceId: inv.id,
+            invoiceNumber: inv.invoiceNumber,
+            userId: payment.userId,
+            workspaceId: workspace.id,
+            customerName: user?.displayName || 'Aria Vance',
+            customerEmail: user?.email || 'creator@fluviaflow.online',
+            amountReceived: payment.amountInr,
+            currency: 'INR',
+            paymentMethod: 'Online Payment',
+            payuMihpayid: payment.providerPaymentId,
+            productPurchased: payment.paymentType === 'subscription' ? 'Fluvia Starter Plan Subscription' : 'Creative Credits',
+            paymentDate: now,
+            paymentStatus: 'verified_success',
+            verificationReference: `VERIFIED-${payment.id}`,
+            footerNotice: 'Official payment receipt.',
+            createdAt: now,
+          };
+          db.receipts.push(newRcp);
+          receiptsRecovered++;
+        }
+      }
+    }
+
+    if (invoicesRecovered > 0 || receiptsRecovered > 0) {
+      this.save(db);
+    }
+
+    return { invoicesRecovered, receiptsRecovered };
   }
 
   // ==========================================

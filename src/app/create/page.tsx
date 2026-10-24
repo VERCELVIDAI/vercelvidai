@@ -747,13 +747,17 @@ function CreateWorkspaceContent() {
 
                 {/* Generation Action Bar */}
                 <div className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl glass-card border border-emerald-500/20 shadow-md gap-3">
-                  <div className="flex items-center gap-2 text-xs text-slate-600 self-start sm:self-auto">
-                    <Zap className="w-4 h-4 text-emerald-600" />
-                    <span>Fixed Generation Cost:</span>
-                    <span className="font-extrabold text-[#17211D] text-sm">{estimatedCost} Credits</span>
-                    <span className="text-[11px] text-slate-500 font-medium">
-                      ({credits.availableBalance} in wallet)
-                    </span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 text-xs text-slate-600 self-start sm:self-auto">
+                    <div className="flex items-center gap-1.5 font-bold text-[#17211D]">
+                      <Zap className="w-4 h-4 text-emerald-600 fill-emerald-500" />
+                      <span>Cost: <span className="text-emerald-700 font-black text-sm">{estimatedCost} Credits</span></span>
+                    </div>
+                    <span className="hidden sm:inline text-slate-300">•</span>
+                    <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500">
+                      <span>Available: <strong className="text-slate-800 font-semibold">{credits.availableBalance}</strong></span>
+                      <span>→</span>
+                      <span>After Render: <strong className="text-emerald-700 font-semibold">{Math.max(0, credits.availableBalance - estimatedCost)}</strong></span>
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-2 w-full sm:w-auto">
