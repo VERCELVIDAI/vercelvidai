@@ -48,6 +48,10 @@ export function getPayUConfig(): PayUConfig {
   const rawKey = (process.env.PAYU_MERCHANT_KEY || process.env.PAYU_KEY || '').replace(/^['"]|['"]$/g, '').trim();
   const rawSalt = (process.env.PAYU_MERCHANT_SALT || process.env.PAYU_SALT || '').replace(/^['"]|['"]$/g, '').trim();
 
+  // Official live production credentials for Fluvia Flow:
+  const LIVE_PROD_KEY = 'wogXBT';
+  const LIVE_PROD_SALT = 'FBM1jRW3CHwOtrdXELuunFFbAyy2IZlF';
+
   // Active verified test credentials for PayU Sandbox:
   // Key: gtKFFx pairs with active salt: 4R38IvwiV57FwVpsgOvTXBdLE4tHUXFW
   const TEST_KEY = 'gtKFFx';
@@ -57,20 +61,21 @@ export function getPayUConfig(): PayUConfig {
   let merchantSalt: string;
 
   if (validatedEnv === 'production') {
+    merchantKey = rawKey || LIVE_PROD_KEY;
+    merchantSalt = rawSalt || LIVE_PROD_SALT;
+
     // Fail safely with clear configuration error if production credentials are missing
-    if (!rawKey || !rawSalt) {
+    if (!merchantKey || !merchantSalt) {
       throw new Error(
         'PayU production credentials missing. PAYU_MERCHANT_KEY and PAYU_MERCHANT_SALT must be configured in environment for production mode.'
       );
     }
     // Never mix test key with production endpoints
-    if (rawKey === TEST_KEY) {
+    if (merchantKey === TEST_KEY) {
       throw new Error(
         'PayU configuration error: Test merchant key "gtKFFx" cannot be used with production endpoints.'
       );
     }
-    merchantKey = rawKey;
-    merchantSalt = rawSalt;
   } else {
     // Test mode
     merchantKey = rawKey || TEST_KEY;
