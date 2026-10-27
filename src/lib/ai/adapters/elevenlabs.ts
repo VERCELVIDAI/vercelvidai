@@ -1,5 +1,6 @@
 import { BaseAIProviderAdapter } from './base';
 import { AIProviderCapabilities, GenerationInputPayload, GenerationResultPayload } from '../types';
+import { elevenLabsService } from '../elevenlabs';
 
 export class ElevenLabsAdapter extends BaseAIProviderAdapter {
   readonly id = 'elevenlabs';
@@ -7,7 +8,7 @@ export class ElevenLabsAdapter extends BaseAIProviderAdapter {
   readonly type = 'audio' as const;
 
   isConfigured(): boolean {
-    return !!process.env.ELEVENLABS_API_KEY;
+    return elevenLabsService.isConfigured();
   }
 
   getCapabilities(): AIProviderCapabilities {
@@ -21,64 +22,58 @@ export class ElevenLabsAdapter extends BaseAIProviderAdapter {
   }
 
   async startGeneration(input: GenerationInputPayload, jobId: string): Promise<GenerationResultPayload> {
-    const apiKey = process.env.ELEVENLABS_API_KEY;
-
-    if (!apiKey) {
+    if (!this.isConfigured()) {
       return {
-        status: 'completed',
-        audioUrl: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=synthwave-80s-110045.mp3',
-        transcript: input.prompt || input.scriptText || 'Welcome to Fluvia Flow. Powered by next-generation creative intelligence.',
-        progressPercent: 100,
-        progressMessage: 'Demo Mode — ElevenLabs API not configured. High-quality demonstration voice track provided.',
-        isDemoSimulated: true,
-        providerRequestId: `el_sim_${jobId}`,
-      };
-    }
-
-    try {
-      const voiceId = input.voiceId || '21m00Tcm4TlvDq8ikWAM'; // Rachel default
-      const text = input.scriptText || input.prompt;
-
-      const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-        method: 'POST',
-        headers: {
-          'xi-api-key': apiKey,
-          'Content-Type': 'application/json',
-          'Accept': 'audio/mpeg',
-        },
-        body: JSON.stringify({
-          text,
-          model_id: 'eleven_turbo_v2_5',
-          voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.75,
-          },
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`ElevenLabs error: ${response.status}`);
-      }
-
-      // In production, we'd stream this into object storage (S3 / Supabase Storage).
-      return {
-        status: 'completed',
-        audioUrl: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=synthwave-80s-110045.mp3',
-        transcript: text,
-        progressPercent: 100,
+        status: 'failed',
+        progressPercent: 0,
         isDemoSimulated: false,
-        providerRequestId: `el_${Date.now()}`,
+        error: 'ElevenLabs API key is not configured. Please supply ELEVENLABS_API_KEY in the server environment (.env.local).',
       };
-    } catch (err: any) {
-      throw new Error(`ElevenLabs voice synthesis error: ${err.message}`);
     }
+
+    const text = input.scriptText || input.prompt;
+    if (!text) {
+      return {
+        status: 'failed',
+        progressPercent: 0,
+        isDemoSimulated: false,
+        error: 'Please provide script text or prompt for voiceover generation.',
+      };
+    }
+
+    const result = await elevenLabsService.generateVoiceover({
+      text,
+      voiceId: input.voiceId || 'JBFqnCBsd6RMkjVDRZzb',
+      modelId: 'eleven_v4',
+    }, jobId);
+
+    if (!result.success || !result.audioUrl) {
+      return {
+        status: 'failed',
+        progressPercent: 0,
+        isDemoSimulated: false,
+        error: result.error || 'ElevenLabs voice generation failed.',
+        metadata: { errorCode: result.errorCode },
+      };
+    }
+
+    return {
+      status: 'completed',
+      audioUrl: result.audioUrl,
+      transcript: text,
+      progressPercent: 100,
+      progressMessage: 'ElevenLabs neural speech synthesis completed',
+      isDemoSimulated: false,
+      providerRequestId: `el_${jobId}`,
+    };
   }
 
   async checkStatus(providerRequestId: string, jobId: string): Promise<GenerationResultPayload> {
     return {
       status: 'completed',
       progressPercent: 100,
-      isDemoSimulated: true,
+      isDemoSimulated: false,
+      providerRequestId,
     };
   }
 }
