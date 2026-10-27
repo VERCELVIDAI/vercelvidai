@@ -11,6 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { GoogleGenAI } from '@google/genai';
 import { z } from 'zod';
+import { pollinationsService } from './pollinations';
 
 // Configurable model IDs
 export const GEMINI_MODELS = {
@@ -673,6 +674,29 @@ Output strictly JSON:
       }
     }
 
+    // Fallback: If Pollinations AI is configured, generate image via Pollinations
+    if (pollinationsService.isConfigured()) {
+      try {
+        console.log('[Fluvia Gemini Image] Attempting Pollinations image fallback...');
+        const pollRes = await pollinationsService.generateImage({
+          prompt: params.prompt,
+          model: 'black-forest-labs/flux-3-image',
+        });
+        if (pollRes.success && pollRes.mediaBuffer) {
+          return {
+            success: true,
+            imageBuffer: pollRes.mediaBuffer,
+            mimeType: 'image/png',
+            modelUsed: 'black-forest-labs/flux-3-image (via Pollinations)',
+            aspectRatio: ratio,
+            prompt: params.prompt,
+          };
+        }
+      } catch (pollErr) {
+        console.warn('[Fluvia Gemini Image] Pollinations fallback failed:', pollErr);
+      }
+    }
+
     // Classify error for clear user guidance
     const errText = String(lastError?.message || lastError || 'Unknown provider error');
     let errorCode: 'QUOTA_EXHAUSTED' | 'INVALID_KEY' | 'UNCONFIGURED' | 'PROVIDER_ERROR' = 'PROVIDER_ERROR';
@@ -809,6 +833,32 @@ Output strictly JSON:
           userFacingError = 'Invalid or unauthorized Gemini API key. Please check your GEMINI_API_KEY setting.';
         }
 
+        // Fallback: If Pollinations AI is configured, generate video via Pollinations
+        if (pollinationsService.isConfigured()) {
+          try {
+            console.log('[Fluvia Gemini Video] Attempting Pollinations Omni Flash video fallback...');
+            const pollVidRes = await pollinationsService.generateVideo({
+              prompt: params.prompt,
+              model: 'google/gemini-omni-1.1-flash',
+              durationSec: duration,
+              aspectRatio: ratio as any,
+            }, params.jobId);
+            if (pollVidRes.success && pollVidRes.mediaUrl) {
+              return {
+                success: true,
+                videoUrl: pollVidRes.mediaUrl,
+                thumbnailUrl: pollVidRes.mediaUrl,
+                modelUsed: 'google/gemini-omni-1.1-flash (via Pollinations)',
+                prompt: params.prompt,
+                aspectRatio: ratio,
+                durationSec: duration,
+              };
+            }
+          } catch (pollErr) {
+            console.warn('[Fluvia Gemini Video] Pollinations fallback failed:', pollErr);
+          }
+        }
+
         return {
           success: false,
           modelUsed,
@@ -825,6 +875,32 @@ Output strictly JSON:
       const videoUri = outputVideo?.uri || outputVideo?.url;
 
       if (!videoUri) {
+        // Fallback: If Pollinations AI is configured, generate video via Pollinations
+        if (pollinationsService.isConfigured()) {
+          try {
+            console.log('[Fluvia Gemini Video] Attempting Pollinations Omni Flash video fallback...');
+            const pollVidRes = await pollinationsService.generateVideo({
+              prompt: params.prompt,
+              model: 'google/gemini-omni-1.1-flash',
+              durationSec: duration,
+              aspectRatio: ratio as any,
+            }, params.jobId);
+            if (pollVidRes.success && pollVidRes.mediaUrl) {
+              return {
+                success: true,
+                videoUrl: pollVidRes.mediaUrl,
+                thumbnailUrl: pollVidRes.mediaUrl,
+                modelUsed: 'google/gemini-omni-1.1-flash (via Pollinations)',
+                prompt: params.prompt,
+                aspectRatio: ratio,
+                durationSec: duration,
+              };
+            }
+          } catch (pollErr) {
+            console.warn('[Fluvia Gemini Video] Pollinations fallback failed:', pollErr);
+          }
+        }
+
         return {
           success: false,
           modelUsed,

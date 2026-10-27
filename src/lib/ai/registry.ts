@@ -6,6 +6,7 @@ import { FalAdapter } from './adapters/fal';
 import { ElevenLabsAdapter } from './adapters/elevenlabs';
 import { OpenAIAdapter } from './adapters/openai';
 import { GeminiImageAdapter } from './adapters/gemini';
+import { PollinationsAdapter } from './adapters/pollinations';
 
 class ProviderRegistry {
   private adapters: Map<string, IAIProviderAdapter> = new Map();
@@ -22,6 +23,7 @@ class ProviderRegistry {
     this.register(new ElevenLabsAdapter());
     this.register(new OpenAIAdapter());
     this.register(new GeminiImageAdapter());
+    this.register(new PollinationsAdapter());
   }
 
   register(adapter: IAIProviderAdapter): void {

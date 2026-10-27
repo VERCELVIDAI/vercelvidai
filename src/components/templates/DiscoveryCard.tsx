@@ -115,7 +115,9 @@ export function DiscoveryCard({
     <div
       onClick={() => onSelect(template)}
       onMouseEnter={() => {
-        if (isVideo) onHoverStart(template.id);
+        if (isVideo && !template.isStaticPreview && Boolean(template.videoPreview)) {
+          onHoverStart(template.id);
+        }
       }}
       onMouseLeave={onHoverEnd}
       className="break-inside-avoid mb-4 group relative rounded-2xl overflow-hidden bg-[#131917] border border-white/10 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-950/40 transition-all duration-300 cursor-pointer select-none"
@@ -128,12 +130,12 @@ export function DiscoveryCard({
           loading="lazy"
           onError={() => setHasError(true)}
           className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
-            isVideo && isActivePlaying && videoLoaded ? 'opacity-0' : 'opacity-100'
+            isVideo && isActivePlaying && videoLoaded && !template.isStaticPreview ? 'opacity-0' : 'opacity-100'
           }`}
         />
 
-        {/* Real Hover Video Preview (Only for real video templates) */}
-        {isVideo && isActivePlaying && Boolean(template.videoPreview) && !hasError && (
+        {/* Real Hover Video Preview (Only for real video templates with dedicated video file) */}
+        {isVideo && !template.isStaticPreview && isActivePlaying && Boolean(template.videoPreview) && !hasError && (
           <video
             ref={videoRef}
             src={template.videoPreview}
@@ -198,11 +200,21 @@ export function DiscoveryCard({
           </div>
         </div>
 
-        {/* Center Indicator: ONLY Show Play Button on Real Video Templates. No Fake Play Buttons on Static Images! */}
-        {isVideo && !isActivePlaying && (
+        {/* Center Indicator: ONLY Show Play Button on Video Templates that have video clips. If static poster preview, show Static Poster badge! */}
+        {isVideo && !isActivePlaying && !template.isStaticPreview && (
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
             <div className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 shadow-lg group-hover:scale-110 transition-transform">
               <Play className="w-4 h-4 fill-white/80 ml-0.5" />
+            </div>
+          </div>
+        )}
+
+        {/* Video Card Static Poster Hover Badge (Honest preview indicator) */}
+        {isVideo && template.isStaticPreview && (
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-center gap-1.5 shadow-xl">
+              <Film className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Static Poster Preview</span>
             </div>
           </div>
         )}

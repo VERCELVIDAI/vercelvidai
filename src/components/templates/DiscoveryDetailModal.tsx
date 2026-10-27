@@ -160,7 +160,27 @@ export function DiscoveryDetailModal({
 
         {/* Left: Media Preview Section (Dynamic by Template Type) */}
         <div className="relative flex-1 bg-black flex items-center justify-center min-h-[320px] lg:min-h-[560px] overflow-hidden">
-          {isVideo ? (
+          {isVideo && (template.isStaticPreview || !template.videoPreview) ? (
+            <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
+              <img
+                src={template.thumbnail}
+                alt={template.title}
+                className="max-w-full max-h-[70vh] lg:max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+              />
+              <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-emerald-500/40 text-emerald-300 text-xs font-semibold shadow-lg">
+                <Film className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Static Creative Preview • Render via Gemini Omni Flash (15 cr)</span>
+              </div>
+              <div className="absolute bottom-4 inset-x-4 flex items-center justify-between z-30 pointer-events-auto">
+                <span className="text-xs font-mono px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-white/90 border border-white/15">
+                  {template.aspect} • {template.duration || '15s'}
+                </span>
+                <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                  Google Gemini (gemini-omni-1.1-flash)
+                </span>
+              </div>
+            </div>
+          ) : isVideo ? (
             <>
               {/* Real Video Player */}
               <video

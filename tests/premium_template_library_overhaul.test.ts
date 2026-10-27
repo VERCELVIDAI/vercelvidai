@@ -6,26 +6,27 @@ import {
   IMAGE_TEMPLATES,
   TEXT_ANIMATION_TEMPLATES,
   TEMPLATES_DATA,
-  TEMPLATE_CATEGORIES,
+  getAllTemplates,
+  getTemplatesByType,
   getTemplateById,
   getTemplateBySlug,
-  getTemplatesByType,
   isVideoTemplate,
   isImageTemplate,
   isTextAnimationTemplate,
 } from '../src/lib/templates';
 import { dbStore } from '../src/lib/db/store';
-import { aiDispatcher, calculateEstimatedCredits } from '../src/lib/ai/dispatcher';
+import { calculateEstimatedCredits } from '../src/lib/ai/dispatcher';
 
 let passed = 0;
 let failed = 0;
 
-function assert(description: string, condition: boolean, extraInfo?: string) {
+function assert(description: string, condition: boolean, extra?: any) {
   if (condition) {
     console.log(`  ✅ PASS: ${description}`);
     passed++;
   } else {
-    console.error(`  ❌ FAIL: ${description}${extraInfo ? ` -> ${extraInfo}` : ''}`);
+    console.error(`  ❌ FAIL: ${description}`);
+    if (extra !== undefined) console.error('     Detail:', extra);
     failed++;
   }
 }
@@ -39,11 +40,11 @@ async function runAcceptanceTests() {
   // TEST 1: Irrelevant Templates Completely Removed & Curated Counts
   // ============================================================================
   console.log('1. Testing Curated Template Counts & Removal of Low-Quality Filler...');
-  assert('Total curated templates collection is >= 30 (actual: ' + ALL_CURATED_TEMPLATES.length + ')', ALL_CURATED_TEMPLATES.length >= 30);
-  assert('Curated video templates count is 26', VIDEO_TEMPLATES.length === 26);
-  assert('Curated image templates count is 15', IMAGE_TEMPLATES.length === 15);
-  assert('Curated text animation templates count is 12', TEXT_ANIMATION_TEMPLATES.length === 12);
-  assert('Total curated templates equals exactly 53', ALL_CURATED_TEMPLATES.length === 53);
+  assert('Total curated templates collection is 24', ALL_CURATED_TEMPLATES.length === 24);
+  assert('Curated video templates count is 8', VIDEO_TEMPLATES.length === 8);
+  assert('Curated image templates count is 8', IMAGE_TEMPLATES.length === 8);
+  assert('Curated text animation templates count is 8', TEXT_ANIMATION_TEMPLATES.length === 8);
+  assert('Total curated templates equals exactly 24', ALL_CURATED_TEMPLATES.length === 24);
   assert('TEMPLATES_DATA backward compatibility preserved (26)', TEMPLATES_DATA.length === 26);
 
   // Check no filler or irrelevant terms
@@ -66,9 +67,9 @@ async function runAcceptanceTests() {
   const images = getTemplatesByType('image');
   const texts = getTemplatesByType('text-animation');
 
-  assert('getTemplatesByType("video") returns exactly 26 video templates', videos.length === 26);
-  assert('getTemplatesByType("image") returns exactly 15 image templates', images.length === 15);
-  assert('getTemplatesByType("text-animation") returns exactly 12 text templates', texts.length === 12);
+  assert('getTemplatesByType("video") returns exactly 8 video templates', videos.length === 8);
+  assert('getTemplatesByType("image") returns exactly 8 image templates', images.length === 8);
+  assert('getTemplatesByType("text-animation") returns exactly 8 text templates', texts.length === 8);
 
   for (const v of videos) {
     assert(`Video template ${v.id} has type 'video'`, v.type === 'video');
@@ -101,7 +102,7 @@ async function runAcceptanceTests() {
   const seenMedia = new Set<string>();
 
   for (const tmpl of ALL_CURATED_TEMPLATES) {
-    const assetPath = tmpl.videoPreview || tmpl.thumbnail;
+    const assetPath = tmpl.thumbnail;
     assert(`Template ${tmpl.id} has preview asset assigned`, Boolean(assetPath));
 
     const isUnique = !seenMedia.has(assetPath);
@@ -123,66 +124,46 @@ async function runAcceptanceTests() {
   // TEST 4: Professional Prompts & Specification Coverage
   // ============================================================================
   console.log('\n4. Testing Professional Prompts & Required Commercial Categories...');
-  // Video specification coverage: A through L
   const allPrompts = ALL_CURATED_TEMPLATES.map((t) => t.prompt);
   assert('Every template has a comprehensive prompt > 40 chars', allPrompts.every((p) => p && p.length > 40));
 
-  const luxuryProduct = getTemplateById('tmpl_01');
-  assert('Video: Luxury Product Commercial (Aura Chrono) exists', Boolean(luxuryProduct));
+  const luxuryPerfume = getTemplateBySlug('aura-privee-luxury-perfume-commercial');
+  assert('Video: Luxury Perfume Commercial exists', Boolean(luxuryPerfume));
 
-  const automotive = getTemplateById('tmpl_05');
-  assert('Video: Automotive Launch Film (Apex GT) exists', Boolean(automotive));
+  const skincareAd = getTemplateBySlug('hydraluxe-cell-renewal-serum-ad');
+  assert('Video: Premium Skincare Advertisement exists', Boolean(skincareAd));
 
-  const ecommerceAd = getTemplateById('tmpl_10');
-  assert('Video: E-commerce Product Ad (Ergonomic Aero Backpack) exists', Boolean(ecommerceAd));
+  const automotive = getTemplateBySlug('veloce-hyperion-track-edition-launch');
+  assert('Video: Automotive Launch Film exists', Boolean(automotive));
 
-  const beautyCommercial = getTemplateById('tmpl_03');
-  assert('Video: Skincare and Beauty Commercial (HydraGlow) exists', Boolean(beautyCommercial));
+  const smartphone = getTemplateBySlug('apex-titanium-smartphone-reveal');
+  assert('Video: High-End Smartphone Reveal exists', Boolean(smartphone));
 
-  const saasExplainer = getTemplateById('tmpl_13');
-  assert('Video: SaaS and Technology Explainer (Autonomous AI Agents) exists', Boolean(saasExplainer));
+  const saasExplainer = getTemplateBySlug('synthetix-ai-enterprise-launch');
+  assert('Video: SaaS and Technology Explainer exists', Boolean(saasExplainer));
 
-  const brandStory = getTemplateById('tmpl_06');
-  assert('Video: Cinematic Brand Story (Nordic Fjords Expedition) exists', Boolean(brandStory));
+  const ecommerceAd = getTemplateBySlug('aerosprint-pro-kinetic-footwear-ad');
+  assert('Video: E-commerce Product Ad exists', Boolean(ecommerceAd));
 
-  const socialReel = getTemplateById('tmpl_14');
-  assert('Video: Social Media Reel (Hyper-Kinetic Workout) exists', Boolean(socialReel));
+  const fashionCampaign = getTemplateBySlug('atelier-solstice-haute-couture-campaign');
+  assert('Video: Luxury Fashion Campaign exists', Boolean(fashionCampaign));
 
-  const foodCommercial = getTemplateById('tmpl_07');
-  assert('Video: Food and Beverage Commercial (Artisanal Neapolitan Pizza) exists', Boolean(foodCommercial));
-
-  const fashionCampaign = getTemplateById('tmpl_04');
-  assert('Video: Fashion Campaign (Avant-Garde Milan Runways) exists', Boolean(fashionCampaign));
-
-  const realEstate = getTemplateById('tmpl_08');
-  assert('Video: Real Estate Showcase (Bel Air Sanctuary) exists', Boolean(realEstate));
-
-  const appPromo = getTemplateById('tmpl_22');
-  assert('Video: App and Website Promo (High-Conversion Mobile App) exists', Boolean(appPromo));
-
-  const logoReveal = getTemplateById('tmpl_12');
-  assert('Video: Logo Reveal (Cyberpunk Neon Channel Intro) exists', Boolean(logoReveal));
+  const brandReveal = getTemplateBySlug('zenith-vanguard-master-brand-reveal');
+  assert('Video: Cinematic Brand Reveal exists', Boolean(brandReveal));
 
   // ============================================================================
   // TEST 5: Image Generation Library Distinct Styles
   // ============================================================================
-  console.log('\n5. Testing 15 Distinct Image Generation Templates...');
+  console.log('\n5. Testing 8 Distinct Image Generation Templates...');
   const expectedImageSlugs = [
-    'aura-flacon-luxury-perfume-photo',
-    'sonic-aero-headset-ecommerce-hero',
-    'hydraglow-botanical-dew-serum',
-    'apex-gt-evoluzione-automotive-poster',
-    'titan-75-mechanical-keyboard-launch',
-    'origin-craft-espresso-extraction-poster',
-    'solaris-sparkling-citrus-social-creative',
-    'pro-creator-curved-oled-desk-setup',
-    'maison-emeraude-structural-trench',
-    'ferment-and-oak-wild-sourdough',
-    'synapse-3d-glass-analytics-cloud',
-    'modernist-swiss-fluid-chrome-typography',
-    'terra-noir-sustainable-brand-moodboard',
-    'aurora-autumn-cashmere-collection',
-    'serenity-zen-mineral-facial-balm',
+    'chrono-royal-horology-hero',
+    'monza-gt-track-manifesto-poster',
+    'lumiere-botanica-golden-serum',
+    'vogue-solitaire-editorial-portrait',
+    'ergotype-studio-mechanical-art',
+    'apex-stride-urban-streetwear-hero',
+    'architectural-lettering-monolith',
+    'citrus-botanica-sparkling-tonic',
   ];
 
   for (const slug of expectedImageSlugs) {
@@ -195,19 +176,15 @@ async function runAcceptanceTests() {
   // ============================================================================
   // TEST 6: Text Animation Distinct Styles & Deterministic Preservation
   // ============================================================================
-  console.log('\n6. Testing 12 Distinct Text Animation Templates...');
+  console.log('\n6. Testing 8 Distinct Text Animation Templates...');
   const expectedTextPresets = [
     'chrome-3d',
     'liquid-metal',
     'emerald-glass',
     'kinetic-spring',
-    'neon-flicker',
     'luxury-tracking',
     'editorial-mask',
-    'digital-glitch',
     'smooth-wipe',
-    'particle-swarm',
-    'typewriter-cadence',
     'vector-draw',
   ];
 
@@ -224,10 +201,10 @@ async function runAcceptanceTests() {
   console.log('\n7. Testing Quality Curation & Missing Asset Detection Engine in dbStore...');
   const report = dbStore.getTemplateAuditReport();
   assert('Audit report runs without error', Boolean(report));
-  assert('Audit report reflects 53 total templates', report.totalTemplates === 53);
-  assert('Audit report reflects 26 video templates', report.videoTemplates === 26);
-  assert('Audit report reflects 15 image templates', report.imageTemplates === 15);
-  assert('Audit report reflects 12 text animation templates', report.textAnimationTemplates === 12);
+  assert('Audit report reflects 24 total templates', report.totalTemplates === 24);
+  assert('Audit report reflects 8 video templates', report.videoTemplates === 8);
+  assert('Audit report reflects 8 image templates', report.imageTemplates === 8);
+  assert('Audit report reflects 8 text animation templates', report.textAnimationTemplates === 8);
   assert('Zero missing assets detected across entire library', report.missingAssets.length === 0, JSON.stringify(report.missingAssets));
   assert('Zero duplicate prompts detected across entire library', report.duplicatePrompts.length === 0, JSON.stringify(report.duplicatePrompts));
   assert('Zero duplicate titles detected across entire library', report.duplicateTitles.length === 0, JSON.stringify(report.duplicateTitles));
