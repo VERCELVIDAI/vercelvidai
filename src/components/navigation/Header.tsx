@@ -170,22 +170,12 @@ export function Header() {
                       <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
                         <Video className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="font-bold text-[#17211D] text-xs">AI Video Engine</div>
-                        <div className="text-[11px] text-[#64748B]">Cinematic text & image to video</div>
-                      </div>
-                    </Link>
-
-                    <Link
-                      href="/create?mode=image"
-                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-emerald-50/80 transition-colors group"
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-pink-100 text-pink-700 flex items-center justify-center group-hover:bg-pink-500 group-hover:text-white transition-colors">
-                        <ImageIcon className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-[#17211D] text-xs">AI Image Studio</div>
-                        <div className="text-[11px] text-[#64748B]">Flux Pro photorealistic generation</div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-[#17211D] text-xs">AI Video Engine</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-mono font-bold">15 cr</span>
+                        </div>
+                        <div className="text-[11px] text-[#64748B]">Google Gemini Omni Flash 4K</div>
                       </div>
                     </Link>
 
@@ -193,12 +183,31 @@ export function Header() {
                       href="/create?mode=audio"
                       className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-emerald-50/80 transition-colors group"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-teal-100 text-teal-800 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors">
                         <Mic className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="font-bold text-[#17211D] text-xs">Voice & Narration</div>
-                        <div className="text-[11px] text-[#64748B]">Neural multilingual voiceovers</div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-[#17211D] text-xs">AI Voiceover HD</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-teal-100 text-teal-800 font-mono font-bold">2 cr</span>
+                        </div>
+                        <div className="text-[11px] text-[#64748B]">ElevenLabs 40+ neural voices</div>
+                      </div>
+                    </Link>
+
+                    <Link
+                      href="/create?mode=image"
+                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-emerald-50/80 transition-colors group"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                        <ImageIcon className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-[#17211D] text-xs">AI Image Studio</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-mono font-bold">5 cr</span>
+                        </div>
+                        <div className="text-[11px] text-[#64748B]">Gemini 3.1 & Flux Pro stills</div>
                       </div>
                     </Link>
 
@@ -345,8 +354,8 @@ export function Header() {
                 className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold glass-button flex items-center gap-1 sm:gap-1.5 shrink-0 shadow-xs"
               >
                 <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                <span className="hidden sm:inline">Start Creating</span>
-                <span className="inline sm:hidden">Create</span>
+                <span className="hidden sm:inline">Launch Flow Studio</span>
+                <span className="inline sm:hidden">Studio</span>
               </Link>
             </>
           )}

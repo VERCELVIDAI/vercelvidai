@@ -26,260 +26,293 @@ import {
   Camera,
   Play,
   Share2,
+  Palette,
+  Workflow,
+  Cpu,
 } from 'lucide-react';
 
 const CREATIVE_SHOWCASE_ITEMS = [
   {
     id: 'showcase-1',
-    title: 'Cyberpunk Runner — Rain Reflections',
-    category: 'Cinematic',
-    aspect: '21:9',
-    videoUrl: '/media/login/login-hero-preview.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80',
-    modelBadge: 'Fluvia Cinematic HD',
-    camera: 'Tracking shot',
+    title: 'AeroGT Hypercar Launch Film — Twilight Alpine Ridge',
+    category: 'Cinematic Automotive',
+    aspect: '16:9',
+    videoUrl: '/media/templates/tmpl-05-automotive-film.mp4',
+    posterUrl: '/media/templates/poster-vid-05-automotive.jpg',
+    modelBadge: 'Google Gemini Omni Flash',
+    credits: '15 cr',
+    camera: 'Tracking dolly',
   },
   {
     id: 'showcase-2',
-    title: 'Aura Lumina — Luxury Fragrance Reveal',
-    category: 'Commercial',
-    aspect: '16:9',
+    title: "Aura Privée — L'Élixir Noir Luxury Perfume",
+    category: 'Product Commercial',
+    aspect: '1:1',
     videoUrl: '/media/templates/tmpl-02-luxury-perfume.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&auto=format&fit=crop&q=80',
-    modelBadge: 'Runway Gen-3',
-    camera: 'Dolly in',
+    posterUrl: '/media/templates/poster-vid-01-perfume.jpg',
+    modelBadge: 'Google Gemini Omni Flash',
+    credits: '15 cr',
+    camera: 'Macro orbit',
   },
   {
     id: 'showcase-3',
-    title: 'Pacific Coastline Golden Hour Glide',
-    category: 'Drone Aerial',
-    aspect: '16:9',
-    videoUrl: '/media/templates/tmpl-06-travel-reel.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80',
-    modelBadge: 'Luma Ray',
-    camera: 'Aerial movement',
+    title: 'Neon Shibuya Cyberpunk Night Drive',
+    category: 'Social Media Reel',
+    aspect: '9:16',
+    videoUrl: '/media/templates/tmpl-14-instagram-reel.mp4',
+    posterUrl: '/media/templates/poster-vid-04-fashion.jpg',
+    modelBadge: 'Google Gemini Omni Flash',
+    credits: '15 cr',
+    camera: 'Handheld dynamic',
   },
   {
     id: 'showcase-4',
-    title: 'Tokyo Streetwear Motion Lookbook',
-    category: 'Fashion',
+    title: 'Torched Wagyu A5 Culinary Mastery',
+    category: 'Food & Beverage',
     aspect: '9:16',
-    videoUrl: '/media/templates/tmpl-04-fashion-campaign.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&auto=format&fit=crop&q=80',
-    modelBadge: 'Flux 1.1 Pro Vision',
-    camera: 'Orbit',
+    videoUrl: '/media/templates/tmpl-07-food-commercial.mp4',
+    posterUrl: '/media/templates/poster-vid-07-food.jpg',
+    modelBadge: 'Google Gemini Omni Flash',
+    credits: '15 cr',
+    camera: 'Slow clock dolly',
   },
   {
     id: 'showcase-5',
-    title: 'Gourmet Sizzle Macro Patty Promo',
-    category: 'Commercial',
-    aspect: '9:16',
-    videoUrl: '/media/templates/tmpl-07-food-commercial.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80',
-    modelBadge: 'Runway Gen-3',
-    camera: 'Dolly in',
+    title: 'Pacific Coastline Golden Hour Aerial Glide',
+    category: 'Drone Cinematic',
+    aspect: '16:9',
+    videoUrl: '/media/templates/tmpl-06-travel-reel.mp4',
+    posterUrl: '/media/templates/poster-vid-06-travel.jpg',
+    modelBadge: 'Google Gemini Omni Flash',
+    credits: '15 cr',
+    camera: 'Aerial drone flight',
   },
   {
     id: 'showcase-6',
-    title: 'Urban Skater Sunset Golden Anamorphic',
-    category: 'Cinematic',
-    aspect: '9:16',
-    videoUrl: '/media/templates/tmpl-14-instagram-reel.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?w=800&auto=format&fit=crop&q=80',
-    modelBadge: 'Fluvia Cinematic HD',
-    camera: 'Handheld',
+    title: 'High-Speed Urban Runner — Rain Reflections',
+    category: 'Commercial Film',
+    aspect: '16:9',
+    videoUrl: '/media/login/login-hero-preview.mp4',
+    posterUrl: '/media/login/thumb-cyberpunk.jpg',
+    modelBadge: 'Google Gemini Omni Flash',
+    credits: '15 cr',
+    camera: 'Low-angle tracking',
   },
 ];
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D]">
+    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D] bg-white">
       <Header />
 
       <main className="flex-1">
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION (White + Emerald Green + Soft Pink Glassmorphism) */}
+        {/* 1. GOOGLE FLOW HERO SECTION */}
         {/* ========================================================================= */}
-        <section className="relative pt-16 pb-20 md:pt-24 md:pb-32 overflow-hidden text-center">
+        <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden text-center bg-gradient-to-b from-emerald-50/40 via-white to-white">
           {/* Ambient Lighting Spheres */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-pink-400/15 rounded-full blur-[140px] pointer-events-none -z-10" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-emerald-300/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-emerald-500/25 text-xs font-semibold text-emerald-800 mb-8 backdrop-blur-md shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Powered by Google Gemini & Multi-Model Inference</span>
+            {/* Google Flow Studio Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-emerald-500/30 text-xs font-bold text-emerald-800 mb-8 backdrop-blur-md shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Google Flow Studio</span>
               <span className="text-slate-300">•</span>
-              <span className="text-slate-600">Runway, Luma & Fluvia Core</span>
+              <span className="text-slate-600 font-medium">Powered by Google DeepMind (Veo & Gemini Omni Flash)</span>
             </div>
 
-            {/* Official Headline */}
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-[#17211D] max-w-5xl mx-auto leading-[1.05] uppercase">
-              Your imagination.{' '}
-              <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-pink-600 bg-clip-text text-transparent">
-                In motion.
+            {/* Official Google Flow Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#17211D] max-w-5xl mx-auto leading-[1.08]">
+              Bring your stories to life with our{' '}
+              <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 bg-clip-text text-transparent">
+                AI creative studio.
               </span>
             </h1>
 
             {/* Supporting Copy */}
-            <p className="mt-6 text-base sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-              Create cinematic videos, striking visuals and campaign-ready content with AI — all inside one creative studio.
+            <p className="mt-6 text-base sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-normal">
+              Try Fluvia Flow, the ultimate AI for creatives. Transform ideas into reality using advanced generative models for cinematic video, images, and custom creative tools.
             </p>
 
             {/* Call to Actions */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/create"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 shadow-xl shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider group"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 shadow-xl shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider group"
               >
-                <span>Start Creating</span>
+                <span>Launch Flow Studio (15 cr)</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <Link
-                href="#gallery"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl font-bold text-slate-700 bg-white/80 hover:bg-white border border-emerald-500/20 shadow-sm transition-colors text-sm"
+                href="#pillars"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl font-bold text-slate-700 bg-white hover:bg-emerald-50/60 border border-emerald-500/20 shadow-2xs transition-colors text-sm"
               >
-                <span>Explore Creations</span>
+                <span>Explore Capabilities</span>
               </Link>
             </div>
 
-            {/* Functional Prompt Composer */}
+            {/* Functional Google Flow Prompt Composer */}
             <div className="mt-12">
               <HeroComposer />
             </div>
 
-            {/* Cinema Studio Viewport */}
+            {/* Google Flow Scene Builder & Neural Viewport */}
             <HeroVisual />
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* 2. PRODUCTION STUDIOS SHOWCASE */}
+        {/* 2. THE 4 PILLARS OF GOOGLE FLOW ARCHITECTURE */}
         {/* ========================================================================= */}
-        <section className="py-24 border-t border-emerald-500/15 bg-emerald-50/20">
+        <section id="pillars" className="py-24 border-t border-emerald-500/15 bg-emerald-50/25 text-left">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-3 block">
-                Fluvia Flow Studios
+                Google Flow Creative Architecture
               </span>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17211D] tracking-tight">
-                Specialized Environments for Every Creative Workflow
+                An Infinite Canvas for Every Story
               </h2>
               <p className="mt-4 text-slate-600 text-sm sm:text-base leading-relaxed">
-                Move seamlessly from raw concept to scripted storyboard, camera choreographies, and timeline finishing.
+                Move beyond disconnected prompt windows. Flow unites text-to-video, frame interpolation, character consistency, and bespoke workflow apps into one seamless studio.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Studio 1: Cinema Studio */}
-              <Link
-                href="/studios/cinema"
-                className="p-8 rounded-3xl glass-card border border-emerald-500/20 hover:border-emerald-500/50 hover:shadow-xl transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden text-left"
-              >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
-                <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Pillar 1: Text-to-Video */}
+              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+                <div className="space-y-3">
                   <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center">
-                    <Film className="w-6 h-6 text-emerald-700" />
+                    <Video className="w-6 h-6 text-emerald-700" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
-                      Cinema Studio
+                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
+                      Text to Video
                     </h3>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono font-bold border border-emerald-300">
-                      Director
+                      15 cr
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    Camera trajectory controls (Dolly, Orbit, Crane, Handheld), 35mm anamorphic optical simulation, and Kodak 2383 color grading.
+                    Powered by Google Gemini Omni 1.1 Flash. Full programmatic camera motion control including Dolly, Orbit, Tracking, and Crane shots.
                   </p>
                 </div>
-                <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-emerald-700">
-                  <span>Open Cinema Studio</span>
+                <Link
+                  href="/create?mode=video"
+                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-emerald-700"
+                >
+                  <span>Open Video Studio</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
+                </Link>
+              </div>
 
-              {/* Studio 2: Marketing Studio */}
-              <Link
-                href="/studios/marketing"
-                className="p-8 rounded-3xl glass-card border border-emerald-500/20 hover:border-pink-500/40 hover:shadow-xl transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden text-left"
-              >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-pink-400/10 rounded-full blur-3xl pointer-events-none" />
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-pink-100 text-pink-700 border border-pink-300 flex items-center justify-center">
-                    <Megaphone className="w-6 h-6 text-pink-600" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold text-[#17211D] group-hover:text-pink-600 transition-colors">
-                      Marketing Studio
-                    </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-700 font-mono font-bold border border-pink-300">
-                      Brand & Ecom
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Product commercials, viral UGC hooks, ecom showcases, and platform-tailored ad briefs engineered with Gemini Marketing Copilot.
-                  </p>
-                </div>
-                <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-pink-600">
-                  <span>Open Marketing Studio</span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-
-              {/* Studio 3: Storyboard Studio */}
-              <Link
-                href="/studios/storyboard"
-                className="p-8 rounded-3xl glass-card border border-emerald-500/20 hover:border-teal-500/40 hover:shadow-xl transition-all group flex flex-col justify-between space-y-6 relative overflow-hidden text-left"
-              >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-teal-400/10 rounded-full blur-3xl pointer-events-none" />
-                <div className="space-y-4">
+              {/* Pillar 2: Frames-to-Video */}
+              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+                <div className="space-y-3">
                   <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-800 border border-teal-300 flex items-center justify-center">
                     <Layers className="w-6 h-6 text-teal-700" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold text-[#17211D] group-hover:text-teal-700 transition-colors">
-                      Storyboard Studio
+                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-teal-700 transition-colors">
+                      Frames to Video
                     </h3>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 font-mono font-bold border border-teal-300">
-                      Gemini Copilot
+                      Keyframes
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    Automated multi-shot scene sequencing, timing breakdown, narration voiceover sync, and seamless export to the Creative Canvas.
+                    Provide a starting frame, ending frame, or both. Flow generates fluid transitions while preserving lighting, subject anatomy, and narrative continuity.
                   </p>
                 </div>
-                <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-teal-700">
-                  <span>Open Storyboard Studio</span>
+                <Link
+                  href="/create?mode=video"
+                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-teal-700"
+                >
+                  <span>Upload Keyframes</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Pillar 3: Ingredients & Consistent Characters */}
+              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+                <div className="space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center">
+                    <CheckCircle2 className="w-6 h-6 text-emerald-700" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
+                      Consistency Locker
+                    </h3>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono font-bold border border-emerald-300">
+                      Ingredients
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Lock character facial structures, brand color schemes, and physical product styling across whole multi-shot scenes without visual drift.
+                  </p>
                 </div>
-              </Link>
+                <Link
+                  href="/dashboard/brand-kit"
+                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-emerald-700"
+                >
+                  <span>Manage Ingredients</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Pillar 4: Custom Tools Builder */}
+              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+                <div className="space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-800 border border-slate-300 flex items-center justify-center">
+                    <Sliders className="w-6 h-6 text-slate-700" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
+                      Custom Tools
+                    </h3>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 font-mono font-bold border border-slate-300">
+                      No-Code
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Describe custom creative tools in natural language. Powered by Gemini, Flow generates bespoke mini-apps, filters, and remixable studio widgets.
+                  </p>
+                </div>
+                <Link
+                  href="/editor"
+                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-slate-800"
+                >
+                  <span>Build Tools</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* 3. PLAYABLE VIDEO & IMAGE GALLERY */}
+        {/* 3. PLAYABLE VIDEO & IMAGE GALLERY (FLOW SHOWCASE) */}
         {/* ========================================================================= */}
         <section id="gallery" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
               <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-2 block">
-                Creator Gallery
+                Google Flow Showcase
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-[#17211D] tracking-tight">
-                Playable Video Showcase & Presets
+                Cinematic Reels & Commercial Presets
               </h2>
               <p className="text-xs text-slate-600 mt-2">
-                Hover to preview video motion. Click any preset to replicate lighting, camera motion, and aesthetics.
+                Hover to play full video motion. Click any preset to launch directly into the Flow Studio with exact prompt, camera movement, and aspect ratio.
               </p>
             </div>
             <Link
               href="/templates"
               className="mt-4 md:mt-0 text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 uppercase tracking-wider"
             >
-              <span>Explore All Templates</span>
+              <span>Explore All 24 Templates</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -288,10 +321,10 @@ export default function HomePage() {
             {CREATIVE_SHOWCASE_ITEMS.map((item) => (
               <div
                 key={item.id}
-                className="rounded-3xl glass-card border border-emerald-500/20 overflow-hidden group hover:border-emerald-500/40 hover:shadow-xl transition-all flex flex-col justify-between"
+                className="rounded-3xl glass-card border border-emerald-500/20 bg-white/95 overflow-hidden group hover:border-emerald-500/40 hover:shadow-xl transition-all flex flex-col justify-between"
               >
                 {/* Playable Video Card Container */}
-                <div className="relative aspect-video bg-slate-900 overflow-hidden">
+                <div className="relative aspect-video bg-slate-950 overflow-hidden">
                   <video
                     src={item.videoUrl}
                     poster={item.posterUrl}
@@ -305,7 +338,7 @@ export default function HomePage() {
 
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-white border border-white/10">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white border border-white/15">
                       {item.aspect} • {item.camera}
                     </span>
                   </div>
@@ -314,6 +347,9 @@ export default function HomePage() {
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-600/90 backdrop-blur-md text-white">
                       {item.modelBadge}
                     </span>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/60 text-emerald-300 border border-emerald-400/30">
+                      {item.credits}
+                    </span>
                   </div>
                 </div>
 
@@ -321,7 +357,7 @@ export default function HomePage() {
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <span className="text-[10px] font-mono uppercase text-emerald-700 font-bold">{item.category}</span>
-                    <h3 className="font-bold text-[#17211D] text-sm mt-1 group-hover:text-emerald-700 transition-colors">
+                    <h3 className="font-bold text-[#17211D] text-sm mt-1 group-hover:text-emerald-700 transition-colors line-clamp-1">
                       {item.title}
                     </h3>
                   </div>
@@ -335,7 +371,7 @@ export default function HomePage() {
                       <span>Use Preset</span>
                     </Link>
                     <Link
-                      href="/studios/cinema"
+                      href="/create?mode=video"
                       className="text-emerald-700 hover:underline font-bold"
                     >
                       Open in Studio →
@@ -361,10 +397,10 @@ export default function HomePage() {
               Transparent Credit-Based Pricing
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17211D] tracking-tight">
-              Pay in INR with Full Flexibility
+              Simple Plans in INR with Instant Settlement
             </h2>
             <p className="mt-4 text-slate-600 text-sm">
-              Official PayU India Hosted Checkout & UPI integration. Instant billing invoicing & settlement receipts.
+              Official PayU India Hosted Checkout & UPI integration. Instant billing invoicing & official settlement receipts with 0% GST.
             </p>
           </div>
 
@@ -375,7 +411,7 @@ export default function HomePage() {
                 price: '₹0',
                 period: 'forever',
                 credits: '60 credits / month',
-                features: ['720p Exports', 'Standard Models', 'Watermarked', '1 GB Storage'],
+                features: ['720p Video Exports', 'Gemini Omni Flash Engine', 'Standard Rate Limit', '1 GB Cloud Storage'],
                 cta: 'Start Free',
                 popular: false,
                 href: '/signup',
@@ -385,7 +421,7 @@ export default function HomePage() {
                 price: '₹999',
                 period: 'per month',
                 credits: '500 credits / month',
-                features: ['1080p HD Exports', 'No Watermark', 'Runway & Fluvia Core', '10 GB Cloud Storage'],
+                features: ['1080p HD Video Exports', '15 Credits Per Video Rule', 'ElevenLabs HD Voice (2 cr)', '10 GB Cloud Storage'],
                 cta: 'Upgrade to Basic',
                 popular: false,
                 href: '/pricing',
@@ -395,7 +431,7 @@ export default function HomePage() {
                 price: '₹2,499',
                 period: 'per month',
                 credits: '1,600 credits / month',
-                features: ['4K Ultra HD Exports', 'Runway Gen-3 & Luma Ray', 'Gemini Storyboards', '50 GB Cloud Storage'],
+                features: ['4K Ultra HD Exports', 'Priority Gemini Queue', 'Scene Builder Timeline', '50 GB Cloud Storage'],
                 cta: 'Get Fluvia Pro',
                 popular: true,
                 href: '/pricing',
@@ -405,7 +441,7 @@ export default function HomePage() {
                 price: '₹9,999',
                 period: 'per month',
                 credits: '10,000 credits / month',
-                features: ['Full Multi-Model Access', '10 Member Team Seats', '500 GB Storage', 'Custom Billing Invoicing'],
+                features: ['Full Studio Multi-Model', '10 Team Member Seats', '500 GB Storage', 'Dedicated Billing & Invoices'],
                 cta: 'Get Fluvia Teams',
                 popular: false,
                 href: '/pricing',
@@ -413,7 +449,7 @@ export default function HomePage() {
             ].map((plan, i) => (
               <div
                 key={i}
-                className={`p-6 rounded-3xl glass-card border flex flex-col justify-between relative shadow-lg ${
+                className={`p-6 rounded-3xl glass-card border bg-white flex flex-col justify-between relative shadow-lg ${
                   plan.popular ? 'border-emerald-500 ring-2 ring-emerald-500/20 shadow-emerald-500/10' : 'border-emerald-500/20'
                 }`}
               >
@@ -448,7 +484,7 @@ export default function HomePage() {
                   className={`mt-8 w-full py-3 rounded-xl text-center text-xs font-bold uppercase tracking-wider transition-all ${
                     plan.popular
                       ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20'
-                      : 'bg-white/80 hover:bg-emerald-50 text-[#17211D] border border-emerald-500/20'
+                      : 'bg-white hover:bg-emerald-50 text-[#17211D] border border-emerald-500/20'
                   }`}
                 >
                   {plan.cta}
@@ -471,27 +507,27 @@ export default function HomePage() {
             <div className="space-y-4">
               {[
                 {
-                  q: 'What makes Fluvia Flow different from ordinary video generators?',
-                  a: 'Fluvia Flow unites specialized studios: Cinema Studio (camera movement paths & optical emulation), Marketing Studio (viral hook generator & commercial briefs), and Storyboard Studio powered by Google Gemini AI, combined with our non-linear Creative Canvas timeline editor.',
+                  q: 'What is Google Flow / Fluvia Flow?',
+                  a: 'Fluvia Flow is an advanced AI creative studio designed for filmmakers, designers, and creators to generate cinematic video, photorealistic images, voiceover audio, and bespoke creative workflows with Google Gemini and ElevenLabs.',
                 },
                 {
-                  q: 'How does the Google Gemini integration work?',
-                  a: 'Fluvia Flow uses official Google Gen AI SDK models on the server to enrich simple user prompts, write commercial video scripts, and generate structured JSON storyboards with camera directions and shotlists.',
+                  q: 'How does video generation pricing work?',
+                  a: 'Video generation is strictly fixed at 15 credits per video powered by Google Gemini Omni 1.1 Flash. If a generation ever fails, credits are automatically refunded to your wallet atomically.',
                 },
                 {
-                  q: 'How do generation credits work?',
-                  a: 'Every generation reserves credits atomically based on the chosen model and duration. Standard 5-second Fluvia HD renders take 25 credits. If a generation fails, credits are immediately refunded.',
+                  q: 'Can I generate voiceovers and character dialogues?',
+                  a: 'Yes! Fluvia Flow integrates ElevenLabs Neural Voiceover HD at 2 credits per synthesis with 40+ professional voices (Roger, Sarah, Laura, George) and over 29 supported languages.',
                 },
                 {
-                  q: 'Can I pay using Indian Payment Methods (UPI, Netbanking, Cards)?',
-                  a: 'Yes! Fluvia Flow supports direct INR billing through official PayU India Hosted Checkout, allowing UPI, debit/credit cards, and corporate netbanking with automatic invoices and receipts.',
+                  q: 'What is the Google Vids Studio integration?',
+                  a: 'Google Vids Studio Workspace is available directly with 0 Fluvia credits charged, enabling enterprise storyboard handoff and collaborative video editing across Google Workspace.',
                 },
                 {
-                  q: 'Do I own commercial rights to videos created on Fluvia Flow?',
-                  a: 'Yes! All content generated on paid plans carries full commercial usage rights for marketing, advertising, YouTube monetization, and client deliverables.',
+                  q: 'Do I get official invoices and receipts?',
+                  a: 'Yes. Every plan purchase generates an official PDF Tax Invoice and Payment Receipt with 0% GST compliance and PayU India verification records, downloadable anytime in your Purchase History.',
                 },
               ].map((item, idx) => (
-                <div key={idx} className="p-5 rounded-2xl glass-card border border-emerald-500/20 shadow-sm">
+                <div key={idx} className="p-5 rounded-2xl glass-card border border-emerald-500/20 shadow-2xs bg-white">
                   <h3 className="font-bold text-[#17211D] text-sm flex items-center gap-2">
                     <HelpCircle className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>{item.q}</span>
@@ -506,20 +542,20 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* 7. FINAL CALL TO ACTION */}
         {/* ========================================================================= */}
-        <section className="py-24 relative overflow-hidden text-center">
+        <section className="py-24 relative overflow-hidden text-center bg-gradient-to-t from-emerald-50/50 to-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4">
-            <h2 className="text-4xl sm:text-6xl font-black text-[#17211D] tracking-tight uppercase">
-              Ready to create your next cinematic masterpiece?
+            <h2 className="text-4xl sm:text-6xl font-black text-[#17211D] tracking-tight">
+              Bring your stories to life today.
             </h2>
             <p className="text-base text-slate-600 max-w-xl mx-auto">
-              Join thousands of creators, agencies, and brands producing high-impact videos in minutes with Fluvia Flow.
+              Join thousands of creators producing high-impact cinematic videos, images, and voiceovers with Fluvia Flow.
             </p>
             <div className="pt-6">
               <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 shadow-xl shadow-emerald-500/25 text-sm uppercase tracking-wider"
+                href="/create"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 shadow-xl shadow-emerald-500/25 text-sm uppercase tracking-wider"
               >
-                <span>Get Started with Free Credits</span>
+                <span>Launch Flow Studio (15 cr)</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

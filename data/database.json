@@ -3726,6 +3726,18 @@
       "availableBalance": 100,
       "reservedBalance": 0,
       "updatedAt": "2026-10-28T06:53:07.410Z"
+    },
+    "usr_test_audit_1793171566757": {
+      "userId": "usr_test_audit_1793171566757",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-28T07:12:46.780Z"
+    },
+    "audit_user_1793171665849": {
+      "userId": "audit_user_1793171665849",
+      "availableBalance": 48,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-28T07:14:26.108Z"
     }
   },
   "creditLedger": [
@@ -7629,6 +7641,103 @@
         "reason": "Free Tier Limit 0 requests/day"
       },
       "createdAt": "2026-10-28T06:53:07.410Z"
+    },
+    {
+      "id": "cld_i5wav9orhv",
+      "userId": "usr_test_audit_1793171566757",
+      "transactionType": "Test credit grant",
+      "amount": 100,
+      "balanceAfter": 100,
+      "createdAt": "2026-10-28T07:12:46.758Z"
+    },
+    {
+      "id": "cld_uqjajjufuf",
+      "userId": "usr_test_audit_1793171566757",
+      "transactionType": "generation_reserve",
+      "amount": -15,
+      "balanceAfter": 85,
+      "relatedJobId": "job_test_refund_1793171566768",
+      "idempotencyKey": "reserve_job_test_refund_1793171566768",
+      "metadata": {
+        "reservedAmount": 15
+      },
+      "createdAt": "2026-10-28T07:12:46.769Z"
+    },
+    {
+      "id": "cld_65auvd2phe",
+      "userId": "usr_test_audit_1793171566757",
+      "transactionType": "refund",
+      "amount": 15,
+      "balanceAfter": 100,
+      "relatedJobId": "job_test_refund_1793171566768",
+      "idempotencyKey": "refund_job_test_refund_1793171566768_1793171566780",
+      "metadata": {
+        "reason": "Free Tier Limit 0 requests/day"
+      },
+      "createdAt": "2026-10-28T07:12:46.780Z"
+    },
+    {
+      "id": "cld_jf613o4wj",
+      "userId": "audit_user_1793171665849",
+      "transactionType": "subscription",
+      "amount": 50,
+      "balanceAfter": 50,
+      "idempotencyKey": "audit_fund_1793171665849",
+      "createdAt": "2026-10-28T07:14:26.063Z"
+    },
+    {
+      "id": "cld_74fu8i189a",
+      "userId": "audit_user_1793171665849",
+      "transactionType": "generation_reserve",
+      "amount": -2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_test_1793171666073",
+      "idempotencyKey": "reserve_voice_test_1793171666073",
+      "metadata": {
+        "reservedAmount": 2
+      },
+      "createdAt": "2026-10-28T07:14:26.073Z"
+    },
+    {
+      "id": "cld_4fx3s4rhdq",
+      "userId": "audit_user_1793171665849",
+      "transactionType": "generation_settle",
+      "amount": -2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_test_1793171666073",
+      "idempotencyKey": "settle_voice_test_1793171666073",
+      "metadata": {
+        "reserved": 2,
+        "actual": 2,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-28T07:14:26.084Z"
+    },
+    {
+      "id": "cld_136qm19mk9",
+      "userId": "audit_user_1793171665849",
+      "transactionType": "generation_reserve",
+      "amount": -2,
+      "balanceAfter": 46,
+      "relatedJobId": "voice_fail_1793171666096",
+      "idempotencyKey": "reserve_voice_fail_1793171666096",
+      "metadata": {
+        "reservedAmount": 2
+      },
+      "createdAt": "2026-10-28T07:14:26.096Z"
+    },
+    {
+      "id": "cld_di18bj5kb4",
+      "userId": "audit_user_1793171665849",
+      "transactionType": "refund",
+      "amount": 2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_fail_1793171666096",
+      "idempotencyKey": "refund_voice_fail_1793171666096_1793171666108",
+      "metadata": {
+        "reason": "Voiceover Failure Refund"
+      },
+      "createdAt": "2026-10-28T07:14:26.108Z"
     }
   ],
   "plans": [

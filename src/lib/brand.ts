@@ -9,10 +9,10 @@ export const BRAND = {
   name: 'Fluvia Flow',
   shortName: 'Fluvia Flow',
   legalName: 'Fluvia Flow Technologies Inc.',
-  tagline: 'Your imagination. In motion.',
-  title: 'Fluvia Flow — AI Video, Image & Creative Studio',
+  tagline: 'Bring your stories to life with our AI creative studio.',
+  title: 'Fluvia Flow — AI Creative Studio for Video, Images & Custom Tools',
   description:
-    'Create cinematic AI videos, stunning images and creative content with Fluvia Flow. Explore AI-powered tools for visual storytelling and content creation.',
+    'Try Fluvia Flow, the ultimate AI for creatives. Transform ideas into reality using advanced generative models for cinematic video, images, & custom tools.',
   domain: 'fluviaflow.online',
   supportEmail: 'support@fluviaflow.online',
   contactEmail: 'hello@fluviaflow.online',

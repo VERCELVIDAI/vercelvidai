@@ -484,12 +484,12 @@ function CreateWorkspaceContent() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-600 text-white shadow-2xs">
-                  Native Studio
+                  Google Flow Studio
                 </span>
-                <span className="text-xs text-slate-500 font-medium">Google Gemini Omni 1.1 Flash Engine</span>
+                <span className="text-xs text-slate-500 font-medium">Google DeepMind (Veo & Gemini Omni Flash)</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black text-[#17211D] tracking-tight mt-1">
-                AI Video Creation Studio
+                Google Flow — AI Video Creation Studio
               </h1>
               <p className="text-xs sm:text-sm text-slate-600">
                 Generate high-fidelity AI video commercials, product reels, and SaaS demos in-app with real-time inference.

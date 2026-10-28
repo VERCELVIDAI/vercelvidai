@@ -359,21 +359,21 @@ export default function DashboardPage() {
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300">
-                    {plan.name} Tier
+                    Google Flow • {plan.name} Tier
                   </span>
                   <span className="text-slate-400">•</span>
                   <span className="text-xs text-slate-600 font-medium flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    All 4 Generative Engines Online
+                    Google DeepMind & Gemini Engines Online
                   </span>
                 </div>
 
                 <h1 className="text-2xl sm:text-3xl font-black text-[#17211D] tracking-tight">
-                  Welcome back, {user.displayName || 'Creator'}!
+                  Google Flow Creative Studio
                 </h1>
 
                 <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
-                  Your creative workspace is ready. You have <strong className="text-emerald-800 font-bold">{credits.availableBalance} credits</strong> available in your wallet.
+                  Welcome to Google Flow, {user.displayName || 'Creator'}! Your AI production workspace is ready with <strong className="text-emerald-800 font-bold">{credits.availableBalance} credits</strong> available in your wallet.
                 </p>
 
                 {/* Service Rates Pill Strip */}
@@ -423,7 +423,7 @@ export default function DashboardPage() {
               <div>
                 <h2 className="text-lg font-black text-[#17211D] flex items-center gap-2">
                   <Sliders className="w-5 h-5 text-emerald-600" />
-                  <span>Fluvia AI Creative Services</span>
+                  <span>Google Flow AI Creative Services</span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
                   Select a specialized engine designed for commercial video, speech synthesis, and photorealistic imagery.
