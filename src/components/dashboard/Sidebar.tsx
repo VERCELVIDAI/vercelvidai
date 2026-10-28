@@ -12,6 +12,7 @@ import {
   Sliders,
   Video,
   Image as ImageIcon,
+  Mic,
   FolderKanban,
   HardDrive,
   Palette,
@@ -63,20 +64,28 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     router.push('/login');
   };
 
-  const studioItems = [
+  interface SidebarNavItem {
+    label: string;
+    href: string;
+    icon: any;
+    badge?: string;
+  }
+
+  const studioItems: SidebarNavItem[] = [
     { label: 'Cinema Studio', href: '/studios/cinema', icon: Film, badge: 'Director' },
     { label: 'Marketing Studio', href: '/studios/marketing', icon: Megaphone, badge: 'Ecom' },
     { label: 'Storyboard Studio', href: '/studios/storyboard', icon: Layers, badge: 'Gemini' },
     { label: 'Creative Canvas', href: '/editor', icon: Sliders },
   ];
 
-  const creationItems = [
-    { label: 'AI Video Engine', href: '/create?mode=video', icon: Video },
-    { label: 'AI Image Studio', href: '/create?mode=image', icon: ImageIcon },
-    { label: 'Templates Library', href: '/templates', icon: Layers },
+  const creationItems: SidebarNavItem[] = [
+    { label: 'AI Video Studio', href: '/create?mode=video', icon: Video, badge: '15 cr' },
+    { label: 'AI Voiceover HD', href: '/create?mode=audio', icon: Mic, badge: '2 cr' },
+    { label: 'AI Image Studio', href: '/create?mode=image', icon: ImageIcon, badge: '5 cr' },
+    { label: 'Curated Templates', href: '/templates', icon: Layers, badge: '24' },
   ];
 
-  const managementItems = [
+  const managementItems: SidebarNavItem[] = [
     { label: 'My Projects', href: '/dashboard/projects', icon: FolderKanban },
     { label: 'Asset Library', href: '/dashboard/assets', icon: HardDrive },
     { label: 'Brand Kit', href: '/dashboard/brand-kit', icon: Palette },
@@ -177,14 +186,21 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                   key={item.href}
                   href={item.href}
                   onClick={() => isDrawer && setIsMobileOpen(false)}
-                  className={`flex items-center gap-2.5 px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
+                  className={`flex items-center justify-between px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
                     isActive
                       ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300'
                       : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                  <span>{item.label}</span>
+                  <div className="flex items-center gap-2.5">
+                    <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-emerald-700' : 'text-slate-500'}`} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono font-bold border border-emerald-200">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -203,14 +219,21 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                   key={item.href}
                   href={item.href}
                   onClick={() => isDrawer && setIsMobileOpen(false)}
-                  className={`flex items-center gap-2.5 px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
+                  className={`flex items-center justify-between px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
                     isActive
                       ? 'font-bold bg-emerald-50 text-emerald-900 border-emerald-300'
                       : 'border-transparent text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                  <span>{item.label}</span>
+                  <div className="flex items-center gap-2.5">
+                    <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-emerald-700' : 'text-slate-500'}`} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono font-bold border border-emerald-200">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}

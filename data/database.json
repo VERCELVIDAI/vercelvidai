@@ -3714,6 +3714,18 @@
       "availableBalance": 4000,
       "reservedBalance": 0,
       "updatedAt": "2026-10-24T07:26:07.833Z"
+    },
+    "audit_user_1793170377298": {
+      "userId": "audit_user_1793170377298",
+      "availableBalance": 48,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-28T06:52:57.582Z"
+    },
+    "usr_test_audit_1793170387378": {
+      "userId": "usr_test_audit_1793170387378",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-28T06:53:07.410Z"
     }
   },
   "creditLedger": [
@@ -7520,6 +7532,103 @@
         "amountInr": 588.82
       },
       "createdAt": "2026-10-24T07:27:36.412Z"
+    },
+    {
+      "id": "cld_d7nx3ge0c0",
+      "userId": "audit_user_1793170377298",
+      "transactionType": "subscription",
+      "amount": 50,
+      "balanceAfter": 50,
+      "idempotencyKey": "audit_fund_1793170377298",
+      "createdAt": "2026-10-28T06:52:57.529Z"
+    },
+    {
+      "id": "cld_k4yt3hto25",
+      "userId": "audit_user_1793170377298",
+      "transactionType": "generation_reserve",
+      "amount": -2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_test_1793170377544",
+      "idempotencyKey": "reserve_voice_test_1793170377544",
+      "metadata": {
+        "reservedAmount": 2
+      },
+      "createdAt": "2026-10-28T06:52:57.544Z"
+    },
+    {
+      "id": "cld_bu52aeitd1",
+      "userId": "audit_user_1793170377298",
+      "transactionType": "generation_settle",
+      "amount": -2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_test_1793170377544",
+      "idempotencyKey": "settle_voice_test_1793170377544",
+      "metadata": {
+        "reserved": 2,
+        "actual": 2,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-28T06:52:57.555Z"
+    },
+    {
+      "id": "cld_xbopzxoil6",
+      "userId": "audit_user_1793170377298",
+      "transactionType": "generation_reserve",
+      "amount": -2,
+      "balanceAfter": 46,
+      "relatedJobId": "voice_fail_1793170377566",
+      "idempotencyKey": "reserve_voice_fail_1793170377566",
+      "metadata": {
+        "reservedAmount": 2
+      },
+      "createdAt": "2026-10-28T06:52:57.567Z"
+    },
+    {
+      "id": "cld_ppsaisdefq",
+      "userId": "audit_user_1793170377298",
+      "transactionType": "refund",
+      "amount": 2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_fail_1793170377566",
+      "idempotencyKey": "refund_voice_fail_1793170377566_1793170377582",
+      "metadata": {
+        "reason": "Voiceover Failure Refund"
+      },
+      "createdAt": "2026-10-28T06:52:57.582Z"
+    },
+    {
+      "id": "cld_3zyipqa2s7",
+      "userId": "usr_test_audit_1793170387378",
+      "transactionType": "Test credit grant",
+      "amount": 100,
+      "balanceAfter": 100,
+      "createdAt": "2026-10-28T06:53:07.379Z"
+    },
+    {
+      "id": "cld_40iy25wpvb",
+      "userId": "usr_test_audit_1793170387378",
+      "transactionType": "generation_reserve",
+      "amount": -15,
+      "balanceAfter": 85,
+      "relatedJobId": "job_test_refund_1793170387399",
+      "idempotencyKey": "reserve_job_test_refund_1793170387399",
+      "metadata": {
+        "reservedAmount": 15
+      },
+      "createdAt": "2026-10-28T06:53:07.399Z"
+    },
+    {
+      "id": "cld_039tqrebyn",
+      "userId": "usr_test_audit_1793170387378",
+      "transactionType": "refund",
+      "amount": 15,
+      "balanceAfter": 100,
+      "relatedJobId": "job_test_refund_1793170387399",
+      "idempotencyKey": "refund_job_test_refund_1793170387399_1793170387410",
+      "metadata": {
+        "reason": "Free Tier Limit 0 requests/day"
+      },
+      "createdAt": "2026-10-28T06:53:07.410Z"
     }
   ],
   "plans": [
@@ -24975,6 +25084,62 @@
       "id": "inv_dlvd65a40",
       "createdAt": "2026-10-24T07:27:36.472Z",
       "updatedAt": "2026-10-24T07:27:36.472Z"
+    },
+    {
+      "id": "inv_ehzkebxbs",
+      "invoiceNumber": "INV-2026-0077",
+      "orderId": "order_rzp_mock_123",
+      "txnid": "pay_rzp_mock_456",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Aria Vance",
+        "email": "creator@vidai.io",
+        "phone": "9999999999",
+        "state": "Delhi"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Starter Plan Subscription",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 0,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 0,
+          "totalAmount": 999
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 0,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 0,
+      "totalAmount": 999,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-21T06:14:19.599Z",
+      "dueDate": "2026-10-21T06:14:19.599Z",
+      "paymentDate": "2026-10-21T06:14:19.599Z",
+      "payuPaymentId": "pay_rzp_mock_456",
+      "terms": "Payment received. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Official tax invoice.",
+      "createdAt": "2026-10-21T06:14:19.599Z",
+      "updatedAt": "2026-10-21T06:14:19.599Z"
     }
   ],
   "receipts": [
@@ -26809,6 +26974,28 @@
       "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
       "id": "rcp_n6f7k43ty",
       "createdAt": "2026-10-24T07:27:36.519Z"
+    },
+    {
+      "id": "rcp_8r0kvt2l0",
+      "receiptNumber": "RCP-2026-0077",
+      "orderId": "order_rzp_mock_123",
+      "txnid": "pay_rzp_mock_456",
+      "invoiceId": "inv_ehzkebxbs",
+      "invoiceNumber": "INV-2026-0077",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "customerName": "Aria Vance",
+      "customerEmail": "creator@vidai.io",
+      "amountReceived": 999,
+      "currency": "INR",
+      "paymentMethod": "Online Payment",
+      "payuMihpayid": "pay_rzp_mock_456",
+      "productPurchased": "Fluvia Starter Plan Subscription",
+      "paymentDate": "2026-10-21T06:14:19.599Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "VERIFIED-pay_starter_1",
+      "footerNotice": "Official payment receipt.",
+      "createdAt": "2026-10-21T06:14:19.599Z"
     }
   ],
   "creditNotes": [],

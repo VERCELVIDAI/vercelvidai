@@ -41,6 +41,7 @@ export interface CreativeTemplate {
   duration?: string;
   thumbnail: string;
   videoPreview?: string;
+  previewUrl?: string;
   isStaticPreview?: boolean;
   description: string;
   prompt: string;
@@ -52,6 +53,7 @@ export interface CreativeTemplate {
   tags: string[];
   scenes?: TemplateScene[];
   aiModelsUsed: string[];
+  engine?: string;
   estimatedCredits: number;
   generationWorkflow?: 'video_gemini' | 'image_gemini' | 'text_renderer';
   textFields?: EditableTextField[];
