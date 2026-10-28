@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Deduct credits permanently
-    dbStore.settleReservedCredits(current.user.id, creditCost, reservationRef);
+    dbStore.settleCredits(current.user.id, reservationRef, creditCost, creditCost);
 
     dbStore.logAudit(current.user.id, 'VOICEOVER_GENERATED', 'audio', result.audioUrl, {
       voiceId: result.voiceId,
@@ -90,10 +90,20 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     const isConfigured = elevenLabsService.isConfigured();
-    const voices = isConfigured ? await elevenLabsService.getVoices() : [];
+    const rawVoices = isConfigured ? await elevenLabsService.getVoices() : [];
+    const voices = rawVoices.slice(0, 30).map((v: any) => ({
+      id: v.voiceId || v.voice_id || v.id,
+      voiceId: v.voiceId || v.voice_id || v.id,
+      name: v.name,
+      category: v.category,
+      gender: v.labels?.gender || 'Neural',
+      accent: v.labels?.accent || 'Natural',
+      previewUrl: v.previewUrl || v.preview_url,
+      description: v.description,
+    }));
     return NextResponse.json({
       isConfigured,
-      voices: voices.slice(0, 20),
+      voices,
     });
   } catch (err: any) {
     return NextResponse.json({ isConfigured: elevenLabsService.isConfigured(), voices: [] });

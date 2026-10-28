@@ -162,7 +162,8 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     borderWidth: 1,
   });
 
-  const issueDateFormatted = new Date(invoice.issueDate).toLocaleDateString('en-IN', {
+  const rawIssueDate = invoice.issueDate || (invoice as any).issuedDate || (invoice as any).createdAt || new Date().toISOString();
+  const issueDateFormatted = new Date(rawIssueDate).toLocaleDateString('en-IN', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -177,11 +178,25 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   page.drawText(issueDateFormatted, { x: 52, y: metaYVal, size: 9, font: fontBold, color: colorDark });
 
   // Meta 2: Transaction ID
+  const txnIdSafe = String(invoice.txnid || (invoice as any).transactionReference || invoice.orderId || invoice.id || 'N/A');
   page.drawText('TRANSACTION ID', { x: 40 + metaColWidth + 12, y: metaYLabel, size: 7, font: fontBold, color: colorLightSlate });
-  page.drawText(invoice.txnid.slice(0, 18), { x: 40 + metaColWidth + 12, y: metaYVal, size: 8.5, font: fontBold, color: colorDark });
+  page.drawText(txnIdSafe.slice(0, 18), { x: 40 + metaColWidth + 12, y: metaYVal, size: 8.5, font: fontBold, color: colorDark });
 
   // Meta 3: Place of Supply
-  const placeOfSupply = invoice.customer.state || invoice.supplier.state || 'Delhi (07)';
+  const supplierObj = invoice.supplier || {
+    legalName: 'Fluvia Flow Technologies Private Limited',
+    registeredAddress: 'Level 4, Horizon Creative Hub, Connaught Place, New Delhi 110001',
+    state: 'Delhi',
+    supportEmail: 'billing@fluviaflow.online',
+  };
+  const customerObj = invoice.customer || {
+    name: (invoice as any).customerName || 'Fluvia Flow Creator',
+    email: (invoice as any).customerEmail || 'creator@fluviaflow.online',
+    state: 'Delhi',
+    address: 'Registered SaaS Creator Account',
+  };
+
+  const placeOfSupply = customerObj.state || supplierObj.state || 'Delhi (07)';
   page.drawText('PLACE OF SUPPLY', { x: 40 + metaColWidth * 2 + 12, y: metaYLabel, size: 7, font: fontBold, color: colorLightSlate });
   page.drawText(placeOfSupply.slice(0, 18), { x: 40 + metaColWidth * 2 + 12, y: metaYVal, size: 8.5, font: fontBold, color: colorDark });
 
@@ -209,13 +224,13 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   let supY = cursorY - 14;
   page.drawText('ISSUED BY (SUPPLIER)', { x: 52, y: supY, size: 7.5, font: fontBold, color: colorEmerald });
   supY -= 14;
-  page.drawText(invoice.supplier.legalName, { x: 52, y: supY, size: 9.5, font: fontBold, color: colorDark });
+  page.drawText(supplierObj.legalName.slice(0, 36), { x: 52, y: supY, size: 9.5, font: fontBold, color: colorDark });
   supY -= 12;
-  page.drawText(invoice.supplier.registeredAddress.slice(0, 48), { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
+  page.drawText(supplierObj.registeredAddress.slice(0, 48), { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
   supY -= 11;
-  page.drawText(`State: ${invoice.supplier.state}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
+  page.drawText(`State: ${supplierObj.state}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
   supY -= 12;
-  page.drawText(`Support: ${invoice.supplier.supportEmail}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
+  page.drawText(`Support: ${supplierObj.supportEmail}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
 
   // Right Card: Customer Box
   const custX = 40 + cardWidth + 16;
@@ -232,11 +247,11 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   let custY = cursorY - 14;
   page.drawText('BILLED TO (CUSTOMER)', { x: custX + 12, y: custY, size: 7.5, font: fontBold, color: colorEmerald });
   custY -= 14;
-  page.drawText(invoice.customer.name.slice(0, 36), { x: custX + 12, y: custY, size: 9.5, font: fontBold, color: colorDark });
+  page.drawText(customerObj.name.slice(0, 36), { x: custX + 12, y: custY, size: 9.5, font: fontBold, color: colorDark });
   custY -= 12;
-  page.drawText(invoice.customer.email.slice(0, 42), { x: custX + 12, y: custY, size: 7.5, font: fontRegular, color: colorSlate });
+  page.drawText((customerObj.email || '').slice(0, 42), { x: custX + 12, y: custY, size: 7.5, font: fontRegular, color: colorSlate });
   custY -= 11;
-  page.drawText(invoice.customer.address ? invoice.customer.address.slice(0, 46) : 'Registered SaaS Creator Account', {
+  page.drawText(customerObj.address ? customerObj.address.slice(0, 46) : 'Registered SaaS Creator Account', {
     x: custX + 12,
     y: custY,
     size: 7.5,
@@ -244,7 +259,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     color: colorSlate,
   });
   custY -= 12;
-  page.drawText(`Place of Supply: ${invoice.customer.state || invoice.supplier.state || 'India'}`, {
+  page.drawText(`Place of Supply: ${customerObj.state || supplierObj.state || 'India'}`, {
     x: custX + 12,
     y: custY,
     size: 7.5,
@@ -295,10 +310,13 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     });
 
     const itemDesc = item.description || 'Creative Credits / Subscription';
+    const itemRate = Number(item.unitPrice ?? item.taxableValue ?? (item as any).total ?? (item as any).totalAmount ?? 0);
+    const itemTotal = Number(item.totalAmount ?? (item as any).total ?? (item.quantity * itemRate));
+
     page.drawText(itemDesc.slice(0, 45), { x: colDescX, y: cursorY - 16, size: 8.5, font: fontBold, color: colorDark });
     page.drawText(String(item.quantity || 1), { x: colQtyX, y: cursorY - 16, size: 8, font: fontRegular, color: colorSlate });
-    drawRightText(page, (item.unitPrice || item.taxableValue).toFixed(2), colRateRight, cursorY - 16, fontRegular, 8, colorDark);
-    drawRightText(page, item.totalAmount.toFixed(2), colTotalRight, cursorY - 16, fontBold, 8.5, colorDark);
+    drawRightText(page, itemRate.toFixed(2), colRateRight, cursorY - 16, fontRegular, 8, colorDark);
+    drawRightText(page, itemTotal.toFixed(2), colTotalRight, cursorY - 16, fontBold, 8.5, colorDark);
 
     cursorY -= rowHeight;
   });
@@ -338,13 +356,17 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     sumY -= 14;
   }
 
+  const safeBase = Number(invoice.baseAmount ?? (invoice as any).taxableAmount ?? invoice.totalAmount ?? 0);
+  const safeTax = Number(invoice.taxAmount ?? 0);
+  const safeTotal = Number(invoice.totalAmount ?? safeBase + safeTax);
+
   page.drawText('Subtotal:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
-  drawRightText(page, `INR ${invoice.baseAmount.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
+  drawRightText(page, `INR ${safeBase.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
   sumY -= 15;
 
   if (hasTaxes) {
     page.drawText('Taxes & Fees:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
-    drawRightText(page, `INR ${invoice.taxAmount.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
+    drawRightText(page, `INR ${safeTax.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
     sumY -= 15;
   }
 
@@ -357,7 +379,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   });
 
   page.drawText('Total Amount:', { x: labelX, y: sumY - 11, size: 10, font: fontBold, color: colorDark });
-  drawRightText(page, `INR ${invoice.totalAmount.toFixed(2)}`, valRight, sumY - 11, fontBold, 11, colorEmeraldDark);
+  drawRightText(page, `INR ${safeTotal.toFixed(2)}`, valRight, sumY - 11, fontBold, 11, colorEmeraldDark);
 
   // Left Note Beside Totals
   const leftNoteWidth = summaryBoxX - 40 - 16;
@@ -378,7 +400,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   noteY -= 11;
   page.drawText('- Creative generative tokens and compute units active on account.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
   noteY -= 11;
-  page.drawText(`- Linked Merchant Ref: ${invoice.txnid.slice(0, 24)}`, { x: 52, y: noteY, size: 7, font: fontBold, color: colorDark });
+  page.drawText(`- Linked Merchant Ref: ${txnIdSafe.slice(0, 24)}`, { x: 52, y: noteY, size: 7, font: fontBold, color: colorDark });
   noteY -= 13;
   page.drawText('[VERIFIED] DIGITAL CERTIFICATION: PAID IN FULL', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorEmeraldDark });
 
@@ -584,7 +606,7 @@ export async function generateReceiptPdf(
   gY -= 16;
 
   const gatewayItems = [
-    { label: 'Merchant Txn ID:', val: receipt.txnid },
+    { label: 'Merchant Txn ID:', val: receipt.txnid || (receipt as any).transactionReference || 'N/A' },
     { label: 'PayU Payment ID:', val: receipt.payuMihpayid || 'Verified Auto-Settled' },
     { label: 'Bank Ref / UTR:', val: receipt.payuBankRefNum || 'Direct Net/UPI Clearance' },
     { label: 'Payment Method:', val: receipt.paymentMethod || 'PayU India' },
@@ -593,8 +615,9 @@ export async function generateReceiptPdf(
   ];
 
   gatewayItems.forEach((item) => {
+    const safeVal = String(item.val || 'N/A');
     page.drawText(item.label, { x: 52, y: gY, size: 7.5, font: fontRegular, color: colorSlate });
-    page.drawText(item.val.slice(0, 24), { x: 145, y: gY, size: 8, font: fontBold, color: colorDark });
+    page.drawText(safeVal.slice(0, 24), { x: 145, y: gY, size: 8, font: fontBold, color: colorDark });
     gY -= 18;
   });
 
@@ -616,16 +639,17 @@ export async function generateReceiptPdf(
 
   const orderItems = [
     { label: 'Customer Name:', val: receipt.customerName || 'Fluvia Flow Creator' },
-    { label: 'Customer Email:', val: receipt.customerEmail },
-    { label: 'Product Purchased:', val: receipt.productPurchased || 'Creative Credits / Pack' },
+    { label: 'Customer Email:', val: receipt.customerEmail || 'creator@fluviaflow.online' },
+    { label: 'Product Purchased:', val: (receipt as any).productPurchased || (receipt as any).paidItemDescription || 'Creative Credits / Pack' },
     { label: 'Linked Invoice:', val: receipt.invoiceNumber || invoice?.invoiceNumber || 'INV-AVAILABLE' },
-    { label: 'Order Identifier:', val: receipt.orderId || receipt.txnid },
+    { label: 'Order Identifier:', val: receipt.orderId || receipt.txnid || 'ORD-AVAILABLE' },
     { label: 'Cryptographic Auth:', val: 'Verified Server HMAC' },
   ];
 
   orderItems.forEach((item) => {
+    const safeVal = String(item.val || 'N/A');
     page.drawText(item.label, { x: cX + 12, y: oY, size: 7.5, font: fontRegular, color: colorSlate });
-    page.drawText(item.val.slice(0, 25), { x: cX + 105, y: oY, size: 8, font: fontBold, color: colorDark });
+    page.drawText(safeVal.slice(0, 25), { x: cX + 105, y: oY, size: 8, font: fontBold, color: colorDark });
     oY -= 18;
   });
 
@@ -651,7 +675,7 @@ export async function generateReceiptPdf(
     color: colorLightSlate,
   });
 
-  const refHash = receipt.verificationReference || `FF-VERIF-${receipt.txnid}-SETTLED`;
+  const refHash = receipt.verificationReference || `FF-VERIF-${receipt.txnid || (receipt as any).transactionReference || 'REF'}-SETTLED`;
   page.drawText(refHash, {
     x: 52,
     y: cursorY - 28,

@@ -36,3 +36,4 @@ next-env.d.ts
 # temp files
 data/*.tmp
 *.bat
+public/uploads/audio/*.mp3

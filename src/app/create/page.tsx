@@ -34,6 +34,7 @@ import {
   ShieldCheck,
   Flame,
   LayoutGrid,
+  Volume2,
 } from 'lucide-react';
 
 const MODELS = [
@@ -44,7 +45,7 @@ const MODELS = [
   { id: 'gemini-3.1-flash-image', name: 'Google Gemini 3.1 Flash Image', cost: 5, badge: 'Official Google', active: true },
   { id: 'gemini-3-pro-image', name: 'Google Gemini 3 Pro Image (Ultra)', cost: 10, badge: 'Ultra', active: true },
   { id: 'fal-flux-pro', name: 'Flux 1.1 Pro Vision (Image)', cost: 5, badge: 'Photoreal', active: true },
-  { id: 'eleven-multilingual', name: 'ElevenLabs Voice HD', cost: 10, badge: 'Voiceover', active: true },
+  { id: 'eleven-multilingual', name: 'ElevenLabs Voice HD', cost: 2, badge: 'Voiceover', active: true },
 ];
 
 // Curated high-conversion productive templates for quick load in the studio
@@ -67,9 +68,10 @@ function CreateWorkspaceContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initial params
-  const initialMode = (searchParams.get('mode') as any) || 'video';
+  const initialVoice = searchParams.get('voice') || '';
+  const initialMode = (searchParams.get('mode') as any) || (initialVoice ? 'audio' : 'video');
   const initialPrompt = searchParams.get('prompt') || '';
-  const initialModel = searchParams.get('modelId') || 'gemini-omni-1.1-flash';
+  const initialModel = searchParams.get('modelId') || (initialMode === 'audio' ? 'eleven-multilingual' : 'gemini-omni-1.1-flash');
   const initialRatio = (searchParams.get('aspectRatio') as any) || '16:9';
 
   const [authData, setAuthData] = useState<any>(null);
@@ -85,6 +87,19 @@ function CreateWorkspaceContent() {
   const [uploadedImageName, setUploadedImageName] = useState<string | null>(null);
   const [negativePrompt, setNegativePrompt] = useState('');
 
+  // Voiceover selection & preview state
+  const [selectedVoice, setSelectedVoice] = useState<string>(initialVoice || 'Roger');
+  const [availableVoices, setAvailableVoices] = useState<any[]>([
+    { voiceId: 'CwhRBWXzGAHq8TQ4Fs17', name: 'Roger - Casual & Resonant', gender: 'male', accent: 'american' },
+    { voiceId: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah - Reassuring & Confident', gender: 'female', accent: 'american' },
+    { voiceId: 'FGY2WhTYpPnrIDTdsKH5', name: 'Laura - Enthusiast & Quirky', gender: 'female', accent: 'american' },
+    { voiceId: 'JBFqnCBsd6RMkjVDRZzb', name: 'George - Warm Storyteller', gender: 'male', accent: 'british' },
+    { voiceId: '21m00Tcm4TlvDq8ikWAM', name: 'Rachel - Calm & Clear', gender: 'female', accent: 'american' },
+    { voiceId: 'AZnzlk1XvdvUeBnXmlld', name: 'Domi - Strong & Engaging', gender: 'female', accent: 'american' },
+  ]);
+  const [previewAudio, setPreviewAudio] = useState<HTMLAudioElement | null>(null);
+  const [playingVoicePreview, setPlayingVoicePreview] = useState<string | null>(null);
+
   // Active Job & History State
   const [activeJob, setActiveJob] = useState<any>(null);
   const [userJobs, setUserJobs] = useState<any[]>([]);
@@ -95,6 +110,29 @@ function CreateWorkspaceContent() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [copiedVids, setCopiedVids] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  // Load available voices from ElevenLabs endpoint
+  useEffect(() => {
+    fetch('/api/ai/voice')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.voices && Array.isArray(data.voices) && data.voices.length > 0) {
+          setAvailableVoices(data.voices);
+          if (initialVoice) {
+            const found = data.voices.find(
+              (v: any) =>
+                v.name?.toLowerCase().includes(initialVoice.toLowerCase()) ||
+                v.id === initialVoice ||
+                v.voiceId === initialVoice
+            );
+            if (found) {
+              setSelectedVoice(found.voiceId || found.id);
+            }
+          }
+        }
+      })
+      .catch(() => {});
+  }, [initialVoice]);
 
   // Load auth & pending draft
   useEffect(() => {
@@ -175,7 +213,7 @@ function CreateWorkspaceContent() {
       : mode === 'image'
       ? (selectedModelObj.cost || 5)
       : mode === 'audio'
-      ? 10
+      ? 2
       : 15;
 
   // Handle Image Upload for Image-to-Video
@@ -292,6 +330,25 @@ function CreateWorkspaceContent() {
     window.open('https://workspace.google.com/intl/en_in/products/vids/?from=gafb-drive_6806271-def-en_in', '_blank');
   };
 
+  const handleToggleVoicePreview = (previewUrl?: string, voiceId?: string) => {
+    if (!previewUrl) return;
+    if (playingVoicePreview === voiceId && previewAudio) {
+      previewAudio.pause();
+      setPlayingVoicePreview(null);
+      return;
+    }
+    if (previewAudio) {
+      previewAudio.pause();
+    }
+    const audio = new Audio(previewUrl);
+    audio.play().catch(() => {});
+    setPreviewAudio(audio);
+    setPlayingVoicePreview(voiceId || null);
+    audio.onended = () => {
+      setPlayingVoicePreview(null);
+    };
+  };
+
   // Dispatch Generation to Backend
   const handleStartGeneration = async () => {
     if (!prompt.trim() && !referenceImageUrl) {
@@ -301,6 +358,57 @@ function CreateWorkspaceContent() {
 
     setIsSubmitting(true);
     setErrorMsg(null);
+
+    // Dedicated Voiceover Generation Handler via ElevenLabs
+    if (mode === 'audio') {
+      try {
+        const res = await fetch('/api/ai/voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: prompt.trim(),
+            voiceId: selectedVoice,
+            modelId: 'eleven_v4',
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to synthesize voiceover with ElevenLabs.');
+        }
+
+        const voiceJob = {
+          id: `voice_${Date.now()}`,
+          status: 'completed',
+          modelId: 'eleven-multilingual',
+          reservedCredits: 2,
+          actualCredits: data.creditsDeducted || 2,
+          progressPercent: 100,
+          progressMessage: `Synthesized speech with ${availableVoices.find((v) => (v.voiceId || v.id) === selectedVoice)?.name || 'ElevenLabs Neural Engine'}`,
+          output: {
+            audioUrl: data.audioUrl,
+            text: prompt.trim(),
+          },
+          createdAt: new Date().toISOString(),
+        };
+
+        setActiveJob(voiceJob);
+        setUserJobs((prev) => [voiceJob, ...prev]);
+        setActiveTab('studio');
+
+        // Refresh credits balance immediately
+        fetch('/api/auth/me')
+          .then((r) => r.json())
+          .then((fresh) => {
+            if (fresh) setAuthData(fresh);
+          });
+      } catch (err: any) {
+        setErrorMsg(err.message);
+      } finally {
+        setIsSubmitting(false);
+      }
+      return;
+    }
 
     try {
       const res = await fetch('/api/generate', {
@@ -599,23 +707,29 @@ function CreateWorkspaceContent() {
                 <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-4 shadow-md">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>Creative Direction Prompt</span>
+                      {mode === 'audio' ? (
+                        <Mic className="w-3.5 h-3.5 text-teal-600" />
+                      ) : (
+                        <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      )}
+                      <span>{mode === 'audio' ? 'Voiceover Narration Script' : 'Creative Direction Prompt'}</span>
                     </label>
 
-                    <button
-                      type="button"
-                      onClick={handleEnhancePrompt}
-                      disabled={isEnhancing || !prompt.trim()}
-                      className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[11px] flex items-center gap-1 transition-all disabled:opacity-40 cursor-pointer"
-                    >
-                      {isEnhancing ? (
-                        <span className="w-3 h-3 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
-                      ) : (
-                        <Sparkles className="w-3 h-3 text-emerald-600" />
-                      )}
-                      <span>{isEnhancing ? 'Enhancing...' : 'Gemini AI Enhance'}</span>
-                    </button>
+                    {mode !== 'audio' && (
+                      <button
+                        type="button"
+                        onClick={handleEnhancePrompt}
+                        disabled={isEnhancing || !prompt.trim()}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[11px] flex items-center gap-1 transition-all disabled:opacity-40 cursor-pointer"
+                      >
+                        {isEnhancing ? (
+                          <span className="w-3 h-3 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <Sparkles className="w-3 h-3 text-emerald-600" />
+                        )}
+                        <span>{isEnhancing ? 'Enhancing...' : 'Gemini AI Enhance'}</span>
+                      </button>
+                    )}
                   </div>
 
                   {enhancementApplied && (
@@ -630,7 +744,9 @@ function CreateWorkspaceContent() {
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder={
-                      videoInputType === 'image'
+                      mode === 'audio'
+                        ? 'Enter narration text or script to synthesize with ElevenLabs (e.g. "Welcome to Fluvia Flow. Create studio-grade videos and hyperrealistic voiceovers in seconds.")...'
+                        : videoInputType === 'image'
                         ? 'Describe camera motion and animation for your image (e.g. slow cinematic dolly push forward, volumetric lighting, gentle wind motion)...'
                         : 'Describe your video scene: subject, environment, lighting, camera motion, cinematic aesthetic (e.g. 16:9 4K commercial)...'
                     }
@@ -689,7 +805,7 @@ function CreateWorkspaceContent() {
                       <div className="flex justify-between items-center mb-1.5">
                         <label className="text-slate-700 uppercase font-bold">Active Engine</label>
                         <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
-                          15 Credits
+                          {mode === 'video' ? '15 Credits' : `${estimatedCost} Credits`}
                         </span>
                       </div>
                       <select
@@ -708,29 +824,106 @@ function CreateWorkspaceContent() {
                           </option>
                         ))}
                       </select>
+                      <p className="text-[10px] text-slate-500 mt-1 font-medium">
+                        Fixed rate: 15 Credits for Gemini Omni video generations.
+                      </p>
                     </div>
 
-                    {/* Aspect Ratio */}
-                    <div>
-                      <label className="block text-slate-700 uppercase font-bold mb-1.5">Aspect Ratio</label>
-                      <div className="grid grid-cols-4 gap-1 bg-white/80 p-1 rounded-xl border border-emerald-500/20 shadow-2xs">
-                        {(['16:9', '9:16', '1:1', '4:3'] as const).map((r) => (
-                          <button
-                            key={r}
-                            type="button"
-                            onClick={() => setAspectRatio(r)}
-                            className={`py-1 rounded-lg font-bold transition-all cursor-pointer ${
-                              aspectRatio === r
-                                ? 'bg-emerald-600 text-white shadow-2xs'
-                                : 'text-slate-600 hover:text-[#17211D]'
-                            }`}
-                          >
-                            {r}
-                          </button>
-                        ))}
+                    {/* Aspect Ratio OR Voice Selector */}
+                    {mode === 'audio' ? (
+                      <div>
+                        <div className="flex justify-between items-center mb-1.5">
+                          <label className="text-slate-700 uppercase font-bold">Neural Voice Model</label>
+                          <span className="text-[10px] text-teal-800 font-bold bg-teal-100 px-1.5 py-0.5 rounded">
+                            ElevenLabs HD
+                          </span>
+                        </div>
+                        <select
+                          value={selectedVoice}
+                          onChange={(e) => setSelectedVoice(e.target.value)}
+                          className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl border border-emerald-500/20 focus:outline-none focus:border-emerald-500 text-xs cursor-pointer font-bold"
+                        >
+                          {availableVoices.map((v) => (
+                            <option key={v.voiceId || v.id} value={v.voiceId || v.id} className="text-[#17211D]">
+                              {v.name} ({v.gender || 'Neural'} • {v.accent || 'Natural'})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ) : (
+                      <div>
+                        <label className="block text-slate-700 uppercase font-bold mb-1.5">Aspect Ratio</label>
+                        <div className="grid grid-cols-4 gap-1 bg-white/80 p-1 rounded-xl border border-emerald-500/20 shadow-2xs">
+                          {(['16:9', '9:16', '1:1', '4:3'] as const).map((r) => (
+                            <button
+                              key={r}
+                              type="button"
+                              onClick={() => setAspectRatio(r)}
+                              className={`py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                                aspectRatio === r
+                                  ? 'bg-emerald-600 text-white shadow-2xs'
+                                  : 'text-slate-600 hover:text-[#17211D]'
+                              }`}
+                            >
+                              {r}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Featured Voice Presets when in Audio Mode */}
+                  {mode === 'audio' && (
+                    <div className="pt-2 border-t border-slate-100">
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="text-slate-700 uppercase font-bold text-[11px]">Featured Voice Presets</label>
+                        <span className="text-[10px] text-slate-500">Click card to select • speaker to preview</span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {availableVoices.slice(0, 6).map((v) => {
+                          const isSelected = selectedVoice === (v.voiceId || v.id) || selectedVoice === v.name;
+                          return (
+                            <div
+                              key={v.voiceId || v.id}
+                              onClick={() => setSelectedVoice(v.voiceId || v.id)}
+                              className={`p-2 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
+                                isSelected
+                                  ? 'bg-teal-50/90 border-teal-600 shadow-2xs ring-1 ring-teal-500'
+                                  : 'bg-white/60 border-slate-200 hover:border-teal-300'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between gap-1">
+                                <span className="font-bold text-[#17211D] text-xs truncate">
+                                  {v.name.split('-')[0].trim()}
+                                </span>
+                                {v.previewUrl && (
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleToggleVoicePreview(v.previewUrl, v.voiceId || v.id);
+                                    }}
+                                    title="Preview voice sample"
+                                    className={`p-1 rounded-full transition-colors ${
+                                      playingVoicePreview === (v.voiceId || v.id)
+                                        ? 'bg-teal-600 text-white animate-pulse'
+                                        : 'hover:bg-teal-100 text-teal-700'
+                                    }`}
+                                  >
+                                    <Volume2 className="w-3 h-3" />
+                                  </button>
+                                )}
+                              </div>
+                              <span className="text-[10px] text-slate-500 mt-1 capitalize font-medium">
+                                {v.gender || 'Neural'} • {v.accent || 'Natural'}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Duration Slider (if video mode) */}
                   {mode === 'video' && (
@@ -895,7 +1088,7 @@ function CreateWorkspaceContent() {
                       </div>
                     ) : activeJob.status === 'completed' ? (
                       <div className="space-y-4">
-                        {/* Cinema Result Video Player */}
+                        {/* Cinema Result Video / Image / Audio Player */}
                         <div className="aspect-video rounded-xl overflow-hidden bg-slate-900 relative border border-emerald-500/20 group shadow-xl">
                           {activeJob.output?.videoUrl ? (
                             <video
@@ -912,9 +1105,25 @@ function CreateWorkspaceContent() {
                               alt="Generated Image"
                               className="w-full h-full object-cover"
                             />
+                          ) : activeJob.output?.audioUrl ? (
+                            <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-slate-900 via-teal-950 to-emerald-950 text-white text-center">
+                              <div className="w-14 h-14 rounded-full bg-teal-500/20 border-2 border-teal-400 flex items-center justify-center mb-3 shadow-lg shadow-teal-500/20">
+                                <Volume2 className="w-7 h-7 text-teal-300 animate-pulse" />
+                              </div>
+                              <h4 className="text-sm font-bold text-teal-200 mb-1">ElevenLabs Neural Voiceover HD</h4>
+                              <p className="text-xs text-slate-300 max-w-sm line-clamp-2 italic mb-4 font-serif">
+                                &ldquo;{activeJob.output.text || prompt}&rdquo;
+                              </p>
+                              <audio
+                                controls
+                                src={activeJob.output.audioUrl}
+                                className="w-full max-w-xs rounded-lg accent-teal-500"
+                                autoPlay
+                              />
+                            </div>
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-xs text-slate-400 p-4">
-                              Generated audio narration registered to timeline.
+                              Generated media registered to timeline.
                             </div>
                           )}
                         </div>
@@ -935,9 +1144,9 @@ function CreateWorkspaceContent() {
                           </p>
                         </div>
 
-                        {/* Action Buttons: Download Video, Remix, Edit */}
+                        {/* Action Buttons: Download Video/Audio, Remix, Edit */}
                         <div className="grid grid-cols-2 gap-2 pt-1">
-                          {activeJob.output?.videoUrl && (
+                          {activeJob.output?.videoUrl ? (
                             <button
                               type="button"
                               onClick={() => handleDownloadVideo(activeJob.output.videoUrl)}
@@ -946,7 +1155,16 @@ function CreateWorkspaceContent() {
                               <Download className="w-3.5 h-3.5" />
                               <span>Download MP4</span>
                             </button>
-                          )}
+                          ) : activeJob.output?.audioUrl ? (
+                            <button
+                              type="button"
+                              onClick={() => handleDownloadVideo(activeJob.output.audioUrl, 'fluvia-voiceover.mp3')}
+                              className="py-2.5 px-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-teal-700/20 cursor-pointer transition-colors"
+                            >
+                              <Download className="w-3.5 h-3.5" />
+                              <span>Download MP3</span>
+                            </button>
+                          ) : null}
 
                           <button
                             type="button"
