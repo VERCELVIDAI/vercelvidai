@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { DashboardHeader } from '@/components/dashboard/Header';
-import { TEMPLATES_DATA, VideoTemplate } from '@/lib/templates';
+import { TEMPLATES_DATA, ALL_CURATED_TEMPLATES, getTemplateById, getTemplateBySlug, VideoTemplate, CreativeTemplate } from '@/lib/templates';
 import {
   Sparkles,
   Video,
@@ -315,10 +315,15 @@ function CreateWorkspaceContent() {
   };
 
   // Quick load template
-  const handleLoadTemplate = (template: VideoTemplate) => {
-    setPrompt(template.prompt);
-    setMode('video');
-    setModelId('gemini-omni-1.1-flash');
+  const handleLoadTemplate = (template: any) => {
+    setPrompt(template.prompt || template.description || '');
+    if (template.type === 'image') {
+      setMode('image');
+      setModelId('gemini-3.1-flash-image');
+    } else {
+      setMode('video');
+      setModelId('gemini-omni-1.1-flash');
+    }
     if (template.aspect === '16:9' || template.aspect === '9:16' || template.aspect === '1:1') {
       setAspectRatio(template.aspect);
     }
@@ -331,7 +336,11 @@ function CreateWorkspaceContent() {
   useEffect(() => {
     const templateParam = searchParams.get('template');
     if (templateParam) {
-      const found = TEMPLATES_DATA.find((t) => t.id === templateParam || t.slug === templateParam);
+      const found =
+        TEMPLATES_DATA.find((t) => t.id === templateParam || t.slug === templateParam) ||
+        ALL_CURATED_TEMPLATES.find((t) => t.id === templateParam || t.slug === templateParam) ||
+        getTemplateById(templateParam) ||
+        getTemplateBySlug(templateParam);
       if (found) {
         handleLoadTemplate(found);
       }

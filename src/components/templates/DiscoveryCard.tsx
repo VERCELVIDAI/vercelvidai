@@ -115,14 +115,14 @@ export function DiscoveryCard({
     <div
       onClick={() => onSelect(template)}
       onMouseEnter={() => {
-        if (isVideo && !template.isStaticPreview && Boolean(template.videoPreview)) {
+        if (isVideo && Boolean(template.videoPreview)) {
           onHoverStart(template.id);
         }
       }}
       onMouseLeave={onHoverEnd}
-      className="break-inside-avoid mb-4 group relative rounded-2xl overflow-hidden bg-[#131917] border border-white/10 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-950/40 transition-all duration-300 cursor-pointer select-none"
+      className="break-inside-avoid mb-4 group relative rounded-2xl overflow-hidden bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/60 hover:shadow-2xl hover:shadow-[#F05BCE]/15 transition-all duration-300 cursor-pointer select-none"
     >
-      <div className={`relative w-full ${getAspectClass()} overflow-hidden bg-[#0c100f]`}>
+      <div className={`relative w-full ${getAspectClass()} overflow-hidden bg-[#100A12]`}>
         {/* Poster Image */}
         <img
           src={template.thumbnail}
@@ -130,12 +130,12 @@ export function DiscoveryCard({
           loading="lazy"
           onError={() => setHasError(true)}
           className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
-            isVideo && isActivePlaying && videoLoaded && !template.isStaticPreview ? 'opacity-0' : 'opacity-100'
+            isVideo && isActivePlaying && videoLoaded && Boolean(template.videoPreview) ? 'opacity-0' : 'opacity-100'
           }`}
         />
 
         {/* Real Hover Video Preview (Only for real video templates with dedicated video file) */}
-        {isVideo && !template.isStaticPreview && isActivePlaying && Boolean(template.videoPreview) && !hasError && (
+        {isVideo && isActivePlaying && Boolean(template.videoPreview) && !hasError && (
           <video
             ref={videoRef}
             src={template.videoPreview}
@@ -148,30 +148,30 @@ export function DiscoveryCard({
         )}
 
         {/* Ambient Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/60 opacity-80 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none z-20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#100A12]/95 via-[#100A12]/30 to-black/60 opacity-80 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none z-20" />
 
         {/* Top Badges & Creator Info */}
         <div className="absolute top-3 inset-x-3 flex items-center justify-between z-30 pointer-events-auto">
           {/* Creator Chip */}
-          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 shadow-xs max-w-[70%]">
+          <div className="flex items-center gap-2 bg-[#100A12]/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#39233B] shadow-xs max-w-[70%]">
             <img
               src={template.creatorAvatar}
               alt={template.creatorName}
-              className="w-5 h-5 rounded-full object-cover ring-1 ring-emerald-500/50 shrink-0"
+              className="w-5 h-5 rounded-full object-cover ring-1 ring-[#F05BCE]/50 shrink-0"
             />
-            <span className="text-[11px] font-medium text-white/90 truncate">
+            <span className="text-[11px] font-medium text-[#F5EAF4] truncate">
               {template.creatorName}
             </span>
             <button
               type="button"
               onClick={handleFollowClick}
               title={isFollowing ? 'Following creator' : 'Follow creator'}
-              className="ml-0.5 text-white/60 hover:text-emerald-400 transition-colors p-0.5"
+              className="ml-0.5 text-[#A99AAA] hover:text-[#F05BCE] transition-colors p-0.5"
             >
               {isFollowing ? (
-                <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <UserCheck className="w-3.5 h-3.5 text-[#F05BCE]" />
               ) : (
-                <UserPlus className="w-3.5 h-3.5 hover:text-emerald-400" />
+                <UserPlus className="w-3.5 h-3.5 hover:text-[#F05BCE]" />
               )}
             </button>
           </div>
@@ -179,62 +179,52 @@ export function DiscoveryCard({
           {/* Format & Credit Badge */}
           <div className="flex items-center gap-1.5">
             {isImage ? (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-950/80 text-pink-300 border border-pink-500/30 flex items-center gap-1">
-                <ImageIcon className="w-3 h-3 text-pink-400" />
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 flex items-center gap-1">
+                <ImageIcon className="w-3 h-3 text-[#F05BCE]" />
                 <span>Image (5 cr)</span>
               </span>
             ) : isText ? (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
-                <Type className="w-3 h-3 text-cyan-400" />
-                <span>Text (0 cr)</span>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] flex items-center gap-1">
+                <Type className="w-3 h-3 text-[#F05BCE]" />
+                <span>Text (Free)</span>
               </span>
             ) : (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                <Film className="w-3 h-3 text-emerald-400" />
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#100A12]/80 backdrop-blur-md text-[#F05BCE] border border-[#F05BCE]/30 flex items-center gap-1">
+                <Film className="w-3 h-3 text-[#F05BCE]" />
                 <span>15 cr</span>
               </span>
             )}
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white/80 border border-white/10">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#100A12]/80 backdrop-blur-md text-[#A99AAA] border border-[#39233B]">
               {template.aspect}
             </span>
           </div>
         </div>
 
-        {/* Center Indicator: ONLY Show Play Button on Video Templates that have video clips. If static poster preview, show Static Poster badge! */}
-        {isVideo && !isActivePlaying && !template.isStaticPreview && (
+        {/* Center Indicator: Play Icon for video cards when not playing */}
+        {isVideo && !isActivePlaying && (
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
-            <div className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 shadow-lg group-hover:scale-110 transition-transform">
-              <Play className="w-4 h-4 fill-white/80 ml-0.5" />
+            <div className="w-10 h-10 rounded-full bg-[#100A12]/70 backdrop-blur-md border border-[#F05BCE]/40 flex items-center justify-center text-[#F5EAF4] shadow-lg group-hover:scale-110 transition-transform">
+              <Play className="w-4 h-4 fill-[#F05BCE] text-[#F05BCE] ml-0.5" />
             </div>
           </div>
         )}
 
-        {/* Video Card Static Poster Hover Badge (Honest preview indicator) */}
-        {isVideo && template.isStaticPreview && (
-          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-center gap-1.5 shadow-xl">
-              <Film className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Static Poster Preview</span>
-            </div>
-          </div>
-        )}
-
-        {/* Image Card Center Hover Badge (Clear Image Label, NO Play Button) */}
+        {/* Image Card Center Hover Badge */}
         {isImage && (
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-pink-500/40 text-pink-300 text-xs font-bold flex items-center gap-1.5 shadow-xl">
-              <ImageIcon className="w-3.5 h-3.5 text-pink-400" />
-              <span>AI Image Preview</span>
+            <div className="px-3 py-1.5 rounded-full bg-[#100A12]/85 backdrop-blur-md border border-[#F05BCE]/40 text-[#F5EAF4] text-xs font-bold flex items-center gap-1.5 shadow-xl">
+              <ImageIcon className="w-3.5 h-3.5 text-[#F05BCE]" />
+              <span>AI Image Synthesis</span>
             </div>
           </div>
         )}
 
-        {/* Text Animation Center Hover Badge (NO Play Button) */}
+        {/* Text Animation Center Hover Badge */}
         {isText && (
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-cyan-500/40 text-cyan-300 text-xs font-bold flex items-center gap-1.5 shadow-xl">
-              <Type className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Interactive Motion</span>
+            <div className="px-3 py-1.5 rounded-full bg-[#100A12]/85 backdrop-blur-md border border-[#F05BCE]/40 text-[#F5EAF4] text-xs font-bold flex items-center gap-1.5 shadow-xl">
+              <Type className="w-3.5 h-3.5 text-[#F05BCE]" />
+              <span>Kinetic Motion Preset</span>
             </div>
           </div>
         )}
@@ -243,7 +233,7 @@ export function DiscoveryCard({
         <div className="absolute bottom-3 inset-x-3 z-30 flex flex-col gap-2 pointer-events-auto">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-md">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#F05BCE] bg-[#F05BCE]/15 border border-[#F05BCE]/30 px-2 py-0.5 rounded-md">
                 {template.category}
               </span>
               {template.badge && (
@@ -252,27 +242,21 @@ export function DiscoveryCard({
                 </span>
               )}
             </div>
-            <h4 className="text-xs sm:text-sm font-bold text-white tracking-tight line-clamp-1 group-hover:text-emerald-300 transition-colors">
+            <h4 className="text-xs sm:text-sm font-bold text-[#F5EAF4] tracking-tight line-clamp-1 group-hover:text-[#F05BCE] transition-colors">
               {template.title}
             </h4>
-            <p className="text-[11px] text-white/70 line-clamp-2 mt-0.5 font-normal leading-relaxed">
+            <p className="text-[11px] text-[#A99AAA] line-clamp-2 mt-0.5 font-normal leading-relaxed">
               {template.prompt || template.description}
             </p>
           </div>
 
           {/* Actions Bar */}
-          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+          <div className="flex items-center justify-between pt-2 border-t border-[#39233B]">
             {/* Quick "Use Template" CTA */}
             <button
               type="button"
               onClick={handleUseClick}
-              className={`px-3 py-1.5 rounded-xl font-bold text-[11px] flex items-center gap-1.5 shadow-md transition-all hover:scale-[1.02] cursor-pointer ${
-                isImage
-                  ? 'bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white shadow-pink-950/60'
-                  : isText
-                  ? 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white shadow-cyan-950/60'
-                  : 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white shadow-emerald-950/60'
-              }`}
+              className="px-3 py-1.5 rounded-xl font-bold text-[11px] flex items-center gap-1.5 shadow-md shadow-[#F05BCE]/20 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white transition-all hover:scale-[1.02] cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Use Template</span>
@@ -282,13 +266,13 @@ export function DiscoveryCard({
             <button
               type="button"
               onClick={handleLikeClick}
-              className="flex items-center gap-1 text-[11px] font-mono px-2.5 py-1.5 rounded-xl bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/10 text-white/90 hover:text-rose-400 transition-colors"
+              className="flex items-center gap-1 text-[11px] font-mono px-2.5 py-1.5 rounded-xl bg-[#100A12]/80 hover:bg-[#100A12] backdrop-blur-md border border-[#39233B] text-[#F5EAF4] hover:text-[#F05BCE] transition-colors"
             >
               <Heart
                 className={`w-3.5 h-3.5 ${
                   optimisticLiked
-                    ? 'fill-rose-500 text-rose-500'
-                    : 'text-white/80 group-hover:text-rose-400'
+                    ? 'fill-[#F05BCE] text-[#F05BCE]'
+                    : 'text-[#A99AAA] group-hover:text-[#F05BCE]'
                 } transition-colors`}
               />
               <span>{likeCount.toLocaleString()}</span>

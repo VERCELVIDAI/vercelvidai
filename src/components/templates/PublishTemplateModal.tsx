@@ -85,22 +85,22 @@ export function PublishTemplateModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="relative w-full max-w-xl rounded-3xl bg-[#111714] border border-white/15 shadow-2xl p-6 sm:p-8 text-white">
+      <div className="relative w-full max-w-xl rounded-3xl bg-[#211522] border border-[#39233B] shadow-2xl p-6 sm:p-8 text-[#F5EAF4]">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 text-white/60 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"
+          className="absolute top-5 right-5 text-[#A99AAA] hover:text-[#F5EAF4] p-1 rounded-full hover:bg-white/5 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="flex items-center gap-2.5 mb-2">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="w-9 h-9 rounded-xl bg-[#F05BCE]/15 border border-[#F05BCE]/30 flex items-center justify-center text-[#F05BCE]">
             <Upload className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white">Publish Video Template</h3>
-            <p className="text-xs text-white/60">Share your creative AI prompt with the Fluvia Flow community</p>
+            <h3 className="text-lg font-bold text-[#F5EAF4]">Publish Video Template</h3>
+            <p className="text-xs text-[#A99AAA]">Share your creative AI prompt with the Fluvia Flow community</p>
           </div>
         </div>
 
@@ -112,16 +112,16 @@ export function PublishTemplateModal({
         )}
 
         {success && (
-          <div className="mt-4 p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <div className="mt-4 p-3 rounded-xl bg-[#100A12] border border-[#F05BCE]/40 text-[#F5EAF4] text-xs flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
             <span>Template successfully published to the Discovery Feed!</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-white/80 mb-1">
-              Template Title <span className="text-emerald-400">*</span>
+            <label className="block text-xs font-semibold text-[#F5EAF4] mb-1">
+              Template Title <span className="text-[#F05BCE]">*</span>
             </label>
             <input
               type="text"
@@ -129,17 +129,17 @@ export function PublishTemplateModal({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Neo Tokyo Cyberpunk Drone Flight"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs sm:text-sm placeholder:text-white/30 focus:outline-none focus:border-emerald-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#100A12] border border-[#39233B] text-[#F5EAF4] text-xs sm:text-sm placeholder:text-[#A99AAA]/50 focus:outline-none focus:border-[#F05BCE]"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-white/80 mb-1">Category</label>
+              <label className="block text-xs font-semibold text-[#F5EAF4] mb-1">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-[#161D1A] border border-white/10 text-white text-xs focus:outline-none focus:border-emerald-500 cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#100A12] border border-[#39233B] text-[#F5EAF4] text-xs focus:outline-none focus:border-[#F05BCE] cursor-pointer"
               >
                 <option value="Product Commercial">Product Commercial</option>
                 <option value="Cinematic Automotive">Cinematic Automotive</option>
@@ -155,11 +155,11 @@ export function PublishTemplateModal({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-white/80 mb-1">Aspect Ratio</label>
+              <label className="block text-xs font-semibold text-[#F5EAF4] mb-1">Aspect Ratio</label>
               <select
                 value={aspect}
                 onChange={(e) => setAspect(e.target.value as any)}
-                className="w-full px-3 py-2.5 rounded-xl bg-[#161D1A] border border-white/10 text-white text-xs focus:outline-none focus:border-emerald-500 cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#100A12] border border-[#39233B] text-[#F5EAF4] text-xs focus:outline-none focus:border-[#F05BCE] cursor-pointer"
               >
                 <option value="16:9">16:9 Landscape (TV & Film)</option>
                 <option value="9:16">9:16 Vertical (Reels & Shorts)</option>
@@ -171,8 +171,8 @@ export function PublishTemplateModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-white/80 mb-1">
-              AI Generation Prompt <span className="text-emerald-400">*</span>
+            <label className="block text-xs font-semibold text-[#F5EAF4] mb-1">
+              AI Generation Prompt <span className="text-[#F05BCE]">*</span>
             </label>
             <textarea
               rows={3}
@@ -180,18 +180,18 @@ export function PublishTemplateModal({
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Detailed scene description, camera lighting, movements, style tokens..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs sm:text-sm placeholder:text-white/30 focus:outline-none focus:border-emerald-500 font-mono resize-none"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#100A12] border border-[#39233B] text-[#F5EAF4] text-xs sm:text-sm placeholder:text-[#A99AAA]/50 focus:outline-none focus:border-[#F05BCE] font-mono resize-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-white/80 mb-1">Short Description (Optional)</label>
+            <label className="block text-xs font-semibold text-[#F5EAF4] mb-1">Short Description (Optional)</label>
             <input
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="e.g. High energy drone flight through rain-slicked neon skyscrapers."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-emerald-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#100A12] border border-[#39233B] text-[#F5EAF4] text-xs placeholder:text-[#A99AAA]/50 focus:outline-none focus:border-[#F05BCE]"
             />
           </div>
 
@@ -199,7 +199,7 @@ export function PublishTemplateModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-xs font-semibold transition-colors"
+              className="px-4 py-2.5 rounded-xl bg-[#100A12] hover:bg-white/5 text-[#A99AAA] hover:text-[#F5EAF4] text-xs font-semibold border border-[#39233B] transition-colors"
             >
               Cancel
             </button>
@@ -207,7 +207,7 @@ export function PublishTemplateModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-950/60 transition-all disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#d641b6] hover:from-[#ff6ee0] hover:to-[#e64ec6] text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-[#F05BCE]/25 transition-all disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? (
                 <>

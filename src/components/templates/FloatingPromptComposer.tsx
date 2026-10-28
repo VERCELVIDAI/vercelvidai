@@ -246,22 +246,22 @@ export function FloatingPromptComposer({
       {/* Generated Video Player Modal */}
       {completedVideo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-xl rounded-3xl bg-[#0F1412] border border-emerald-500/40 p-5 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="relative w-full max-w-xl rounded-3xl bg-[#211522] border border-[#39233B] p-5 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-[#39233B] pb-3">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <h3 className="font-bold text-white text-sm sm:text-base">Video Generated Successfully</h3>
+                <CheckCircle2 className="w-5 h-5 text-[#F05BCE]" />
+                <h3 className="font-bold text-[#F5EAF4] text-sm sm:text-base">Video Generated Successfully</h3>
               </div>
               <button
                 type="button"
                 onClick={() => setCompletedVideo(null)}
-                className="text-white/60 hover:text-white p-1"
+                className="text-[#A99AAA] hover:text-[#F5EAF4] p-1 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-black ring-1 ring-white/10">
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-black ring-1 ring-[#39233B]">
               <video
                 src={completedVideo.url}
                 controls
@@ -271,16 +271,16 @@ export function FloatingPromptComposer({
               />
             </div>
 
-            <div className="flex items-center justify-between text-xs text-white/70">
-              <span className="font-mono text-emerald-400">Engine: Google Gemini (gemini-omni-1.1-flash)</span>
-              <span className="font-mono text-white/60">Charged: 15 Credits</span>
+            <div className="flex items-center justify-between text-xs text-[#A99AAA]">
+              <span className="font-mono text-[#F05BCE]">Engine: Google Gemini (gemini-omni-1.1-flash)</span>
+              <span className="font-mono text-[#A99AAA]">Charged: 15 Credits</span>
             </div>
 
             <div className="flex items-center gap-3 pt-2">
               <a
                 href={completedVideo.url}
                 download={`fluvia_gemini_${completedVideo.jobId}.mp4`}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/60 transition-all"
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#d641b6] hover:from-[#ff6ee0] hover:to-[#e64ec6] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all"
               >
                 <Download className="w-4 h-4" />
                 <span>Download MP4</span>
@@ -288,7 +288,7 @@ export function FloatingPromptComposer({
               <button
                 type="button"
                 onClick={() => setCompletedVideo(null)}
-                className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs border border-white/10"
+                className="px-5 py-3 rounded-xl bg-[#100A12] hover:bg-white/5 text-[#F5EAF4] font-semibold text-xs border border-[#39233B] transition-colors"
               >
                 Close
               </button>
@@ -300,44 +300,44 @@ export function FloatingPromptComposer({
       {/* Google Vids Studio Handoff Modal */}
       {showGoogleVidsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-lg rounded-3xl bg-[#0F1412] border border-blue-500/40 p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="relative w-full max-w-lg rounded-3xl bg-[#211522] border border-[#39233B] p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-[#39233B] pb-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-sm">
+                <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/15 border border-[#F05BCE]/30 flex items-center justify-center text-[#F05BCE] font-bold text-sm">
                   G
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-base">Google Vids Studio</h3>
-                  <p className="text-[11px] text-blue-400 font-mono">Google Workspace App (vids.new)</p>
+                  <h3 className="font-bold text-[#F5EAF4] text-base">Google Vids Studio</h3>
+                  <p className="text-[11px] text-[#F05BCE] font-mono">Google Workspace App (vids.new)</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setShowGoogleVidsModal(false)}
-                className="text-white/60 hover:text-white p-1"
+                className="text-[#A99AAA] hover:text-[#F5EAF4] p-1 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
-              <p className="text-white/90 leading-relaxed">
+            <div className="p-4 rounded-2xl bg-[#100A12] border border-[#39233B] space-y-2 text-xs">
+              <p className="text-[#F5EAF4]/90 leading-relaxed">
                 <strong>Google Vids</strong> is an interactive AI video workspace application within Google Workspace.
                 Storyboards, voiceover, and scenes are composed directly in your Google account.
               </p>
-              <div className="p-2.5 rounded-xl bg-blue-950/40 border border-blue-500/20 text-[11px] text-blue-200">
+              <div className="p-2.5 rounded-xl bg-[#211522] border border-[#F05BCE]/25 text-[11px] text-[#F5EAF4]/90">
                 💡 <strong>0 Credits Deducted:</strong> Because video generation occurs externally inside your Google Workspace, Fluvia Flow does not charge any credits for this handoff.
               </div>
             </div>
 
             {/* Cool Templates Selector for Google Vids */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/70 font-semibold flex items-center justify-between">
+              <label className="text-[11px] text-[#A99AAA] font-semibold flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>Cool Starter Templates for Google Vids:</span>
                 </span>
-                <span className="text-[10px] text-cyan-300 font-mono">1-Click Apply</span>
+                <span className="text-[10px] text-[#F05BCE] font-mono">1-Click Apply</span>
               </label>
               <div className="grid grid-cols-3 gap-1.5">
                 {GOOGLE_VIDS_STARTER_TEMPLATES.map((tmpl) => {
@@ -349,8 +349,8 @@ export function FloatingPromptComposer({
                       onClick={() => setVidsPromptOverride(tmpl.prompt)}
                       className={`px-2 py-1.5 rounded-xl text-[11px] font-medium border flex items-center gap-1.5 transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-blue-600/30 text-blue-200 border-blue-400/60 shadow-xs'
-                          : 'bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border-white/10'
+                          ? 'bg-[#F05BCE]/20 text-[#F5EAF4] border-[#F05BCE] shadow-xs'
+                          : 'bg-[#100A12] hover:bg-white/5 text-[#A99AAA] hover:text-[#F5EAF4] border-[#39233B]'
                       }`}
                     >
                       <span>{tmpl.emoji}</span>
@@ -362,8 +362,8 @@ export function FloatingPromptComposer({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/60 font-semibold">Your Prompt for Google Vids:</label>
-              <div className="relative p-3 rounded-xl bg-black/50 border border-white/10 text-xs text-white/90 font-mono select-all">
+              <label className="text-[11px] text-[#A99AAA] font-semibold">Your Prompt for Google Vids:</label>
+              <div className="relative p-3 rounded-xl bg-[#100A12] border border-[#39233B] text-xs text-[#F5EAF4] font-mono select-all">
                 {getActiveVidsPrompt()}
               </div>
             </div>
@@ -372,12 +372,12 @@ export function FloatingPromptComposer({
               <button
                 type="button"
                 onClick={handleCopyVidsPrompt}
-                className="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs flex items-center justify-center gap-2 border border-white/10"
+                className="py-3 px-4 rounded-xl bg-[#100A12] hover:bg-white/5 text-[#F5EAF4] font-semibold text-xs flex items-center justify-center gap-2 border border-[#39233B] transition-colors"
               >
                 {copiedVidsPrompt ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-400" />
-                    <span className="text-emerald-400">Prompt Copied!</span>
+                    <Check className="w-4 h-4 text-[#F05BCE]" />
+                    <span className="text-[#F05BCE]">Prompt Copied!</span>
                   </>
                 ) : (
                   <>
@@ -392,7 +392,7 @@ export function FloatingPromptComposer({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowGoogleVidsModal(false)}
-                className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-950/60"
+                className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#d641b6] hover:from-[#ff6ee0] hover:to-[#e64ec6] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all"
               >
                 <span>Open Google Vids</span>
                 <ExternalLink className="w-4 h-4" />
@@ -404,18 +404,18 @@ export function FloatingPromptComposer({
 
       {/* Floating Pill Panel */}
       <div className="fixed bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-3xl">
-        <div className="relative rounded-2xl sm:rounded-full bg-[#0D1210]/95 backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-2 sm:p-2.5 transition-all ring-1 ring-emerald-500/20 hover:border-emerald-500/40">
+        <div className="relative rounded-2xl sm:rounded-full bg-[#100A12]/95 backdrop-blur-2xl border border-[#39233B] shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-2 sm:p-2.5 transition-all ring-1 ring-[#F05BCE]/20 hover:border-[#F05BCE]/40">
           {/* Active Template & Model Chip */}
-          <div className="flex items-center justify-between px-3 py-1 mb-1.5 rounded-lg bg-emerald-950/70 border border-emerald-500/30 text-[11px] text-emerald-300 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between px-3 py-1 mb-1.5 rounded-lg bg-[#211522] border border-[#39233B] text-[11px] text-[#F5EAF4] animate-in fade-in duration-200">
             <div className="flex items-center gap-2 truncate">
-              <span className="flex items-center gap-1 font-bold text-emerald-400">
-                <Sparkles className="w-3 h-3 text-emerald-400 shrink-0" />
+              <span className="flex items-center gap-1 font-bold text-[#F05BCE]">
+                <Sparkles className="w-3 h-3 text-[#F05BCE] shrink-0" />
                 <span>Google Gemini (gemini-omni-1.1-flash)</span>
               </span>
               {selectedTemplate && (
                 <>
-                  <span className="text-white/30">•</span>
-                  <span className="truncate text-white/80">Template: {selectedTemplate.title}</span>
+                  <span className="text-[#A99AAA]/40">•</span>
+                  <span className="truncate text-[#F5EAF4]">Template: {selectedTemplate.title}</span>
                 </>
               )}
             </div>
@@ -424,7 +424,7 @@ export function FloatingPromptComposer({
               <button
                 type="button"
                 onClick={() => setShowGoogleVidsModal(true)}
-                className="text-[10px] text-blue-400 hover:text-blue-300 font-semibold underline px-1"
+                className="text-[10px] text-[#F05BCE] hover:text-white font-semibold underline px-1 transition-colors"
                 title="Open Google Vids handoff"
               >
                 Google Vids Option
@@ -433,7 +433,7 @@ export function FloatingPromptComposer({
                 <button
                   type="button"
                   onClick={onClearTemplate}
-                  className="text-emerald-400 hover:text-white p-0.5 ml-1"
+                  className="text-[#A99AAA] hover:text-[#F05BCE] p-0.5 ml-1 transition-colors"
                   title="Detach template"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -451,8 +451,8 @@ export function FloatingPromptComposer({
                 title="Attach reference image or subject"
                 className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
                   attachedReference || showAttachMenu
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-white/10 hover:bg-white/15 text-white/80 hover:text-white'
+                    ? 'bg-[#F05BCE] text-white shadow-md shadow-[#F05BCE]/30'
+                    : 'bg-[#211522] hover:bg-white/10 text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B]'
                 }`}
               >
                 <Plus className="w-4 h-4" />
@@ -460,8 +460,8 @@ export function FloatingPromptComposer({
 
               {/* Reference Attachment Dropdown */}
               {showAttachMenu && (
-                <div className="absolute bottom-12 left-0 w-56 p-2 rounded-2xl bg-[#141A17] border border-white/15 shadow-2xl backdrop-blur-2xl text-xs text-white/90 space-y-1 z-50">
-                  <div className="text-[10px] uppercase font-bold text-slate-400 px-2 py-1">
+                <div className="absolute bottom-12 left-0 w-56 p-2 rounded-2xl bg-[#211522] border border-[#39233B] shadow-2xl backdrop-blur-2xl text-xs text-[#F5EAF4] space-y-1 z-50">
+                  <div className="text-[10px] uppercase font-bold text-[#A99AAA] px-2 py-1">
                     Add Media Reference
                   </div>
                   <button
@@ -470,9 +470,9 @@ export function FloatingPromptComposer({
                       setAttachedReference('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800');
                       setShowAttachMenu(false);
                     }}
-                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left transition-colors"
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left transition-colors text-[#F5EAF4]"
                   >
-                    <ImageIcon className="w-3.5 h-3.5 text-emerald-400" />
+                    <ImageIcon className="w-3.5 h-3.5 text-[#F05BCE]" />
                     <span>Product / Image Reference</span>
                   </button>
                   <button
@@ -481,9 +481,9 @@ export function FloatingPromptComposer({
                       setAttachedReference('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800');
                       setShowAttachMenu(false);
                     }}
-                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left transition-colors"
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-left transition-colors text-[#F5EAF4]"
                   >
-                    <Video className="w-3.5 h-3.5 text-teal-400" />
+                    <Video className="w-3.5 h-3.5 text-[#F05BCE]" />
                     <span>Subject / Character Anchor</span>
                   </button>
                   {attachedReference && (
@@ -503,16 +503,16 @@ export function FloatingPromptComposer({
             </div>
 
             {/* Middle: Aspect Selector */}
-            <div className="hidden sm:flex items-center bg-white/5 border border-white/10 rounded-full px-2 py-1 shrink-0">
+            <div className="hidden sm:flex items-center bg-[#211522] border border-[#39233B] rounded-full px-2 py-1 shrink-0">
               <select
                 value={aspectRatio}
                 onChange={(e) => setAspectRatio(e.target.value as any)}
-                className="bg-transparent text-[11px] font-mono text-white/80 focus:outline-none cursor-pointer"
+                className="bg-transparent text-[11px] font-mono text-[#F5EAF4] focus:outline-none cursor-pointer"
               >
-                <option value="16:9" className="bg-[#141A17] text-white">16:9 Landscape</option>
-                <option value="9:16" className="bg-[#141A17] text-white">9:16 Vertical</option>
-                <option value="1:1" className="bg-[#141A17] text-white">1:1 Square</option>
-                <option value="4:5" className="bg-[#141A17] text-white">4:5 Social</option>
+                <option value="16:9" className="bg-[#211522] text-[#F5EAF4]">16:9 Landscape</option>
+                <option value="9:16" className="bg-[#211522] text-[#F5EAF4]">9:16 Vertical</option>
+                <option value="1:1" className="bg-[#211522] text-[#F5EAF4]">1:1 Square</option>
+                <option value="4:5" className="bg-[#211522] text-[#F5EAF4]">4:5 Social</option>
               </select>
             </div>
 
@@ -521,52 +521,52 @@ export function FloatingPromptComposer({
               <button
                 type="button"
                 onClick={() => setShowModelPicker((prev) => !prev)}
-                className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-2.5 py-1 text-[11px] font-medium text-white/80 hover:text-white"
+                className="flex items-center gap-1.5 bg-[#211522] border border-[#39233B] rounded-full px-2.5 py-1 text-[11px] font-medium text-[#F5EAF4] hover:border-[#F05BCE]/50 transition-colors"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F05BCE] animate-pulse" />
                 <span>Gemini Omni Flash</span>
-                <ChevronDown className="w-3 h-3 text-white/50" />
+                <ChevronDown className="w-3 h-3 text-[#A99AAA]" />
               </button>
 
               {showModelPicker && (
-                <div className="absolute bottom-11 left-0 w-64 p-2 rounded-2xl bg-[#141A17] border border-white/15 shadow-2xl backdrop-blur-2xl text-xs space-y-1 z-50">
-                  <div className="text-[10px] uppercase font-bold text-slate-400 px-2 py-1">
+                <div className="absolute bottom-11 left-0 w-64 p-2 rounded-2xl bg-[#211522] border border-[#39233B] shadow-2xl backdrop-blur-2xl text-xs space-y-1 z-50">
+                  <div className="text-[10px] uppercase font-bold text-[#A99AAA] px-2 py-1">
                     AI Generation Engine
                   </div>
-                  <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 flex items-center justify-between">
+                  <div className="p-2 rounded-xl bg-[#100A12] border border-[#F05BCE]/40 text-[#F5EAF4] flex items-center justify-between">
                     <div>
                       <p className="font-bold">Google Gemini Omni 1.1 Flash</p>
-                      <p className="text-[10px] text-emerald-400/80">Active Model • 15 credits / video</p>
+                      <p className="text-[10px] text-[#F05BCE]">Active Model • 15 credits / video</p>
                     </div>
-                    <Check className="w-4 h-4 text-emerald-400" />
+                    <Check className="w-4 h-4 text-[#F05BCE]" />
                   </div>
 
-                  <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-white/40 flex items-center justify-between opacity-60 cursor-not-allowed">
+                  <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-[#A99AAA]/50 flex items-center justify-between opacity-60 cursor-not-allowed">
                     <div>
                       <p className="font-medium">Runway Gen-3 Alpha</p>
                       <p className="text-[10px]">High-speed cinematic video</p>
                     </div>
-                    <span className="text-[9px] uppercase font-bold bg-white/10 px-1.5 py-0.5 rounded text-white/60">
+                    <span className="text-[9px] uppercase font-bold bg-white/10 px-1.5 py-0.5 rounded text-[#A99AAA]">
                       Coming Soon
                     </span>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-white/40 flex items-center justify-between opacity-60 cursor-not-allowed">
+                  <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-[#A99AAA]/50 flex items-center justify-between opacity-60 cursor-not-allowed">
                     <div>
                       <p className="font-medium">Luma Dream Machine Ray</p>
                       <p className="text-[10px]">Realistic camera movement</p>
                     </div>
-                    <span className="text-[9px] uppercase font-bold bg-white/10 px-1.5 py-0.5 rounded text-white/60">
+                    <span className="text-[9px] uppercase font-bold bg-white/10 px-1.5 py-0.5 rounded text-[#A99AAA]">
                       Coming Soon
                     </span>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-white/40 flex items-center justify-between opacity-60 cursor-not-allowed">
+                  <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-[#A99AAA]/50 flex items-center justify-between opacity-60 cursor-not-allowed">
                     <div>
                       <p className="font-medium">OpenAI Sora Engine</p>
                       <p className="text-[10px]">Advanced video generation</p>
                     </div>
-                    <span className="text-[9px] uppercase font-bold bg-white/10 px-1.5 py-0.5 rounded text-white/60">
+                    <span className="text-[9px] uppercase font-bold bg-white/10 px-1.5 py-0.5 rounded text-[#A99AAA]">
                       Coming Soon
                     </span>
                   </div>
@@ -583,7 +583,7 @@ export function FloatingPromptComposer({
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Describe your commercial scene, product ad, or campaign video..."
-                className="w-full bg-transparent text-white text-xs sm:text-sm placeholder:text-white/40 focus:outline-none resize-none px-2 py-1.5 max-h-28 overflow-y-auto"
+                className="w-full bg-transparent text-[#F5EAF4] text-xs sm:text-sm placeholder:text-[#A99AAA]/60 focus:outline-none resize-none px-2 py-1.5 max-h-28 overflow-y-auto"
               />
             </div>
 
@@ -591,9 +591,9 @@ export function FloatingPromptComposer({
             <div className="flex items-center gap-2 shrink-0">
               <span
                 title={`Cost: exactly 15 credits per video (Available: ${availableCredits})`}
-                className="hidden md:inline-flex items-center gap-1 text-[11px] font-mono font-medium text-emerald-400 bg-emerald-950/60 border border-emerald-500/25 px-2.5 py-1.5 rounded-full"
+                className="hidden md:inline-flex items-center gap-1 text-[11px] font-mono font-medium text-[#F05BCE] bg-[#100A12] border border-[#39233B] px-2.5 py-1.5 rounded-full"
               >
-                <Zap className="w-3 h-3 text-emerald-400" />
+                <Zap className="w-3 h-3 text-[#F05BCE]" />
                 <span>15 cr</span>
               </span>
 
@@ -601,7 +601,7 @@ export function FloatingPromptComposer({
                 type="button"
                 onClick={handleGenerate}
                 disabled={!prompt.trim() || isGenerating}
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-950/60 transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#F05BCE] to-[#d641b6] hover:from-[#ff6ee0] hover:to-[#e64ec6] text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-[#F05BCE]/25 transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 {isGenerating ? (
                   <>

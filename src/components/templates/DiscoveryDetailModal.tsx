@@ -160,7 +160,7 @@ export function DiscoveryDetailModal({
 
         {/* Left: Media Preview Section (Dynamic by Template Type) */}
         <div className="relative flex-1 bg-[#100A12] flex items-center justify-center min-h-[320px] lg:min-h-[560px] overflow-hidden">
-          {isVideo && (template.isStaticPreview || !template.videoPreview) ? (
+          {isVideo && !template.videoPreview ? (
             <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
               <img
                 src={template.thumbnail}
@@ -169,7 +169,7 @@ export function DiscoveryDetailModal({
               />
               <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#100A12]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#F05BCE]/40 text-[#F05BCE] text-xs font-semibold shadow-lg">
                 <Film className="w-3.5 h-3.5 text-[#F05BCE]" />
-                <span>Static Creative Preview • Render via Gemini Omni Flash (15 cr)</span>
+                <span>Creative Preview • Render via Gemini Omni Flash (15 cr)</span>
               </div>
               <div className="absolute bottom-4 inset-x-4 flex items-center justify-between z-30 pointer-events-auto">
                 <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#100A12]/90 backdrop-blur-md text-[#F5EAF4] border border-[#39233B]">
@@ -200,21 +200,21 @@ export function DiscoveryDetailModal({
                   <button
                     type="button"
                     onClick={togglePlay}
-                    className="w-9 h-9 rounded-full bg-black/60 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/90 hover:text-white hover:bg-black/80 transition-colors"
+                    className="w-9 h-9 rounded-full bg-[#100A12]/80 backdrop-blur-md border border-[#39233B] flex items-center justify-center text-[#F5EAF4] hover:text-white hover:bg-[#211522] transition-colors"
                   >
                     {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
                   </button>
                   <button
                     type="button"
                     onClick={toggleMute}
-                    className="w-9 h-9 rounded-full bg-black/60 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/90 hover:text-white hover:bg-black/80 transition-colors"
+                    className="w-9 h-9 rounded-full bg-[#100A12]/80 backdrop-blur-md border border-[#39233B] flex items-center justify-center text-[#F5EAF4] hover:text-white hover:bg-[#211522] transition-colors"
                   >
                     {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                   </button>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white/80 border border-white/15">
+                  <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-[#100A12]/80 backdrop-blur-md text-[#F5EAF4] border border-[#39233B]">
                     {template.aspect} • {template.duration || '15s'}
                   </span>
                 </div>
@@ -446,7 +446,7 @@ export function DiscoveryDetailModal({
                   type="button"
                   onClick={handleOpenInEditor}
                   disabled={isCreatingProject}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/80 transition-all hover:scale-[1.01] cursor-pointer"
+                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all hover:scale-[1.01] cursor-pointer"
                 >
                   <Type className="w-4 h-4" />
                   <span>Use Typography in Video Project (0 cr)</span>
@@ -458,9 +458,9 @@ export function DiscoveryDetailModal({
                     onUseInComposer(template);
                     onClose();
                   }}
-                  className="w-full py-2.5 px-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs flex items-center justify-center gap-2 border border-white/10 transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-2xl bg-[#100A12] hover:bg-[#211522] text-[#F5EAF4] font-medium text-xs flex items-center justify-center gap-2 border border-[#39233B] transition-colors cursor-pointer"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>Render Video with AI Background (15 cr)</span>
                 </button>
               </>
@@ -472,41 +472,41 @@ export function DiscoveryDetailModal({
       {/* Google Vids Handoff Modal */}
       {showVidsHandoff && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-lg rounded-3xl bg-[#0F1412] border border-blue-500/40 p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="relative w-full max-w-lg rounded-3xl bg-[#211522] border border-[#39233B] p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-[#39233B] pb-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-sm">
+                <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/15 border border-[#F05BCE]/30 flex items-center justify-center text-[#F05BCE] font-bold text-sm">
                   G
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-base">Google Vids Studio</h3>
-                  <p className="text-[11px] text-blue-400 font-mono">Google Workspace App (vids.new)</p>
+                  <h3 className="font-bold text-[#F5EAF4] text-base">Google Vids Studio</h3>
+                  <p className="text-[11px] text-[#F05BCE] font-mono">Google Workspace App (vids.new)</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setShowVidsHandoff(false)}
-                className="text-white/60 hover:text-white p-1"
+                className="text-[#A99AAA] hover:text-[#F5EAF4] p-1 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
-              <p className="text-white/90 leading-relaxed">
+            <div className="p-4 rounded-2xl bg-[#100A12] border border-[#39233B] space-y-2 text-xs">
+              <p className="text-[#F5EAF4]/90 leading-relaxed">
                 <strong>Google Vids</strong> is an interactive AI video workspace application within Google Workspace.
                 Storyboards, voiceover, and scenes are composed directly in your Google account.
               </p>
-              <div className="p-2.5 rounded-xl bg-blue-950/40 border border-blue-500/20 text-[11px] text-blue-200">
+              <div className="p-2.5 rounded-xl bg-[#211522] border border-[#F05BCE]/25 text-[11px] text-[#F5EAF4]/90">
                 💡 <strong>0 Credits Deducted:</strong> Because video generation occurs externally inside your Google Workspace, Fluvia Flow does not charge any credits for this handoff.
               </div>
             </div>
 
             {/* Featured Cool Templates Quick Switcher */}
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/70 font-semibold flex items-center justify-between">
+              <label className="text-[11px] text-[#A99AAA] font-semibold flex items-center justify-between">
                 <span>Featured Cool Video Templates:</span>
-                <span className="text-[10px] text-blue-400 font-mono">0 cr handoff</span>
+                <span className="text-[10px] text-[#F05BCE] font-mono">0 cr handoff</span>
               </label>
               <div className="grid grid-cols-3 gap-1.5">
                 {[
@@ -526,8 +526,8 @@ export function DiscoveryDetailModal({
                       onClick={() => setActiveVidsPrompt(tmpl.prompt)}
                       className={`px-2 py-1.5 rounded-xl text-[11px] font-medium border flex items-center gap-1.5 transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-blue-600/30 text-blue-200 border-blue-400/60 shadow-xs'
-                          : 'bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border-white/10'
+                          ? 'bg-[#F05BCE]/20 text-[#F5EAF4] border-[#F05BCE] shadow-xs'
+                          : 'bg-[#100A12] hover:bg-white/5 text-[#A99AAA] hover:text-[#F5EAF4] border-[#39233B]'
                       }`}
                     >
                       <span>{tmpl.emoji}</span>
@@ -539,8 +539,8 @@ export function DiscoveryDetailModal({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] text-white/60 font-semibold">Template Prompt:</label>
-              <div className="relative p-3 rounded-xl bg-black/50 border border-white/10 text-xs text-white/90 font-mono select-all">
+              <label className="text-[11px] text-[#A99AAA] font-semibold">Template Prompt:</label>
+              <div className="relative p-3 rounded-xl bg-[#100A12] border border-[#39233B] text-xs text-[#F5EAF4] font-mono select-all">
                 {activeVidsPrompt || template.prompt || template.description}
               </div>
             </div>
@@ -553,12 +553,12 @@ export function DiscoveryDetailModal({
                   setCopiedVidsPrompt(true);
                   setTimeout(() => setCopiedVidsPrompt(false), 2000);
                 }}
-                className="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs flex items-center justify-center gap-2 border border-white/10"
+                className="py-3 px-4 rounded-xl bg-[#100A12] hover:bg-white/5 text-[#F5EAF4] font-semibold text-xs flex items-center justify-center gap-2 border border-[#39233B] transition-colors"
               >
                 {copiedVidsPrompt ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-400" />
-                    <span className="text-emerald-400">Prompt Copied!</span>
+                    <Check className="w-4 h-4 text-[#F05BCE]" />
+                    <span className="text-[#F05BCE]">Prompt Copied!</span>
                   </>
                 ) : (
                   <>
@@ -573,7 +573,7 @@ export function DiscoveryDetailModal({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowVidsHandoff(false)}
-                className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-950/60"
+                className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#d641b6] hover:from-[#ff6ee0] hover:to-[#e64ec6] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all"
               >
                 <span>Launch Google Vids</span>
                 <ExternalLink className="w-3.5 h-3.5" />

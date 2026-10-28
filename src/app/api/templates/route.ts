@@ -24,13 +24,26 @@ export async function GET(req: NextRequest) {
     const currentUser = await getCurrentUser();
     const currentUserId = currentUser?.user?.id || '';
 
-    // Merge static curated templates (53) with community published templates from dbStore
+    // Merge static curated templates with commercial templates and community published templates
     const publishedCustom: CreativeTemplate[] = dbStore.getPublishedTemplates().map((t: any) => ({
       ...t,
       type: t.type || 'video',
       generationWorkflow: t.generationWorkflow || 'video_gemini',
     }));
-    const allTemplates: CreativeTemplate[] = [...publishedCustom, ...ALL_CURATED_TEMPLATES];
+
+    const commercialVideoTemplates: CreativeTemplate[] = TEMPLATES_DATA.map((t) => ({
+      ...t,
+      type: 'video' as const,
+      generationWorkflow: 'video_gemini' as const,
+      estimatedCredits: 15,
+      aspectLabel: t.aspectLabel || `${t.aspect} Cinema`,
+    }));
+
+    const baseCurated = [...ALL_CURATED_TEMPLATES];
+    const existingIds = new Set(baseCurated.map((t) => t.id));
+    const uniqueCommercial = commercialVideoTemplates.filter((t) => !existingIds.has(t.id));
+
+    const allTemplates: CreativeTemplate[] = [...publishedCustom, ...baseCurated, ...uniqueCommercial];
 
     // Compute live like counts and liked status for each template
     const userLikes = new Set<string>();
