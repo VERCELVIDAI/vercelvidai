@@ -28,7 +28,7 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
 
   const content = (
     <div className={`flex items-center gap-2 sm:gap-2.5 group select-none cursor-pointer shrink-0 min-w-0 ${className}`}>
-      {/* Whisk Flow Studio Mark */}
+      {/* Fluvia Flow Studio Mark */}
       <div
         className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-gradient-to-tr from-[#F05BCE] via-[#E046BD] to-[#C026D3] p-[1px] shadow-lg shadow-[#F05BCE]/20 group-hover:shadow-[#F05BCE]/40 group-hover:scale-105 transition-all duration-300 ease-out`}
       >
@@ -81,7 +81,7 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
       <div className="flex flex-col">
         <div className="flex items-center tracking-tight leading-none gap-1.5">
           <span className={`font-black text-[#F5EAF4] tracking-tight ${textSizes[size]}`}>
-            WHISK
+            FLUVIA
           </span>
           <span className={`font-light text-[#F05BCE] tracking-wider ${textSizes[size]}`}>
             FLOW

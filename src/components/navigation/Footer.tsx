@@ -22,7 +22,7 @@ export function Footer() {
               <span>Gemini Omni Flash 4K & ElevenLabs Neural Voice Active</span>
             </div>
             <p className="mt-3 text-[11px] text-[#A99AAA]/70">
-              Whisk Flow — Premium AI Creative Studio with Midnight Plum × Hot Pink Art Direction.
+              Fluvia Flow — Premium AI Creative Studio with Midnight Plum × Hot Pink Art Direction.
             </p>
           </div>
 

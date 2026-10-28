@@ -292,7 +292,7 @@ export function Header() {
                     <div className="p-2 rounded-2xl bg-[#211522] border border-[#39233B] shadow-2xl space-y-1 text-left">
                       <div className="px-3 py-2 border-b border-[#39233B]">
                         <div className="text-xs font-bold text-[#F5EAF4] truncate">
-                          {user.displayName || 'Whisk Studio Creator'}
+                          {user.displayName || 'Fluvia Studio Creator'}
                         </div>
                         <div className="text-[11px] text-[#A99AAA] truncate mt-0.5">
                           {user.email}

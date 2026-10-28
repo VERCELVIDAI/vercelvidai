@@ -1,5 +1,5 @@
 // ==============================================================================
-// WHISK FLOW — MIDNIGHT PLUM × HOT PINK DESIGN SYSTEM
+// FLUVIA FLOW — MIDNIGHT PLUM × HOT PINK DESIGN SYSTEM
 // ==============================================================================
 
 export type ThemeMode = 'dark' | 'light';
