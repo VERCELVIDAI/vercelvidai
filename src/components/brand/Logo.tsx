@@ -14,9 +14,9 @@ interface LogoProps {
 export function Logo({ className = '', size = 'md', href = '/', showTagline = false }: LogoProps) {
   const iconSizes = {
     sm: 'w-6 h-6 sm:w-7 sm:h-7',
-    md: 'w-7 h-7 sm:w-9 sm:h-9',
-    lg: 'w-9 h-9 sm:w-11 sm:h-11',
-    xl: 'w-12 h-12 sm:w-14 sm:h-14',
+    md: 'w-7 h-7 sm:w-8 sm:h-8',
+    lg: 'w-9 h-9 sm:w-10 sm:h-10',
+    xl: 'w-11 h-11 sm:w-12 sm:h-12',
   };
 
   const textSizes = {
@@ -28,15 +28,15 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
 
   const content = (
     <div className={`flex items-center gap-2 sm:gap-2.5 group select-none cursor-pointer shrink-0 min-w-0 ${className}`}>
-      {/* Fluid-motion Playframe Mark */}
+      {/* Kling-Inspired Cinematic Studio Mark */}
       <div
-        className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-pink-400 p-[1.5px] shadow-md shadow-emerald-500/20 group-hover:shadow-emerald-500/35 group-hover:scale-105 transition-all duration-300 ease-out`}
+        className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 group-hover:scale-105 transition-all duration-300 ease-out`}
       >
-        <div className="w-full h-full bg-white/90 backdrop-blur-md rounded-[10px] flex items-center justify-center relative overflow-hidden border border-white/60">
-          {/* Luminous dynamic ambient glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-transparent to-pink-500/15 opacity-80 group-hover:opacity-100 transition-opacity" />
+        <div className="w-full h-full bg-[#0D0F14] rounded-[11px] flex items-center justify-center relative overflow-hidden border border-white/10">
+          {/* Subtle Ambient Lens Glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-transparent to-cyan-500/20 opacity-80 group-hover:opacity-100 transition-opacity" />
 
-          {/* Fluid Flow & Cinema Playframe Icon */}
+          {/* Cinematic Shutter / K-Facet Studio Mark */}
           <svg
             viewBox="0 0 32 32"
             fill="none"
@@ -44,54 +44,54 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
             className="w-4/5 h-4/5 relative z-10"
           >
             <defs>
-              <linearGradient id="fluviaEmeraldGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#10B981" />
-                <stop offset="0.6" stopColor="#047857" />
-                <stop offset="1" stopColor="#059669" />
-              </linearGradient>
-              <linearGradient id="fluviaPinkGrad" x1="12" y1="8" x2="24" y2="22" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#EC4899" />
-                <stop offset="1" stopColor="#F472B6" />
+              <linearGradient id="klingPrimaryGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#6366F1" />
+                <stop offset="0.5" stopColor="#8B5CF6" />
+                <stop offset="1" stopColor="#06B6D4" />
               </linearGradient>
             </defs>
 
-            {/* Fluid Ribbon wave 1 (Emerald) */}
+            {/* Left Vertical Blade */}
             <path
-              d="M6 16C6 10.4772 10.4772 6 16 6C20.5 6 24 8.5 25.5 12C23.5 10.5 21 10 18.5 10.5C14.5 11.5 12 15 10 18.5C8.5 21.5 6 22 6 16Z"
-              fill="url(#fluviaEmeraldGrad)"
-              fillOpacity="0.75"
+              d="M8 7C8 6.44772 8.44772 6 9 6H12C12.5523 6 13 6.44772 13 7V25C13 25.5523 12.5523 26 12 26H9C8.44772 26 8 25.5523 8 25V7Z"
+              fill="url(#klingPrimaryGrad)"
             />
 
-            {/* Fluid Ribbon wave 2 (Pink Accent) */}
+            {/* Top Right Angular Shutter Blade */}
             <path
-              d="M26 16C26 21.5228 21.5228 26 16 26C11.5 26 8 23.5 6.5 20C8.5 21.5 11 22 13.5 21.5C17.5 20.5 20 17 22 13.5C23.5 10.5 26 10 26 16Z"
-              fill="url(#fluviaPinkGrad)"
-              fillOpacity="0.75"
+              d="M16 16L23.2 7.6C23.6 7.1 24.4 7.4 24.4 8V11C24.4 11.5 24.1 12 23.7 12.4L18.8 17.5L16 16Z"
+              fill="url(#klingPrimaryGrad)"
+              fillOpacity="0.85"
             />
 
-            {/* Minimalist Cinema Play Arrow Core */}
-            <polygon
-              points="14,11 21,16 14,21"
-              fill="#047857"
-              className="drop-shadow-sm"
+            {/* Bottom Right Angular Shutter Blade */}
+            <path
+              d="M16 16L23.7 24.6C24.1 25 24.4 25.5 24.4 26V25C24.4 24.4 23.6 24 23.2 23.5L16 16Z"
+              fill="url(#klingPrimaryGrad)"
+              fillOpacity="0.95"
             />
+
+            {/* Glowing Core Dot */}
+            <circle cx="15.5" cy="16" r="2" fill="#00F0FF" />
           </svg>
         </div>
       </div>
 
-      {/* Typography: Wordmark in Deep Forest #17211D with emerald dot */}
+      {/* Typography: Crisp White Wordmark with Kling Studio Pill */}
       <div className="flex flex-col">
-        <div className="flex items-center tracking-tight leading-none">
-          <span className={`font-black text-[#17211D] tracking-tight ${textSizes[size]}`}>
+        <div className="flex items-center tracking-tight leading-none gap-1.5">
+          <span className={`font-black text-white tracking-tight ${textSizes[size]}`}>
             FLUVIA
           </span>
-          <span className={`font-light text-[#047857] ml-1.5 tracking-wider ${textSizes[size]}`}>
-            FLOW
+          <span className={`font-light text-indigo-400 tracking-wider ${textSizes[size]}`}>
+            AI
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-1 mb-2 animate-pulse" />
+          <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white/10 text-slate-300 border border-white/10 uppercase tracking-widest">
+            STUDIO
+          </span>
         </div>
         {showTagline && (
-          <span className="text-[10px] font-medium tracking-wide text-[#64748B] mt-0.5">
+          <span className="text-[10px] font-medium tracking-wide text-slate-400 mt-1">
             {BRAND.tagline}
           </span>
         )}
@@ -100,11 +100,7 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
   );
 
   if (href) {
-    return (
-      <Link href={href} className="inline-block focus:outline-none">
-        {content}
-      </Link>
-    );
+    return <Link href={href}>{content}</Link>;
   }
 
   return content;

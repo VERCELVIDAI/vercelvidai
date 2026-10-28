@@ -88,8 +88,8 @@ export default function AssetLibraryPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen text-[#17211D] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -102,10 +102,10 @@ export default function AssetLibraryPage() {
     .filter((a) => a.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-[#17211D] relative">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#090A0D] text-white relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#090A0D]">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -117,15 +117,15 @@ export default function AssetLibraryPage() {
         <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Asset Library</h1>
-              <p className="mt-1 text-xs sm:text-sm text-slate-600">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Asset Library</h1>
+              <p className="mt-1 text-xs sm:text-sm text-slate-400">
                 Uploaded reference footage, generated media, textures, and background sound files.
               </p>
             </div>
 
             <button
               onClick={() => setUploadModalOpen(true)}
-              className="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 shrink-0 transition-all"
+              className="px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/30 shrink-0 transition-all cursor-pointer"
             >
               <Upload className="w-4 h-4" />
               <span>Add / Upload Asset</span>
@@ -133,15 +133,15 @@ export default function AssetLibraryPage() {
           </div>
 
           {/* Search & Filters */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-between items-center glass-card p-4 rounded-2xl">
+          <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-[#0E1015] border border-white/8 p-4 rounded-2xl">
             <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search assets by filename..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full glass-input text-[#17211D] pl-10 pr-4 py-2 rounded-xl text-xs"
+                className="w-full bg-[#11131A] text-white pl-10 pr-4 py-2 rounded-xl text-xs border border-white/10 focus:outline-none focus:border-indigo-500 placeholder:text-slate-500"
               />
             </div>
 
@@ -150,10 +150,10 @@ export default function AssetLibraryPage() {
                 <button
                   key={t}
                   onClick={() => setFilterType(t)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all cursor-pointer ${
                     filterType === t
-                      ? 'bg-emerald-500 text-white shadow-sm'
-                      : 'glass-button text-slate-600 hover:text-emerald-700'
+                      ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm'
+                      : 'bg-white/[0.04] text-slate-400 hover:text-white border border-white/8'
                   }`}
                 >
                   {t}
@@ -164,10 +164,10 @@ export default function AssetLibraryPage() {
 
           {/* Asset Grid */}
           {filteredAssets.length === 0 ? (
-            <div className="p-12 text-center rounded-3xl glass-card border-emerald-500/15">
-              <HardDrive className="w-10 h-10 text-slate-400 mx-auto mb-3" />
-              <h3 className="font-bold text-[#17211D] text-base">No assets found</h3>
-              <p className="mt-1 text-xs text-slate-600 max-w-sm mx-auto">
+            <div className="p-12 text-center rounded-3xl bg-[#0E1015] border border-white/8">
+              <HardDrive className="w-10 h-10 text-slate-500 mx-auto mb-3" />
+              <h3 className="font-bold text-white text-base">No assets found</h3>
+              <p className="mt-1 text-xs text-slate-400 max-w-sm mx-auto">
                 Upload creative media or generate content to automatically store it in your workspace.
               </p>
             </div>
@@ -176,10 +176,10 @@ export default function AssetLibraryPage() {
               {filteredAssets.map((asset) => (
                 <div
                   key={asset.id}
-                  className="rounded-3xl glass-card overflow-hidden group hover:border-emerald-500/40 transition-all flex flex-col justify-between shadow-sm"
+                  className="rounded-3xl bg-[#0E1015] border border-white/8 overflow-hidden group hover:border-white/20 transition-all flex flex-col justify-between shadow-sm"
                 >
                   <div>
-                    <div className="aspect-square relative overflow-hidden bg-slate-100">
+                    <div className="aspect-square relative overflow-hidden bg-[#151822]">
                       {asset.assetType === 'video' ? (
                         <video
                           src={asset.url}
@@ -195,34 +195,34 @@ export default function AssetLibraryPage() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-emerald-50/50 text-emerald-700">
+                        <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-indigo-950/20 text-indigo-400">
                           <Mic className="w-12 h-12 mb-2" />
-                          <span className="text-xs font-mono text-center truncate w-full">{asset.name}</span>
+                          <span className="text-xs font-mono text-center truncate w-full px-2">{asset.name}</span>
                         </div>
                       )}
 
-                      <span className="absolute top-2.5 left-2.5 bg-white/80 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] font-mono text-emerald-700 font-bold uppercase shadow-sm border border-emerald-500/20">
+                      <span className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] font-mono text-cyan-400 font-bold uppercase shadow-sm border border-cyan-500/20">
                         {asset.assetType}
                       </span>
                     </div>
 
                     <div className="p-4">
-                      <h4 className="font-bold text-[#17211D] text-xs truncate" title={asset.name}>
+                      <h4 className="font-bold text-white text-xs truncate" title={asset.name}>
                         {asset.name}
                       </h4>
-                      <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 font-mono">
+                      <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2 font-mono">
                         <span>{(asset.fileSize / 1024 / 1024).toFixed(1)} MB</span>
                         <span>{new Date(asset.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-3 border-t border-emerald-500/10 bg-emerald-50/30 flex items-center justify-between text-xs">
+                  <div className="p-3 border-t border-white/8 bg-[#11131A] flex items-center justify-between text-xs">
                     <a
                       href={asset.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-emerald-700 hover:underline flex items-center gap-1 text-[11px] font-medium"
+                      className="text-indigo-400 hover:text-indigo-300 hover:underline flex items-center gap-1 text-[11px] font-medium"
                     >
                       <ExternalLink className="w-3 h-3" />
                       <span>View</span>
@@ -231,7 +231,7 @@ export default function AssetLibraryPage() {
                     <button
                       type="button"
                       onClick={() => handleDelete(asset.id)}
-                      className="text-slate-400 hover:text-rose-500 p-1 transition-colors"
+                      className="text-slate-400 hover:text-rose-400 p-1 transition-colors cursor-pointer"
                       title="Delete asset"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -244,29 +244,29 @@ export default function AssetLibraryPage() {
 
           {/* Upload Modal */}
           {uploadModalOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
-              <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
-                <h3 className="font-bold text-[#17211D] text-base">Add Asset to Workspace</h3>
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+              <div className="bg-[#0E1015] border border-white/10 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+                <h3 className="font-bold text-white text-base">Add Asset to Workspace</h3>
 
                 <form onSubmit={handleUploadSubmit} className="space-y-4 text-xs">
                   <div>
-                    <label className="block text-slate-600 font-semibold mb-1">Asset Name</label>
+                    <label className="block text-slate-300 font-semibold mb-1">Asset Name</label>
                     <input
                       type="text"
                       required
                       value={uploadName}
                       onChange={(e) => setUploadName(e.target.value)}
                       placeholder="Product Commercial Reference.png"
-                      className="w-full glass-input px-3 py-2 rounded-xl text-xs text-[#17211D]"
+                      className="w-full bg-[#11131A] border border-white/10 px-3 py-2 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-600 font-semibold mb-1">Media Type</label>
+                    <label className="block text-slate-300 font-semibold mb-1">Media Type</label>
                     <select
                       value={uploadType}
                       onChange={(e) => setUploadType(e.target.value as any)}
-                      className="w-full glass-input px-3 py-2 rounded-xl text-xs text-[#17211D]"
+                      className="w-full bg-[#11131A] border border-white/10 px-3 py-2 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
                     >
                       <option value="video">Video (MP4)</option>
                       <option value="image">Image (PNG/JPG)</option>
@@ -275,14 +275,14 @@ export default function AssetLibraryPage() {
                   </div>
 
                   <div>
-                    <label className="block text-slate-600 font-semibold mb-1">Direct URL / Cloud Link</label>
+                    <label className="block text-slate-300 font-semibold mb-1">Direct URL / Cloud Link</label>
                     <input
                       type="url"
                       required
                       value={uploadUrl}
                       onChange={(e) => setUploadUrl(e.target.value)}
                       placeholder="https://images.unsplash.com/..."
-                      className="w-full glass-input px-3 py-2 rounded-xl text-xs text-[#17211D]"
+                      className="w-full bg-[#11131A] border border-white/10 px-3 py-2 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500"
                     />
                   </div>
 
@@ -290,13 +290,13 @@ export default function AssetLibraryPage() {
                     <button
                       type="button"
                       onClick={() => setUploadModalOpen(false)}
-                      className="px-4 py-2 rounded-xl text-xs font-semibold glass-button text-slate-600 hover:text-slate-800"
+                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/[0.04] border border-white/8 text-slate-300 hover:text-white cursor-pointer"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-sm"
+                      className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-600/30 cursor-pointer"
                     >
                       Save Asset
                     </button>

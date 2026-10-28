@@ -1,72 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ==============================================================================
-   FLUVIA FLOW — UNIFIED WHITE + EMERALD GREEN + SOFT PINK GLASSMORPHISM
+   KLING AI INSPIRED — DARK CINEMATIC CREATIVE STUDIO DESIGN SYSTEM
    ============================================================================== */
 
 @layer base {
   :root {
-    /* Palette Tokens */
-    --app-bg: #FFFFFF;
-    --app-soft-bg: #F8FAFC;
-    --app-secondary-bg: #F0FDF4;
-    
-    --app-primary: #10B981; /* Primary Emerald Green */
-    --app-primary-hover: #047857; /* Deep Emerald */
+    /* Palette Tokens: Deep Charcoal, Near-Black Surfaces & Electric Accents */
+    --app-bg: #090A0D;
+    --app-soft-bg: #0E1015;
+    --app-secondary-bg: #14161F;
+    --app-surface: #11131A;
+    --app-card: #151822;
+    --app-card-hover: #1C202C;
+    --app-card-border: rgba(255, 255, 255, 0.08);
+    --app-card-border-hover: rgba(255, 255, 255, 0.16);
+
+    --app-primary: #6366F1; /* Electric Indigo */
+    --app-primary-hover: #4F46E5;
     --app-primary-foreground: #FFFFFF;
-    
-    --app-deep-emerald: #047857;
-    --app-mint: #D1FAE5; /* Light Mint */
-    
-    --app-soft-pink: #FCE7F3; /* Soft Pink */
-    --app-accent-pink: #EC4899; /* Accent Pink */
-    --app-rose: #FFF1F7; /* Soft Rose */
-    
-    --app-text-primary: #17211D; /* Primary Dark Slate/Forest Text */
-    --app-text-secondary: #64748B; /* Secondary Slate */
-    --app-text-muted: #94A3B8;
-    
-    --app-card: rgba(255, 255, 255, 0.72);
-    --app-card-border: rgba(16, 185, 129, 0.16);
-    --app-glass: rgba(255, 255, 255, 0.68);
-    --app-surface: #FFFFFF;
-    --app-sidebar: rgba(255, 255, 255, 0.82);
-    
-    --app-input-bg: rgba(255, 255, 255, 0.9);
-    --app-input-border: rgba(16, 185, 129, 0.2);
-    --app-ring: #10B981;
-    
-    --app-gradient-primary: linear-gradient(135deg, #10B981 0%, #047857 50%, #059669 100%);
-    --app-gradient-pink: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
-    --app-gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(209, 250, 229, 0.35) 100%);
-    
-    --app-badge-bg: #D1FAE5;
-    --app-badge-text: #047857;
-    --app-badge-border: rgba(16, 185, 129, 0.28);
-    --app-glow: rgba(16, 185, 129, 0.18);
+
+    --app-violet: #7C3AED; /* Vivid Violet */
+    --app-cyan: #06B6D4; /* Cyber Cyan */
+    --app-emerald: #10B981; /* Status Emerald */
+    --app-amber: #F59E0B; /* Status Amber */
+    --app-rose: #F43F5E; /* Status Rose */
+
+    --app-text-primary: #F8FAFC; /* Crisp White */
+    --app-text-secondary: #94A3B8; /* Slate Silver */
+    --app-text-muted: #64748B; /* Muted Graphite */
+
+    --app-input-bg: rgba(14, 16, 23, 0.92);
+    --app-input-border: rgba(255, 255, 255, 0.1);
+    --app-ring: #6366F1;
+
+    --app-gradient-primary: linear-gradient(135deg, #6366F1 0%, #4F46E5 50%, #7C3AED 100%);
+    --app-gradient-cinema: linear-gradient(135deg, #1E1B4B 0%, #0F172A 100%);
+    --app-gradient-glow: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(9, 10, 13, 0) 70%);
 
     /* Tailwind HSL mappings */
-    --background: 0 0% 100%;
-    --foreground: 154 18% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 154 18% 11%;
-    --primary: 159 84% 39%;
+    --background: 224 25% 4%;
+    --foreground: 210 40% 98%;
+    --card: 224 22% 8%;
+    --card-foreground: 210 40% 98%;
+    --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 151 82% 90%;
-    --secondary-foreground: 161 94% 19%;
-    --border: 159 84% 39% / 0.16;
-    --input: 159 84% 39% / 0.2;
-    --ring: 159 84% 39%;
-    --radius: 1rem;
+    --secondary: 223 18% 14%;
+    --secondary-foreground: 210 40% 98%;
+    --border: 220 13% 18%;
+    --input: 220 13% 18%;
+    --ring: 239 84% 67%;
+    --radius: 0.75rem;
   }
 
-  /* Force light theme always - disable dark styles */
+  /* Force dark cinematic theme across entire platform */
   html, body {
-    color-scheme: light !important;
+    color-scheme: dark !important;
     background-color: var(--app-bg) !important;
     color: var(--app-text-primary) !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -77,213 +70,183 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', 'Manrope', -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
     color: var(--app-text-primary);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
 
 /* ==============================================================================
-   REAL GLASSMORPHISM DESIGN SYSTEM CLASSES
+   KLING AI CINEMATIC GLASSMORPHISM & SURFACE CLASSES
    ============================================================================== */
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.72) !important;
+  background: rgba(16, 18, 25, 0.85) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(16, 185, 129, 0.16) !important;
-  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6) !important;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.78) !important;
+  background: rgba(21, 24, 34, 0.88) !important;
   backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
-  border: 1px solid rgba(16, 185, 129, 0.18) !important;
-  box-shadow: 0 12px 35px -8px rgba(16, 185, 129, 0.09), 0 2px 6px rgba(0, 0, 0, 0.02) !important;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.5) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(16, 185, 129, 0.38) !important;
-  box-shadow: 0 20px 45px -10px rgba(16, 185, 129, 0.16), 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 20px -5px rgba(99, 102, 241, 0.15) !important;
   transform: translateY(-2px);
 }
 
 .glass-navbar {
-  background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(16, 185, 129, 0.14) !important;
-  box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.05) !important;
+  background: rgba(9, 10, 13, 0.88) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.7) !important;
 }
 
 .glass-sidebar {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(11, 13, 18, 0.96) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
-  border-right: 1px solid rgba(16, 185, 129, 0.14) !important;
-  box-shadow: 4px 0 24px -2px rgba(16, 185, 129, 0.04) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 4px 0 24px -2px rgba(0, 0, 0, 0.6) !important;
 }
 
 .glass-modal {
-  background: rgba(255, 255, 255, 0.94) !important;
+  background: #11131B !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
-  border: 1px solid rgba(16, 185, 129, 0.22) !important;
-  box-shadow: 0 25px 60px -15px rgba(4, 120, 87, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85) !important;
 }
 
 .glass-input {
-  background: rgba(255, 255, 255, 0.88) !important;
+  background: rgba(14, 16, 23, 0.95) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(16, 185, 129, 0.2) !important;
-  color: #17211D !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #F8FAFC !important;
   transition: all 0.2s ease;
 }
 
 .glass-input:focus {
   outline: none !important;
-  border-color: #10B981 !important;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18) !important;
-  background: #FFFFFF !important;
+  border-color: #6366F1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+  background: #151822 !important;
 }
 
 .glass-button {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%) !important;
   color: #FFFFFF !important;
   font-weight: 700 !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 6px 20px -4px rgba(16, 185, 129, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 6px 20px -4px rgba(99, 102, 241, 0.45) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-button:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.45) !important;
+  background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%) !important;
+  box-shadow: 0 10px 25px -4px rgba(99, 102, 241, 0.6) !important;
   transform: translateY(-1px);
 }
 
 .glass-button-secondary {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
-  color: #047857 !important;
+  color: #E2E8F0 !important;
   font-weight: 600 !important;
-  border: 1px solid rgba(16, 185, 129, 0.25) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
   transition: all 0.2s ease;
 }
 
 .glass-button-secondary:hover {
-  background: rgba(240, 253, 244, 0.95) !important;
-  border-color: rgba(16, 185, 129, 0.45) !important;
-  color: #047857 !important;
-  transform: translateY(-1px);
-}
-
-.glass-button-pink {
-  background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
   color: #FFFFFF !important;
-  font-weight: 700 !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  box-shadow: 0 6px 20px -4px rgba(236, 72, 153, 0.35) !important;
-  transition: all 0.2s ease;
-}
-
-.glass-button-pink:hover {
-  background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%) !important;
-  box-shadow: 0 10px 25px -4px rgba(236, 72, 153, 0.45) !important;
   transform: translateY(-1px);
 }
 
 .glass-badge-emerald {
-  background: #D1FAE5 !important;
-  color: #047857 !important;
-  border: 1px solid rgba(16, 185, 129, 0.28) !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34D399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
   font-weight: 700 !important;
 }
 
-.glass-badge-pink {
-  background: #FCE7F3 !important;
-  color: #BE185D !important;
-  border: 1px solid rgba(236, 72, 153, 0.28) !important;
+.glass-badge-indigo {
+  background: rgba(99, 102, 241, 0.15) !important;
+  color: #A5B4FC !important;
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
   font-weight: 700 !important;
 }
 
 /* ==============================================================================
-   TYPOGRAPHY & ACCESSIBLE COLOR UTILITIES
+   TYPOGRAPHY & UTILITY MAPPINGS (PRESERVING COMPATIBILITY)
    ============================================================================== */
 
 .text-fluvia-primary {
-  color: #17211D !important;
+  color: #F8FAFC !important;
 }
 
 .text-fluvia-secondary {
-  color: #64748B !important;
+  color: #94A3B8 !important;
 }
 
 .text-fluvia-emerald {
-  color: #047857 !important;
-}
-
-.text-fluvia-pink {
-  color: #EC4899 !important;
+  color: #34D399 !important;
 }
 
 .bg-fluvia-emerald {
   background-color: #10B981 !important;
 }
 
-.bg-fluvia-mint {
-  background-color: #D1FAE5 !important;
-}
-
-.bg-fluvia-pink {
-  background-color: #FCE7F3 !important;
-}
-
-/* Theme helper mappings so components using var(--app-*) look luminous */
 .bg-theme-primary {
-  background-color: #10B981 !important;
+  background-color: #6366F1 !important;
 }
+
 .hover\:bg-theme-primary-hover:hover {
-  background-color: #047857 !important;
+  background-color: #4F46E5 !important;
 }
+
 .text-theme-primary {
-  color: #047857 !important;
+  color: #818CF8 !important;
 }
+
 .border-theme-primary {
-  border-color: rgba(16, 185, 129, 0.28) !important;
-}
-.bg-theme-gradient {
-  background-image: linear-gradient(135deg, #10B981 0%, #047857 100%) !important;
-}
-.text-theme-gradient {
-  background-image: linear-gradient(135deg, #047857 0%, #10B981 60%, #EC4899 100%) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: transparent !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
 }
 
 /* ==============================================================================
-   SMOOTH SCROLLBAR & ANIMATION PERFORMANCE
+   SMOOTH DARK SCROLLBAR
    ============================================================================== */
 
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F8FAFC;
+  background: #090A0D;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.25);
+  background: rgba(255, 255, 255, 0.14);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.45);
+  background: rgba(255, 255, 255, 0.28);
 }
 
 @media (prefers-reduced-motion: reduce) {

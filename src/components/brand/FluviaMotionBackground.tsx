@@ -6,56 +6,44 @@ export function FluviaMotionBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-white select-none"
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#090A0D] select-none"
     >
-      {/* 1. Base clean white canvas with subtle gradient wash */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#F0FDF4]/50" />
+      {/* 1. Base Dark Charcoal Canvas */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#090A0D] via-[#0E1015] to-[#090A0D]" />
 
-      {/* 2. Fluid Ambient Emerald Ribbon 1 (Top Left to Center) */}
+      {/* 2. Top-Center Deep Violet/Indigo Flare (Cinema Ambience) */}
       <div
-        className="absolute -top-[20%] -left-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-full blur-[100px] opacity-40 animate-flow-ribbon"
+        className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[50vw] max-w-[1100px] max-h-[700px] rounded-full blur-[140px] opacity-25"
         style={{
-          background: 'radial-gradient(circle, rgba(16,185,129,0.28) 0%, rgba(209,250,229,0.35) 45%, rgba(255,255,255,0) 75%)',
+          background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.3) 0%, rgba(124,58,237,0.15) 50%, rgba(9,10,13,0) 80%)',
           willChange: 'transform',
         }}
       />
 
-      {/* 3. Fluid Soft Pink Ambient Field (Top Right to Middle) */}
+      {/* 3. Subtle Cyber Cyan Rim (Top Right) */}
       <div
-        className="absolute -top-[10%] -right-[15%] w-[60vw] h-[60vw] max-w-[850px] max-h-[850px] rounded-full blur-[110px] opacity-35"
+        className="absolute top-[10%] -right-[15%] w-[45vw] h-[45vw] max-w-[700px] max-h-[700px] rounded-full blur-[130px] opacity-15"
         style={{
-          background: 'radial-gradient(circle, rgba(244,114,182,0.22) 0%, rgba(252,231,243,0.45) 50%, rgba(255,255,255,0) 75%)',
-          animation: 'flow-ribbon 28s ease-in-out infinite reverse',
+          background: 'radial-gradient(circle, rgba(6,182,212,0.2) 0%, rgba(99,102,241,0.05) 50%, rgba(9,10,13,0) 80%)',
           willChange: 'transform',
         }}
       />
 
-      {/* 4. Fluid Mint Liquid-Glass Ribbon (Center to Bottom Left) */}
+      {/* 4. Subtle Emerald Glow (Bottom Left) */}
       <div
-        className="absolute top-[40%] -left-[15%] w-[70vw] h-[55vw] max-w-[950px] max-h-[750px] rounded-[40%] blur-[120px] opacity-30"
+        className="absolute bottom-[5%] -left-[10%] w-[50vw] h-[50vw] max-w-[750px] max-h-[750px] rounded-full blur-[140px] opacity-10"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(52,211,153,0.20) 0%, rgba(209,250,229,0.3) 50%, rgba(255,255,255,0) 80%)',
-          animation: 'float-slow 14s ease-in-out infinite',
+          background: 'radial-gradient(circle, rgba(16,185,129,0.25) 0%, rgba(9,10,13,0) 75%)',
           willChange: 'transform',
         }}
       />
 
-      {/* 5. Delicate Soft Rose Highlight (Bottom Right) */}
+      {/* 5. Minimalist Dark Grain / Grid Pattern */}
       <div
-        className="absolute -bottom-[15%] right-[5%] w-[55vw] h-[55vw] max-w-[800px] max-h-[800px] rounded-full blur-[100px] opacity-30"
+        className="absolute inset-0 opacity-[0.025]"
         style={{
-          background: 'radial-gradient(circle, rgba(236,72,153,0.18) 0%, rgba(255,241,247,0.5) 55%, rgba(255,255,255,0) 80%)',
-          animation: 'float-slow 18s ease-in-out infinite reverse',
-          willChange: 'transform',
-        }}
-      />
-
-      {/* 6. Subtle Micro-dot Mesh for Organic Cinematic Texture */}
-      <div
-        className="absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage: `radial-gradient(#047857 0.75px, transparent 0.75px)`,
-          backgroundSize: '24px 24px',
+          backgroundImage: `radial-gradient(rgba(255,255,255,0.4) 0.75px, transparent 0.75px)`,
+          backgroundSize: '32px 32px',
         }}
       />
     </div>

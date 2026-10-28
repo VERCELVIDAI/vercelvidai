@@ -202,10 +202,10 @@ function SignupForm() {
         {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-emerald-500/15" />
+            <div className="w-full border-t border-white/10" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-3 text-slate-500 font-mono text-[11px]">
+            <span className="bg-[#0E1015] px-3 text-slate-500 font-mono text-[11px]">
               Or register with email
             </span>
           </div>
@@ -214,36 +214,36 @@ function SignupForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Full Name */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
               Full Name or Creator Handle
             </label>
             <div className="relative">
-              <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 required
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="e.g. Alex Rivera"
-                className="w-full glass-input text-[#17211D] pl-10 pr-4 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm shadow-xs"
+                className="w-full bg-[#11131A] text-white pl-10 pr-4 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm shadow-xs placeholder:text-slate-500"
               />
             </div>
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
               Email Address
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
-                className="w-full glass-input text-[#17211D] pl-10 pr-4 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm shadow-xs"
+                className="w-full bg-[#11131A] text-white pl-10 pr-4 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm shadow-xs placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -251,29 +251,30 @@ function SignupForm() {
           {/* Password */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
                 Password
               </label>
-              <span className={`text-[10px] font-mono ${passwordLengthValid ? 'text-emerald-700 font-bold' : 'text-slate-400'}`}>
+              <span className={`text-[10px] font-mono ${passwordLengthValid ? 'text-indigo-400 font-bold' : 'text-slate-500'}`}>
                 min. 8 characters
               </span>
             </div>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
+                id="password-input"
                 type={showPassword ? 'text' : 'password'}
                 required
                 minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Create a secure password"
-                className="w-full glass-input text-[#17211D] pl-10 pr-11 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm shadow-xs"
+                className="w-full bg-[#11131A] text-white pl-10 pr-11 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm shadow-xs placeholder:text-slate-500"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-md"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-1 rounded-md cursor-pointer"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -283,36 +284,37 @@ function SignupForm() {
           {/* Confirm Password */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
                 Confirm Password
               </label>
               {confirmPassword.length > 0 && (
-                <span className={`text-[10px] font-mono flex items-center gap-1 ${passwordsMatch ? 'text-emerald-700 font-bold' : 'text-rose-600'}`}>
-                  {passwordsMatch ? <Check className="w-3 h-3 text-emerald-600" /> : null}
+                <span className={`text-[10px] font-mono flex items-center gap-1 ${passwordsMatch ? 'text-indigo-400 font-bold' : 'text-rose-400'}`}>
+                  {passwordsMatch ? <Check className="w-3 h-3 text-cyan-400" /> : null}
                   {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
                 </span>
               )}
             </div>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
+                id="confirm-password-input"
                 type={showConfirmPassword ? 'text' : 'password'}
                 required
                 minLength={8}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-enter your password"
-                className={`w-full glass-input text-[#17211D] pl-10 pr-11 py-2.5 rounded-xl border ${
+                className={`w-full bg-[#11131A] text-white pl-10 pr-11 py-2.5 rounded-xl border ${
                   confirmPassword.length > 0 && !passwordsMatch
                     ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/20'
-                    : 'border-emerald-500/20 focus:border-emerald-500 focus:ring-emerald-500/20'
-                } focus:outline-none focus:ring-2 text-sm shadow-xs`}
+                    : 'border-white/10 focus:border-indigo-500 focus:ring-indigo-500/20'
+                } focus:outline-none focus:ring-2 text-sm shadow-xs placeholder:text-slate-500`}
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-md"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-1 rounded-md cursor-pointer"
               >
                 {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -327,15 +329,15 @@ function SignupForm() {
                 required
                 checked={agreeTerms}
                 onChange={(e) => setAgreeTerms(e.target.checked)}
-                className="mt-1 w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500/20 cursor-pointer accent-emerald-600"
+                className="mt-1 w-4 h-4 rounded border-white/20 bg-[#11131A] text-indigo-600 focus:ring-indigo-500/20 cursor-pointer accent-indigo-600"
               />
-              <span className="text-xs text-slate-600 leading-relaxed">
+              <span className="text-xs text-slate-400 leading-relaxed">
                 I agree to the{' '}
-                <Link href="/terms" target="_blank" className="text-emerald-700 font-bold hover:underline">
+                <Link href="/terms" target="_blank" className="text-indigo-400 font-bold hover:underline">
                   Terms of Service
                 </Link>{' '}
                 and{' '}
-                <Link href="/privacy" target="_blank" className="text-emerald-700 font-bold hover:underline">
+                <Link href="/privacy" target="_blank" className="text-indigo-400 font-bold hover:underline">
                   Privacy Policy
                 </Link>
                 .
@@ -347,24 +349,24 @@ function SignupForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-3 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all text-sm disabled:opacity-50 cursor-pointer"
+            className="w-full mt-3 py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all text-sm disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? (
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <span>Create Fluvia Flow Account</span>
+                <span>Create Fluvia Studio Account</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-6 text-center text-xs text-slate-600">
+        <div className="mt-6 text-center text-xs text-slate-400">
           Already have an account?{' '}
           <Link
             href={`/login?returnUrl=${encodeURIComponent(returnUrl)}`}
-            className="text-emerald-700 font-bold hover:underline"
+            className="text-indigo-400 font-bold hover:underline"
           >
             Sign in
           </Link>
@@ -376,12 +378,14 @@ function SignupForm() {
 
 export default function SignupPage() {
   return (
-    <div className="min-h-screen text-[#17211D] flex flex-col justify-center items-center px-4 py-8 relative overflow-hidden bg-gradient-to-br from-white via-[#F0FDF4]/50 to-[#FFF1F7]/40">
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-emerald-400/15 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-pink-400/15 rounded-full blur-[120px] pointer-events-none -z-10" />
-      <Suspense fallback={<div className="text-xs text-slate-500 font-mono">Loading registration portal...</div>}>
-        <SignupForm />
-      </Suspense>
+    <div className="min-h-screen text-white flex flex-col justify-center items-center px-4 py-8 relative overflow-hidden bg-[#090A0D]">
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/10 shadow-2xl relative z-10">
+        <Suspense fallback={<div className="text-xs text-slate-500 font-mono">Loading registration portal...</div>}>
+          <SignupForm />
+        </Suspense>
+      </div>
     </div>
   );
 }

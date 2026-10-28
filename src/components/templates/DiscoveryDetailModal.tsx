@@ -262,7 +262,7 @@ export function DiscoveryDetailModal({
         </div>
 
         {/* Right: Info, Prompt, & Generation Actions */}
-        <div className="w-full lg:w-[420px] p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#131916] border-t lg:border-t-0 lg:border-l border-white/10">
+        <div className="w-full lg:w-[420px] p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#0E1015] border-t lg:border-t-0 lg:border-l border-white/10">
           <div className="space-y-6">
             {/* Header: Title, Category & Format Badge */}
             <div>

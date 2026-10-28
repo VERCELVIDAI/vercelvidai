@@ -14,15 +14,15 @@ import {
 
 export function GoogleVidsCard() {
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-white via-emerald-50/40 to-teal-50/60 p-6 sm:p-8 shadow-lg shadow-emerald-500/5 transition-all hover:shadow-xl hover:border-emerald-500/40 min-w-0">
+    <div className="relative overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-br from-[#11131A] via-[#151822] to-[#11131A] p-6 sm:p-8 shadow-xl transition-all hover:border-white/20 min-w-0">
       {/* Decorative background ambient glows */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-400/15 blur-3xl"
+        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-teal-400/10 blur-3xl"
+        className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl"
       />
 
       <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
@@ -32,38 +32,38 @@ export function GoogleVidsCard() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-google-vids-popup'))}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 hover:bg-emerald-200 border border-emerald-300 text-emerald-800 text-xs font-black tracking-wider uppercase transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 text-indigo-300 text-xs font-black tracking-wider uppercase transition-colors cursor-pointer"
               title="Click to view Cool Templates popup"
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400 animate-pulse" />
               <span>GOOGLE VIDS</span>
             </button>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/80 border border-emerald-200 text-emerald-700 text-[11px] font-bold font-mono">
-              <Zap className="w-3 h-3 text-emerald-600 fill-emerald-500" />
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-[11px] font-bold font-mono">
+              <Zap className="w-3 h-3 text-indigo-400 fill-indigo-400" />
               15 credits per video
             </span>
           </div>
 
           <div>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-[#17211D] tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
               Turn your ideas into stunning videos
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+            <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">
               Create compelling video content with an AI-powered workflow. Describe your vision, customize camera lenses, and render high-resolution 1080p and 4K commercial videos right inside Fluvia Flow.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-slate-700 font-medium">
+          <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-slate-300 font-medium">
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <CheckCircle2 className="w-4 h-4 text-indigo-400" />
               <span>Text-to-Video & Image-to-Video</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <CheckCircle2 className="w-4 h-4 text-indigo-400" />
               <span>Google Gemini Omni Flash AI</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <CheckCircle2 className="w-4 h-4 text-indigo-400" />
               <span>Direct MP4 Download</span>
             </div>
           </div>
@@ -71,7 +71,7 @@ export function GoogleVidsCard() {
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <Link
               href="/create?source=google-vids"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 hover:shadow-lg hover:shadow-emerald-600/30 transition-all cursor-pointer group"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-indigo-600/25 transition-all cursor-pointer group border border-white/10"
             >
               <span>Create Video</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
@@ -79,18 +79,18 @@ export function GoogleVidsCard() {
 
             <Link
               href="/templates"
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-white/80 hover:bg-white text-slate-700 hover:text-emerald-800 border border-emerald-500/20 text-xs sm:text-sm font-semibold transition-all"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 text-xs sm:text-sm font-semibold transition-all"
             >
-              <Layers className="w-4 h-4 text-emerald-600" />
+              <Layers className="w-4 h-4 text-indigo-400" />
               <span>Browse 26 Templates</span>
             </Link>
 
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-google-vids-popup'))}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-emerald-50 hover:bg-emerald-100/80 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs"
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               <span>Cool Templates Popup</span>
             </button>
           </div>

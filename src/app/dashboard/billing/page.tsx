@@ -58,8 +58,8 @@ export default function BillingOverviewPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -73,10 +73,10 @@ export default function BillingOverviewPage() {
   const latestReceipts = billing?.latestReceipts || [];
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-[#17211D] relative">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#090A0D] text-white relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#090A0D]">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -89,8 +89,8 @@ export default function BillingOverviewPage() {
           {/* Header Title & Subnavigation */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D]">Billing & Financial Management</h1>
-              <p className="mt-1 text-xs sm:text-sm text-slate-600">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Billing & Financial Management</h1>
+              <p className="mt-1 text-xs sm:text-sm text-slate-400">
                 Manage your subscription plans, PayU India transactions, official invoices, and receipts.
               </p>
             </div>
@@ -98,15 +98,15 @@ export default function BillingOverviewPage() {
             <div className="flex items-center gap-2.5">
               <Link
                 href="/checkout?type=pack&id=pack_1200"
-                className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center gap-1.5 transition-all cursor-pointer"
+                className="px-4 py-2 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30 flex items-center gap-1.5 transition-all cursor-pointer"
               >
-                <Zap className="w-3.5 h-3.5 text-emerald-100" />
+                <Zap className="w-3.5 h-3.5 text-cyan-300" />
                 <span>Buy Credits</span>
               </Link>
 
               <Link
                 href="/pricing"
-                className="px-4 py-2 glass-card hover:bg-emerald-50 text-slate-800 border border-emerald-500/20 rounded-xl text-xs font-bold transition-all shadow-xs"
+                className="px-4 py-2 bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 rounded-xl text-xs font-bold transition-all shadow-xs"
               >
                 Upgrade Plan
               </Link>
@@ -114,71 +114,71 @@ export default function BillingOverviewPage() {
           </div>
 
           {/* Subnavigation Pills */}
-          <div className="flex items-center gap-2 border-b border-emerald-500/15 pb-3 overflow-x-auto text-xs font-bold">
+          <div className="flex items-center gap-2 border-b border-white/10 pb-3 overflow-x-auto text-xs font-bold">
             <Link
               href="/dashboard/billing"
-              className="px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg shadow-xs"
+              className="px-3.5 py-1.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-lg shadow-xs"
             >
               Overview
             </Link>
             <Link
               href="/dashboard/billing/invoices"
-              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
             >
               Invoices ({latestInvoices.length})
             </Link>
             <Link
               href="/dashboard/billing/receipts"
-              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
             >
               Payment Receipts ({latestReceipts.length})
             </Link>
             <Link
               href="/dashboard/billing/transactions"
-              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
             >
               Transactions History
             </Link>
             <Link
               href="/dashboard/billing/subscription"
-              className="px-3.5 py-1.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-slate-400 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
             >
               Subscription Details
             </Link>
           </div>
 
           {/* Subscription & Active Plan Banner */}
-          <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-pink-50/50 border border-emerald-500/25 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-lg">
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-[#151822] via-[#11131A] to-[#151822] border border-indigo-500/30 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300 font-bold">
+                <span className="text-[10px] font-mono uppercase text-indigo-300 bg-indigo-500/20 px-2.5 py-0.5 rounded-full border border-indigo-500/30 font-bold">
                   Active Subscription
                 </span>
-                <span className="text-xs text-emerald-700 font-bold flex items-center gap-1">
+                <span className="text-xs text-cyan-400 font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Auto-Renewal Active
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#17211D]">
+              <h2 className="text-xl sm:text-2xl font-black text-white">
                 {plan?.name || 'Fluvia Pro Plan'}
               </h2>
-              <p className="text-xs text-slate-600 max-w-xl">
+              <p className="text-xs text-slate-400 max-w-xl">
                 Priority GPU queue, 4K rendering, access to Runway Gen-3, Luma Ray, Fal Flux, and ElevenLabs voices.
               </p>
             </div>
 
             <div className="flex items-center gap-4 shrink-0">
               <div className="text-right">
-                <div className="text-xs text-slate-500 font-medium">Monthly Billing</div>
-                <div className="text-xl font-extrabold text-[#17211D] font-mono">
+                <div className="text-xs text-slate-400 font-medium">Monthly Billing</div>
+                <div className="text-xl font-extrabold text-white font-mono">
                   INR {plan?.priceInr || 2499}
-                  <span className="text-xs text-slate-500 font-normal"> / mo</span>
+                  <span className="text-xs text-slate-400 font-normal"> / mo</span>
                 </div>
               </div>
 
               <Link
                 href="/pricing"
-                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
+                className="px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
               >
                 Change Plan
               </Link>
@@ -187,57 +187,57 @@ export default function BillingOverviewPage() {
 
           {/* Financial Overview Metrics Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
+            <div className="p-5 rounded-2xl bg-[#0E1015] border border-white/8 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-400 font-bold">
                 <span>Available Compute</span>
-                <Zap className="w-4 h-4 text-emerald-600" />
+                <Zap className="w-4 h-4 text-cyan-400" />
               </div>
-              <div className="text-3xl font-black text-[#17211D] font-mono">
+              <div className="text-3xl font-black text-white font-mono">
                 {billing?.availableCredits ?? credits.availableBalance}
               </div>
-              <p className="text-[11px] text-slate-500 font-medium">Live spendable credits</p>
+              <p className="text-[11px] text-slate-400 font-medium">Live spendable credits</p>
             </div>
 
-            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
+            <div className="p-5 rounded-2xl bg-[#0E1015] border border-white/8 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-400 font-bold">
                 <span>Purchased Credits</span>
-                <TrendingUp className="w-4 h-4 text-teal-700" />
+                <TrendingUp className="w-4 h-4 text-indigo-400" />
               </div>
-              <div className="text-3xl font-black text-[#17211D] font-mono">
+              <div className="text-3xl font-black text-white font-mono">
                 {billing?.purchasedCredits ?? 0}
               </div>
-              <p className="text-[11px] text-slate-500 font-medium">Total top-ups & plan allowances</p>
+              <p className="text-[11px] text-slate-400 font-medium">Total top-ups & plan allowances</p>
             </div>
 
-            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
+            <div className="p-5 rounded-2xl bg-[#0E1015] border border-white/8 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-400 font-bold">
                 <span>Total Spent (INR)</span>
-                <CreditCard className="w-4 h-4 text-emerald-600" />
+                <CreditCard className="w-4 h-4 text-cyan-400" />
               </div>
-              <div className="text-3xl font-black text-emerald-700 font-mono">
+              <div className="text-3xl font-black text-cyan-400 font-mono">
                 ₹{billing?.totalSpentInr?.toFixed(2) ?? '0.00'}
               </div>
-              <p className="text-[11px] text-slate-500 font-medium">Paid via PayU India</p>
+              <p className="text-[11px] text-slate-400 font-medium">Paid via PayU India</p>
             </div>
 
-            <div className="p-5 rounded-2xl glass-card border border-emerald-500/20 space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
+            <div className="p-5 rounded-2xl bg-[#0E1015] border border-white/8 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-slate-400 font-bold">
                 <span>Successful Orders</span>
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
               </div>
-              <div className="text-3xl font-black text-[#17211D] font-mono">
+              <div className="text-3xl font-black text-white font-mono">
                 {billing?.totalSuccessfulPayments ?? 0}
               </div>
-              <p className="text-[11px] text-slate-500 font-medium">Verified transactions on ledger</p>
+              <p className="text-[11px] text-slate-400 font-medium">Verified transactions on ledger</p>
             </div>
           </div>
 
           {/* Quick Credit Packs Section */}
-          <div className="rounded-2xl glass-card border border-emerald-500/20 p-6 space-y-4 shadow-sm">
+          <div className="rounded-2xl bg-[#0E1015] border border-white/8 p-6 space-y-4 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-[#17211D]">Instant Credit Top-Up Packs</h3>
-                <p className="text-xs text-slate-600">Never let rendering stop. Instant delivery via PayU UPI & Cards.</p>
+                <h3 className="text-base font-bold text-white">Instant Credit Top-Up Packs</h3>
+                <p className="text-xs text-slate-400">Never let rendering stop. Instant delivery via PayU UPI & Cards.</p>
               </div>
               <Link href="/pricing" className="text-xs text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1">
                 <span>View All Packs</span>

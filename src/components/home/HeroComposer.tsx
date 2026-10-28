@@ -114,26 +114,26 @@ export function HeroComposer() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl glass-card p-4 sm:p-6 relative overflow-hidden text-left shadow-2xl border border-emerald-500/25 bg-white/95">
+    <div className="w-full max-w-4xl mx-auto rounded-3xl p-4 sm:p-6 relative overflow-hidden text-left shadow-2xl border border-white/10 bg-[#0E1015]/95 backdrop-blur-xl">
       {/* Background ambient lighting */}
-      <div className="absolute -top-32 -right-32 w-80 h-80 bg-emerald-400/15 rounded-full blur-[90px] pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-teal-400/10 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute -top-32 -right-32 w-80 h-80 bg-indigo-500/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Google Flow Top Header Bar: Studio Console + Mode Switchers */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3.5 border-b border-emerald-500/15">
+      {/* Kling-Inspired Top Header Bar: Studio Console + Mode Switchers */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3.5 border-b border-white/8">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
           <button
             type="button"
             onClick={() => setMode('video')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               mode === 'video'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25'
-                : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/70'
+                ? 'bg-white/[0.12] text-white border border-white/20 shadow-md'
+                : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
             }`}
           >
-            <Video className="w-3.5 h-3.5" />
+            <Video className="w-3.5 h-3.5 text-indigo-400" />
             <span>Text to Video</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20 font-mono">15 cr</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">15 cr</span>
           </button>
 
           <button
@@ -141,13 +141,13 @@ export function HeroComposer() {
             onClick={() => setMode('frames')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               mode === 'frames'
-                ? 'bg-teal-700 text-white shadow-md shadow-teal-700/25'
-                : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/70'
+                ? 'bg-white/[0.12] text-white border border-white/20 shadow-md'
+                : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
             }`}
           >
-            <Layers className="w-3.5 h-3.5" />
+            <Layers className="w-3.5 h-3.5 text-cyan-400" />
             <span>Frames to Video</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20 font-mono">15 cr</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 font-mono border border-cyan-500/30">15 cr</span>
           </button>
 
           <button
@@ -155,13 +155,13 @@ export function HeroComposer() {
             onClick={() => setMode('image')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               mode === 'image'
-                ? 'bg-emerald-700 text-white shadow-md shadow-emerald-700/25'
-                : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/70'
+                ? 'bg-white/[0.12] text-white border border-white/20 shadow-md'
+                : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
             }`}
           >
-            <ImageIcon className="w-3.5 h-3.5" />
+            <ImageIcon className="w-3.5 h-3.5 text-violet-400" />
             <span>AI Image</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20 font-mono">5 cr</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-violet-500/20 text-violet-300 font-mono border border-violet-500/30">5 cr</span>
           </button>
 
           <button
@@ -169,13 +169,13 @@ export function HeroComposer() {
             onClick={() => setMode('audio')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               mode === 'audio'
-                ? 'bg-teal-800 text-white shadow-md shadow-teal-800/25'
-                : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/70'
+                ? 'bg-white/[0.12] text-white border border-white/20 shadow-md'
+                : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
             }`}
           >
-            <Mic className="w-3.5 h-3.5" />
+            <Mic className="w-3.5 h-3.5 text-amber-400" />
             <span>Voiceover HD</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20 font-mono">2 cr</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">2 cr</span>
           </button>
 
           <button
@@ -183,13 +183,13 @@ export function HeroComposer() {
             onClick={() => setMode('tools')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               mode === 'tools'
-                ? 'bg-[#17211D] text-white shadow-md'
-                : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/70'
+                ? 'bg-white/[0.12] text-white border border-white/20 shadow-md'
+                : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
             }`}
           >
             <Sliders className="w-3.5 h-3.5 text-emerald-400" />
             <span>Custom Tools</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-mono font-bold">Free</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 font-mono border border-emerald-500/30 font-bold">Free</span>
           </button>
         </div>
 
@@ -198,9 +198,9 @@ export function HeroComposer() {
           type="button"
           onClick={handleEnhanceWithGemini}
           disabled={isEnhancing}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-xs font-bold transition-all disabled:opacity-50 shadow-2xs shrink-0 cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 text-xs font-bold transition-all disabled:opacity-50 shadow-2xs shrink-0 cursor-pointer"
         >
-          <Sparkles className={`w-3.5 h-3.5 text-emerald-600 ${isEnhancing ? 'animate-spin' : ''}`} />
+          <Sparkles className={`w-3.5 h-3.5 text-indigo-400 ${isEnhancing ? 'animate-spin' : ''}`} />
           <span>{isEnhancing ? 'Gemini Enhancing...' : 'Gemini AI Enhance'}</span>
         </button>
       </div>
@@ -222,18 +222,18 @@ export function HeroComposer() {
               ? 'Enter script to synthesize with ElevenLabs high-definition neural voice (George, Roger, Sarah)...'
               : 'Describe the custom creative mini-tool you want Google Flow Agent to generate...'
           }
-          className="w-full bg-white text-[#17211D] placeholder-slate-400 rounded-2xl p-4 text-xs sm:text-sm border border-emerald-500/25 focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 transition-all resize-none font-mono leading-relaxed shadow-inner"
+          className="w-full bg-[#090A0D] text-slate-100 placeholder-slate-500 rounded-2xl p-4 text-xs sm:text-sm border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all resize-none font-mono leading-relaxed shadow-inner"
         />
 
         {/* Inspiration Chips */}
         <div className="mt-3 flex flex-wrap gap-2 items-center">
-          <span className="text-xs text-slate-500 font-semibold">Flow Presets:</span>
+          <span className="text-xs text-slate-400 font-semibold">Studio Presets:</span>
           {EXAMPLE_PROMPTS.slice(0, 3).map((ex, i) => (
             <button
               key={i}
               type="button"
               onClick={() => setPrompt(ex)}
-              className="text-xs text-slate-700 hover:text-emerald-800 bg-emerald-50/70 hover:bg-emerald-100/80 px-3 py-1 rounded-full transition-all border border-emerald-500/15 truncate max-w-[240px] sm:max-w-xs shadow-2xs"
+              className="text-xs text-slate-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] px-3 py-1 rounded-full transition-all border border-white/8 truncate max-w-[240px] sm:max-w-xs shadow-2xs"
             >
               {ex}
             </button>
@@ -241,18 +241,18 @@ export function HeroComposer() {
         </div>
       </div>
 
-      {/* Google Flow Parameters & Controls Row */}
-      <div className="mt-5 pt-4 border-t border-emerald-500/15 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+      {/* Kling-Inspired Parameters & Controls Row */}
+      <div className="mt-5 pt-4 border-t border-white/8 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
         <div className="flex flex-wrap items-center gap-2.5">
           {/* Aspect Ratio Selector */}
-          <div className="flex items-center gap-1 bg-emerald-50/60 p-1 rounded-xl border border-emerald-500/20">
+          <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-white/8">
             {(['16:9', '9:16', '1:1', '21:9'] as const).map((ar) => (
               <button
                 key={ar}
                 type="button"
                 onClick={() => setAspectRatio(ar)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                  aspectRatio === ar ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-[#17211D]'
+                  aspectRatio === ar ? 'bg-white/[0.14] text-white shadow-2xs border border-white/15' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {ar}
@@ -262,15 +262,15 @@ export function HeroComposer() {
 
           {/* Camera Motion Selector */}
           {(mode === 'video' || mode === 'frames') && (
-            <div className="flex items-center gap-1.5 bg-emerald-50/60 px-3 py-1.5 rounded-xl border border-emerald-500/20 text-slate-700">
-              <Camera className="w-3.5 h-3.5 text-emerald-600" />
+            <div className="flex items-center gap-1.5 bg-white/[0.04] px-3 py-1.5 rounded-xl border border-white/8 text-slate-300">
+              <Camera className="w-3.5 h-3.5 text-indigo-400" />
               <select
                 value={camera}
                 onChange={(e) => setCamera(e.target.value)}
-                className="bg-transparent text-[#17211D] font-bold text-xs focus:outline-none cursor-pointer"
+                className="bg-transparent text-white font-bold text-xs focus:outline-none cursor-pointer"
               >
                 {CAMERA_PRESETS.map((c) => (
-                  <option key={c} value={c} className="bg-white text-[#17211D]">
+                  <option key={c} value={c} className="bg-[#11131A] text-slate-200">
                     {c}
                   </option>
                 ))}
@@ -285,11 +285,11 @@ export function HeroComposer() {
               onClick={() => setHasIngredient(!hasIngredient)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
                 hasIngredient
-                  ? 'bg-emerald-100 text-emerald-800 border-emerald-400 font-bold'
-                  : 'bg-white text-slate-600 border-emerald-500/20 hover:bg-emerald-50'
+                  ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40 font-bold'
+                  : 'bg-white/[0.04] text-slate-300 border-white/8 hover:bg-white/[0.08]'
               }`}
             >
-              <Plus className="w-3 h-3 text-emerald-600" />
+              <Plus className="w-3 h-3 text-indigo-400" />
               <span>{hasIngredient ? '✓ Start Frame Locked' : '+ Add Keyframe'}</span>
             </button>
           )}
@@ -305,7 +305,7 @@ export function HeroComposer() {
           type="button"
           onClick={handleGenerate}
           disabled={isSubmitting}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/25 hover:shadow-xl transition-all cursor-pointer disabled:opacity-50"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all cursor-pointer disabled:opacity-50 border border-white/10"
         >
           {isSubmitting ? (
             <>

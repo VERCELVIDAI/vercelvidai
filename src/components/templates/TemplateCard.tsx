@@ -101,12 +101,12 @@ export function TemplateCard({
       ref={cardRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative rounded-2xl glass-card border border-emerald-500/20 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col justify-between text-left bg-white/80 backdrop-blur-md"
+      className="group relative rounded-2xl border border-white/8 bg-[#11131A] hover:border-white/20 hover:bg-[#151822] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between text-left"
     >
       {/* Video & Thumbnail Container */}
       <div
         onClick={handleMobileCardTap}
-        className="relative aspect-[16/10] overflow-hidden bg-slate-900 select-none cursor-pointer"
+        className="relative aspect-[16/10] overflow-hidden bg-black select-none cursor-pointer"
       >
         {/* Poster Image */}
         <img
@@ -140,16 +140,16 @@ export function TemplateCard({
         )}
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
 
         {/* Top Badges: Category & Aspect Ratio */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[10px] font-bold text-emerald-300 border border-white/10">
+            <span className="px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[10px] font-bold text-indigo-300 border border-white/10">
               {template.category}
             </span>
             {template.badge && (
-              <span className="px-2 py-0.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 text-[10px] font-bold text-white shadow-xs">
+              <span className="px-2 py-0.5 rounded-lg bg-gradient-to-r from-indigo-500 to-violet-600 text-[10px] font-bold text-white shadow-xs">
                 {template.badge}
               </span>
             )}
@@ -178,11 +178,11 @@ export function TemplateCard({
 
         {/* Bottom Badges: Duration & Aspect */}
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
-          <span className="text-[10px] font-mono font-medium text-white/90 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+          <span className="text-[10px] font-mono font-medium text-slate-300 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
             {template.aspectLabel}
           </span>
-          <div className="flex items-center gap-1 text-[10px] font-mono font-medium text-white/90 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
-            <Clock className="w-3 h-3 text-emerald-400" />
+          <div className="flex items-center gap-1 text-[10px] font-mono font-medium text-slate-300 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+            <Clock className="w-3 h-3 text-indigo-400" />
             <span>{template.duration}</span>
           </div>
         </div>
@@ -197,7 +197,7 @@ export function TemplateCard({
             }}
             className="pointer-events-auto px-4 py-2 rounded-xl bg-white/95 hover:bg-white text-slate-900 font-bold text-xs shadow-xl flex items-center gap-1.5 transition-all transform hover:scale-105 active:scale-95"
           >
-            <Maximize2 className="w-3.5 h-3.5 text-emerald-700" />
+            <Maximize2 className="w-3.5 h-3.5 text-indigo-600" />
             <span>Watch Preview</span>
           </button>
         </div>
@@ -207,11 +207,11 @@ export function TemplateCard({
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
           <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-bold text-[#17211D] text-base group-hover:text-emerald-700 transition-colors line-clamp-1">
+            <h3 className="font-bold text-white text-base group-hover:text-indigo-400 transition-colors line-clamp-1">
               {template.title}
             </h3>
           </div>
-          <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4 font-normal">
+          <p className="text-xs text-slate-400 leading-relaxed line-clamp-2 mb-4 font-normal">
             {template.description}
           </p>
 
@@ -220,7 +220,7 @@ export function TemplateCard({
             {template.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] font-mono text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200"
+                className="text-[10px] font-mono text-slate-300 bg-white/[0.04] px-2 py-0.5 rounded border border-white/8"
               >
                 {tag}
               </span>
@@ -229,20 +229,20 @@ export function TemplateCard({
         </div>
 
         {/* Action Bottom Row */}
-        <div className="pt-4 border-t border-emerald-500/15 flex items-center justify-between gap-2">
+        <div className="pt-4 border-t border-white/8 flex items-center justify-between gap-2">
           <button
             type="button"
             onClick={() => onPreview(template)}
-            className="text-xs font-semibold text-slate-600 hover:text-emerald-700 transition-colors flex items-center gap-1.5 p-1 rounded-lg hover:bg-emerald-50/50"
+            className="text-xs font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 p-1 rounded-lg hover:bg-white/[0.06]"
           >
-            <Play className="w-3.5 h-3.5 text-emerald-600" />
+            <Play className="w-3.5 h-3.5 text-indigo-400" />
             <span>Preview</span>
           </button>
 
           <button
             type="button"
             onClick={() => onUseTemplate(template)}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-emerald-600/30 hover:shadow-emerald-600/50 transition-all active:scale-95"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-indigo-500/20 transition-all active:scale-95 border border-white/10"
           >
             <span>Use Template</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

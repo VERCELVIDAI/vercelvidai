@@ -384,23 +384,23 @@ function CheckoutContent() {
 
   if (isLoadingAuth) {
     return (
-      <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D]">
+    <div className="min-h-screen flex flex-col transition-colors duration-200 bg-[#090A0D] text-white">
       {/* Top Header */}
-      <header className="h-16 glass-navbar px-4 sm:px-6 flex items-center justify-between border-b border-emerald-500/15">
-        <Link href="/pricing" className="flex items-center gap-2 text-xs text-slate-600 hover:text-emerald-800 font-bold transition-colors">
+      <header className="h-16 bg-[#090A0D]/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between border-b border-white/10">
+        <Link href="/pricing" className="flex items-center gap-2 text-xs text-slate-400 hover:text-white font-bold transition-colors">
           <ArrowLeft className="w-4 h-4" />
           <span className="hidden sm:inline">Back to Pricing</span>
         </Link>
         <Logo size="sm" />
-        <div className="flex items-center gap-1.5 sm:gap-2 text-emerald-700 text-[11px] sm:text-xs font-bold">
-          <Lock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+        <div className="flex items-center gap-1.5 sm:gap-2 text-cyan-300 text-[11px] sm:text-xs font-mono font-bold">
+          <Lock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
           <span>PayU India Verified</span>
         </div>
       </header>
@@ -408,53 +408,53 @@ function CheckoutContent() {
       {/* Main Checkout Area */}
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8 sm:p-10 text-left">
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-black text-[#17211D]">Complete Your Order</h1>
-          <p className="mt-1 text-xs sm:text-sm text-slate-600">
+          <h1 className="text-2xl sm:text-3xl font-black text-white">Complete Your Order</h1>
+          <p className="mt-1 text-xs sm:text-sm text-slate-400">
             Secure checkout powered by PayU India. Instant credit fulfillment with official invoice.
           </p>
         </div>
 
         {errorMessage && (
-          <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-xs flex items-center gap-3">
-            <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+          <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-3">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
             <span className="font-semibold">{errorMessage}</span>
           </div>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Customer Billing Details Form */}
-          <div className="lg:col-span-7 glass-card border border-emerald-500/20 rounded-3xl p-5 sm:p-8 space-y-6 shadow-xl">
-            <div className="flex items-center gap-2 pb-4 border-b border-emerald-500/15">
-              <Building2 className="w-5 h-5 text-emerald-700" />
-              <h2 className="text-base font-bold text-[#17211D]">Billing Information</h2>
+          <div className="lg:col-span-7 bg-[#0E1015] border border-white/10 rounded-3xl p-5 sm:p-8 space-y-6 shadow-2xl">
+            <div className="flex items-center gap-2 pb-4 border-b border-white/10">
+              <Building2 className="w-5 h-5 text-indigo-400" />
+              <h2 className="text-base font-bold text-white">Billing Information</h2>
             </div>
 
             <form onSubmit={handleSubmitPayment} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    Full Name <span className="text-rose-500">*</span>
+                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                    Full Name <span className="text-rose-400">*</span>
                   </label>
                   <input
                     type="text"
                     required
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full bg-[#11131A] rounded-xl px-3.5 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-500"
                     placeholder="e.g. Aria Vance"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    Email Address <span className="text-rose-500">*</span>
+                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                    Email Address <span className="text-rose-400">*</span>
                   </label>
                   <input
                     type="email"
                     required
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
-                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full bg-[#11131A] rounded-xl px-3.5 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-500"
                     placeholder="creator@fluviaflow.ai"
                   />
                 </div>
@@ -462,30 +462,30 @@ function CheckoutContent() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    Phone (PayU Mobile) <span className="text-rose-500">*</span>
+                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                    Phone (PayU Mobile) <span className="text-rose-400">*</span>
                   </label>
                   <input
                     type="tel"
                     required
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 font-mono"
+                    className="w-full bg-[#11131A] rounded-xl px-3.5 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 font-mono placeholder:text-slate-500"
                     placeholder="10-digit mobile"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    State / Place of Supply <span className="text-rose-500">*</span>
+                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                    State / Place of Supply <span className="text-rose-400">*</span>
                   </label>
                   <select
                     value={customerState}
                     onChange={(e) => setCustomerState(e.target.value)}
-                    className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 cursor-pointer"
+                    className="w-full bg-[#11131A] rounded-xl px-3.5 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
                   >
                     {INDIAN_STATES.map((s) => (
-                      <option key={s} value={s} className="bg-white text-[#17211D]">
+                      <option key={s} value={s} className="bg-[#11131A] text-white">
                         {s}
                       </option>
                     ))}
@@ -494,50 +494,50 @@ function CheckoutContent() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
                   Billing Address <span className="text-slate-500 font-normal">(Optional for Individual)</span>
                 </label>
                 <input
                   type="text"
                   value={customerAddress}
                   onChange={(e) => setCustomerAddress(e.target.value)}
-                  className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full bg-[#11131A] rounded-xl px-3.5 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-500"
                   placeholder="Street address, city, pincode"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
                   Tax ID / Business ID <span className="text-slate-500 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={customerGstin}
                   onChange={(e) => setCustomerGstin(e.target.value.toUpperCase())}
-                  className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs text-[#17211D] border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 font-mono"
+                  className="w-full bg-[#11131A] rounded-xl px-3.5 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 font-mono placeholder:text-slate-500"
                   placeholder="e.g. TAX-ID-12345"
                   maxLength={15}
                 />
-                <p className="mt-1 text-[11px] text-slate-500">
+                <p className="mt-1 text-[11px] text-slate-400">
                   Optional business identification or registration number.
                 </p>
               </div>
 
               <div className="pt-2">
-                <label className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-600">
+                <label className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-300">
                   <input
                     type="checkbox"
                     checked={agreeTerms}
                     onChange={(e) => setAgreeTerms(e.target.checked)}
-                    className="mt-0.5 rounded border-emerald-500 text-emerald-600 focus:ring-emerald-500"
+                    className="mt-0.5 rounded border-white/20 bg-[#11131A] text-indigo-600 focus:ring-indigo-500 accent-indigo-600 cursor-pointer"
                   />
                   <span>
                     I accept the{' '}
-                    <Link href="/terms" target="_blank" className="text-emerald-700 underline font-semibold">
+                    <Link href="/terms" target="_blank" className="text-indigo-400 underline font-semibold">
                       Terms of Service
                     </Link>{' '}
                     and acknowledge the{' '}
-                    <Link href="/refund-policy" target="_blank" className="text-emerald-700 underline font-semibold">
+                    <Link href="/refund-policy" target="_blank" className="text-indigo-400 underline font-semibold">
                       Refund Policy
                     </Link>
                     .
@@ -547,13 +547,13 @@ function CheckoutContent() {
 
               <div className="pt-4">
                 {cooldownSeconds > 0 && (
-                  <div className="mb-3 p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-start gap-2.5 shadow-xs">
-                    <Clock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5 animate-pulse" />
+                  <div className="mb-3 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs flex items-start gap-2.5 shadow-xs">
+                    <Clock className="w-4 h-4 text-amber-400 shrink-0 mt-0.5 animate-pulse" />
                     <div>
                       <p className="font-bold">Rate Limit Protection Active</p>
-                      <p className="text-[11px] text-amber-800 mt-0.5">
+                      <p className="text-[11px] text-amber-300 mt-0.5">
                         Please wait{' '}
-                        <span className="font-mono font-bold text-amber-950 bg-amber-200/80 px-1.5 py-0.5 rounded">
+                        <span className="font-mono font-bold text-white bg-amber-900/60 px-1.5 py-0.5 rounded">
                           {cooldownSeconds}s
                         </span>{' '}
                         before attempting payment again to prevent PayU gateway throttling.
@@ -565,7 +565,7 @@ function CheckoutContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting || cooldownSeconds > 0}
-                  className="w-full py-3.5 px-6 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                  className="w-full py-3.5 px-6 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition-all disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
@@ -592,8 +592,8 @@ function CheckoutContent() {
 
                 {/* Gateway Production Status Banner */}
                 {!isZeroPayable && (
-                  <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-emerald-800 font-semibold bg-emerald-50/80 border border-emerald-500/25 rounded-xl py-2 px-3 shadow-2xs">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-cyan-300 font-semibold bg-[#11131A] border border-cyan-500/30 rounded-xl py-2 px-3 shadow-2xs font-mono">
+                    <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                     <span>PayU Live Production Gateway • 256-Bit SSL Encrypted</span>
                   </div>
                 )}
@@ -605,7 +605,7 @@ function CheckoutContent() {
                       type="button"
                       onClick={handleSimulatePayment}
                       disabled={isSubmitting}
-                      className="text-[11px] text-emerald-700 hover:text-emerald-900 underline font-semibold transition-colors cursor-pointer"
+                      className="text-[11px] text-indigo-400 hover:text-indigo-300 underline font-semibold transition-colors cursor-pointer"
                     >
                       Developer Sandbox: Test Immediate Fulfillment & Invoice Clearance →
                     </button>
@@ -613,62 +613,62 @@ function CheckoutContent() {
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 pt-2 text-[11px] text-slate-600 font-medium">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 pt-2 text-[11px] text-slate-400 font-medium">
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> UPI (GPay, PhonePe, Paytm)
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" /> UPI (GPay, PhonePe, Paytm)
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> Credit / Debit Cards
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" /> Credit / Debit Cards
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> Net Banking
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" /> Net Banking
                 </span>
               </div>
             </form>
           </div>
 
           {/* Right: Order Summary Card */}
-          <div className="lg:col-span-5 glass-card border border-emerald-500/20 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
-            <h2 className="text-base font-bold text-[#17211D] pb-4 border-b border-emerald-500/15">Order Summary</h2>
+          <div className="lg:col-span-5 bg-[#0E1015] border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
+            <h2 className="text-base font-bold text-white pb-4 border-b border-white/10">Order Summary</h2>
 
-            <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200 space-y-3">
+            <div className="p-4 rounded-xl bg-[#11131A] border border-white/8 space-y-3">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <h3 className="text-sm font-bold text-[#17211D]">{itemDetails.name}</h3>
-                  <p className="text-xs text-slate-600 mt-0.5">{itemDetails.description}</p>
+                  <h3 className="text-sm font-bold text-white">{itemDetails.name}</h3>
+                  <p className="text-xs text-slate-400 mt-0.5">{itemDetails.description}</p>
                 </div>
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-300">
-                  <Zap className="w-4 h-4 text-emerald-700" />
+                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/30">
+                  <Zap className="w-4 h-4 text-indigo-400" />
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-700 pt-2 border-t border-emerald-200/80">
+              <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/8">
                 <span>Credits Included:</span>
-                <strong className="text-emerald-800 font-mono font-bold">
+                <strong className="text-cyan-400 font-mono font-bold">
                   {itemDetails.credits.toLocaleString()} Credits
                 </strong>
               </div>
 
               {itemDetails.intervalLabel && (
-                <div className="flex items-center justify-between text-xs text-slate-700 pt-2 border-t border-emerald-200/80">
+                <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/8">
                   <span>Billing Cycle:</span>
-                  <span className="text-emerald-800 font-bold">{itemDetails.intervalLabel}</span>
+                  <span className="text-indigo-400 font-bold">{itemDetails.intervalLabel}</span>
                 </div>
               )}
             </div>
 
             {/* Coupon Code Section */}
-            <div className="p-4 rounded-xl bg-white/70 border border-emerald-500/20 space-y-3 shadow-xs">
+            <div className="p-4 rounded-xl bg-[#11131A] border border-white/8 space-y-3 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#17211D] flex items-center gap-1.5">
-                  <Tag className="w-3.5 h-3.5 text-emerald-700" />
+                <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Have a coupon code?</span>
                 </span>
                 {appliedCoupon && (
                   <button
                     type="button"
                     onClick={handleRemoveCoupon}
-                    className="text-[11px] text-rose-600 hover:text-rose-700 font-semibold underline cursor-pointer"
+                    className="text-[11px] text-rose-400 hover:text-rose-300 font-semibold underline cursor-pointer"
                   >
                     Remove
                   </button>
@@ -676,18 +676,18 @@ function CheckoutContent() {
               </div>
 
               {appliedCoupon ? (
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs">
-                  <div className="flex items-center gap-2 text-emerald-900 font-mono font-bold">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <div className="flex items-center justify-between p-2.5 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-xs">
+                  <div className="flex items-center gap-2 text-indigo-300 font-mono font-bold">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
                     <span>{appliedCoupon.code}</span>
-                    <span className="text-emerald-700 font-normal font-sans text-[11px]">
+                    <span className="text-slate-300 font-normal font-sans text-[11px]">
                       ({appliedCoupon.discountType === 'percentage' ? `${appliedCoupon.discountValue}% off` : `INR ${appliedCoupon.discountValue} off`})
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={handleRemoveCoupon}
-                    className="p-1 rounded hover:bg-emerald-100 text-slate-500 hover:text-rose-600 transition-colors"
+                    className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-rose-400 transition-colors"
                     title="Remove coupon"
                   >
                     <X className="w-3.5 h-3.5" />
@@ -709,13 +709,13 @@ function CheckoutContent() {
                       }
                     }}
                     placeholder="e.g. SAVE20"
-                    className="flex-1 glass-input rounded-xl px-3 py-2 text-xs text-[#17211D] font-mono uppercase border border-emerald-500/20 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                    className="flex-1 bg-[#0E1015] rounded-xl px-3 py-2 text-xs text-white font-mono uppercase border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-500"
                   />
                   <button
                     type="button"
                     onClick={() => handleApplyCoupon()}
                     disabled={isValidatingCoupon || !couponInput.trim()}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs disabled:opacity-50 transition-all flex items-center gap-1.5 cursor-pointer"
+                    className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold rounded-xl shadow-xs disabled:opacity-50 transition-all flex items-center gap-1.5 cursor-pointer"
                   >
                     {isValidatingCoupon ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -727,14 +727,14 @@ function CheckoutContent() {
               )}
 
               {couponSuccess && (
-                <p className="text-[11px] text-emerald-700 font-medium flex items-center gap-1">
+                <p className="text-[11px] text-cyan-400 font-medium flex items-center gap-1 font-mono">
                   <CheckCircle2 className="w-3 h-3 shrink-0" />
                   <span>{couponSuccess}</span>
                 </p>
               )}
 
               {couponError && (
-                <p className="text-[11px] text-rose-600 font-medium flex items-center gap-1">
+                <p className="text-[11px] text-rose-400 font-medium flex items-center gap-1">
                   <AlertCircle className="w-3 h-3 shrink-0" />
                   <span>{couponError}</span>
                 </p>
@@ -743,26 +743,26 @@ function CheckoutContent() {
 
             {/* Price Breakdown */}
             <div className="space-y-2.5 text-xs">
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between text-slate-400">
                 <span>Subtotal:</span>
-                <span className={`text-[#17211D] font-mono font-bold ${appliedCoupon ? 'line-through text-slate-400' : ''}`}>
+                <span className={`text-white font-mono font-bold ${appliedCoupon ? 'line-through text-slate-500' : ''}`}>
                   INR {itemDetails.basePrice.toFixed(2)}
                 </span>
               </div>
 
               {appliedCoupon && couponPricing && (
                 <>
-                  <div className="flex justify-between text-emerald-700 font-semibold bg-emerald-50/80 p-2 rounded-lg border border-emerald-200">
+                  <div className="flex justify-between text-indigo-400 font-semibold bg-indigo-500/10 p-2 rounded-lg border border-indigo-500/20 font-mono">
                     <span className="flex items-center gap-1.5">
                       <Tag className="w-3.5 h-3.5 shrink-0" />
                       <span>Coupon: {appliedCoupon.code}</span>
                     </span>
-                    <span className="font-mono font-bold">-INR {couponPricing.discountAmount.toFixed(2)}</span>
+                    <span className="font-bold">-INR {couponPricing.discountAmount.toFixed(2)}</span>
                   </div>
 
-                  <div className="flex justify-between text-slate-600">
+                  <div className="flex justify-between text-slate-400">
                     <span>Discounted Base:</span>
-                    <span className="text-[#17211D] font-mono font-bold">
+                    <span className="text-white font-mono font-bold">
                       INR {couponPricing.discountedBaseAmount.toFixed(2)}
                     </span>
                   </div>
@@ -770,27 +770,27 @@ function CheckoutContent() {
               )}
 
               {taxAmount > 0 && (
-                <div className="flex justify-between text-slate-600">
+                <div className="flex justify-between text-slate-400">
                   <span>Taxes & Fees:</span>
-                  <span className="text-[#17211D] font-mono font-bold">INR {taxAmount.toFixed(2)}</span>
+                  <span className="text-white font-mono font-bold">INR {taxAmount.toFixed(2)}</span>
                 </div>
               )}
 
-              <div className="pt-3 border-t border-emerald-500/15 flex justify-between items-baseline">
-                <span className="text-sm font-bold text-[#17211D]">Total Payable Amount:</span>
-                <span className="text-lg font-extrabold text-emerald-700 font-mono">
+              <div className="pt-3 border-t border-white/10 flex justify-between items-baseline">
+                <span className="text-sm font-bold text-white">Total Payable Amount:</span>
+                <span className="text-lg font-extrabold text-cyan-400 font-mono">
                   INR {totalAmount.toFixed(2)}
                 </span>
               </div>
             </div>
 
             {/* Satisfaction / Guarantee info */}
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 space-y-1.5 shadow-xs">
-              <div className="flex items-center gap-1.5 font-bold text-emerald-900">
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
+            <div className="p-4 rounded-xl bg-[#11131A] border border-white/8 text-xs text-slate-300 space-y-1.5 shadow-xs">
+              <div className="flex items-center gap-1.5 font-bold text-white">
+                <ShieldCheck className="w-4 h-4 text-cyan-400" />
                 <span>Instant Crediting & Official Invoice</span>
               </div>
-              <p className="text-[11px] text-slate-700 leading-relaxed">
+              <p className="text-[11px] text-slate-400 leading-relaxed">
                 Your credits are added to your wallet automatically upon confirmation. You will be able to download your
                 official invoice and payment receipt immediately.
               </p>
@@ -806,8 +806,8 @@ export default function CheckoutPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

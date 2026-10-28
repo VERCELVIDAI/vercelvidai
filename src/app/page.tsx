@@ -102,36 +102,36 @@ const CREATIVE_SHOWCASE_ITEMS = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D] bg-white">
+    <div className="min-h-screen flex flex-col transition-colors duration-200 text-slate-100 bg-[#090A0D]">
       <Header />
 
       <main className="flex-1">
         {/* ========================================================================= */}
         {/* 1. GOOGLE FLOW HERO SECTION */}
         {/* ========================================================================= */}
-        <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden text-center bg-gradient-to-b from-emerald-50/40 via-white to-white">
+        <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden text-center bg-gradient-to-b from-[#0E1015]/60 via-[#090A0D] to-[#090A0D]">
           {/* Ambient Lighting Spheres */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-emerald-300/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-indigo-500/20 via-violet-500/15 to-cyan-500/10 rounded-full blur-[150px] pointer-events-none -z-10" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Google Flow Studio Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-emerald-500/30 text-xs font-bold text-emerald-800 mb-8 backdrop-blur-md shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Google Flow Studio</span>
-              <span className="text-slate-300">•</span>
-              <span className="text-slate-600 font-medium">Powered by Google DeepMind (Veo & Gemini Omni Flash)</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-xs font-bold text-slate-300 mb-8 backdrop-blur-md shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+              <span className="text-white">Google Flow Studio</span>
+              <span className="text-slate-600">•</span>
+              <span className="text-slate-400 font-medium">Powered by Google DeepMind (Veo & Gemini Omni Flash)</span>
             </div>
 
             {/* Official Google Flow Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#17211D] max-w-5xl mx-auto leading-[1.08]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-5xl mx-auto leading-[1.08]">
               Bring your stories to life with our{' '}
-              <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-400 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
                 AI creative studio.
               </span>
             </h1>
 
             {/* Supporting Copy */}
-            <p className="mt-6 text-base sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-normal">
+            <p className="mt-6 text-base sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-normal">
               Try Fluvia Flow, the ultimate AI for creatives. Transform ideas into reality using advanced generative models for cinematic video, images, and custom creative tools.
             </p>
 
@@ -139,7 +139,7 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/create"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 shadow-xl shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider group"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-xl shadow-indigo-500/25 transition-all text-sm uppercase tracking-wider group border border-white/10"
               >
                 <span>Launch Flow Studio (15 cr)</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -147,7 +147,7 @@ export default function HomePage() {
 
               <Link
                 href="#pillars"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl font-bold text-slate-700 bg-white hover:bg-emerald-50/60 border border-emerald-500/20 shadow-2xs transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl font-bold text-slate-300 bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 shadow-2xs transition-colors text-sm"
               >
                 <span>Explore Capabilities</span>
               </Link>
@@ -166,42 +166,42 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* 2. THE 4 PILLARS OF GOOGLE FLOW ARCHITECTURE */}
         {/* ========================================================================= */}
-        <section id="pillars" className="py-24 border-t border-emerald-500/15 bg-emerald-50/25 text-left">
+        <section id="pillars" className="py-24 border-t border-white/8 bg-[#0B0C10] text-left">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-3 block">
+              <span className="text-[11px] uppercase tracking-widest text-indigo-400 font-mono font-bold mb-3 block">
                 Google Flow Creative Architecture
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17211D] tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
                 An Infinite Canvas for Every Story
               </h2>
-              <p className="mt-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+              <p className="mt-4 text-slate-400 text-sm sm:text-base leading-relaxed">
                 Move beyond disconnected prompt windows. Flow unites text-to-video, frame interpolation, character consistency, and bespoke workflow apps into one seamless studio.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Pillar 1: Text-to-Video */}
-              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+              <div className="p-6 rounded-3xl border border-white/8 bg-[#11131A] hover:border-white/20 hover:bg-[#151822] flex flex-col justify-between space-y-5 shadow-xl transition-all group">
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center">
-                    <Video className="w-6 h-6 text-emerald-700" />
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+                    <Video className="w-6 h-6 text-indigo-400" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
+                    <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">
                       Text to Video
                     </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono font-bold border border-emerald-300">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono font-bold border border-indigo-500/30">
                       15 cr
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-400 leading-relaxed">
                     Powered by Google Gemini Omni 1.1 Flash. Full programmatic camera motion control including Dolly, Orbit, Tracking, and Crane shots.
                   </p>
                 </div>
                 <Link
                   href="/create?mode=video"
-                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-emerald-700"
+                  className="pt-3 border-t border-white/8 flex items-center justify-between text-xs font-bold text-indigo-400 group-hover:text-indigo-300"
                 >
                   <span>Open Video Studio</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -209,26 +209,26 @@ export default function HomePage() {
               </div>
 
               {/* Pillar 2: Frames-to-Video */}
-              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+              <div className="p-6 rounded-3xl border border-white/8 bg-[#11131A] hover:border-white/20 hover:bg-[#151822] flex flex-col justify-between space-y-5 shadow-xl transition-all group">
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-800 border border-teal-300 flex items-center justify-center">
-                    <Layers className="w-6 h-6 text-teal-700" />
+                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 flex items-center justify-center">
+                    <Layers className="w-6 h-6 text-cyan-400" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-teal-700 transition-colors">
+                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">
                       Frames to Video
                     </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 font-mono font-bold border border-teal-300">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-mono font-bold border border-cyan-500/30">
                       Keyframes
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-400 leading-relaxed">
                     Provide a starting frame, ending frame, or both. Flow generates fluid transitions while preserving lighting, subject anatomy, and narrative continuity.
                   </p>
                 </div>
                 <Link
                   href="/create?mode=video"
-                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-teal-700"
+                  className="pt-3 border-t border-white/8 flex items-center justify-between text-xs font-bold text-cyan-400 group-hover:text-cyan-300"
                 >
                   <span>Upload Keyframes</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -236,26 +236,26 @@ export default function HomePage() {
               </div>
 
               {/* Pillar 3: Ingredients & Consistent Characters */}
-              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+              <div className="p-6 rounded-3xl border border-white/8 bg-[#11131A] hover:border-white/20 hover:bg-[#151822] flex flex-col justify-between space-y-5 shadow-xl transition-all group">
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6 text-emerald-700" />
+                  <div className="w-12 h-12 rounded-2xl bg-violet-500/15 text-violet-400 border border-violet-500/30 flex items-center justify-center">
+                    <CheckCircle2 className="w-6 h-6 text-violet-400" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
+                    <h3 className="text-lg font-bold text-white group-hover:text-violet-400 transition-colors">
                       Consistency Locker
                     </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono font-bold border border-emerald-300">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 font-mono font-bold border border-violet-500/30">
                       Ingredients
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-400 leading-relaxed">
                     Lock character facial structures, brand color schemes, and physical product styling across whole multi-shot scenes without visual drift.
                   </p>
                 </div>
                 <Link
                   href="/dashboard/brand-kit"
-                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-emerald-700"
+                  className="pt-3 border-t border-white/8 flex items-center justify-between text-xs font-bold text-violet-400 group-hover:text-violet-300"
                 >
                   <span>Manage Ingredients</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -263,26 +263,26 @@ export default function HomePage() {
               </div>
 
               {/* Pillar 4: Custom Tools Builder */}
-              <div className="p-6 rounded-3xl glass-card border border-emerald-500/20 bg-white/95 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-lg transition-all group">
+              <div className="p-6 rounded-3xl border border-white/8 bg-[#11131A] hover:border-white/20 hover:bg-[#151822] flex flex-col justify-between space-y-5 shadow-xl transition-all group">
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-800 border border-slate-300 flex items-center justify-center">
-                    <Sliders className="w-6 h-6 text-slate-700" />
+                  <div className="w-12 h-12 rounded-2xl bg-slate-800 text-slate-300 border border-white/10 flex items-center justify-center">
+                    <Sliders className="w-6 h-6 text-slate-300" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
+                    <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">
                       Custom Tools
                     </h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 font-mono font-bold border border-slate-300">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.08] text-slate-300 font-mono font-bold border border-white/10">
                       No-Code
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-400 leading-relaxed">
                     Describe custom creative tools in natural language. Powered by Gemini, Flow generates bespoke mini-apps, filters, and remixable studio widgets.
                   </p>
                 </div>
                 <Link
                   href="/editor"
-                  className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs font-bold text-slate-800"
+                  className="pt-3 border-t border-white/8 flex items-center justify-between text-xs font-bold text-slate-300 hover:text-white"
                 >
                   <span>Build Tools</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -298,19 +298,19 @@ export default function HomePage() {
         <section id="gallery" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-              <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-2 block">
+              <span className="text-[11px] uppercase tracking-widest text-indigo-400 font-mono font-bold mb-2 block">
                 Google Flow Showcase
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#17211D] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
                 Cinematic Reels & Commercial Presets
               </h2>
-              <p className="text-xs text-slate-600 mt-2">
+              <p className="text-xs text-slate-400 mt-2">
                 Hover to play full video motion. Click any preset to launch directly into the Flow Studio with exact prompt, camera movement, and aspect ratio.
               </p>
             </div>
             <Link
               href="/templates"
-              className="mt-4 md:mt-0 text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 uppercase tracking-wider"
+              className="mt-4 md:mt-0 text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 uppercase tracking-wider"
             >
               <span>Explore All 24 Templates</span>
               <ArrowRight className="w-4 h-4" />
@@ -321,10 +321,10 @@ export default function HomePage() {
             {CREATIVE_SHOWCASE_ITEMS.map((item) => (
               <div
                 key={item.id}
-                className="rounded-3xl glass-card border border-emerald-500/20 bg-white/95 overflow-hidden group hover:border-emerald-500/40 hover:shadow-xl transition-all flex flex-col justify-between"
+                className="rounded-3xl border border-white/8 bg-[#11131A] hover:border-white/20 hover:bg-[#151822] overflow-hidden group hover:shadow-2xl transition-all flex flex-col justify-between"
               >
                 {/* Playable Video Card Container */}
-                <div className="relative aspect-video bg-slate-950 overflow-hidden">
+                <div className="relative aspect-video bg-black overflow-hidden">
                   <video
                     src={item.videoUrl}
                     poster={item.posterUrl}
@@ -334,20 +334,20 @@ export default function HomePage() {
                     playsInline
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
 
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white border border-white/15">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/75 backdrop-blur-md text-white border border-white/15">
                       {item.aspect} • {item.camera}
                     </span>
                   </div>
 
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-600/90 backdrop-blur-md text-white">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-600/90 backdrop-blur-md text-white border border-indigo-400/30">
                       {item.modelBadge}
                     </span>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/60 text-emerald-300 border border-emerald-400/30">
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/70 text-indigo-300 border border-indigo-400/30">
                       {item.credits}
                     </span>
                   </div>
@@ -356,23 +356,23 @@ export default function HomePage() {
                 {/* Card Body */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-emerald-700 font-bold">{item.category}</span>
-                    <h3 className="font-bold text-[#17211D] text-sm mt-1 group-hover:text-emerald-700 transition-colors line-clamp-1">
+                    <span className="text-[10px] font-mono uppercase text-indigo-400 font-bold">{item.category}</span>
+                    <h3 className="font-bold text-white text-sm mt-1 group-hover:text-indigo-400 transition-colors line-clamp-1">
                       {item.title}
                     </h3>
                   </div>
 
-                  <div className="pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs">
+                  <div className="pt-3 border-t border-white/8 flex items-center justify-between text-xs">
                     <Link
                       href={`/create?prompt=${encodeURIComponent(item.title)}&mode=video`}
-                      className="text-slate-700 hover:text-emerald-800 font-semibold flex items-center gap-1"
+                      className="text-slate-300 hover:text-white font-semibold flex items-center gap-1"
                     >
-                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
                       <span>Use Preset</span>
                     </Link>
                     <Link
                       href="/create?mode=video"
-                      className="text-emerald-700 hover:underline font-bold"
+                      className="text-indigo-400 hover:text-indigo-300 font-bold"
                     >
                       Open in Studio →
                     </Link>
@@ -391,15 +391,15 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* 5. PRICING & CREDIT MONETIZATION */}
         {/* ========================================================================= */}
-        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-emerald-500/15 text-left">
+        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/8 text-left">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-3 block">
+            <span className="text-[11px] uppercase tracking-widest text-indigo-400 font-mono font-bold mb-3 block">
               Transparent Credit-Based Pricing
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17211D] tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
               Simple Plans in INR with Instant Settlement
             </h2>
-            <p className="mt-4 text-slate-600 text-sm">
+            <p className="mt-4 text-slate-400 text-sm">
               Official PayU India Hosted Checkout & UPI integration. Instant billing invoicing & official settlement receipts with 0% GST.
             </p>
           </div>
@@ -449,30 +449,30 @@ export default function HomePage() {
             ].map((plan, i) => (
               <div
                 key={i}
-                className={`p-6 rounded-3xl glass-card border bg-white flex flex-col justify-between relative shadow-lg ${
-                  plan.popular ? 'border-emerald-500 ring-2 ring-emerald-500/20 shadow-emerald-500/10' : 'border-emerald-500/20'
+                className={`p-6 rounded-3xl border flex flex-col justify-between relative shadow-xl transition-all ${
+                  plan.popular ? 'bg-[#131520] border-indigo-500 ring-2 ring-indigo-500/30 shadow-indigo-500/15' : 'bg-[#11131A] border-white/8 hover:border-white/16'
                 }`}
               >
                 {plan.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-sm border border-white/20">
                     Most Popular
                   </span>
                 )}
 
                 <div>
-                  <h3 className="font-bold text-[#17211D] text-base">{plan.name}</h3>
+                  <h3 className="font-bold text-white text-base">{plan.name}</h3>
                   <div className="mt-4 flex items-baseline gap-1">
-                    <span className="text-3xl font-extrabold text-[#17211D]">{plan.price}</span>
-                    <span className="text-xs text-slate-500">/{plan.period}</span>
+                    <span className="text-3xl font-extrabold text-white">{plan.price}</span>
+                    <span className="text-xs text-slate-400">/{plan.period}</span>
                   </div>
-                  <div className="mt-2 text-xs font-bold text-emerald-800 bg-emerald-50 p-2 rounded-xl border border-emerald-200">
+                  <div className="mt-2 text-xs font-bold text-indigo-300 bg-white/[0.04] p-2 rounded-xl border border-white/8 font-mono">
                     {plan.credits}
                   </div>
 
-                  <ul className="mt-6 space-y-3 text-xs text-slate-600">
+                  <ul className="mt-6 space-y-3 text-xs text-slate-400">
                     {plan.features.map((f, fi) => (
                       <li key={fi} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
                         <span>{f}</span>
                       </li>
                     ))}
@@ -483,8 +483,8 @@ export default function HomePage() {
                   href={plan.href}
                   className={`mt-8 w-full py-3 rounded-xl text-center text-xs font-bold uppercase tracking-wider transition-all ${
                     plan.popular
-                      ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20'
-                      : 'bg-white hover:bg-emerald-50 text-[#17211D] border border-emerald-500/20'
+                      ? 'bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-500/25 border border-white/10'
+                      : 'bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10'
                   }`}
                 >
                   {plan.cta}
@@ -497,11 +497,11 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* 6. FAQ SECTION */}
         {/* ========================================================================= */}
-        <section className="py-20 border-t border-emerald-500/15 bg-emerald-50/20 text-left">
+        <section className="py-20 border-t border-white/8 bg-[#0B0C10] text-left">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <span className="text-[11px] uppercase tracking-widest text-emerald-700 font-mono font-bold mb-2 block">FAQ</span>
-              <h2 className="text-3xl font-bold text-[#17211D]">Frequently Asked Questions</h2>
+              <span className="text-[11px] uppercase tracking-widest text-indigo-400 font-mono font-bold mb-2 block">FAQ</span>
+              <h2 className="text-3xl font-bold text-white">Frequently Asked Questions</h2>
             </div>
 
             <div className="space-y-4">
@@ -527,12 +527,12 @@ export default function HomePage() {
                   a: 'Yes. Every plan purchase generates an official PDF Tax Invoice and Payment Receipt with 0% GST compliance and PayU India verification records, downloadable anytime in your Purchase History.',
                 },
               ].map((item, idx) => (
-                <div key={idx} className="p-5 rounded-2xl glass-card border border-emerald-500/20 shadow-2xs bg-white">
-                  <h3 className="font-bold text-[#17211D] text-sm flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                <div key={idx} className="p-5 rounded-2xl border border-white/8 bg-[#11131A] shadow-lg">
+                  <h3 className="font-bold text-white text-sm flex items-center gap-2">
+                    <HelpCircle className="w-4 h-4 text-indigo-400 shrink-0" />
                     <span>{item.q}</span>
                   </h3>
-                  <p className="mt-2.5 text-xs text-slate-600 pl-6 leading-relaxed">{item.a}</p>
+                  <p className="mt-2.5 text-xs text-slate-400 pl-6 leading-relaxed">{item.a}</p>
                 </div>
               ))}
             </div>
@@ -542,18 +542,18 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* 7. FINAL CALL TO ACTION */}
         {/* ========================================================================= */}
-        <section className="py-24 relative overflow-hidden text-center bg-gradient-to-t from-emerald-50/50 to-white">
+        <section className="py-24 relative overflow-hidden text-center bg-gradient-to-b from-[#0B0C10] to-[#090A0D]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4">
-            <h2 className="text-4xl sm:text-6xl font-black text-[#17211D] tracking-tight">
+            <h2 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
               Bring your stories to life today.
             </h2>
-            <p className="text-base text-slate-600 max-w-xl mx-auto">
+            <p className="text-base text-slate-400 max-w-xl mx-auto">
               Join thousands of creators producing high-impact cinematic videos, images, and voiceovers with Fluvia Flow.
             </p>
             <div className="pt-6">
               <Link
                 href="/create"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 shadow-xl shadow-emerald-500/25 text-sm uppercase tracking-wider"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-xl shadow-indigo-500/25 text-sm uppercase tracking-wider border border-white/10"
               >
                 <span>Launch Flow Studio (15 cr)</span>
                 <ArrowRight className="w-4 h-4" />

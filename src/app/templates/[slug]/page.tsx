@@ -120,10 +120,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
 
   return (
     <div
-      className="min-h-screen flex flex-col transition-colors duration-200 bg-gradient-to-b from-white via-[#F8FAFC] to-[#F0FDF4]/30"
-      style={{
-        color: '#17211D',
-      }}
+      className="min-h-screen flex flex-col transition-colors duration-200 bg-[#090A0D] text-white"
     >
       <Header />
 
@@ -132,7 +129,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
         <div className="mb-6">
           <Link
             href="/templates"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-emerald-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Template Marketplace</span>
@@ -142,7 +139,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left Column (7 cols): Media Preview by Type */}
           <div className="lg:col-span-7 flex flex-col items-center">
-            <div className="w-full rounded-3xl bg-white p-3 sm:p-4 border border-emerald-500/20 shadow-xl overflow-hidden">
+            <div className="w-full rounded-3xl bg-[#0E1015] p-3 sm:p-4 border border-white/10 shadow-2xl overflow-hidden">
               {tmpl.type === 'image' ? (
                 /* Static High-Res Image Lightbox */
                 <div className="relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl flex items-center justify-center p-2">
@@ -202,7 +199,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                       }`}
                     />
                   ) : (
-                    <div className="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center p-6 text-center text-white">
+                    <div className="absolute inset-0 bg-[#090A0D]/90 flex flex-col items-center justify-center p-6 text-center text-white">
                       <AlertCircle className="w-8 h-8 text-amber-400 mb-2" />
                       <p className="text-sm font-semibold">Video preview ready in studio</p>
                     </div>
@@ -210,7 +207,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
 
                   {/* Overlaid Badges */}
                   <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-emerald-300 font-mono border border-emerald-500/30">
+                    <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-indigo-300 font-mono border border-indigo-500/30">
                       {tmpl.aspectLabel || tmpl.aspect}
                     </span>
                     <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-slate-300 font-mono border border-white/10">
@@ -224,7 +221,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                       <button
                         type="button"
                         onClick={togglePlay}
-                        className="hover:text-emerald-400 transition-colors cursor-pointer"
+                        className="hover:text-indigo-400 transition-colors cursor-pointer"
                         aria-label={isPlaying ? 'Pause' : 'Play'}
                       >
                         {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
@@ -232,7 +229,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                       <button
                         type="button"
                         onClick={toggleMute}
-                        className="hover:text-emerald-400 transition-colors cursor-pointer"
+                        className="hover:text-indigo-400 transition-colors cursor-pointer"
                         aria-label={isMuted ? 'Unmute' : 'Mute'}
                       >
                         {isMuted ? <VolumeX className="w-4 h-4 text-amber-400" /> : <Volume2 className="w-4 h-4" />}
@@ -247,31 +244,31 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
           {/* Right Column (5 cols): Details & CTA */}
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs uppercase tracking-wider mb-3 border border-emerald-300">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 font-bold text-xs uppercase tracking-wider mb-3 border border-indigo-500/20 font-mono">
+                <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
                 <span>{tmpl.category}</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-[#17211D] tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                 {tmpl.title}
               </h1>
 
-              <p className="mt-4 text-base text-slate-600 leading-relaxed font-normal">
+              <p className="mt-4 text-base text-slate-300 leading-relaxed font-normal">
                 {tmpl.description}
               </p>
             </div>
 
             {/* AI Engine Pipeline */}
-            <div className="p-4 rounded-2xl bg-white border border-emerald-500/20 space-y-2 shadow-2xs">
-              <div className="text-xs font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1.5">
-                <Cpu className="w-4 h-4 text-emerald-600" />
+            <div className="p-4 rounded-2xl bg-[#0E1015] border border-white/10 space-y-2 shadow-2xs">
+              <div className="text-xs font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Cpu className="w-4 h-4 text-indigo-400" />
                 <span>Integrated AI Pipeline</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {(tmpl.aiModelsUsed || ['Google Gemini (gemini-omni-1.1-flash)']).map((m) => (
                   <span
                     key={m}
-                    className="text-xs font-mono px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium"
+                    className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[#151822] text-slate-300 border border-white/8 font-medium"
                   >
                     {m}
                   </span>
@@ -281,23 +278,23 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
 
             {/* Timeline Breakdown (If Scenes Defined) */}
             {tmpl.scenes && tmpl.scenes.length > 0 && (
-              <div className="p-4 rounded-2xl bg-white border border-emerald-500/20 space-y-3 shadow-2xs">
-                <div className="text-xs font-bold text-[#17211D] uppercase tracking-wider flex items-center gap-1.5">
-                  <Film className="w-4 h-4 text-teal-600" />
+              <div className="p-4 rounded-2xl bg-[#0E1015] border border-white/10 space-y-3 shadow-2xs">
+                <div className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <Film className="w-4 h-4 text-cyan-400" />
                   <span>Timeline Structure ({tmpl.duration})</span>
                 </div>
                 <div className="space-y-2">
                   {tmpl.scenes.map((scene, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-[#F8FAFC] border border-emerald-500/10 text-xs flex items-start gap-3"
+                      className="p-3 rounded-xl bg-[#151822] border border-white/6 text-xs flex items-start gap-3"
                     >
-                      <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
+                      <span className="font-mono text-[11px] font-bold text-cyan-400 shrink-0 mt-0.5">
                         {scene.time}
                       </span>
                       <div>
-                        <div className="font-bold text-[#17211D]">{scene.title}</div>
-                        <div className="text-slate-600 text-[11px] leading-relaxed mt-0.5">
+                        <div className="font-bold text-white">{scene.title}</div>
+                        <div className="text-slate-400 text-[11px] leading-relaxed mt-0.5">
                           {scene.desc}
                         </div>
                       </div>
@@ -313,7 +310,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                 type="button"
                 onClick={handleUseTemplate}
                 disabled={isCloning}
-                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-sm shadow-xl shadow-emerald-600/25 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-sm shadow-xl shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
               >
                 {isCloning ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -338,14 +335,14 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
         </div>
 
         {/* Related Templates Section */}
-        <div className="mt-20 pt-10 border-t border-emerald-500/15">
+        <div className="mt-20 pt-10 border-t border-white/10">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-black text-[#17211D] tracking-tight">
+            <h2 className="text-2xl font-black text-white tracking-tight">
               Related Video Templates
             </h2>
             <Link
               href="/templates"
-              className="text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline flex items-center gap-1"
+              className="text-xs font-bold text-indigo-400 hover:text-indigo-300 hover:underline flex items-center gap-1"
             >
               <span>Explore All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -357,7 +354,7 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
               <Link
                 key={r.id}
                 href={`/templates/${r.slug}`}
-                className="group rounded-2xl bg-white border border-emerald-500/20 overflow-hidden shadow-xs hover:shadow-xl hover:border-emerald-500/40 transition-all flex flex-col justify-between"
+                className="group rounded-2xl bg-[#0E1015] border border-white/8 overflow-hidden shadow-xs hover:shadow-xl hover:border-indigo-500/40 transition-all flex flex-col justify-between"
               >
                 <div className="aspect-video relative overflow-hidden bg-slate-900">
                   <img
@@ -373,10 +370,10 @@ export default function TemplateDetailPage({ params }: { params: { slug: string 
                   </div>
                 </div>
                 <div className="p-4">
-                  <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider mb-1">
+                  <div className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-1 font-mono">
                     {r.category}
                   </div>
-                  <h3 className="font-bold text-[#17211D] text-sm group-hover:text-emerald-700 transition-colors truncate">
+                  <h3 className="font-bold text-white text-sm group-hover:text-indigo-300 transition-colors truncate">
                     {r.title}
                   </h3>
                 </div>
