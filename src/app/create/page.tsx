@@ -20,7 +20,6 @@ import {
   Zap,
   CheckCircle2,
   AlertCircle,
-  FileText,
   UploadCloud,
   Film,
   Download,
@@ -35,6 +34,12 @@ import {
   Flame,
   LayoutGrid,
   Volume2,
+  Maximize2,
+  Eye,
+  Camera,
+  Layers,
+  Settings2,
+  Share2,
 } from 'lucide-react';
 
 const MODELS = [
@@ -48,18 +53,25 @@ const MODELS = [
   { id: 'eleven-multilingual', name: 'ElevenLabs Voice HD', cost: 2, badge: 'Voiceover', active: true },
 ];
 
-// Curated high-conversion productive templates for quick load in the studio
 const PRODUCTIVE_PRESETS = [
-  'tmpl_19', // Enterprise Cloud Security & Zero-Trust Shield
-  'tmpl_20', // AI Agent Swarm & Autonomous Workflow Orchestrator
-  'tmpl_21', // Global B2B Fintech & Automated Cross-Border Settlements
-  'tmpl_22', // High-Conversion Mobile App Showcase & Onboarding Reel
-  'tmpl_23', // Real-Time Executive Analytics & Big Data Command Center
-  'tmpl_24', // Spatial Computing & Holographic Glass AR Experience
-  'tmpl_25', // Developer CLI & Serverless Container Infrastructure
-  'tmpl_26', // Next-Gen Cloud AI Platform Feature Tour
-  'tmpl_01', // Cinematic Hyper-Car Launch
-  'tmpl_09', // High-Tech Smartphone Unboxing & Feature Reveal
+  'tmpl_19',
+  'tmpl_20',
+  'tmpl_21',
+  'tmpl_22',
+  'tmpl_23',
+  'tmpl_24',
+  'tmpl_25',
+  'tmpl_26',
+  'tmpl_01',
+  'tmpl_09',
+];
+
+const CAMERA_PRESETS = [
+  { label: 'Dolly In', promptAdd: ', slow cinematic dolly push-in, shallow depth of field' },
+  { label: 'Orbit 360', promptAdd: ', smooth 360 orbital camera rotation, studio rim lighting' },
+  { label: 'Drone Glide', promptAdd: ', sweeping aerial drone tracking shot, golden hour illumination' },
+  { label: 'Low-Angle Tracking', promptAdd: ', dynamic low-angle speed tracking shot, anamorphic lens flare' },
+  { label: 'Macro Texture', promptAdd: ', extreme macro lens detail, controlled specular reflections' },
 ];
 
 function CreateWorkspaceContent() {
@@ -67,7 +79,7 @@ function CreateWorkspaceContent() {
   const searchParams = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Initial params
+  // Initial query parameters
   const initialVoice = searchParams.get('voice') || '';
   const initialMode = (searchParams.get('mode') as any) || (initialVoice ? 'audio' : 'video');
   const initialPrompt = searchParams.get('prompt') || '';
@@ -86,6 +98,9 @@ function CreateWorkspaceContent() {
   const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
   const [uploadedImageName, setUploadedImageName] = useState<string | null>(null);
   const [negativePrompt, setNegativePrompt] = useState('');
+
+  // Inspector panel drawer toggle (for compact workspace)
+  const [inspectorOpen, setInspectorOpen] = useState(true);
 
   // Voiceover selection & preview state
   const [selectedVoice, setSelectedVoice] = useState<string>(initialVoice || 'Roger');
@@ -148,15 +163,14 @@ function CreateWorkspaceContent() {
           localStorage.removeItem('fluvia_pending_prompt');
           localStorage.removeItem('vidai_pending_prompt');
         }
-      } catch (e) {}
+      } catch {}
     }
 
     fetch('/api/auth/me')
       .then((res) => (res.ok ? res.json() : null))
-      .then((d) => {
-        if (!d) router.push('/login?returnUrl=/create');
-        else {
-          setAuthData(d);
+      .then((data) => {
+        if (data?.authenticated) {
+          setAuthData(data);
           fetchUserJobs();
         }
       });
@@ -188,7 +202,6 @@ function CreateWorkspaceContent() {
           const d = await res.json();
           setActiveJob(d.job);
 
-          // Update user credits balance and history if completed or failed
           if (d.job.status === 'completed' || d.job.status === 'failed') {
             fetch('/api/auth/me')
               .then((r) => r.json())
@@ -295,6 +308,12 @@ function CreateWorkspaceContent() {
     }
   };
 
+  const handleApplyCameraPreset = (preset: typeof CAMERA_PRESETS[0]) => {
+    if (!prompt.includes(preset.label)) {
+      setPrompt((prev) => `${prev.trim()}${preset.promptAdd}`);
+    }
+  };
+
   // Quick load template
   const handleLoadTemplate = (template: VideoTemplate) => {
     setPrompt(template.prompt);
@@ -306,7 +325,6 @@ function CreateWorkspaceContent() {
     const dur = template.durationSec ?? 15;
     setDurationSec(dur <= 15 ? dur : 15);
     setActiveTab('studio');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Auto-load template if provided in URL params
@@ -396,7 +414,6 @@ function CreateWorkspaceContent() {
         setUserJobs((prev) => [voiceJob, ...prev]);
         setActiveTab('studio');
 
-        // Refresh credits balance immediately
         fetch('/api/auth/me')
           .then((r) => r.json())
           .then((fresh) => {
@@ -434,7 +451,6 @@ function CreateWorkspaceContent() {
       setActiveJob(data.job);
       setActiveTab('studio');
 
-      // Refresh credits balance immediately after reservation
       fetch('/api/auth/me')
         .then((r) => r.json())
         .then((fresh) => {
@@ -460,16 +476,17 @@ function CreateWorkspaceContent() {
   const credits = authData?.credits || { availableBalance: 0 };
   const hasEnoughCredits = credits.availableBalance >= estimatedCost;
 
-  // Curate active productive templates
   const productiveTemplates = TEMPLATES_DATA.filter((t) =>
     PRODUCTIVE_PRESETS.includes(t.id)
   );
 
   return (
     <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-slate-100 bg-[#090A0D] relative">
+      {/* Studio Nav Rail */}
       <Sidebar credits={credits} userRole={authData?.user?.role} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative">
+      {/* Main Studio Viewport */}
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#090A0D]">
         <DashboardHeader
           displayName={authData?.user?.displayName}
           avatarUrl={authData?.user?.avatarUrl}
@@ -478,498 +495,440 @@ function CreateWorkspaceContent() {
           workspaceName={authData?.workspace?.name}
         />
 
-        <main className="flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full space-y-6 text-left">
-          {/* Top Title & Studio Navigation Tabs */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/8">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigo-600 text-white shadow-2xs">
-                  Google Flow Studio
-                </span>
-                <span className="text-xs text-slate-400 font-medium">Google DeepMind (Veo & Gemini Omni Flash)</span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight mt-1">
-                Google Flow — AI Video Creation Studio
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-400">
-                Generate high-fidelity AI video commercials, product reels, and SaaS demos in-app with real-time inference.
-              </p>
-            </div>
+        {/* Studio Top Command Bar */}
+        <div className="sticky top-0 z-20 px-4 sm:px-6 py-2.5 bg-[#090A0D]/90 backdrop-blur-xl border-b border-white/8 flex items-center justify-between gap-4">
+          {/* Left: Mode Switcher Pills */}
+          <div className="flex items-center gap-1 p-1 bg-white/[0.04] rounded-xl border border-white/8">
+            <button
+              type="button"
+              onClick={() => {
+                setMode('video');
+                setModelId('gemini-omni-1.1-flash');
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                mode === 'video'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Video className="w-3.5 h-3.5" />
+              <span>AI Video (Gemini Omni)</span>
+            </button>
 
-            {/* Navigation Tabs */}
-            <div className="flex items-center gap-1.5 p-1 bg-white/[0.04] rounded-xl border border-white/8 shadow-xs self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={() => {
+                setMode('image');
+                setModelId('gemini-3.1-flash-image');
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                mode === 'image'
+                  ? 'bg-violet-600 text-white shadow-xs'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <ImageIcon className="w-3.5 h-3.5" />
+              <span>AI Image (Gemini)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setMode('audio');
+                setModelId('eleven-multilingual');
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                mode === 'audio'
+                  ? 'bg-amber-600 text-white shadow-xs'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Mic className="w-3.5 h-3.5" />
+              <span>Voiceover HD</span>
+            </button>
+          </div>
+
+          {/* Right: Studio Mode Tabs & Inspector Toggle */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 p-1 bg-white/[0.04] rounded-xl border border-white/8 text-xs">
               <button
                 type="button"
                 onClick={() => setActiveTab('studio')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'studio'
                     ? 'bg-white/[0.12] text-white border border-white/16 shadow-xs'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
                 <Film className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Studio Viewport</span>
+                <span className="hidden sm:inline">Studio Viewport</span>
               </button>
+
               <button
                 type="button"
                 onClick={() => setActiveTab('templates')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'templates'
                     ? 'bg-white/[0.12] text-white border border-white/16 shadow-xs'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
                 <LayoutGrid className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Live Templates ({productiveTemplates.length})</span>
+                <span className="hidden sm:inline">Live Templates ({productiveTemplates.length})</span>
               </button>
+
               <button
                 type="button"
                 onClick={() => {
                   setActiveTab('history');
                   fetchUserJobs();
                 }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'history'
                     ? 'bg-white/[0.12] text-white border border-white/16 shadow-xs'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
                 <History className="w-3.5 h-3.5 text-amber-400" />
-                <span>History ({userJobs.length})</span>
+                <span className="hidden sm:inline">History ({userJobs.length})</span>
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setInspectorOpen(!inspectorOpen)}
+              title={inspectorOpen ? 'Hide Parameters Inspector' : 'Show Parameters Inspector'}
+              className={`p-2 rounded-xl border transition-colors cursor-pointer hidden lg:flex items-center justify-center ${
+                inspectorOpen ? 'bg-indigo-600/20 border-indigo-500/40 text-indigo-300' : 'bg-white/[0.04] border-white/8 text-slate-400 hover:text-white'
+              }`}
+            >
+              <Settings2 className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Global Error Banner */}
+        {errorMsg && (
+          <div className="m-4 p-4 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-200 text-xs flex items-center justify-between gap-3 shadow-xs">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+              <span className="font-semibold">{errorMsg}</span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              {errorMsg.toLowerCase().includes('insufficient') && (
+                <Link
+                  href="/pricing"
+                  className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg text-xs shadow-2xs"
+                >
+                  Top Up Credits
+                </Link>
+              )}
+              <button
+                onClick={() => setErrorMsg(null)}
+                className="p-1 text-rose-400 hover:text-white rounded cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
+        )}
 
-          {/* Error / Alert Banner */}
-          {errorMsg && (
-            <div className="p-4 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-200 text-xs flex items-center justify-between gap-3 shadow-xs">
-              <div className="flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
-                <span className="font-semibold">{errorMsg}</span>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                {errorMsg.toLowerCase().includes('insufficient') && (
-                  <Link
-                    href="/pricing"
-                    className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg text-xs shadow-2xs"
-                  >
-                    Top Up Credits
-                  </Link>
-                )}
-                <button
-                  onClick={() => setErrorMsg(null)}
-                  className="p-1 text-rose-400 hover:text-white rounded cursor-pointer"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 1: STUDIO VIEWPORT (MAIN CREATION WORKSPACE) */}
-          {activeTab === 'studio' && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              {/* LEFT: Composer Controls & Parameters (7 cols) */}
-              <div className="lg:col-span-7 space-y-5">
-                {/* Mode Selector */}
-                <div className="flex items-center gap-1.5 p-1 bg-white/[0.04] rounded-xl border border-white/8 text-xs shadow-xs">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMode('video');
-                      setModelId('gemini-omni-1.1-flash');
-                    }}
-                    className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                      mode === 'video' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Video className="w-3.5 h-3.5" />
-                    <span>AI Video (Gemini Omni)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMode('image');
-                      setModelId('gemini-3.1-flash-image');
-                    }}
-                    className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                      mode === 'image' ? 'bg-violet-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <ImageIcon className="w-3.5 h-3.5" />
-                    <span>AI Image (Gemini)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMode('audio');
-                      setModelId('eleven-multilingual');
-                    }}
-                    className={`flex-1 py-2 rounded-lg font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                      mode === 'audio' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Mic className="w-3.5 h-3.5" />
-                    <span>Voiceover HD</span>
-                  </button>
-                </div>
-
-                {/* Video Generation Mode Toggle (Text-to-Video vs Image-to-Video) */}
-                {mode === 'video' && (
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-[#11131A] border border-white/8 text-xs">
-                    <span className="font-bold text-slate-300 pl-2">Input Workflow:</span>
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => setVideoInputType('text')}
-                        className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                          videoInputType === 'text'
-                            ? 'bg-white/[0.12] text-white shadow-2xs border border-white/16'
-                            : 'text-slate-400 hover:text-white'
-                        }`}
-                      >
-                        Text-to-Video
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setVideoInputType('image')}
-                        className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                          videoInputType === 'image'
-                            ? 'bg-white/[0.12] text-white shadow-2xs border border-white/16'
-                            : 'text-slate-400 hover:text-white'
-                        }`}
-                      >
-                        Image-to-Video
-                      </button>
-                    </div>
+        {/* ========================================================================= */}
+        {/* TAB 1: RADICAL CINEMATIC CREATIVE STUDIO */}
+        {/* ========================================================================= */}
+        {activeTab === 'studio' && (
+          <main className="flex-1 flex flex-col lg:flex-row min-w-0 p-4 sm:p-6 gap-6 items-stretch">
+            {/* CENTER: CINEMA VIEWPORT & FLOATING COMMAND BAR */}
+            <div className="flex-1 flex flex-col justify-between min-w-0 space-y-4">
+              
+              {/* STAGE: Large Cinema Display Monitor */}
+              <div className="relative w-full rounded-3xl border border-white/10 bg-[#0B0C10] overflow-hidden flex flex-col items-center justify-center min-h-[380px] sm:min-h-[460px] shadow-2xl group">
+                
+                {/* Cinema Crosshair & Aspect Frame Watermarks */}
+                <div className="absolute inset-4 pointer-events-none border border-white/[0.04] rounded-2xl flex flex-col justify-between p-3 z-10">
+                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 font-bold uppercase tracking-wider">
+                    <span>FLUVIA CINEMA • 4K RENDER</span>
+                    <span>{aspectRatio} • {durationSec}s</span>
                   </div>
-                )}
-
-                {/* Image-to-Video Uploader Area */}
-                {mode === 'video' && videoInputType === 'image' && (
-                  <div className="p-4 rounded-2xl border border-white/8 bg-[#11131A] space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                        <UploadCloud className="w-4 h-4 text-indigo-400" />
-                        <span>Source Reference Frame</span>
-                      </label>
-                      <span className="text-[11px] text-slate-400 font-medium">PNG, JPG, WEBP • Max 10MB</span>
-                    </div>
-
-                    {!uploadedImagePreview ? (
-                      <div
-                        onClick={() => fileInputRef.current?.click()}
-                        className="border-2 border-dashed border-white/15 hover:border-indigo-500/50 rounded-xl p-6 text-center cursor-pointer transition-colors bg-white/[0.02] hover:bg-white/[0.04]"
-                      >
-                        <ImageIcon className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
-                        <p className="text-xs font-bold text-white">
-                          Click to upload initial keyframe or drop image here
-                        </p>
-                        <p className="text-[11px] text-slate-400 mt-0.5">
-                          Gemini Omni Flash will bring this image to life with cinematographic motion
-                        </p>
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept="image/png,image/jpeg,image/webp"
-                          onChange={handleImageUpload}
-                          className="hidden"
-                        />
-                      </div>
-                    ) : (
-                      <div className="relative rounded-xl overflow-hidden border border-white/10 bg-black aspect-video max-h-48 flex items-center justify-center group">
-                        <img
-                          src={uploadedImagePreview}
-                          alt="Uploaded Keyframe"
-                          className="w-full h-full object-contain"
-                        />
-                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                          <button
-                            type="button"
-                            onClick={handleClearImage}
-                            className="px-3 py-1.5 rounded-lg bg-rose-600 text-white font-bold text-xs flex items-center gap-1.5 shadow"
-                          >
-                            <X className="w-3.5 h-3.5" />
-                            <span>Remove</span>
-                          </button>
-                        </div>
-                        <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/80 text-white text-[10px] font-mono border border-white/10">
-                          {uploadedImageName}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Prompt Box & Gemini Enhancer */}
-                <div className="p-5 rounded-2xl border border-white/8 bg-[#11131A] space-y-4 shadow-xl">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                      {mode === 'audio' ? (
-                        <Mic className="w-3.5 h-3.5 text-amber-400" />
-                      ) : (
-                        <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-                      )}
-                      <span>{mode === 'audio' ? 'Voiceover Narration Script' : 'Creative Direction Prompt'}</span>
-                    </label>
-
-                    {mode !== 'audio' && (
-                      <button
-                        type="button"
-                        onClick={handleEnhancePrompt}
-                        disabled={isEnhancing || !prompt.trim()}
-                        className="px-2.5 py-1 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold text-[11px] flex items-center gap-1 transition-all disabled:opacity-40 cursor-pointer"
-                      >
-                        {isEnhancing ? (
-                          <span className="w-3 h-3 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-                        ) : (
-                          <Sparkles className="w-3 h-3 text-indigo-400" />
-                        )}
-                        <span>{isEnhancing ? 'Enhancing...' : 'Gemini AI Enhance'}</span>
-                      </button>
-                    )}
-                  </div>
-
-                  {enhancementApplied && (
-                    <div className="p-2 rounded-lg bg-indigo-500/20 text-indigo-200 text-[11px] font-semibold flex items-center gap-1.5 border border-indigo-500/40">
-                      <Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                      <span>Prompt expanded with cinematic camera movement, lighting cues, and optical fidelity.</span>
-                    </div>
-                  )}
-
-                  <textarea
-                    rows={4}
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder={
-                      mode === 'audio'
-                        ? 'Enter narration text or script to synthesize with ElevenLabs (e.g. "Welcome to Fluvia Flow. Create studio-grade videos and hyperrealistic voiceovers in seconds.")...'
-                        : videoInputType === 'image'
-                        ? 'Describe camera motion and animation for your image (e.g. slow cinematic dolly push forward, volumetric lighting, gentle wind motion)...'
-                        : 'Describe your video scene: subject, environment, lighting, camera motion, cinematic aesthetic (e.g. 16:9 4K commercial)...'
-                    }
-                    className="w-full bg-[#090A0D] text-slate-100 placeholder-slate-500 p-3.5 rounded-xl border border-white/10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-xs sm:text-sm leading-relaxed resize-none shadow-inner"
-                  />
-
-                  {/* Quick Style Chips */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mr-1">
-                      Quick Tags:
-                    </span>
-                    {[
-                      '3D Glassmorphism',
-                      'Holographic Telemetry',
-                      'Cinematic Drone Orbit',
-                      'Volumetric Studio Light',
-                      'Macro Detail 8K',
-                      'SaaS Tech Explainer',
-                      'Fintech Gold Glow',
-                    ].map((tag) => (
-                      <button
-                        key={tag}
-                        type="button"
-                        onClick={() => {
-                          if (!prompt.includes(tag)) {
-                            setPrompt((prev) => (prev ? `${prev}, ${tag}` : tag));
-                          }
-                        }}
-                        className="px-2 py-0.5 rounded-md bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white border border-white/8 text-[10px] font-medium transition-colors cursor-pointer"
-                      >
-                        +{tag}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Negative Prompt */}
-                  <div className="pt-2 border-t border-white/8">
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                      Negative Prompt (Optional)
-                    </label>
-                    <input
-                      type="text"
-                      value={negativePrompt}
-                      onChange={(e) => setNegativePrompt(e.target.value)}
-                      placeholder="blurry, low resolution, warped text, distorted hands, watermark..."
-                      className="w-full bg-[#090A0D] text-slate-100 placeholder-slate-500 px-3 py-1.5 rounded-xl border border-white/10 focus:outline-none focus:border-indigo-500 text-xs"
-                    />
+                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
+                    <span>MODEL: {selectedModelObj.name}</span>
+                    <span>15 Credits</span>
                   </div>
                 </div>
 
-                {/* Model & Settings Parameters */}
-                <div className="p-5 rounded-2xl border border-white/8 bg-[#11131A] space-y-4 text-xs shadow-xl">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Model Selector */}
+                {/* VIEWPORT CONTENT STATES */}
+                {!activeJob ? (
+                  // IDLE MONITOR STATE
+                  <div className="py-20 px-6 text-center z-10 max-w-lg mx-auto space-y-4">
+                    <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto shadow-inner">
+                      <Camera className="w-8 h-8 text-indigo-400 animate-pulse" />
+                    </div>
                     <div>
-                      <div className="flex justify-between items-center mb-1.5">
-                        <label className="text-slate-300 uppercase font-bold">Active Engine</label>
-                        <span className="text-[10px] font-bold text-indigo-300 bg-indigo-500/20 px-1.5 py-0.5 rounded border border-indigo-500/30">
-                          {mode === 'video' ? '15 Credits' : `${estimatedCost} Credits`}
-                        </span>
-                      </div>
-                      <select
-                        value={modelId}
-                        onChange={(e) => setModelId(e.target.value)}
-                        className="w-full bg-[#090A0D] text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-indigo-500 text-xs cursor-pointer font-bold"
-                      >
-                        {MODELS.map((m) => (
-                          <option
-                            key={m.id}
-                            value={m.id}
-                            disabled={!m.active}
-                            className={`bg-[#11131A] ${m.active ? 'text-white font-bold' : 'text-slate-500 italic'}`}
-                          >
-                            {m.name} {!m.active ? '(Coming Soon)' : `(${m.cost} credits)`}
-                          </option>
-                        ))}
-                      </select>
-                      <p className="text-[10px] text-slate-400 mt-1 font-medium">
-                        Fixed rate: 15 Credits for Gemini Omni video generations.
+                      <h3 className="text-xl font-black text-white tracking-tight">
+                        Studio Viewport Ready
+                      </h3>
+                      <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+                        Enter your creative prompt below or select a camera motion path to synthesize 4K cinematic commercial video with Google Gemini Omni 1.1 Flash.
                       </p>
                     </div>
 
-                    {/* Aspect Ratio OR Voice Selector */}
-                    {mode === 'audio' ? (
-                      <div>
-                        <div className="flex justify-between items-center mb-1.5">
-                          <label className="text-slate-300 uppercase font-bold">Neural Voice Model</label>
-                          <span className="text-[10px] text-amber-300 font-bold bg-amber-500/20 px-1.5 py-0.5 rounded border border-amber-500/30">
-                            ElevenLabs HD
-                          </span>
-                        </div>
-                        <select
-                          value={selectedVoice}
-                          onChange={(e) => setSelectedVoice(e.target.value)}
-                          className="w-full bg-[#090A0D] text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-indigo-500 text-xs cursor-pointer font-bold"
+                    {/* Camera Presets Chips */}
+                    <div className="flex flex-wrap justify-center gap-1.5 pt-2">
+                      {CAMERA_PRESETS.map((p) => (
+                        <button
+                          key={p.label}
+                          type="button"
+                          onClick={() => handleApplyCameraPreset(p)}
+                          className="px-2.5 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/8 text-slate-300 text-[11px] font-medium transition-colors cursor-pointer"
                         >
-                          {availableVoices.map((v) => (
-                            <option key={v.voiceId || v.id} value={v.voiceId || v.id} className="bg-[#11131A] text-white">
-                              {v.name} ({v.gender || 'Neural'} • {v.accent || 'Natural'})
-                            </option>
-                          ))}
-                        </select>
+                          + {p.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : activeJob.status === 'queued' || activeJob.status === 'processing' ? (
+                  // NEURAL SYNTHESIS PROGRESS STATE
+                  <div className="py-16 px-6 text-center z-10 max-w-md mx-auto space-y-5">
+                    <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+                      <div className="absolute inset-0 rounded-full border-2 border-indigo-500/30 animate-ping" />
+                      <div className="w-20 h-20 rounded-full bg-indigo-500/20 border-2 border-indigo-500 border-t-transparent animate-spin" />
+                      <Film className="w-8 h-8 text-indigo-300 absolute" />
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-indigo-400 font-bold block mb-1">
+                        NEURAL INFERENCE IN PROGRESS
+                      </span>
+                      <h3 className="text-lg font-black text-white">
+                        {activeJob.status === 'queued' ? 'Dispatched to Queue' : 'Synthesizing Latent Frames'}
+                      </h3>
+                      <p className="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
+                        {activeJob.progressMessage || 'Processing latent motion tensors with Gemini Omni 1.1 Flash...'}
+                      </p>
+                    </div>
+
+                    {/* Progress Bar & Telemetry */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[11px] font-mono text-slate-400 font-semibold px-1">
+                        <span>Diffusion Step</span>
+                        <span>{activeJob.progressPercent || 45}%</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-white/10">
+                        <div
+                          className="h-full bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-400 transition-all duration-500"
+                          style={{ width: `${activeJob.progressPercent || 45}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : activeJob.status === 'completed' ? (
+                  // FINISHED RENDER PLAYBACK STATE
+                  <div className="w-full h-full flex flex-col justify-between relative z-10 bg-black">
+                    {/* VIDEO OUTPUT */}
+                    {activeJob.output?.videoUrl ? (
+                      <div className="relative w-full h-full flex items-center justify-center bg-black">
+                        <video
+                          src={activeJob.output.videoUrl}
+                          controls
+                          autoPlay
+                          loop
+                          playsInline
+                          className="w-full max-h-[520px] object-contain rounded-2xl shadow-2xl"
+                        />
+                      </div>
+                    ) : activeJob.output?.audioUrl ? (
+                      // ELEVENLABS AUDIO PLAYER
+                      <div className="p-8 text-center space-y-6 max-w-lg mx-auto my-auto">
+                        <div className="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto shadow-lg">
+                          <Volume2 className="w-8 h-8" />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold">
+                            ElevenLabs Neural Voiceover HD
+                          </span>
+                          <h4 className="text-xl font-black text-white mt-1">Voiceover Synthesized</h4>
+                          <p className="text-xs text-slate-300 mt-2 italic bg-white/[0.04] p-3 rounded-xl border border-white/8">
+                            "{activeJob.output.text}"
+                          </p>
+                        </div>
+                        <audio src={activeJob.output.audioUrl} controls className="w-full rounded-xl" autoPlay />
+                        <div className="flex justify-center gap-3">
+                          <a
+                            href={activeJob.output.audioUrl}
+                            download="fluvia-voiceover.mp3"
+                            className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs flex items-center gap-2 shadow"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            <span>Download MP3</span>
+                          </a>
+                        </div>
+                      </div>
+                    ) : activeJob.output?.imageUrl ? (
+                      // IMAGE OUTPUT
+                      <div className="relative w-full h-full flex items-center justify-center bg-black">
+                        <img
+                          src={activeJob.output.imageUrl}
+                          alt="Rendered Output"
+                          className="w-full max-h-[520px] object-contain rounded-2xl shadow-2xl"
+                        />
                       </div>
                     ) : (
-                      <div>
-                        <label className="block text-slate-300 uppercase font-bold mb-1.5">Aspect Ratio</label>
-                        <div className="grid grid-cols-4 gap-1 bg-[#090A0D] p-1 rounded-xl border border-white/10 shadow-2xs">
-                          {(['16:9', '9:16', '1:1', '4:3'] as const).map((r) => (
-                            <button
-                              key={r}
-                              type="button"
-                              onClick={() => setAspectRatio(r)}
-                              className={`py-1 rounded-lg font-bold transition-all cursor-pointer ${
-                                aspectRatio === r
-                                  ? 'bg-white/[0.14] text-white shadow-2xs border border-white/15'
-                                  : 'text-slate-400 hover:text-white'
-                              }`}
-                            >
-                              {r}
-                            </button>
-                          ))}
-                        </div>
+                      <div className="p-8 text-center text-slate-400">
+                        Render completed without preview output.
                       </div>
                     )}
+
+                    {/* Stage Control Action Strip */}
+                    <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent flex items-center justify-between gap-3 border-t border-white/10">
+                      <div className="text-xs text-slate-300 font-medium truncate max-w-md">
+                        {activeJob.output?.videoUrl ? 'Gemini Omni 1.1 Flash 4K Video Render' : 'Synthesized Generation'}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {activeJob.output?.videoUrl && (
+                          <button
+                            type="button"
+                            onClick={() => handleDownloadVideo(activeJob.output.videoUrl)}
+                            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-500/25 cursor-pointer border border-white/10"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            <span>Download MP4</span>
+                          </button>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (activeJob.input?.prompt) setPrompt(activeJob.input.prompt);
+                            if (activeJob.input?.aspectRatio) setAspectRatio(activeJob.input.aspectRatio);
+                          }}
+                          className="px-3 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white font-bold text-xs flex items-center gap-1.5 border border-white/10 cursor-pointer"
+                          title="Remix Prompt"
+                        >
+                          <RotateCcw className="w-3.5 h-3.5 text-indigo-400" />
+                          <span>Remix Prompt</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
+                ) : (
+                  // FAILED STATE
+                  <div className="py-16 px-6 text-center z-10 max-w-sm mx-auto space-y-3">
+                    <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
+                    <h3 className="text-lg font-black text-white">Generation Failed</h3>
+                    <p className="text-xs text-rose-300">
+                      {activeJob.error || 'The model was unable to complete this generation. Your credits have been restored.'}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setActiveJob(null)}
+                      className="px-4 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-bold"
+                    >
+                      Reset Viewport
+                    </button>
+                  </div>
+                )}
+              </div>
 
-                  {/* Featured Voice Presets when in Audio Mode */}
-                  {mode === 'audio' && (
-                    <div className="pt-2 border-t border-white/8">
-                      <div className="flex justify-between items-center mb-2">
-                        <label className="text-slate-300 uppercase font-bold text-[11px]">Featured Voice Presets</label>
-                        <span className="text-[10px] text-slate-400">Click card to select • speaker to preview</span>
-                      </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        {availableVoices.slice(0, 6).map((v) => {
-                          const isSelected = selectedVoice === (v.voiceId || v.id) || selectedVoice === v.name;
-                          return (
-                            <div
-                              key={v.voiceId || v.id}
-                              onClick={() => setSelectedVoice(v.voiceId || v.id)}
-                              className={`p-2 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
-                                isSelected
-                                  ? 'bg-indigo-500/20 border-indigo-500 shadow-2xs ring-1 ring-indigo-500 text-white'
-                                  : 'bg-white/[0.04] border-white/8 hover:border-white/16 text-slate-300'
-                              }`}
-                            >
-                              <div className="flex items-center justify-between gap-1">
-                                <span className="font-bold text-white text-xs truncate">
-                                  {v.name.split('-')[0].trim()}
-                                </span>
-                                {v.previewUrl && (
-                                  <button
-                                    type="button"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleToggleVoicePreview(v.previewUrl, v.voiceId || v.id);
-                                    }}
-                                    title="Preview voice sample"
-                                    className={`p-1 rounded-full transition-colors ${
-                                      playingVoicePreview === (v.voiceId || v.id)
-                                        ? 'bg-indigo-600 text-white animate-pulse'
-                                        : 'hover:bg-white/10 text-indigo-400'
-                                    }`}
-                                  >
-                                    <Volume2 className="w-3 h-3" />
-                                  </button>
-                                )}
-                              </div>
-                              <span className="text-[10px] text-slate-400 mt-1 capitalize font-medium">
-                                {v.gender || 'Neural'} • {v.accent || 'Natural'}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
+              {/* ========================================================================= */}
+              {/* FLOATING CREATIVE COMMAND DOCK (PROMPT COMPOSER) */}
+              {/* ========================================================================= */}
+              <div className="rounded-3xl border border-white/10 bg-[#11131A] p-4 sm:p-5 shadow-2xl space-y-4">
+                
+                {/* Prompt Textarea & Gemini Enhance */}
+                <div className="relative">
+                  <textarea
+                    rows={3}
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder={
+                      mode === 'video'
+                        ? 'Describe your cinematic scene... (e.g. Ultra-luxury midnight chronograph watch floating in zero-gravity, studio reflections, 4k commercial camera move)'
+                        : mode === 'audio'
+                        ? 'Enter the narration script for ElevenLabs Neural Voiceover HD...'
+                        : 'Describe the photorealistic subject, lighting, and composition...'
+                    }
+                    className="w-full bg-[#090A0D] text-white px-4 py-3 rounded-2xl border border-white/10 focus:outline-none focus:border-indigo-500 placeholder-slate-500 text-sm leading-relaxed resize-none transition-colors"
+                  />
 
-                  {/* Duration Slider (if video mode) */}
-                  {mode === 'video' && (
-                    <div className="pt-2 border-t border-white/8">
-                      <div className="flex justify-between items-center mb-1.5">
-                        <label className="text-slate-300 uppercase font-bold">Duration: {durationSec} seconds</label>
-                        <span className="text-[11px] text-slate-400 font-mono font-medium">Standard 5s / Extended 15s</span>
-                      </div>
-                      <input
-                        type="range"
-                        min={5}
-                        max={15}
-                        step={5}
-                        value={durationSec}
-                        onChange={(e) => setDurationSec(Number(e.target.value))}
-                        className="w-full accent-indigo-500 cursor-pointer"
-                      />
-                      <div className="flex justify-between text-[10px] text-slate-400 font-mono mt-1 font-semibold">
-                        <span>5s Standard</span>
-                        <span>10s Commercial</span>
-                        <span>15s Narrative</span>
-                      </div>
-                    </div>
-                  )}
+                  {/* Gemini AI Enhance Button */}
+                  <div className="absolute right-3 bottom-3 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleEnhancePrompt}
+                      disabled={isEnhancing || !prompt.trim()}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                        enhancementApplied
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                          : 'bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40'
+                      }`}
+                    >
+                      {isEnhancing ? (
+                        <span className="w-3 h-3 border-2 border-indigo-300 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                      )}
+                      <span>{enhancementApplied ? 'Enhanced by Gemini!' : 'Gemini AI Enhance'}</span>
+                    </button>
+                  </div>
                 </div>
 
-                {/* Generation Action Bar */}
-                <div className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl border border-white/8 bg-[#11131A] shadow-xl gap-3">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 text-xs text-slate-300 self-start sm:self-auto">
-                    <div className="flex items-center gap-1.5 font-bold text-white">
-                      <Zap className="w-4 h-4 text-indigo-400 fill-indigo-400" />
-                      <span>Cost: <span className="text-indigo-400 font-black text-sm">{estimatedCost} Credits</span></span>
-                    </div>
-                    <span className="hidden sm:inline text-slate-600">•</span>
-                    <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-400 font-mono">
-                      <span>Available: <strong className="text-white font-semibold">{credits.availableBalance}</strong></span>
-                      <span>→</span>
-                      <span>After Render: <strong className="text-indigo-300 font-semibold">{Math.max(0, credits.availableBalance - estimatedCost)}</strong></span>
+                {/* Command Bar Action Row */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+                  
+                  {/* Left Controls: Aspect Ratio & Duration */}
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    {mode !== 'audio' && (
+                      <div className="flex items-center gap-1 bg-[#090A0D] p-1 rounded-xl border border-white/10">
+                        {(['16:9', '9:16', '1:1', '4:3'] as const).map((r) => (
+                          <button
+                            key={r}
+                            type="button"
+                            onClick={() => setAspectRatio(r)}
+                            className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
+                              aspectRatio === r
+                                ? 'bg-white/[0.14] text-white shadow-xs border border-white/15'
+                                : 'text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {r}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {mode === 'video' && (
+                      <div className="flex items-center gap-1 bg-[#090A0D] p-1 rounded-xl border border-white/10 text-[11px] font-mono">
+                        {[5, 10, 15].map((d) => (
+                          <button
+                            key={d}
+                            type="button"
+                            onClick={() => setDurationSec(d)}
+                            className={`px-2 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                              durationSec === d
+                                ? 'bg-indigo-600 text-white shadow-xs'
+                                : 'text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {d}s
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Cost Telemetry Pill */}
+                    <div className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/8 text-[11px] font-mono">
+                      <Zap className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>Cost: <strong className="text-white font-bold">{estimatedCost} Credits</strong></span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                  {/* Right Controls: Dispatch Button */}
+                  <div className="flex items-center gap-2 ml-auto">
                     {!hasEnoughCredits && (
                       <Link
                         href="/pricing"
-                        className="px-3 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-all shadow-xs"
+                        className="px-3.5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-all shadow-xs"
                       >
                         Top Up
                       </Link>
@@ -979,12 +938,12 @@ function CreateWorkspaceContent() {
                       type="button"
                       onClick={handleStartGeneration}
                       disabled={isSubmitting || (!prompt.trim() && !referenceImageUrl) || !hasEnoughCredits}
-                      className="flex-1 sm:flex-initial px-6 py-3 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 transition-all disabled:opacity-50 cursor-pointer border border-white/10"
+                      className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 transition-all disabled:opacity-50 cursor-pointer border border-white/10"
                     >
                       {isSubmitting ? (
                         <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
-                        <Sparkles className="w-4 h-4" />
+                        <Sparkles className="w-4 h-4 text-indigo-200" />
                       )}
                       <span>
                         {!hasEnoughCredits
@@ -997,9 +956,190 @@ function CreateWorkspaceContent() {
                     </button>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Google Vids Alternative Option Card */}
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs space-y-2 text-slate-300">
+            {/* ========================================================================= */}
+            {/* RIGHT: CONTEXTUAL INSPECTOR PANEL (PARAMETERS & GOOGLE VIDS) */}
+            {/* ========================================================================= */}
+            {inspectorOpen && (
+              <div className="w-full lg:w-80 shrink-0 space-y-4">
+                
+                {/* 1. Model Engine Selector */}
+                <div className="p-4 rounded-2xl border border-white/8 bg-[#11131A] space-y-3 text-xs shadow-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">
+                      Active Model Policy
+                    </span>
+                    <span className="text-[10px] font-mono font-bold text-indigo-300 bg-indigo-500/20 px-2 py-0.5 rounded border border-indigo-500/30">
+                      15 Credits
+                    </span>
+                  </div>
+
+                  <select
+                    value={modelId}
+                    onChange={(e) => setModelId(e.target.value)}
+                    className="w-full bg-[#090A0D] text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-indigo-500 text-xs cursor-pointer font-bold"
+                  >
+                    {MODELS.map((m) => (
+                      <option
+                        key={m.id}
+                        value={m.id}
+                        disabled={!m.active}
+                        className={`bg-[#11131A] ${m.active ? 'text-white font-bold' : 'text-slate-500 italic'}`}
+                      >
+                        {m.name} {!m.active ? '(Coming Soon)' : `(${m.cost} cr)`}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* 2. Video Workflow: Text-to-Video vs Image-to-Video */}
+                {mode === 'video' && (
+                  <div className="p-4 rounded-2xl border border-white/8 bg-[#11131A] space-y-3 text-xs shadow-xl">
+                    <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px] block">
+                      Input Workflow
+                    </span>
+
+                    <div className="grid grid-cols-2 gap-1 bg-[#090A0D] p-1 rounded-xl border border-white/10">
+                      <button
+                        type="button"
+                        onClick={() => setVideoInputType('text')}
+                        className={`py-1.5 rounded-lg font-bold text-xs transition-all cursor-pointer ${
+                          videoInputType === 'text'
+                            ? 'bg-white/[0.14] text-white shadow-2xs border border-white/15'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        Text-to-Video
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setVideoInputType('image')}
+                        className={`py-1.5 rounded-lg font-bold text-xs transition-all cursor-pointer ${
+                          videoInputType === 'image'
+                            ? 'bg-white/[0.14] text-white shadow-2xs border border-white/15'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        Image-to-Video
+                      </button>
+                    </div>
+
+                    {/* Image-to-Video Upload Zone */}
+                    {videoInputType === 'image' && (
+                      <div className="space-y-2 pt-1">
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                          id="image-to-video-file-input"
+                        />
+
+                        {!uploadedImagePreview ? (
+                          <label
+                            htmlFor="image-to-video-file-input"
+                            className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-white/15 hover:border-indigo-500/50 rounded-xl bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer text-center"
+                          >
+                            <UploadCloud className="w-6 h-6 text-indigo-400 mb-1" />
+                            <span className="font-bold text-white text-xs">Upload Starting Frame</span>
+                            <span className="text-[10px] text-slate-400 mt-0.5">PNG, JPG, WEBP up to 10MB</span>
+                          </label>
+                        ) : (
+                          <div className="relative rounded-xl overflow-hidden border border-white/15 group">
+                            <img
+                              src={uploadedImagePreview}
+                              alt="Uploaded source frame"
+                              className="w-full h-32 object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                              <button
+                                type="button"
+                                onClick={handleClearImage}
+                                className="p-1.5 rounded-lg bg-rose-600 text-white font-bold text-xs flex items-center gap-1 cursor-pointer"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                                <span>Remove</span>
+                              </button>
+                            </div>
+                            <span className="absolute bottom-1.5 left-1.5 text-[9px] bg-black/80 text-white px-2 py-0.5 rounded font-mono truncate max-w-[180px]">
+                              {uploadedImageName || 'Starting Frame'}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 3. Neural Voiceover Selector (when mode === 'audio') */}
+                {mode === 'audio' && (
+                  <div className="p-4 rounded-2xl border border-white/8 bg-[#11131A] space-y-3 text-xs shadow-xl">
+                    <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px] block">
+                      ElevenLabs Neural Voice
+                    </span>
+
+                    <select
+                      value={selectedVoice}
+                      onChange={(e) => setSelectedVoice(e.target.value)}
+                      className="w-full bg-[#090A0D] text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-indigo-500 text-xs cursor-pointer font-bold"
+                    >
+                      {availableVoices.map((v) => (
+                        <option key={v.voiceId || v.id} value={v.voiceId || v.id} className="bg-[#11131A] text-white">
+                          {v.name} ({v.gender || 'Neural'})
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* Quick Voice Chips */}
+                    <div className="space-y-1.5 pt-1">
+                      {availableVoices.slice(0, 4).map((v) => (
+                        <div
+                          key={v.voiceId || v.id}
+                          onClick={() => setSelectedVoice(v.voiceId || v.id)}
+                          className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                            selectedVoice === (v.voiceId || v.id)
+                              ? 'bg-indigo-500/20 border-indigo-500 text-white'
+                              : 'bg-white/[0.02] border-white/8 hover:border-white/16 text-slate-300'
+                          }`}
+                        >
+                          <span className="font-bold truncate text-[11px]">{v.name.split('-')[0].trim()}</span>
+                          {v.previewUrl && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleToggleVoicePreview(v.previewUrl, v.voiceId || v.id);
+                              }}
+                              className="p-1 rounded-full text-indigo-400 hover:text-white"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 4. Negative Prompt Drawer */}
+                <div className="p-4 rounded-2xl border border-white/8 bg-[#11131A] space-y-2 text-xs shadow-xl">
+                  <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px] block">
+                    Negative Prompt (Exclusions)
+                  </span>
+                  <input
+                    type="text"
+                    value={negativePrompt}
+                    onChange={(e) => setNegativePrompt(e.target.value)}
+                    placeholder="blurry, distorted anatomy, low quality, artifacts..."
+                    className="w-full bg-[#090A0D] text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-indigo-500 placeholder-slate-600 text-xs"
+                  />
+                </div>
+
+                {/* 5. Transparent Google Vids Handoff Card */}
+                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs space-y-2 text-slate-300 shadow-xl">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-2.5">
                       <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0">
@@ -1007,10 +1147,10 @@ function CreateWorkspaceContent() {
                       </div>
                       <div>
                         <p className="font-bold text-white text-xs">
-                          Google Vids Studio Workspace (External Handoff)
+                          Google Vids Studio Workspace
                         </p>
-                        <p className="text-[11px] text-slate-400">
-                          Google Vids operates as a web-first Google Workspace tool without a public developer API. Refine your prompt here, then launch Google Vids in 1 click.
+                        <p className="text-[10px] text-slate-400">
+                          External Google Workspace tool
                         </p>
                       </div>
                     </div>
@@ -1021,425 +1161,218 @@ function CreateWorkspaceContent() {
                       className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer border border-white/10"
                     >
                       {copiedVids ? <Check className="w-3 h-3" /> : <ExternalLink className="w-3 h-3" />}
-                      <span>{copiedVids ? 'Copied & Opening...' : 'Copy & Open Vids'}</span>
+                      <span>{copiedVids ? 'Opening...' : 'Launch (0 cr)'}</span>
                     </button>
                   </div>
 
                   <div className="flex items-center gap-2 text-[10px] text-indigo-300 bg-indigo-500/20 px-2 py-1 rounded font-semibold border border-indigo-500/30">
                     <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-                    <span>0 Fluvia Credits Charged for Google Vids handoff. All credits remain in your wallet.</span>
+                    <span>0 Fluvia Credits Charged for Google Vids handoff.</span>
                   </div>
                 </div>
               </div>
+            )}
+          </main>
+        )}
 
-              {/* RIGHT: Active Job Status & Cinema Viewport (5 cols) */}
-              <div className="lg:col-span-5 space-y-5">
-                <div className="p-6 rounded-2xl border border-white/8 bg-[#11131A] min-h-[480px] flex flex-col justify-between shadow-2xl">
-                  <div>
-                    <div className="flex items-center justify-between border-b border-white/8 pb-3 mb-4">
-                      <h3 className="font-bold text-white text-sm flex items-center gap-2">
-                        <Film className="w-4 h-4 text-indigo-400" />
-                        <span>Live Cinema Viewport</span>
-                      </h3>
-                      {activeJob && (
-                        <span className="text-[11px] font-mono text-slate-400 uppercase font-bold">
-                          Job: {activeJob.id.slice(0, 8)}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Viewport Content State */}
-                    {!activeJob ? (
-                      <div className="py-24 text-center">
-                        <Video className="w-12 h-12 text-indigo-400 mx-auto mb-3 animate-pulse" />
-                        <h4 className="font-bold text-white text-sm">Studio Ready to Render</h4>
-                        <p className="mt-1 text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
-                          Enter your prompt or load one of our live productive templates on the left to dispatch a 15-credit generation.
-                        </p>
-                      </div>
-                    ) : activeJob.status === 'queued' || activeJob.status === 'processing' ? (
-                      <div className="py-16 text-center space-y-4">
-                        <div className="w-16 h-16 rounded-full bg-indigo-500/20 border-2 border-indigo-500 border-t-transparent mx-auto animate-spin" />
-                        <div>
-                          <h4 className="font-bold text-white text-base">
-                            {activeJob.status === 'queued' ? 'Dispatched to Queue' : 'Synthesizing Neural Frames'}
-                          </h4>
-                          <p className="mt-1 text-xs text-slate-400 max-w-xs mx-auto">
-                            {activeJob.progressMessage || 'Processing latent motion tensors with Gemini Omni 1.1 Flash...'}
-                          </p>
-                        </div>
-
-                        <div className="max-w-xs mx-auto">
-                          <div className="flex justify-between text-[11px] font-mono text-slate-400 mb-1 font-semibold">
-                            <span>Inference Progress</span>
-                            <span>{activeJob.progressPercent || 35}%</span>
-                          </div>
-                          <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-gradient-to-r from-indigo-500 to-violet-600 transition-all duration-500"
-                              style={{ width: `${activeJob.progressPercent || 35}%` }}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="text-[11px] font-mono text-indigo-300 bg-indigo-500/20 p-2 rounded-lg border border-indigo-500/30 inline-block font-bold">
-                          Atomic Reservation: {activeJob.reservedCredits} credits locked
-                        </div>
-                      </div>
-                    ) : activeJob.status === 'completed' ? (
-                      <div className="space-y-4">
-                        {/* Cinema Result Video / Image / Audio Player */}
-                        <div className="aspect-video rounded-xl overflow-hidden bg-black relative border border-white/10 group shadow-xl">
-                          {activeJob.output?.videoUrl ? (
-                            <video
-                              src={activeJob.output.videoUrl}
-                              controls
-                              autoPlay
-                              loop
-                              playsInline
-                              className="w-full h-full object-cover"
-                            />
-                          ) : activeJob.output?.imageUrl ? (
-                            <img
-                              src={activeJob.output.imageUrl}
-                              alt="Generated Image"
-                              className="w-full h-full object-cover"
-                            />
-                          ) : activeJob.output?.audioUrl ? (
-                            <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#090A0D] via-[#11131A] to-[#151822] text-white text-center">
-                              <div className="w-14 h-14 rounded-full bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center mb-3 shadow-lg shadow-amber-500/20">
-                                <Volume2 className="w-7 h-7 text-amber-300 animate-pulse" />
-                              </div>
-                              <h4 className="text-sm font-bold text-amber-200 mb-1">ElevenLabs Neural Voiceover HD</h4>
-                              <p className="text-xs text-slate-300 max-w-sm line-clamp-2 italic mb-4 font-serif">
-                                &ldquo;{activeJob.output.text || prompt}&rdquo;
-                              </p>
-                              <audio
-                                controls
-                                src={activeJob.output.audioUrl}
-                                className="w-full max-w-xs rounded-lg accent-amber-500"
-                                autoPlay
-                              />
-                            </div>
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-xs text-slate-400 p-4">
-                              Generated media registered to timeline.
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Success Settlement Badge */}
-                        <div className="p-3 bg-[#151822] rounded-xl border border-indigo-500/30 text-xs space-y-1">
-                          <div className="flex justify-between font-bold text-white">
-                            <span className="flex items-center gap-1.5 text-indigo-300">
-                              <CheckCircle2 className="w-4 h-4 text-indigo-400" />
-                              <span>Generation Succeeded</span>
-                            </span>
-                            <span className="text-indigo-400 font-mono">
-                              ✓ Settled {activeJob.actualCredits || 15} cr
-                            </span>
-                          </div>
-                          <p className="text-slate-400 text-[11px]">
-                            {activeJob.progressMessage || 'Rendered with high optical fidelity via Google Gemini Omni 1.1 Flash.'}
-                          </p>
-                        </div>
-
-                        {/* Action Buttons: Download Video/Audio, Remix, Edit */}
-                        <div className="grid grid-cols-2 gap-2 pt-1">
-                          {activeJob.output?.videoUrl ? (
-                            <button
-                              type="button"
-                              onClick={() => handleDownloadVideo(activeJob.output.videoUrl)}
-                              className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/20 cursor-pointer transition-colors border border-white/10"
-                            >
-                              <Download className="w-3.5 h-3.5" />
-                              <span>Download MP4</span>
-                            </button>
-                          ) : activeJob.output?.audioUrl ? (
-                            <button
-                              type="button"
-                              onClick={() => handleDownloadVideo(activeJob.output.audioUrl, 'fluvia-voiceover.mp3')}
-                              className="py-2.5 px-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 cursor-pointer transition-colors border border-white/10"
-                            >
-                              <Download className="w-3.5 h-3.5" />
-                              <span>Download MP3</span>
-                            </button>
-                          ) : null}
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              if (activeJob.input?.prompt) setPrompt(activeJob.input.prompt);
-                              if (activeJob.input?.aspectRatio) setAspectRatio(activeJob.input.aspectRatio);
-                              window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }}
-                            className="py-2.5 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-slate-200 border border-white/10 font-bold text-xs flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer transition-colors"
-                          >
-                            <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
-                            <span>Remix Prompt</span>
-                          </button>
-                        </div>
-
-                        {/* Editor CTA button */}
-                        {activeJob.projectId && (
-                          <Link
-                            href={`/editor/${activeJob.projectId}`}
-                            className="w-full py-2.5 bg-white/[0.08] hover:bg-white/[0.15] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow transition-all border border-white/10"
-                          >
-                            <Film className="w-3.5 h-3.5 text-indigo-400" />
-                            <span>Open in Studio Timeline Editor</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </Link>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="py-16 text-center space-y-3">
-                        <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
-                        <h4 className="font-bold text-white text-base">Generation Failed</h4>
-                        <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
-                          {activeJob.errorMessage || 'An error occurred during GPU inference.'}
-                        </p>
-                        <div className="text-xs text-indigo-300 bg-indigo-500/20 p-2.5 rounded-lg border border-indigo-500/30 inline-block font-bold">
-                          Compensating Refund Applied: +{activeJob.reservedCredits || 15} credits returned to wallet
-                        </div>
-                        <div className="pt-2">
-                          <button
-                            type="button"
-                            onClick={handleStartGeneration}
-                            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg text-xs cursor-pointer shadow-xs"
-                          >
-                            Retry Generation
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-4 border-t border-white/8 text-[11px] text-slate-400 flex justify-between font-medium">
-                    <span>Fluvia Flow GPU Inference Cluster</span>
-                    <span>15 Cr / Render</span>
-                  </div>
-                </div>
-              </div>
+        {/* ========================================================================= */}
+        {/* TAB 2: LIVE PRODUCTIVE TEMPLATES VAULT */}
+        {/* ========================================================================= */}
+        {activeTab === 'templates' && (
+          <main className="flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full space-y-6 text-left">
+            <div>
+              <h2 className="text-xl font-black text-white">Live Productive Templates</h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Agency-grade commercial video prompts curated for high-converting advertising campaigns.
+              </p>
             </div>
-          )}
 
-          {/* TAB 2: LIVE TEMPLATES DISCOVERY GALLERY */}
-          {activeTab === 'templates' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-lg font-black text-white">Productive Business & SaaS Video Templates</h2>
-                  <p className="text-xs text-slate-400">
-                    Click any live template below to load its exact cinematic prompts, aspect ratio, and model settings into the studio.
-                  </p>
-                </div>
-                <Link
-                  href="/templates"
-                  className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {productiveTemplates.map((t) => (
+                <div
+                  key={t.id}
+                  className="p-5 rounded-2xl border border-white/8 bg-[#11131A] hover:border-white/20 hover:bg-[#151822] flex flex-col justify-between space-y-4 shadow-xl transition-all group"
                 >
-                  <span>Explore Full Feed</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">
+                        {t.category}
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">15 Credits</span>
+                    </div>
+                    <h3 className="font-bold text-white text-sm group-hover:text-indigo-400 transition-colors">
+                      {t.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
+                      {t.prompt}
+                    </p>
+                  </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {productiveTemplates.map((template) => (
+                  <button
+                    type="button"
+                    onClick={() => handleLoadTemplate(t)}
+                    className="w-full py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-indigo-500/30"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Use Template in Studio</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </main>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB 3: GENERATION HISTORY & REEL ITERATIONS */}
+        {/* ========================================================================= */}
+        {activeTab === 'history' && (
+          <main className="flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full space-y-6 text-left">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-black text-white">Your Generation History</h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Review, download, and remix all video and audio jobs rendered under your account.
+                </p>
+              </div>
+              <button
+                onClick={fetchUserJobs}
+                className="px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/10 text-xs font-bold text-white hover:bg-white/[0.1] shadow-2xs cursor-pointer flex items-center gap-1.5"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-slate-300" />
+                <span>Refresh</span>
+              </button>
+            </div>
+
+            {isLoadingJobs ? (
+              <div className="py-16 text-center">
+                <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                <p className="text-xs text-slate-400">Loading your generation history...</p>
+              </div>
+            ) : userJobs.length === 0 ? (
+              <div className="py-20 text-center rounded-2xl border border-white/8 bg-[#11131A] p-8">
+                <Film className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                <h4 className="font-bold text-white text-sm">No Generations Dispatched Yet</h4>
+                <p className="text-xs text-slate-400 max-w-xs mx-auto mt-1 mb-4">
+                  Head to the Studio Viewport or choose a template to create your first AI video.
+                </p>
+                <button
+                  onClick={() => setActiveTab('studio')}
+                  className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold rounded-xl text-xs shadow"
+                >
+                  Launch Studio
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {userJobs.map((job) => (
                   <div
-                    key={template.id}
-                    className="p-3.5 rounded-2xl border border-white/8 bg-[#11131A] hover:bg-[#151822] hover:border-white/20 flex flex-col justify-between shadow-xl transition-all group"
+                    key={job.id}
+                    className="p-4 rounded-2xl border border-white/8 bg-[#11131A] hover:border-white/16 flex flex-col justify-between space-y-3 shadow-xl transition-all"
                   >
                     <div>
-                      <div className="relative aspect-video rounded-xl overflow-hidden bg-black mb-3">
-                        <img
-                          src={template.thumbnail}
-                          alt={template.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <span className="absolute top-2 left-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded border border-white/10">
-                          {template.aspect}
+                      {/* Video / Image preview */}
+                      <div className="aspect-video rounded-xl overflow-hidden bg-black relative border border-white/10 mb-2">
+                        {job.output?.videoUrl ? (
+                          <video
+                            src={job.output.videoUrl}
+                            controls
+                            playsInline
+                            className="w-full h-full object-cover"
+                          />
+                        ) : job.output?.imageUrl ? (
+                          <img
+                            src={job.output.imageUrl}
+                            alt="Generated output"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
+                            {job.status === 'processing' ? 'Generating...' : job.status}
+                          </div>
+                        )}
+
+                        <span
+                          className={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded shadow ${
+                            job.status === 'completed'
+                              ? 'bg-indigo-600 text-white'
+                              : job.status === 'failed'
+                              ? 'bg-rose-600 text-white'
+                              : 'bg-amber-500 text-white'
+                          }`}
+                        >
+                          {job.status.toUpperCase()}
                         </span>
-                        <span className="absolute top-2 right-2 bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
-                          15 Cr
+
+                        <span className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-mono px-1.5 py-0.5 rounded border border-white/10">
+                          {job.input?.aspectRatio || '16:9'}
                         </span>
                       </div>
 
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-400 block mb-1">
-                        {template.category}
-                      </span>
-                      <h4 className="font-black text-sm text-white line-clamp-1 mb-1">
-                        {template.title}
-                      </h4>
-                      <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed mb-3">
-                        {template.description}
+                      <p className="text-xs font-semibold text-white line-clamp-2 leading-relaxed">
+                        {job.input?.prompt || 'No prompt provided'}
                       </p>
+
+                      <div className="flex items-center justify-between text-[10px] text-slate-400 mt-2 font-mono">
+                        <span>{new Date(job.createdAt).toLocaleDateString()}</span>
+                        <span>{job.actualCredits || job.estimatedCredits || 15} Credits</span>
+                      </div>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => handleLoadTemplate(template)}
-                      className="w-full py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow transition-all cursor-pointer border border-white/10"
-                    >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Use This Template</span>
-                    </button>
+                    {/* History actions */}
+                    <div className="flex items-center gap-2 pt-2 border-t border-white/8">
+                      {job.output?.videoUrl && (
+                        <button
+                          type="button"
+                          onClick={() => handleDownloadVideo(job.output.videoUrl)}
+                          className="flex-1 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
+                        >
+                          <Download className="w-3 h-3" />
+                          <span>Download MP4</span>
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveJob(job);
+                          setActiveTab('studio');
+                        }}
+                        className="flex-1 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
+                      >
+                        <Play className="w-3 h-3 text-indigo-400" />
+                        <span>View</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (job.input?.prompt) setPrompt(job.input.prompt);
+                          if (job.input?.aspectRatio) setAspectRatio(job.input.aspectRatio);
+                          setActiveTab('studio');
+                        }}
+                        className="p-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-slate-300 font-bold text-[11px] cursor-pointer"
+                        title="Remix Prompt"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* TAB 3: GENERATION HISTORY */}
-          {activeTab === 'history' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-lg font-black text-white">Your Generation History</h2>
-                  <p className="text-xs text-slate-400">
-                    Review and download all video jobs rendered under your account.
-                  </p>
-                </div>
-                <button
-                  onClick={fetchUserJobs}
-                  className="px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/10 text-xs font-bold text-white hover:bg-white/[0.1] shadow-2xs cursor-pointer flex items-center gap-1"
-                >
-                  <RotateCcw className="w-3 h-3 text-slate-300" />
-                  <span>Refresh</span>
-                </button>
-              </div>
-
-              {isLoadingJobs ? (
-                <div className="py-16 text-center">
-                  <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                  <p className="text-xs text-slate-400">Loading your generation history...</p>
-                </div>
-              ) : userJobs.length === 0 ? (
-                <div className="py-20 text-center rounded-2xl border border-white/8 bg-[#11131A] p-8">
-                  <Film className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                  <h4 className="font-bold text-white text-sm">No Generations Dispatched Yet</h4>
-                  <p className="text-xs text-slate-400 max-w-xs mx-auto mt-1 mb-4">
-                    Head to the Studio Viewport or choose a template to create your first AI video.
-                  </p>
-                  <button
-                    onClick={() => setActiveTab('studio')}
-                    className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold rounded-xl text-xs shadow"
-                  >
-                    Launch Studio
-                  </button>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {userJobs.map((job) => (
-                    <div
-                      key={job.id}
-                      className="p-4 rounded-2xl border border-white/8 bg-[#11131A] hover:border-white/16 flex flex-col justify-between space-y-3 shadow-xl transition-all"
-                    >
-                      <div>
-                        {/* Video / Image preview */}
-                        <div className="aspect-video rounded-xl overflow-hidden bg-black relative border border-white/10 mb-2">
-                          {job.output?.videoUrl ? (
-                            <video
-                              src={job.output.videoUrl}
-                              controls
-                              playsInline
-                              className="w-full h-full object-cover"
-                            />
-                          ) : job.output?.imageUrl ? (
-                            <img
-                              src={job.output.imageUrl}
-                              alt="Generated output"
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
-                              {job.status === 'processing' ? 'Generating...' : job.status}
-                            </div>
-                          )}
-
-                          <span
-                            className={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded shadow ${
-                              job.status === 'completed'
-                                ? 'bg-indigo-600 text-white'
-                                : job.status === 'failed'
-                                ? 'bg-rose-600 text-white'
-                                : 'bg-amber-500 text-white'
-                            }`}
-                          >
-                            {job.status.toUpperCase()}
-                          </span>
-
-                          <span className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-mono px-1.5 py-0.5 rounded border border-white/10">
-                            {job.input?.aspectRatio || '16:9'}
-                          </span>
-                        </div>
-
-                        <p className="text-xs font-semibold text-white line-clamp-2 leading-relaxed">
-                          {job.input?.prompt || 'No prompt provided'}
-                        </p>
-
-                        <div className="flex items-center justify-between text-[10px] text-slate-400 mt-2 font-mono">
-                          <span>{new Date(job.createdAt).toLocaleDateString()}</span>
-                          <span>{job.actualCredits || job.estimatedCredits || 15} Credits</span>
-                        </div>
-                      </div>
-
-                      {/* History actions */}
-                      <div className="flex items-center gap-2 pt-2 border-t border-white/8">
-                        {job.output?.videoUrl && (
-                          <button
-                            type="button"
-                            onClick={() => handleDownloadVideo(job.output.videoUrl)}
-                            className="flex-1 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
-                          >
-                            <Download className="w-3 h-3" />
-                            <span>Download</span>
-                          </button>
-                        )}
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActiveJob(job);
-                            setActiveTab('studio');
-                          }}
-                          className="flex-1 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
-                        >
-                          <Play className="w-3 h-3 text-indigo-400" />
-                          <span>View</span>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (job.input?.prompt) setPrompt(job.input.prompt);
-                            if (job.input?.aspectRatio) setAspectRatio(job.input.aspectRatio);
-                            setActiveTab('studio');
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                          }}
-                          className="p-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-slate-300 font-bold text-[11px] cursor-pointer"
-                          title="Remix prompt"
-                        >
-                          <RotateCcw className="w-3 h-3" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </main>
+            )}
+          </main>
+        )}
       </div>
     </div>
   );
 }
 
-export default function CreateWorkspacePage() {
+export default function CreatePage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-white/70 text-slate-800 flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

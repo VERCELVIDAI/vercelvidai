@@ -25,6 +25,8 @@ import {
   Sparkles,
   Zap,
   X,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -36,6 +38,27 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Restore collapsed preference
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('fluvia_sidebar_collapsed');
+      if (saved !== null) {
+        setIsCollapsed(saved === 'true');
+      }
+    } catch {}
+  }, []);
+
+  const toggleCollapsed = () => {
+    setIsCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('fluvia_sidebar_collapsed', String(next));
+      } catch {}
+      return next;
+    });
+  };
 
   useEffect(() => {
     const handleToggle = () => setIsMobileOpen((prev) => !prev);
@@ -94,18 +117,80 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     { label: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
 
-  const renderContent = (isDrawer: boolean) => (
+  const renderNavGroup = (title: string, items: SidebarNavItem[], collapsed: boolean, isDrawer: boolean) => (
+    <div className="space-y-1">
+      {!collapsed && (
+        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3 block">
+          {title}
+        </span>
+      )}
+      {items.map((item) => {
+        const Icon = item.icon;
+        const isActive = pathname === item.href;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => isDrawer && setIsMobileOpen(false)}
+            title={collapsed ? `${item.label}${item.badge ? ` (${item.badge})` : ''}` : undefined}
+            className={`group relative flex items-center ${
+              collapsed ? 'justify-center px-2 py-2.5' : 'justify-between px-3 py-2'
+            } min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
+              isActive
+                ? 'font-bold bg-white/[0.08] text-white border-white/16 shadow-xs'
+                : 'border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04]'
+            }`}
+          >
+            {/* Glowing vertical active indicator on rail */}
+            {isActive && (
+              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+            )}
+
+            <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
+              <Icon
+                className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
+                  isActive ? 'text-indigo-400' : 'text-slate-400 group-hover:text-slate-200'
+                }`}
+              />
+              {!collapsed && <span className="truncate">{item.label}</span>}
+            </div>
+
+            {!collapsed && item.badge && (
+              <span
+                className={`text-[9px] px-1.5 py-0.5 rounded font-mono font-bold shrink-0 ${
+                  item.badge.includes('cr')
+                    ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                    : 'bg-white/[0.06] text-slate-300 border border-white/10'
+                }`}
+              >
+                {item.badge}
+              </span>
+            )}
+          </Link>
+        );
+      })}
+    </div>
+  );
+
+  const renderContent = (isDrawer: boolean, collapsed: boolean) => (
     <>
       <div className="flex flex-col flex-1 overflow-y-auto overscroll-contain">
-        {/* Brand header */}
-        <div className="p-4 border-b border-white/8 flex items-center justify-between">
-          <Logo size="sm" showTagline={false} />
+        {/* Brand Header */}
+        <div className={`p-4 border-b border-white/8 flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
+          {collapsed ? (
+            <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-black text-sm hover:scale-105 transition-transform">
+              F
+            </Link>
+          ) : (
+            <Logo size="sm" showTagline={false} />
+          )}
+
           {isDrawer && (
             <button
               type="button"
               onClick={() => setIsMobileOpen(false)}
               aria-label="Close navigation"
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5 text-slate-300" />
             </button>
@@ -113,185 +198,132 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
         </div>
 
         {/* Quick Create CTA */}
-        <div className="p-3">
+        <div className={`p-3 ${collapsed ? 'px-2' : ''}`}>
           <Link
             href="/create"
             onClick={() => isDrawer && setIsMobileOpen(false)}
-            className="w-full py-2.5 px-3 min-h-[44px] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 transition-all cursor-pointer border border-white/10"
+            title={collapsed ? 'New Creation' : undefined}
+            className={`w-full py-2.5 px-3 min-h-[44px] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 transition-all cursor-pointer border border-white/10 ${
+              collapsed ? 'px-0' : ''
+            }`}
           >
-            <Sparkles className="w-4 h-4 text-indigo-200" />
-            <span>New Creation</span>
+            <Sparkles className="w-4 h-4 text-indigo-200 shrink-0" />
+            {!collapsed && <span>New Creation</span>}
           </Link>
         </div>
 
         {/* Navigation Sections */}
-        <div className="px-3 space-y-4 py-1 text-left">
-          {/* Main */}
+        <div className={`space-y-4 py-1 text-left ${collapsed ? 'px-2' : 'px-3'}`}>
+          {/* Main Dashboard */}
           <Link
             href="/dashboard"
             onClick={() => isDrawer && setIsMobileOpen(false)}
-            className={`flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold transition-all border ${
+            title={collapsed ? 'Dashboard Overview' : undefined}
+            className={`group relative flex items-center ${
+              collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2.5'
+            } min-h-[44px] rounded-xl text-xs font-semibold transition-all border ${
               pathname === '/dashboard'
                 ? 'font-bold bg-white/[0.08] text-white border-white/16 shadow-xs'
                 : 'border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04]'
             }`}
           >
-            <Home className="w-4 h-4 text-slate-400 shrink-0" />
-            <span>Dashboard Overview</span>
+            {pathname === '/dashboard' && (
+              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+            )}
+            <Home className="w-4 h-4 text-slate-400 shrink-0 group-hover:text-white" />
+            {!collapsed && <span>Dashboard Overview</span>}
           </Link>
 
-          {/* Studios Section */}
-          <div className="space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3">
-              Production Studios
-            </span>
-            {studioItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => isDrawer && setIsMobileOpen(false)}
-                  className={`flex items-center justify-between px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
-                    isActive
-                      ? 'font-bold bg-white/[0.08] text-white border-white/16 shadow-xs'
-                      : 'border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
+          {/* Production Studios */}
+          {renderNavGroup('Production Studios', studioItems, collapsed, isDrawer)}
 
-          {/* Creative Tools */}
-          <div className="space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3">
-              Generative Tools
-            </span>
-            {creationItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => isDrawer && setIsMobileOpen(false)}
-                  className={`flex items-center justify-between px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
-                    isActive
-                      ? 'font-bold bg-white/[0.08] text-white border-white/16 shadow-xs'
-                      : 'border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.06] text-slate-300 font-mono font-bold border border-white/10">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
+          {/* Generative Tools */}
+          {renderNavGroup('Generative Tools', creationItems, collapsed, isDrawer)}
 
-          {/* Management */}
-          <div className="space-y-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3">
-              Workspace & Billing
-            </span>
-            {managementItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => isDrawer && setIsMobileOpen(false)}
-                  className={`flex items-center justify-between px-3 py-2 min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
-                    isActive
-                      ? 'font-bold bg-white/[0.08] text-white border-white/16 shadow-xs'
-                      : 'border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.06] text-slate-300 font-mono font-bold border border-white/10">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
+          {/* Workspace & Billing */}
+          {renderNavGroup('Workspace & Billing', managementItems, collapsed, isDrawer)}
 
           {/* Admin link if user is admin */}
           {userRole === 'admin' && (
             <Link
               href="/admin"
               onClick={() => isDrawer && setIsMobileOpen(false)}
-              className={`flex items-center gap-2.5 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold transition-all mt-2 ${
+              title={collapsed ? 'Admin Console' : undefined}
+              className={`flex items-center ${
+                collapsed ? 'justify-center p-2' : 'gap-2.5 px-3 py-2.5'
+              } min-h-[44px] rounded-xl text-xs font-semibold transition-all mt-2 ${
                 pathname.startsWith('/admin')
                   ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold'
                   : 'text-amber-400 hover:bg-white/[0.04]'
               }`}
             >
               <ShieldAlert className="w-4 h-4 shrink-0" />
-              <span>Admin Console</span>
+              {!collapsed && <span>Admin Console</span>}
             </Link>
           )}
         </div>
       </div>
 
       {/* Credit Wallet Widget & Footer Profile */}
-      <div className="p-3 border-t border-white/8 space-y-2">
+      <div className={`p-3 border-t border-white/8 space-y-2 ${collapsed ? 'px-2' : ''}`}>
         <Link
           href="/dashboard/wallet"
           onClick={() => isDrawer && setIsMobileOpen(false)}
-          className="p-3 bg-[#11131A] hover:bg-[#151822] rounded-2xl border border-white/8 hover:border-white/16 flex items-center justify-between transition-colors block text-left shadow-xs"
+          title={collapsed ? `Credits: ${credits.availableBalance}` : undefined}
+          className={`bg-[#11131A] hover:bg-[#151822] rounded-2xl border border-white/8 hover:border-white/16 transition-colors block text-left shadow-xs ${
+            collapsed ? 'p-2 flex flex-col items-center justify-center gap-1' : 'p-3 flex items-center justify-between'
+          }`}
         >
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+          <div className={`flex items-center ${collapsed ? 'flex-col gap-1' : 'gap-2'}`}>
+            <div className="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 shrink-0">
               <Zap className="w-4 h-4 text-indigo-400" />
             </div>
-            <div>
-              <div className="text-[10px] text-slate-400 font-medium">Available Credits</div>
-              <div className="text-sm font-black text-white font-mono">{credits.availableBalance}</div>
-            </div>
+            {!collapsed ? (
+              <div>
+                <div className="text-[10px] text-slate-400 font-medium">Available Credits</div>
+                <div className="text-sm font-black text-white font-mono">{credits.availableBalance}</div>
+              </div>
+            ) : (
+              <span className="text-[10px] font-mono font-bold text-white">{credits.availableBalance}</span>
+            )}
           </div>
-          <span className="text-[10px] text-indigo-400 font-bold hover:underline">Top Up</span>
+          {!collapsed && <span className="text-[10px] text-indigo-400 font-bold hover:underline">Top Up</span>}
         </Link>
 
-        <div className="flex items-center justify-between text-xs text-slate-400 px-1 pt-1">
-          <Link
-            href="/help"
-            onClick={() => isDrawer && setIsMobileOpen(false)}
-            className="hover:text-white flex items-center gap-1 text-[11px] font-medium transition-colors"
-          >
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>Support</span>
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="hover:text-rose-400 flex items-center gap-1 text-[11px] font-medium cursor-pointer transition-colors"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out</span>
-          </button>
+        {/* Footer Links & Rail Toggle */}
+        <div className={`flex items-center ${collapsed ? 'flex-col gap-2' : 'justify-between'} text-xs text-slate-400 px-1 pt-1`}>
+          {!collapsed && (
+            <Link
+              href="/help"
+              onClick={() => isDrawer && setIsMobileOpen(false)}
+              className="hover:text-white flex items-center gap-1 text-[11px] font-medium transition-colors"
+            >
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>Support</span>
+            </Link>
+          )}
+
+          <div className="flex items-center gap-2">
+            {!isDrawer && (
+              <button
+                type="button"
+                onClick={toggleCollapsed}
+                title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              >
+                {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+              </button>
+            )}
+
+            <button
+              onClick={handleLogout}
+              title={collapsed ? 'Sign Out' : undefined}
+              className="hover:text-rose-400 flex items-center gap-1 text-[11px] font-medium cursor-pointer transition-colors p-1"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              {!collapsed && <span>Sign Out</span>}
+            </button>
+          </div>
         </div>
       </div>
     </>
@@ -299,9 +331,13 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
 
   return (
     <>
-      {/* Desktop Persistent Sidebar */}
-      <aside className="hidden md:flex w-64 flex-col justify-between shrink-0 h-full select-none border-r border-white/8 bg-[#0B0C10] transition-colors duration-200 text-slate-200">
-        {renderContent(false)}
+      {/* Desktop Persistent Sidebar with smooth width transition */}
+      <aside
+        className={`hidden md:flex flex-col justify-between shrink-0 h-full select-none border-r border-white/8 bg-[#0B0C10] text-slate-200 transition-[width] duration-200 ease-in-out ${
+          isCollapsed ? 'w-20' : 'w-64'
+        }`}
+      >
+        {renderContent(false, isCollapsed)}
       </aside>
 
       {/* Mobile Drawer Overlay */}
@@ -312,7 +348,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             onClick={() => setIsMobileOpen(false)}
           />
           <aside className="relative flex flex-col justify-between w-72 max-w-[85vw] h-full bg-[#0B0C10] shadow-2xl z-10 border-r border-white/10 animate-in slide-in-from-left duration-200 text-slate-200">
-            {renderContent(true)}
+            {renderContent(true, false)}
           </aside>
         </div>
       )}
