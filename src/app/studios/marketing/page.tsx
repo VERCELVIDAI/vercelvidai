@@ -106,31 +106,31 @@ export default function MarketingStudioPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden font-sans bg-[#090A0D] text-white">
+    <div className="flex h-screen overflow-hidden font-sans bg-[#100A12] text-[#F5EAF4]">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#100A12]">
         <DashboardHeader user={authData?.user} />
 
         {/* Studio Subheader */}
-        <div className="h-14 border-b border-white/8 glass-navbar px-6 flex items-center justify-between">
+        <div className="h-14 border-b border-[#39233B] bg-[#100A12]/90 backdrop-blur-md px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-pink-100 border border-pink-300 flex items-center justify-center">
-              <Megaphone className="w-4 h-4 text-pink-600" />
+            <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/10 border border-[#F05BCE]/25 flex items-center justify-center">
+              <Megaphone className="w-4 h-4 text-[#F05BCE]" />
             </div>
             <div className="text-left">
               <div className="flex items-center gap-2">
-                <h1 className="text-sm font-bold tracking-tight text-white uppercase">Marketing Studio</h1>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-700 border border-pink-300 font-bold">
+                <h1 className="text-sm font-bold tracking-tight text-[#F5EAF4] uppercase">Marketing Studio</h1>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 font-bold font-mono">
                   Brand & Ecommerce
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500">High-converting video ads, UGC hooks & multi-platform briefs</p>
+              <p className="text-[11px] text-[#A99AAA]">High-converting video ads, UGC hooks & multi-platform briefs</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-emerald-800 bg-white/[0.04] px-3 py-1.5 rounded-lg border border-emerald-200 font-bold">
+            <span className="text-xs font-mono text-[#F05BCE] bg-[#F05BCE]/10 px-3 py-1.5 rounded-lg border border-[#F05BCE]/30 font-bold">
               Gemini Marketing Copilot Active
             </span>
           </div>
@@ -139,10 +139,10 @@ export default function MarketingStudioPage() {
         {/* Studio Workspace Content */}
         <div className="flex-1 flex overflow-hidden">
           {/* Controls Column (Left) */}
-          <div className="w-[480px] border-r border-white/8 flex flex-col glass-sidebar overflow-y-auto p-6 space-y-5 text-left">
+          <div className="w-[480px] border-r border-[#39233B] flex flex-col bg-[#211522] overflow-y-auto p-6 space-y-5 text-left">
             {/* Presets Grid */}
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Campaign Workflow Preset</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4]">Campaign Workflow Preset</label>
               <div className="grid grid-cols-2 gap-2">
                 {MARKETING_PRESETS.map((preset) => {
                   const isSelected = selectedPreset === preset.id;
@@ -152,12 +152,12 @@ export default function MarketingStudioPage() {
                       onClick={() => setSelectedPreset(preset.id)}
                       className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-white/[0.04] border-emerald-500 text-emerald-950 font-bold shadow-xs'
-                          : 'bg-[#151822] border-white/10 text-slate-300 hover:bg-white/[0.04]/50'
+                          ? 'bg-[#F05BCE]/15 border-[#F05BCE] text-[#F5EAF4] font-bold shadow-xs'
+                          : 'bg-[#100A12] border-[#39233B] text-[#A99AAA] hover:bg-white/[0.04]'
                       }`}
                     >
-                      <span className="text-xs font-bold block text-white">{preset.title}</span>
-                      <span className="text-[10px] text-slate-500 mt-0.5 line-clamp-1 block font-medium">{preset.desc}</span>
+                      <span className="text-xs font-bold block text-[#F5EAF4]">{preset.title}</span>
+                      <span className="text-[10px] text-[#A99AAA] mt-0.5 line-clamp-1 block font-medium">{preset.desc}</span>
                     </button>
                   );
                 })}
@@ -167,40 +167,40 @@ export default function MarketingStudioPage() {
             {/* Product Details Form */}
             <div className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                  <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1.5">
+                  <ShoppingBag className="w-3.5 h-3.5 text-[#F05BCE]" />
                   Product Name
                 </label>
                 <input
                   type="text"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
-                  className="w-full glass-input border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#100A12] border border-[#39233B] rounded-xl px-3.5 py-2.5 text-xs text-[#F5EAF4] placeholder-[#A99AAA]/50 focus:outline-none focus:border-[#F05BCE]"
                   placeholder="e.g. Lumina Wireless Earbuds"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-300">Key Features & Value Proposition</label>
+                <label className="text-[11px] font-bold uppercase tracking-wider text-[#F5EAF4]">Key Features & Value Proposition</label>
                 <textarea
                   value={productDescription}
                   onChange={(e) => setProductDescription(e.target.value)}
                   rows={3}
-                  className="w-full glass-input border border-white/10 rounded-xl p-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 resize-none font-mono leading-relaxed"
+                  className="w-full bg-[#100A12] border border-[#39233B] rounded-xl p-3 text-xs text-[#F5EAF4] placeholder-[#A99AAA]/50 focus:outline-none focus:border-[#F05BCE] resize-none font-mono leading-relaxed"
                   placeholder="What makes this product exceptional? Key benefits, materials, emotional appeal..."
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1">
-                    <Share2 className="w-3 h-3 text-pink-500" />
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1">
+                    <Share2 className="w-3 h-3 text-[#F05BCE]" />
                     Target Platform
                   </label>
                   <select
                     value={platform}
                     onChange={(e) => setPlatform(e.target.value as any)}
-                    className="w-full glass-input border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 cursor-pointer"
+                    className="w-full bg-[#100A12] border border-[#39233B] rounded-xl px-3 py-2 text-xs text-[#F5EAF4] focus:outline-none focus:border-[#F05BCE] cursor-pointer"
                   >
                     <option value="reels">TikTok / IG Reels (9:16)</option>
                     <option value="youtube">YouTube / Web (16:9)</option>
@@ -209,29 +209,29 @@ export default function MarketingStudioPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1">
-                    <Target className="w-3 h-3 text-emerald-600" />
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1">
+                    <Target className="w-3 h-3 text-[#F05BCE]" />
                     Brand Color
                   </label>
-                  <div className="flex items-center gap-2 bg-[#151822] border border-white/10 rounded-xl px-3 py-1.5 shadow-2xs">
+                  <div className="flex items-center gap-2 bg-[#100A12] border border-[#39233B] rounded-xl px-3 py-1.5 shadow-2xs">
                     <input
                       type="color"
                       value={brandColor}
                       onChange={(e) => setBrandColor(e.target.value)}
                       className="w-6 h-6 rounded bg-transparent cursor-pointer border-0"
                     />
-                    <span className="text-xs font-mono text-slate-300 font-bold">{brandColor}</span>
+                    <span className="text-xs font-mono text-[#F5EAF4] font-bold">{brandColor}</span>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-300">Target Audience Profile</label>
+                <label className="text-[11px] font-bold uppercase tracking-wider text-[#F5EAF4]">Target Audience Profile</label>
                 <input
                   type="text"
                   value={targetAudience}
                   onChange={(e) => setTargetAudience(e.target.value)}
-                  className="w-full glass-input border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#100A12] border border-[#39233B] rounded-xl px-3.5 py-2 text-xs text-[#F5EAF4] placeholder-[#A99AAA]/50 focus:outline-none focus:border-[#F05BCE]"
                 />
               </div>
             </div>
@@ -241,7 +241,7 @@ export default function MarketingStudioPage() {
               <button
                 onClick={handleGenerateCampaign}
                 disabled={isLoading}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-sm shadow-lg shadow-[#F05BCE]/25 flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
               >
                 <Sparkles className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                 <span>{isLoading ? 'Synthesizing Campaign Strategy...' : 'Generate Campaign Brief with Gemini'}</span>
@@ -250,19 +250,19 @@ export default function MarketingStudioPage() {
           </div>
 
           {/* Campaign Strategy Output (Right) */}
-          <div className="flex-1 p-8 overflow-y-auto text-left">
+          <div className="flex-1 bg-[#100A12] p-8 overflow-y-auto text-left">
             {campaignResult ? (
               <div className="max-w-4xl mx-auto space-y-6">
                 {/* Header Banner */}
-                <div className="flex items-center justify-between p-6 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-pink-50/50 border border-white/10 shadow-sm">
+                <div className="flex items-center justify-between p-6 rounded-2xl bg-[#211522] border border-[#39233B] shadow-sm">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider">AI Marketing Brief</span>
-                    <h2 className="text-xl font-bold text-white mt-1">{campaignResult.campaignTitle || `${productName} Campaign`}</h2>
-                    <p className="text-xs text-slate-400 mt-1 max-w-xl">{campaignResult.targetAudienceAnalysis}</p>
+                    <span className="text-[10px] uppercase font-bold text-[#F05BCE] tracking-wider font-mono">AI Marketing Brief</span>
+                    <h2 className="text-xl font-bold text-[#F5EAF4] mt-1">{campaignResult.campaignTitle || `${productName} Campaign`}</h2>
+                    <p className="text-xs text-[#A99AAA] mt-1 max-w-xl">{campaignResult.targetAudienceAnalysis}</p>
                   </div>
                   <button
                     onClick={handleLaunchProduction}
-                    className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
+                    className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-[#F05BCE]/25 transition-all cursor-pointer"
                   >
                     <Zap className="w-4 h-4 fill-white" />
                     <span>Launch AI Video Production</span>
@@ -271,8 +271,8 @@ export default function MarketingStudioPage() {
 
                 {/* 3 High-Converting Hook Angles */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-emerald-600" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-[#F05BCE]" />
                     Tested Hook Angles (Select to Apply)
                   </h3>
                   <div className="grid grid-cols-3 gap-3">
@@ -286,17 +286,17 @@ export default function MarketingStudioPage() {
                         <button
                           key={idx}
                           onClick={() => setSelectedHookIndex(idx)}
-                          className={`p-4 rounded-xl border text-left transition-all relative cursor-pointer glass-card ${
+                          className={`p-4 rounded-xl border text-left transition-all relative cursor-pointer ${
                             isSelected
-                              ? 'bg-white/[0.04] border-emerald-500 text-white ring-2 ring-emerald-500/20 shadow-sm'
-                              : 'border-white/10 text-slate-300 hover:bg-white/[0.04]/50'
+                              ? 'bg-[#F05BCE]/15 border-[#F05BCE] text-[#F5EAF4] ring-1 ring-[#F05BCE]/30 shadow-sm'
+                              : 'bg-[#211522] border-[#39233B] text-[#A99AAA] hover:bg-white/[0.04]'
                           }`}
                         >
                           <div className="flex items-center justify-between mb-2">
-                            <span className="text-[10px] font-mono text-emerald-700 font-bold">HOOK #{idx + 1}</span>
-                            {isSelected && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
+                            <span className="text-[10px] font-mono text-[#F05BCE] font-bold">HOOK #{idx + 1}</span>
+                            {isSelected && <CheckCircle2 className="w-4 h-4 text-[#F05BCE]" />}
                           </div>
-                          <p className="text-xs font-bold leading-relaxed text-white">&quot;{hook}&quot;</p>
+                          <p className="text-xs font-bold leading-relaxed text-[#F5EAF4]">&quot;{hook}&quot;</p>
                         </button>
                       );
                     })}
@@ -304,15 +304,15 @@ export default function MarketingStudioPage() {
                 </div>
 
                 {/* Script & Voiceover Direction */}
-                <div className="p-6 rounded-2xl glass-card border border-white/10 space-y-4 shadow-sm">
+                <div className="p-6 rounded-2xl bg-[#211522] border border-[#39233B] space-y-4 shadow-sm">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-emerald-600" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-[#F05BCE]" />
                       Narration & Voiceover Script
                     </h3>
-                    <span className="text-[11px] font-mono text-slate-500 font-medium">Duration: ~15 seconds</span>
+                    <span className="text-[11px] font-mono text-[#A99AAA] font-medium">Duration: ~15 seconds</span>
                   </div>
-                  <p className="text-sm text-white leading-relaxed font-mono bg-[#151822] p-4 rounded-xl border border-white/8 shadow-inner">
+                  <p className="text-sm text-[#F5EAF4] leading-relaxed font-mono bg-[#100A12] p-4 rounded-xl border border-[#39233B]">
                     {campaignResult.primaryScript}
                   </p>
                 </div>
@@ -320,19 +320,19 @@ export default function MarketingStudioPage() {
                 {/* Storyboard Visual Breakdown */}
                 {campaignResult.storyboard && (
                   <div className="space-y-3">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-teal-700" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-[#F05BCE]" />
                       Commercial Storyboard Breakdown
                     </h3>
                     <div className="grid grid-cols-3 gap-4">
                       {campaignResult.storyboard.scenes.map((scene: any, sIdx: number) => (
-                        <div key={sIdx} className="p-4 rounded-xl glass-card border border-white/10 space-y-2 shadow-xs">
-                          <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 font-semibold">
-                            <span className="font-bold text-emerald-800">SHOT {scene.sceneNumber || sIdx + 1}</span>
+                        <div key={sIdx} className="p-4 rounded-xl bg-[#211522] border border-[#39233B] space-y-2 shadow-xs">
+                          <div className="flex items-center justify-between text-[11px] font-mono text-[#A99AAA] font-semibold">
+                            <span className="font-bold text-[#F05BCE]">SHOT {scene.sceneNumber || sIdx + 1}</span>
                             <span>{scene.cameraDirection}</span>
                           </div>
-                          <p className="text-xs text-white font-bold line-clamp-3">{scene.visualPrompt}</p>
-                          <div className="pt-2 border-t border-white/8 text-[10px] text-slate-500 italic">
+                          <p className="text-xs text-[#F5EAF4] font-bold line-clamp-3">{scene.visualPrompt}</p>
+                          <div className="pt-2 border-t border-[#39233B] text-[10px] text-[#A99AAA] italic">
                             &quot;{scene.narration}&quot;
                           </div>
                         </div>
@@ -344,18 +344,18 @@ export default function MarketingStudioPage() {
             ) : (
               /* Empty / Getting Started State */
               <div className="h-full flex flex-col items-center justify-center text-center max-w-md mx-auto space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-white/[0.08] border border-emerald-300 flex items-center justify-center shadow-xs">
-                  <Megaphone className="w-8 h-8 text-emerald-700" />
+                <div className="w-16 h-16 rounded-2xl bg-[#F05BCE]/10 border border-[#F05BCE]/30 flex items-center justify-center shadow-xs">
+                  <Megaphone className="w-8 h-8 text-[#F05BCE]" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">Turn Products into High-Converting Video Ads</h3>
-                  <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                  <h3 className="text-lg font-bold text-[#F5EAF4]">Turn Products into High-Converting Video Ads</h3>
+                  <p className="text-xs text-[#A99AAA] mt-2 leading-relaxed">
                     Fill in your product details on the left and click Generate. Fluvia Flow's Gemini Copilot will instantly produce viral hooks, campaign scripts, and visual storyboards.
                   </p>
                 </div>
                 <button
                   onClick={handleGenerateCampaign}
-                  className="px-5 py-2.5 rounded-xl bg-white/[0.04] border border-emerald-300 text-emerald-800 hover:bg-white/[0.08] text-xs font-bold transition-all shadow-xs cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-[#F05BCE]/15 border border-[#F05BCE]/40 text-[#F05BCE] hover:bg-[#F05BCE]/25 text-xs font-bold transition-all shadow-xs cursor-pointer"
                 >
                   Generate Sample Campaign for {productName}
                 </button>

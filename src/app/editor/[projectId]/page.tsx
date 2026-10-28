@@ -319,8 +319,8 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
   if (!project || !timeline) {
     return (
-      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -334,34 +334,26 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
   return (
     <div
-      className="min-h-screen flex flex-col h-screen overflow-hidden select-none transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--app-bg)',
-        color: 'var(--app-text-primary)',
-      }}
+      className="min-h-screen flex flex-col h-screen overflow-hidden select-none transition-colors duration-200 bg-[#100A12] text-[#F5EAF4]"
     >
       {/* 1. TOP TOOLBAR */}
       <header
-        className="h-14 border-b px-4 flex items-center justify-between shrink-0"
-        style={{
-          backgroundColor: 'var(--app-surface)',
-          borderColor: 'var(--app-card-border)',
-        }}
+        className="h-14 border-b border-[#39233B] bg-[#211522] px-4 flex items-center justify-between shrink-0"
       >
         <div className="flex items-center gap-3">
           <Link
             href="/dashboard"
-            className="p-1.5 rounded-lg bg-[#11131A]/5 hover:bg-[#11131A]/10 text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-[#A99AAA] hover:text-[#F5EAF4] transition-colors"
             title="Back to Dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
 
-          <div className="h-5 w-px bg-[#11131A]/10" />
+          <div className="h-5 w-px bg-[#39233B]" />
 
           <div className="flex items-center gap-2">
-            <span className="font-bold text-white text-sm truncate max-w-xs">{project.title}</span>
-            <span className="text-[11px] font-mono text-emerald-700 bg-white/[0.04] px-2 py-0.5 rounded border border-emerald-500/30 font-bold">
+            <span className="font-bold text-[#F5EAF4] text-sm truncate max-w-xs">{project.title}</span>
+            <span className="text-[11px] font-mono text-[#F05BCE] bg-[#F05BCE]/15 px-2 py-0.5 rounded border border-[#F05BCE]/30 font-bold">
               {timeline.aspectRatio}
             </span>
           </div>
@@ -369,11 +361,11 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
         {/* Center: Undo / Redo / Aspect Switcher */}
         <div className="hidden sm:flex items-center gap-2">
-          <div className="flex items-center gap-1 bg-[#11131A]/5 p-1 rounded-lg border border-white/8">
+          <div className="flex items-center gap-1 bg-[#100A12] p-1 rounded-lg border border-[#39233B]">
             <button
               onClick={handleUndo}
               disabled={history.length === 0}
-              className="p-1 rounded text-slate-500 hover:text-emerald-700 disabled:opacity-30"
+              className="p-1 rounded text-[#A99AAA] hover:text-[#F05BCE] disabled:opacity-30 cursor-pointer"
               title="Undo (Ctrl+Z)"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -381,20 +373,20 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
             <button
               onClick={handleRedo}
               disabled={future.length === 0}
-              className="p-1 rounded text-slate-500 hover:text-emerald-700 disabled:opacity-30"
+              className="p-1 rounded text-[#A99AAA] hover:text-[#F05BCE] disabled:opacity-30 cursor-pointer"
               title="Redo (Ctrl+Y)"
             >
               <RotateCw className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="flex items-center gap-1 bg-[#11131A]/5 p-1 rounded-lg border border-white/8 text-xs font-mono">
+          <div className="flex items-center gap-1 bg-[#100A12] p-1 rounded-lg border border-[#39233B] text-xs font-mono">
             {(['16:9', '9:16', '1:1'] as const).map((r) => (
               <button
                 key={r}
                 onClick={() => handleAspectRatioChange(r)}
-                className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-all ${
-                  timeline.aspectRatio === r ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-400 hover:text-emerald-700'
+                className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-all cursor-pointer ${
+                  timeline.aspectRatio === r ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white shadow-xs' : 'text-[#A99AAA] hover:text-[#F5EAF4]'
                 }`}
               >
                 {r}
@@ -408,9 +400,9 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
           <button
             onClick={handleSaveProject}
             disabled={isSaving}
-            className="px-3 py-1.5 rounded-xl glass-button text-slate-300 text-xs font-bold flex items-center gap-1.5 transition-all"
+            className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-[#39233B] text-[#F5EAF4] text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            {saveToast ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Save className="w-3.5 h-3.5" />}
+            {saveToast ? <Check className="w-3.5 h-3.5 text-[#F05BCE]" /> : <Save className="w-3.5 h-3.5" />}
             <span>{saveToast ? 'Saved' : 'Save'}</span>
           </button>
 
@@ -419,7 +411,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
               setExportModalOpen(true);
               setExportResult(null);
             }}
-            className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-500/20 transition-all"
+            className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#F05BCE]/25 transition-all cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export Video</span>
@@ -431,15 +423,11 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
       <div className="flex-1 flex overflow-hidden">
         {/* Left Tools / Media Palette (Desktop only) */}
         <aside
-          className="hidden md:flex w-16 border-r flex-col items-center py-4 gap-4 shrink-0 transition-colors duration-200"
-          style={{
-            backgroundColor: 'var(--app-sidebar)',
-            borderColor: 'var(--app-card-border)',
-          }}
+          className="hidden md:flex w-16 border-r border-[#39233B] bg-[#211522] flex-col items-center py-4 gap-4 shrink-0 transition-colors duration-200"
         >
           <button
             onClick={handleAddSampleScene}
-            className="p-2.5 rounded-xl glass-button text-slate-400 hover:text-emerald-700 hover:bg-white/[0.04] transition-all"
+            className="p-2.5 rounded-xl bg-white/[0.04] text-[#A99AAA] hover:text-[#F05BCE] hover:bg-white/[0.08] transition-all cursor-pointer"
             title="Add AI Scene"
           >
             <Film className="w-5 h-5" />
@@ -450,7 +438,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
               fetchAssets();
               setAssetModalOpen(true);
             }}
-            className="p-2.5 rounded-xl glass-button text-slate-400 hover:text-emerald-700 hover:bg-white/[0.04] transition-all"
+            className="p-2.5 rounded-xl bg-white/[0.04] text-[#A99AAA] hover:text-[#F05BCE] hover:bg-white/[0.08] transition-all cursor-pointer"
             title="Import Asset from Library"
           >
             <Layers className="w-5 h-5" />
@@ -458,7 +446,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
           <button
             onClick={handleAddTextOverlay}
-            className="p-2.5 rounded-xl glass-button text-slate-400 hover:text-emerald-700 hover:bg-white/[0.04] transition-all"
+            className="p-2.5 rounded-xl bg-white/[0.04] text-[#A99AAA] hover:text-[#F05BCE] hover:bg-white/[0.08] transition-all cursor-pointer"
             title="Add Text Caption"
           >
             <Type className="w-5 h-5" />
@@ -466,18 +454,18 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
           <Link
             href="/create?mode=video"
-            className="p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-emerald-700 hover:text-emerald-800 transition-all border border-emerald-300"
+            className="p-2.5 rounded-xl bg-[#F05BCE]/15 hover:bg-[#F05BCE]/25 text-[#F05BCE] transition-all border border-[#F05BCE]/30"
             title="Generate AI Scene"
           >
-            <Sparkles className="w-5 h-5 text-emerald-600" />
+            <Sparkles className="w-5 h-5 text-[#F05BCE]" />
           </Link>
         </aside>
 
         {/* Central Cinema Viewport */}
-        <div className="flex-1 flex flex-col bg-[#050608] relative overflow-hidden items-center justify-center p-2 sm:p-4">
+        <div className="flex-1 flex flex-col bg-[#100A12] relative overflow-hidden items-center justify-center p-2 sm:p-4">
           {/* Cinema Frame */}
           <div
-            className={`relative rounded-xl overflow-hidden bg-black shadow-2xl border border-white/10 transition-all max-h-[35vh] sm:max-h-[50vh] ${
+            className={`relative rounded-xl overflow-hidden bg-black shadow-2xl border border-[#39233B] transition-all max-h-[35vh] sm:max-h-[50vh] ${
               timeline.aspectRatio === '9:16'
                 ? 'aspect-[9/16] h-[260px] sm:h-[400px]'
                 : timeline.aspectRatio === '1:1'
@@ -529,16 +517,16 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
           </div>
 
           {/* Quick Playback Transport Controls */}
-          <div className="mt-2.5 flex items-center gap-3 sm:gap-4 glass-card px-4 py-1.5 rounded-full border border-white/10 text-xs shadow-lg">
+          <div className="mt-2.5 flex items-center gap-3 sm:gap-4 bg-[#211522] px-4 py-1.5 rounded-full border border-[#39233B] text-xs shadow-lg">
             <button
               onClick={togglePlay}
               aria-label={isPlaying ? 'Pause' : 'Play'}
-              className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center hover:bg-emerald-600 transition-colors shadow-sm shrink-0"
+              className="w-8 h-8 rounded-full bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white flex items-center justify-center hover:brightness-110 transition-all shadow-sm shrink-0 cursor-pointer"
             >
               {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
             </button>
 
-            <span className="font-mono text-slate-300 text-[11px] sm:text-xs">
+            <span className="font-mono text-[#A99AAA] text-[11px] sm:text-xs">
               {Math.floor(currentTimeSec)}s / {timeline.durationSec || 15}s
             </span>
           </div>
@@ -546,12 +534,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
         {/* Right Inspector Panel (Desktop only) */}
         <aside
-          className="hidden md:flex w-72 border-l p-4 flex-col justify-between shrink-0 overflow-y-auto transition-colors duration-200"
-          style={{
-            backgroundColor: 'var(--app-surface)',
-            borderColor: 'var(--app-card-border)',
-            color: 'var(--app-text-primary)',
-          }}
+          className="hidden md:flex w-72 border-l border-[#39233B] bg-[#211522] p-4 flex-col justify-between shrink-0 overflow-y-auto transition-colors duration-200 text-[#F5EAF4]"
         >
           {activeClip ? (
             <div className="space-y-4">
@@ -574,12 +557,12 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                         activeClip.text = e.target.value;
                         setTimeline({ ...timeline });
                       }}
-                      className="w-full bg-[#12141A] text-white px-3 py-2 rounded-lg border border-white/10 focus:outline-none"
+                      className="w-full bg-[#100A12] text-[#F5EAF4] px-3 py-2 rounded-lg border border-[#39233B] focus:outline-none focus:border-[#F05BCE]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 mb-1 font-semibold">Text Color</label>
+                    <label className="block text-[#A99AAA] mb-1 font-semibold">Text Color</label>
                     <input
                       type="color"
                       value={activeClip.style?.color || '#FFFFFF'}
@@ -588,12 +571,12 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                         activeClip.style = { ...activeClip.style, color: e.target.value };
                         setTimeline({ ...timeline });
                       }}
-                      className="w-full h-8 bg-[#12141A] rounded cursor-pointer"
+                      className="w-full h-8 bg-[#100A12] border border-[#39233B] rounded cursor-pointer"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 mb-1 font-semibold">Duration ({activeClip.durationSec}s)</label>
+                    <label className="block text-[#A99AAA] mb-1 font-semibold">Duration ({activeClip.durationSec}s)</label>
                     <input
                       type="range"
                       min={1}
@@ -604,7 +587,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                         activeClip.durationSec = Number(e.target.value);
                         setTimeline({ ...timeline });
                       }}
-                      className="w-full accent-emerald-500 cursor-pointer"
+                      className="w-full accent-[#F05BCE] cursor-pointer"
                     />
                   </div>
                 </div>
@@ -613,45 +596,45 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
               {activeClip.type === 'video' && (
                 <div className="space-y-3 text-xs">
                   <div>
-                    <span className="text-slate-400">Clip Title:</span>
-                    <p className="font-semibold text-white mt-1">{activeClip.title}</p>
+                    <span className="text-[#A99AAA]">Clip Title:</span>
+                    <p className="font-semibold text-[#F5EAF4] mt-1">{activeClip.title}</p>
                   </div>
                   <div>
-                    <span className="text-slate-400">Duration:</span>
-                    <p className="font-semibold text-white mt-1">{activeClip.durationSec} seconds</p>
+                    <span className="text-[#A99AAA]">Duration:</span>
+                    <p className="font-semibold text-[#F5EAF4] mt-1">{activeClip.durationSec} seconds</p>
                   </div>
                   <button
                     onClick={() => handleSplitClip(activeClip.id)}
-                    className="w-full py-2 rounded-lg bg-[#11131A]/10 hover:bg-[#11131A]/15 text-white font-semibold flex items-center justify-center gap-1.5"
+                    className="w-full py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-[#F5EAF4] border border-[#39233B] font-semibold flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    <Scissors className="w-3.5 h-3.5" />
+                    <Scissors className="w-3.5 h-3.5 text-[#F05BCE]" />
                     <span>Split Clip in Half</span>
                   </button>
                 </div>
               )}
             </div>
           ) : (
-            <div className="py-12 text-center text-xs text-slate-500 space-y-2">
-              <Sliders className="w-8 h-8 mx-auto text-slate-400" />
+            <div className="py-12 text-center text-xs text-[#A99AAA] space-y-2">
+              <Sliders className="w-8 h-8 mx-auto text-[#A99AAA]/50" />
               <p>Select any clip or text layer on the timeline to inspect and edit properties.</p>
             </div>
           )}
 
-          <div className="pt-4 border-t border-white/[0.08] text-[11px] text-slate-500">
+          <div className="pt-4 border-t border-[#39233B] text-[11px] text-[#A99AAA]">
             <span>Video Engine: WebCodecs Remotion</span>
           </div>
         </aside>
       </div>
 
       {/* MOBILE TAB CONTROLS (Only visible on screens < 768px) */}
-      <div className="md:hidden flex border-t border-white/10 bg-[#0E1015] text-xs font-bold divide-x divide-emerald-500/15 shrink-0">
+      <div className="md:hidden flex border-t border-[#39233B] bg-[#211522] text-xs font-bold divide-x divide-[#39233B] shrink-0">
         <button
           type="button"
           onClick={() => setMobileTab('timeline')}
-          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors ${
+          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
             mobileTab === 'timeline'
-              ? 'bg-white/[0.04] text-emerald-800 border-b-2 border-emerald-600'
-              : 'text-slate-400'
+              ? 'bg-[#F05BCE]/15 text-[#F05BCE] border-b-2 border-[#F05BCE]'
+              : 'text-[#A99AAA]'
           }`}
         >
           <Film className="w-3.5 h-3.5" />
@@ -660,10 +643,10 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
         <button
           type="button"
           onClick={() => setMobileTab('inspector')}
-          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors ${
+          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
             mobileTab === 'inspector'
-              ? 'bg-white/[0.04] text-emerald-800 border-b-2 border-emerald-600'
-              : 'text-slate-400'
+              ? 'bg-[#F05BCE]/15 text-[#F05BCE] border-b-2 border-[#F05BCE]'
+              : 'text-[#A99AAA]'
           }`}
         >
           <Sliders className="w-3.5 h-3.5" />
@@ -672,10 +655,10 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
         <button
           type="button"
           onClick={() => setMobileTab('tools')}
-          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors ${
+          className={`flex-1 py-2.5 min-h-[44px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
             mobileTab === 'tools'
-              ? 'bg-white/[0.04] text-emerald-800 border-b-2 border-emerald-600'
-              : 'text-slate-400'
+              ? 'bg-[#F05BCE]/15 text-[#F05BCE] border-b-2 border-[#F05BCE]'
+              : 'text-[#A99AAA]'
           }`}
         >
           <Plus className="w-3.5 h-3.5" />
@@ -685,11 +668,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
       {/* 3. MULTI-TRACK TIMELINE & MOBILE PANELS (Bottom Area) */}
       <div
-        className="h-56 sm:h-60 border-t flex flex-col shrink-0 transition-colors duration-200 overflow-hidden"
-        style={{
-          backgroundColor: 'var(--app-sidebar)',
-          borderColor: 'var(--app-card-border)',
-        }}
+        className="h-56 sm:h-60 border-t border-[#39233B] bg-[#211522] flex flex-col shrink-0 transition-colors duration-200 overflow-hidden"
       >
         {/* Mobile Tab Condition: Inspector */}
         {mobileTab === 'inspector' && (
@@ -738,7 +717,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                         />
                       </div>
                       <div className="flex-1">
-                        <label className="block text-slate-400 mb-1 font-semibold">Duration: {activeClip.durationSec}s</label>
+                        <label className="block text-[#A99AAA] mb-1 font-semibold">Duration: {activeClip.durationSec}s</label>
                         <input
                           type="range"
                           min={1}
@@ -749,7 +728,7 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                             activeClip.durationSec = Number(e.target.value);
                             setTimeline({ ...timeline });
                           }}
-                          className="w-full accent-emerald-500 cursor-pointer"
+                          className="w-full accent-[#F05BCE] cursor-pointer"
                         />
                       </div>
                     </div>
@@ -758,10 +737,10 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
                 {activeClip.type === 'video' && (
                   <div className="space-y-2">
-                    <p className="text-slate-400">Duration: <strong className="text-white">{activeClip.durationSec}s</strong></p>
+                    <p className="text-[#A99AAA]">Duration: <strong className="text-[#F5EAF4]">{activeClip.durationSec}s</strong></p>
                     <button
                       onClick={() => handleSplitClip(activeClip.id)}
-                      className="py-2 px-3 rounded-xl bg-white/[0.04] text-emerald-800 font-bold border border-emerald-300 flex items-center justify-center gap-1.5"
+                      className="py-2 px-3 rounded-xl bg-white/[0.04] text-[#F05BCE] font-bold border border-[#F05BCE]/30 flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <Scissors className="w-3.5 h-3.5" />
                       <span>Split Clip in Half</span>
@@ -770,8 +749,8 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                 )}
               </div>
             ) : (
-              <div className="py-8 text-center text-slate-500 space-y-1">
-                <Sliders className="w-6 h-6 mx-auto text-emerald-600" />
+              <div className="py-8 text-center text-[#A99AAA] space-y-1">
+                <Sliders className="w-6 h-6 mx-auto text-[#F05BCE]" />
                 <p>Tap any clip or caption in the Timeline tab to edit its properties.</p>
               </div>
             )}
@@ -786,9 +765,9 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                 handleAddSampleScene();
                 setMobileTab('timeline');
               }}
-              className="p-3 rounded-xl bg-[#11131A] border border-white/10 flex flex-col items-center gap-1.5 text-xs font-bold text-slate-300 shadow-xs"
+              className="p-3 rounded-xl bg-[#100A12] border border-[#39233B] flex flex-col items-center gap-1.5 text-xs font-bold text-[#F5EAF4] shadow-xs cursor-pointer"
             >
-              <Film className="w-5 h-5 text-emerald-600" />
+              <Film className="w-5 h-5 text-[#F05BCE]" />
               <span>Add AI Scene</span>
             </button>
             <button
@@ -796,9 +775,9 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                 fetchAssets();
                 setAssetModalOpen(true);
               }}
-              className="p-3 rounded-xl bg-[#11131A] border border-white/10 flex flex-col items-center gap-1.5 text-xs font-bold text-slate-300 shadow-xs"
+              className="p-3 rounded-xl bg-[#100A12] border border-[#39233B] flex flex-col items-center gap-1.5 text-xs font-bold text-[#F5EAF4] shadow-xs cursor-pointer"
             >
-              <Layers className="w-5 h-5 text-emerald-600" />
+              <Layers className="w-5 h-5 text-[#F05BCE]" />
               <span>Import Asset</span>
             </button>
             <button
@@ -806,16 +785,16 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                 handleAddTextOverlay();
                 setMobileTab('timeline');
               }}
-              className="p-3 rounded-xl bg-[#11131A] border border-white/10 flex flex-col items-center gap-1.5 text-xs font-bold text-slate-300 shadow-xs"
+              className="p-3 rounded-xl bg-[#100A12] border border-[#39233B] flex flex-col items-center gap-1.5 text-xs font-bold text-[#F5EAF4] shadow-xs cursor-pointer"
             >
-              <Type className="w-5 h-5 text-sky-500" />
+              <Type className="w-5 h-5 text-sky-400" />
               <span>Add Caption</span>
             </button>
             <Link
               href="/create?mode=video"
-              className="p-3 rounded-xl bg-white/[0.04] border border-emerald-300 flex flex-col items-center gap-1.5 text-xs font-bold text-emerald-800 shadow-xs"
+              className="p-3 rounded-xl bg-[#F05BCE]/15 border border-[#F05BCE]/30 flex flex-col items-center gap-1.5 text-xs font-bold text-[#F05BCE] shadow-xs"
             >
-              <Sparkles className="w-5 h-5 text-emerald-600" />
+              <Sparkles className="w-5 h-5 text-[#F05BCE]" />
               <span>Generate AI Clip</span>
             </Link>
           </div>
@@ -825,20 +804,15 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
         <div className={`flex-1 flex flex-col overflow-hidden ${mobileTab !== 'timeline' ? 'hidden md:flex' : 'flex'}`}>
           {/* Timeline ruler & playhead */}
           <div
-            className="h-8 border-b flex items-center px-4 justify-between text-[11px] font-mono shrink-0"
-            style={{
-              backgroundColor: 'var(--app-surface)',
-              borderColor: 'var(--app-card-border)',
-              color: 'var(--app-text-muted)',
-            }}
+            className="h-8 border-b border-[#39233B] bg-[#211522] flex items-center px-4 justify-between text-[11px] font-mono shrink-0 text-[#A99AAA]"
           >
             <div className="flex items-center gap-3">
-              <span className="text-emerald-700 font-bold">TIMELINE</span>
+              <span className="text-[#F05BCE] font-bold">TIMELINE</span>
               <button
                 onClick={handleAddTextOverlay}
-                className="hidden sm:flex text-[11px] text-slate-400 hover:text-emerald-700 items-center gap-1 font-medium"
+                className="hidden sm:flex text-[11px] text-[#A99AAA] hover:text-[#F05BCE] items-center gap-1 font-medium cursor-pointer"
               >
-                <Plus className="w-3 h-3 text-emerald-600" />
+                <Plus className="w-3 h-3 text-[#F05BCE]" />
                 <span>Add Caption Track</span>
               </button>
             </div>
@@ -851,11 +825,11 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                 step={0.1}
                 value={currentTimeSec}
                 onChange={(e) => handleSeek(Number(e.target.value))}
-                className="w-full accent-emerald-500 cursor-pointer h-1.5"
+                className="w-full accent-[#F05BCE] cursor-pointer h-1.5"
               />
             </div>
 
-            <span className="font-bold text-white">{Math.floor(currentTimeSec)}s</span>
+            <span className="font-bold text-[#F5EAF4]">{Math.floor(currentTimeSec)}s</span>
           </div>
 
           {/* Tracks Area (Scrolls horizontally ONLY within its own container) */}
@@ -863,12 +837,12 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
             <div className="min-w-[540px] space-y-2">
               {/* TRACK 1: Video Track */}
               <div className="flex items-center gap-3">
-                <div className="w-24 shrink-0 text-xs font-mono text-slate-500 flex items-center gap-1.5 font-medium">
-                  <Film className="w-3.5 h-3.5 text-emerald-600" />
+                <div className="w-24 shrink-0 text-xs font-mono text-[#A99AAA] flex items-center gap-1.5 font-medium">
+                  <Film className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>VIDEO</span>
                 </div>
 
-                <div className="flex-1 h-12 bg-[#11131A]/40 rounded-xl border border-white/8 relative flex items-center p-1 gap-2">
+                <div className="flex-1 h-12 bg-[#100A12] rounded-xl border border-[#39233B] relative flex items-center p-1 gap-2">
                   {timeline.clips
                     .filter((c: any) => c.type === 'video')
                     .map((clip: any) => (
@@ -880,8 +854,8 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                         }}
                         className={`h-full rounded-lg px-3 flex items-center justify-between text-xs font-semibold cursor-pointer border transition-all ${
                           activeClipId === clip.id
-                            ? 'bg-emerald-500 text-white border-emerald-300 shadow-md'
-                            : 'bg-indigo-500/15 text-emerald-900 border-white/10 hover:border-emerald-500/40'
+                            ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white border-[#F05BCE] shadow-md'
+                            : 'bg-[#211522] text-[#F5EAF4] border-[#39233B] hover:border-[#F05BCE]/40'
                         }`}
                         style={{ flex: clip.durationSec }}
                       >
@@ -894,12 +868,12 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
               {/* TRACK 2: Text / Subtitle Track */}
               <div className="flex items-center gap-3">
-                <div className="w-24 shrink-0 text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                <div className="w-24 shrink-0 text-xs font-mono text-[#A99AAA] flex items-center gap-1.5">
                   <Type className="w-3.5 h-3.5 text-sky-400" />
                   <span>CAPTIONS</span>
                 </div>
 
-                <div className="flex-1 h-9 bg-[#11131A]/[0.02] rounded-xl border border-white/5 relative flex items-center p-1 gap-2">
+                <div className="flex-1 h-9 bg-[#100A12] rounded-xl border border-[#39233B] relative flex items-center p-1 gap-2">
                   {timeline.clips
                     .filter((c: any) => c.type === 'text')
                     .map((clip: any) => (
@@ -925,12 +899,12 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
               {/* TRACK 3: Audio Track */}
               <div className="flex items-center gap-3">
-                <div className="w-24 shrink-0 text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                  <Music className="w-3.5 h-3.5 text-emerald-400" />
+                <div className="w-24 shrink-0 text-xs font-mono text-[#A99AAA] flex items-center gap-1.5">
+                  <Music className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>AUDIO</span>
                 </div>
 
-                <div className="flex-1 h-8 bg-emerald-950/20 rounded-xl border border-white/10 flex items-center px-3 text-[11px] font-mono text-emerald-300 truncate">
+                <div className="flex-1 h-8 bg-[#100A12] rounded-xl border border-[#39233B] flex items-center px-3 text-[11px] font-mono text-[#A99AAA] truncate">
                   Synthwave Master Audio Track (Royalty-Free 128BPM)
                 </div>
               </div>
@@ -941,15 +915,15 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
       {/* EXPORT & RENDER MODAL */}
       {exportModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5">
-            <div className="flex justify-between items-center border-b border-white/8 pb-3">
-              <h3 className="font-bold text-white text-base flex items-center gap-2">
-                <Download className="w-4 h-4 text-emerald-600" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+          <div className="bg-[#211522] border border-[#39233B] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 text-left text-[#F5EAF4]">
+            <div className="flex justify-between items-center border-b border-[#39233B] pb-3">
+              <h3 className="font-bold text-[#F5EAF4] text-base flex items-center gap-2">
+                <Download className="w-4 h-4 text-[#F05BCE]" />
                 <span>Export Master Video</span>
               </h3>
               {!isRendering && (
-                <button onClick={() => setExportModalOpen(false)} className="text-slate-400 hover:text-white">
+                <button onClick={() => setExportModalOpen(false)} className="text-[#A99AAA] hover:text-[#F5EAF4] cursor-pointer">
                   ✕
                 </button>
               )}
@@ -957,30 +931,30 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
             {isRendering ? (
               <div className="py-8 text-center space-y-4">
-                <div className="w-12 h-12 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin mx-auto" />
-                <h4 className="font-bold text-white text-base">Rendering Master MP4</h4>
-                <p className="text-xs text-slate-400">Composing tracks, subtitles, and lossless audio...</p>
+                <div className="w-12 h-12 rounded-full border-2 border-[#F05BCE] border-t-transparent animate-spin mx-auto" />
+                <h4 className="font-bold text-[#F5EAF4] text-base">Rendering Master MP4</h4>
+                <p className="text-xs text-[#A99AAA]">Composing tracks, subtitles, and lossless audio...</p>
 
-                <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-[#100A12] rounded-full overflow-hidden border border-[#39233B]">
                   <div
-                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] transition-all duration-300"
                     style={{ width: `${renderProgress}%` }}
                   />
                 </div>
-                <span className="text-xs font-mono text-emerald-700 font-bold">{renderProgress}% Complete</span>
+                <span className="text-xs font-mono text-[#F05BCE] font-bold">{renderProgress}% Complete</span>
               </div>
             ) : exportResult ? (
               <div className="py-4 text-center space-y-4">
-                <Check className="w-12 h-12 text-emerald-600 mx-auto" />
-                <h4 className="font-bold text-white text-base">Export Ready</h4>
-                <p className="text-xs text-slate-400">{exportResult.message}</p>
+                <Check className="w-12 h-12 text-[#F05BCE] mx-auto" />
+                <h4 className="font-bold text-[#F5EAF4] text-base">Export Ready</h4>
+                <p className="text-xs text-[#A99AAA]">{exportResult.message}</p>
 
                 <a
                   href={exportResult.downloadUrl}
                   download="FluviaFlow_MasterRender.mp4"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
+                  className="w-full py-3 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   <span>Download Master File (1080p MP4)</span>
@@ -989,17 +963,17 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
             ) : (
               <div className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1.5">Master Resolution</label>
+                  <label className="block text-[#A99AAA] font-semibold mb-1.5">Master Resolution</label>
                   <div className="grid grid-cols-3 gap-2">
                     {(['720p', '1080p', '4k'] as const).map((res) => (
                       <button
                         key={res}
                         type="button"
                         onClick={() => setExportResolution(res)}
-                        className={`p-2.5 rounded-xl border text-center font-bold uppercase transition-all ${
+                        className={`p-2.5 rounded-xl border text-center font-bold uppercase transition-all cursor-pointer ${
                           exportResolution === res
-                            ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
-                            : 'glass-button text-slate-400 hover:text-emerald-700'
+                            ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white border-[#F05BCE] shadow-sm'
+                            : 'bg-[#100A12] border-[#39233B] text-[#A99AAA] hover:text-[#F5EAF4]'
                         }`}
                       >
                         {res}
@@ -1008,18 +982,18 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-white/[0.04]/40 border border-white/8 text-slate-300 space-y-1">
+                <div className="p-3 rounded-xl bg-[#100A12] border border-[#39233B] text-[#A99AAA] space-y-1">
                   <div className="flex justify-between">
                     <span>Aspect Ratio:</span>
-                    <strong className="text-white">{timeline.aspectRatio}</strong>
+                    <strong className="text-[#F5EAF4]">{timeline.aspectRatio}</strong>
                   </div>
                   <div className="flex justify-between">
                     <span>Duration:</span>
-                    <strong className="text-white">{timeline.durationSec || 15}s</strong>
+                    <strong className="text-[#F5EAF4]">{timeline.durationSec || 15}s</strong>
                   </div>
                   <div className="flex justify-between">
                     <span>Codec:</span>
-                    <strong className="text-white">H.264 / AAC High Profile</strong>
+                    <strong className="text-[#F5EAF4]">H.264 / AAC High Profile</strong>
                   </div>
                 </div>
 
@@ -1027,14 +1001,14 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                   <button
                     type="button"
                     onClick={() => setExportModalOpen(false)}
-                    className="px-4 py-2.5 rounded-xl text-slate-400 glass-button font-semibold"
+                    className="px-4 py-2.5 rounded-xl text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B] bg-white/[0.04] font-semibold cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="button"
                     onClick={handleExportSubmit}
-                    className="px-6 py-2.5 rounded-xl text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 font-bold shadow-lg shadow-emerald-500/20 flex items-center gap-1.5"
+                    className="px-6 py-2.5 rounded-xl text-white bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 font-bold shadow-lg shadow-[#F05BCE]/25 flex items-center gap-1.5 cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Start Render</span>
@@ -1048,16 +1022,16 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
 
       {/* 5. ASSET PICKER MODAL */}
       {assetModalOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="glass-modal rounded-3xl w-full max-w-2xl p-6 shadow-2xl relative space-y-4 flex flex-col max-h-[85vh]">
-            <div className="flex items-center justify-between pb-3 border-b border-white/8 shrink-0">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-[#211522] border border-[#39233B] rounded-3xl w-full max-w-2xl p-6 shadow-2xl relative space-y-4 flex flex-col max-h-[85vh] text-[#F5EAF4]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#39233B] shrink-0">
               <div className="flex items-center gap-2">
-                <Layers className="w-5 h-5 text-emerald-600" />
-                <h3 className="font-bold text-white text-base">Select from Workspace Assets</h3>
+                <Layers className="w-5 h-5 text-[#F05BCE]" />
+                <h3 className="font-bold text-[#F5EAF4] text-base">Select from Workspace Assets</h3>
               </div>
               <button
                 onClick={() => setAssetModalOpen(false)}
-                className="text-slate-400 hover:text-white p-1 rounded-lg"
+                className="text-[#A99AAA] hover:text-[#F5EAF4] p-1 rounded-lg cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1066,14 +1040,14 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
             <div className="flex-1 overflow-y-auto pr-1">
               {isAssetsLoading ? (
                 <div className="py-12 flex justify-center">
-                  <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-6 h-6 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
                 </div>
               ) : availableAssets.length === 0 ? (
-                <div className="py-12 text-center text-slate-500 space-y-3">
+                <div className="py-12 text-center text-[#A99AAA] space-y-3">
                   <p className="text-sm">No assets found in workspace library.</p>
                   <Link
                     href="/dashboard/assets"
-                    className="inline-block px-4 py-2 glass-button rounded-xl text-xs font-semibold text-slate-300 hover:text-emerald-700"
+                    className="inline-block px-4 py-2 bg-white/[0.04] border border-[#39233B] rounded-xl text-xs font-semibold text-[#F5EAF4] hover:border-[#F05BCE]/40"
                   >
                     Upload Assets in Dashboard
                   </Link>
@@ -1083,9 +1057,9 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                   {availableAssets.map((asset) => (
                     <div
                       key={asset.id}
-                      className="p-3 glass-card rounded-xl flex items-center gap-3 transition-all group"
+                      className="p-3 bg-[#100A12] border border-[#39233B] rounded-xl flex items-center gap-3 transition-all group hover:border-[#F05BCE]/40"
                     >
-                      <div className="w-12 h-12 rounded-lg bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center border border-slate-200">
+                      <div className="w-12 h-12 rounded-lg bg-black overflow-hidden shrink-0 flex items-center justify-center border border-[#39233B]">
                         {asset.assetType === 'image' || asset.assetType === 'video' ? (
                           <img
                             src={asset.url}
@@ -1096,18 +1070,18 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
                             }}
                           />
                         ) : (
-                          <Music className="w-5 h-5 text-emerald-600" />
+                          <Music className="w-5 h-5 text-[#F05BCE]" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-xs font-bold text-white truncate">{asset.name}</h4>
-                        <span className="text-[10px] uppercase font-mono text-slate-500">
+                        <h4 className="text-xs font-bold text-[#F5EAF4] truncate">{asset.name}</h4>
+                        <span className="text-[10px] uppercase font-mono text-[#A99AAA]">
                           {asset.assetType}
                         </span>
                       </div>
                       <button
                         onClick={() => handleAddAssetToTimeline(asset)}
-                        className="px-2.5 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-lg text-xs font-bold shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                        className="px-2.5 py-1.5 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-lg text-xs font-bold shrink-0 opacity-80 group-hover:opacity-100 transition-opacity cursor-pointer shadow-xs"
                       >
                         Insert
                       </button>
@@ -1117,11 +1091,11 @@ export default function VideoEditorPage({ params }: { params: { projectId: strin
               )}
             </div>
 
-            <div className="flex justify-end pt-3 border-t border-white/8 shrink-0">
+            <div className="flex justify-end pt-3 border-t border-[#39233B] shrink-0">
               <button
                 type="button"
                 onClick={() => setAssetModalOpen(false)}
-                className="px-4 py-2 rounded-xl text-slate-400 glass-button text-xs font-semibold"
+                className="px-4 py-2 rounded-xl text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B] bg-white/[0.04] text-xs font-semibold cursor-pointer"
               >
                 Close
               </button>

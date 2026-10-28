@@ -361,8 +361,8 @@ export default function AdminConsolePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -374,29 +374,29 @@ export default function AdminConsolePage() {
   const recentAudits = adminData?.recentAudits || [];
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-200 bg-[#090A0D] text-white">
+    <div className="min-h-screen flex flex-col transition-colors duration-200 bg-[#100A12] text-[#F5EAF4]">
       {/* Admin Top Bar */}
-      <header className="h-16 border-b border-white/8 glass-navbar px-6 flex items-center justify-between shrink-0">
+      <header className="h-16 border-b border-[#39233B] bg-[#211522] px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"
-            className="p-1.5 rounded-lg bg-[#11131A]/[0.04] hover:bg-[#11131A]/[0.08] text-slate-300 hover:text-emerald-900 border border-emerald-300"
+            className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B]"
             title="Return to User Dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
-          <div className="h-5 w-px bg-emerald-500/20" />
+          <div className="h-5 w-px bg-[#39233B]" />
           <div className="flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-amber-600" />
-            <span className="font-bold text-white text-base">Fluvia Flow • Admin Console</span>
-            <span className="text-[10px] bg-amber-100 text-amber-900 font-mono px-2 py-0.5 rounded border border-amber-300 uppercase font-bold">
+            <ShieldAlert className="w-5 h-5 text-[#F05BCE]" />
+            <span className="font-bold text-[#F5EAF4] text-base">Fluvia Flow • Admin Console</span>
+            <span className="text-[10px] bg-[#F05BCE]/15 text-[#F05BCE] font-mono px-2 py-0.5 rounded border border-[#F05BCE]/30 uppercase font-bold">
               Super Admin
             </span>
           </div>
         </div>
 
         {/* Tab navigation */}
-        <div className="flex gap-1 glass-panel border border-white/8 p-1 rounded-xl text-xs font-bold">
+        <div className="flex gap-1 bg-[#100A12] border border-[#39233B] p-1 rounded-xl text-xs font-bold">
           {[
             { id: 'overview', label: 'Metrics Overview' },
             { id: 'pricing', label: 'Pricing, Plans & Tax' },
@@ -411,7 +411,7 @@ export default function AdminConsolePage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                activeTab === tab.id ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs' : 'text-slate-400 hover:text-white hover:bg-[#11131A]/[0.06]'
+                activeTab === tab.id ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-xs' : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-white/[0.04]'
               }`}
             >
               {tab.label}
@@ -792,7 +792,7 @@ export default function AdminConsolePage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold transition-all shadow-xs cursor-pointer"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold transition-all shadow-xs cursor-pointer"
                   >
                     {couponModal.mode === 'create' ? 'Create Coupon' : 'Save Changes'}
                   </button>
@@ -1490,7 +1490,7 @@ export default function AdminConsolePage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold transition-all shadow-xs cursor-pointer"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold transition-all shadow-xs cursor-pointer"
                   >
                     {couponModal.mode === 'create' ? 'Create Coupon' : 'Save Changes'}
                   </button>

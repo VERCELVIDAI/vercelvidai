@@ -21,7 +21,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [colorTheme] = useState<string>('kling-obsidian');
+  const [colorTheme] = useState<string>('midnight-plum');
   const [mode] = useState<'dark'>('dark');
   const [resolvedMode] = useState<'dark'>('dark');
   const [isCompleted, setIsCompleted] = useState<boolean>(true);
@@ -31,13 +31,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (typeof window === 'undefined') return;
 
     const root = document.documentElement;
-    root.setAttribute('data-color-theme', 'kling-obsidian');
+    root.setAttribute('data-color-theme', 'midnight-plum');
     root.setAttribute('data-theme', 'dark');
     root.style.colorScheme = 'dark';
     root.classList.remove('light');
     root.classList.add('dark');
 
-    // Apply Palette Variables
+    // Apply Palette Variables (Midnight Plum × Hot Pink)
     const palette = FLUVIA_PALETTE;
     root.style.setProperty('--app-bg', palette.bg);
     root.style.setProperty('--app-surface', palette.surface);
@@ -64,7 +64,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       localStorage.setItem('fluvia_theme', 'dark');
-      localStorage.setItem('fluvia_color_theme', 'kling-obsidian');
+      localStorage.setItem('fluvia_color_theme', 'midnight-plum');
     } catch {}
 
     applyThemeToDOM();

@@ -56,7 +56,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#090A0D]/90 backdrop-blur-2xl border-b border-white/[0.08] transition-all duration-200">
+    <header className="sticky top-0 z-50 w-full bg-[#100A12]/90 backdrop-blur-2xl border-b border-[#39233B] transition-all duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3 min-w-0">
         <div className="flex items-center gap-6 lg:gap-8 shrink-0 min-w-0">
           <Logo size="md" />
@@ -72,75 +72,75 @@ export function Header() {
               <button
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
                   pathname.startsWith('/studios')
-                    ? 'text-white bg-white/10'
-                    : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                    ? 'text-[#F05BCE] bg-[#211522]'
+                    : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522]/50'
                 }`}
               >
                 <span>Studios</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform text-slate-400 ${studiosOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform text-[#A99AAA] ${studiosOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {studiosOpen && (
                 <div className="absolute top-full left-0 w-80 pt-2 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                  <div className="p-2 rounded-2xl bg-[#11131A] border border-white/10 shadow-2xl space-y-1">
+                  <div className="p-2 rounded-2xl bg-[#211522] border border-[#39233B] shadow-2xl space-y-1">
                     <Link
                       href="/studios/cinema"
-                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.06] transition-colors group"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#2A1A2B] transition-colors group"
                     >
-                      <div className="w-9 h-9 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                      <div className="w-9 h-9 rounded-lg bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 flex items-center justify-center shrink-0 group-hover:bg-[#F05BCE] group-hover:text-white transition-colors">
                         <Film className="w-4 h-4" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-white text-xs">Cinema Studio</span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono font-bold">Director</span>
+                          <span className="font-bold text-[#F5EAF4] text-xs">Cinema Studio</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F05BCE]/20 text-[#F05BCE] font-mono font-bold">Director</span>
                         </div>
-                        <p className="text-[11px] text-slate-400 mt-0.5">Camera motion paths & optical lens grades</p>
+                        <p className="text-[11px] text-[#A99AAA] mt-0.5">Camera motion paths & optical lens grades</p>
                       </div>
                     </Link>
 
                     <Link
                       href="/studios/marketing"
-                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.06] transition-colors group"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#2A1A2B] transition-colors group"
                     >
-                      <div className="w-9 h-9 rounded-lg bg-purple-500/15 text-purple-400 border border-purple-500/30 flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                      <div className="w-9 h-9 rounded-lg bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 flex items-center justify-center shrink-0 group-hover:bg-[#F05BCE] group-hover:text-white transition-colors">
                         <Megaphone className="w-4 h-4" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-white text-xs">Marketing Studio</span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-mono font-bold">Ads</span>
+                          <span className="font-bold text-[#F5EAF4] text-xs">Marketing Studio</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F05BCE]/20 text-[#F05BCE] font-mono font-bold">Ads</span>
                         </div>
-                        <p className="text-[11px] text-slate-400 mt-0.5">Commercials, viral hooks & product briefs</p>
+                        <p className="text-[11px] text-[#A99AAA] mt-0.5">Commercials, viral hooks & product briefs</p>
                       </div>
                     </Link>
 
                     <Link
                       href="/studios/storyboard"
-                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.06] transition-colors group"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#2A1A2B] transition-colors group"
                     >
-                      <div className="w-9 h-9 rounded-lg bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+                      <div className="w-9 h-9 rounded-lg bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 flex items-center justify-center shrink-0 group-hover:bg-[#F05BCE] group-hover:text-white transition-colors">
                         <Layers className="w-4 h-4" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-white text-xs">Storyboard Studio</span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 font-mono font-bold">Gemini</span>
+                          <span className="font-bold text-[#F5EAF4] text-xs">Storyboard Studio</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F05BCE]/20 text-[#F05BCE] font-mono font-bold">Gemini</span>
                         </div>
-                        <p className="text-[11px] text-slate-400 mt-0.5">Multi-shot scene orchestration & timing</p>
+                        <p className="text-[11px] text-[#A99AAA] mt-0.5">Multi-shot scene orchestration & timing</p>
                       </div>
                     </Link>
 
                     <Link
                       href="/editor"
-                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.06] transition-colors group"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#2A1A2B] transition-colors group"
                     >
-                      <div className="w-9 h-9 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                      <div className="w-9 h-9 rounded-lg bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 flex items-center justify-center shrink-0 group-hover:bg-[#F05BCE] group-hover:text-white transition-colors">
                         <Sliders className="w-4 h-4" />
                       </div>
                       <div>
-                        <span className="font-bold text-white text-xs block">Creative Canvas</span>
-                        <p className="text-[11px] text-slate-400 mt-0.5">Non-linear multi-track timeline video editor</p>
+                        <span className="font-bold text-[#F5EAF4] text-xs block">Creative Canvas</span>
+                        <p className="text-[11px] text-[#A99AAA] mt-0.5">Non-linear multi-track timeline video editor</p>
                       </div>
                     </Link>
                   </div>
@@ -157,62 +157,62 @@ export function Header() {
               <button
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
                   pathname.startsWith('/create') || pathname.startsWith('/ai-')
-                    ? 'text-white bg-white/10'
-                    : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                    ? 'text-[#F05BCE] bg-[#211522]'
+                    : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522]/50'
                 }`}
               >
                 <span>AI Tools</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform text-slate-400 ${toolsOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform text-[#A99AAA] ${toolsOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {toolsOpen && (
                 <div className="absolute top-full left-0 w-72 pt-2 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                  <div className="p-2 rounded-2xl bg-[#11131A] border border-white/10 shadow-2xl space-y-1">
+                  <div className="p-2 rounded-2xl bg-[#211522] border border-[#39233B] shadow-2xl space-y-1">
                     <Link
                       href="/create?mode=video"
-                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/[0.06] transition-colors group"
+                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#2A1A2B] transition-colors group"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/20 text-[#F05BCE] flex items-center justify-center group-hover:bg-[#F05BCE] group-hover:text-white transition-colors">
                         <Video className="w-4 h-4" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-white text-xs">AI Video Engine</span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono font-bold">15 cr</span>
+                          <span className="font-bold text-[#F5EAF4] text-xs">AI Video Engine</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F05BCE]/20 text-[#F05BCE] font-mono font-bold">15 cr</span>
                         </div>
-                        <div className="text-[11px] text-slate-400">Gemini Omni Flash 4K</div>
+                        <div className="text-[11px] text-[#A99AAA]">Gemini Omni Flash 4K</div>
                       </div>
                     </Link>
 
                     <Link
                       href="/create?mode=audio"
-                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/[0.06] transition-colors group"
+                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#2A1A2B] transition-colors group"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/20 text-[#F05BCE] flex items-center justify-center group-hover:bg-[#F05BCE] group-hover:text-white transition-colors">
                         <Mic className="w-4 h-4" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-white text-xs">AI Voiceover HD</span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-teal-500/20 text-teal-300 font-mono font-bold">2 cr</span>
+                          <span className="font-bold text-[#F5EAF4] text-xs">AI Voiceover HD</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F05BCE]/20 text-[#F05BCE] font-mono font-bold">2 cr</span>
                         </div>
-                        <div className="text-[11px] text-slate-400">ElevenLabs 40+ Neural Voices</div>
+                        <div className="text-[11px] text-[#A99AAA]">ElevenLabs 40+ Neural Voices</div>
                       </div>
                     </Link>
 
                     <Link
                       href="/create?mode=image"
-                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/[0.06] transition-colors group"
+                      className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#2A1A2B] transition-colors group"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/20 text-[#F05BCE] flex items-center justify-center group-hover:bg-[#F05BCE] group-hover:text-white transition-colors">
                         <ImageIcon className="w-4 h-4" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-white text-xs">AI Image Studio</span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-mono font-bold">5 cr</span>
+                          <span className="font-bold text-[#F5EAF4] text-xs">AI Image Studio</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F05BCE]/20 text-[#F05BCE] font-mono font-bold">5 cr</span>
                         </div>
-                        <div className="text-[11px] text-slate-400">Gemini 3.1 & Flux Pro Stills</div>
+                        <div className="text-[11px] text-[#A99AAA]">Gemini 3.1 & Flux Pro Stills</div>
                       </div>
                     </Link>
                   </div>
@@ -224,8 +224,8 @@ export function Header() {
               href="/templates"
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
                 pathname === '/templates'
-                  ? 'text-white bg-white/10'
-                  : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                  ? 'text-[#F05BCE] bg-[#211522]'
+                  : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522]/50'
               }`}
             >
               Templates
@@ -235,8 +235,8 @@ export function Header() {
               href="/pricing"
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
                 pathname === '/pricing'
-                  ? 'text-white bg-white/10'
-                  : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                  ? 'text-[#F05BCE] bg-[#211522]'
+                  : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522]/50'
               }`}
             >
               Pricing
@@ -251,16 +251,16 @@ export function Header() {
               {/* Wallet Credits Pill */}
               <Link
                 href="/dashboard/wallet"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-xs font-mono font-bold text-slate-200 transition-all shadow-sm"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#211522] hover:bg-[#2A1A2B] border border-[#39233B] text-xs font-mono font-bold text-[#F5EAF4] transition-all shadow-sm"
               >
-                <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400/30" />
+                <Zap className="w-3.5 h-3.5 text-[#F05BCE] fill-[#F05BCE]/30" />
                 <span>{user.credits ?? 0}</span>
-                <span className="text-[10px] text-slate-400">cr</span>
+                <span className="text-[10px] text-[#A99AAA]">cr</span>
               </Link>
 
               <Link
                 href="/create"
-                className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
+                className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:from-[#E046BD] hover:to-[#A21CAF] text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-[#F05BCE]/30 transition-all cursor-pointer border border-[#F05BCE]/30"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Launch Studio</span>
@@ -277,24 +277,24 @@ export function Header() {
                   type="button"
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   aria-label="User account menu"
-                  className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-white/10 transition-all border border-white/10 bg-white/[0.04] cursor-pointer"
+                  className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-[#211522] transition-all border border-[#39233B] bg-[#211522] cursor-pointer"
                 >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 p-[1px]">
-                    <div className="w-full h-full rounded-full bg-[#11131A] flex items-center justify-center text-xs font-black text-indigo-300">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#F05BCE] to-[#C026D3] p-[1px]">
+                    <div className="w-full h-full rounded-full bg-[#211522] flex items-center justify-center text-xs font-black text-[#F05BCE]">
                       {(user.displayName || user.email || 'U')[0].toUpperCase()}
                     </div>
                   </div>
-                  <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 text-[#A99AAA] transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {userMenuOpen && (
                   <div className="absolute right-0 top-full w-56 pt-2 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                    <div className="p-2 rounded-2xl bg-[#11131A] border border-white/10 shadow-2xl space-y-1 text-left">
-                      <div className="px-3 py-2 border-b border-white/[0.08]">
-                        <div className="text-xs font-bold text-white truncate">
-                          {user.displayName || 'Kling Studio Creator'}
+                    <div className="p-2 rounded-2xl bg-[#211522] border border-[#39233B] shadow-2xl space-y-1 text-left">
+                      <div className="px-3 py-2 border-b border-[#39233B]">
+                        <div className="text-xs font-bold text-[#F5EAF4] truncate">
+                          {user.displayName || 'Whisk Studio Creator'}
                         </div>
-                        <div className="text-[11px] text-slate-400 truncate mt-0.5">
+                        <div className="text-[11px] text-[#A99AAA] truncate mt-0.5">
                           {user.email}
                         </div>
                       </div>
@@ -302,27 +302,27 @@ export function Header() {
                       <Link
                         href="/dashboard"
                         onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.06] transition-colors"
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#2A1A2B] transition-colors"
                       >
-                        <ArrowRight className="w-4 h-4 text-indigo-400" />
+                        <ArrowRight className="w-4 h-4 text-[#F05BCE]" />
                         <span>Command Dashboard</span>
                       </Link>
 
                       <Link
                         href="/dashboard/wallet"
                         onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.06] transition-colors"
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#2A1A2B] transition-colors"
                       >
-                        <Wallet className="w-4 h-4 text-emerald-400" />
+                        <Wallet className="w-4 h-4 text-[#F05BCE]" />
                         <span>Credit Wallet</span>
                       </Link>
 
                       <Link
                         href="/dashboard/billing"
                         onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.06] transition-colors"
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#2A1A2B] transition-colors"
                       >
-                        <CreditCard className="w-4 h-4 text-purple-400" />
+                        <CreditCard className="w-4 h-4 text-[#F05BCE]" />
                         <span>Invoices & Plans</span>
                       </Link>
 
@@ -340,81 +340,67 @@ export function Header() {
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.06] transition-colors"
+                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522] transition-colors"
               >
                 Sign In
               </Link>
               <Link
-                href="/create"
-                className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-indigo-600/30 transition-all"
+                href="/signup"
+                className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:from-[#E046BD] hover:to-[#A21CAF] text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-[#F05BCE]/30 transition-all border border-[#F05BCE]/30"
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Launch Studio</span>
+                <span>Get Started</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           )}
 
-          {/* Mobile Menu Trigger */}
+          {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
-            className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-colors"
+            className="md:hidden p-1.5 rounded-lg text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522]"
+            aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-white/[0.08] bg-[#0E1015] p-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 shadow-2xl">
-          <div className="space-y-1 font-semibold text-xs text-slate-300">
+        <div className="md:hidden border-t border-[#39233B] bg-[#100A12] px-4 py-6 space-y-4 text-left">
+          <div className="space-y-1">
             <Link
               href="/create"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 p-2.5 rounded-lg bg-indigo-600 text-white font-bold"
+              className="flex items-center gap-2 p-2.5 rounded-lg bg-[#F05BCE] text-white font-bold text-xs"
             >
               <Sparkles className="w-4 h-4" />
-              <span>Launch Studio (15 cr)</span>
+              <span>Launch Creation Studio</span>
             </Link>
             <Link
               href="/dashboard"
               onClick={() => setMobileMenuOpen(false)}
-              className="block p-2.5 rounded-lg hover:bg-white/[0.06]"
+              className="block p-2 text-xs font-semibold text-[#F5EAF4] hover:bg-[#211522] rounded-lg"
             >
-              Dashboard
-            </Link>
-            <Link
-              href="/create?mode=video"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block p-2.5 rounded-lg hover:bg-white/[0.06]"
-            >
-              AI Video Engine (15 cr)
-            </Link>
-            <Link
-              href="/create?mode=audio"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block p-2.5 rounded-lg hover:bg-white/[0.06]"
-            >
-              AI Voiceover HD (2 cr)
+              Command Dashboard
             </Link>
             <Link
               href="/templates"
               onClick={() => setMobileMenuOpen(false)}
-              className="block p-2.5 rounded-lg hover:bg-white/[0.06]"
+              className="block p-2 text-xs font-semibold text-[#F5EAF4] hover:bg-[#211522] rounded-lg"
             >
-              Curated Templates
+              Creative Templates
             </Link>
             <Link
               href="/pricing"
               onClick={() => setMobileMenuOpen(false)}
-              className="block p-2.5 rounded-lg hover:bg-white/[0.06]"
+              className="block p-2 text-xs font-semibold text-[#F5EAF4] hover:bg-[#211522] rounded-lg"
             >
-              Pricing & Credits
+              Pricing & Credit Wallet
             </Link>
           </div>
         </div>

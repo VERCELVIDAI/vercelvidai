@@ -99,19 +99,19 @@ export default function ModelsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#090A0D] text-white flex flex-col">
+    <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex flex-col text-left">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-mono font-semibold text-cyan-300 mb-4">
-            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F05BCE]/15 border border-[#F05BCE]/30 text-xs font-mono font-semibold text-[#F05BCE] mb-4">
+            <Cpu className="w-3.5 h-3.5 text-[#F05BCE]" />
             <span>Multi-Provider Model Registry</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-black text-[#F5EAF4] tracking-tight">
             Foundation AI Models
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-[#A99AAA]">
             Transparent pricing, official API integration, and continuous benchmarking across top global generative weights.
           </p>
         </div>
@@ -120,50 +120,50 @@ export default function ModelsPage() {
           {models.map((m) => (
             <div
               key={m.id}
-              className="p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/8 hover:border-indigo-500/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-sm"
+              className="p-6 sm:p-8 rounded-3xl bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-sm"
             >
               <div className="max-w-2xl">
                 <div className="flex flex-wrap items-center gap-2.5 mb-2">
-                  <h3 className="text-xl font-bold text-white">{m.name}</h3>
+                  <h3 className="text-xl font-bold text-[#F5EAF4]">{m.name}</h3>
                   <span className={`text-[11px] font-bold font-mono px-2.5 py-0.5 rounded-full border ${
                     m.badge === 'Active Engine'
-                      ? 'text-cyan-300 bg-cyan-950/60 border-cyan-500/30'
+                      ? 'text-[#F05BCE] bg-[#F05BCE]/15 border-[#F05BCE]/30'
                       : m.isComingSoon
-                      ? 'text-slate-400 bg-white/5 border-white/10'
-                      : 'text-indigo-300 bg-indigo-950/60 border-indigo-500/30'
+                      ? 'text-[#A99AAA] bg-white/5 border-white/10'
+                      : 'text-[#F05BCE] bg-[#F05BCE]/15 border-[#F05BCE]/30'
                   }`}>
                     {m.badge}
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">by {m.provider}</span>
+                  <span className="text-xs text-[#A99AAA] font-mono">by {m.provider}</span>
                 </div>
-                <p className="text-sm text-slate-300 leading-relaxed">{m.desc}</p>
+                <p className="text-sm text-[#A99AAA] leading-relaxed">{m.desc}</p>
 
-                <div className="mt-4 flex flex-wrap gap-4 text-xs font-mono text-slate-400">
-                  <span>Resolutions: <strong className="text-white">{m.resolutions.join(', ')}</strong></span>
+                <div className="mt-4 flex flex-wrap gap-4 text-xs font-mono text-[#A99AAA]">
+                  <span>Resolutions: <strong className="text-[#F5EAF4]">{m.resolutions.join(', ')}</strong></span>
                   <span>•</span>
-                  <span>Durations: <strong className="text-white">{m.durations}</strong></span>
+                  <span>Durations: <strong className="text-[#F5EAF4]">{m.durations}</strong></span>
                   <span>•</span>
-                  <span>Ratios: <strong className="text-white">{m.aspectRatios.join(', ')}</strong></span>
+                  <span>Ratios: <strong className="text-[#F5EAF4]">{m.aspectRatios.join(', ')}</strong></span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-6 shrink-0 border-t lg:border-t-0 pt-4 lg:pt-0 border-white/8">
+              <div className="flex items-center gap-6 shrink-0 border-t lg:border-t-0 pt-4 lg:pt-0 border-[#39233B]">
                 <div className="text-right">
-                  <div className="flex items-center justify-end gap-1 text-cyan-400 font-bold text-lg font-mono">
-                    <Zap className="w-4 h-4 text-cyan-400" />
+                  <div className="flex items-center justify-end gap-1 text-[#F05BCE] font-bold text-lg font-mono">
+                    <Zap className="w-4 h-4 text-[#F05BCE]" />
                     <span>{m.costCredits} credits</span>
                   </div>
-                  <span className="text-[11px] text-slate-500 font-mono">per generation</span>
+                  <span className="text-[11px] text-[#A99AAA] font-mono">per generation</span>
                 </div>
 
                 {m.isComingSoon ? (
-                  <span className="px-5 py-2.5 bg-white/5 text-slate-500 border border-white/8 rounded-xl text-xs font-bold cursor-not-allowed font-mono">
+                  <span className="px-5 py-2.5 bg-white/5 text-[#A99AAA] border border-[#39233B] rounded-xl text-xs font-bold cursor-not-allowed font-mono">
                     Coming Soon
                   </span>
                 ) : (
                   <Link
                     href={`/create?modelId=${m.id}`}
-                    className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-600/30 flex items-center gap-1.5 cursor-pointer"
+                    className="px-5 py-2.5 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-[#F05BCE]/25 flex items-center gap-1.5 cursor-pointer"
                   >
                     <span>Select Model</span>
                     <ArrowRight className="w-3.5 h-3.5" />

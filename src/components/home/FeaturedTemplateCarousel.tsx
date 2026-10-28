@@ -71,31 +71,31 @@ export function FeaturedTemplateCarousel() {
   };
 
   return (
-    <section className="py-20 border-t border-white/8 relative overflow-hidden">
+    <section className="py-20 border-t border-[#39233B] relative overflow-hidden bg-[#100A12]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 font-bold text-xs uppercase tracking-wider mb-3">
-              <Flame className="w-3.5 h-3.5 text-indigo-400" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F05BCE]/10 text-pink-300 border border-[#F05BCE]/30 font-bold text-xs uppercase tracking-wider mb-3">
+              <Flame className="w-3.5 h-3.5 text-[#F05BCE]" />
               <span>Trending Templates</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black text-[#F5EAF4] tracking-tight">
               Pre-built timelines.{' '}
-              <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#F05BCE] via-pink-400 to-purple-300 bg-clip-text text-transparent">
                 Ready for instant remix.
               </span>
             </h2>
-            <p className="mt-3 text-base text-slate-400 max-w-xl">
+            <p className="mt-3 text-base text-[#A99AAA] max-w-xl">
               Hover over any card to preview the pacing, audio synchronicity, and scene composition.
             </p>
           </div>
 
           <Link
             href="/templates"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-white/[0.08] hover:bg-white/[0.14] transition-all border border-white/12 shadow-sm shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs text-[#F5EAF4] bg-[#211522] hover:bg-[#2A1B2C] transition-all border border-[#39233B] shadow-sm shrink-0"
           >
             <span>Explore All 18 Cinematic Templates</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 text-[#F05BCE]" />
           </Link>
         </div>
 

@@ -5,63 +5,62 @@
 @tailwind utilities;
 
 /* ==============================================================================
-   KLING AI INSPIRED — DARK CINEMATIC CREATIVE STUDIO DESIGN SYSTEM
+   WHISK FLOW — MIDNIGHT PLUM × HOT PINK DESIGN SYSTEM
    ============================================================================== */
 
 @layer base {
   :root {
-    /* Palette Tokens: Deep Charcoal, Near-Black Surfaces & Electric Accents */
-    --app-bg: #090A0D;
-    --app-soft-bg: #0E1015;
-    --app-secondary-bg: #14161F;
-    --app-surface: #11131A;
-    --app-card: #151822;
-    --app-card-hover: #1C202C;
-    --app-card-border: rgba(255, 255, 255, 0.08);
-    --app-card-border-hover: rgba(255, 255, 255, 0.16);
+    /* LOCKED BRAND COLORS */
+    --app-bg: #100A12; /* Primary Background */
+    --app-surface: #211522; /* Secondary Surfaces */
+    --app-sidebar: #170E1A; /* Sidebar Rail */
+    --app-card: #211522; /* Card Surface */
+    --app-card-hover: #2A1A2B;
+    --app-card-border: #39233B; /* Hairline Borders */
+    --app-card-border-hover: #553158;
 
-    --app-primary: #6366F1; /* Electric Indigo */
-    --app-primary-hover: #4F46E5;
+    --app-primary: #F05BCE; /* Primary Hot Pink Accent */
+    --app-primary-hover: #E046BD;
     --app-primary-foreground: #FFFFFF;
 
-    --app-violet: #7C3AED; /* Vivid Violet */
-    --app-cyan: #06B6D4; /* Cyber Cyan */
-    --app-emerald: #10B981; /* Status Emerald */
-    --app-amber: #F59E0B; /* Status Amber */
-    --app-rose: #F43F5E; /* Status Rose */
+    --app-secondary: #C026D3; /* Deep Orchid Accent */
+    --app-cyan: #F05BCE;
+    --app-emerald: #10B981;
+    --app-amber: #F59E0B;
+    --app-rose: #F05BCE;
 
-    --app-text-primary: #F8FAFC; /* Crisp White */
-    --app-text-secondary: #94A3B8; /* Slate Silver */
-    --app-text-muted: #64748B; /* Muted Graphite */
+    --app-text-primary: #F5EAF4; /* Soft Luminous Rose-White */
+    --app-text-secondary: #A99AAA; /* Warm Dusty Lavender-Slate */
+    --app-text-muted: #A99AAA;
 
-    --app-input-bg: rgba(14, 16, 23, 0.92);
-    --app-input-border: rgba(255, 255, 255, 0.1);
-    --app-ring: #6366F1;
+    --app-input-bg: rgba(33, 21, 34, 0.85);
+    --app-input-border: #39233B;
+    --app-ring: #F05BCE;
 
-    --app-gradient-primary: linear-gradient(135deg, #6366F1 0%, #4F46E5 50%, #7C3AED 100%);
-    --app-gradient-cinema: linear-gradient(135deg, #1E1B4B 0%, #0F172A 100%);
-    --app-gradient-glow: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(9, 10, 13, 0) 70%);
+    --app-gradient-primary: linear-gradient(135deg, #F05BCE 0%, #E046BD 50%, #C026D3 100%);
+    --app-gradient-cinema: linear-gradient(135deg, #211522 0%, #100A12 100%);
+    --app-gradient-glow: radial-gradient(circle, rgba(240, 91, 206, 0.18) 0%, rgba(16, 10, 18, 0) 70%);
 
     /* Tailwind HSL mappings */
-    --background: 224 25% 4%;
-    --foreground: 210 40% 98%;
-    --card: 224 22% 8%;
-    --card-foreground: 210 40% 98%;
-    --primary: 239 84% 67%;
+    --background: 288 29% 5%;
+    --foreground: 306 31% 94%;
+    --card: 295 24% 11%;
+    --card-foreground: 306 31% 94%;
+    --primary: 312 83% 65%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 223 18% 14%;
-    --secondary-foreground: 210 40% 98%;
-    --border: 220 13% 18%;
-    --input: 220 13% 18%;
-    --ring: 239 84% 67%;
+    --secondary: 295 24% 11%;
+    --secondary-foreground: 306 31% 94%;
+    --border: 294 25% 18%;
+    --input: 294 25% 18%;
+    --ring: 312 83% 65%;
     --radius: 0.75rem;
   }
 
-  /* Force dark cinematic theme across entire platform */
+  /* Force Midnight Plum × Hot Pink theme across entire platform */
   html, body {
     color-scheme: dark !important;
-    background-color: var(--app-bg) !important;
-    color: var(--app-text-primary) !important;
+    background-color: #100A12 !important;
+    color: #F5EAF4 !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -71,7 +70,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
-    color: var(--app-text-primary);
+    color: #F5EAF4;
     letter-spacing: -0.02em;
   }
 
@@ -81,183 +80,45 @@
 }
 
 /* ==============================================================================
-   KLING AI CINEMATIC GLASSMORPHISM & SURFACE CLASSES
+   MIDNIGHT PLUM GLASSMORPHISM & SURFACE CLASSES
    ============================================================================== */
 
 .glass-panel {
-  background: rgba(16, 18, 25, 0.85) !important;
+  background: rgba(33, 21, 34, 0.88) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid #39233B !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7) !important;
 }
 
 .glass-card {
-  background: rgba(21, 24, 34, 0.88) !important;
+  background: rgba(33, 21, 34, 0.88) !important;
   backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.5) !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border: 1px solid #39233B !important;
+  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.6) !important;
 }
 
-.glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.16) !important;
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 20px -5px rgba(99, 102, 241, 0.15) !important;
-  transform: translateY(-2px);
-}
-
-.glass-navbar {
-  background: rgba(9, 10, 13, 0.88) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.7) !important;
-}
-
-.glass-sidebar {
-  background: rgba(11, 13, 18, 0.96) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 4px 0 24px -2px rgba(0, 0, 0, 0.6) !important;
-}
-
-.glass-modal {
-  background: #11131B !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85) !important;
-}
-
-.glass-input {
-  background: rgba(14, 16, 23, 0.95) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #F8FAFC !important;
-  transition: all 0.2s ease;
-}
-
-.glass-input:focus {
-  outline: none !important;
-  border-color: #6366F1 !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
-  background: #151822 !important;
-}
-
-.glass-button {
-  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%) !important;
-  color: #FFFFFF !important;
-  font-weight: 700 !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  box-shadow: 0 6px 20px -4px rgba(99, 102, 241, 0.45) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-button:hover {
-  background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%) !important;
-  box-shadow: 0 10px 25px -4px rgba(99, 102, 241, 0.6) !important;
-  transform: translateY(-1px);
-}
-
-.glass-button-secondary {
-  background: rgba(255, 255, 255, 0.06) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  color: #E2E8F0 !important;
-  font-weight: 600 !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
-  transition: all 0.2s ease;
-}
-
-.glass-button-secondary:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
-  color: #FFFFFF !important;
-  transform: translateY(-1px);
-}
-
-.glass-badge-emerald {
-  background: rgba(16, 185, 129, 0.15) !important;
-  color: #34D399 !important;
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
-  font-weight: 700 !important;
-}
-
-.glass-badge-indigo {
-  background: rgba(99, 102, 241, 0.15) !important;
-  color: #A5B4FC !important;
-  border: 1px solid rgba(99, 102, 241, 0.3) !important;
-  font-weight: 700 !important;
-}
-
-/* ==============================================================================
-   TYPOGRAPHY & UTILITY MAPPINGS (PRESERVING COMPATIBILITY)
-   ============================================================================== */
-
-.text-fluvia-primary {
-  color: #F8FAFC !important;
-}
-
-.text-\[\#17211D\] {
-  color: #F8FAFC !important;
-}
-
-.text-fluvia-secondary {
-  color: #94A3B8 !important;
-}
-
-.text-fluvia-emerald {
-  color: #34D399 !important;
-}
-
-.bg-fluvia-emerald {
-  background-color: #10B981 !important;
-}
-
-.bg-theme-primary {
-  background-color: #6366F1 !important;
-}
-
-.hover\:bg-theme-primary-hover:hover {
-  background-color: #4F46E5 !important;
-}
-
-.text-theme-primary {
-  color: #818CF8 !important;
-}
-
-.border-theme-primary {
-  border-color: rgba(99, 102, 241, 0.3) !important;
-}
-
-/* ==============================================================================
-   SMOOTH DARK SCROLLBAR
-   ============================================================================== */
-
+/* Custom Hot Pink Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #090A0D;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: #100A12;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+::-webkit-scrollbar-thumb {
+  background: #39233B;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F05BCE;
+}
+
+/* Safety Override ensuring legacy charcoal classes never render dark text */
+.text-\[\#17211D\] {
+  color: #F5EAF4 !important;
 }

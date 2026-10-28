@@ -120,7 +120,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
   const renderNavGroup = (title: string, items: SidebarNavItem[], collapsed: boolean, isDrawer: boolean) => (
     <div className="space-y-1">
       {!collapsed && (
-        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3 block">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#A99AAA]/70 px-3 block">
           {title}
         </span>
       )}
@@ -137,19 +137,19 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               collapsed ? 'justify-center px-2 py-2.5' : 'justify-between px-3 py-2'
             } min-h-[40px] rounded-xl text-xs font-semibold transition-all border ${
               isActive
-                ? 'font-bold bg-white/[0.08] text-white border-white/16 shadow-xs'
-                : 'border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                ? 'font-bold bg-[#211522] text-[#F5EAF4] border-[#39233B] shadow-xs'
+                : 'border-transparent text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522]/50'
             }`}
           >
-            {/* Glowing vertical active indicator on rail */}
+            {/* Glowing Hot Pink vertical active indicator on rail */}
             {isActive && (
-              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#F05BCE] shadow-[0_0_10px_rgba(240,91,206,0.9)]" />
             )}
 
             <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
               <Icon
                 className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                  isActive ? 'text-indigo-400' : 'text-slate-400 group-hover:text-slate-200'
+                  isActive ? 'text-[#F05BCE]' : 'text-[#A99AAA] group-hover:text-[#F5EAF4]'
                 }`}
               />
               {!collapsed && <span className="truncate">{item.label}</span>}
@@ -159,8 +159,8 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               <span
                 className={`text-[9px] px-1.5 py-0.5 rounded font-mono font-bold shrink-0 ${
                   item.badge.includes('cr')
-                    ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
-                    : 'bg-white/[0.06] text-slate-300 border border-white/10'
+                    ? 'bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30'
+                    : 'bg-[#211522] text-[#A99AAA] border border-[#39233B]'
                 }`}
               >
                 {item.badge}
@@ -176,10 +176,10 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     <>
       <div className="flex flex-col flex-1 overflow-y-auto overscroll-contain">
         {/* Brand Header */}
-        <div className={`p-4 border-b border-white/8 flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
+        <div className={`p-4 border-b border-[#39233B] flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
           {collapsed ? (
-            <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-black text-sm hover:scale-105 transition-transform">
-              F
+            <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-[#F05BCE]/15 border border-[#F05BCE]/30 flex items-center justify-center text-[#F05BCE] font-black text-sm hover:scale-105 transition-transform">
+              W
             </Link>
           ) : (
             <Logo size="sm" showTagline={false} />
@@ -190,24 +190,24 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               type="button"
               onClick={() => setIsMobileOpen(false)}
               aria-label="Close navigation"
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1.5 rounded-xl text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522] transition-colors cursor-pointer"
             >
-              <X className="w-5 h-5 text-slate-300" />
+              <X className="w-5 h-5 text-[#F5EAF4]" />
             </button>
           )}
         </div>
 
-        {/* Quick Create CTA */}
+        {/* Quick Create CTA in Hot Pink */}
         <div className={`p-3 ${collapsed ? 'px-2' : ''}`}>
           <Link
             href="/create"
             onClick={() => isDrawer && setIsMobileOpen(false)}
             title={collapsed ? 'New Creation' : undefined}
-            className={`w-full py-2.5 px-3 min-h-[44px] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 transition-all cursor-pointer border border-white/10 ${
+            className={`w-full py-2.5 px-3 min-h-[44px] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:from-[#E046BD] hover:to-[#A21CAF] transition-all cursor-pointer border border-[#F05BCE]/40 ${
               collapsed ? 'px-0' : ''
             }`}
           >
-            <Sparkles className="w-4 h-4 text-indigo-200 shrink-0" />
+            <Sparkles className="w-4 h-4 text-white shrink-0" />
             {!collapsed && <span>New Creation</span>}
           </Link>
         </div>
@@ -223,14 +223,14 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2.5'
             } min-h-[44px] rounded-xl text-xs font-semibold transition-all border ${
               pathname === '/dashboard'
-                ? 'font-bold bg-white/[0.08] text-white border-white/16 shadow-xs'
-                : 'border-transparent text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                ? 'font-bold bg-[#211522] text-[#F5EAF4] border-[#39233B] shadow-xs'
+                : 'border-transparent text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522]/50'
             }`}
           >
             {pathname === '/dashboard' && (
-              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#F05BCE] shadow-[0_0_10px_rgba(240,91,206,0.9)]" />
             )}
-            <Home className="w-4 h-4 text-slate-400 shrink-0 group-hover:text-white" />
+            <Home className="w-4 h-4 text-[#A99AAA] shrink-0 group-hover:text-[#F5EAF4]" />
             {!collapsed && <span>Dashboard Overview</span>}
           </Link>
 
@@ -254,7 +254,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               } min-h-[44px] rounded-xl text-xs font-semibold transition-all mt-2 ${
                 pathname.startsWith('/admin')
                   ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold'
-                  : 'text-amber-400 hover:bg-white/[0.04]'
+                  : 'text-amber-400 hover:bg-[#211522]'
               }`}
             >
               <ShieldAlert className="w-4 h-4 shrink-0" />
@@ -265,38 +265,38 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
       </div>
 
       {/* Credit Wallet Widget & Footer Profile */}
-      <div className={`p-3 border-t border-white/8 space-y-2 ${collapsed ? 'px-2' : ''}`}>
+      <div className={`p-3 border-t border-[#39233B] space-y-2 ${collapsed ? 'px-2' : ''}`}>
         <Link
           href="/dashboard/wallet"
           onClick={() => isDrawer && setIsMobileOpen(false)}
           title={collapsed ? `Credits: ${credits.availableBalance}` : undefined}
-          className={`bg-[#11131A] hover:bg-[#151822] rounded-2xl border border-white/8 hover:border-white/16 transition-colors block text-left shadow-xs ${
+          className={`bg-[#211522] hover:bg-[#2A1A2B] rounded-2xl border border-[#39233B] hover:border-[#F05BCE]/40 transition-colors block text-left shadow-xs ${
             collapsed ? 'p-2 flex flex-col items-center justify-center gap-1' : 'p-3 flex items-center justify-between'
           }`}
         >
           <div className={`flex items-center ${collapsed ? 'flex-col gap-1' : 'gap-2'}`}>
-            <div className="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 shrink-0">
-              <Zap className="w-4 h-4 text-indigo-400" />
+            <div className="w-7 h-7 rounded-lg bg-[#F05BCE]/20 text-[#F05BCE] flex items-center justify-center border border-[#F05BCE]/30 shrink-0">
+              <Zap className="w-4 h-4 text-[#F05BCE]" />
             </div>
             {!collapsed ? (
               <div>
-                <div className="text-[10px] text-slate-400 font-medium">Available Credits</div>
-                <div className="text-sm font-black text-white font-mono">{credits.availableBalance}</div>
+                <div className="text-[10px] text-[#A99AAA] font-medium">Available Credits</div>
+                <div className="text-sm font-black text-[#F5EAF4] font-mono">{credits.availableBalance}</div>
               </div>
             ) : (
-              <span className="text-[10px] font-mono font-bold text-white">{credits.availableBalance}</span>
+              <span className="text-[10px] font-mono font-bold text-[#F5EAF4]">{credits.availableBalance}</span>
             )}
           </div>
-          {!collapsed && <span className="text-[10px] text-indigo-400 font-bold hover:underline">Top Up</span>}
+          {!collapsed && <span className="text-[10px] text-[#F05BCE] font-bold hover:underline">Top Up</span>}
         </Link>
 
         {/* Footer Links & Rail Toggle */}
-        <div className={`flex items-center ${collapsed ? 'flex-col gap-2' : 'justify-between'} text-xs text-slate-400 px-1 pt-1`}>
+        <div className={`flex items-center ${collapsed ? 'flex-col gap-2' : 'justify-between'} text-xs text-[#A99AAA] px-1 pt-1`}>
           {!collapsed && (
             <Link
               href="/help"
               onClick={() => isDrawer && setIsMobileOpen(false)}
-              className="hover:text-white flex items-center gap-1 text-[11px] font-medium transition-colors"
+              className="hover:text-[#F5EAF4] flex items-center gap-1 text-[11px] font-medium transition-colors"
             >
               <HelpCircle className="w-3.5 h-3.5" />
               <span>Support</span>
@@ -309,7 +309,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
                 type="button"
                 onClick={toggleCollapsed}
                 title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                className="p-1 rounded-lg hover:bg-[#211522] text-[#A99AAA] hover:text-[#F5EAF4] transition-colors cursor-pointer"
               >
                 {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
               </button>
@@ -331,9 +331,9 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
 
   return (
     <>
-      {/* Desktop Persistent Sidebar with smooth width transition */}
+      {/* Desktop Persistent Sidebar in Midnight Plum */}
       <aside
-        className={`hidden md:flex flex-col justify-between shrink-0 h-full select-none border-r border-white/8 bg-[#0B0C10] text-slate-200 transition-[width] duration-200 ease-in-out ${
+        className={`hidden md:flex flex-col justify-between shrink-0 h-full select-none border-r border-[#39233B] bg-[#170E1A] text-[#F5EAF4] transition-[width] duration-200 ease-in-out ${
           isCollapsed ? 'w-20' : 'w-64'
         }`}
       >
@@ -344,10 +344,10 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
       {isMobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex animate-in fade-in duration-200">
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-black/85 backdrop-blur-xs transition-opacity"
             onClick={() => setIsMobileOpen(false)}
           />
-          <aside className="relative flex flex-col justify-between w-72 max-w-[85vw] h-full bg-[#0B0C10] shadow-2xl z-10 border-r border-white/10 animate-in slide-in-from-left duration-200 text-slate-200">
+          <aside className="relative flex flex-col justify-between w-72 max-w-[85vw] h-full bg-[#170E1A] shadow-2xl z-10 border-r border-[#39233B] animate-in slide-in-from-left duration-200 text-[#F5EAF4]">
             {renderContent(true, false)}
           </aside>
         </div>

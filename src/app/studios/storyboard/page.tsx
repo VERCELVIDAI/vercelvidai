@@ -112,35 +112,35 @@ export default function StoryboardStudioPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden font-sans bg-[#090A0D] text-white">
+    <div className="flex h-screen overflow-hidden font-sans bg-[#100A12] text-[#F5EAF4]">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#100A12]">
         <DashboardHeader user={authData?.user} />
 
         {/* Studio Subheader */}
-        <div className="h-14 border-b border-white/8 glass-navbar px-6 flex items-center justify-between">
+        <div className="h-14 border-b border-[#39233B] bg-[#100A12]/90 backdrop-blur-md px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-teal-100 border border-teal-300 flex items-center justify-center">
-              <Layers className="w-4 h-4 text-teal-700" />
+            <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/10 border border-[#F05BCE]/25 flex items-center justify-center">
+              <Layers className="w-4 h-4 text-[#F05BCE]" />
             </div>
             <div className="text-left">
               <div className="flex items-center gap-2">
-                <h1 className="text-sm font-bold tracking-tight text-white uppercase">Storyboard Studio</h1>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 border border-teal-300 font-bold">
+                <h1 className="text-sm font-bold tracking-tight text-[#F5EAF4] uppercase">Storyboard Studio</h1>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 font-bold font-mono">
                   Scene Orchestrator
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500">Multi-shot narrative sequencing, camera choreographies & pacing</p>
+              <p className="text-[11px] text-[#A99AAA]">Multi-shot narrative sequencing, camera choreographies & pacing</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={handleOpenInEditor}
-              className="px-3.5 py-1.5 rounded-lg glass-card border border-white/10 hover:border-emerald-500/40 text-xs font-bold text-slate-300 hover:text-emerald-800 flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+              className="px-3.5 py-1.5 rounded-lg bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/50 text-xs font-bold text-[#F5EAF4] hover:text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
             >
-              <Sliders className="w-3.5 h-3.5 text-emerald-600" />
+              <Sliders className="w-3.5 h-3.5 text-[#F05BCE]" />
               <span>Export to Timeline Editor</span>
             </button>
           </div>
@@ -149,9 +149,9 @@ export default function StoryboardStudioPage() {
         {/* Workspace Canvas */}
         <div className="flex-1 overflow-y-auto p-8 space-y-6 max-w-6xl mx-auto w-full text-left">
           {/* Concept Header Composer */}
-          <div className="p-6 rounded-2xl glass-card border border-white/10 space-y-3 shadow-md">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-emerald-600" />
+          <div className="p-6 rounded-2xl bg-[#211522] border border-[#39233B] space-y-3 shadow-md">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#F05BCE]" />
               Overarching Narrative Concept
             </label>
             <div className="flex items-center gap-3">
@@ -159,12 +159,12 @@ export default function StoryboardStudioPage() {
                 type="text"
                 value={concept}
                 onChange={(e) => setConcept(e.target.value)}
-                className="flex-1 glass-input border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
+                className="flex-1 bg-[#100A12] border border-[#39233B] rounded-xl px-4 py-2.5 text-xs text-[#F5EAF4] placeholder-[#A99AAA]/50 focus:outline-none focus:border-[#F05BCE]"
               />
               <button
                 onClick={handleGenerateAIScenes}
                 disabled={isGenerating}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-[#F05BCE]/25 transition-all disabled:opacity-50 cursor-pointer"
               >
                 <Sparkles className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
                 <span>{isGenerating ? 'Gemini Orchestrating...' : 'Regenerate Scenes with Gemini'}</span>
@@ -175,7 +175,7 @@ export default function StoryboardStudioPage() {
           {/* Scenes Grid */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-[#A99AAA] font-mono">
                 Timeline Sequences ({scenes.length} Shots • {scenes.reduce((acc, s) => acc + s.duration, 0)}s Total)
               </h2>
             </div>
@@ -184,15 +184,15 @@ export default function StoryboardStudioPage() {
               {scenes.map((scene, idx) => (
                 <div
                   key={scene.id}
-                  className="rounded-2xl glass-card border border-white/10 p-5 flex items-start gap-6 hover:border-emerald-500/40 hover:shadow-lg transition-all group"
+                  className="rounded-2xl bg-[#211522] border border-[#39233B] p-5 flex items-start gap-6 hover:border-[#F05BCE]/40 hover:shadow-lg transition-all group"
                 >
                   {/* Scene Number Index */}
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.08] border border-emerald-300 flex items-center justify-center font-mono font-bold text-sm text-emerald-900 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#F05BCE]/15 border border-[#F05BCE]/30 flex items-center justify-center font-mono font-bold text-sm text-[#F05BCE] shrink-0">
                     0{scene.sceneNumber}
                   </div>
 
                   {/* Thumbnail / Video Preview */}
-                  <div className="w-52 aspect-video rounded-xl overflow-hidden bg-slate-900 border border-white/10 shrink-0 relative">
+                  <div className="w-52 aspect-video rounded-xl overflow-hidden bg-black border border-[#39233B] shrink-0 relative">
                     <video
                       src={scene.previewUrl}
                       muted
@@ -201,7 +201,7 @@ export default function StoryboardStudioPage() {
                       playsInline
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute bottom-2 left-2 bg-black/60 px-2 py-0.5 rounded text-[10px] font-mono text-white">
+                    <div className="absolute bottom-2 left-2 bg-[#100A12]/80 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-mono text-[#F5EAF4]">
                       {scene.duration}s • {scene.camera}
                     </div>
                   </div>
@@ -209,18 +209,18 @@ export default function StoryboardStudioPage() {
                   {/* Scene Details */}
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                        <Camera className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-xs font-bold text-[#F5EAF4] flex items-center gap-1.5">
+                        <Camera className="w-3.5 h-3.5 text-[#F05BCE]" />
                         Camera: {scene.camera}
                       </span>
-                      <span className="text-xs font-mono text-slate-500 font-semibold">{scene.duration} Seconds</span>
+                      <span className="text-xs font-mono text-[#A99AAA] font-semibold">{scene.duration} Seconds</span>
                     </div>
 
-                    <p className="text-xs text-white font-bold leading-relaxed bg-[#151822] p-3 rounded-lg border border-white/8">
+                    <p className="text-xs text-[#F5EAF4] font-medium leading-relaxed bg-[#100A12] p-3 rounded-lg border border-[#39233B]">
                       {scene.prompt}
                     </p>
 
-                    <div className="text-[11px] text-slate-400 italic">
+                    <div className="text-[11px] text-[#A99AAA] italic">
                       Voiceover Narration: &quot;{scene.narration}&quot;
                     </div>
                   </div>

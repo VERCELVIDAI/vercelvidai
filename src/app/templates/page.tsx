@@ -296,32 +296,32 @@ function DiscoveryFeedContent() {
   }, [templates, activeTab]);
 
   return (
-    <div className="min-h-screen bg-[#080B0A] text-white flex flex-col selection:bg-emerald-500/30 selection:text-emerald-200">
+    <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex flex-col selection:bg-[#F05BCE]/30 selection:text-pink-200">
       {/* ============================================================== */}
       {/* 1. TOP STICKY DISCOVERY HEADER & FORMAT NAVIGATION */}
       {/* ============================================================== */}
-      <header className="sticky top-0 z-40 w-full bg-[#080B0A]/95 backdrop-blur-2xl border-b border-white/10 transition-all">
+      <header className="sticky top-0 z-40 w-full bg-[#100A12]/95 backdrop-blur-2xl border-b border-[#39233B] transition-all">
         {/* Main Navigation Row */}
         <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3 sm:gap-6">
           {/* Left: Brand Logo & Discovery Tag */}
           <div className="flex items-center gap-3 shrink-0">
             <Link href="/" className="flex items-center gap-2 group">
               <Logo size="sm" />
-              <span className="hidden sm:inline-flex text-[11px] font-bold font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+              <span className="hidden sm:inline-flex text-[11px] font-bold font-mono uppercase tracking-wider text-[#F05BCE] bg-[#211522] border border-[#F05BCE]/30 px-2 py-0.5 rounded-full">
                 Creative Studio Feed
               </span>
             </Link>
           </div>
 
           {/* Center: Feed Stream Tabs (Recommended, Following, Events) */}
-          <nav className="flex items-center bg-white/5 border border-white/10 rounded-full p-1 shrink-0">
+          <nav className="flex items-center bg-[#211522] border border-[#39233B] rounded-full p-1 shrink-0">
             <button
               type="button"
               onClick={() => setActiveTab('recommended')}
               className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'recommended'
-                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
-                  : 'text-white/70 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-md shadow-[rgba(240,91,206,0.3)]'
+                  : 'text-[#A99AAA] hover:text-white'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -333,8 +333,8 @@ function DiscoveryFeedContent() {
               onClick={() => setActiveTab('following')}
               className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'following'
-                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
-                  : 'text-white/70 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-md shadow-[rgba(240,91,206,0.3)]'
+                  : 'text-[#A99AAA] hover:text-white'
               }`}
             >
               <Users className="w-3.5 h-3.5" />
@@ -351,11 +351,11 @@ function DiscoveryFeedContent() {
               onClick={() => setActiveTab('events')}
               className={`flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'events'
-                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-950/60'
-                  : 'text-white/70 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-md shadow-[rgba(240,91,206,0.3)]'
+                  : 'text-[#A99AAA] hover:text-white'
               }`}
             >
-              <Trophy className="w-3.5 h-3.5 text-amber-400" />
+              <Trophy className="w-3.5 h-3.5 text-pink-300" />
               <span>Events</span>
             </button>
           </nav>
@@ -363,19 +363,19 @@ function DiscoveryFeedContent() {
           {/* Search Input Bar (Desktop) */}
           {activeTab !== 'events' && (
             <div className="relative hidden md:block flex-1 max-w-md">
-              <Search className="w-4 h-4 text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#A99AAA] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by prompt, style, format, creator..."
-                className="w-full bg-white/5 border border-white/10 text-white text-xs pl-10 pr-9 py-2 rounded-full focus:outline-none focus:border-emerald-500/80 focus:bg-white/10 transition-all placeholder:text-white/35 font-normal"
+                className="w-full bg-[#211522] border border-[#39233B] text-[#F5EAF4] text-xs pl-10 pr-9 py-2 rounded-full focus:outline-none focus:border-[#F05BCE] focus:bg-[#2A1B2C] transition-all placeholder:text-[#A99AAA]/50 font-normal"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white p-0.5"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A99AAA] hover:text-white p-0.5"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -394,30 +394,30 @@ function DiscoveryFeedContent() {
                   setIsPublishModalOpen(true);
                 }
               }}
-              className="px-3 sm:px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-white font-bold text-xs flex items-center gap-1.5 border border-white/15 shadow-sm transition-all hover:border-emerald-500/40 cursor-pointer"
+              className="px-3 sm:px-4 py-2 rounded-full bg-[#211522] hover:bg-[#2A1B2C] text-[#F5EAF4] font-bold text-xs flex items-center gap-1.5 border border-[#39233B] shadow-sm transition-all hover:border-[#F05BCE]/40 cursor-pointer"
             >
-              <Upload className="w-3.5 h-3.5 text-emerald-400" />
+              <Upload className="w-3.5 h-3.5 text-[#F05BCE]" />
               <span>Publish</span>
             </button>
 
             {currentUser ? (
               <Link
                 href="/dashboard"
-                className="flex items-center gap-2 p-1 pl-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                className="flex items-center gap-2 p-1 pl-2.5 rounded-full bg-[#211522] hover:bg-[#2A1B2C] border border-[#39233B] transition-colors"
               >
-                <span className="hidden sm:inline-flex text-[11px] font-mono font-medium text-emerald-400">
+                <span className="hidden sm:inline-flex text-[11px] font-mono font-medium text-[#F05BCE]">
                   Dashboard
                 </span>
                 <img
                   src={currentUser.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
                   alt={currentUser.displayName || 'User'}
-                  className="w-7 h-7 rounded-full object-cover ring-1 ring-emerald-500/50"
+                  className="w-7 h-7 rounded-full object-cover ring-1 ring-[#F05BCE]/50"
                 />
               </Link>
             ) : (
               <Link
                 href="/login?redirect=/templates"
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-950/60 transition-all"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-xs shadow-md shadow-[rgba(240,91,206,0.25)] transition-all"
               >
                 Sign In
               </Link>
@@ -427,7 +427,7 @@ function DiscoveryFeedContent() {
 
         {/* Format Selector Bar: Video, Image, Text Animation */}
         {activeTab !== 'events' && (
-          <div className="border-t border-white/10 bg-[#060807] px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
+          <div className="border-t border-[#39233B] bg-[#170E1A] px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
             {/* Format Pill Switcher */}
             <div className="flex items-center gap-2 shrink-0">
               {FORMAT_TABS.map((tab) => {
@@ -449,12 +449,8 @@ function DiscoveryFeedContent() {
                     onClick={() => setSelectedType(tab.id as any)}
                     className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                       isActive
-                        ? tab.id === 'image'
-                          ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-md shadow-pink-950/60'
-                          : tab.id === 'text-animation'
-                          ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-md shadow-cyan-950/60'
-                          : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-950/60'
-                        : 'bg-white/5 text-white/70 hover:text-white hover:bg-white/10 border border-white/10'
+                        ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-md shadow-[rgba(240,91,206,0.3)]'
+                        : 'bg-[#211522] text-[#A99AAA] hover:text-white hover:bg-[#2A1B2C] border border-[#39233B]'
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -477,19 +473,19 @@ function DiscoveryFeedContent() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="bg-white/5 border border-white/10 text-white text-xs px-3 py-1.5 rounded-xl focus:outline-none focus:border-emerald-500 font-medium cursor-pointer"
+                className="bg-[#211522] border border-[#39233B] text-[#F5EAF4] text-xs px-3 py-1.5 rounded-xl focus:outline-none focus:border-[#F05BCE] font-medium cursor-pointer"
               >
                 {DISCOVERY_CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat} className="bg-[#121915] text-white">
+                  <option key={cat} value={cat} className="bg-[#211522] text-[#F5EAF4]">
                     {cat}
                   </option>
                 ))}
               </select>
 
               {/* Aspect Ratio Filter Selector on Right */}
-              <div className="hidden lg:flex items-center gap-1 pl-2 border-l border-white/10">
-                <span className="text-xs text-white/50 flex items-center gap-1 font-mono">
-                  <Ratio className="w-3 h-3 text-emerald-400" />
+              <div className="hidden lg:flex items-center gap-1 pl-2 border-l border-[#39233B]">
+                <span className="text-xs text-[#A99AAA] flex items-center gap-1 font-mono">
+                  <Ratio className="w-3 h-3 text-[#F05BCE]" />
                 </span>
                 {[
                   { label: 'All', value: 'all' },
@@ -504,8 +500,8 @@ function DiscoveryFeedContent() {
                     onClick={() => setSelectedAspect(a.value)}
                     className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
                       selectedAspect === a.value
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                        : 'text-white/60 hover:text-white'
+                        ? 'bg-[#F05BCE]/20 text-pink-200 border border-[#F05BCE]/40'
+                        : 'text-[#A99AAA] hover:text-white'
                     }`}
                   >
                     {a.label}
@@ -523,17 +519,17 @@ function DiscoveryFeedContent() {
       <main className="flex-1 max-w-[1700px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-32">
         {/* Spotlight Showcase Banner for Curated Collections */}
         {activeTab === 'recommended' && !searchQuery && selectedCategory === 'All Categories' && (
-          <div className="mb-8 p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-emerald-950/40 via-teal-950/20 to-black/60 border border-emerald-500/20 relative overflow-hidden shadow-2xl">
+          <div className="mb-8 p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#211522] via-[#2A1B2C] to-[#100A12] border border-[#39233B] relative overflow-hidden shadow-2xl">
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="space-y-1">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold">
-                  <Sparkles className="w-3 h-3" />
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F05BCE]/20 border border-[#F05BCE]/30 text-pink-200 text-[11px] font-bold">
+                  <Sparkles className="w-3 h-3 text-[#F05BCE]" />
                   <span>Curated Commercial Production Suite</span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-black text-[#F5EAF4] tracking-tight">
                   53 Production-Grade Creative Templates
                 </h2>
-                <p className="text-xs sm:text-sm text-white/70 max-w-2xl">
+                <p className="text-xs sm:text-sm text-[#A99AAA] max-w-2xl">
                   Curated across <strong>AI Video</strong> (Gemini Omni Flash • 15 cr), <strong>AI Image</strong> (Gemini Imagen • 5 cr), and <strong>Deterministic Text Animation</strong> (Free Live Engine).
                 </p>
               </div>
@@ -541,16 +537,16 @@ function DiscoveryFeedContent() {
               <div className="flex items-center gap-2 self-start md:self-auto">
                 <Link
                   href="/create"
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-emerald-950/60 transition-all hover:scale-[1.02]"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-[rgba(240,91,206,0.25)] transition-all hover:scale-[1.02]"
                 >
                   <Film className="w-3.5 h-3.5" />
                   <span>Open Video Studio</span>
                 </Link>
                 <Link
                   href="/ai-image-generator"
-                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center gap-1.5 border border-white/10 transition-colors"
+                  className="px-4 py-2.5 rounded-xl bg-[#211522] hover:bg-[#2A1B2C] text-[#F5EAF4] font-bold text-xs flex items-center gap-1.5 border border-[#39233B] transition-colors"
                 >
-                  <Wand2 className="w-3.5 h-3.5 text-pink-400" />
+                  <Wand2 className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>AI Image Studio</span>
                 </Link>
               </div>
@@ -565,13 +561,13 @@ function DiscoveryFeedContent() {
         ) : activeTab === 'following' && displayedTemplates.length === 0 ? (
           /* FOLLOWING EMPTY STATE WITH SUGGESTED CREATORS */
           <div className="py-16 text-center max-w-2xl mx-auto space-y-6">
-            <div className="w-16 h-16 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mx-auto">
+            <div className="w-16 h-16 rounded-3xl bg-[#F05BCE]/10 border border-[#F05BCE]/20 flex items-center justify-center text-[#F05BCE] mx-auto">
               <Users className="w-8 h-8" />
             </div>
 
             <div>
-              <h3 className="text-2xl font-bold text-white">Your Following Feed is Empty</h3>
-              <p className="text-xs sm:text-sm text-white/60 mt-1 max-w-md mx-auto">
+              <h3 className="text-2xl font-bold text-[#F5EAF4]">Your Following Feed is Empty</h3>
+              <p className="text-xs sm:text-sm text-[#A99AAA] mt-1 max-w-md mx-auto">
                 Follow top AI creators, commercial directors, and motion designers to see their latest generation templates here.
               </p>
             </div>
@@ -581,24 +577,24 @@ function DiscoveryFeedContent() {
               {suggestedCreators.map((creator) => (
                 <div
                   key={creator.id}
-                  className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3 hover:border-emerald-500/30 transition-colors"
+                  className="p-4 rounded-2xl bg-[#211522] border border-[#39233B] flex items-center justify-between gap-3 hover:border-[#F05BCE]/40 transition-colors"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <img
                       src={creator.avatar}
                       alt={creator.name}
-                      className="w-10 h-10 rounded-full object-cover ring-1 ring-emerald-500/40 shrink-0"
+                      className="w-10 h-10 rounded-full object-cover ring-1 ring-[#F05BCE]/40 shrink-0"
                     />
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-white truncate">{creator.name}</h4>
-                      <p className="text-[11px] text-white/50 truncate">{creator.bio}</p>
+                      <h4 className="text-xs font-bold text-[#F5EAF4] truncate">{creator.name}</h4>
+                      <p className="text-[11px] text-[#A99AAA] truncate">{creator.bio}</p>
                     </div>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => handleToggleFollow(creator.id)}
-                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shrink-0 shadow-sm"
+                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-xs shrink-0 shadow-sm"
                   >
                     Follow
                   </button>
@@ -609,7 +605,7 @@ function DiscoveryFeedContent() {
             <button
               type="button"
               onClick={() => setActiveTab('recommended')}
-              className="mt-6 text-xs text-emerald-400 hover:underline font-semibold"
+              className="mt-6 text-xs text-[#F05BCE] hover:underline font-semibold"
             >
               ← Back to Recommended Feed
             </button>
@@ -617,9 +613,9 @@ function DiscoveryFeedContent() {
         ) : displayedTemplates.length === 0 ? (
           /* EMPTY SEARCH / FILTER RESULTS */
           <div className="py-24 text-center max-w-md mx-auto space-y-4">
-            <Film className="w-12 h-12 text-white/30 mx-auto" />
-            <h3 className="text-lg font-bold text-white">No Templates Found</h3>
-            <p className="text-xs text-white/60">
+            <Film className="w-12 h-12 text-[#A99AAA]/40 mx-auto" />
+            <h3 className="text-lg font-bold text-[#F5EAF4]">No Templates Found</h3>
+            <p className="text-xs text-[#A99AAA]">
               We couldn&apos;t find any templates matching your filter criteria. Try resetting the category, format, or search keywords.
             </p>
             <button
@@ -630,7 +626,7 @@ function DiscoveryFeedContent() {
                 setSelectedAspect('all');
                 setSearchQuery('');
               }}
-              className="px-4 py-2 rounded-full bg-emerald-500 text-black text-xs font-bold shadow-md hover:bg-emerald-400 transition-colors"
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white text-xs font-bold shadow-md hover:brightness-110 transition-colors"
             >
               Reset Filters
             </button>
@@ -699,8 +695,8 @@ export default function TemplatesPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#080B0A] flex items-center justify-center text-white">
-          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen bg-[#100A12] flex items-center justify-center text-white">
+          <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

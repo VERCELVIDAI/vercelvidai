@@ -148,18 +148,18 @@ export function DiscoveryDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#101513] border border-white/15 shadow-2xl text-white flex flex-col lg:flex-row overflow-hidden">
+      <div className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#211522] border border-[#39233B] shadow-2xl text-[#F5EAF4] flex flex-col lg:flex-row overflow-hidden">
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-40 p-2 rounded-full bg-black/60 hover:bg-black/90 text-white/70 hover:text-white border border-white/10 transition-colors"
+          className="absolute top-4 right-4 z-40 p-2 rounded-full bg-[#100A12]/80 hover:bg-[#100A12] text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B] transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Left: Media Preview Section (Dynamic by Template Type) */}
-        <div className="relative flex-1 bg-black flex items-center justify-center min-h-[320px] lg:min-h-[560px] overflow-hidden">
+        <div className="relative flex-1 bg-[#100A12] flex items-center justify-center min-h-[320px] lg:min-h-[560px] overflow-hidden">
           {isVideo && (template.isStaticPreview || !template.videoPreview) ? (
             <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
               <img
@@ -167,15 +167,15 @@ export function DiscoveryDetailModal({
                 alt={template.title}
                 className="max-w-full max-h-[70vh] lg:max-h-[85vh] object-contain rounded-2xl shadow-2xl"
               />
-              <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-emerald-500/40 text-emerald-300 text-xs font-semibold shadow-lg">
-                <Film className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#100A12]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#F05BCE]/40 text-[#F05BCE] text-xs font-semibold shadow-lg">
+                <Film className="w-3.5 h-3.5 text-[#F05BCE]" />
                 <span>Static Creative Preview • Render via Gemini Omni Flash (15 cr)</span>
               </div>
               <div className="absolute bottom-4 inset-x-4 flex items-center justify-between z-30 pointer-events-auto">
-                <span className="text-xs font-mono px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-white/90 border border-white/15">
+                <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#100A12]/90 backdrop-blur-md text-[#F5EAF4] border border-[#39233B]">
                   {template.aspect} • {template.duration || '15s'}
                 </span>
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#211522] text-[#F05BCE] border border-[#F05BCE]/30">
                   Google Gemini (gemini-omni-1.1-flash)
                 </span>
               </div>
@@ -262,67 +262,61 @@ export function DiscoveryDetailModal({
         </div>
 
         {/* Right: Info, Prompt, & Generation Actions */}
-        <div className="w-full lg:w-[420px] p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#0E1015] border-t lg:border-t-0 lg:border-l border-white/10">
+        <div className="w-full lg:w-[420px] p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#211522] border-t lg:border-t-0 lg:border-l border-[#39233B]">
           <div className="space-y-6">
             {/* Header: Title, Category & Format Badge */}
             <div>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
-                  isImage
-                    ? 'text-pink-300 bg-pink-950/70 border-pink-500/40'
-                    : isText
-                    ? 'text-cyan-300 bg-cyan-950/70 border-cyan-500/40'
-                    : 'text-emerald-400 bg-emerald-950/70 border-emerald-500/30'
-                }`}>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border text-[#F05BCE] bg-[#F05BCE]/15 border-[#F05BCE]/30">
                   {template.category}
                 </span>
                 {template.badge && (
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-950/70 border border-amber-500/30 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold text-[#F5EAF4] bg-[#100A12] border border-[#39233B] px-2 py-0.5 rounded-full">
                     {template.badge}
                   </span>
                 )}
-                <span className="text-[10px] font-mono text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-mono text-[#A99AAA] bg-[#100A12] border border-[#39233B] px-2 py-0.5 rounded-full">
                   {isImage ? '🎨 AI Image' : isText ? '✨ Text Animation' : '🎬 AI Video'}
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black text-[#F5EAF4] tracking-tight">
                 {template.title}
               </h2>
-              <p className="text-xs text-white/70 mt-1 leading-relaxed">
+              <p className="text-xs text-[#A99AAA] mt-1 leading-relaxed">
                 {template.description}
               </p>
             </div>
 
             {/* Creator Card */}
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/10">
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#100A12] border border-[#39233B]">
               <div className="flex items-center gap-3">
                 <img
                   src={template.creatorAvatar}
                   alt={template.creatorName}
-                  className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/40"
+                  className="w-10 h-10 rounded-full object-cover ring-2 ring-[#F05BCE]/40"
                 />
                 <div>
-                  <h4 className="text-sm font-bold text-white">{template.creatorName}</h4>
-                  <p className="text-[11px] text-white/50">Verified Fluvia Creator</p>
+                  <h4 className="text-sm font-bold text-[#F5EAF4]">{template.creatorName}</h4>
+                  <p className="text-[11px] text-[#A99AAA]">Verified Fluvia Creator</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => onToggleFollow(template.creatorId)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
                   isFollowing
-                    ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/30'
-                    : 'bg-white/10 hover:bg-white/20 text-white border border-white/10'
+                    ? 'bg-[#F05BCE]/20 text-[#F5EAF4] border border-[#F05BCE]'
+                    : 'bg-[#211522] hover:bg-[#100A12] text-[#F5EAF4] border border-[#39233B]'
                 }`}
               >
                 {isFollowing ? (
                   <>
-                    <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    <UserCheck className="w-3.5 h-3.5 text-[#F05BCE]" />
                     <span>Following</span>
                   </>
                 ) : (
                   <>
-                    <UserPlus className="w-3.5 h-3.5" />
+                    <UserPlus className="w-3.5 h-3.5 text-[#F05BCE]" />
                     <span>Follow</span>
                   </>
                 )}
@@ -330,21 +324,21 @@ export function DiscoveryDetailModal({
             </div>
 
             {/* Generation Prompt Box */}
-            <div className="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+            <div className="p-4 rounded-2xl bg-[#100A12] border border-[#39233B] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-xs font-bold text-[#F05BCE] flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>Production Prompt & Settings</span>
                 </span>
                 <button
                   type="button"
                   onClick={handleCopyPrompt}
-                  className="text-[11px] text-white/70 hover:text-white flex items-center gap-1 font-mono transition-colors"
+                  className="text-[11px] text-[#A99AAA] hover:text-[#F5EAF4] flex items-center gap-1 font-mono transition-colors cursor-pointer"
                 >
                   {copiedPrompt ? (
                     <>
-                      <Check className="w-3 h-3 text-emerald-400" />
-                      <span className="text-emerald-400">Copied!</span>
+                      <Check className="w-3 h-3 text-[#F05BCE]" />
+                      <span className="text-[#F05BCE]">Copied!</span>
                     </>
                   ) : (
                     <>
@@ -354,27 +348,27 @@ export function DiscoveryDetailModal({
                   )}
                 </button>
               </div>
-              <p className="text-xs font-mono text-white/85 leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5 select-all">
+              <p className="text-xs font-mono text-[#F5EAF4] leading-relaxed bg-[#211522] p-3 rounded-xl border border-[#39233B] select-all">
                 {template.prompt || template.description}
               </p>
             </div>
 
             {/* Tech Specs */}
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
-                <span className="text-[10px] text-white/50 block">Aspect Ratio</span>
-                <strong className="text-white font-mono">{template.aspectLabel || template.aspect}</strong>
+              <div className="p-2.5 rounded-xl bg-[#100A12] border border-[#39233B]">
+                <span className="text-[10px] text-[#A99AAA] block">Aspect Ratio</span>
+                <strong className="text-[#F5EAF4] font-mono">{template.aspectLabel || template.aspect}</strong>
               </div>
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
-                <span className="text-[10px] text-white/50 block">Generation Cost</span>
-                <strong className={`font-mono ${isText ? 'text-cyan-400' : isImage ? 'text-pink-400' : 'text-emerald-400'}`}>
+              <div className="p-2.5 rounded-xl bg-[#100A12] border border-[#39233B]">
+                <span className="text-[10px] text-[#A99AAA] block">Generation Cost</span>
+                <strong className="font-mono text-[#F05BCE]">
                   {isVideo ? '15 Credits' : isImage ? '5 Credits' : '0 Credits (Free)'}
                 </strong>
               </div>
-              <div className="col-span-2 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/20 flex items-center justify-between">
-                <span className="text-[10px] text-emerald-300/80">Active AI Engine</span>
-                <span className="text-xs font-semibold text-emerald-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="col-span-2 p-2.5 rounded-xl bg-[#100A12] border border-[#39233B] flex items-center justify-between">
+                <span className="text-[10px] text-[#A99AAA]">Active AI Engine</span>
+                <span className="text-xs font-semibold text-[#F05BCE] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F05BCE] animate-pulse" />
                   {isImage
                     ? 'Google Gemini Imagen (gemini-3.1-flash-image)'
                     : isText
@@ -386,7 +380,7 @@ export function DiscoveryDetailModal({
           </div>
 
           {/* Action CTAs (Tailored by Template Type) */}
-          <div className="pt-4 border-t border-white/10 space-y-2">
+          <div className="pt-4 border-t border-[#39233B] space-y-2">
             {isVideo ? (
               <>
                 <button
@@ -395,18 +389,18 @@ export function DiscoveryDetailModal({
                     onUseInComposer(template);
                     onClose();
                   }}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/80 transition-all hover:scale-[1.01] cursor-pointer"
+                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all hover:scale-[1.01] cursor-pointer border border-[#F05BCE]/40"
                 >
-                  <Sparkles className="w-4 h-4" />
+                  <Sparkles className="w-4 h-4 text-[#100A12]" />
                   <span>Use in AI Video Studio (15 cr)</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setShowVidsHandoff(true)}
-                  className="w-full py-2.5 px-4 rounded-2xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 hover:text-white border border-blue-500/30 font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-2xl bg-[#100A12] hover:bg-[#211522] text-[#F05BCE] hover:text-[#F5EAF4] border border-[#F05BCE]/30 font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
-                  <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
+                  <ExternalLink className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>Create in Google Vids Workspace (0 cr)</span>
                 </button>
 
@@ -414,9 +408,9 @@ export function DiscoveryDetailModal({
                   type="button"
                   onClick={handleOpenInEditor}
                   disabled={isCreatingProject}
-                  className="w-full py-2.5 px-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white/90 font-medium text-xs flex items-center justify-center gap-2 border border-white/10 transition-colors"
+                  className="w-full py-2.5 px-4 rounded-2xl bg-[#100A12] hover:bg-[#211522] text-[#F5EAF4] font-medium text-xs flex items-center justify-center gap-2 border border-[#39233B] transition-colors cursor-pointer"
                 >
-                  <Film className="w-3.5 h-3.5 text-emerald-400" />
+                  <Film className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>{isCreatingProject ? 'Creating project...' : 'Open Multi-Track Studio Timeline'}</span>
                 </button>
               </>
@@ -428,9 +422,9 @@ export function DiscoveryDetailModal({
                     router.push(`/ai-image-generator?prompt=${encodeURIComponent(template.prompt)}&aspect=${encodeURIComponent(template.aspect)}`);
                     onClose();
                   }}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-pink-950/80 transition-all hover:scale-[1.01] cursor-pointer"
+                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all hover:scale-[1.01] cursor-pointer border border-[#F05BCE]/40"
                 >
-                  <Wand2 className="w-4 h-4" />
+                  <Wand2 className="w-4 h-4 text-[#100A12]" />
                   <span>Generate with Gemini Imagen (5 cr)</span>
                 </button>
 
@@ -440,9 +434,9 @@ export function DiscoveryDetailModal({
                     router.push(`/create?mode=image-to-video&prompt=${encodeURIComponent(template.prompt)}&ref=${encodeURIComponent(template.thumbnail)}`);
                     onClose();
                   }}
-                  className="w-full py-2.5 px-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs flex items-center justify-center gap-2 border border-white/10 transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-2xl bg-[#100A12] hover:bg-[#211522] text-[#F5EAF4] font-medium text-xs flex items-center justify-center gap-2 border border-[#39233B] transition-colors cursor-pointer"
                 >
-                  <Film className="w-3.5 h-3.5 text-emerald-400" />
+                  <Film className="w-3.5 h-3.5 text-[#F05BCE]" />
                   <span>Animate Image to Video in Studio (15 cr)</span>
                 </button>
               </>

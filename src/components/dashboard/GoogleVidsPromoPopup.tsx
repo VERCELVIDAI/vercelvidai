@@ -211,72 +211,72 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
     >
       <div
         ref={modalRef}
-        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#0E1015] border border-white/10 p-5 sm:p-7 shadow-2xl text-left text-white animate-in zoom-in-95 duration-200 scrollbar-thin"
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#211522] border border-[#39233B] p-5 sm:p-7 shadow-2xl text-left text-[#F5EAF4] animate-in zoom-in-95 duration-200 scrollbar-thin"
       >
         {/* Close Button */}
         <button
           type="button"
           onClick={handleClose}
           aria-label="Close promotion dialog"
-          className="absolute right-4 top-4 p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors z-20 cursor-pointer"
+          className="absolute right-4 top-4 p-2 rounded-full text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-white/[0.06] transition-colors z-20 cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Visual Artwork Banner */}
-        <div className="relative aspect-[24/9] sm:aspect-[28/9] w-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#090A0D] via-[#11131A] to-[#1E1B4B] p-4 sm:p-5 flex flex-col justify-between mb-5 border border-white/8 shadow-inner">
-          <div className="flex items-center justify-between text-[11px] text-indigo-300 font-mono">
+        <div className="relative aspect-[24/9] sm:aspect-[28/9] w-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#100A12] via-[#211522] to-[#39233B] p-4 sm:p-5 flex flex-col justify-between mb-5 border border-[#39233B] shadow-inner">
+          <div className="flex items-center justify-between text-[11px] text-[#F05BCE] font-mono">
             <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-400 animate-spin" />
+              <Sparkles className="w-3.5 h-3.5 text-[#F05BCE] animate-spin" />
               GOOGLE VIDS WORKFLOW
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-200 border border-indigo-400/30 text-[10px] font-bold">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 text-[10px] font-bold">
               15 Credits / Video
             </span>
           </div>
 
           <div className="flex items-center gap-3 my-auto">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/20 border border-indigo-400/40 flex items-center justify-center text-indigo-300 shadow-md">
-              <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-indigo-300 translate-x-0.5" />
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#F05BCE]/20 border border-[#F05BCE]/40 flex items-center justify-center text-[#F05BCE] shadow-md">
+              <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-[#F05BCE] translate-x-0.5" />
             </div>
             <div>
-              <div className="text-white font-bold text-sm sm:text-base">AI Video Creative Engine</div>
-              <div className="text-indigo-300/80 text-xs font-mono">Powered by Google Gemini Omni Flash</div>
+              <div className="text-[#F5EAF4] font-bold text-sm sm:text-base">AI Video Creative Engine</div>
+              <div className="text-[#A99AAA] text-xs font-mono">Powered by Google Gemini Omni Flash</div>
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono border-t border-white/8 pt-2">
+          <div className="flex items-center justify-between text-[10px] text-[#A99AAA] font-mono border-t border-[#39233B] pt-2">
             <span>Direct In-App Creation</span>
-            <span className="text-cyan-400 font-semibold">1080p & 4K Export Ready</span>
+            <span className="text-[#F05BCE] font-semibold">1080p & 4K Export Ready</span>
           </div>
         </div>
 
         {/* Main Header Copy */}
         <div className="space-y-2 mb-5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-black uppercase tracking-wider">
-            <Video className="w-3.5 h-3.5 text-indigo-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F05BCE]/15 border border-[#F05BCE]/30 text-[#F05BCE] text-xs font-black uppercase tracking-wider">
+            <Video className="w-3.5 h-3.5 text-[#F05BCE]" />
             <span>Feature Spotlight</span>
           </div>
 
-          <h2 id="google-vids-promo-title" className="text-xl sm:text-2xl font-black text-white tracking-tight">
+          <h2 id="google-vids-promo-title" className="text-xl sm:text-2xl font-black text-[#F5EAF4] tracking-tight">
             Meet Google Vids in Fluvia Flow
           </h2>
 
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#A99AAA] leading-relaxed">
             Turn your ideas into videos with a simple prompt. Choose from cool production templates below or craft your own prompt to create right here or in Google Vids Workspace.
           </p>
         </div>
 
         {/* 🌟 COOL TEMPLATES SHOWCASE SECTION */}
-        <div className="mb-5 rounded-2xl bg-[#11131A] border border-white/8 p-4 space-y-3.5">
+        <div className="mb-5 rounded-2xl bg-[#100A12] border border-[#39233B] p-4 space-y-3.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Flame className="w-4 h-4 text-indigo-400" />
-              <h3 className="font-bold text-xs sm:text-sm text-white uppercase tracking-wider">
+              <Flame className="w-4 h-4 text-[#F05BCE]" />
+              <h3 className="font-bold text-xs sm:text-sm text-[#F5EAF4] uppercase tracking-wider">
                 Cool Video Templates for Google Vids
               </h3>
             </div>
-            <span className="text-[10px] font-mono text-cyan-300 bg-cyan-950/50 border border-cyan-500/30 px-2 py-0.5 rounded-full font-bold">
+            <span className="text-[10px] font-mono text-[#F05BCE] bg-[#F05BCE]/15 border border-[#F05BCE]/30 px-2 py-0.5 rounded-full font-bold">
               6 Curated Starters
             </span>
           </div>
@@ -292,8 +292,8 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
                   onClick={() => setSelectedTemplate(tmpl)}
                   className={`text-left p-2.5 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? 'bg-indigo-600/25 text-white border-indigo-500 shadow-md ring-2 ring-indigo-500/40'
-                      : 'bg-[#151822] hover:bg-[#1A1E2C] text-slate-300 border-white/8 hover:border-white/20'
+                      ? 'bg-[#F05BCE]/20 text-[#F5EAF4] border-[#F05BCE] shadow-md ring-2 ring-[#F05BCE]/40'
+                      : 'bg-[#211522] hover:bg-[#211522]/80 text-[#A99AAA] border-[#39233B] hover:border-[#F05BCE]/30'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
@@ -301,8 +301,8 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
                     <span
                       className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
                         isSelected
-                          ? 'bg-indigo-500/30 text-indigo-200'
-                          : 'bg-white/[0.06] text-slate-400'
+                          ? 'bg-[#F05BCE]/30 text-[#F5EAF4]'
+                          : 'bg-[#100A12] text-[#A99AAA]'
                       }`}
                     >
                       {tmpl.aspect}
@@ -311,14 +311,14 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
                   <div>
                     <h4
                       className={`text-xs font-bold line-clamp-1 leading-snug ${
-                        isSelected ? 'text-white' : 'text-slate-200'
+                        isSelected ? 'text-[#F5EAF4]' : 'text-slate-300'
                       }`}
                     >
                       {tmpl.title}
                     </h4>
                     <p
                       className={`text-[10px] line-clamp-1 mt-0.5 ${
-                        isSelected ? 'text-indigo-300 font-mono' : 'text-slate-400'
+                        isSelected ? 'text-[#F05BCE] font-mono' : 'text-[#A99AAA]'
                       }`}
                     >
                       {tmpl.category}
@@ -330,26 +330,26 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
           </div>
 
           {/* Selected Template Details Box */}
-          <div className="p-3.5 rounded-xl bg-[#151822] border border-white/8 space-y-2.5 shadow-xs">
+          <div className="p-3.5 rounded-xl bg-[#211522] border border-[#39233B] space-y-2.5 shadow-xs">
             <div className="flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="text-lg">{selectedTemplate.emoji}</span>
                 <div>
-                  <h4 className="font-bold text-white text-xs sm:text-sm">
+                  <h4 className="font-bold text-[#F5EAF4] text-xs sm:text-sm">
                     {selectedTemplate.title}
                   </h4>
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-[#A99AAA] font-mono">
                     {selectedTemplate.category} • {selectedTemplate.aspect} • {selectedTemplate.duration}
                   </span>
                 </div>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30">
                 {selectedTemplate.badge}
               </span>
             </div>
 
             {/* Prompt preview */}
-            <div className="relative p-2.5 rounded-lg bg-[#090A0D] border border-white/8 text-slate-200 text-[11px] font-mono leading-relaxed select-all">
+            <div className="relative p-2.5 rounded-lg bg-[#100A12] border border-[#39233B] text-[#F5EAF4] text-[11px] font-mono leading-relaxed select-all">
               {selectedTemplate.prompt}
             </div>
 
@@ -358,21 +358,21 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
               <button
                 type="button"
                 onClick={() => handleNavigateToStudio('google-vids-cool-template', selectedTemplate.id)}
-                className="flex-1 py-2 px-3 rounded-lg bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/30 cursor-pointer transition-all"
+                className="flex-1 py-2 px-3 rounded-lg bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#F05BCE]/25 cursor-pointer transition-all border border-[#F05BCE]/40"
               >
-                <Play className="w-3.5 h-3.5 fill-white" />
+                <Play className="w-3.5 h-3.5 fill-[#100A12]" />
                 <span>Use Template in Studio (15 cr)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleLaunchGoogleVids(selectedTemplate.prompt)}
-                className="py-2 px-3 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-cyan-300 border border-cyan-500/30 font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
+                className="py-2 px-3 rounded-lg bg-[#100A12] hover:bg-[#211522] text-[#F05BCE] border border-[#F05BCE]/30 font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
                 title="Copy prompt & open Google Vids workspace (0 credits)"
               >
                 {copiedPrompt ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-cyan-400" />
+                    <Check className="w-3.5 h-3.5 text-[#F05BCE]" />
                     <span>Opening Vids...</span>
                   </>
                 ) : (
@@ -386,17 +386,17 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
               <button
                 type="button"
                 onClick={() => handleCopyPrompt(selectedTemplate.prompt)}
-                className="py-2 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 font-semibold text-xs flex items-center justify-center gap-1.5 border border-white/8 cursor-pointer"
+                className="py-2 px-3 rounded-lg bg-[#100A12] hover:bg-[#211522] text-[#A99AAA] hover:text-[#F5EAF4] font-semibold text-xs flex items-center justify-center gap-1.5 border border-[#39233B] cursor-pointer"
                 title="Copy prompt to clipboard"
               >
                 {copiedPrompt ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-indigo-400" />
-                    <span className="text-indigo-400">Copied</span>
+                    <Check className="w-3.5 h-3.5 text-[#F05BCE]" />
+                    <span className="text-[#F05BCE]">Copied</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5 text-slate-400" />
+                    <Copy className="w-3.5 h-3.5 text-[#A99AAA]" />
                     <span>Copy</span>
                   </>
                 )}
@@ -406,22 +406,22 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
         </div>
 
         {/* Feature Highlights Grid */}
-        <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 font-medium pb-4 border-b border-white/8">
+        <div className="grid grid-cols-2 gap-2 text-xs text-[#A99AAA] font-medium pb-4 border-b border-[#39233B]">
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-            <span>Prompt to Video</span>
+            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
+            <span className="text-[#F5EAF4]">Prompt to Video</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-            <span>Fixed 15 Credits</span>
+            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
+            <span className="text-[#F5EAF4]">Fixed 15 Credits</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-            <span>Image-to-Video</span>
+            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
+            <span className="text-[#F5EAF4]">Image-to-Video</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-            <span>26 Curated Templates</span>
+            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
+            <span className="text-[#F5EAF4]">26 Curated Templates</span>
           </div>
         </div>
 
@@ -431,7 +431,7 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
             <button
               type="button"
               onClick={() => handleNavigateToStudio('google-vids-promo-primary')}
-              className="w-full sm:flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] text-xs sm:text-sm font-black shadow-lg shadow-[#F05BCE]/25 transition-all flex items-center justify-center gap-2 cursor-pointer border border-[#F05BCE]/40"
             >
               <span>Create Video</span>
               <ArrowRight className="w-4 h-4" />
@@ -448,21 +448,21 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
                 setIsOpen(false);
                 router.push('/templates?type=video');
               }}
-              className="w-full sm:w-auto py-3 px-4 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 border border-white/10 text-xs sm:text-sm font-bold transition-all cursor-pointer text-center flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto py-3 px-4 rounded-xl bg-[#100A12] hover:bg-[#211522] text-[#F5EAF4] border border-[#39233B] text-xs sm:text-sm font-bold transition-all cursor-pointer text-center flex items-center justify-center gap-1.5"
             >
-              <Layers className="w-4 h-4 text-indigo-400" />
+              <Layers className="w-4 h-4 text-[#F05BCE]" />
               <span>Browse All 26 Templates</span>
             </button>
           </div>
 
           {/* Dismissal Preference */}
           <div className="flex items-center justify-between pt-1">
-            <label className="flex items-center gap-2 text-xs text-slate-400 cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-xs text-[#A99AAA] cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={dontShowAgain}
                 onChange={(e) => setDontShowAgain(e.target.checked)}
-                className="w-3.5 h-3.5 rounded border-white/20 bg-[#151822] text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                className="w-3.5 h-3.5 rounded border-[#39233B] bg-[#100A12] text-[#F05BCE] focus:ring-[#F05BCE] cursor-pointer"
               />
               <span>Don't show again</span>
             </label>
@@ -470,7 +470,7 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
             <button
               type="button"
               onClick={handleClose}
-              className="text-xs text-slate-400 hover:text-white underline cursor-pointer"
+              className="text-xs text-[#A99AAA] hover:text-[#F5EAF4] underline cursor-pointer"
             >
               Dismiss
             </button>

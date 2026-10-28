@@ -28,13 +28,13 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
 
   const content = (
     <div className={`flex items-center gap-2 sm:gap-2.5 group select-none cursor-pointer shrink-0 min-w-0 ${className}`}>
-      {/* Kling-Inspired Cinematic Studio Mark */}
+      {/* Whisk Flow Studio Mark */}
       <div
-        className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 group-hover:scale-105 transition-all duration-300 ease-out`}
+        className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-gradient-to-tr from-[#F05BCE] via-[#E046BD] to-[#C026D3] p-[1px] shadow-lg shadow-[#F05BCE]/20 group-hover:shadow-[#F05BCE]/40 group-hover:scale-105 transition-all duration-300 ease-out`}
       >
-        <div className="w-full h-full bg-[#0D0F14] rounded-[11px] flex items-center justify-center relative overflow-hidden border border-white/10">
+        <div className="w-full h-full bg-[#211522] rounded-[11px] flex items-center justify-center relative overflow-hidden border border-[#39233B]">
           {/* Subtle Ambient Lens Glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-transparent to-cyan-500/20 opacity-80 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#F05BCE]/20 via-transparent to-[#C026D3]/20 opacity-80 group-hover:opacity-100 transition-opacity" />
 
           {/* Cinematic Shutter / K-Facet Studio Mark */}
           <svg
@@ -45,9 +45,9 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
           >
             <defs>
               <linearGradient id="klingPrimaryGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#6366F1" />
-                <stop offset="0.5" stopColor="#8B5CF6" />
-                <stop offset="1" stopColor="#06B6D4" />
+                <stop stopColor="#F05BCE" />
+                <stop offset="0.5" stopColor="#E046BD" />
+                <stop offset="1" stopColor="#C026D3" />
               </linearGradient>
             </defs>
 
@@ -72,26 +72,26 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
             />
 
             {/* Glowing Core Dot */}
-            <circle cx="15.5" cy="16" r="2" fill="#00F0FF" />
+            <circle cx="15.5" cy="16" r="2" fill="#F05BCE" />
           </svg>
         </div>
       </div>
 
-      {/* Typography: Crisp White Wordmark with Kling Studio Pill */}
+      {/* Typography: Rose White Wordmark with Hot Pink Accent */}
       <div className="flex flex-col">
         <div className="flex items-center tracking-tight leading-none gap-1.5">
-          <span className={`font-black text-white tracking-tight ${textSizes[size]}`}>
-            FLUVIA
+          <span className={`font-black text-[#F5EAF4] tracking-tight ${textSizes[size]}`}>
+            WHISK
           </span>
-          <span className={`font-light text-indigo-400 tracking-wider ${textSizes[size]}`}>
-            AI
+          <span className={`font-light text-[#F05BCE] tracking-wider ${textSizes[size]}`}>
+            FLOW
           </span>
-          <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white/10 text-slate-300 border border-white/10 uppercase tracking-widest">
+          <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 uppercase tracking-widest">
             STUDIO
           </span>
         </div>
         {showTagline && (
-          <span className="text-[10px] font-medium tracking-wide text-slate-400 mt-1">
+          <span className="text-[10px] font-medium tracking-wide text-[#A99AAA] mt-1">
             {BRAND.tagline}
           </span>
         )}

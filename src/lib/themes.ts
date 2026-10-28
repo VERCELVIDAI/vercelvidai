@@ -1,5 +1,5 @@
 // ==============================================================================
-// FLUVIA FLOW — KLING AI CINEMATIC OBSIDIAN STUDIO THEME DEFINITIONS
+// WHISK FLOW — MIDNIGHT PLUM × HOT PINK DESIGN SYSTEM
 // ==============================================================================
 
 export type ThemeMode = 'dark' | 'light';
@@ -44,40 +44,48 @@ export interface ColorTheme {
   light: ThemePalette;
 }
 
+// LOCKED BRAND COLORS:
+// - Primary background: #100A12
+// - Secondary surfaces: #211522
+// - Primary accent: #F05BCE
+// - Primary text: #F5EAF4
+// - Muted text: #A99AAA
+// - Borders: #39233B
+
 export const FLUVIA_PALETTE: ThemePalette = {
-  bg: '#090A0D',
-  surface: '#11131A',
-  sidebar: '#0B0C10',
-  card: '#151822',
-  cardBorder: 'rgba(255, 255, 255, 0.08)',
-  textPrimary: '#F8FAFC',
-  textSecondary: '#94A3B8',
-  textMuted: '#64748B',
-  primary: '#6366F1',
-  primaryHover: '#4F46E5',
+  bg: '#100A12',
+  surface: '#211522',
+  sidebar: '#170E1A',
+  card: '#211522',
+  cardBorder: '#39233B',
+  textPrimary: '#F5EAF4',
+  textSecondary: '#A99AAA',
+  textMuted: '#A99AAA',
+  primary: '#F05BCE',
+  primaryHover: '#E046BD',
   primaryForeground: '#FFFFFF',
-  secondary: '#7C3AED',
-  ring: '#6366F1',
-  inputBg: 'rgba(14, 16, 23, 0.92)',
-  inputBorder: 'rgba(255, 255, 255, 0.1)',
-  gradientPrimary: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 50%, #7C3AED 100%)',
-  badgeBg: 'rgba(99, 102, 241, 0.15)',
-  badgeText: '#A5B4FC',
-  badgeBorder: 'rgba(99, 102, 241, 0.3)',
-  glow: 'rgba(99, 102, 241, 0.2)',
+  secondary: '#C026D3',
+  ring: '#F05BCE',
+  inputBg: 'rgba(33, 21, 34, 0.85)',
+  inputBorder: '#39233B',
+  gradientPrimary: 'linear-gradient(135deg, #F05BCE 0%, #E046BD 50%, #C026D3 100%)',
+  badgeBg: 'rgba(240, 91, 206, 0.15)',
+  badgeText: '#F05BCE',
+  badgeBorder: 'rgba(240, 91, 206, 0.35)',
+  glow: 'rgba(240, 91, 206, 0.25)',
 };
 
 export const COLOR_THEMES: ColorTheme[] = [
   {
-    id: 'kling-obsidian',
-    name: 'Kling AI Obsidian Dark',
-    description: 'Deep obsidian charcoal canvas with electric indigo flares, cyber cyan badges, and cinema monitors.',
+    id: 'midnight-plum',
+    name: 'Midnight Plum × Hot Pink',
+    description: 'Deep midnight plum canvas with layered velvet plum surfaces, hot pink highlights, and luminous rose text.',
     tone: 'vibrant',
     previewColors: {
-      primary: '#6366F1',
-      secondary: '#7C3AED',
-      darkBg: '#090A0D',
-      lightBg: '#11131A',
+      primary: '#F05BCE',
+      secondary: '#C026D3',
+      darkBg: '#100A12',
+      lightBg: '#211522',
     },
     dark: FLUVIA_PALETTE,
     light: FLUVIA_PALETTE,

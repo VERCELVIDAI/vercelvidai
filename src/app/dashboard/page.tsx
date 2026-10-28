@@ -264,11 +264,11 @@ export default function DashboardPage() {
 
   if (isRedirecting) {
     return (
-      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="w-9 h-9 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm font-bold text-white">Session expired or sign in required</p>
-          <span className="text-xs text-slate-400">Redirecting to sign in...</span>
+          <div className="w-9 h-9 border-3 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-bold text-[#F5EAF4]">Session expired or sign in required</p>
+          <span className="text-xs text-[#A99AAA]">Redirecting to sign in...</span>
         </div>
       </div>
     );
@@ -276,18 +276,18 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="h-screen h-[100dvh] w-full bg-[#090A0D] flex text-slate-200 overflow-hidden">
-        <div className="hidden md:block w-20 h-full shrink-0 border-r border-white/8 bg-[#0B0C10] p-3 space-y-4">
-          <div className="h-10 w-10 bg-white/10 rounded-xl mx-auto animate-pulse" />
+      <div className="h-screen h-[100dvh] w-full bg-[#100A12] flex text-[#F5EAF4] overflow-hidden">
+        <div className="hidden md:block w-20 h-full shrink-0 border-r border-[#39233B] bg-[#211522] p-3 space-y-4">
+          <div className="h-10 w-10 bg-[#39233B]/40 rounded-xl mx-auto animate-pulse" />
           <div className="space-y-3 pt-6">
-            <div className="h-8 w-8 bg-white/5 rounded-xl mx-auto animate-pulse" />
-            <div className="h-8 w-8 bg-white/5 rounded-xl mx-auto animate-pulse" />
-            <div className="h-8 w-8 bg-white/5 rounded-xl mx-auto animate-pulse" />
+            <div className="h-8 w-8 bg-[#39233B]/30 rounded-xl mx-auto animate-pulse" />
+            <div className="h-8 w-8 bg-[#39233B]/30 rounded-xl mx-auto animate-pulse" />
+            <div className="h-8 w-8 bg-[#39233B]/30 rounded-xl mx-auto animate-pulse" />
           </div>
         </div>
         <div className="flex-1 h-full flex flex-col p-8 space-y-6">
-          <div className="h-8 w-64 bg-white/5 rounded-lg animate-pulse" />
-          <div className="h-96 w-full bg-white/5 rounded-3xl animate-pulse" />
+          <div className="h-8 w-64 bg-[#211522] rounded-lg animate-pulse" />
+          <div className="h-96 w-full bg-[#211522] rounded-3xl animate-pulse" />
         </div>
       </div>
     );
@@ -316,12 +316,12 @@ export default function DashboardPage() {
   const activeShowcase = FEATURED_SHOWCASE[showcaseIndex];
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-slate-100 bg-[#090A0D] relative">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-[#F5EAF4] bg-[#100A12] relative">
       {/* Studio Nav Rail */}
       <Sidebar userRole={user.role} credits={credits} />
 
       {/* Main Viewport */}
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#090A0D]">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#100A12]">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -335,22 +335,22 @@ export default function DashboardPage() {
           {/* ========================================================================= */}
           {/* 1. TOP CREATIVE TELEMETRY DOCK */}
           {/* ========================================================================= */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-[#0E1015] border border-white/8 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-[#211522] border border-[#39233B] shadow-xl">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
-                <Film className="w-5 h-5 text-indigo-400" />
+              <div className="w-10 h-10 rounded-xl bg-[#F05BCE]/15 border border-[#F05BCE]/30 flex items-center justify-center text-[#F05BCE] shrink-0">
+                <Film className="w-5 h-5 text-[#F05BCE]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-base font-black text-white tracking-tight">
+                  <h1 className="text-base font-black text-[#F5EAF4] tracking-tight">
                     Fluvia Creator Studio
                   </h1>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] font-mono border border-[#F05BCE]/30">
                     {plan.name}
                   </span>
                 </div>
-                <p className="text-xs text-slate-400">
-                  Google DeepMind & Gemini Omni Flash inference ready • <strong className="text-white">{credits.availableBalance} credits</strong> in wallet
+                <p className="text-xs text-[#A99AAA]">
+                  Google DeepMind & Gemini Omni Flash inference ready • <strong className="text-[#F5EAF4]">{credits.availableBalance} credits</strong> in wallet
                 </p>
               </div>
             </div>
@@ -358,16 +358,16 @@ export default function DashboardPage() {
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 href="/create"
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2 border border-white/10"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black text-xs shadow-lg shadow-[#F05BCE]/25 transition-all flex items-center gap-2 border border-[#F05BCE]/40"
               >
-                <Sparkles className="w-3.5 h-3.5 text-indigo-200" />
+                <Sparkles className="w-3.5 h-3.5 text-[#100A12]" />
                 <span>Launch Cinema Studio</span>
               </Link>
               <Link
                 href="/pricing"
-                className="px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 text-xs font-bold transition-all flex items-center gap-1.5"
+                className="px-3 py-2 rounded-xl bg-[#100A12] hover:bg-[#211522] text-[#F5EAF4] border border-[#39233B] text-xs font-bold transition-all flex items-center gap-1.5"
               >
-                <Zap className="w-3.5 h-3.5 text-indigo-400" />
+                <Zap className="w-3.5 h-3.5 text-[#F05BCE]" />
                 <span>Top Up</span>
               </Link>
             </div>
@@ -379,10 +379,10 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
             {/* LEFT: MASTER CINEMA SCREEN (7 COLS) */}
-            <div className="lg:col-span-7 flex flex-col justify-between rounded-3xl border border-white/10 bg-[#0E1015] overflow-hidden shadow-2xl relative group">
+            <div className="lg:col-span-7 flex flex-col justify-between rounded-3xl border border-[#39233B] bg-[#211522] overflow-hidden shadow-2xl relative group">
               
               {/* Cinema Frame Screen */}
-              <div className="relative aspect-video w-full bg-black flex items-center justify-center overflow-hidden">
+              <div className="relative aspect-video w-full bg-[#100A12] flex items-center justify-center overflow-hidden">
                 <video
                   key={activeShowcase.videoUrl}
                   src={activeShowcase.videoUrl}
@@ -397,29 +397,29 @@ export default function DashboardPage() {
 
                 {/* Top Badge Overlay */}
                 <div className="absolute top-3 left-3 flex items-center gap-2 pointer-events-none">
-                  <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-white font-mono border border-white/15">
+                  <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#100A12]/80 backdrop-blur-md text-[#F5EAF4] font-mono border border-[#39233B]">
                     {activeShowcase.category}
                   </span>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/30 text-indigo-300 border border-indigo-500/40">
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30">
                     4K UHD • 15 cr
                   </span>
                 </div>
 
                 {/* Aspect Pill Overlay */}
                 <div className="absolute top-3 right-3 pointer-events-none">
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-slate-300 border border-white/15">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#100A12]/80 backdrop-blur-md text-[#A99AAA] border border-[#39233B]">
                     {activeShowcase.aspect}
                   </span>
                 </div>
               </div>
 
               {/* Showcase Footer Strip */}
-              <div className="p-4 sm:p-5 bg-gradient-to-t from-[#0E1015] via-[#0E1015]/90 to-transparent flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/8">
+              <div className="p-4 sm:p-5 bg-gradient-to-t from-[#211522] via-[#211522]/90 to-transparent flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-[#39233B]">
                 <div className="space-y-1 min-w-0">
-                  <h3 className="text-sm font-black text-white truncate">
+                  <h3 className="text-sm font-black text-[#F5EAF4] truncate">
                     {activeShowcase.title}
                   </h3>
-                  <p className="text-xs text-slate-400 line-clamp-1 italic">
+                  <p className="text-xs text-[#A99AAA] line-clamp-1 italic">
                     "{activeShowcase.prompt}"
                   </p>
                 </div>
@@ -432,7 +432,7 @@ export default function DashboardPage() {
                       setQuickMode('video');
                       router.push(`/create?mode=video&prompt=${encodeURIComponent(activeShowcase.prompt)}`);
                     }}
-                    className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow cursor-pointer transition-colors"
+                    className="px-3.5 py-1.5 rounded-xl bg-[#F05BCE] hover:bg-[#E046BD] text-[#100A12] font-black text-xs flex items-center gap-1.5 shadow-md shadow-[#F05BCE]/20 cursor-pointer transition-colors"
                   >
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Fork Scene</span>
@@ -446,8 +446,8 @@ export default function DashboardPage() {
                         onClick={() => setShowcaseIndex(idx)}
                         className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${
                           showcaseIndex === idx
-                            ? 'bg-indigo-500 w-5'
-                            : 'bg-white/20 hover:bg-white/40'
+                            ? 'bg-[#F05BCE] w-5'
+                            : 'bg-white/20 hover:bg-[#F05BCE]/40'
                         }`}
                         title={`Scene ${idx + 1}`}
                       />
@@ -458,27 +458,27 @@ export default function DashboardPage() {
             </div>
 
             {/* RIGHT: DIRECTOR'S QUICK COMMAND CONSOLE (5 COLS) */}
-            <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-6 rounded-3xl border border-white/10 bg-[#0E1015] shadow-2xl space-y-4">
+            <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-6 rounded-3xl border border-[#39233B] bg-[#211522] shadow-2xl space-y-4">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Camera className="w-4 h-4 text-indigo-400" />
-                    <span className="font-bold text-white text-xs uppercase tracking-wider">
+                    <Camera className="w-4 h-4 text-[#F05BCE]" />
+                    <span className="font-bold text-[#F5EAF4] text-xs uppercase tracking-wider">
                       Command Console
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono text-indigo-300 font-bold bg-indigo-500/20 px-2 py-0.5 rounded border border-indigo-500/30">
+                  <span className="text-[10px] font-mono text-[#F05BCE] font-bold bg-[#F05BCE]/15 px-2 py-0.5 rounded border border-[#F05BCE]/30">
                     {quickMode === 'video' ? '15 Credits' : quickMode === 'audio' ? '2 Credits' : quickMode === 'image' ? '5 Credits' : '0 Credits'}
                   </span>
                 </div>
 
                 {/* Mode Switcher Tabs */}
-                <div className="grid grid-cols-4 gap-1 p-1 bg-[#090A0D] rounded-xl border border-white/8 text-xs mb-3">
+                <div className="grid grid-cols-4 gap-1 p-1 bg-[#100A12] rounded-xl border border-[#39233B] text-xs mb-3">
                   <button
                     type="button"
                     onClick={() => setQuickMode('video')}
                     className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                      quickMode === 'video' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+                      quickMode === 'video' ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-[#100A12] font-black shadow-xs' : 'text-[#A99AAA] hover:text-[#F5EAF4]'
                     }`}
                   >
                     Video
@@ -487,7 +487,7 @@ export default function DashboardPage() {
                     type="button"
                     onClick={() => setQuickMode('audio')}
                     className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                      quickMode === 'audio' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+                      quickMode === 'audio' ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-[#100A12] font-black shadow-xs' : 'text-[#A99AAA] hover:text-[#F5EAF4]'
                     }`}
                   >
                     Voice
@@ -496,7 +496,7 @@ export default function DashboardPage() {
                     type="button"
                     onClick={() => setQuickMode('image')}
                     className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                      quickMode === 'image' ? 'bg-violet-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+                      quickMode === 'image' ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-[#100A12] font-black shadow-xs' : 'text-[#A99AAA] hover:text-[#F5EAF4]'
                     }`}
                   >
                     Image
@@ -505,7 +505,7 @@ export default function DashboardPage() {
                     type="button"
                     onClick={() => setQuickMode('vids')}
                     className={`py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                      quickMode === 'vids' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+                      quickMode === 'vids' ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-[#100A12] font-black shadow-xs' : 'text-[#A99AAA] hover:text-[#F5EAF4]'
                     }`}
                   >
                     Vids (0 cr)
@@ -526,13 +526,13 @@ export default function DashboardPage() {
                       ? 'Describe the photorealistic subject, lighting, and camera lens...'
                       : 'Draft prompt to copy and handoff into Google Vids workspace...'
                   }
-                  className="w-full bg-[#090A0D] text-white p-3 rounded-2xl border border-white/10 focus:outline-none focus:border-indigo-500 placeholder-slate-500 text-xs leading-relaxed resize-none transition-colors"
+                  className="w-full bg-[#100A12] text-[#F5EAF4] p-3 rounded-2xl border border-[#39233B] focus:outline-none focus:border-[#F05BCE] placeholder-[#A99AAA]/50 text-xs leading-relaxed resize-none transition-colors"
                 />
 
                 {/* Parameters: Voice presets (if audio) or Aspect ratio (if visual) */}
                 {quickMode === 'audio' ? (
                   <div className="pt-2 space-y-1.5">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                    <span className="text-[10px] font-bold text-[#A99AAA] uppercase tracking-wider block">
                       ElevenLabs Voice Preview
                     </span>
                     <div className="grid grid-cols-2 gap-2">
@@ -542,8 +542,8 @@ export default function DashboardPage() {
                           onClick={() => setSelectedVoice(v.name)}
                           className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                             selectedVoice === v.name
-                              ? 'bg-amber-500/20 border-amber-500 text-white'
-                              : 'bg-white/[0.02] border-white/8 hover:border-white/16 text-slate-300'
+                              ? 'bg-[#F05BCE]/20 border-[#F05BCE] text-[#F5EAF4]'
+                              : 'bg-[#100A12] border-[#39233B] hover:border-[#39233B]/80 text-[#A99AAA]'
                           }`}
                         >
                           <span className="text-xs font-bold">{v.name}</span>
@@ -554,7 +554,7 @@ export default function DashboardPage() {
                               handleToggleVoiceSample(v.sample, v.name);
                             }}
                             className={`p-1 rounded-full ${
-                              playingVoice === v.name ? 'bg-amber-500 text-white' : 'text-amber-400 hover:bg-white/10'
+                              playingVoice === v.name ? 'bg-[#F05BCE] text-[#100A12]' : 'text-[#F05BCE] hover:bg-[#F05BCE]/20'
                             }`}
                           >
                             <Volume2 className="w-3 h-3" />
@@ -565,10 +565,10 @@ export default function DashboardPage() {
                   </div>
                 ) : quickMode !== 'vids' ? (
                   <div className="pt-2 flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <span className="text-[10px] font-bold text-[#A99AAA] uppercase tracking-wider">
                       Aspect Ratio
                     </span>
-                    <div className="flex items-center gap-1 bg-[#090A0D] p-1 rounded-xl border border-white/10 text-xs">
+                    <div className="flex items-center gap-1 bg-[#100A12] p-1 rounded-xl border border-[#39233B] text-xs">
                       {(['16:9', '9:16', '1:1'] as const).map((r) => (
                         <button
                           key={r}
@@ -576,8 +576,8 @@ export default function DashboardPage() {
                           onClick={() => setQuickAspect(r)}
                           className={`px-2.5 py-0.5 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                             quickAspect === r
-                              ? 'bg-white/[0.14] text-white shadow-xs border border-white/15'
-                              : 'text-slate-400 hover:text-white'
+                              ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-[#100A12] font-black shadow-xs'
+                              : 'text-[#A99AAA] hover:text-[#F5EAF4]'
                           }`}
                         >
                           {r}
@@ -586,9 +586,9 @@ export default function DashboardPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200 mt-2">
-                    <p className="font-semibold">0 Fluvia Credits Charged</p>
-                    <p className="text-[11px] text-blue-300/80 mt-0.5">
+                  <div className="p-3 rounded-xl bg-[#F05BCE]/10 border border-[#F05BCE]/30 text-xs text-[#F5EAF4] mt-2">
+                    <p className="font-semibold text-[#F05BCE]">0 Fluvia Credits Charged</p>
+                    <p className="text-[11px] text-[#A99AAA] mt-0.5">
                       Copies prompt to clipboard and opens Google Vids in a new tab.
                     </p>
                   </div>
@@ -599,9 +599,9 @@ export default function DashboardPage() {
               <button
                 type="button"
                 onClick={handleLaunchServiceStudio}
-                className="w-full py-3 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 transition-all cursor-pointer border border-white/10"
+                className="w-full py-3 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all cursor-pointer border border-[#F05BCE]/40"
               >
-                <Sparkles className="w-4 h-4 text-indigo-200" />
+                <Sparkles className="w-4 h-4 text-[#100A12]" />
                 <span>
                   {quickMode === 'vids'
                     ? copiedVidsPrompt
@@ -609,7 +609,7 @@ export default function DashboardPage() {
                       : 'Launch Google Vids (0 cr)'
                     : 'Open in Creation Studio'}
                 </span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#100A12]" />
               </button>
             </div>
           </div>
@@ -620,18 +620,18 @@ export default function DashboardPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-black text-white flex items-center gap-2">
-                  <FolderOpen className="w-5 h-5 text-indigo-400" />
+                <h2 className="text-lg font-black text-[#F5EAF4] flex items-center gap-2">
+                  <FolderOpen className="w-5 h-5 text-[#F05BCE]" />
                   <span>Your Projects & Rendered Iterations</span>
                 </h2>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-[#A99AAA]">
                   {projects.length} project files saved in your studio workspace
                 </p>
               </div>
 
               <Link
                 href="/dashboard/projects"
-                className="text-xs text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1"
+                className="text-xs text-[#F05BCE] hover:text-[#E046BD] font-bold flex items-center gap-1"
               >
                 <span>View Full Library</span>
                 <ChevronRight className="w-4 h-4" />
@@ -639,15 +639,15 @@ export default function DashboardPage() {
             </div>
 
             {projects.length === 0 ? (
-              <div className="p-10 rounded-3xl border border-white/8 bg-[#0E1015] text-center space-y-3">
-                <Film className="w-10 h-10 text-slate-600 mx-auto" />
-                <h3 className="font-bold text-white text-sm">No Projects in Library</h3>
-                <p className="text-xs text-slate-400 max-w-sm mx-auto">
+              <div className="p-10 rounded-3xl border border-[#39233B] bg-[#211522] text-center space-y-3">
+                <Film className="w-10 h-10 text-[#A99AAA]/50 mx-auto" />
+                <h3 className="font-bold text-[#F5EAF4] text-sm">No Projects in Library</h3>
+                <p className="text-xs text-[#A99AAA] max-w-sm mx-auto">
                   Launch the Studio to synthesize your first cinematic commercial video.
                 </p>
                 <Link
                   href="/create"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-[#100A12] font-black text-xs shadow-md shadow-[#F05BCE]/20"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Start New Creation</span>
@@ -658,11 +658,11 @@ export default function DashboardPage() {
                 {projects.slice(0, 4).map((p) => (
                   <div
                     key={p.id}
-                    className="p-3.5 rounded-2xl border border-white/8 bg-[#0E1015] hover:border-white/20 hover:bg-[#151822] transition-all flex flex-col justify-between space-y-3 group shadow-lg"
+                    className="p-3.5 rounded-2xl border border-[#39233B] bg-[#211522] hover:border-[#F05BCE]/40 transition-all flex flex-col justify-between space-y-3 group shadow-lg"
                   >
                     <div>
                       {/* Thumbnail with aspect */}
-                      <div className="aspect-video w-full rounded-xl bg-black overflow-hidden relative border border-white/8 mb-2">
+                      <div className="aspect-video w-full rounded-xl bg-[#100A12] overflow-hidden relative border border-[#39233B] mb-2">
                         {p.thumbnailUrl || p.mediaUrl ? (
                           <img
                             src={p.thumbnailUrl || p.mediaUrl}
@@ -670,47 +670,47 @@ export default function DashboardPage() {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-slate-500">
+                          <div className="w-full h-full flex items-center justify-center text-[#A99AAA]/40">
                             <Film className="w-6 h-6" />
                           </div>
                         )}
-                        <span className="absolute bottom-1.5 right-1.5 text-[9px] font-mono px-1.5 py-0.5 rounded bg-black/80 text-white border border-white/10">
+                        <span className="absolute bottom-1.5 right-1.5 text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#100A12]/90 text-[#F5EAF4] border border-[#39233B]">
                           {p.aspectRatio || '16:9'}
                         </span>
                       </div>
 
                       <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-bold text-white text-xs truncate">{p.title}</h4>
+                        <h4 className="font-bold text-[#F5EAF4] text-xs truncate">{p.title}</h4>
                         <button
                           type="button"
                           onClick={() => handleToggleFavorite(p.id, p.isFavorite)}
-                          className="text-slate-400 hover:text-amber-400 cursor-pointer"
+                          className="text-[#A99AAA] hover:text-[#F05BCE] cursor-pointer"
                         >
-                          <Star className={`w-3.5 h-3.5 ${p.isFavorite ? 'text-amber-400 fill-amber-400' : ''}`} />
+                          <Star className={`w-3.5 h-3.5 ${p.isFavorite ? 'text-[#F05BCE] fill-[#F05BCE]' : ''}`} />
                         </button>
                       </div>
 
-                      <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                      <span className="text-[10px] text-[#A99AAA] font-mono mt-0.5 block">
                         {new Date(p.updatedAt || p.createdAt).toLocaleDateString()}
                       </span>
                     </div>
 
                     {/* Card Actions */}
-                    <div className="flex items-center justify-between pt-2 border-t border-white/8 text-xs">
+                    <div className="flex items-center justify-between pt-2 border-t border-[#39233B] text-xs">
                       <Link
                         href={`/editor/${p.id}`}
-                        className="text-indigo-400 hover:text-indigo-300 font-bold text-[11px] flex items-center gap-1"
+                        className="text-[#F05BCE] hover:text-[#E046BD] font-bold text-[11px] flex items-center gap-1"
                       >
                         <Play className="w-3 h-3" />
                         <span>Open Editor</span>
                       </Link>
 
-                      <div className="flex items-center gap-1 text-slate-400">
+                      <div className="flex items-center gap-1 text-[#A99AAA]">
                         <button
                           type="button"
                           onClick={() => setRenameModal({ id: p.id, title: p.title })}
                           title="Rename"
-                          className="p-1 hover:text-white rounded cursor-pointer"
+                          className="p-1 hover:text-[#F5EAF4] rounded cursor-pointer"
                         >
                           <Edit2 className="w-3 h-3" />
                         </button>
@@ -718,7 +718,7 @@ export default function DashboardPage() {
                           type="button"
                           onClick={() => handleDuplicate(p.id)}
                           title="Duplicate"
-                          className="p-1 hover:text-white rounded cursor-pointer"
+                          className="p-1 hover:text-[#F5EAF4] rounded cursor-pointer"
                         >
                           <Copy className="w-3 h-3" />
                         </button>
@@ -744,17 +744,17 @@ export default function DashboardPage() {
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h2 className="text-lg font-black text-white flex items-center gap-2">
-                  <Layers className="w-5 h-5 text-indigo-400" />
+                <h2 className="text-lg font-black text-[#F5EAF4] flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-[#F05BCE]" />
                   <span>Curated Agency Commercial Presets</span>
                 </h2>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-[#A99AAA]">
                   Ready-to-render luxury, automotive, and technology commercials with Gemini Omni Flash
                 </p>
               </div>
 
               {/* Filter Tabs */}
-              <div className="flex items-center gap-1 bg-[#0E1015] p-1 rounded-xl border border-white/8 text-xs self-start sm:self-auto">
+              <div className="flex items-center gap-1 bg-[#211522] p-1 rounded-xl border border-[#39233B] text-xs self-start sm:self-auto">
                 {(['all', 'video', 'image', 'text'] as const).map((tab) => (
                   <button
                     key={tab}
@@ -762,8 +762,8 @@ export default function DashboardPage() {
                     onClick={() => setTemplateTab(tab)}
                     className={`px-3 py-1 rounded-lg font-bold capitalize transition-all cursor-pointer ${
                       templateTab === tab
-                        ? 'bg-white/[0.12] text-white shadow-xs'
-                        : 'text-slate-400 hover:text-white'
+                        ? 'bg-[#100A12] text-[#F5EAF4] border border-[#39233B] shadow-xs'
+                        : 'text-[#A99AAA] hover:text-[#F5EAF4]'
                     }`}
                   >
                     {tab}
@@ -776,20 +776,20 @@ export default function DashboardPage() {
               {displayedTemplates.map((t) => (
                 <div
                   key={t.id}
-                  className="p-4 rounded-2xl border border-white/8 bg-[#0E1015] hover:border-white/20 hover:bg-[#151822] transition-all flex flex-col justify-between space-y-3 group shadow-xl"
+                  className="p-4 rounded-2xl border border-[#39233B] bg-[#211522] hover:border-[#F05BCE]/40 transition-all flex flex-col justify-between space-y-3 group shadow-xl"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] font-mono border border-[#F05BCE]/30">
                         {t.category}
                       </span>
-                      <span className="text-[10px] font-mono text-slate-400">15 Credits</span>
+                      <span className="text-[10px] font-mono text-[#A99AAA]">15 Credits</span>
                     </div>
 
-                    <h3 className="font-bold text-white text-xs group-hover:text-indigo-400 transition-colors">
+                    <h3 className="font-bold text-[#F5EAF4] text-xs group-hover:text-[#F05BCE] transition-colors">
                       {t.title}
                     </h3>
-                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#A99AAA] line-clamp-2 leading-relaxed">
                       {t.prompt}
                     </p>
                   </div>
@@ -799,9 +799,9 @@ export default function DashboardPage() {
                     onClick={() => {
                       router.push(`/create?template=${t.id}`);
                     }}
-                    className="w-full py-1.5 rounded-xl bg-white/[0.04] hover:bg-indigo-600 text-slate-300 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-white/8 hover:border-indigo-500"
+                    className="w-full py-1.5 rounded-xl bg-[#100A12] hover:bg-gradient-to-r hover:from-[#F05BCE] hover:to-[#C026D3] text-[#A99AAA] hover:text-[#100A12] font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-[#39233B] hover:border-[#F05BCE]/50"
                   >
-                    <Sparkles className="w-3 h-3 text-indigo-400" />
+                    <Sparkles className="w-3 h-3 text-[#F05BCE]" />
                     <span>Use Template in Studio</span>
                   </button>
                 </div>
@@ -823,26 +823,26 @@ export default function DashboardPage() {
       {/* RENAME MODAL */}
       {renameModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
-          <div className="w-full max-w-sm rounded-2xl bg-[#0E1015] border border-white/15 p-6 shadow-2xl space-y-4">
-            <h3 className="font-bold text-white text-sm">Rename Project</h3>
+          <div className="w-full max-w-sm rounded-2xl bg-[#211522] border border-[#39233B] p-6 shadow-2xl space-y-4">
+            <h3 className="font-bold text-[#F5EAF4] text-sm">Rename Project</h3>
             <input
               type="text"
               value={renameModal.title}
               onChange={(e) => setRenameModal({ ...renameModal, title: e.target.value })}
-              className="w-full bg-[#090A0D] text-white p-2.5 rounded-xl border border-white/15 text-xs focus:outline-none focus:border-indigo-500"
+              className="w-full bg-[#100A12] text-[#F5EAF4] p-2.5 rounded-xl border border-[#39233B] text-xs focus:outline-none focus:border-[#F05BCE]"
             />
             <div className="flex justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setRenameModal(null)}
-                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
+                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-[#A99AAA] hover:text-[#F5EAF4]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleRenameConfirm}
-                className="px-4 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow"
+                className="px-4 py-1.5 rounded-xl text-xs font-bold bg-[#F05BCE] hover:bg-[#E046BD] text-[#100A12] shadow"
               >
                 Save
               </button>
@@ -854,16 +854,16 @@ export default function DashboardPage() {
       {/* DELETE MODAL */}
       {deleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
-          <div className="w-full max-w-sm rounded-2xl bg-[#0E1015] border border-white/15 p-6 shadow-2xl space-y-4">
-            <h3 className="font-bold text-white text-sm">Delete Project</h3>
-            <p className="text-xs text-slate-400">
-              Are you sure you want to delete <strong className="text-white">"{deleteModal.title}"</strong>? This action cannot be undone.
+          <div className="w-full max-w-sm rounded-2xl bg-[#211522] border border-[#39233B] p-6 shadow-2xl space-y-4">
+            <h3 className="font-bold text-[#F5EAF4] text-sm">Delete Project</h3>
+            <p className="text-xs text-[#A99AAA]">
+              Are you sure you want to delete <strong className="text-[#F5EAF4]">"{deleteModal.title}"</strong>? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setDeleteModal(null)}
-                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
+                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-[#A99AAA] hover:text-[#F5EAF4]"
               >
                 Cancel
               </button>

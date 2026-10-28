@@ -7,19 +7,19 @@ import { Image as ImageIcon, Sparkles, ArrowRight, Wand2, Palette, Shield } from
 
 export default function AIImageGeneratorPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#090A0D] text-white">
+    <div className="min-h-screen flex flex-col bg-[#100A12] text-[#F5EAF4]">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-left">
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-50 border border-pink-300 text-xs font-bold text-pink-700 mb-4 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-pink-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F05BCE]/15 border border-[#F05BCE]/30 text-xs font-bold text-[#F05BCE] mb-4 shadow-xs font-mono">
+            <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
             <span>Google Gemini Imagen & Flux 1.1 Pro Vision</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#F5EAF4] tracking-tight">
             Gemini AI Image Studio
           </h1>
-          <p className="mt-3 text-sm sm:text-lg text-slate-400">
+          <p className="mt-3 text-sm sm:text-lg text-[#A99AAA]">
             Generate ultra-high-fidelity concept art, luxury commercial advertisements, and product renderings powered by Google Gemini AI.
           </p>
         </div>
@@ -31,7 +31,7 @@ export default function AIImageGeneratorPage() {
 
         {/* Gallery of High Fidelity Visuals */}
         <div className="my-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#F5EAF4] mb-8 text-center">
             Curated High-Fidelity Generations
           </h2>
 
@@ -68,8 +68,8 @@ export default function AIImageGeneratorPage() {
                 aspect: 'Cinema (16:9)',
               },
             ].map((card, idx) => (
-              <div key={idx} className="rounded-2xl glass-card border border-white/8 overflow-hidden group shadow-md hover:shadow-xl transition-all">
-                <div className="aspect-square relative overflow-hidden">
+              <div key={idx} className="rounded-2xl bg-[#211522] border border-[#39233B] overflow-hidden group shadow-md hover:border-[#F05BCE]/40 transition-all">
+                <div className="aspect-square relative overflow-hidden bg-black">
                   <img
                     src={card.image}
                     alt={card.title}
@@ -78,7 +78,7 @@ export default function AIImageGeneratorPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                     <Link
                       href={`/create?mode=video&ref=${encodeURIComponent(card.image)}`}
-                      className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-md"
+                      className="w-full py-2 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-md shadow-[#F05BCE]/25 cursor-pointer"
                     >
                       <span>Animate to Video</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -86,8 +86,8 @@ export default function AIImageGeneratorPage() {
                   </div>
                 </div>
                 <div className="p-4 flex items-center justify-between">
-                  <h4 className="font-bold text-white text-sm">{card.title}</h4>
-                  <span className="text-[11px] text-slate-500 font-mono font-medium">{card.aspect}</span>
+                  <h4 className="font-bold text-[#F5EAF4] text-sm">{card.title}</h4>
+                  <span className="text-[11px] text-[#A99AAA] font-mono font-medium">{card.aspect}</span>
                 </div>
               </div>
             ))}

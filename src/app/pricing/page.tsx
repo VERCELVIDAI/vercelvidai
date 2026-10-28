@@ -419,14 +419,14 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-200 bg-[#090A0D] text-white relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col transition-colors duration-200 bg-[#100A12] text-[#F5EAF4] relative overflow-x-hidden">
       {/* ========================================================================= */}
       {/* CINEMATIC OBSIDIAN STUDIO BACKGROUND (DARK GRID & LENS FLARES) */}
       {/* ========================================================================= */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1200px] h-[550px] bg-gradient-to-b from-indigo-600/15 via-violet-600/10 to-transparent rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 -right-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-10 -left-40 w-96 h-96 bg-purple-600/10 rounded-full blur-[130px]" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1200px] h-[550px] bg-gradient-to-b from-[#F05BCE]/15 via-pink-600/10 to-transparent rounded-full blur-[140px]" />
+        <div className="absolute top-1/3 -right-40 w-96 h-96 bg-purple-700/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-10 -left-40 w-96 h-96 bg-pink-800/10 rounded-full blur-[130px]" />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -444,29 +444,29 @@ export default function PricingPage() {
         {/* ========================================================================= */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           {/* Top Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-xs font-mono text-cyan-300 mb-4 shadow-xs">
-            <Zap className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#211522] border border-[#39233B] text-xs font-mono text-pink-300 mb-4 shadow-xs">
+            <Zap className="w-3.5 h-3.5 text-[#F05BCE] shrink-0" />
             <span className="truncate">PayU India Verified • Instant Token Delivery • 256-bit Secure Gateway</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black text-[#F5EAF4] tracking-tight">
             Plans built for creators who move fast.
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-slate-400 font-normal max-w-2xl mx-auto">
+          <p className="mt-3 text-sm sm:text-base text-[#A99AAA] font-normal max-w-2xl mx-auto">
             Every plan includes authentic server-grade AI rendering, multi-track timeline editing, and zero export watermarks.
           </p>
 
           {/* Navigation Controls: Tabs & Billing Toggle */}
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             {/* Individual vs Business Tabs */}
-            <div className="inline-flex p-1 rounded-xl bg-[#0E1015] border border-white/10 shadow-xs w-full sm:w-auto justify-center">
+            <div className="inline-flex p-1 rounded-xl bg-[#211522] border border-[#39233B] shadow-xs w-full sm:w-auto justify-center">
               <button
                 type="button"
                 onClick={() => setPlanCategory('individual')}
                 className={`flex-1 sm:flex-initial px-4 py-2 min-h-[44px] rounded-lg text-xs sm:text-sm font-bold transition-all ${
                   planCategory === 'individual'
-                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-sm'
+                    : 'text-[#A99AAA] hover:text-white'
                 }`}
               >
                 Individual Creators
@@ -476,8 +476,8 @@ export default function PricingPage() {
                 onClick={() => setPlanCategory('business')}
                 className={`flex-1 sm:flex-initial px-4 py-2 min-h-[44px] rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 ${
                   planCategory === 'business'
-                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-sm'
+                    : 'text-[#A99AAA] hover:text-white'
                 }`}
               >
                 <Users className="w-3.5 h-3.5" />
@@ -486,14 +486,14 @@ export default function PricingPage() {
             </div>
 
             {/* Monthly / Annual Billing Toggle */}
-            <div className="inline-flex items-center p-1 rounded-xl bg-[#0E1015] border border-white/10 shadow-xs w-full sm:w-auto justify-center">
+            <div className="inline-flex items-center p-1 rounded-xl bg-[#211522] border border-[#39233B] shadow-xs w-full sm:w-auto justify-center">
               <button
                 type="button"
                 onClick={() => handleIntervalChange('month')}
                 className={`flex-1 sm:flex-initial px-4 py-2 min-h-[44px] rounded-lg text-xs sm:text-sm font-bold transition-all ${
                   billingInterval === 'month'
-                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-sm'
+                    : 'text-[#A99AAA] hover:text-white'
                 }`}
               >
                 Monthly
@@ -503,12 +503,12 @@ export default function PricingPage() {
                 onClick={() => handleIntervalChange('year')}
                 className={`flex-1 sm:flex-initial px-4 py-2 min-h-[44px] rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 ${
                   billingInterval === 'year'
-                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-sm'
+                    : 'text-[#A99AAA] hover:text-white'
                 }`}
               >
                 <span>Annual Billing</span>
-                <span className="text-[10px] font-extrabold bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded border border-indigo-500/30 shadow-2xs font-mono">
+                <span className="text-[10px] font-extrabold bg-[#F05BCE]/20 text-pink-200 px-1.5 py-0.5 rounded border border-[#F05BCE]/30 shadow-2xs font-mono">
                   SAVE 20%
                 </span>
               </button>
@@ -518,30 +518,30 @@ export default function PricingPage() {
             <button
               type="button"
               onClick={() => setShowRecommenderModal(true)}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 min-h-[44px] rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white bg-[#0E1015] border border-white/10 hover:border-white/20 shadow-xs transition-all w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 min-h-[44px] rounded-xl text-xs sm:text-sm font-bold text-[#F5EAF4] hover:text-white bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/30 shadow-xs transition-all w-full sm:w-auto"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+              <HelpCircle className="w-3.5 h-3.5 text-[#F05BCE] shrink-0" />
               <span>Not sure which plan?</span>
             </button>
           </div>
 
           {/* Transparent Credit Consumption Note */}
-          <div className="mt-5 text-xs text-slate-400 max-w-2xl mx-auto flex items-center justify-center gap-2 px-2 text-center">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+          <div className="mt-5 text-xs text-[#A99AAA] max-w-2xl mx-auto flex items-center justify-center gap-2 px-2 text-center">
+            <span className="w-2 h-2 rounded-full bg-[#F05BCE] shrink-0" />
             <span>
               <strong className="text-white">Credit consumption:</strong> 1s Fluvia Cinematic Video = 5 credits (15 credits / video on Gemini Omni Flash). Flux Image = 5 credits. ElevenLabs Voiceover = 2 credits.
             </span>
           </div>
 
           {/* Mobile Plan Tab Switcher (Visible only on small viewports) */}
-          <div className="mt-6 sm:hidden flex items-center justify-between p-1 rounded-xl bg-[#0E1015] border border-white/10">
+          <div className="mt-6 sm:hidden flex items-center justify-between p-1 rounded-xl bg-[#211522] border border-[#39233B]">
             <button
               type="button"
               onClick={() => setMobileActivePlan('all')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 mobileActivePlan === 'all'
-                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white shadow-xs'
+                  : 'text-[#A99AAA] hover:text-white'
               }`}
             >
               All Plans
@@ -551,8 +551,8 @@ export default function PricingPage() {
               onClick={() => setMobileActivePlan('basic')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 mobileActivePlan === 'basic'
-                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white shadow-xs'
+                  : 'text-[#A99AAA] hover:text-white'
               }`}
             >
               Basic
@@ -562,19 +562,19 @@ export default function PricingPage() {
               onClick={() => setMobileActivePlan('pro')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1 ${
                 mobileActivePlan === 'pro'
-                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs'
-                  : 'text-indigo-400 font-extrabold'
+                  ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white shadow-xs'
+                  : 'text-[#F05BCE] font-extrabold'
               }`}
             >
               <span>Pro</span>
-              <Sparkles className="w-3 h-3 text-amber-400" />
+              <Sparkles className="w-3 h-3 text-pink-300" />
             </button>
             <button
               type="button"
               onClick={() => setMobileActivePlan('max')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 mobileActivePlan === 'max'
-                  ? 'bg-pink-600 text-white shadow-xs'
+                  ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white shadow-xs'
                   : 'text-pink-400'
               }`}
             >
@@ -585,8 +585,8 @@ export default function PricingPage() {
               onClick={() => setMobileActivePlan('teams')}
               className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 mobileActivePlan === 'teams'
-                  ? 'bg-cyan-600 text-white shadow-xs'
-                  : 'text-cyan-400'
+                  ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white shadow-xs'
+                  : 'text-purple-400'
               }`}
             >
               Teams
@@ -607,62 +607,62 @@ export default function PricingPage() {
             );
             const isExpanded = !!expandedCards[plan.id];
 
-            // 4 Distinct Visual Styles per Plan Tier (Kling AI Cinematic Dark Palette)
+            // 4 Distinct Visual Styles per Plan Tier (Midnight Plum × Hot Pink Palette)
             const cardTheme = {
               basic: {
                 wrapper:
-                  'bg-[#11131A]/90 backdrop-blur-xl border border-white/8 hover:border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.4)] transition-all',
-                accentBg: 'bg-white/5',
+                  'bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/40 shadow-xl transition-all',
+                accentBg: 'bg-[#100A12]',
                 badgeText: 'text-slate-300',
-                badgeBorder: 'border-white/10',
-                badgeBg: 'bg-white/10 text-white border-white/15',
-                creditBox: 'bg-[#0B0C10] text-white border-white/8',
-                creditNumber: 'text-cyan-400',
+                badgeBorder: 'border-[#39233B]',
+                badgeBg: 'bg-[#100A12] text-[#F5EAF4] border-[#39233B]',
+                creditBox: 'bg-[#100A12] text-white border-[#39233B]',
+                creditNumber: 'text-pink-300',
                 ctaButton:
-                  'bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/12 hover:border-white/25 font-bold shadow-xs',
-                checkColor: 'text-cyan-400',
+                  'bg-[#100A12] hover:bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] font-bold shadow-xs',
+                checkColor: 'text-[#F05BCE]',
                 tag: 'Essential Starter',
               },
               pro: {
                 wrapper:
-                  'bg-gradient-to-b from-[#151822] via-[#11131A] to-[#151822] backdrop-blur-2xl border-2 border-indigo-500/70 ring-2 ring-indigo-500/25 shadow-[0_20px_50px_rgba(99,102,241,0.22)] hover:shadow-[0_25px_60px_rgba(99,102,241,0.32)] lg:-translate-y-2 lg:scale-[1.02] relative z-10',
-                accentBg: 'bg-gradient-to-r from-indigo-600 to-violet-600',
+                  'bg-gradient-to-b from-[#29172A] via-[#211522] to-[#29172A] backdrop-blur-2xl border-2 border-[#F05BCE] ring-2 ring-[#F05BCE]/25 shadow-[0_20px_50px_rgba(240,91,206,0.22)] hover:shadow-[0_25px_60px_rgba(240,91,206,0.32)] lg:-translate-y-2 lg:scale-[1.02] relative z-10',
+                accentBg: 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3]',
                 badgeText: 'text-white',
-                badgeBorder: 'border-indigo-400/50',
-                badgeBg: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-black border-indigo-400/40 shadow-md shadow-indigo-500/30',
-                creditBox: 'bg-[#0B0C10] text-white border-indigo-500/30',
-                creditNumber: 'text-indigo-400',
+                badgeBorder: 'border-[#F05BCE]/50',
+                badgeBg: 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white font-black border-white/20 shadow-md shadow-[rgba(240,91,206,0.3)]',
+                creditBox: 'bg-[#100A12] text-white border-[#39233B]',
+                creditNumber: 'text-[#F05BCE]',
                 ctaButton:
-                  'bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold shadow-lg shadow-indigo-600/35 hover:scale-[1.01]',
-                checkColor: 'text-indigo-400',
+                  'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold shadow-lg shadow-[rgba(240,91,206,0.35)] hover:scale-[1.01] border border-white/15',
+                checkColor: 'text-[#F05BCE]',
                 tag: 'Creator Choice',
               },
               max: {
                 wrapper:
-                  'bg-[#11131A]/90 backdrop-blur-2xl border border-pink-500/30 hover:border-pink-500/50 ring-1 ring-pink-500/15 shadow-[0_16px_45px_rgba(236,72,153,0.12)]',
-                accentBg: 'bg-pink-950/40',
+                  'bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/40 shadow-xl transition-all',
+                accentBg: 'bg-[#100A12]',
                 badgeText: 'text-pink-300',
-                badgeBorder: 'border-pink-500/40',
-                badgeBg: 'bg-gradient-to-r from-pink-600 to-rose-600 text-white font-black border-pink-400/40 shadow-md shadow-pink-500/25',
-                creditBox: 'bg-[#0B0C10] text-white border-pink-500/20',
-                creditNumber: 'text-pink-400',
+                badgeBorder: 'border-[#39233B]',
+                badgeBg: 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white font-black border-white/20 shadow-md',
+                creditBox: 'bg-[#100A12] text-white border-[#39233B]',
+                creditNumber: 'text-[#F05BCE]',
                 ctaButton:
-                  'bg-gradient-to-r from-pink-600 via-rose-600 to-pink-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold shadow-lg shadow-pink-600/30',
-                checkColor: 'text-pink-400',
+                  'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] hover:brightness-110 text-white font-bold shadow-lg shadow-[rgba(240,91,206,0.25)] border border-white/10',
+                checkColor: 'text-[#F05BCE]',
                 tag: 'Director VFX',
               },
               teams: {
                 wrapper:
-                  'bg-[#11131A]/90 backdrop-blur-2xl border border-cyan-500/30 hover:border-cyan-500/50 ring-1 ring-cyan-500/15 shadow-[0_12px_40px_rgba(6,182,212,0.12)]',
-                accentBg: 'bg-cyan-950/40',
-                badgeText: 'text-cyan-300',
-                badgeBorder: 'border-cyan-500/40',
-                badgeBg: 'bg-gradient-to-r from-cyan-600 to-teal-600 text-white font-black border-cyan-400/40 shadow-md shadow-cyan-600/25',
-                creditBox: 'bg-[#0B0C10] text-white border-cyan-500/20',
-                creditNumber: 'text-cyan-400',
+                  'bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/40 shadow-xl transition-all',
+                accentBg: 'bg-[#100A12]',
+                badgeText: 'text-pink-300',
+                badgeBorder: 'border-[#39233B]',
+                badgeBg: 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white font-black border-white/20 shadow-md',
+                creditBox: 'bg-[#100A12] text-white border-[#39233B]',
+                creditNumber: 'text-[#F05BCE]',
                 ctaButton:
-                  'bg-gradient-to-r from-cyan-600 via-teal-600 to-cyan-600 hover:from-cyan-500 hover:to-teal-500 text-white font-bold shadow-lg shadow-cyan-600/30',
-                checkColor: 'text-cyan-400',
+                  'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] hover:brightness-110 text-white font-bold shadow-lg shadow-[rgba(240,91,206,0.25)] border border-white/10',
+                checkColor: 'text-[#F05BCE]',
                 tag: 'Team Collaboration',
               },
             }[plan.tier];

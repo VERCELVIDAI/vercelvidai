@@ -102,13 +102,13 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  // Permanent Dark Cinematic Kling AI Studio Theme
+                  // Midnight Plum × Hot Pink Design System
                   localStorage.setItem('fluvia_theme', 'dark');
-                  localStorage.setItem('fluvia_color_theme', 'kling-obsidian');
+                  localStorage.setItem('fluvia_color_theme', 'midnight-plum');
                   document.documentElement.classList.remove('light');
                   document.documentElement.classList.add('dark');
                   document.documentElement.setAttribute('data-theme', 'dark');
-                  document.documentElement.setAttribute('data-color-theme', 'kling-obsidian');
+                  document.documentElement.setAttribute('data-color-theme', 'midnight-plum');
                   document.documentElement.style.colorScheme = 'dark';
                 } catch(e) {}
               })();
@@ -117,7 +117,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased min-h-screen text-slate-100 bg-[#090A0D] relative selection:bg-indigo-500/30 selection:text-white"
+        className="antialiased min-h-screen text-[#F5EAF4] bg-[#100A12] relative selection:bg-[#F05BCE]/30 selection:text-white"
       >
         <FluviaMotionBackground />
         <ThemeProvider>
