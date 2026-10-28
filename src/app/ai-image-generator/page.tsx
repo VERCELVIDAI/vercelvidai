@@ -7,7 +7,7 @@ import { Image as ImageIcon, Sparkles, ArrowRight, Wand2, Palette, Shield } from
 
 export default function AIImageGeneratorPage() {
   return (
-    <div className="min-h-screen flex flex-col text-[#17211D]">
+    <div className="min-h-screen flex flex-col bg-[#090A0D] text-white">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-left">
@@ -16,10 +16,10 @@ export default function AIImageGeneratorPage() {
             <Sparkles className="w-3.5 h-3.5 text-pink-600" />
             <span>Google Gemini Imagen & Flux 1.1 Pro Vision</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#17211D] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight">
             Gemini AI Image Studio
           </h1>
-          <p className="mt-3 text-sm sm:text-lg text-slate-600">
+          <p className="mt-3 text-sm sm:text-lg text-slate-400">
             Generate ultra-high-fidelity concept art, luxury commercial advertisements, and product renderings powered by Google Gemini AI.
           </p>
         </div>
@@ -31,7 +31,7 @@ export default function AIImageGeneratorPage() {
 
         {/* Gallery of High Fidelity Visuals */}
         <div className="my-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#17211D] mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
             Curated High-Fidelity Generations
           </h2>
 
@@ -68,7 +68,7 @@ export default function AIImageGeneratorPage() {
                 aspect: 'Cinema (16:9)',
               },
             ].map((card, idx) => (
-              <div key={idx} className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden group shadow-md hover:shadow-xl transition-all">
+              <div key={idx} className="rounded-2xl glass-card border border-white/8 overflow-hidden group shadow-md hover:shadow-xl transition-all">
                 <div className="aspect-square relative overflow-hidden">
                   <img
                     src={card.image}
@@ -86,7 +86,7 @@ export default function AIImageGeneratorPage() {
                   </div>
                 </div>
                 <div className="p-4 flex items-center justify-between">
-                  <h4 className="font-bold text-[#17211D] text-sm">{card.title}</h4>
+                  <h4 className="font-bold text-white text-sm">{card.title}</h4>
                   <span className="text-[11px] text-slate-500 font-mono font-medium">{card.aspect}</span>
                 </div>
               </div>

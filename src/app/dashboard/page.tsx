@@ -222,11 +222,11 @@ export default function DashboardPage() {
 
   if (isRedirecting) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-white via-[#F0FDF4]/50 to-[#FFF1F7]/40 text-[#17211D] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="w-9 h-9 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm font-bold text-[#17211D]">Session expired or sign in required</p>
-          <span className="text-xs text-slate-500">Redirecting to Fluvia Flow sign in...</span>
+          <div className="w-9 h-9 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-bold text-white">Session expired or sign in required</p>
+          <span className="text-xs text-slate-400">Redirecting to Fluvia Flow sign in...</span>
         </div>
       </div>
     );

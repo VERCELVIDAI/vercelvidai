@@ -77,13 +77,13 @@ function PaymentStatusContent() {
   const isCancelled = urlStatus === 'cancelled' || order?.status === 'cancelled';
 
   return (
-    <div className="min-h-screen text-[#17211D] flex flex-col justify-between">
+    <div className="min-h-screen bg-[#090A0D] text-white flex flex-col justify-between">
       {/* Top Header */}
-      <header className="h-16 glass-navbar border-b border-emerald-500/10 px-6 flex items-center justify-between">
+      <header className="h-16 glass-navbar border-b border-white/8 px-6 flex items-center justify-between">
         <Logo size="sm" />
         <Link
           href="/dashboard"
-          className="text-xs text-slate-600 hover:text-emerald-700 flex items-center gap-1.5 transition-colors font-medium"
+          className="text-xs text-slate-400 hover:text-indigo-400 flex items-center gap-1.5 transition-colors font-medium"
         >
           <span>Dashboard</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -95,62 +95,62 @@ function PaymentStatusContent() {
         {isLoading ? (
           <div className="p-10 rounded-3xl glass-card space-y-4 w-full">
             <div className="w-12 h-12 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
-            <h2 className="text-lg font-bold text-[#17211D]">Verifying Payment with PayU India...</h2>
-            <p className="text-xs text-slate-600">
+            <h2 className="text-lg font-bold text-white">Verifying Payment with PayU India...</h2>
+            <p className="text-xs text-slate-400">
               Reconciling cryptographic reverse hash and confirming credit grant. Please do not close this window.
             </p>
           </div>
         ) : isSuccess ? (
           /* SUCCESS STATE */
-          <div className="p-8 sm:p-10 rounded-3xl glass-card border-emerald-500/30 space-y-6 w-full shadow-xl relative overflow-hidden">
-            <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto ring-8 ring-emerald-500/10">
+          <div className="p-8 sm:p-10 rounded-3xl glass-card border-white/10 space-y-6 w-full shadow-xl relative overflow-hidden">
+            <div className="w-16 h-16 rounded-2xl bg-white/[0.04] text-emerald-600 flex items-center justify-center mx-auto ring-8 ring-emerald-500/10">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <div>
-              <span className="text-[11px] font-bold font-mono uppercase text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-500/30">
+              <span className="text-[11px] font-bold font-mono uppercase text-indigo-400 bg-white/[0.04] px-3 py-1 rounded-full border border-white/10">
                 Payment Verified & Settled
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D] mt-3">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-3">
                 Welcome to Fluvia Flow
               </h1>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600">
+              <p className="mt-2 text-xs sm:text-sm text-slate-400">
                 Your payment was processed securely by PayU. Your workspace credits are ready to spend immediately.
               </p>
             </div>
 
             {/* Order Details Card */}
-            <div className="p-5 rounded-2xl bg-emerald-50/40 border border-emerald-500/15 text-xs text-left space-y-2.5">
-              <div className="flex justify-between items-center text-slate-600">
+            <div className="p-5 rounded-2xl bg-white/[0.04]/40 border border-white/8 text-xs text-left space-y-2.5">
+              <div className="flex justify-between items-center text-slate-400">
                 <span>Product / Plan:</span>
-                <strong className="text-[#17211D] font-semibold">{order?.productInfo || 'Fluvia Flow Credits'}</strong>
+                <strong className="text-white font-semibold">{order?.productInfo || 'Fluvia Flow Credits'}</strong>
               </div>
-              <div className="flex justify-between items-center text-slate-600">
+              <div className="flex justify-between items-center text-slate-400">
                 <span>Amount Paid (INR):</span>
-                <strong className="text-emerald-700 font-mono font-bold text-sm">
+                <strong className="text-indigo-400 font-mono font-bold text-sm">
                   INR {order?.totalAmount ? order.totalAmount.toFixed(2) : '---'}
                 </strong>
               </div>
-              <div className="flex justify-between items-center text-slate-600">
+              <div className="flex justify-between items-center text-slate-400">
                 <span>Merchant Txn ID:</span>
                 <span className="font-mono text-slate-800">{txnid}</span>
               </div>
               {order?.payuMihpayid && (
-                <div className="flex justify-between items-center text-slate-600">
+                <div className="flex justify-between items-center text-slate-400">
                   <span>PayU Payment ID:</span>
                   <span className="font-mono text-slate-800">{order.payuMihpayid}</span>
                 </div>
               )}
               {invoice?.invoiceNumber && (
-                <div className="flex justify-between items-center text-slate-600">
+                <div className="flex justify-between items-center text-slate-400">
                   <span>Invoice Number:</span>
                   <span className="font-mono text-teal-700 font-semibold">{invoice.invoiceNumber}</span>
                 </div>
               )}
               {receipt?.receiptNumber && (
-                <div className="flex justify-between items-center text-slate-600">
+                <div className="flex justify-between items-center text-slate-400">
                   <span>Official Receipt:</span>
-                  <span className="font-mono text-emerald-700 font-semibold">{receipt.receiptNumber}</span>
+                  <span className="font-mono text-indigo-400 font-semibold">{receipt.receiptNumber}</span>
                 </div>
               )}
             </div>
@@ -163,7 +163,7 @@ function PaymentStatusContent() {
                     href={`/api/billing/receipts/${receipt.id}/pdf`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3 px-4 glass-button text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors hover:text-emerald-700 hover:border-emerald-400"
+                    className="py-3 px-4 glass-button text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors hover:text-indigo-400 hover:border-emerald-400"
                   >
                     <Download className="w-4 h-4 text-emerald-600" />
                     <span>Download Receipt (PDF)</span>
@@ -175,7 +175,7 @@ function PaymentStatusContent() {
                     href={`/api/billing/invoices/${invoice.id}/pdf`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3 px-4 glass-button text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors hover:text-emerald-700 hover:border-emerald-400"
+                    className="py-3 px-4 glass-button text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors hover:text-indigo-400 hover:border-emerald-400"
                   >
                     <FileText className="w-4 h-4 text-teal-600" />
                     <span>Download Invoice (PDF)</span>
@@ -185,7 +185,7 @@ function PaymentStatusContent() {
 
               <Link
                 href="/create"
-                className="w-full py-3.5 px-6 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all block text-center"
+                className="w-full py-3.5 px-6 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition-all block text-center"
               >
                 <Sparkles className="w-4 h-4 text-amber-200" />
                 <span>Launch AI Creative Studio</span>
@@ -193,7 +193,7 @@ function PaymentStatusContent() {
 
               <Link
                 href="/dashboard/billing"
-                className="block text-xs text-slate-600 hover:text-emerald-700 pt-2 transition-colors font-medium"
+                className="block text-xs text-slate-400 hover:text-indigo-400 pt-2 transition-colors font-medium"
               >
                 View Full Billing History & Receipts →
               </Link>
@@ -210,8 +210,8 @@ function PaymentStatusContent() {
               <span className="text-[11px] font-bold font-mono uppercase text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-500/30">
                 Payment Under Verification
               </span>
-              <h1 className="text-2xl font-extrabold text-[#17211D] mt-3">Confirmation Pending</h1>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600">
+              <h1 className="text-2xl font-extrabold text-white mt-3">Confirmation Pending</h1>
+              <p className="mt-2 text-xs sm:text-sm text-slate-400">
                 PayU has received your payment request and is awaiting clearance from your issuing bank. Your order has
                 been preserved safely.
               </p>
@@ -250,10 +250,10 @@ function PaymentStatusContent() {
               >
                 {isCancelled ? 'Payment Cancelled' : 'Payment Failed'}
               </span>
-              <h1 className="text-2xl font-extrabold text-[#17211D] mt-3">
+              <h1 className="text-2xl font-extrabold text-white mt-3">
                 {isCancelled ? 'Checkout Cancelled' : 'Transaction Declined'}
               </h1>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600">
+              <p className="mt-2 text-xs sm:text-sm text-slate-400">
                 {errorMessage ||
                   (isCancelled
                     ? 'You cancelled the payment on the PayU gateway portal.'
@@ -264,13 +264,13 @@ function PaymentStatusContent() {
             <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/pricing"
-                className="py-3 px-6 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold rounded-xl text-xs flex items-center justify-center shadow-sm"
+                className="py-3 px-6 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center justify-center shadow-sm"
               >
                 Try Another Payment Method
               </Link>
               <Link
                 href="/dashboard"
-                className="py-3 px-6 glass-button text-slate-700 font-bold rounded-xl text-xs flex items-center justify-center"
+                className="py-3 px-6 glass-button text-slate-300 font-bold rounded-xl text-xs flex items-center justify-center"
               >
                 Back to Dashboard
               </Link>
@@ -280,7 +280,7 @@ function PaymentStatusContent() {
       </main>
 
       {/* Footer */}
-      <footer className="h-14 glass-navbar border-t border-emerald-500/10 px-6 flex items-center justify-center text-xs text-slate-600">
+      <footer className="h-14 glass-navbar border-t border-white/8 px-6 flex items-center justify-center text-xs text-slate-400">
         <span className="flex items-center gap-1.5">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
           <span>PayU India Hosted Checkout — Official Merchant Integration</span>
@@ -294,7 +294,7 @@ export default function PaymentStatusPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen text-[#17211D] flex items-center justify-center">
+        <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
           <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
         </div>
       }

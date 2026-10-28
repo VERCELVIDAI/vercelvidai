@@ -127,25 +127,25 @@ function SignupForm() {
           </Link>
         </div>
 
-        <div className="p-6 sm:p-8 rounded-3xl glass-card border border-emerald-500/20 shadow-xl bg-white/90 text-center">
-          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600 shadow-xs">
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/10 shadow-xl text-center">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shadow-xs">
             <Mail className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-extrabold text-[#17211D]">Check your email</h2>
-          <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-            We&apos;ve sent a verification link to <strong className="text-[#17211D]">{registeredEmail}</strong>. Please click the link to confirm your account and claim your 100 free credits.
+          <h2 className="text-xl font-extrabold text-white">Check your email</h2>
+          <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+            We&apos;ve sent a verification link to <strong className="text-white">{registeredEmail}</strong>. Please click the link to confirm your account and claim your 100 free credits.
           </p>
           <div className="mt-6 flex flex-col gap-3">
             <Link
               href={`/login?returnUrl=${encodeURIComponent(returnUrl)}`}
-              className="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 text-sm text-center transition-all"
+              className="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 text-sm text-center transition-all cursor-pointer"
             >
               Go to Sign In
             </Link>
             <button
               type="button"
               onClick={() => setVerificationSent(false)}
-              className="text-xs text-slate-500 hover:text-slate-800 font-medium py-1"
+              className="text-xs text-slate-400 hover:text-white font-medium py-1 cursor-pointer"
             >
               Didn&apos;t receive it or want to change your email?
             </button>
@@ -165,19 +165,19 @@ function SignupForm() {
       </div>
 
       <div className="text-center mb-6">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold mb-3 border border-emerald-300 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/15 text-indigo-300 text-xs font-bold mb-3 border border-indigo-500/30 shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
           <span>Includes 100 Free Generative Credits</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17211D] tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
           Create your account
         </h1>
-        <p className="mt-2 text-xs sm:text-sm text-slate-600">
+        <p className="mt-2 text-xs sm:text-sm text-slate-400">
           Start producing cinema-grade AI videos, ads, and viral clips in minutes
         </p>
       </div>
 
-      <div className="p-6 sm:p-8 rounded-3xl glass-card border border-emerald-500/20 shadow-xl bg-white/90">
+      <div className="p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/10 shadow-2xl">
         {error && (
           <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-xs text-rose-800 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
             <div className="flex items-center gap-2">

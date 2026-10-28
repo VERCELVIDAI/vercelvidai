@@ -239,7 +239,7 @@ export default function BillingOverviewPage() {
                 <h3 className="text-base font-bold text-white">Instant Credit Top-Up Packs</h3>
                 <p className="text-xs text-slate-400">Never let rendering stop. Instant delivery via PayU UPI & Cards.</p>
               </div>
-              <Link href="/pricing" className="text-xs text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1">
+              <Link href="/pricing" className="text-xs text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1">
                 <span>View All Packs</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
@@ -254,16 +254,16 @@ export default function BillingOverviewPage() {
               ].map((pack) => (
                 <div
                   key={pack.id}
-                  className="p-4 rounded-xl glass-card border border-emerald-500/20 hover:border-emerald-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+                  className="p-4 rounded-xl glass-card border border-white/8 hover:border-emerald-500/50 hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-200">
+                      <span className="text-[10px] font-mono font-bold text-indigo-300 bg-white/[0.08] px-2 py-0.5 rounded border border-emerald-200">
                         {pack.tag}
                       </span>
                     </div>
-                    <div className="font-bold text-[#17211D] text-base mt-2">{pack.name}</div>
-                    <div className="text-sm font-extrabold text-[#17211D] mt-1 font-mono">
+                    <div className="font-bold text-white text-base mt-2">{pack.name}</div>
+                    <div className="text-sm font-extrabold text-white mt-1 font-mono">
                       INR {pack.price}
                     </div>
                   </div>
@@ -280,15 +280,15 @@ export default function BillingOverviewPage() {
           </div>
 
           {/* Recent Transactions & Invoices Table */}
-          <div className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden shadow-sm">
-            <div className="p-5 border-b border-emerald-500/15 flex items-center justify-between">
+          <div className="rounded-2xl glass-card border border-white/8 overflow-hidden shadow-sm">
+            <div className="p-5 border-b border-white/8 flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-[#17211D] text-sm">Recent PayU Transactions</h3>
-                <p className="text-xs text-slate-600">Latest orders processed with immediate settlement</p>
+                <h3 className="font-bold text-white text-sm">Recent PayU Transactions</h3>
+                <p className="text-xs text-slate-400">Latest orders processed with immediate settlement</p>
               </div>
               <Link
                 href="/dashboard/billing/transactions"
-                className="text-xs text-emerald-700 hover:text-emerald-800 font-bold"
+                className="text-xs text-indigo-400 hover:text-indigo-300 font-bold"
               >
                 View Full Ledger →
               </Link>
@@ -298,13 +298,13 @@ export default function BillingOverviewPage() {
               {recentTransactions.length === 0 ? (
                 <div className="p-10 text-center text-slate-500 text-xs space-y-2">
                   <p>No transactions recorded yet in this workspace.</p>
-                  <Link href="/checkout?type=pack&id=pack_1200" className="text-emerald-700 font-bold underline">
+                  <Link href="/checkout?type=pack&id=pack_1200" className="text-indigo-400 font-bold underline">
                     Make your first credit purchase
                   </Link>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-emerald-50/50 text-slate-600 border-b border-emerald-500/15 uppercase text-[10px] font-mono font-bold">
+                  <thead className="bg-indigo-500/10 text-slate-400 border-b border-white/8 uppercase text-[10px] font-mono font-bold">
                     <tr>
                       <th className="py-3 px-4">Transaction ID</th>
                       <th className="py-3 px-4">Item</th>
@@ -314,25 +314,25 @@ export default function BillingOverviewPage() {
                       <th className="py-3 px-4 text-right">Documents</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-emerald-500/10 text-slate-700">
+                  <tbody className="divide-y divide-emerald-500/10 text-slate-300">
                     {recentTransactions.map((tx: any) => (
-                      <tr key={tx.id} className="hover:bg-emerald-50/40 transition-colors">
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#17211D]">
-                          <Link href={`/dashboard/billing/transactions/${tx.id}`} className="hover:text-emerald-700 underline">
+                      <tr key={tx.id} className="hover:bg-white/[0.04]/40 transition-colors">
+                        <td className="py-3.5 px-4 font-mono font-bold text-white">
+                          <Link href={`/dashboard/billing/transactions/${tx.id}`} className="hover:text-indigo-400 underline">
                             {tx.txnid}
                           </Link>
                         </td>
-                        <td className="py-3.5 px-4 font-semibold text-[#17211D] max-w-xs truncate">
+                        <td className="py-3.5 px-4 font-semibold text-white max-w-xs truncate">
                           {tx.productInfo}
                         </td>
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#17211D]">
+                        <td className="py-3.5 px-4 font-mono font-bold text-white">
                           INR {tx.totalAmount.toFixed(2)}
                         </td>
                         <td className="py-3.5 px-4">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold ${
                               tx.status === 'success'
-                                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                                ? 'bg-white/[0.08] text-indigo-300 border border-emerald-300'
                                 : tx.status === 'pending'
                                 ? 'bg-amber-100 text-amber-800 border border-amber-300'
                                 : 'bg-rose-100 text-rose-800 border border-rose-300'
@@ -375,20 +375,20 @@ export default function BillingOverviewPage() {
                               <>
                                 <Link
                                   href={`/dashboard/billing/receipts/${tx.receiptId}`}
-                                  className="px-2 py-1 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 transition-colors text-[11px] font-bold inline-flex items-center gap-1"
+                                  className="px-2 py-1 rounded-md bg-white/[0.04] hover:bg-white/[0.08] text-indigo-300 border border-emerald-300 transition-colors text-[11px] font-bold inline-flex items-center gap-1"
                                   title="View Payment Receipt"
                                 >
-                                  <Receipt className="w-3 h-3 text-emerald-700" />
+                                  <Receipt className="w-3 h-3 text-indigo-400" />
                                   <span>Receipt</span>
                                 </Link>
                                 <a
                                   href={`/api/billing/receipts/${tx.receiptId}/pdf`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="p-1 rounded-md bg-emerald-100/70 hover:bg-emerald-200 text-emerald-800 border border-emerald-300 transition-colors text-[11px] font-bold inline-flex items-center"
+                                  className="p-1 rounded-md bg-white/[0.08]/70 hover:bg-emerald-200 text-indigo-300 border border-emerald-300 transition-colors text-[11px] font-bold inline-flex items-center"
                                   title="Download Receipt PDF"
                                 >
-                                  <Download className="w-3 h-3 text-emerald-700" />
+                                  <Download className="w-3 h-3 text-indigo-400" />
                                 </a>
                               </>
                             )}

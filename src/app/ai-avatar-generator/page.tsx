@@ -13,19 +13,19 @@ export default function AIAvatarGeneratorPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col text-[#17211D]">
+    <div className="min-h-screen flex flex-col bg-[#090A0D] text-white">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-xs font-bold text-emerald-800 mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-emerald-300 text-xs font-bold text-indigo-300 mb-4 shadow-xs">
             <UserCheck className="w-3.5 h-3.5 text-emerald-600" />
             <span>AI Talking Heads & Presenters</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-[#17211D] tracking-tight">
+          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
             AI Avatar Presenters
           </h1>
-          <p className="mt-4 text-base sm:text-xl text-slate-600">
+          <p className="mt-4 text-base sm:text-xl text-slate-400">
             Create professional presenter videos and UGC testimonials without actors, cameras, or studios.
           </p>
 
@@ -43,7 +43,7 @@ export default function AIAvatarGeneratorPage() {
         {/* Avatar Showcase Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-16">
           {avatars.map((av, idx) => (
-            <div key={idx} className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden group shadow-md hover:shadow-xl transition-all">
+            <div key={idx} className="rounded-2xl glass-card border border-white/8 overflow-hidden group shadow-md hover:shadow-xl transition-all">
               <div className="aspect-[4/5] relative overflow-hidden bg-slate-900">
                 <img
                   src={av.img}
@@ -56,9 +56,9 @@ export default function AIAvatarGeneratorPage() {
                   <p className="text-xs text-emerald-300 font-semibold">{av.role}</p>
                 </div>
               </div>
-              <div className="p-3 border-t border-emerald-500/15 bg-white/70 flex justify-between items-center text-xs">
+              <div className="p-3 border-t border-white/8 bg-[#11131A] flex justify-between items-center text-xs">
                 <span className="text-slate-500 font-medium">Lip-sync: 99.4%</span>
-                <Link href={`/create?avatar=${encodeURIComponent(av.name)}`} className="text-emerald-700 font-bold hover:underline">
+                <Link href={`/create?avatar=${encodeURIComponent(av.name)}`} className="text-indigo-400 font-bold hover:underline">
                   Use Avatar →
                 </Link>
               </div>

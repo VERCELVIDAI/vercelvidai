@@ -95,19 +95,19 @@ export default function FeaturesPage() {
   ];
 
   return (
-    <div className="min-h-screen text-[#17211D] flex flex-col">
+    <div className="min-h-screen bg-[#090A0D] text-white flex flex-col">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-500/20 text-xs font-semibold text-emerald-700 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/8 text-xs font-semibold text-indigo-400 mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Platform Capabilities</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#17211D] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
             Built for modern creative velocity
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-600">
+          <p className="mt-4 text-base sm:text-lg text-slate-400">
             Discover the full breadth of generative video, voice synthesis, multi-track editing, and export workflows.
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function FeaturesPage() {
         <div className="space-y-16">
           {features.map((group, gIdx) => (
             <div key={gIdx}>
-              <h2 className="text-xl sm:text-2xl font-bold text-[#17211D] mb-8 border-b border-emerald-500/10 pb-3 flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-8 border-b border-white/8 pb-3 flex items-center gap-3">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                 <span>{group.category}</span>
               </h2>
@@ -126,16 +126,16 @@ export default function FeaturesPage() {
                   return (
                     <div
                       key={fIdx}
-                      className="p-6 rounded-3xl glass-card hover:border-emerald-500/40 transition-all flex gap-5 group shadow-sm"
+                      className="p-6 rounded-3xl glass-card hover:border-white/20 transition-all flex gap-5 group shadow-sm"
                     >
-                      <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-colors border border-emerald-500/20">
+                      <div className="w-12 h-12 rounded-2xl bg-white/[0.04] text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-colors border border-white/8">
                         <Icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors">
+                        <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">
                           {feat.title}
                         </h3>
-                        <p className="mt-2 text-sm text-slate-600 leading-relaxed">{feat.desc}</p>
+                        <p className="mt-2 text-sm text-slate-400 leading-relaxed">{feat.desc}</p>
                       </div>
                     </div>
                   );
@@ -146,17 +146,17 @@ export default function FeaturesPage() {
         </div>
 
         {/* CTA Banner */}
-        <div className="mt-20 p-8 sm:p-12 rounded-3xl glass-card border-emerald-500/30 text-center relative overflow-hidden shadow-xl bg-gradient-to-r from-emerald-50/80 via-white/80 to-pink-50/50">
-          <h3 className="text-2xl sm:text-4xl font-extrabold text-[#17211D]">
+        <div className="mt-20 p-8 sm:p-12 rounded-3xl glass-card border-white/10 text-center relative overflow-hidden shadow-xl bg-gradient-to-r from-emerald-50/80 via-white/80 to-pink-50/50">
+          <h3 className="text-2xl sm:text-4xl font-extrabold text-white">
             Experience the future of video creation today
           </h3>
-          <p className="mt-3 text-slate-600 max-w-lg mx-auto text-sm sm:text-base">
+          <p className="mt-3 text-slate-400 max-w-lg mx-auto text-sm sm:text-base">
             No credit card required for initial explorer tests. Get 100 free credits upon signup.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link
               href="/signup"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 shadow-xl shadow-emerald-500/25 transition-all"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-xl shadow-emerald-500/25 transition-all"
             >
               <span>Get Started Free</span>
               <ArrowRight className="w-4 h-4" />

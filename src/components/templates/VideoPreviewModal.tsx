@@ -152,15 +152,15 @@ export function VideoPreviewModal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto glass-modal border border-emerald-500/25 rounded-3xl shadow-2xl flex flex-col text-[#17211D] bg-white/95"
+        className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto bg-[#0E1015] border border-white/10 rounded-3xl shadow-2xl flex flex-col text-white"
       >
         {/* Modal Header */}
-        <div className="sticky top-0 z-30 px-5 py-4 border-b border-emerald-500/15 bg-white/95 backdrop-blur-md flex items-center justify-between">
+        <div className="sticky top-0 z-30 px-5 py-4 border-b border-white/8 bg-[#0E1015]/95 backdrop-blur-md flex items-center justify-between">
           <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300">
+            <span className="px-3 py-1 rounded-full bg-indigo-500/15 text-indigo-300 text-xs font-bold border border-indigo-500/30">
               {template.category}
             </span>
-            <span className="text-xs font-mono text-slate-500">
+            <span className="text-xs font-mono text-slate-400">
               {template.aspectLabel} • {template.duration}
             </span>
           </div>
@@ -169,7 +169,7 @@ export function VideoPreviewModal({
             type="button"
             onClick={onClose}
             aria-label="Close template preview (Esc)"
-            className="p-2 min-h-[40px] min-w-[40px] rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors cursor-pointer"
+            className="p-2 min-h-[40px] min-w-[40px] rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer border border-white/8"
           >
             <X className="w-5 h-5" />
           </button>
@@ -181,7 +181,7 @@ export function VideoPreviewModal({
             {/* Left 7 Columns: Video Player */}
             <div className="lg:col-span-7 flex flex-col items-center">
               <div
-                className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-emerald-500/20 ${
+                className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/10 ${
                   template.aspect === '9:16'
                     ? 'aspect-[9/16] max-w-xs'
                     : template.aspect === '1:1'
@@ -221,7 +221,7 @@ export function VideoPreviewModal({
                     }`}
                   />
                 ) : (
-                  <div className="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center p-6 text-center text-white">
+                  <div className="absolute inset-0 bg-[#090A0D]/90 flex flex-col items-center justify-center p-6 text-center text-white">
                     <AlertCircle className="w-8 h-8 text-amber-400 mb-2" />
                     <p className="text-sm font-semibold">Video preview stream unavailable</p>
                     <p className="text-xs text-slate-400 mt-1 max-w-xs">
@@ -236,7 +236,7 @@ export function VideoPreviewModal({
                           videoRef.current.load();
                         }
                       }}
-                      className="mt-4 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5"
+                      className="mt-4 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5"
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       <span>Retry Playback</span>
@@ -247,7 +247,7 @@ export function VideoPreviewModal({
                 {/* Loading Spinner */}
                 {isLoading && !hasError && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none">
-                    <div className="w-8 h-8 border-3 border-emerald-400/30 border-t-emerald-400 rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-3 border-indigo-400/30 border-t-indigo-400 rounded-full animate-spin" />
                   </div>
                 )}
 
@@ -260,7 +260,7 @@ export function VideoPreviewModal({
                     className="h-1.5 w-full bg-white/20 hover:h-2 rounded-full cursor-pointer relative transition-all"
                   >
                     <div
-                      className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full"
+                      className="h-full bg-gradient-to-r from-indigo-500 to-violet-400 rounded-full"
                       style={{
                         width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%`,
                       }}
@@ -273,7 +273,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={togglePlay}
-                        className="p-1 hover:text-emerald-400 transition-colors"
+                        className="p-1 hover:text-indigo-400 transition-colors"
                         aria-label={isPlaying ? 'Pause' : 'Play'}
                       >
                         {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
@@ -282,7 +282,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={toggleMute}
-                        className="p-1 hover:text-emerald-400 transition-colors"
+                        className="p-1 hover:text-indigo-400 transition-colors"
                         aria-label={isMuted ? 'Unmute' : 'Mute'}
                       >
                         {isMuted ? <VolumeX className="w-4 h-4 text-amber-400" /> : <Volume2 className="w-4 h-4" />}
@@ -297,7 +297,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={handleFullscreen}
-                        className="p-1 hover:text-emerald-400 transition-colors"
+                        className="p-1 hover:text-indigo-400 transition-colors"
                         aria-label="Fullscreen"
                       >
                         <Maximize className="w-4 h-4" />
@@ -311,24 +311,24 @@ export function VideoPreviewModal({
             {/* Right 5 Columns: Metadata, Scenes & CTA */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17211D] leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
                   {template.title}
                 </h2>
-                <p className="mt-3 text-sm text-slate-600 leading-relaxed font-normal">
+                <p className="mt-3 text-sm text-slate-400 leading-relaxed font-normal">
                   {template.description}
                 </p>
 
                 {/* AI Models Used */}
-                <div className="mt-5 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-500/20 space-y-2">
-                  <div className="text-[11px] font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-emerald-600" />
+                <div className="mt-5 p-3.5 rounded-2xl bg-[#11131A] border border-white/8 space-y-2">
+                  <div className="text-[11px] font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-indigo-400" />
                     <span>AI Engine Pipeline</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {template.aiModelsUsed.map((m) => (
                       <span
                         key={m}
-                        className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-white text-emerald-800 border border-emerald-500/20 font-semibold shadow-2xs"
+                        className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-[#151822] text-cyan-300 border border-white/8 font-semibold shadow-2xs"
                       >
                         {m}
                       </span>
@@ -339,22 +339,22 @@ export function VideoPreviewModal({
                 {/* Scene Timeline Structure */}
                 {template.scenes && template.scenes.length > 0 && (
                   <div className="mt-6 space-y-2.5">
-                    <div className="text-xs font-bold uppercase tracking-wider text-[#17211D] flex items-center gap-1.5">
-                      <Film className="w-3.5 h-3.5 text-teal-600" />
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
+                      <Film className="w-3.5 h-3.5 text-indigo-400" />
                       <span>Timeline Scene Breakdown</span>
                     </div>
                     <div className="space-y-2">
                       {template.scenes.map((scene, idx) => (
                         <div
                           key={idx}
-                          className="p-3 rounded-xl bg-white border border-emerald-500/15 flex items-start gap-3 text-xs shadow-2xs"
+                          className="p-3 rounded-xl bg-[#151822] border border-white/8 flex items-start gap-3 text-xs shadow-2xs"
                         >
-                          <span className="font-mono text-[11px] font-bold text-emerald-700 shrink-0 mt-0.5">
+                          <span className="font-mono text-[11px] font-bold text-indigo-400 shrink-0 mt-0.5">
                             {scene.time}
                           </span>
                           <div>
-                            <div className="font-semibold text-[#17211D]">{scene.title}</div>
-                            <div className="text-slate-600 text-[11px] leading-relaxed mt-0.5">
+                            <div className="font-semibold text-white">{scene.title}</div>
+                            <div className="text-slate-400 text-[11px] leading-relaxed mt-0.5">
                               {scene.desc}
                             </div>
                           </div>
@@ -366,12 +366,12 @@ export function VideoPreviewModal({
               </div>
 
               {/* Primary Action Button */}
-              <div className="pt-4 border-t border-emerald-500/15">
+              <div className="pt-4 border-t border-white/8">
                 <button
                   type="button"
                   onClick={handleCloneClick}
                   disabled={isCloning}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-sm shadow-xl shadow-emerald-600/25 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-sm shadow-xl shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
                 >
                   {isCloning ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -382,7 +382,7 @@ export function VideoPreviewModal({
                     </>
                   )}
                 </button>
-                <p className="mt-2 text-center text-[11px] text-slate-500 font-medium">
+                <p className="mt-2 text-center text-[11px] text-slate-400 font-medium">
                   Creates an independent editable project in your workspace without deducting credits.
                 </p>
               </div>
@@ -390,9 +390,9 @@ export function VideoPreviewModal({
           </div>
 
           {/* Related Templates Grid */}
-          <div className="pt-6 border-t border-emerald-500/15">
-            <h3 className="font-bold text-[#17211D] text-base mb-4 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-emerald-600" />
+          <div className="pt-6 border-t border-white/8">
+            <h3 className="font-bold text-white text-base mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-indigo-400" />
               <span>More Templates in this Style</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -400,7 +400,7 @@ export function VideoPreviewModal({
                 <div
                   key={r.id}
                   onClick={() => onSelectRelated(r)}
-                  className="group cursor-pointer rounded-2xl p-2.5 glass-card border border-emerald-500/15 hover:border-emerald-500/40 bg-white/70 hover:bg-white transition-all flex items-center gap-3 shadow-xs"
+                  className="group cursor-pointer rounded-2xl p-2.5 bg-[#11131A] hover:bg-[#151822] border border-white/8 hover:border-white/20 transition-all flex items-center gap-3 shadow-xs"
                 >
                   <img
                     src={r.thumbnail}
@@ -411,10 +411,10 @@ export function VideoPreviewModal({
                     }}
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="font-bold text-xs text-[#17211D] truncate group-hover:text-emerald-700 transition-colors">
+                    <div className="font-bold text-xs text-white truncate group-hover:text-indigo-400 transition-colors">
                       {r.title}
                     </div>
-                    <div className="text-[10px] text-slate-500 font-mono">
+                    <div className="text-[10px] text-slate-400 font-mono">
                       {r.aspectLabel} • {r.duration}
                     </div>
                   </div>

@@ -361,7 +361,7 @@ export default function AdminConsolePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen text-[#17211D] flex items-center justify-center">
+      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -374,13 +374,13 @@ export default function AdminConsolePage() {
   const recentAudits = adminData?.recentAudits || [];
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-200 text-[#17211D]">
+    <div className="min-h-screen flex flex-col transition-colors duration-200 bg-[#090A0D] text-white">
       {/* Admin Top Bar */}
-      <header className="h-16 border-b border-emerald-500/15 glass-navbar px-6 flex items-center justify-between shrink-0">
+      <header className="h-16 border-b border-white/8 glass-navbar px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"
-            className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-slate-700 hover:text-emerald-900 border border-emerald-300"
+            className="p-1.5 rounded-lg bg-[#11131A]/[0.04] hover:bg-[#11131A]/[0.08] text-slate-300 hover:text-emerald-900 border border-emerald-300"
             title="Return to User Dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -388,7 +388,7 @@ export default function AdminConsolePage() {
           <div className="h-5 w-px bg-emerald-500/20" />
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-amber-600" />
-            <span className="font-bold text-[#17211D] text-base">Fluvia Flow • Admin Console</span>
+            <span className="font-bold text-white text-base">Fluvia Flow • Admin Console</span>
             <span className="text-[10px] bg-amber-100 text-amber-900 font-mono px-2 py-0.5 rounded border border-amber-300 uppercase font-bold">
               Super Admin
             </span>
@@ -396,7 +396,7 @@ export default function AdminConsolePage() {
         </div>
 
         {/* Tab navigation */}
-        <div className="flex gap-1 glass-panel border border-emerald-500/20 p-1 rounded-xl text-xs font-bold">
+        <div className="flex gap-1 glass-panel border border-white/8 p-1 rounded-xl text-xs font-bold">
           {[
             { id: 'overview', label: 'Metrics Overview' },
             { id: 'pricing', label: 'Pricing, Plans & Tax' },
@@ -411,7 +411,7 @@ export default function AdminConsolePage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                activeTab === tab.id ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-[#17211D] hover:bg-emerald-50/60'
+                activeTab === tab.id ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs' : 'text-slate-400 hover:text-white hover:bg-[#11131A]/[0.06]'
               }`}
             >
               {tab.label}
@@ -466,15 +466,15 @@ export default function AdminConsolePage() {
 
             {/* Provider Status Quick Grid */}
             <div className="p-6 rounded-3xl glass-card space-y-4 shadow-sm">
-              <h3 className="font-bold text-[#17211D] text-base">Configured Provider Integrations</h3>
+              <h3 className="font-bold text-white text-base">Configured Provider Integrations</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                 {providers.map((prv: any) => (
                   <div key={prv.id} className="p-3.5 glass-card rounded-2xl flex items-center justify-between">
                     <div>
-                      <span className="font-semibold text-[#17211D] block">{prv.name}</span>
+                      <span className="font-semibold text-white block">{prv.name}</span>
                       <span className="text-[11px] text-slate-500 capitalize">{prv.providerType} AI</span>
                     </div>
-                    <span className="text-[10px] bg-emerald-50 text-emerald-700 font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/30">
+                    <span className="text-[10px] bg-[#11131A]/[0.04] text-emerald-700 font-mono font-bold px-2 py-0.5 rounded border border-white/10">
                       Live / Active
                     </span>
                   </div>
@@ -506,7 +506,7 @@ export default function AdminConsolePage() {
                 </thead>
                 <tbody className="divide-y divide-white/5 text-slate-300">
                   {usersList.map((usr) => (
-                    <tr key={usr.id} className="hover:bg-white/[0.02]">
+                    <tr key={usr.id} className="hover:bg-[#11131A]/[0.02]">
                       <td className="p-3 font-semibold text-white flex items-center gap-2">
                         <div className="w-7 h-7 rounded-full bg-violet-600/30 text-white flex items-center justify-center font-bold text-[11px]">
                           {usr.displayName[0]}
@@ -531,7 +531,7 @@ export default function AdminConsolePage() {
                         <button
                           type="button"
                           onClick={() => setAdjModal({ open: true, userId: usr.id, userEmail: usr.email })}
-                          className="px-2.5 py-1 bg-white/5 hover:bg-violet-600 text-white rounded-lg text-[11px] font-semibold transition-colors"
+                          className="px-2.5 py-1 bg-[#11131A]/5 hover:bg-violet-600 text-white rounded-lg text-[11px] font-semibold transition-colors"
                         >
                           Adjust Credits
                         </button>
@@ -587,21 +587,21 @@ export default function AdminConsolePage() {
         {couponModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
             <div className="glass-modal rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between pb-3 border-b border-emerald-500/15">
-                <h3 className="font-bold text-[#17211D] text-base flex items-center gap-2">
+              <div className="flex items-center justify-between pb-3 border-b border-white/8">
+                <h3 className="font-bold text-white text-base flex items-center gap-2">
                   <Tag className="w-4 h-4 text-emerald-600" />
                   <span>{couponModal.mode === 'create' ? 'Create New Coupon' : `Edit Coupon: ${couponModal.coupon.code}`}</span>
                 </h3>
                 <button
                   onClick={() => setCouponModal(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-emerald-50 cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 hover:bg-[#11131A]/[0.04] cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               {couponActionStatus && (
-                <div className={`p-3 text-xs rounded-xl ${couponActionStatus.startsWith('Error') ? 'bg-rose-50 border border-rose-300 text-rose-800' : 'bg-emerald-50 border border-emerald-300 text-emerald-800'}`}>
+                <div className={`p-3 text-xs rounded-xl ${couponActionStatus.startsWith('Error') ? 'bg-rose-50 border border-rose-300 text-rose-800' : 'bg-[#11131A]/[0.04] border border-emerald-300 text-emerald-800'}`}>
                   {couponActionStatus}
                 </div>
               )}
@@ -609,23 +609,23 @@ export default function AdminConsolePage() {
               <form onSubmit={handleSaveCoupon} className="space-y-4 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Coupon Code *</label>
+                    <label className="block text-slate-300 font-bold mb-1">Coupon Code *</label>
                     <input
                       type="text"
                       required
                       value={couponForm.code}
                       onChange={(e) => setCouponForm({ ...couponForm, code: e.target.value.toUpperCase() })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase border border-white/8"
                       placeholder="e.g. SUMMER25"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Discount Type *</label>
+                    <label className="block text-slate-300 font-bold mb-1">Discount Type *</label>
                     <select
                       value={couponForm.discountType}
                       onChange={(e) => setCouponForm({ ...couponForm, discountType: e.target.value as any })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20 cursor-pointer bg-white"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8 cursor-pointer bg-[#11131A]"
                     >
                       <option value="percentage">Percentage (%)</option>
                       <option value="fixed">Fixed Amount (INR)</option>
@@ -635,7 +635,7 @@ export default function AdminConsolePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">
+                    <label className="block text-slate-300 font-bold mb-1">
                       Discount Value * {couponForm.discountType === 'percentage' ? '(%)' : '(INR)'}
                     </label>
                     <input
@@ -645,69 +645,69 @@ export default function AdminConsolePage() {
                       max={couponForm.discountType === 'percentage' ? 100 : 100000}
                       value={couponForm.discountValue}
                       onChange={(e) => setCouponForm({ ...couponForm, discountValue: Number(e.target.value) })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono font-bold border border-white/8"
                     />
                   </div>
 
                   {couponForm.discountType === 'percentage' && (
                     <div>
-                      <label className="block text-slate-700 font-bold mb-1">Max Discount Cap (INR)</label>
+                      <label className="block text-slate-300 font-bold mb-1">Max Discount Cap (INR)</label>
                       <input
                         type="number"
                         min={0}
                         value={couponForm.maxDiscount}
                         onChange={(e) => setCouponForm({ ...couponForm, maxDiscount: e.target.value })}
-                        className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                        className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                         placeholder="e.g. 500 (optional)"
                       />
                     </div>
                   )}
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Minimum Order Value (INR)</label>
+                    <label className="block text-slate-300 font-bold mb-1">Minimum Order Value (INR)</label>
                     <input
                       type="number"
                       min={0}
                       value={couponForm.minimumOrderValue}
                       onChange={(e) => setCouponForm({ ...couponForm, minimumOrderValue: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                       placeholder="e.g. 499 (optional)"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-bold mb-1">Description</label>
+                  <label className="block text-slate-300 font-bold mb-1">Description</label>
                   <input
                     type="text"
                     value={couponForm.description}
                     onChange={(e) => setCouponForm({ ...couponForm, description: e.target.value })}
-                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8"
                     placeholder="e.g. 20% off up to INR 500 for creator subscriptions"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Total Max Redemptions</label>
+                    <label className="block text-slate-300 font-bold mb-1">Total Max Redemptions</label>
                     <input
                       type="number"
                       min={1}
                       value={couponForm.usageLimit}
                       onChange={(e) => setCouponForm({ ...couponForm, usageLimit: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                       placeholder="e.g. 500 (blank for unlimited)"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Per-User Limit</label>
+                    <label className="block text-slate-300 font-bold mb-1">Per-User Limit</label>
                     <input
                       type="number"
                       min={1}
                       value={couponForm.perUserLimit}
                       onChange={(e) => setCouponForm({ ...couponForm, perUserLimit: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                       placeholder="e.g. 1 per customer"
                     />
                   </div>
@@ -715,28 +715,28 @@ export default function AdminConsolePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Starts At Date</label>
+                    <label className="block text-slate-300 font-bold mb-1">Starts At Date</label>
                     <input
                       type="date"
                       value={couponForm.startsAt}
                       onChange={(e) => setCouponForm({ ...couponForm, startsAt: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Expires At Date</label>
+                    <label className="block text-slate-300 font-bold mb-1">Expires At Date</label>
                     <input
                       type="date"
                       value={couponForm.expiresAt}
                       onChange={(e) => setCouponForm({ ...couponForm, expiresAt: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-bold mb-1">Restrict Checkout Types</label>
+                  <label className="block text-slate-300 font-bold mb-1">Restrict Checkout Types</label>
                   <div className="flex gap-4 pt-1">
                     <label className="flex items-center gap-1.5 cursor-pointer">
                       <input
@@ -771,7 +771,7 @@ export default function AdminConsolePage() {
                 </div>
 
                 <div className="pt-2">
-                  <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+                  <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-300">
                     <input
                       type="checkbox"
                       checked={couponForm.isActive}
@@ -782,11 +782,11 @@ export default function AdminConsolePage() {
                   </label>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-3 border-t border-emerald-500/15">
+                <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/8">
                   <button
                     type="button"
                     onClick={() => setCouponModal(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-300 font-bold transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -873,13 +873,13 @@ export default function AdminConsolePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {(adminPlans || []).map((p: any) => (
-                  <div key={p.id} className="p-5 rounded-xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <div key={p.id} className="p-5 rounded-xl bg-[#11131A]/[0.02] border border-white/10 space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
                         <h4 className="font-bold text-white text-sm">{p.name}</h4>
                         <span className="text-[10px] font-mono text-slate-500">ID: {p.id}</span>
                       </div>
-                      <span className="text-[10px] font-mono uppercase bg-white/10 px-2 py-0.5 rounded text-slate-300">
+                      <span className="text-[10px] font-mono uppercase bg-[#11131A]/10 px-2 py-0.5 rounded text-slate-300">
                         {p.category || 'individual'}
                       </span>
                     </div>
@@ -893,7 +893,7 @@ export default function AdminConsolePage() {
                           type="number"
                           defaultValue={p.priceInr}
                           id={`price_m_${p.id}`}
-                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-[#17211D] font-mono font-semibold"
+                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-white font-mono font-semibold"
                         />
                       </div>
                       <div>
@@ -904,7 +904,7 @@ export default function AdminConsolePage() {
                           type="number"
                           defaultValue={p.priceAnnualInr || Math.round(p.priceInr * 0.8)}
                           id={`price_a_${p.id}`}
-                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-[#17211D] font-mono font-semibold"
+                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-white font-mono font-semibold"
                         />
                       </div>
                       <div>
@@ -915,14 +915,14 @@ export default function AdminConsolePage() {
                           type="number"
                           defaultValue={p.creditsPerPeriod}
                           id={`credits_${p.id}`}
-                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-[#17211D] font-mono font-semibold"
+                          className="w-full glass-input rounded-lg px-3 py-1.5 text-xs text-white font-mono font-semibold"
                         />
                       </div>
                       <div>
                         <label className="block text-slate-400 text-[10px] uppercase font-bold mb-1">
                           Max Resolution
                         </label>
-                        <div className="px-3 py-1.5 rounded-lg bg-white/[0.03] text-white font-mono text-xs border border-white/5">
+                        <div className="px-3 py-1.5 rounded-lg bg-[#11131A]/[0.03] text-white font-mono text-xs border border-white/5">
                           {p.entitlements?.maxResolution || '1080p'}
                         </div>
                       </div>
@@ -936,7 +936,7 @@ export default function AdminConsolePage() {
                         const cVal = Number((document.getElementById(`credits_${p.id}`) as HTMLInputElement)?.value);
                         handleUpdatePlanPrice(p.id, mVal, aVal, cVal);
                       }}
-                      className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold transition-all border border-white/10"
+                      className="w-full py-2 bg-[#11131A]/10 hover:bg-[#11131A]/20 text-white rounded-lg text-xs font-bold transition-all border border-white/10"
                     >
                       Save {p.name} Changes
                     </button>
@@ -956,7 +956,7 @@ export default function AdminConsolePage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {(adminPacks || []).map((pack: any) => (
-                  <div key={pack.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                  <div key={pack.id} className="p-4 rounded-xl bg-[#11131A]/[0.02] border border-white/10 space-y-3">
                     <div className="flex items-center justify-between">
                       <strong className="text-white text-xs">{pack.name}</strong>
                       <span className="text-[10px] font-mono text-slate-500">{pack.id}</span>
@@ -969,7 +969,7 @@ export default function AdminConsolePage() {
                           type="number"
                           defaultValue={pack.priceInr}
                           id={`pack_price_${pack.id}`}
-                          className="w-full glass-input rounded-lg px-2.5 py-1 text-xs text-[#17211D] font-mono font-semibold"
+                          className="w-full glass-input rounded-lg px-2.5 py-1 text-xs text-white font-mono font-semibold"
                         />
                       </div>
                       <div>
@@ -978,7 +978,7 @@ export default function AdminConsolePage() {
                           type="number"
                           defaultValue={pack.creditAmount}
                           id={`pack_credits_${pack.id}`}
-                          className="w-full glass-input rounded-lg px-2.5 py-1 text-xs text-[#17211D] font-mono font-semibold"
+                          className="w-full glass-input rounded-lg px-2.5 py-1 text-xs text-white font-mono font-semibold"
                         />
                       </div>
                     </div>
@@ -990,7 +990,7 @@ export default function AdminConsolePage() {
                         const cVal = Number((document.getElementById(`pack_credits_${pack.id}`) as HTMLInputElement)?.value);
                         handleUpdateCreditPack(pack.id, pVal, cVal);
                       }}
-                      className="w-full py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold transition-all border border-white/10"
+                      className="w-full py-1.5 bg-[#11131A]/10 hover:bg-[#11131A]/20 text-white rounded-lg text-xs font-bold transition-all border border-white/10"
                     >
                       Update Pack
                     </button>
@@ -1012,88 +1012,88 @@ export default function AdminConsolePage() {
                 <form onSubmit={handleUpdateBillingConfig} className="space-y-4 text-xs">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-slate-600 font-semibold mb-1">Supplier Legal Entity Name</label>
+                      <label className="block text-slate-400 font-semibold mb-1">Supplier Legal Entity Name</label>
                       <input
                         type="text"
                         value={billingConfig.legalName || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, legalName: e.target.value })}
-                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white"
                         placeholder="e.g. Fluvia Flow Technologies Pvt. Ltd."
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-600 font-semibold mb-1">Trade / Brand Name</label>
+                      <label className="block text-slate-400 font-semibold mb-1">Trade / Brand Name</label>
                       <input
                         type="text"
                         value={billingConfig.tradeName || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, tradeName: e.target.value })}
-                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white"
                         placeholder="e.g. Fluvia Flow"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-slate-600 font-semibold mb-1">Registered Office Address</label>
+                    <label className="block text-slate-400 font-semibold mb-1">Registered Office Address</label>
                     <input
                       type="text"
                       value={billingConfig.registeredAddress || ''}
                       onChange={(e) => setBillingConfig({ ...billingConfig, registeredAddress: e.target.value })}
-                      className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
+                      className="w-full glass-input rounded-xl px-3.5 py-2 text-white"
                       placeholder="e.g. Plot 42, DLF Cyber City, Phase III"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-slate-600 font-semibold mb-1">City</label>
+                      <label className="block text-slate-400 font-semibold mb-1">City</label>
                       <input
                         type="text"
                         value={billingConfig.city || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, city: e.target.value })}
-                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-600 font-semibold mb-1">State (Origin for Tax Calc)</label>
+                      <label className="block text-slate-400 font-semibold mb-1">State (Origin for Tax Calc)</label>
                       <input
                         type="text"
                         value={billingConfig.state || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, state: e.target.value })}
-                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white"
                         placeholder="e.g. Delhi"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-600 font-semibold mb-1">Pincode</label>
+                      <label className="block text-slate-400 font-semibold mb-1">Pincode</label>
                       <input
                         type="text"
                         value={billingConfig.pincode || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, pincode: e.target.value })}
-                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D] font-mono"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white font-mono"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-slate-600 font-semibold mb-1">Supplier GSTIN (15 characters)</label>
+                      <label className="block text-slate-400 font-semibold mb-1">Supplier GSTIN (15 characters)</label>
                       <input
                         type="text"
                         value={billingConfig.gstin || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, gstin: e.target.value.toUpperCase() })}
-                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D] font-mono font-bold"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white font-mono font-bold"
                         placeholder="07AAAAA0000A1Z5"
                         maxLength={15}
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-600 font-semibold mb-1">Billing Support Email</label>
+                      <label className="block text-slate-400 font-semibold mb-1">Billing Support Email</label>
                       <input
                         type="email"
                         value={billingConfig.supportEmail || ''}
                         onChange={(e) => setBillingConfig({ ...billingConfig, supportEmail: e.target.value })}
-                        className="w-full glass-input rounded-xl px-3.5 py-2 text-[#17211D]"
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white"
                         placeholder="billing@fluviaflow.ai"
                       />
                     </div>
@@ -1154,15 +1154,15 @@ export default function AdminConsolePage() {
             {/* Gateway Integration Status Banner */}
             <div className="p-4 rounded-2xl glass-card flex flex-col sm:flex-row justify-between items-center gap-4 text-xs shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold border border-emerald-500/20">
+                <div className="w-8 h-8 rounded-xl bg-[#11131A]/[0.04] text-emerald-600 flex items-center justify-center font-bold border border-white/8">
                   ✓
                 </div>
                 <div>
-                  <h4 className="font-bold text-[#17211D]">
+                  <h4 className="font-bold text-white">
                     {billingData?.payuIntegration?.provider || 'PayU India Hosted Checkout'}
                   </h4>
-                  <p className="text-slate-600">
-                    Mode: <strong className="text-emerald-700 uppercase font-mono">{billingData?.payuIntegration?.env || 'test'}</strong> • Merchant Key: <span className="font-mono text-slate-800">{billingData?.payuIntegration?.merchantKeyMasked}</span>
+                  <p className="text-slate-400">
+                    Mode: <strong className="text-emerald-700 uppercase font-mono">{billingData?.payuIntegration?.env || 'test'}</strong> • Merchant Key: <span className="font-mono text-slate-200">{billingData?.payuIntegration?.merchantKeyMasked}</span>
                   </p>
                 </div>
               </div>
@@ -1170,7 +1170,7 @@ export default function AdminConsolePage() {
               <div className="flex items-center gap-3">
                 <a
                   href="/api/admin/billing/overview?format=csv"
-                  className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold flex items-center gap-1.5 border border-white/10 transition-colors"
+                  className="px-4 py-2 bg-[#11131A]/5 hover:bg-[#11131A]/10 text-white rounded-xl font-bold flex items-center gap-1.5 border border-white/10 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Export Transactions (CSV)</span>
@@ -1187,7 +1187,7 @@ export default function AdminConsolePage() {
 
             {/* Orders Management Table */}
             <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden">
-              <div className="p-4 border-b border-white/10 bg-white/[0.02] flex items-center justify-between">
+              <div className="p-4 border-b border-white/10 bg-[#11131A]/[0.02] flex items-center justify-between">
                 <h3 className="font-bold text-white text-sm">All Orders & Settlement Audit</h3>
                 <span className="text-xs text-slate-400 font-mono">
                   {billingData?.orders?.length || 0} total orders
@@ -1196,7 +1196,7 @@ export default function AdminConsolePage() {
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-white/5 text-slate-400 border-b border-white/5 uppercase text-[10px] font-mono">
+                  <thead className="bg-[#11131A]/5 text-slate-400 border-b border-white/5 uppercase text-[10px] font-mono">
                     <tr>
                       <th className="py-3 px-4">Txn ID</th>
                       <th className="py-3 px-4">Customer</th>
@@ -1209,7 +1209,7 @@ export default function AdminConsolePage() {
                   </thead>
                   <tbody className="divide-y divide-white/5 text-slate-300">
                     {(billingData?.orders || []).map((o: any) => (
-                      <tr key={o.id} className="hover:bg-white/[0.02]">
+                      <tr key={o.id} className="hover:bg-[#11131A]/[0.02]">
                         <td className="py-3 px-4 font-mono font-bold text-white">
                           {o.txnid}
                         </td>
@@ -1227,7 +1227,7 @@ export default function AdminConsolePage() {
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold ${
                               o.status === 'success'
-                                ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30'
+                                ? 'bg-emerald-950/80 text-emerald-400 border border-white/10'
                                 : o.status === 'pending'
                                 ? 'bg-amber-950/80 text-amber-400 border border-amber-500/30'
                                 : 'bg-red-950/80 text-red-400 border border-red-500/30'
@@ -1243,7 +1243,7 @@ export default function AdminConsolePage() {
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => handleRecheckPayUOrder(o.txnid)}
-                              className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-amber-500 hover:text-black text-slate-300 font-semibold text-[11px] transition-colors"
+                              className="px-2.5 py-1 rounded-lg bg-[#11131A]/5 hover:bg-amber-500 hover:text-black text-slate-300 font-semibold text-[11px] transition-colors"
                               title="Re-verify against official PayU upstream API"
                             >
                               Recheck
@@ -1285,21 +1285,21 @@ export default function AdminConsolePage() {
         {couponModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
             <div className="glass-modal rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between pb-3 border-b border-emerald-500/15">
-                <h3 className="font-bold text-[#17211D] text-base flex items-center gap-2">
+              <div className="flex items-center justify-between pb-3 border-b border-white/8">
+                <h3 className="font-bold text-white text-base flex items-center gap-2">
                   <Tag className="w-4 h-4 text-emerald-600" />
                   <span>{couponModal.mode === 'create' ? 'Create New Coupon' : `Edit Coupon: ${couponModal.coupon.code}`}</span>
                 </h3>
                 <button
                   onClick={() => setCouponModal(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-emerald-50 cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 hover:bg-[#11131A]/[0.04] cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               {couponActionStatus && (
-                <div className={`p-3 text-xs rounded-xl ${couponActionStatus.startsWith('Error') ? 'bg-rose-50 border border-rose-300 text-rose-800' : 'bg-emerald-50 border border-emerald-300 text-emerald-800'}`}>
+                <div className={`p-3 text-xs rounded-xl ${couponActionStatus.startsWith('Error') ? 'bg-rose-50 border border-rose-300 text-rose-800' : 'bg-[#11131A]/[0.04] border border-emerald-300 text-emerald-800'}`}>
                   {couponActionStatus}
                 </div>
               )}
@@ -1307,23 +1307,23 @@ export default function AdminConsolePage() {
               <form onSubmit={handleSaveCoupon} className="space-y-4 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Coupon Code *</label>
+                    <label className="block text-slate-300 font-bold mb-1">Coupon Code *</label>
                     <input
                       type="text"
                       required
                       value={couponForm.code}
                       onChange={(e) => setCouponForm({ ...couponForm, code: e.target.value.toUpperCase() })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase border border-white/8"
                       placeholder="e.g. SUMMER25"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Discount Type *</label>
+                    <label className="block text-slate-300 font-bold mb-1">Discount Type *</label>
                     <select
                       value={couponForm.discountType}
                       onChange={(e) => setCouponForm({ ...couponForm, discountType: e.target.value as any })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20 cursor-pointer bg-white"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8 cursor-pointer bg-[#11131A]"
                     >
                       <option value="percentage">Percentage (%)</option>
                       <option value="fixed">Fixed Amount (INR)</option>
@@ -1333,7 +1333,7 @@ export default function AdminConsolePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">
+                    <label className="block text-slate-300 font-bold mb-1">
                       Discount Value * {couponForm.discountType === 'percentage' ? '(%)' : '(INR)'}
                     </label>
                     <input
@@ -1343,69 +1343,69 @@ export default function AdminConsolePage() {
                       max={couponForm.discountType === 'percentage' ? 100 : 100000}
                       value={couponForm.discountValue}
                       onChange={(e) => setCouponForm({ ...couponForm, discountValue: Number(e.target.value) })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono font-bold border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono font-bold border border-white/8"
                     />
                   </div>
 
                   {couponForm.discountType === 'percentage' && (
                     <div>
-                      <label className="block text-slate-700 font-bold mb-1">Max Discount Cap (INR)</label>
+                      <label className="block text-slate-300 font-bold mb-1">Max Discount Cap (INR)</label>
                       <input
                         type="number"
                         min={0}
                         value={couponForm.maxDiscount}
                         onChange={(e) => setCouponForm({ ...couponForm, maxDiscount: e.target.value })}
-                        className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                        className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                         placeholder="e.g. 500 (optional)"
                       />
                     </div>
                   )}
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Minimum Order Value (INR)</label>
+                    <label className="block text-slate-300 font-bold mb-1">Minimum Order Value (INR)</label>
                     <input
                       type="number"
                       min={0}
                       value={couponForm.minimumOrderValue}
                       onChange={(e) => setCouponForm({ ...couponForm, minimumOrderValue: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                       placeholder="e.g. 499 (optional)"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-bold mb-1">Description</label>
+                  <label className="block text-slate-300 font-bold mb-1">Description</label>
                   <input
                     type="text"
                     value={couponForm.description}
                     onChange={(e) => setCouponForm({ ...couponForm, description: e.target.value })}
-                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                    className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8"
                     placeholder="e.g. 20% off up to INR 500 for creator subscriptions"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Total Max Redemptions</label>
+                    <label className="block text-slate-300 font-bold mb-1">Total Max Redemptions</label>
                     <input
                       type="number"
                       min={1}
                       value={couponForm.usageLimit}
                       onChange={(e) => setCouponForm({ ...couponForm, usageLimit: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                       placeholder="e.g. 500 (blank for unlimited)"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Per-User Limit</label>
+                    <label className="block text-slate-300 font-bold mb-1">Per-User Limit</label>
                     <input
                       type="number"
                       min={1}
                       value={couponForm.perUserLimit}
                       onChange={(e) => setCouponForm({ ...couponForm, perUserLimit: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs font-mono border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs font-mono border border-white/8"
                       placeholder="e.g. 1 per customer"
                     />
                   </div>
@@ -1413,28 +1413,28 @@ export default function AdminConsolePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Starts At Date</label>
+                    <label className="block text-slate-300 font-bold mb-1">Starts At Date</label>
                     <input
                       type="date"
                       value={couponForm.startsAt}
                       onChange={(e) => setCouponForm({ ...couponForm, startsAt: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Expires At Date</label>
+                    <label className="block text-slate-300 font-bold mb-1">Expires At Date</label>
                     <input
                       type="date"
                       value={couponForm.expiresAt}
                       onChange={(e) => setCouponForm({ ...couponForm, expiresAt: e.target.value })}
-                      className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs border border-emerald-500/20"
+                      className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs border border-white/8"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-bold mb-1">Restrict Checkout Types</label>
+                  <label className="block text-slate-300 font-bold mb-1">Restrict Checkout Types</label>
                   <div className="flex gap-4 pt-1">
                     <label className="flex items-center gap-1.5 cursor-pointer">
                       <input
@@ -1469,7 +1469,7 @@ export default function AdminConsolePage() {
                 </div>
 
                 <div className="pt-2">
-                  <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+                  <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-300">
                     <input
                       type="checkbox"
                       checked={couponForm.isActive}
@@ -1480,11 +1480,11 @@ export default function AdminConsolePage() {
                   </label>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-3 border-t border-emerald-500/15">
+                <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/8">
                   <button
                     type="button"
                     onClick={() => setCouponModal(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-300 font-bold transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -1504,37 +1504,37 @@ export default function AdminConsolePage() {
         {adjModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
             <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
-              <h3 className="font-bold text-[#17211D] text-base">Adjust User Credits</h3>
-              <p className="text-xs text-slate-600">
-                Grant or revoke credits for <strong className="text-[#17211D]">{adjModal.userEmail}</strong>.
+              <h3 className="font-bold text-white text-base">Adjust User Credits</h3>
+              <p className="text-xs text-slate-400">
+                Grant or revoke credits for <strong className="text-white">{adjModal.userEmail}</strong>.
               </p>
 
               {adjStatus && (
-                <div className="p-3 bg-emerald-50 border border-emerald-500/30 text-xs text-emerald-800 rounded-xl">
+                <div className="p-3 bg-[#11131A]/[0.04] border border-white/10 text-xs text-emerald-800 rounded-xl">
                   {adjStatus}
                 </div>
               )}
 
               <form onSubmit={handleAdjustCreditSubmit} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-slate-600 font-semibold mb-1">Credit Amount (+ to grant, - to deduct)</label>
+                  <label className="block text-slate-400 font-semibold mb-1">Credit Amount (+ to grant, - to deduct)</label>
                   <input
                     type="number"
                     required
                     value={adjAmount}
                     onChange={(e) => setAdjAmount(Number(e.target.value))}
-                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-sm font-semibold"
+                    className="w-full glass-input text-white px-3 py-2 rounded-xl text-sm font-semibold"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-600 font-semibold mb-1">Audit Reason</label>
+                  <label className="block text-slate-400 font-semibold mb-1">Audit Reason</label>
                   <input
                     type="text"
                     required
                     value={adjReason}
                     onChange={(e) => setAdjReason(e.target.value)}
-                    className="w-full glass-input text-[#17211D] px-3 py-2 rounded-xl text-xs"
+                    className="w-full glass-input text-white px-3 py-2 rounded-xl text-xs"
                   />
                 </div>
 
@@ -1542,7 +1542,7 @@ export default function AdminConsolePage() {
                   <button
                     type="button"
                     onClick={() => setAdjModal(null)}
-                    className="px-4 py-2 rounded-xl bg-white/5 text-slate-300"
+                    className="px-4 py-2 rounded-xl bg-[#11131A]/5 text-slate-300"
                   >
                     Cancel
                   </button>

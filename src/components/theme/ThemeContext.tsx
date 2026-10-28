@@ -1,15 +1,15 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { ColorTheme, ThemeMode, COLOR_THEMES, getThemeById, getDefaultTheme, FLUVIA_PALETTE } from '@/lib/themes';
+import { ColorTheme, ThemeMode, COLOR_THEMES, FLUVIA_PALETTE } from '@/lib/themes';
 
-export type ResolvedMode = 'light';
+export type ResolvedMode = 'dark';
 
 interface ThemeContextType {
   colorTheme: string;
   themeDetails: ColorTheme;
-  mode: 'light';
-  resolvedMode: 'light';
+  mode: 'dark';
+  resolvedMode: 'dark';
   isCompleted: boolean;
   setColorTheme: (themeId: string, persistToBackend?: boolean) => void;
   setMode: (mode: any, persistToBackend?: boolean) => void;
@@ -21,9 +21,9 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [colorTheme] = useState<string>('fluvia-emerald');
-  const [mode] = useState<'light'>('light');
-  const [resolvedMode] = useState<'light'>('light');
+  const [colorTheme] = useState<string>('kling-obsidian');
+  const [mode] = useState<'dark'>('dark');
+  const [resolvedMode] = useState<'dark'>('dark');
   const [isCompleted, setIsCompleted] = useState<boolean>(true);
 
   // Apply CSS variables to document.documentElement
@@ -31,11 +31,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (typeof window === 'undefined') return;
 
     const root = document.documentElement;
-    root.setAttribute('data-color-theme', 'fluvia-emerald');
-    root.setAttribute('data-theme', 'light');
-    root.style.colorScheme = 'light';
-    root.classList.remove('dark');
-    root.classList.add('light');
+    root.setAttribute('data-color-theme', 'kling-obsidian');
+    root.setAttribute('data-theme', 'dark');
+    root.style.colorScheme = 'dark';
+    root.classList.remove('light');
+    root.classList.add('dark');
 
     // Apply Palette Variables
     const palette = FLUVIA_PALETTE;
@@ -61,13 +61,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty('--app-glow', palette.glow);
   }, []);
 
-  // Permanently migrate localStorage on mount
   useEffect(() => {
     try {
-      localStorage.setItem('fluvia_theme', 'light');
-      localStorage.setItem('fluvia_color_theme', 'fluvia-emerald');
-      localStorage.removeItem('vidai_theme');
-      localStorage.removeItem('vidai_color_theme');
+      localStorage.setItem('fluvia_theme', 'dark');
+      localStorage.setItem('fluvia_color_theme', 'kling-obsidian');
     } catch {}
 
     applyThemeToDOM();
@@ -82,7 +79,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleMode = () => {
-    // Single light theme enforced
     applyThemeToDOM();
   };
 

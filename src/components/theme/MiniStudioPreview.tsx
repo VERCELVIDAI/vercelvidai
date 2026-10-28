@@ -20,7 +20,7 @@ interface MiniStudioPreviewProps {
 }
 
 export function MiniStudioPreview({ theme }: MiniStudioPreviewProps) {
-  const palette = theme.light;
+  const palette = theme.dark || theme.light;
 
   return (
     <div
@@ -38,7 +38,7 @@ export function MiniStudioPreview({ theme }: MiniStudioPreviewProps) {
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
           <span className="ml-2 font-mono text-[10px]" style={{ color: palette.textMuted }}>
-            Fluvia Flow Studio • {theme.name} (Light Glassmorphism)
+            Fluvia Flow Studio • {theme.name}
           </span>
         </div>
         <div

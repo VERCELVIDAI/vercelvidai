@@ -7,19 +7,19 @@ import { BLOG_POSTS } from '@/lib/data/blog';
 
 export default function BlogIndexPage() {
   return (
-    <div className="min-h-screen flex flex-col text-[#17211D]">
+    <div className="min-h-screen flex flex-col bg-[#090A0D] text-white">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-xs font-bold text-emerald-800 mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-emerald-300 text-xs font-bold text-indigo-300 mb-4 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
             <span>Engineering & Design Insights</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-[#17211D] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
             The Fluvia Flow Journal
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-600">
+          <p className="mt-4 text-base sm:text-lg text-slate-400">
             Technical architecture, creative workflows, AI model benchmarks, and product updates from the Fluvia Flow team.
           </p>
         </div>
@@ -29,7 +29,7 @@ export default function BlogIndexPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="rounded-2xl glass-card border border-emerald-500/20 overflow-hidden group hover:border-emerald-500/50 hover:shadow-xl transition-all flex flex-col justify-between shadow-md"
+              className="rounded-2xl glass-card border border-white/8 overflow-hidden group hover:border-emerald-500/50 hover:shadow-xl transition-all flex flex-col justify-between shadow-md"
             >
               <div>
                 <div className="aspect-[16/10] relative overflow-hidden bg-slate-900">
@@ -38,7 +38,7 @@ export default function BlogIndexPage() {
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute top-3 left-3 bg-emerald-100 text-emerald-900 backdrop-blur-md px-2.5 py-1 rounded text-[11px] font-bold border border-emerald-300">
+                  <span className="absolute top-3 left-3 bg-white/[0.08] text-indigo-200 backdrop-blur-md px-2.5 py-1 rounded text-[11px] font-bold border border-emerald-300">
                     {post.category}
                   </span>
                 </div>
@@ -56,16 +56,16 @@ export default function BlogIndexPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#17211D] group-hover:text-emerald-700 transition-colors leading-snug">
+                  <h3 className="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors leading-snug">
                     {post.title}
                   </h3>
-                  <p className="mt-3 text-sm text-slate-600 leading-relaxed line-clamp-3">
+                  <p className="mt-3 text-sm text-slate-400 leading-relaxed line-clamp-3">
                     {post.summary}
                   </p>
                 </div>
               </div>
 
-              <div className="p-6 pt-0 border-t border-emerald-500/15 mt-4 flex items-center justify-between text-xs font-bold text-emerald-700">
+              <div className="p-6 pt-0 border-t border-white/8 mt-4 flex items-center justify-between text-xs font-bold text-indigo-400">
                 <span>Read Article</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>

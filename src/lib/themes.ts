@@ -1,9 +1,9 @@
 // ==============================================================================
-// FLUVIA FLOW — UNIFIED WHITE + EMERALD GREEN + SOFT PINK THEME DEFINITIONS
+// FLUVIA FLOW — KLING AI CINEMATIC OBSIDIAN STUDIO THEME DEFINITIONS
 // ==============================================================================
 
-export type ThemeMode = 'light';
-export type ResolvedMode = 'light';
+export type ThemeMode = 'dark' | 'light';
+export type ResolvedMode = 'dark';
 export type ThemeTone = 'vibrant' | 'minimal';
 
 export interface ThemePalette {
@@ -45,39 +45,39 @@ export interface ColorTheme {
 }
 
 export const FLUVIA_PALETTE: ThemePalette = {
-  bg: '#FFFFFF',
-  surface: 'rgba(255, 255, 255, 0.85)',
-  sidebar: 'rgba(255, 255, 255, 0.85)',
-  card: 'rgba(255, 255, 255, 0.72)',
-  cardBorder: 'rgba(16, 185, 129, 0.16)',
-  textPrimary: '#17211D',
-  textSecondary: '#64748B',
-  textMuted: '#94A3B8',
-  primary: '#10B981',
-  primaryHover: '#047857',
+  bg: '#090A0D',
+  surface: '#11131A',
+  sidebar: '#0B0C10',
+  card: '#151822',
+  cardBorder: 'rgba(255, 255, 255, 0.08)',
+  textPrimary: '#F8FAFC',
+  textSecondary: '#94A3B8',
+  textMuted: '#64748B',
+  primary: '#6366F1',
+  primaryHover: '#4F46E5',
   primaryForeground: '#FFFFFF',
-  secondary: '#EC4899',
-  ring: '#10B981',
-  inputBg: 'rgba(255, 255, 255, 0.9)',
-  inputBorder: 'rgba(16, 185, 129, 0.2)',
-  gradientPrimary: 'linear-gradient(135deg, #10B981 0%, #047857 50%, #059669 100%)',
-  badgeBg: '#D1FAE5',
-  badgeText: '#047857',
-  badgeBorder: 'rgba(16, 185, 129, 0.28)',
-  glow: 'rgba(16, 185, 129, 0.2)',
+  secondary: '#7C3AED',
+  ring: '#6366F1',
+  inputBg: 'rgba(14, 16, 23, 0.92)',
+  inputBorder: 'rgba(255, 255, 255, 0.1)',
+  gradientPrimary: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 50%, #7C3AED 100%)',
+  badgeBg: 'rgba(99, 102, 241, 0.15)',
+  badgeText: '#A5B4FC',
+  badgeBorder: 'rgba(99, 102, 241, 0.3)',
+  glow: 'rgba(99, 102, 241, 0.2)',
 };
 
 export const COLOR_THEMES: ColorTheme[] = [
   {
-    id: 'fluvia-emerald',
-    name: 'Fluvia Emerald Glass',
-    description: 'Crisp white canvas with radiant emerald ribbons, light mint gradients, and soft pink accents.',
+    id: 'kling-obsidian',
+    name: 'Kling AI Obsidian Dark',
+    description: 'Deep obsidian charcoal canvas with electric indigo flares, cyber cyan badges, and cinema monitors.',
     tone: 'vibrant',
     previewColors: {
-      primary: '#10B981',
-      secondary: '#EC4899',
-      darkBg: '#FFFFFF',
-      lightBg: '#FFFFFF',
+      primary: '#6366F1',
+      secondary: '#7C3AED',
+      darkBg: '#090A0D',
+      lightBg: '#11131A',
     },
     dark: FLUVIA_PALETTE,
     light: FLUVIA_PALETTE,

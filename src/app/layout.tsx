@@ -89,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="light" data-theme="light" suppressHydrationWarning>
+    <html lang="en" className="dark" data-theme="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -102,16 +102,14 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  // Permanent Migration to Fluvia Emerald Light Theme
-                  localStorage.setItem('fluvia_theme', 'light');
-                  localStorage.setItem('fluvia_color_theme', 'fluvia-emerald');
-                  localStorage.removeItem('vidai_theme');
-                  localStorage.removeItem('vidai_color_theme');
-                  document.documentElement.classList.remove('dark');
-                  document.documentElement.classList.add('light');
-                  document.documentElement.setAttribute('data-theme', 'light');
-                  document.documentElement.setAttribute('data-color-theme', 'fluvia-emerald');
-                  document.documentElement.style.colorScheme = 'light';
+                  // Permanent Dark Cinematic Kling AI Studio Theme
+                  localStorage.setItem('fluvia_theme', 'dark');
+                  localStorage.setItem('fluvia_color_theme', 'kling-obsidian');
+                  document.documentElement.classList.remove('light');
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  document.documentElement.setAttribute('data-color-theme', 'kling-obsidian');
+                  document.documentElement.style.colorScheme = 'dark';
                 } catch(e) {}
               })();
             `,
@@ -119,7 +117,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased min-h-screen text-[#17211D] bg-white relative selection:bg-emerald-100 selection:text-emerald-900"
+        className="antialiased min-h-screen text-slate-100 bg-[#090A0D] relative selection:bg-indigo-500/30 selection:text-white"
       >
         <FluviaMotionBackground />
         <ThemeProvider>

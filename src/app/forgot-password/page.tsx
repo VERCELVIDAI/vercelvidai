@@ -47,8 +47,8 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen text-[#17211D] flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden bg-gradient-to-br from-white via-[#F0FDF4]/50 to-[#FFF1F7]/40">
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-emerald-400/15 rounded-full blur-[100px] pointer-events-none -z-10" />
+    <div className="min-h-screen text-white flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden bg-[#090A0D]">
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
       <div className="w-full max-w-md relative z-10 text-left">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
@@ -56,39 +56,39 @@ export default function ForgotPasswordPage() {
               <Logo size="lg" />
             </Link>
           </div>
-          <h1 className="text-2xl font-extrabold text-[#17211D] tracking-tight">Reset your password</h1>
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-600">
+          <h1 className="text-2xl font-extrabold text-white tracking-tight">Reset your password</h1>
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-400">
             Enter your registered email address to receive password reset instructions.
           </p>
         </div>
 
-        <div className="p-6 sm:p-8 rounded-3xl glass-card border border-emerald-500/20 shadow-2xl bg-white/95">
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/10 shadow-2xl">
           {error && (
-            <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-xs text-rose-800 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+            <div className="mb-5 p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-xs text-rose-200 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
               <span className="font-semibold leading-relaxed">{error}</span>
             </div>
           )}
 
           {sent ? (
             <div className="text-center py-4 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700 flex items-center justify-center mx-auto">
+              <div className="w-12 h-12 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-[#17211D]">Recovery Instructions Sent</h3>
-              <p className="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
-                If an account exists for <strong className="text-[#17211D] font-bold">{email}</strong>, a secure password reset link has been dispatched.
+              <h3 className="text-lg font-bold text-white">Recovery Instructions Sent</h3>
+              <p className="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto">
+                If an account exists for <strong className="text-white font-bold">{email}</strong>, a secure password reset link has been dispatched.
               </p>
 
               {devResetLink && (
-                <div className="p-3 rounded-xl bg-emerald-50/80 border border-emerald-300 text-left text-xs space-y-1.5">
-                  <div className="font-bold text-emerald-900 flex items-center gap-1.5">
-                    <KeyRound className="w-3.5 h-3.5 text-emerald-700" />
+                <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-left text-xs space-y-1.5">
+                  <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                    <KeyRound className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Development Direct Reset Link:</span>
                   </div>
                   <Link
                     href={devResetLink}
-                    className="block text-[11px] font-mono text-emerald-700 hover:text-emerald-900 underline truncate"
+                    className="block text-[11px] font-mono text-cyan-300 hover:text-cyan-200 underline truncate"
                   >
                     {devResetLink}
                   </Link>
@@ -97,27 +97,25 @@ export default function ForgotPasswordPage() {
 
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center gap-2 w-full mt-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-md transition-all"
+                className="inline-flex items-center justify-center gap-2 w-full mt-4 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
               >
-                <span>Return to Sign In</span>
+                <span>Back to Sign In</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                  Email Address
-                </label>
+                <label className="block text-slate-300 font-semibold mb-1">Email Address</label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="creator@fluviaflow.ai"
-                    className="w-full glass-input text-[#17211D] pl-10 pr-4 py-2.5 rounded-xl border border-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm shadow-xs"
+                    placeholder="creator@brand.com"
+                    className="w-full bg-[#11131A] border border-white/10 text-white pl-10 pr-3.5 py-2.5 rounded-xl text-xs placeholder:text-slate-500 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
@@ -125,10 +123,10 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-700 hover:from-emerald-600 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                className="w-full py-3 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
               >
                 {isLoading ? (
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Dispatching Link...</span>
                 ) : (
                   <>
                     <span>Send Reset Instructions</span>
@@ -136,18 +134,18 @@ export default function ForgotPasswordPage() {
                   </>
                 )}
               </button>
-
-              <div className="text-center pt-2">
-                <Link
-                  href="/login"
-                  className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-emerald-700 font-semibold"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Back to Sign In</span>
-                </Link>
-              </div>
             </form>
           )}
+
+          <div className="mt-6 pt-5 border-t border-white/8 text-center text-xs">
+            <Link
+              href="/login"
+              className="text-slate-400 hover:text-white font-semibold inline-flex items-center gap-1.5 transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to Login</span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
