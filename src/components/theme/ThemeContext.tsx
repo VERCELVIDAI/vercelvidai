@@ -3,13 +3,13 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { ColorTheme, ThemeMode, COLOR_THEMES, FLUVIA_PALETTE } from '@/lib/themes';
 
-export type ResolvedMode = 'dark';
+export type ResolvedMode = 'light';
 
 interface ThemeContextType {
   colorTheme: string;
   themeDetails: ColorTheme;
-  mode: 'dark';
-  resolvedMode: 'dark';
+  mode: 'light';
+  resolvedMode: 'light';
   isCompleted: boolean;
   setColorTheme: (themeId: string, persistToBackend?: boolean) => void;
   setMode: (mode: any, persistToBackend?: boolean) => void;
@@ -21,9 +21,9 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [colorTheme] = useState<string>('midnight-plum');
-  const [mode] = useState<'dark'>('dark');
-  const [resolvedMode] = useState<'dark'>('dark');
+  const [colorTheme] = useState<string>('clean-light');
+  const [mode] = useState<'light'>('light');
+  const [resolvedMode] = useState<'light'>('light');
   const [isCompleted, setIsCompleted] = useState<boolean>(true);
 
   // Apply CSS variables to document.documentElement
@@ -31,13 +31,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (typeof window === 'undefined') return;
 
     const root = document.documentElement;
-    root.setAttribute('data-color-theme', 'midnight-plum');
-    root.setAttribute('data-theme', 'dark');
-    root.style.colorScheme = 'dark';
-    root.classList.remove('light');
-    root.classList.add('dark');
+    root.setAttribute('data-color-theme', 'clean-light');
+    root.setAttribute('data-theme', 'light');
+    root.style.colorScheme = 'light';
+    root.classList.remove('dark');
+    root.classList.add('light');
 
-    // Apply Palette Variables (Midnight Plum × Hot Pink)
+    // Apply Palette Variables (Synthesia-inspired Clean Light)
     const palette = FLUVIA_PALETTE;
     root.style.setProperty('--app-bg', palette.bg);
     root.style.setProperty('--app-surface', palette.surface);
@@ -63,8 +63,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem('fluvia_theme', 'dark');
-      localStorage.setItem('fluvia_color_theme', 'midnight-plum');
+      localStorage.setItem('fluvia_theme', 'light');
+      localStorage.setItem('fluvia_color_theme', 'clean-light');
     } catch {}
 
     applyThemeToDOM();

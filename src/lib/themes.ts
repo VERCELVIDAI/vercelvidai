@@ -1,10 +1,16 @@
 // ==============================================================================
-// FLUVIA FLOW — MIDNIGHT PLUM × HOT PINK DESIGN SYSTEM
+// FLUVIA FLOW — CLEAN BUSINESS-GRADE SAAS DESIGN SYSTEM
 // ==============================================================================
+// Primary background: #FFFFFF
+// Secondary surfaces: #F7F8FA, #F1F3F5
+// Primary text: #17191D
+// Secondary text: #667085
+// Borders: #E5E7EB
+// Accent: Deep Indigo #5145CD
 
-export type ThemeMode = 'dark' | 'light';
-export type ResolvedMode = 'dark';
-export type ThemeTone = 'vibrant' | 'minimal';
+export type ThemeMode = 'light';
+export type ResolvedMode = 'light';
+export type ThemeTone = 'minimal';
 
 export interface ThemePalette {
   bg: string;
@@ -44,48 +50,40 @@ export interface ColorTheme {
   light: ThemePalette;
 }
 
-// LOCKED BRAND COLORS:
-// - Primary background: #100A12
-// - Secondary surfaces: #211522
-// - Primary accent: #F05BCE
-// - Primary text: #F5EAF4
-// - Muted text: #A99AAA
-// - Borders: #39233B
-
 export const FLUVIA_PALETTE: ThemePalette = {
-  bg: '#100A12',
-  surface: '#211522',
-  sidebar: '#170E1A',
-  card: '#211522',
-  cardBorder: '#39233B',
-  textPrimary: '#F5EAF4',
-  textSecondary: '#A99AAA',
-  textMuted: '#A99AAA',
-  primary: '#F05BCE',
-  primaryHover: '#E046BD',
+  bg: '#FFFFFF',
+  surface: '#F7F8FA',
+  sidebar: '#FFFFFF',
+  card: '#FFFFFF',
+  cardBorder: '#E5E7EB',
+  textPrimary: '#17191D',
+  textSecondary: '#667085',
+  textMuted: '#9CA3AF',
+  primary: '#5145CD',
+  primaryHover: '#4338CA',
   primaryForeground: '#FFFFFF',
-  secondary: '#C026D3',
-  ring: '#F05BCE',
-  inputBg: 'rgba(33, 21, 34, 0.85)',
-  inputBorder: '#39233B',
-  gradientPrimary: 'linear-gradient(135deg, #F05BCE 0%, #E046BD 50%, #C026D3 100%)',
-  badgeBg: 'rgba(240, 91, 206, 0.15)',
-  badgeText: '#F05BCE',
-  badgeBorder: 'rgba(240, 91, 206, 0.35)',
-  glow: 'rgba(240, 91, 206, 0.25)',
+  secondary: '#F1F3F5',
+  ring: '#5145CD',
+  inputBg: '#FFFFFF',
+  inputBorder: '#E5E7EB',
+  gradientPrimary: 'linear-gradient(135deg, #5145CD 0%, #4338CA 100%)',
+  badgeBg: '#EEF2FF',
+  badgeText: '#5145CD',
+  badgeBorder: '#E0E7FF',
+  glow: 'rgba(81, 69, 205, 0.15)',
 };
 
 export const COLOR_THEMES: ColorTheme[] = [
   {
-    id: 'midnight-plum',
-    name: 'Midnight Plum × Hot Pink',
-    description: 'Deep midnight plum canvas with layered velvet plum surfaces, hot pink highlights, and luminous rose text.',
-    tone: 'vibrant',
+    id: 'clean-light',
+    name: 'Clean Light & Deep Indigo',
+    description: 'Minimalist white canvas with soft grey surfaces and restrained deep indigo accents.',
+    tone: 'minimal',
     previewColors: {
-      primary: '#F05BCE',
-      secondary: '#C026D3',
-      darkBg: '#100A12',
-      lightBg: '#211522',
+      primary: '#5145CD',
+      secondary: '#F1F3F5',
+      darkBg: '#F7F8FA',
+      lightBg: '#FFFFFF',
     },
     dark: FLUVIA_PALETTE,
     light: FLUVIA_PALETTE,

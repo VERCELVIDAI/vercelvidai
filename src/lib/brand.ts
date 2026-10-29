@@ -24,7 +24,7 @@ export const BRAND = {
   siteUrl: 'https://fluviaflow.online',
   ogImage: '/images/fluvia-flow-social-banner.jpg',
   ogImageAbsolute: 'https://fluviaflow.online/images/fluvia-flow-social-banner.jpg',
-  themeColor: '#059669',
+  themeColor: '#5145CD',
 
   // Studios taxonomy
   studios: [

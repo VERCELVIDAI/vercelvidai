@@ -5,7 +5,7 @@ import { FluviaMotionBackground } from '@/components/brand/FluviaMotionBackgroun
 import { BRAND } from '@/lib/brand';
 
 export const viewport: Viewport = {
-  themeColor: '#059669',
+  themeColor: '#5145CD',
   width: 'device-width',
   initialScale: 1,
 };
@@ -89,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" data-theme="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
+    <html lang="en" className="light" data-theme="light" style={{ colorScheme: 'light' }} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -102,14 +102,13 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  // Midnight Plum × Hot Pink Design System
-                  localStorage.setItem('fluvia_theme', 'dark');
-                  localStorage.setItem('fluvia_color_theme', 'midnight-plum');
-                  document.documentElement.classList.remove('light');
-                  document.documentElement.classList.add('dark');
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                  document.documentElement.setAttribute('data-color-theme', 'midnight-plum');
-                  document.documentElement.style.colorScheme = 'dark';
+                  localStorage.setItem('fluvia_theme', 'light');
+                  localStorage.setItem('fluvia_color_theme', 'clean-light');
+                  document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  document.documentElement.setAttribute('data-color-theme', 'clean-light');
+                  document.documentElement.style.colorScheme = 'light';
                 } catch(e) {}
               })();
             `,
@@ -117,7 +116,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased min-h-screen text-[#F5EAF4] bg-[#100A12] relative selection:bg-[#F05BCE]/30 selection:text-white"
+        className="antialiased min-h-screen text-[#17191D] bg-[#FFFFFF] relative selection:bg-[#5145CD]/10 selection:text-[#5145CD]"
       >
         <FluviaMotionBackground />
         <ThemeProvider>
