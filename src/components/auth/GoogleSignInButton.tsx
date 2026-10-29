@@ -28,15 +28,12 @@ export function GoogleSignInButton({
       type="button"
       onClick={handleClick}
       disabled={disabled || isLoading}
-      className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white font-semibold text-sm border border-white/12 hover:border-white/25 shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer relative overflow-hidden group"
+      className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-white hover:bg-[#F7F8FA] text-[#17191D] font-semibold text-sm border border-[#E5E7EB] hover:border-[#D1D5DB] shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer relative overflow-hidden group"
     >
-      {/* Subtle glow on hover */}
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-violet-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
       {isLoading ? (
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-indigo-400/30 border-t-indigo-400 rounded-full animate-spin" />
-          <span className="text-xs text-slate-300 font-medium">Connecting to Google...</span>
+          <div className="w-4 h-4 border-2 border-[#5145CD]/30 border-t-[#5145CD] rounded-full animate-spin" />
+          <span className="text-xs text-[#667085] font-medium">Connecting to Google...</span>
         </div>
       ) : (
         <>
@@ -59,7 +56,7 @@ export function GoogleSignInButton({
               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
             />
           </svg>
-          <span className="font-bold text-white text-xs sm:text-sm tracking-tight">{label}</span>
+          <span className="font-semibold text-[#17191D] text-xs sm:text-sm tracking-tight">{label}</span>
         </>
       )}
     </button>

@@ -12,6 +12,7 @@ export async function GET() {
 
   const creditAccount = dbStore.getCreditAccount(current.user.id);
   const subscription = dbStore.getUserSubscription(current.user.id);
+  const isEligibleFirstCoupon = dbStore.isUserEligibleForFirstCoupon(current.user.id);
 
   return NextResponse.json({
     authenticated: true,
@@ -19,5 +20,6 @@ export async function GET() {
     workspace: current.workspace,
     credits: creditAccount,
     subscription,
+    eligibleForFirstCoupon: isEligibleFirstCoupon,
   });
 }

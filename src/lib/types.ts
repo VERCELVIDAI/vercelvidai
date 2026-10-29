@@ -28,6 +28,7 @@ export interface UserProfile {
     completed?: boolean;
   };
   themePreferences?: ThemePreferences;
+  firstCampaignCouponSeen?: boolean;
   createdAt: string;
   updatedAt: string;
 }

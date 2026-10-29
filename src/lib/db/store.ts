@@ -1644,6 +1644,7 @@ class Store {
       email: cleanEmail,
       displayName: cleanDisplayName,
       role: params.role || 'creator',
+      firstCampaignCouponSeen: false,
       createdAt: now,
       updatedAt: now,
     };
@@ -1663,23 +1664,12 @@ class Store {
       joinedAt: now,
     };
 
-    // Credit account with 100 free credits
+    // Credit account initialized with 0 credits (Strict business policy: no automatic free registration credits)
     const creditAccount: CreditAccount = {
       userId,
-      availableBalance: 100,
+      availableBalance: 0,
       reservedBalance: 0,
       updatedAt: now,
-    };
-
-    const ledgerEntry: CreditLedgerEntry = {
-      id: 'cld_' + Math.random().toString(36).substring(2, 12),
-      userId,
-      transactionType: 'signup_bonus',
-      amount: 100,
-      balanceAfter: 100,
-      idempotencyKey: `signup_grant_${userId}`,
-      metadata: { note: 'Welcome signup allowance' },
-      createdAt: now,
     };
 
     const hashedPassword = hashPassword(params.passwordPlainText);
@@ -1689,7 +1679,6 @@ class Store {
     db.workspaces.push(workspace);
     db.workspaceMembers.push(member);
     db.creditAccounts[userId] = creditAccount;
-    db.creditLedger.push(ledgerEntry);
 
     this.save(db);
     return { profile, workspace };
@@ -1752,29 +1741,45 @@ class Store {
       });
     }
 
-    // Ensure Credit Account exists with 100 free credits
+    // Ensure Credit Account exists with 0 credits (Zero promotional credits on registration)
     if (!db.creditAccounts[params.userId]) {
       db.creditAccounts[params.userId] = {
         userId: params.userId,
-        availableBalance: 100,
+        availableBalance: 0,
         reservedBalance: 0,
         updatedAt: now,
       };
-
-      db.creditLedger.push({
-        id: 'cld_' + Math.random().toString(36).substring(2, 12),
-        userId: params.userId,
-        transactionType: 'signup_bonus',
-        amount: 100,
-        balanceAfter: 100,
-        idempotencyKey: `supabase_signup_${params.userId}`,
-        metadata: { note: 'Supabase welcome allowance' },
-        createdAt: now,
-      });
     }
 
     this.save(db);
     return { profile, workspace };
+  }
+
+  isUserEligibleForFirstCoupon(userId: string): boolean {
+    const db = this.load();
+    const profile = db.profiles.find((p) => p.id === userId);
+    if (!profile) return false;
+    if (profile.firstCampaignCouponSeen) return false;
+
+    // Check if user has already redeemed FIRST20
+    const first20Coupon = db.coupons.find((c) => c.code.toUpperCase() === 'FIRST20');
+    if (first20Coupon) {
+      const redemptions = db.couponRedemptions.filter(
+        (r) => r.userId === userId && r.couponId === first20Coupon.id && r.status === 'completed'
+      );
+      if (redemptions.length > 0) return false;
+    }
+    return true;
+  }
+
+  markFirstCouponSeen(userId: string): void {
+    const db = this.load();
+    const profile = db.profiles.find((p) => p.id === userId);
+    if (profile) {
+      profile.firstCampaignCouponSeen = true;
+      profile.updatedAt = new Date().toISOString();
+      this.save(db);
+    }
   }
 
   updateProfile(id: string, updates: Partial<UserProfile>): UserProfile {

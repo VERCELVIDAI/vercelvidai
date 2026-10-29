@@ -63,9 +63,7 @@ export function DiscoveryCard({
       videoRef.current
         .play()
         .then(() => setVideoLoaded(true))
-        .catch(() => {
-          // Browser prevented autoplay or video issue
-        });
+        .catch(() => {});
     } else {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
@@ -90,7 +88,6 @@ export function DiscoveryCard({
     onUseTemplate(template);
   };
 
-  // Determine aspect ratio class to enforce varied height in masonry columns
   const getAspectClass = () => {
     switch (template.aspect) {
       case '9:16':
@@ -99,15 +96,13 @@ export function DiscoveryCard({
         return 'aspect-[4/5] min-h-[300px] sm:min-h-[350px]';
       case '1:1':
         return 'aspect-square min-h-[260px] sm:min-h-[300px]';
-      case '2.39:1':
-        return 'aspect-[2.39/1] min-h-[170px] sm:min-h-[200px]';
       case '16:9':
       default:
-        return 'aspect-video min-h-[200px] sm:min-h-[240px]';
+        return 'aspect-[16/9] min-h-[200px] sm:min-h-[240px]';
     }
   };
 
-  const isVideo = (template.type || 'video') === 'video';
+  const isVideo = template.type === 'video' || (!template.type && Boolean(template.videoPreview));
   const isImage = template.type === 'image';
   const isText = template.type === 'text-animation';
 
@@ -120,21 +115,21 @@ export function DiscoveryCard({
         }
       }}
       onMouseLeave={onHoverEnd}
-      className="break-inside-avoid mb-4 group relative rounded-2xl overflow-hidden bg-[#211522] border border-[#39233B] hover:border-[#F05BCE]/60 hover:shadow-2xl hover:shadow-[#F05BCE]/15 transition-all duration-300 cursor-pointer select-none"
+      className="break-inside-avoid mb-4 group relative rounded-2xl overflow-hidden bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all duration-300 cursor-pointer select-none"
     >
-      <div className={`relative w-full ${getAspectClass()} overflow-hidden bg-[#100A12]`}>
+      <div className={`relative w-full ${getAspectClass()} overflow-hidden bg-slate-900`}>
         {/* Poster Image */}
         <img
           src={template.thumbnail}
           alt={template.title}
           loading="lazy"
           onError={() => setHasError(true)}
-          className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
+          className={`w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 ${
             isVideo && isActivePlaying && videoLoaded && Boolean(template.videoPreview) ? 'opacity-0' : 'opacity-100'
           }`}
         />
 
-        {/* Real Hover Video Preview (Only for real video templates with dedicated video file) */}
+        {/* Real Hover Video Preview */}
         {isVideo && isActivePlaying && Boolean(template.videoPreview) && !hasError && (
           <video
             ref={videoRef}
@@ -147,31 +142,31 @@ export function DiscoveryCard({
           />
         )}
 
-        {/* Ambient Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#100A12]/95 via-[#100A12]/30 to-black/60 opacity-80 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none z-20" />
+        {/* Gradient Overlay for Readable Text */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 opacity-75 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-20" />
 
         {/* Top Badges & Creator Info */}
         <div className="absolute top-3 inset-x-3 flex items-center justify-between z-30 pointer-events-auto">
           {/* Creator Chip */}
-          <div className="flex items-center gap-2 bg-[#100A12]/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#39233B] shadow-xs max-w-[70%]">
+          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 shadow-xs max-w-[70%]">
             <img
               src={template.creatorAvatar}
               alt={template.creatorName}
-              className="w-5 h-5 rounded-full object-cover ring-1 ring-[#F05BCE]/50 shrink-0"
+              className="w-5 h-5 rounded-full object-cover shrink-0"
             />
-            <span className="text-[11px] font-medium text-[#F5EAF4] truncate">
+            <span className="text-[11px] font-medium text-white truncate">
               {template.creatorName}
             </span>
             <button
               type="button"
               onClick={handleFollowClick}
               title={isFollowing ? 'Following creator' : 'Follow creator'}
-              className="ml-0.5 text-[#A99AAA] hover:text-[#F05BCE] transition-colors p-0.5"
+              className="ml-0.5 text-white/70 hover:text-white transition-colors p-0.5"
             >
               {isFollowing ? (
-                <UserCheck className="w-3.5 h-3.5 text-[#F05BCE]" />
+                <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
               ) : (
-                <UserPlus className="w-3.5 h-3.5 hover:text-[#F05BCE]" />
+                <UserPlus className="w-3.5 h-3.5 hover:text-white" />
               )}
             </button>
           </div>
@@ -179,22 +174,22 @@ export function DiscoveryCard({
           {/* Format & Credit Badge */}
           <div className="flex items-center gap-1.5">
             {isImage ? (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 flex items-center gap-1">
-                <ImageIcon className="w-3 h-3 text-[#F05BCE]" />
-                <span>Image (5 cr)</span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#5145CD] text-white flex items-center gap-1">
+                <ImageIcon className="w-3 h-3" />
+                <span>5 cr</span>
               </span>
             ) : isText ? (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] flex items-center gap-1">
-                <Type className="w-3 h-3 text-[#F05BCE]" />
-                <span>Text (Free)</span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-white border border-white/10 flex items-center gap-1">
+                <Type className="w-3 h-3" />
+                <span>Text</span>
               </span>
             ) : (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#100A12]/80 backdrop-blur-md text-[#F05BCE] border border-[#F05BCE]/30 flex items-center gap-1">
-                <Film className="w-3 h-3 text-[#F05BCE]" />
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#5145CD] text-white flex items-center gap-1 font-semibold">
+                <Film className="w-3 h-3" />
                 <span>15 cr</span>
               </span>
             )}
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#100A12]/80 backdrop-blur-md text-[#A99AAA] border border-[#39233B]">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10">
               {template.aspect}
             </span>
           </div>
@@ -203,60 +198,39 @@ export function DiscoveryCard({
         {/* Center Indicator: Play Icon for video cards when not playing */}
         {isVideo && !isActivePlaying && (
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
-            <div className="w-10 h-10 rounded-full bg-[#100A12]/70 backdrop-blur-md border border-[#F05BCE]/40 flex items-center justify-center text-[#F5EAF4] shadow-lg group-hover:scale-110 transition-transform">
-              <Play className="w-4 h-4 fill-[#F05BCE] text-[#F05BCE] ml-0.5" />
-            </div>
-          </div>
-        )}
-
-        {/* Image Card Center Hover Badge */}
-        {isImage && (
-          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="px-3 py-1.5 rounded-full bg-[#100A12]/85 backdrop-blur-md border border-[#F05BCE]/40 text-[#F5EAF4] text-xs font-bold flex items-center gap-1.5 shadow-xl">
-              <ImageIcon className="w-3.5 h-3.5 text-[#F05BCE]" />
-              <span>AI Image Synthesis</span>
-            </div>
-          </div>
-        )}
-
-        {/* Text Animation Center Hover Badge */}
-        {isText && (
-          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="px-3 py-1.5 rounded-full bg-[#100A12]/85 backdrop-blur-md border border-[#F05BCE]/40 text-[#F5EAF4] text-xs font-bold flex items-center gap-1.5 shadow-xl">
-              <Type className="w-3.5 h-3.5 text-[#F05BCE]" />
-              <span>Kinetic Motion Preset</span>
+            <div className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform">
+              <Play className="w-4 h-4 fill-white text-white ml-0.5" />
             </div>
           </div>
         )}
 
         {/* Bottom Content & Prompt Snippet */}
-        <div className="absolute bottom-3 inset-x-3 z-30 flex flex-col gap-2 pointer-events-auto">
+        <div className="absolute bottom-3 inset-x-3 z-30 flex flex-col gap-2 pointer-events-auto text-left">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#F05BCE] bg-[#F05BCE]/15 border border-[#F05BCE]/30 px-2 py-0.5 rounded-md">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-white bg-white/20 backdrop-blur-xs px-2 py-0.5 rounded-md">
                 {template.category}
               </span>
               {template.badge && (
-                <span className="text-[10px] font-bold text-amber-300 bg-amber-950/60 border border-amber-500/30 px-1.5 py-0.5 rounded-md">
+                <span className="text-[10px] font-semibold text-amber-200 bg-amber-900/60 border border-amber-400/30 px-1.5 py-0.5 rounded-md">
                   {template.badge}
                 </span>
               )}
             </div>
-            <h4 className="text-xs sm:text-sm font-bold text-[#F5EAF4] tracking-tight line-clamp-1 group-hover:text-[#F05BCE] transition-colors">
+            <h4 className="text-xs sm:text-sm font-bold text-white tracking-tight line-clamp-1 transition-colors">
               {template.title}
             </h4>
-            <p className="text-[11px] text-[#A99AAA] line-clamp-2 mt-0.5 font-normal leading-relaxed">
+            <p className="text-[11px] text-white/80 line-clamp-2 mt-0.5 font-normal leading-relaxed">
               {template.prompt || template.description}
             </p>
           </div>
 
           {/* Actions Bar */}
-          <div className="flex items-center justify-between pt-2 border-t border-[#39233B]">
-            {/* Quick "Use Template" CTA */}
+          <div className="flex items-center justify-between pt-2 border-t border-white/15">
             <button
               type="button"
               onClick={handleUseClick}
-              className="px-3 py-1.5 rounded-xl font-bold text-[11px] flex items-center gap-1.5 shadow-md shadow-[#F05BCE]/20 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white transition-all hover:scale-[1.02] cursor-pointer"
+              className="px-3 py-1.5 rounded-xl font-semibold text-[11px] flex items-center gap-1.5 bg-[#5145CD] hover:bg-[#4338CA] text-white shadow-sm transition-all hover:scale-[1.02] cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Use Template</span>
@@ -266,13 +240,13 @@ export function DiscoveryCard({
             <button
               type="button"
               onClick={handleLikeClick}
-              className="flex items-center gap-1 text-[11px] font-mono px-2.5 py-1.5 rounded-xl bg-[#100A12]/80 hover:bg-[#100A12] backdrop-blur-md border border-[#39233B] text-[#F5EAF4] hover:text-[#F05BCE] transition-colors"
+              className="flex items-center gap-1 text-[11px] font-mono px-2.5 py-1.5 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-white transition-colors"
             >
               <Heart
                 className={`w-3.5 h-3.5 ${
                   optimisticLiked
-                    ? 'fill-[#F05BCE] text-[#F05BCE]'
-                    : 'text-[#A99AAA] group-hover:text-[#F05BCE]'
+                    ? 'fill-rose-500 text-rose-500'
+                    : 'text-white/80 group-hover:text-white'
                 } transition-colors`}
               />
               <span>{likeCount.toLocaleString()}</span>

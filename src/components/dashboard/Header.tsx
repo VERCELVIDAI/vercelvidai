@@ -4,15 +4,15 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   User,
-  Bell,
-  Sparkles,
   Zap,
-  ShieldCheck,
   Menu,
   LogOut,
   Settings,
   CreditCard,
   ChevronDown,
+  Sparkles,
+  ShieldCheck,
+  HelpCircle,
 } from 'lucide-react';
 
 interface DashboardHeaderProps {
@@ -29,7 +29,7 @@ export function DashboardHeader({
   avatarUrl,
   role = 'creator',
   credits = 0,
-  workspaceName = 'Personal Studio',
+  workspaceName = 'Fluvia Creative Studio',
   user,
 }: DashboardHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -51,36 +51,41 @@ export function DashboardHeader({
   };
 
   return (
-    <header className="h-16 bg-[#100A12]/90 backdrop-blur-xl border-b border-[#39233B] px-3 sm:px-6 flex items-center justify-between gap-2 sticky top-0 z-40 shrink-0 w-full transition-colors duration-200 text-[#F5EAF4]">
-      <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1">
+    <header className="h-16 bg-white border-b border-[#E5E7EB] px-4 sm:px-6 flex items-center justify-between gap-3 sticky top-0 z-40 shrink-0 w-full text-[#17191D]">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         {/* Mobile Sidebar Hamburger Trigger */}
         <button
           type="button"
           onClick={handleOpenMobileSidebar}
           aria-label="Toggle navigation drawer"
-          className="md:hidden min-h-[40px] min-w-[40px] sm:min-h-[44px] sm:min-w-[44px] p-2 rounded-xl text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522] flex items-center justify-center transition-colors cursor-pointer shrink-0"
+          className="md:hidden min-h-[40px] min-w-[40px] p-2 rounded-xl text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA] flex items-center justify-center transition-colors cursor-pointer shrink-0"
         >
-          <Menu className="w-5 h-5 text-[#F5EAF4]" />
+          <Menu className="w-5 h-5 text-[#17191D]" />
         </button>
 
-        <span className="text-[11px] sm:text-xs font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md border border-[#39233B] bg-[#211522] text-[#F5EAF4] font-bold shadow-2xs truncate max-w-[100px] xs:max-w-[130px] sm:max-w-none shrink-0">
-          {workspaceName}
-        </span>
-        <span className="hidden sm:inline-block opacity-40 text-[#A99AAA]">•</span>
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#F05BCE] font-semibold min-w-0 truncate">
-          <span className="w-2 h-2 rounded-full bg-[#F05BCE] animate-pulse shadow-[0_0_8px_rgba(240,91,206,0.9)]" />
-          <span className="truncate">All AI Inference Nodes Operational</span>
+        {/* Workspace indicator */}
+        <div className="flex items-center gap-2 px-3 py-1 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] text-xs font-semibold text-[#17191D] truncate shrink-0">
+          <div className="w-2 h-2 rounded-full bg-[#5145CD]" />
+          <span className="truncate">{workspaceName}</span>
+        </div>
+
+        <span className="hidden sm:inline-block text-[#E5E7EB]">•</span>
+
+        {/* Operational badge */}
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#667085] min-w-0 truncate">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+          <span className="truncate">Gemini Engine Operational</span>
         </div>
       </div>
 
-      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         {/* Credit Quick Display */}
         <Link
-          href="/dashboard/wallet"
-          className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold hover:bg-[#F05BCE]/25 transition-all border border-[#F05BCE]/40 bg-[#F05BCE]/15 text-[#F05BCE] shadow-xs shrink-0"
+          href="/dashboard/billing"
+          className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#EEF2FF]/80 transition-all border border-[#5145CD]/20 bg-[#EEF2FF] text-[#5145CD] shadow-2xs shrink-0"
         >
-          <Zap className="w-3.5 h-3.5 text-[#F05BCE] shrink-0" />
-          <span>{credits} <span className="hidden xs:inline">Credits</span></span>
+          <Zap className="w-3.5 h-3.5 text-[#5145CD] shrink-0" />
+          <span>{credits.toLocaleString()} <span className="hidden xs:inline">Credits</span></span>
         </Link>
 
         {/* User Account Menu with Logout */}
@@ -93,56 +98,71 @@ export function DashboardHeader({
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="User account options"
-            className="flex items-center gap-2 p-1 pr-2.5 rounded-full hover:bg-[#2A1A2B] transition-all border border-[#39233B] bg-[#211522] shadow-2xs cursor-pointer"
+            className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-[#F7F8FA] transition-all border border-[#E5E7EB] bg-white cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-[#F05BCE] to-[#C026D3] p-[1.5px] shadow-xs">
-              <div className="w-full h-full rounded-full bg-[#211522] flex items-center justify-center text-xs font-black text-[#F05BCE]">
-                {effectiveAvatar ? (
-                  <img src={effectiveAvatar} alt="" className="w-full h-full object-cover rounded-full" />
-                ) : (
-                  effectiveDisplayName.charAt(0).toUpperCase()
-                )}
-              </div>
+            <div className="w-7 h-7 rounded-full overflow-hidden bg-[#5145CD] flex items-center justify-center text-xs font-bold text-white">
+              {effectiveAvatar ? (
+                <img src={effectiveAvatar} alt={effectiveDisplayName} className="w-full h-full object-cover" />
+              ) : (
+                effectiveDisplayName.charAt(0).toUpperCase()
+              )}
             </div>
-            <span className="text-xs font-bold text-[#F5EAF4] hidden sm:inline max-w-[100px] truncate">
+            <span className="hidden sm:inline text-xs font-semibold text-[#17191D] max-w-[100px] truncate">
               {effectiveDisplayName}
             </span>
-            <ChevronDown className="w-3.5 h-3.5 text-[#A99AAA] hidden sm:inline" />
+            <ChevronDown className="w-3.5 h-3.5 text-[#667085]" />
           </button>
 
-          {/* Account Dropdown */}
+          {/* Dropdown Menu */}
           {menuOpen && (
-            <div className="absolute right-0 top-full pt-2 w-56 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-              <div className="p-2 rounded-2xl bg-[#211522] border border-[#39233B] shadow-2xl space-y-1 text-xs">
-                <div className="px-3 py-2 border-b border-[#39233B] mb-1">
-                  <p className="font-bold text-[#F5EAF4] truncate">{effectiveDisplayName}</p>
-                  <p className="text-[10px] text-[#A99AAA] capitalize font-mono mt-0.5">Role: {effectiveRole}</p>
+            <div className="absolute right-0 top-full pt-1.5 w-56 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+              <div className="p-1.5 rounded-xl bg-white border border-[#E5E7EB] shadow-lg text-xs space-y-0.5 text-left">
+                <div className="px-3 py-2 border-b border-[#E5E7EB] mb-1">
+                  <p className="font-bold text-[#17191D] truncate">{effectiveDisplayName}</p>
+                  <p className="text-[11px] text-[#667085] capitalize truncate">{effectiveRole} account</p>
                 </div>
 
                 <Link
-                  href="/dashboard/settings"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#F5EAF4] hover:bg-[#2A1A2B] transition-colors"
+                  href="/dashboard/billing"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA] transition-colors"
                 >
-                  <Settings className="w-3.5 h-3.5 text-[#F05BCE]" />
+                  <CreditCard className="w-4 h-4 text-[#5145CD]" />
+                  <span>Credits & Billing</span>
+                </Link>
+
+                <Link
+                  href="/dashboard/settings"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA] transition-colors"
+                >
+                  <Settings className="w-4 h-4 text-[#667085]" />
                   <span>Account Settings</span>
                 </Link>
 
                 <Link
-                  href="/dashboard/billing"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#F5EAF4] hover:bg-[#2A1A2B] transition-colors"
+                  href="/help"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA] transition-colors"
                 >
-                  <CreditCard className="w-3.5 h-3.5 text-[#F05BCE]" />
-                  <span>Billing & Plans</span>
+                  <HelpCircle className="w-4 h-4 text-[#667085]" />
+                  <span>Help & Support</span>
                 </Link>
 
-                <div className="border-t border-[#39233B] pt-1 mt-1">
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-rose-400 hover:bg-rose-500/10 transition-colors text-left cursor-pointer"
+                {effectiveRole === 'admin' && (
+                  <Link
+                    href="/admin"
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-[#5145CD] hover:bg-[#EEF2FF] transition-colors font-medium"
                   >
-                    <LogOut className="w-3.5 h-3.5" />
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Admin Panel</span>
+                  </Link>
+                )}
+
+                <div className="pt-1 border-t border-[#E5E7EB] mt-1">
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer text-left font-medium"
+                  >
+                    <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>
                   </button>
                 </div>

@@ -361,8 +361,8 @@ export default function AdminConsolePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -374,29 +374,29 @@ export default function AdminConsolePage() {
   const recentAudits = adminData?.recentAudits || [];
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-200 bg-[#100A12] text-[#F5EAF4]">
+    <div className="min-h-screen flex flex-col bg-[#F7F8FA] text-[#17191D]">
       {/* Admin Top Bar */}
-      <header className="h-16 border-b border-[#39233B] bg-[#211522] px-6 flex items-center justify-between shrink-0">
+      <header className="h-16 border-b border-[#E5E7EB] bg-white px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"
-            className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B]"
+            className="p-1.5 rounded-lg bg-[#F7F8FA] hover:bg-slate-100 text-[#667085] hover:text-[#17191D] border border-[#E5E7EB]"
             title="Return to User Dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
-          <div className="h-5 w-px bg-[#39233B]" />
+          <div className="h-5 w-px bg-[#E5E7EB]" />
           <div className="flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-[#F05BCE]" />
-            <span className="font-bold text-[#F5EAF4] text-base">Fluvia Flow • Admin Console</span>
-            <span className="text-[10px] bg-[#F05BCE]/15 text-[#F05BCE] font-mono px-2 py-0.5 rounded border border-[#F05BCE]/30 uppercase font-bold">
+            <ShieldAlert className="w-5 h-5 text-[#5145CD]" />
+            <span className="font-bold text-[#17191D] text-base">Fluvia Flow • Admin Console</span>
+            <span className="text-[10px] bg-[#EEF2FF] text-[#5145CD] font-mono px-2 py-0.5 rounded border border-[#5145CD]/20 uppercase font-bold">
               Super Admin
             </span>
           </div>
         </div>
 
         {/* Tab navigation */}
-        <div className="flex gap-1 bg-[#100A12] border border-[#39233B] p-1 rounded-xl text-xs font-bold">
+        <div className="flex gap-1 bg-[#F7F8FA] border border-[#E5E7EB] p-1 rounded-xl text-xs font-semibold">
           {[
             { id: 'overview', label: 'Metrics Overview' },
             { id: 'pricing', label: 'Pricing, Plans & Tax' },
@@ -411,7 +411,7 @@ export default function AdminConsolePage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                activeTab === tab.id ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-xs' : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-white/[0.04]'
+                activeTab === tab.id ? 'bg-[#5145CD] text-white shadow-2xs' : 'text-[#667085] hover:text-[#17191D] hover:bg-white'
               }`}
             >
               {tab.label}

@@ -28,71 +28,53 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
 
   const content = (
     <div className={`flex items-center gap-2 sm:gap-2.5 group select-none cursor-pointer shrink-0 min-w-0 ${className}`}>
-      {/* Fluvia Flow Studio Mark */}
+      {/* Fluvia Flow Studio Mark (Business Indigo) */}
       <div
-        className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-gradient-to-tr from-[#F05BCE] via-[#E046BD] to-[#C026D3] p-[1px] shadow-lg shadow-[#F05BCE]/20 group-hover:shadow-[#F05BCE]/40 group-hover:scale-105 transition-all duration-300 ease-out`}
+        className={`relative ${iconSizes[size]} shrink-0 rounded-xl bg-[#5145CD] p-[1px] shadow-sm group-hover:bg-[#4338CA] transition-all duration-200 ease-out`}
       >
-        <div className="w-full h-full bg-[#211522] rounded-[11px] flex items-center justify-center relative overflow-hidden border border-[#39233B]">
-          {/* Subtle Ambient Lens Glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#F05BCE]/20 via-transparent to-[#C026D3]/20 opacity-80 group-hover:opacity-100 transition-opacity" />
-
-          {/* Cinematic Shutter / K-Facet Studio Mark */}
+        <div className="w-full h-full bg-[#5145CD] rounded-[11px] flex items-center justify-center relative overflow-hidden text-white">
           <svg
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="w-4/5 h-4/5 relative z-10"
           >
-            <defs>
-              <linearGradient id="klingPrimaryGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#F05BCE" />
-                <stop offset="0.5" stopColor="#E046BD" />
-                <stop offset="1" stopColor="#C026D3" />
-              </linearGradient>
-            </defs>
-
-            {/* Left Vertical Blade */}
+            {/* Left Vertical Bar */}
+            <rect x="7" y="6" width="5" height="20" rx="2" fill="#FFFFFF" />
+            {/* Top Branch */}
             <path
-              d="M8 7C8 6.44772 8.44772 6 9 6H12C12.5523 6 13 6.44772 13 7V25C13 25.5523 12.5523 26 12 26H9C8.44772 26 8 25.5523 8 25V7Z"
-              fill="url(#klingPrimaryGrad)"
+              d="M16 16L23.2 8.5C23.6 8 24.5 8.3 24.5 9V12C24.5 12.5 24.2 13 23.8 13.4L18.8 17.5L16 16Z"
+              fill="#FFFFFF"
+              fillOpacity="0.9"
             />
-
-            {/* Top Right Angular Shutter Blade */}
+            {/* Bottom Branch */}
             <path
-              d="M16 16L23.2 7.6C23.6 7.1 24.4 7.4 24.4 8V11C24.4 11.5 24.1 12 23.7 12.4L18.8 17.5L16 16Z"
-              fill="url(#klingPrimaryGrad)"
-              fillOpacity="0.85"
+              d="M16 16L23.8 23.6C24.2 24 24.5 24.5 24.5 25V24C24.5 23.3 23.6 23 23.2 22.5L16 16Z"
+              fill="#FFFFFF"
+              fillOpacity="0.9"
             />
-
-            {/* Bottom Right Angular Shutter Blade */}
-            <path
-              d="M16 16L23.7 24.6C24.1 25 24.4 25.5 24.4 26V25C24.4 24.4 23.6 24 23.2 23.5L16 16Z"
-              fill="url(#klingPrimaryGrad)"
-              fillOpacity="0.95"
-            />
-
-            {/* Glowing Core Dot */}
-            <circle cx="15.5" cy="16" r="2" fill="#F05BCE" />
+            {/* Center Dynamic Core */}
+            <circle cx="15.5" cy="16" r="2" fill="#FFFFFF" />
           </svg>
         </div>
       </div>
 
-      {/* Typography: Rose White Wordmark with Hot Pink Accent */}
+      {/* Typography: Charcoal Wordmark with Deep Indigo Studio Tag */}
       <div className="flex flex-col">
         <div className="flex items-center tracking-tight leading-none gap-1.5">
-          <span className={`font-black text-[#F5EAF4] tracking-tight ${textSizes[size]}`}>
+          <span className={`font-extrabold text-[#17191D] tracking-tight ${textSizes[size]}`}>
             FLUVIA
           </span>
-          <span className={`font-light text-[#F05BCE] tracking-wider ${textSizes[size]}`}>
+          <span className={`font-semibold text-[#5145CD] tracking-tight ${textSizes[size]}`}>
             FLOW
           </span>
-          <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 uppercase tracking-widest">
-            STUDIO
+          <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] uppercase tracking-wider">
+            AI ADS
           </span>
         </div>
         {showTagline && (
-          <span className="text-[10px] font-medium tracking-wide text-[#A99AAA] mt-1">
-            {BRAND.tagline}
+          <span className="text-[10px] font-medium tracking-normal text-[#667085] mt-0.5">
+            AI Ad Creation Studio
           </span>
         )}
       </div>

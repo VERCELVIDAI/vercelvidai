@@ -47,8 +47,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen text-white flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden bg-[#090A0D]">
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+    <div className="min-h-screen text-[#17191D] flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden bg-[#F7F8FA]">
       <div className="w-full max-w-md relative z-10 text-left">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
@@ -56,39 +55,39 @@ export default function ForgotPasswordPage() {
               <Logo size="lg" />
             </Link>
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Reset your password</h1>
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-400">
+          <h1 className="text-2xl font-bold text-[#17191D] tracking-tight">Reset your password</h1>
+          <p className="mt-1.5 text-xs sm:text-sm text-[#667085]">
             Enter your registered email address to receive password reset instructions.
           </p>
         </div>
 
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/10 shadow-2xl">
+        <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm">
           {error && (
-            <div className="mb-5 p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-xs text-rose-200 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+            <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
               <span className="font-semibold leading-relaxed">{error}</span>
             </div>
           )}
 
           {sent ? (
             <div className="text-center py-4 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 flex items-center justify-center mx-auto">
+              <div className="w-12 h-12 rounded-full bg-[#5145CD]/10 border border-[#5145CD]/20 text-[#5145CD] flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white">Recovery Instructions Sent</h3>
-              <p className="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto">
-                If an account exists for <strong className="text-white font-bold">{email}</strong>, a secure password reset link has been dispatched.
+              <h3 className="text-lg font-bold text-[#17191D]">Recovery Instructions Sent</h3>
+              <p className="text-xs text-[#667085] leading-relaxed max-w-xs mx-auto">
+                If an account exists for <strong className="text-[#17191D] font-bold">{email}</strong>, a secure password reset link has been dispatched.
               </p>
 
               {devResetLink && (
-                <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-left text-xs space-y-1.5">
-                  <div className="font-bold text-indigo-300 flex items-center gap-1.5">
-                    <KeyRound className="w-3.5 h-3.5 text-indigo-400" />
+                <div className="p-3 rounded-xl bg-[#5145CD]/5 border border-[#5145CD]/20 text-left text-xs space-y-1.5">
+                  <div className="font-bold text-[#5145CD] flex items-center gap-1.5">
+                    <KeyRound className="w-3.5 h-3.5" />
                     <span>Development Direct Reset Link:</span>
                   </div>
                   <Link
                     href={devResetLink}
-                    className="block text-[11px] font-mono text-cyan-300 hover:text-cyan-200 underline truncate"
+                    className="block text-[11px] font-mono text-[#5145CD] hover:underline truncate"
                   >
                     {devResetLink}
                   </Link>
@@ -97,25 +96,27 @@ export default function ForgotPasswordPage() {
 
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center gap-2 w-full mt-4 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 w-full mt-4 py-3 bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold rounded-xl text-xs shadow-sm transition-all cursor-pointer"
               >
                 <span>Back to Sign In</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-slate-300 font-semibold mb-1">Email Address</label>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-[#17191D] mb-1.5">
+                  Email Address
+                </label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-4 h-4 text-[#667085] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="creator@brand.com"
-                    className="w-full bg-[#11131A] border border-white/10 text-white pl-10 pr-3.5 py-2.5 rounded-xl text-xs placeholder:text-slate-500 focus:outline-none focus:border-indigo-500"
+                    placeholder="Enter your registered email"
+                    className="w-full bg-white text-[#17191D] pl-10 pr-4 py-2.5 rounded-xl border border-[#E5E7EB] focus:outline-none focus:ring-2 focus:ring-[#5145CD]/20 focus:border-[#5145CD] text-sm shadow-2xs placeholder:text-[#667085]/60"
                   />
                 </div>
               </div>
@@ -123,10 +124,10 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                className="w-full mt-2 py-3 bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold rounded-xl text-sm shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
               >
                 {isLoading ? (
-                  <span>Dispatching Link...</span>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
                     <span>Send Reset Instructions</span>
@@ -134,18 +135,18 @@ export default function ForgotPasswordPage() {
                   </>
                 )}
               </button>
+
+              <div className="pt-4 text-center">
+                <Link
+                  href="/login"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#667085] hover:text-[#17191D] font-medium"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back to Sign In</span>
+                </Link>
+              </div>
             </form>
           )}
-
-          <div className="mt-6 pt-5 border-t border-white/8 text-center text-xs">
-            <Link
-              href="/login"
-              className="text-slate-400 hover:text-white font-semibold inline-flex items-center gap-1.5 transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Login</span>
-            </Link>
-          </div>
         </div>
       </div>
     </div>

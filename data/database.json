@@ -1045,6 +1045,92 @@
       "role": "creator",
       "createdAt": "2026-10-24T07:26:06.799Z",
       "updatedAt": "2026-10-24T07:26:06.799Z"
+    },
+    {
+      "id": "usr_7v301epl",
+      "email": "zero_1793251364161@test.fluviaflow.ai",
+      "displayName": "Zero Credits User",
+      "role": "creator",
+      "createdAt": "2026-10-29T05:22:44.359Z",
+      "updatedAt": "2026-10-29T05:22:44.359Z"
+    },
+    {
+      "id": "usr_699wed4s",
+      "email": "zero_1793251377896@test.fluviaflow.ai",
+      "displayName": "Zero Credits User",
+      "role": "creator",
+      "createdAt": "2026-10-29T05:22:58.109Z",
+      "updatedAt": "2026-10-29T05:22:58.109Z"
+    },
+    {
+      "id": "usr_61hhd909",
+      "email": "zero_1793251393954@test.fluviaflow.ai",
+      "displayName": "Zero Credits User",
+      "role": "creator",
+      "firstCampaignCouponSeen": true,
+      "createdAt": "2026-10-29T05:23:14.151Z",
+      "updatedAt": "2026-10-29T05:23:14.211Z"
+    },
+    {
+      "id": "usr_mimkm1ia",
+      "email": "zero_1793251420690@test.fluviaflow.ai",
+      "displayName": "Zero Credits User",
+      "role": "creator",
+      "firstCampaignCouponSeen": true,
+      "createdAt": "2026-10-29T05:23:40.919Z",
+      "updatedAt": "2026-10-29T05:23:40.983Z"
+    },
+    {
+      "id": "usr_a6i24x8m",
+      "email": "zero_1793251472641@test.fluviaflow.ai",
+      "displayName": "Zero Credits User",
+      "role": "creator",
+      "firstCampaignCouponSeen": true,
+      "createdAt": "2026-10-29T05:24:32.855Z",
+      "updatedAt": "2026-10-29T05:24:32.920Z"
+    },
+    {
+      "id": "usr_8m67juz5",
+      "email": "payu_test_1793251515304@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-10-29T05:25:15.305Z",
+      "updatedAt": "2026-10-29T05:25:15.305Z"
+    },
+    {
+      "id": "usr_gadlh60k",
+      "email": "payu_test_1793251553854@vidai.io",
+      "displayName": "Fintech Tester",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-10-29T05:25:53.855Z",
+      "updatedAt": "2026-10-29T05:25:53.855Z"
+    },
+    {
+      "id": "usr_flow_1793251560027",
+      "email": "flow_1793251560027@fluviaflow.ai",
+      "displayName": "Flow Tester",
+      "role": "creator",
+      "createdAt": "2026-10-29T05:26:00.028Z",
+      "updatedAt": "2026-10-29T05:26:00.028Z"
+    },
+    {
+      "id": "usr_9qd3b2uv",
+      "email": "zero_1793251795414@test.fluviaflow.ai",
+      "displayName": "Zero Credits User",
+      "role": "creator",
+      "firstCampaignCouponSeen": true,
+      "createdAt": "2026-10-29T05:29:55.619Z",
+      "updatedAt": "2026-10-29T05:29:55.680Z"
+    },
+    {
+      "id": "usr_flow_1793251801616",
+      "email": "flow_1793251801616@fluviaflow.ai",
+      "displayName": "Flow Tester",
+      "role": "creator",
+      "createdAt": "2026-10-29T05:30:01.616Z",
+      "updatedAt": "2026-10-29T05:30:01.616Z"
     }
   ],
   "passwords": {
@@ -1235,7 +1321,23 @@
     "usr_idxafnbb": "scrypt:fa626d23b8e20cbe808e04c4360e8794:7ea367a7ecdcde4703ff4d777434f2771dcd6be8aa46047afb54b4d4fb0a3f38d23472b8159a7f2201788eceab21ca54b65d7a870d591b4926e82800dcc474ea",
     "payu_1792824210421@fluvia.io": "scrypt:fa626d23b8e20cbe808e04c4360e8794:7ea367a7ecdcde4703ff4d777434f2771dcd6be8aa46047afb54b4d4fb0a3f38d23472b8159a7f2201788eceab21ca54b65d7a870d591b4926e82800dcc474ea",
     "usr_yn2cq685": "scrypt:1fea6429c5b6a30d838f2b771dc34b9f:4a12bf380fe26865a6b62cd3a5a5eb47dd3eb432fbb0dbeb717ef1e4662577f9ec402fb4b08bee5df818f0898956357a226aa5e4258a3344b1f155587db04bd4",
-    "payu_1792826766797@fluvia.io": "scrypt:1fea6429c5b6a30d838f2b771dc34b9f:4a12bf380fe26865a6b62cd3a5a5eb47dd3eb432fbb0dbeb717ef1e4662577f9ec402fb4b08bee5df818f0898956357a226aa5e4258a3344b1f155587db04bd4"
+    "payu_1792826766797@fluvia.io": "scrypt:1fea6429c5b6a30d838f2b771dc34b9f:4a12bf380fe26865a6b62cd3a5a5eb47dd3eb432fbb0dbeb717ef1e4662577f9ec402fb4b08bee5df818f0898956357a226aa5e4258a3344b1f155587db04bd4",
+    "usr_7v301epl": "scrypt:bee198caba2ae1e81ed5c351ca2d22fe:5da86dad519d528d57925d6dbf7c052385cd1844cab2664521f06ff36de01e717d0d0d5142f72b1dff6aab4f6f460c9c16c2dcedde77d8d1f0e5268bdb2d63ed",
+    "zero_1793251364161@test.fluviaflow.ai": "scrypt:bee198caba2ae1e81ed5c351ca2d22fe:5da86dad519d528d57925d6dbf7c052385cd1844cab2664521f06ff36de01e717d0d0d5142f72b1dff6aab4f6f460c9c16c2dcedde77d8d1f0e5268bdb2d63ed",
+    "usr_699wed4s": "scrypt:ebf8cafcd67dfdbf47bb04236e1b6d55:c197de3ff7f9c3b579a0d18582d259737536793eb0e1bc0a46f3647b26c891f875a92c601181f8e12bee6cd6b36488906caaea613cbb3cdd1b1bf6cbfb3b8492",
+    "zero_1793251377896@test.fluviaflow.ai": "scrypt:ebf8cafcd67dfdbf47bb04236e1b6d55:c197de3ff7f9c3b579a0d18582d259737536793eb0e1bc0a46f3647b26c891f875a92c601181f8e12bee6cd6b36488906caaea613cbb3cdd1b1bf6cbfb3b8492",
+    "usr_61hhd909": "scrypt:755c3ebbfa8d80e07c37147693d143e6:fcbd924a9ca4d8be4eabdbe06904d952d9be0fd564a8c236e1e36c95fc7c66d0cdbbbac29480d64e2337eb25f75572043d62a54e469a88554735e9986328e0c0",
+    "zero_1793251393954@test.fluviaflow.ai": "scrypt:755c3ebbfa8d80e07c37147693d143e6:fcbd924a9ca4d8be4eabdbe06904d952d9be0fd564a8c236e1e36c95fc7c66d0cdbbbac29480d64e2337eb25f75572043d62a54e469a88554735e9986328e0c0",
+    "usr_mimkm1ia": "scrypt:8c321ee716cf1e38225c5eb86f600348:18d6d1f2f7230c3589144a681362c834ad75a23e2ebc1baff79266b04b1c1e54f4b12b96cb4929985142356c76b14f4c2fe46e2056b7cc1a10f7b1723ef130ec",
+    "zero_1793251420690@test.fluviaflow.ai": "scrypt:8c321ee716cf1e38225c5eb86f600348:18d6d1f2f7230c3589144a681362c834ad75a23e2ebc1baff79266b04b1c1e54f4b12b96cb4929985142356c76b14f4c2fe46e2056b7cc1a10f7b1723ef130ec",
+    "usr_a6i24x8m": "scrypt:d9db5beefdf13d3c16034d7429d15d75:e0c86de8d6c634495acb273c02587d06a1fda6683d17ee652f33c6447e9633cb5a09b0b935ab9e15c1df0a88f7e48ff7a53b1a1ddd0f4e862bd8178a2bae10d8",
+    "zero_1793251472641@test.fluviaflow.ai": "scrypt:d9db5beefdf13d3c16034d7429d15d75:e0c86de8d6c634495acb273c02587d06a1fda6683d17ee652f33c6447e9633cb5a09b0b935ab9e15c1df0a88f7e48ff7a53b1a1ddd0f4e862bd8178a2bae10d8",
+    "usr_8m67juz5": "scrypt:242438193a75f0573317df0c5e0c7f31:cbd193ff19fde69998d4b216907c3fcf1bec3902a25a2a43cfa32962f2732d5676439634a7d4898f14f755c678748406b15855ff6fa3eac93d1328389d6c25aa",
+    "payu_test_1793251515304@vidai.io": "scrypt:242438193a75f0573317df0c5e0c7f31:cbd193ff19fde69998d4b216907c3fcf1bec3902a25a2a43cfa32962f2732d5676439634a7d4898f14f755c678748406b15855ff6fa3eac93d1328389d6c25aa",
+    "usr_gadlh60k": "scrypt:367566402582833a8027c49ac324551e:17c1218a246413a181fb0fdececdf01ccea4c595818bea87f5bab89c26f2e8a339bf98b2d3e257fae17561bfa1d5f6ba25f24ea0e420bdb3debf5a33bb57993d",
+    "payu_test_1793251553854@vidai.io": "scrypt:367566402582833a8027c49ac324551e:17c1218a246413a181fb0fdececdf01ccea4c595818bea87f5bab89c26f2e8a339bf98b2d3e257fae17561bfa1d5f6ba25f24ea0e420bdb3debf5a33bb57993d",
+    "usr_9qd3b2uv": "scrypt:56dfdcae0a72f0e699a4bf5ac41ae2fa:c539672ef45ba53a230b4c7d614e6119e74394fbb3221dc8f40e77ac7e1a37ce56fe7c674805adb86e774c6855c254d83ad27f79365e21a753a365620eae7203",
+    "zero_1793251795414@test.fluviaflow.ai": "scrypt:56dfdcae0a72f0e699a4bf5ac41ae2fa:c539672ef45ba53a230b4c7d614e6119e74394fbb3221dc8f40e77ac7e1a37ce56fe7c674805adb86e774c6855c254d83ad27f79365e21a753a365620eae7203"
   },
   "workspaces": [
     {
@@ -2126,6 +2228,76 @@
       "name": "PayU Test Creator's Studio",
       "createdAt": "2026-10-24T07:26:06.799Z",
       "updatedAt": "2026-10-24T07:26:06.799Z"
+    },
+    {
+      "id": "ws_6w6ubxis",
+      "ownerId": "usr_7v301epl",
+      "name": "Zero Credits User's Studio",
+      "createdAt": "2026-10-29T05:22:44.359Z",
+      "updatedAt": "2026-10-29T05:22:44.359Z"
+    },
+    {
+      "id": "ws_y2ddbozp",
+      "ownerId": "usr_699wed4s",
+      "name": "Zero Credits User's Studio",
+      "createdAt": "2026-10-29T05:22:58.109Z",
+      "updatedAt": "2026-10-29T05:22:58.109Z"
+    },
+    {
+      "id": "ws_ue8c2qge",
+      "ownerId": "usr_61hhd909",
+      "name": "Zero Credits User's Studio",
+      "createdAt": "2026-10-29T05:23:14.151Z",
+      "updatedAt": "2026-10-29T05:23:14.151Z"
+    },
+    {
+      "id": "ws_e8t3na18",
+      "ownerId": "usr_mimkm1ia",
+      "name": "Zero Credits User's Studio",
+      "createdAt": "2026-10-29T05:23:40.919Z",
+      "updatedAt": "2026-10-29T05:23:40.919Z"
+    },
+    {
+      "id": "ws_259ldgf4",
+      "ownerId": "usr_a6i24x8m",
+      "name": "Zero Credits User's Studio",
+      "createdAt": "2026-10-29T05:24:32.855Z",
+      "updatedAt": "2026-10-29T05:24:32.855Z"
+    },
+    {
+      "id": "ws_zztscv7n",
+      "ownerId": "usr_8m67juz5",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-29T05:25:15.305Z",
+      "updatedAt": "2026-10-29T05:25:15.305Z"
+    },
+    {
+      "id": "ws_1qgo3oyg",
+      "ownerId": "usr_gadlh60k",
+      "name": "Fintech Tester's Studio",
+      "createdAt": "2026-10-29T05:25:53.855Z",
+      "updatedAt": "2026-10-29T05:25:53.855Z"
+    },
+    {
+      "id": "ws_flow_1793251560027",
+      "ownerId": "usr_flow_1793251560027",
+      "name": "Flow Tester's Studio",
+      "createdAt": "2026-10-29T05:26:00.028Z",
+      "updatedAt": "2026-10-29T05:26:00.028Z"
+    },
+    {
+      "id": "ws_c1d07jsz",
+      "ownerId": "usr_9qd3b2uv",
+      "name": "Zero Credits User's Studio",
+      "createdAt": "2026-10-29T05:29:55.619Z",
+      "updatedAt": "2026-10-29T05:29:55.619Z"
+    },
+    {
+      "id": "ws_flow_1793251801616",
+      "ownerId": "usr_flow_1793251801616",
+      "name": "Flow Tester's Studio",
+      "createdAt": "2026-10-29T05:30:01.616Z",
+      "updatedAt": "2026-10-29T05:30:01.616Z"
     }
   ],
   "workspaceMembers": [
@@ -2866,14 +3038,62 @@
       "userId": "usr_yn2cq685",
       "role": "owner",
       "joinedAt": "2026-10-24T07:26:06.799Z"
+    },
+    {
+      "workspaceId": "ws_6w6ubxis",
+      "userId": "usr_7v301epl",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:22:44.359Z"
+    },
+    {
+      "workspaceId": "ws_y2ddbozp",
+      "userId": "usr_699wed4s",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:22:58.109Z"
+    },
+    {
+      "workspaceId": "ws_ue8c2qge",
+      "userId": "usr_61hhd909",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:23:14.151Z"
+    },
+    {
+      "workspaceId": "ws_e8t3na18",
+      "userId": "usr_mimkm1ia",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:23:40.919Z"
+    },
+    {
+      "workspaceId": "ws_259ldgf4",
+      "userId": "usr_a6i24x8m",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:24:32.855Z"
+    },
+    {
+      "workspaceId": "ws_zztscv7n",
+      "userId": "usr_8m67juz5",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:25:15.305Z"
+    },
+    {
+      "workspaceId": "ws_1qgo3oyg",
+      "userId": "usr_gadlh60k",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:25:53.855Z"
+    },
+    {
+      "workspaceId": "ws_c1d07jsz",
+      "userId": "usr_9qd3b2uv",
+      "role": "owner",
+      "joinedAt": "2026-10-29T05:29:55.619Z"
     }
   ],
   "creditAccounts": {
     "usr_creator_demo_1": {
       "userId": "usr_creator_demo_1",
-      "availableBalance": 7925,
+      "availableBalance": 8425,
       "reservedBalance": 0,
-      "updatedAt": "2026-10-24T07:27:36.412Z"
+      "updatedAt": "2026-10-29T05:26:07.252Z"
     },
     "usr_admin_master_1": {
       "userId": "usr_admin_master_1",
@@ -3792,6 +4012,84 @@
       "availableBalance": 48,
       "reservedBalance": 0,
       "updatedAt": "2026-10-28T08:30:25.768Z"
+    },
+    "usr_test_coupon_1793251100619": {
+      "userId": "usr_test_coupon_1793251100619",
+      "availableBalance": 1600,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:18:21.497Z"
+    },
+    "usr_7v301epl": {
+      "userId": "usr_7v301epl",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:22:44.359Z"
+    },
+    "usr_699wed4s": {
+      "userId": "usr_699wed4s",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:22:58.109Z"
+    },
+    "usr_61hhd909": {
+      "userId": "usr_61hhd909",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:23:14.151Z"
+    },
+    "usr_mimkm1ia": {
+      "userId": "usr_mimkm1ia",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:23:40.919Z"
+    },
+    "usr_a6i24x8m": {
+      "userId": "usr_a6i24x8m",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:24:32.855Z"
+    },
+    "usr_test_audit_1793251492160": {
+      "userId": "usr_test_audit_1793251492160",
+      "availableBalance": 100,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:24:52.184Z"
+    },
+    "audit_user_1793251506982": {
+      "userId": "audit_user_1793251506982",
+      "availableBalance": 48,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:25:07.239Z"
+    },
+    "usr_8m67juz5": {
+      "userId": "usr_8m67juz5",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:25:15.305Z"
+    },
+    "usr_gadlh60k": {
+      "userId": "usr_gadlh60k",
+      "availableBalance": 1200,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:25:54.066Z"
+    },
+    "usr_flow_1793251560027": {
+      "userId": "usr_flow_1793251560027",
+      "availableBalance": 2500,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:26:00.438Z"
+    },
+    "usr_9qd3b2uv": {
+      "userId": "usr_9qd3b2uv",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:29:55.619Z"
+    },
+    "usr_flow_1793251801616": {
+      "userId": "usr_flow_1793251801616",
+      "availableBalance": 2500,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T05:30:02.016Z"
     }
   },
   "creditLedger": [
@@ -8214,6 +8512,243 @@
         "reason": "Voiceover Failure Refund"
       },
       "createdAt": "2026-10-28T08:30:25.768Z"
+    },
+    {
+      "id": "cld_r8fnfg9bo7",
+      "userId": "usr_test_coupon_1793251100619",
+      "transactionType": "subscription_grant",
+      "amount": 500,
+      "balanceAfter": 600,
+      "paymentId": "ord_payu_nm6pltwfy",
+      "idempotencyKey": "payu_sub_grant_TXN_1793251101168_AAYFBW",
+      "metadata": {
+        "planId": "plan_starter",
+        "billingInterval": "month",
+        "txnid": "TXN_1793251101168_AAYFBW"
+      },
+      "createdAt": "2026-10-29T05:18:21.210Z"
+    },
+    {
+      "id": "cld_17rokiafof",
+      "userId": "usr_test_coupon_1793251100619",
+      "transactionType": "subscription_grant",
+      "amount": 500,
+      "balanceAfter": 1100,
+      "paymentId": "ord_payu_czitdq38l",
+      "idempotencyKey": "payu_sub_grant_TXN_1793251101304_1IY0SL",
+      "metadata": {
+        "planId": "plan_starter",
+        "billingInterval": "month",
+        "txnid": "TXN_1793251101304_1IY0SL"
+      },
+      "createdAt": "2026-10-29T05:18:21.333Z"
+    },
+    {
+      "id": "cld_hapoa9zibi",
+      "userId": "usr_test_coupon_1793251100619",
+      "transactionType": "subscription_grant",
+      "amount": 500,
+      "balanceAfter": 1600,
+      "paymentId": "ord_payu_ts9ighvsg",
+      "idempotencyKey": "payu_sub_grant_TXN_1793251101467_AY1NEM",
+      "metadata": {
+        "planId": "plan_starter",
+        "billingInterval": "month",
+        "txnid": "TXN_1793251101467_AY1NEM"
+      },
+      "createdAt": "2026-10-29T05:18:21.497Z"
+    },
+    {
+      "id": "cld_t6xpokhvjh",
+      "userId": "usr_test_audit_1793251492160",
+      "transactionType": "Test credit grant",
+      "amount": 100,
+      "balanceAfter": 100,
+      "createdAt": "2026-10-29T05:24:52.160Z"
+    },
+    {
+      "id": "cld_2bh8o080yw",
+      "userId": "usr_test_audit_1793251492160",
+      "transactionType": "generation_reserve",
+      "amount": -15,
+      "balanceAfter": 85,
+      "relatedJobId": "job_test_refund_1793251492171",
+      "idempotencyKey": "reserve_job_test_refund_1793251492171",
+      "metadata": {
+        "reservedAmount": 15
+      },
+      "createdAt": "2026-10-29T05:24:52.172Z"
+    },
+    {
+      "id": "cld_dhyhwrmimc",
+      "userId": "usr_test_audit_1793251492160",
+      "transactionType": "refund",
+      "amount": 15,
+      "balanceAfter": 100,
+      "relatedJobId": "job_test_refund_1793251492171",
+      "idempotencyKey": "refund_job_test_refund_1793251492171_1793251492184",
+      "metadata": {
+        "reason": "Free Tier Limit 0 requests/day"
+      },
+      "createdAt": "2026-10-29T05:24:52.184Z"
+    },
+    {
+      "id": "cld_0val6op6vx",
+      "userId": "audit_user_1793251506982",
+      "transactionType": "subscription",
+      "amount": 50,
+      "balanceAfter": 50,
+      "idempotencyKey": "audit_fund_1793251506982",
+      "createdAt": "2026-10-29T05:25:07.192Z"
+    },
+    {
+      "id": "cld_hv3n23l9j1",
+      "userId": "audit_user_1793251506982",
+      "transactionType": "generation_reserve",
+      "amount": -2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_test_1793251507202",
+      "idempotencyKey": "reserve_voice_test_1793251507202",
+      "metadata": {
+        "reservedAmount": 2
+      },
+      "createdAt": "2026-10-29T05:25:07.202Z"
+    },
+    {
+      "id": "cld_45ao2l9rhf",
+      "userId": "audit_user_1793251506982",
+      "transactionType": "generation_settle",
+      "amount": -2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_test_1793251507202",
+      "idempotencyKey": "settle_voice_test_1793251507202",
+      "metadata": {
+        "reserved": 2,
+        "actual": 2,
+        "refunded": 0
+      },
+      "createdAt": "2026-10-29T05:25:07.215Z"
+    },
+    {
+      "id": "cld_tlkmctpvls",
+      "userId": "audit_user_1793251506982",
+      "transactionType": "generation_reserve",
+      "amount": -2,
+      "balanceAfter": 46,
+      "relatedJobId": "voice_fail_1793251507225",
+      "idempotencyKey": "reserve_voice_fail_1793251507225",
+      "metadata": {
+        "reservedAmount": 2
+      },
+      "createdAt": "2026-10-29T05:25:07.226Z"
+    },
+    {
+      "id": "cld_mcrmcj9px7",
+      "userId": "audit_user_1793251506982",
+      "transactionType": "refund",
+      "amount": 2,
+      "balanceAfter": 48,
+      "relatedJobId": "voice_fail_1793251507225",
+      "idempotencyKey": "refund_voice_fail_1793251507225_1793251507239",
+      "metadata": {
+        "reason": "Voiceover Failure Refund"
+      },
+      "createdAt": "2026-10-29T05:25:07.239Z"
+    },
+    {
+      "id": "cld_m2a6myczpv",
+      "userId": "usr_gadlh60k",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1200,
+      "paymentId": "ord_payu_f3l3zciha",
+      "idempotencyKey": "payu_fulfill_TXN_1793251554023_AXV0SL",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1793251554023_AXV0SL",
+        "mihpayid": "403993715530999999",
+        "amountInr": 1178.82
+      },
+      "createdAt": "2026-10-29T05:25:54.066Z"
+    },
+    {
+      "id": "cld_zbrwysp1iy",
+      "userId": "usr_flow_1793251560027",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_qnruimku0",
+      "idempotencyKey": "payu_fulfill_TXN_ZERO_1793251560280_FYMWB4",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_ZERO_1793251560280_FYMWB4",
+        "mihpayid": "mih_1793251560306",
+        "amountInr": 0
+      },
+      "createdAt": "2026-10-29T05:26:00.306Z"
+    },
+    {
+      "id": "cld_fe5u0k2uln",
+      "userId": "usr_flow_1793251560027",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 2500,
+      "paymentId": "ord_payu_y8187rxmk",
+      "idempotencyKey": "payu_fulfill_TXN_1793251560402_ROIG0I",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1793251560402_ROIG0I",
+        "mihpayid": "mih_test_1793251560027",
+        "amountInr": 943.06
+      },
+      "createdAt": "2026-10-29T05:26:00.438Z"
+    },
+    {
+      "id": "cld_ia8yglq954",
+      "userId": "usr_creator_demo_1",
+      "transactionType": "subscription_grant",
+      "amount": 500,
+      "balanceAfter": 8425,
+      "paymentId": "ord_payu_9s5nbtc7v",
+      "idempotencyKey": "payu_sub_grant_TXN_1793251567225_99P7PJ",
+      "metadata": {
+        "planId": "plan_starter",
+        "billingInterval": "month",
+        "txnid": "TXN_1793251567225_99P7PJ"
+      },
+      "createdAt": "2026-10-29T05:26:07.252Z"
+    },
+    {
+      "id": "cld_cvedjbe3ri",
+      "userId": "usr_flow_1793251801616",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 1300,
+      "paymentId": "ord_payu_zg2se48qk",
+      "idempotencyKey": "payu_fulfill_TXN_ZERO_1793251801870_OO2KDP",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_ZERO_1793251801870_OO2KDP",
+        "mihpayid": "mih_1793251801895",
+        "amountInr": 0
+      },
+      "createdAt": "2026-10-29T05:30:01.896Z"
+    },
+    {
+      "id": "cld_dikhhtvv1y",
+      "userId": "usr_flow_1793251801616",
+      "transactionType": "purchase",
+      "amount": 1200,
+      "balanceAfter": 2500,
+      "paymentId": "ord_payu_pv329gumn",
+      "idempotencyKey": "payu_fulfill_TXN_1793251801982_XKCZMG",
+      "metadata": {
+        "provider": "payu",
+        "txnid": "TXN_1793251801982_XKCZMG",
+        "mihpayid": "mih_test_1793251801616",
+        "amountInr": 943.06
+      },
+      "createdAt": "2026-10-29T05:30:02.016Z"
     }
   ],
   "plans": [
@@ -8414,10 +8949,10 @@
       "id": "sub_demo_creator",
       "userId": "usr_creator_demo_1",
       "planId": "plan_starter",
-      "providerSubscriptionId": "payu_sub_TXN_1792733049619_MYNGVB",
+      "providerSubscriptionId": "payu_sub_TXN_1793251567225_99P7PJ",
       "status": "active",
-      "currentPeriodStart": "2026-10-23T05:24:09.647Z",
-      "currentPeriodEnd": "2027-10-23T05:24:09.655Z",
+      "currentPeriodStart": "2026-10-29T05:26:07.251Z",
+      "currentPeriodEnd": "2027-10-29T05:26:07.264Z",
       "cancelAtPeriodEnd": false,
       "createdAt": "2026-10-21T06:14:19.599Z"
     },
@@ -8629,6 +9164,17 @@
       "cancelAtPeriodEnd": false,
       "id": "sub_aznhl70tu",
       "createdAt": "2026-10-24T07:26:08.033Z"
+    },
+    {
+      "userId": "usr_test_coupon_1793251100619",
+      "planId": "plan_starter",
+      "providerSubscriptionId": "payu_sub_TXN_1793251101467_AY1NEM",
+      "status": "active",
+      "currentPeriodStart": "2026-10-29T05:18:21.496Z",
+      "currentPeriodEnd": "2026-11-28T05:18:21.507Z",
+      "cancelAtPeriodEnd": false,
+      "id": "sub_dk66idn9r",
+      "createdAt": "2026-10-29T05:18:21.221Z"
     }
   ],
   "creditPacks": [
@@ -8637,14 +9183,16 @@
       "name": "500 Credits Boost",
       "priceInr": 499,
       "creditAmount": 500,
-      "isActive": true
+      "isActive": true,
+      "credits": 500
     },
     {
       "id": "pack_1200",
       "name": "1,200 Credits Studio",
       "priceInr": 999,
       "creditAmount": 1200,
-      "isActive": true
+      "isActive": true,
+      "credits": 1200
     },
     {
       "id": "pack_3500",
@@ -8655,9 +9203,42 @@
     },
     {
       "id": "pack_10000",
-      "name": "10,000 Credits Agency",
-      "priceInr": 5999,
+      "name": "10,000 Credits Business",
+      "priceInr": 11999,
       "creditAmount": 10000,
+      "isActive": true,
+      "credits": 10000
+    },
+    {
+      "id": "pack_1000",
+      "name": "1,000 Credits Starter",
+      "priceInr": 1499,
+      "creditAmount": 1000,
+      "credits": 1000,
+      "isActive": true
+    },
+    {
+      "id": "pack_2500",
+      "name": "2,500 Credits Growth",
+      "priceInr": 3499,
+      "creditAmount": 2500,
+      "credits": 2500,
+      "isActive": true
+    },
+    {
+      "id": "pack_5000",
+      "name": "5,000 Credits Scale",
+      "priceInr": 6500,
+      "creditAmount": 5000,
+      "credits": 5000,
+      "isActive": true
+    },
+    {
+      "id": "pack_25000",
+      "name": "25,000 Credits Enterprise",
+      "priceInr": 27999,
+      "creditAmount": 25000,
+      "credits": 25000,
       "isActive": true
     }
   ],
@@ -11565,6 +12146,105 @@
       "status": "success",
       "paymentType": "subscription",
       "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_nm6pltwfy",
+      "providerPaymentId": "mih_1793251101210",
+      "amountInr": 1001.82,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "subscription",
+      "id": "pay_052x74um6",
+      "createdAt": "2026-10-29T05:18:21.231Z"
+    },
+    {
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_czitdq38l",
+      "providerPaymentId": "mih_1793251101333",
+      "amountInr": 943.06,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "subscription",
+      "id": "pay_9r8jlqwdz",
+      "createdAt": "2026-10-29T05:18:21.353Z"
+    },
+    {
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_ts9ighvsg",
+      "providerPaymentId": "mih_1793251101496",
+      "amountInr": 944,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "subscription",
+      "id": "pay_mbsa9w9lp",
+      "createdAt": "2026-10-29T05:18:21.517Z"
+    },
+    {
+      "userId": "usr_gadlh60k",
+      "orderId": "ord_payu_f3l3zciha",
+      "providerPaymentId": "403993715530999999",
+      "amountInr": 1178.82,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "credit_pack",
+      "id": "pay_2kcvpj5er",
+      "createdAt": "2026-10-29T05:25:54.083Z"
+    },
+    {
+      "userId": "usr_flow_1793251560027",
+      "orderId": "ord_payu_qnruimku0",
+      "providerPaymentId": "mih_1793251560306",
+      "amountInr": 0,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "credit_pack",
+      "id": "pay_tnphyuqtz",
+      "createdAt": "2026-10-29T05:26:00.318Z"
+    },
+    {
+      "userId": "usr_flow_1793251560027",
+      "orderId": "ord_payu_y8187rxmk",
+      "providerPaymentId": "mih_test_1793251560027",
+      "amountInr": 943.06,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "credit_pack",
+      "id": "pay_o0ldpnh6r",
+      "createdAt": "2026-10-29T05:26:00.448Z"
+    },
+    {
+      "userId": "usr_creator_demo_1",
+      "orderId": "ord_payu_9s5nbtc7v",
+      "providerPaymentId": "mih_1793251567251",
+      "amountInr": 11313.84,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "subscription",
+      "id": "pay_tmx2vorh9",
+      "createdAt": "2026-10-29T05:26:07.276Z"
+    },
+    {
+      "userId": "usr_flow_1793251801616",
+      "orderId": "ord_payu_zg2se48qk",
+      "providerPaymentId": "mih_1793251801895",
+      "amountInr": 0,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "credit_pack",
+      "id": "pay_8tgxbflwh",
+      "createdAt": "2026-10-29T05:30:01.907Z"
+    },
+    {
+      "userId": "usr_flow_1793251801616",
+      "orderId": "ord_payu_pv329gumn",
+      "providerPaymentId": "mih_test_1793251801616",
+      "amountInr": 943.06,
+      "currency": "INR",
+      "status": "success",
+      "paymentType": "credit_pack",
+      "id": "pay_45sm2xtyp",
+      "createdAt": "2026-10-29T05:30:02.027Z"
     }
   ],
   "renderJobs": [],
@@ -15663,6 +16343,297 @@
         "creditsAwarded": 500
       },
       "createdAt": "2026-10-24T07:27:36.636Z"
+    },
+    {
+      "id": "aud_h116e0pg90",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_u5jdlbz0x",
+      "metadata": {
+        "txnid": "TXN_1793251101049_R1XIKS",
+        "totalAmount": 1060.94,
+        "productInfo": "Fluvia Basic - Monthly Subscription Coupon TESTPCT10_1793251100619 applied"
+      },
+      "createdAt": "2026-10-29T05:18:21.069Z"
+    },
+    {
+      "id": "aud_gpp92lussb",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_0o1aeaodn",
+      "metadata": {
+        "txnid": "TXN_1793251101080_4EQ71U",
+        "totalAmount": 1178.82,
+        "productInfo": "Fluvia Basic - Monthly Subscription"
+      },
+      "createdAt": "2026-10-29T05:18:21.091Z"
+    },
+    {
+      "id": "aud_ap5wxlrtnn",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_6n56aojit",
+      "metadata": {
+        "txnid": "TXN_1793251101114_DB47R8",
+        "totalAmount": 1060.82,
+        "productInfo": "Fluvia Basic - Monthly Subscription Coupon CANCELTEST_1793251101101 applied"
+      },
+      "createdAt": "2026-10-29T05:18:21.134Z"
+    },
+    {
+      "id": "aud_zmoo9ezpep",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_nm6pltwfy",
+      "metadata": {
+        "txnid": "TXN_1793251101168_AAYFBW",
+        "totalAmount": 1001.82,
+        "productInfo": "Fluvia Basic - Monthly Subscription Coupon IDEMPOTENT_1793251101157 applied"
+      },
+      "createdAt": "2026-10-29T05:18:21.189Z"
+    },
+    {
+      "id": "aud_i5mj1huyo3",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_nm6pltwfy",
+      "metadata": {
+        "txnid": "TXN_1793251101168_AAYFBW",
+        "totalAmount": 1001.82,
+        "invoiceNumber": "INV-2026-0078",
+        "receiptNumber": "RCP-2026-0078",
+        "creditsAwarded": 500
+      },
+      "createdAt": "2026-10-29T05:18:21.281Z"
+    },
+    {
+      "id": "aud_80p1v5q5ut",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_czitdq38l",
+      "metadata": {
+        "txnid": "TXN_1793251101304_1IY0SL",
+        "totalAmount": 943.06,
+        "productInfo": "Fluvia Basic - Monthly Subscription Coupon RACE_1793251101293 applied"
+      },
+      "createdAt": "2026-10-29T05:18:21.323Z"
+    },
+    {
+      "id": "aud_sz4xwjklaf",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_czitdq38l",
+      "metadata": {
+        "txnid": "TXN_1793251101304_1IY0SL",
+        "totalAmount": 943.06,
+        "invoiceNumber": "INV-2026-0079",
+        "receiptNumber": "RCP-2026-0079",
+        "creditsAwarded": 500
+      },
+      "createdAt": "2026-10-29T05:18:21.404Z"
+    },
+    {
+      "id": "aud_8zhzdp2n1a",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_ts9ighvsg",
+      "metadata": {
+        "txnid": "TXN_1793251101467_AY1NEM",
+        "totalAmount": 944,
+        "productInfo": "Fluvia Basic - Monthly Subscription Coupon BILLINGDOC_1793251101454 applied"
+      },
+      "createdAt": "2026-10-29T05:18:21.487Z"
+    },
+    {
+      "id": "aud_wxmamld558",
+      "actorId": "usr_test_coupon_1793251100619",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_ts9ighvsg",
+      "metadata": {
+        "txnid": "TXN_1793251101467_AY1NEM",
+        "totalAmount": 944,
+        "invoiceNumber": "INV-2026-0080",
+        "receiptNumber": "RCP-2026-0080",
+        "creditsAwarded": 500
+      },
+      "createdAt": "2026-10-29T05:18:21.565Z"
+    },
+    {
+      "id": "aud_vb7oxt2tcp",
+      "actorId": "usr_8m67juz5",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_6dlr1trd5",
+      "metadata": {
+        "txnid": "TXN_1793251515393_C4FGQI",
+        "totalAmount": 1178.82,
+        "productInfo": "1200 Credits Studio 1200 Credits"
+      },
+      "createdAt": "2026-10-29T05:25:15.405Z"
+    },
+    {
+      "id": "aud_9kd51l91xg",
+      "actorId": "usr_gadlh60k",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_f3l3zciha",
+      "metadata": {
+        "txnid": "TXN_1793251554023_AXV0SL",
+        "totalAmount": 1178.82,
+        "productInfo": "1200 Credits Studio 1200 Credits"
+      },
+      "createdAt": "2026-10-29T05:25:54.045Z"
+    },
+    {
+      "id": "aud_0fcjuuhhzd",
+      "actorId": "usr_gadlh60k",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_f3l3zciha",
+      "metadata": {
+        "txnid": "TXN_1793251554023_AXV0SL",
+        "totalAmount": 1178.82,
+        "invoiceNumber": "INV-2026-0081",
+        "receiptNumber": "RCP-2026-0081",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-29T05:25:54.137Z"
+    },
+    {
+      "id": "aud_qy0pw22g2w",
+      "actorId": "usr_gadlh60k",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_cqwslfbfo",
+      "metadata": {
+        "txnid": "TXN_1793251554272_T9N42M",
+        "totalAmount": 588.82,
+        "productInfo": "500 Credits Boost 500 Credits"
+      },
+      "createdAt": "2026-10-29T05:25:54.284Z"
+    },
+    {
+      "id": "aud_juatlctz6h",
+      "actorId": "usr_flow_1793251560027",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_qnruimku0",
+      "metadata": {
+        "txnid": "TXN_ZERO_1793251560280_FYMWB4",
+        "totalAmount": 0,
+        "invoiceNumber": "INV-2026-0082",
+        "receiptNumber": "RCP-2026-0082",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-29T05:26:00.387Z"
+    },
+    {
+      "id": "aud_jbybh5wuyf",
+      "actorId": "usr_flow_1793251560027",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_y8187rxmk",
+      "metadata": {
+        "txnid": "TXN_1793251560402_ROIG0I",
+        "totalAmount": 943.06,
+        "productInfo": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied"
+      },
+      "createdAt": "2026-10-29T05:26:00.425Z"
+    },
+    {
+      "id": "aud_sqkp9igrqm",
+      "actorId": "usr_flow_1793251560027",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_y8187rxmk",
+      "metadata": {
+        "txnid": "TXN_1793251560402_ROIG0I",
+        "totalAmount": 943.06,
+        "invoiceNumber": "INV-2026-0083",
+        "receiptNumber": "RCP-2026-0083",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-29T05:26:00.502Z"
+    },
+    {
+      "id": "aud_2av276a5w7",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_9s5nbtc7v",
+      "metadata": {
+        "txnid": "TXN_1793251567225_99P7PJ",
+        "totalAmount": 11313.84,
+        "productInfo": "Fluvia Basic - Annual Subscription 12 Months at INR 799 mo"
+      },
+      "createdAt": "2026-10-29T05:26:07.239Z"
+    },
+    {
+      "id": "aud_r8gsm3eeax",
+      "actorId": "usr_creator_demo_1",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_9s5nbtc7v",
+      "metadata": {
+        "txnid": "TXN_1793251567225_99P7PJ",
+        "totalAmount": 11313.84,
+        "invoiceNumber": "INV-2026-0084",
+        "receiptNumber": "RCP-2026-0084",
+        "creditsAwarded": 500
+      },
+      "createdAt": "2026-10-29T05:26:07.322Z"
+    },
+    {
+      "id": "aud_anj1lcugxy",
+      "actorId": "usr_flow_1793251801616",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_zg2se48qk",
+      "metadata": {
+        "txnid": "TXN_ZERO_1793251801870_OO2KDP",
+        "totalAmount": 0,
+        "invoiceNumber": "INV-2026-0085",
+        "receiptNumber": "RCP-2026-0085",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-29T05:30:01.967Z"
+    },
+    {
+      "id": "aud_102jmfapsk",
+      "actorId": "usr_flow_1793251801616",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_pv329gumn",
+      "metadata": {
+        "txnid": "TXN_1793251801982_XKCZMG",
+        "totalAmount": 943.06,
+        "productInfo": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied"
+      },
+      "createdAt": "2026-10-29T05:30:02.004Z"
+    },
+    {
+      "id": "aud_v1dzrrfc4r",
+      "actorId": "usr_flow_1793251801616",
+      "action": "PAYU_PAYMENT_SUCCESS",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_pv329gumn",
+      "metadata": {
+        "txnid": "TXN_1793251801982_XKCZMG",
+        "totalAmount": 943.06,
+        "invoiceNumber": "INV-2026-0086",
+        "receiptNumber": "RCP-2026-0086",
+        "creditsAwarded": 1200
+      },
+      "createdAt": "2026-10-29T05:30:02.085Z"
     }
   ],
   "supportTickets": [
@@ -15679,6 +16650,635 @@
     }
   ],
   "payuOrders": [
+    {
+      "txnid": "TXN_ZERO_1793251801870_OO2KDP",
+      "userId": "usr_flow_1793251801616",
+      "workspaceId": "ws_flow_1793251801616",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1200 Credits Studio 1200 Credits Coupon FREE100 applied",
+      "currency": "INR",
+      "baseAmount": 0,
+      "taxAmount": 0,
+      "totalAmount": 0,
+      "amountPaise": 0,
+      "taxBreakdown": {
+        "baseAmount": 0,
+        "taxRate": 18,
+        "taxAmount": 0,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Flow Tester",
+        "email": "flow_1793251801616@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_free100",
+      "couponCode": "FREE100",
+      "discountAmount": 999,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_ZERO_1793251801870_OO2KDP",
+      "id": "ord_payu_zg2se48qk",
+      "createdAt": "2026-10-29T05:30:01.870Z",
+      "updatedAt": "2026-10-29T05:30:01.956Z",
+      "payuMihpayid": "mih_1793251801895",
+      "payuBankRefNum": "BNK_1793251801895",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_pjkcmytnv",
+      "invoiceNumber": "INV-2026-0085",
+      "receiptId": "rcp_thcvfbz4l",
+      "receiptNumber": "RCP-2026-0085",
+      "verifiedAt": "2026-10-29T05:30:01.895Z"
+    },
+    {
+      "txnid": "TXN_1793251567225_99P7PJ",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Annual Subscription 12 Months at INR 799 mo",
+      "currency": "INR",
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "totalAmount": 11313.84,
+      "amountPaise": 1131384,
+      "taxBreakdown": {
+        "baseAmount": 9588,
+        "taxRate": 18,
+        "taxAmount": 1725.84,
+        "cgstRate": 9,
+        "cgstAmount": 862.92,
+        "sgstRate": 9,
+        "sgstAmount": 862.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251567225_99P7PJ",
+      "id": "ord_payu_9s5nbtc7v",
+      "createdAt": "2026-10-29T05:26:07.227Z",
+      "updatedAt": "2026-10-29T05:26:07.313Z",
+      "payuMihpayid": "mih_1793251567251",
+      "payuBankRefNum": "BNK_1793251567251",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_q6ojmxlq5",
+      "invoiceNumber": "INV-2026-0084",
+      "receiptId": "rcp_3lqkar5l3",
+      "receiptNumber": "RCP-2026-0084",
+      "verifiedAt": "2026-10-29T05:26:07.251Z"
+    },
+    {
+      "txnid": "TXN_1793251560402_ROIG0I",
+      "userId": "usr_flow_1793251560027",
+      "workspaceId": "ws_flow_1793251560027",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
+      "currency": "INR",
+      "baseAmount": 799.2,
+      "taxAmount": 143.86,
+      "totalAmount": 943.06,
+      "amountPaise": 94306,
+      "taxBreakdown": {
+        "baseAmount": 799.2,
+        "taxRate": 18,
+        "taxAmount": 143.86,
+        "cgstRate": 9,
+        "cgstAmount": 71.93,
+        "sgstRate": 9,
+        "sgstAmount": 71.93,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Flow Tester",
+        "email": "flow_1793251560027@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_save20",
+      "couponCode": "SAVE20",
+      "discountAmount": 199.8,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251560402_ROIG0I",
+      "id": "ord_payu_y8187rxmk",
+      "createdAt": "2026-10-29T05:26:00.403Z",
+      "updatedAt": "2026-10-29T05:26:00.492Z",
+      "payuMihpayid": "mih_test_1793251560027",
+      "payuBankRefNum": "BNK_REF_1793251560027",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_g2qzy4m39",
+      "invoiceNumber": "INV-2026-0083",
+      "receiptId": "rcp_ur7v8ke2m",
+      "receiptNumber": "RCP-2026-0083",
+      "verifiedAt": "2026-10-29T05:26:00.438Z"
+    },
+    {
+      "txnid": "TXN_ZERO_1793251560280_FYMWB4",
+      "userId": "usr_flow_1793251560027",
+      "workspaceId": "ws_flow_1793251560027",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1200 Credits Studio 1200 Credits Coupon FREE100 applied",
+      "currency": "INR",
+      "baseAmount": 0,
+      "taxAmount": 0,
+      "totalAmount": 0,
+      "amountPaise": 0,
+      "taxBreakdown": {
+        "baseAmount": 0,
+        "taxRate": 18,
+        "taxAmount": 0,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Flow Tester",
+        "email": "flow_1793251560027@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_free100",
+      "couponCode": "FREE100",
+      "discountAmount": 999,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_ZERO_1793251560280_FYMWB4",
+      "id": "ord_payu_qnruimku0",
+      "createdAt": "2026-10-29T05:26:00.281Z",
+      "updatedAt": "2026-10-29T05:26:00.369Z",
+      "payuMihpayid": "mih_1793251560306",
+      "payuBankRefNum": "BNK_1793251560306",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_wzmulioix",
+      "invoiceNumber": "INV-2026-0082",
+      "receiptId": "rcp_i7m5957wm",
+      "receiptNumber": "RCP-2026-0082",
+      "verifiedAt": "2026-10-29T05:26:00.306Z"
+    },
+    {
+      "txnid": "TXN_1793251554272_T9N42M",
+      "userId": "usr_gadlh60k",
+      "workspaceId": "ws_1qgo3oyg",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost 500 Credits",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1793251553854@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1793251554272_T9N42M",
+      "id": "ord_payu_cqwslfbfo",
+      "createdAt": "2026-10-29T05:25:54.272Z",
+      "updatedAt": "2026-10-29T05:25:54.298Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1793251554023_AXV0SL",
+      "userId": "usr_gadlh60k",
+      "workspaceId": "ws_1qgo3oyg",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1200 Credits Studio 1200 Credits",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1793251553854@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251554023_AXV0SL",
+      "id": "ord_payu_f3l3zciha",
+      "createdAt": "2026-10-29T05:25:54.025Z",
+      "updatedAt": "2026-10-29T05:25:54.126Z",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_yt5iijie8",
+      "invoiceNumber": "INV-2026-0081",
+      "receiptId": "rcp_6xvzx74j0",
+      "receiptNumber": "RCP-2026-0081",
+      "verifiedAt": "2026-10-29T05:25:54.065Z"
+    },
+    {
+      "txnid": "TXN_1793251515393_C4FGQI",
+      "userId": "usr_8m67juz5",
+      "workspaceId": "ws_zztscv7n",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1200 Credits Studio 1200 Credits",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 179.82,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1793251515304@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "status": "failed",
+      "idempotencyKey": "payu_order_TXN_1793251515393_C4FGQI",
+      "id": "ord_payu_6dlr1trd5",
+      "createdAt": "2026-10-29T05:25:15.393Z",
+      "updatedAt": "2026-10-29T05:25:15.423Z",
+      "payuError": "Response hash mismatch - potential tampering"
+    },
+    {
+      "txnid": "TXN_1793251101467_AY1NEM",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Monthly Subscription Coupon BILLINGDOC_1793251101454 applied",
+      "currency": "INR",
+      "baseAmount": 800,
+      "taxAmount": 144,
+      "totalAmount": 944,
+      "amountPaise": 94400,
+      "taxBreakdown": {
+        "baseAmount": 800,
+        "taxRate": 18,
+        "taxAmount": 144,
+        "cgstRate": 9,
+        "cgstAmount": 72,
+        "sgstRate": 9,
+        "sgstAmount": 72,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_q8qolw49o",
+      "couponCode": "BILLINGDOC_1793251101454",
+      "discountAmount": 199,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251101467_AY1NEM",
+      "id": "ord_payu_ts9ighvsg",
+      "createdAt": "2026-10-29T05:18:21.467Z",
+      "updatedAt": "2026-10-29T05:18:21.555Z",
+      "payuMihpayid": "mih_1793251101496",
+      "payuBankRefNum": "BNK_1793251101496",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_sm3638wpf",
+      "invoiceNumber": "INV-2026-0080",
+      "receiptId": "rcp_sk3sujle9",
+      "receiptNumber": "RCP-2026-0080",
+      "verifiedAt": "2026-10-29T05:18:21.496Z"
+    },
+    {
+      "txnid": "TXN_1793251101304_1IY0SL",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Monthly Subscription Coupon RACE_1793251101293 applied",
+      "currency": "INR",
+      "baseAmount": 799.2,
+      "taxAmount": 143.86,
+      "totalAmount": 943.06,
+      "amountPaise": 94306,
+      "taxBreakdown": {
+        "baseAmount": 799.2,
+        "taxRate": 18,
+        "taxAmount": 143.86,
+        "cgstRate": 9,
+        "cgstAmount": 71.93,
+        "sgstRate": 9,
+        "sgstAmount": 71.93,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_sj0vbilah",
+      "couponCode": "RACE_1793251101293",
+      "discountAmount": 199.8,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251101304_1IY0SL",
+      "id": "ord_payu_czitdq38l",
+      "createdAt": "2026-10-29T05:18:21.305Z",
+      "updatedAt": "2026-10-29T05:18:21.394Z",
+      "payuMihpayid": "mih_1793251101333",
+      "payuBankRefNum": "BNK_1793251101333",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_hdincuagz",
+      "invoiceNumber": "INV-2026-0079",
+      "receiptId": "rcp_dtq3wqyy6",
+      "receiptNumber": "RCP-2026-0079",
+      "verifiedAt": "2026-10-29T05:18:21.333Z"
+    },
+    {
+      "txnid": "TXN_1793251101168_AAYFBW",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Monthly Subscription Coupon IDEMPOTENT_1793251101157 applied",
+      "currency": "INR",
+      "baseAmount": 849,
+      "taxAmount": 152.82,
+      "totalAmount": 1001.82,
+      "amountPaise": 100182,
+      "taxBreakdown": {
+        "baseAmount": 849,
+        "taxRate": 18,
+        "taxAmount": 152.82,
+        "cgstRate": 9,
+        "cgstAmount": 76.41,
+        "sgstRate": 9,
+        "sgstAmount": 76.41,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_iddm5cxvv",
+      "couponCode": "IDEMPOTENT_1793251101157",
+      "discountAmount": 150,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251101168_AAYFBW",
+      "id": "ord_payu_nm6pltwfy",
+      "createdAt": "2026-10-29T05:18:21.168Z",
+      "updatedAt": "2026-10-29T05:18:21.271Z",
+      "payuMihpayid": "mih_1793251101210",
+      "payuBankRefNum": "BNK_1793251101210",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_9akabdeyy",
+      "invoiceNumber": "INV-2026-0078",
+      "receiptId": "rcp_ua4a2zi5i",
+      "receiptNumber": "RCP-2026-0078",
+      "verifiedAt": "2026-10-29T05:18:21.210Z"
+    },
+    {
+      "txnid": "TXN_1793251101114_DB47R8",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Monthly Subscription Coupon CANCELTEST_1793251101101 applied",
+      "currency": "INR",
+      "baseAmount": 899,
+      "taxAmount": 161.82,
+      "totalAmount": 1060.82,
+      "amountPaise": 106082,
+      "taxBreakdown": {
+        "baseAmount": 899,
+        "taxRate": 18,
+        "taxAmount": 161.82,
+        "cgstRate": 9,
+        "cgstAmount": 80.91,
+        "sgstRate": 9,
+        "sgstAmount": 80.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_kq47hs7b5",
+      "couponCode": "CANCELTEST_1793251101101",
+      "discountAmount": 100,
+      "originalBaseAmount": 999,
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793251101114_DB47R8",
+      "id": "ord_payu_6n56aojit",
+      "createdAt": "2026-10-29T05:18:21.114Z",
+      "updatedAt": "2026-10-29T05:18:21.114Z"
+    },
+    {
+      "txnid": "TXN_1793251101080_4EQ71U",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Monthly Subscription",
+      "currency": "INR",
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "totalAmount": 1178.82,
+      "amountPaise": 117882,
+      "taxBreakdown": {
+        "baseAmount": 999,
+        "taxRate": 18,
+        "taxAmount": 179.82,
+        "cgstRate": 9,
+        "cgstAmount": 89.91,
+        "sgstRate": 9,
+        "sgstAmount": 89.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793251101080_4EQ71U",
+      "id": "ord_payu_0o1aeaodn",
+      "createdAt": "2026-10-29T05:18:21.081Z",
+      "updatedAt": "2026-10-29T05:18:21.081Z"
+    },
+    {
+      "txnid": "TXN_1793251101049_R1XIKS",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Monthly Subscription Coupon TESTPCT10_1793251100619 applied",
+      "currency": "INR",
+      "baseAmount": 899.1,
+      "taxAmount": 161.84,
+      "totalAmount": 1060.94,
+      "amountPaise": 106094,
+      "taxBreakdown": {
+        "baseAmount": 899.1,
+        "taxRate": 18,
+        "taxAmount": 161.84,
+        "cgstRate": 9,
+        "cgstAmount": 80.92,
+        "sgstRate": 9,
+        "sgstAmount": 80.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_4kjeomtge",
+      "couponCode": "TESTPCT10_1793251100619",
+      "discountAmount": 99.9,
+      "originalBaseAmount": 999,
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793251101049_R1XIKS",
+      "id": "ord_payu_u5jdlbz0x",
+      "createdAt": "2026-10-29T05:18:21.050Z",
+      "updatedAt": "2026-10-29T05:18:21.050Z"
+    },
+    {
+      "txnid": "TXN_TEST_CB_1792826856346",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_500",
+      "productInfo": "500 Credits Boost",
+      "currency": "INR",
+      "baseAmount": 499,
+      "taxAmount": 89.82,
+      "totalAmount": 588.82,
+      "amountPaise": 58882,
+      "customerDetails": {
+        "name": "Callback Tester",
+        "email": "cb_test@fluviaflow.online",
+        "phone": "9999999999"
+      },
+      "status": "success",
+      "taxBreakdown": {
+        "baseAmount": 499,
+        "taxRate": 18,
+        "taxAmount": 89.82,
+        "cgstRate": 9,
+        "cgstAmount": 44.91,
+        "sgstRate": 9,
+        "sgstAmount": 44.91,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "idempotencyKey": "cb_test_TXN_TEST_CB_1792826856346",
+      "id": "ord_payu_pykhl5faj",
+      "createdAt": "2026-10-24T07:27:36.349Z",
+      "updatedAt": "2026-10-24T07:27:36.581Z",
+      "payuMihpayid": "mih_1792826856408",
+      "payuBankRefNum": "BNK_1792826856408",
+      "payuPaymentMode": "UPI / Card",
+      "invoiceId": "inv_dlvd65a40",
+      "invoiceNumber": "INV-2026-0076",
+      "receiptId": "rcp_n6f7k43ty",
+      "receiptNumber": "RCP-2026-0076",
+      "verifiedAt": "2026-10-24T07:27:36.408Z"
+    },
     {
       "txnid": "TXN_1792826856231_Q8CSDH",
       "userId": "usr_creator_demo_1",
@@ -21234,48 +22834,53 @@
       "verifiedAt": "2026-10-21T10:10:25.231Z"
     },
     {
-      "txnid": "TXN_TEST_CB_1792826856346",
-      "userId": "usr_creator_demo_1",
-      "workspaceId": "ws_creator_demo_1",
+      "txnid": "TXN_1793251801982_XKCZMG",
+      "userId": "usr_flow_1793251801616",
+      "workspaceId": "ws_flow_1793251801616",
       "paymentType": "credit_pack",
-      "itemPlanOrPackId": "pack_500",
-      "productInfo": "500 Credits Boost",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
       "currency": "INR",
-      "baseAmount": 499,
-      "taxAmount": 89.82,
-      "totalAmount": 588.82,
-      "amountPaise": 58882,
-      "customerDetails": {
-        "name": "Callback Tester",
-        "email": "cb_test@fluviaflow.online",
-        "phone": "9999999999"
-      },
-      "status": "success",
+      "baseAmount": 799.2,
+      "taxAmount": 143.86,
+      "totalAmount": 943.06,
+      "amountPaise": 94306,
       "taxBreakdown": {
-        "baseAmount": 499,
+        "baseAmount": 799.2,
         "taxRate": 18,
-        "taxAmount": 89.82,
+        "taxAmount": 143.86,
         "cgstRate": 9,
-        "cgstAmount": 44.91,
+        "cgstAmount": 71.93,
         "sgstRate": 9,
-        "sgstAmount": 44.91,
+        "sgstAmount": 71.93,
         "igstRate": 0,
         "igstAmount": 0,
         "isInterState": false,
         "placeOfSupply": "Delhi"
       },
-      "idempotencyKey": "cb_test_TXN_TEST_CB_1792826856346",
-      "id": "ord_payu_pykhl5faj",
-      "createdAt": "2026-10-24T07:27:36.349Z",
-      "updatedAt": "2026-10-24T07:27:36.581Z",
-      "payuMihpayid": "mih_1792826856408",
-      "payuBankRefNum": "BNK_1792826856408",
-      "payuPaymentMode": "UPI / Card",
-      "invoiceId": "inv_dlvd65a40",
-      "invoiceNumber": "INV-2026-0076",
-      "receiptId": "rcp_n6f7k43ty",
-      "receiptNumber": "RCP-2026-0076",
-      "verifiedAt": "2026-10-24T07:27:36.408Z"
+      "customerDetails": {
+        "name": "Flow Tester",
+        "email": "flow_1793251801616@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_save20",
+      "couponCode": "SAVE20",
+      "discountAmount": 199.8,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251801982_XKCZMG",
+      "id": "ord_payu_pv329gumn",
+      "createdAt": "2026-10-29T05:30:01.983Z",
+      "updatedAt": "2026-10-29T05:30:02.072Z",
+      "payuMihpayid": "mih_test_1793251801616",
+      "payuBankRefNum": "BNK_REF_1793251801616",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_c45rkkjgs",
+      "invoiceNumber": "INV-2026-0086",
+      "receiptId": "rcp_hpiljkhew",
+      "receiptNumber": "RCP-2026-0086",
+      "verifiedAt": "2026-10-29T05:30:02.016Z"
     }
   ],
   "invoices": [
@@ -25725,6 +27330,541 @@
       "notes": "Thank you for your business. Official tax invoice.",
       "createdAt": "2026-10-21T06:14:19.599Z",
       "updatedAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0078",
+      "orderId": "ord_payu_nm6pltwfy",
+      "txnid": "TXN_1793251101168_AAYFBW",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_iddm5cxvv",
+      "couponCode": "IDEMPOTENT_1793251101157",
+      "discountAmount": 150,
+      "originalBaseAmount": 999,
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Basic - Monthly Subscription Coupon IDEMPOTENT_1793251101157 applied",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 849,
+          "gstRate": 18,
+          "cgstAmount": 76.41,
+          "sgstAmount": 76.41,
+          "igstAmount": 0,
+          "totalAmount": 1001.82
+        }
+      ],
+      "baseAmount": 849,
+      "taxAmount": 152.82,
+      "cgstAmount": 76.41,
+      "sgstAmount": 76.41,
+      "igstAmount": 0,
+      "totalAmount": 1001.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:18:21.210Z",
+      "dueDate": "2026-10-29T05:18:21.210Z",
+      "paymentDate": "2026-10-29T05:18:21.210Z",
+      "payuPaymentId": "mih_1793251101210",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Applied Coupon: IDEMPOTENT_1793251101157 (Discount: INR 150.00). Computer-generated tax invoice.",
+      "id": "inv_9akabdeyy",
+      "createdAt": "2026-10-29T05:18:21.250Z",
+      "updatedAt": "2026-10-29T05:18:21.250Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0079",
+      "orderId": "ord_payu_czitdq38l",
+      "txnid": "TXN_1793251101304_1IY0SL",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_sj0vbilah",
+      "couponCode": "RACE_1793251101293",
+      "discountAmount": 199.8,
+      "originalBaseAmount": 999,
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Basic - Monthly Subscription Coupon RACE_1793251101293 applied",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 799.2,
+          "gstRate": 18,
+          "cgstAmount": 71.93,
+          "sgstAmount": 71.93,
+          "igstAmount": 0,
+          "totalAmount": 943.06
+        }
+      ],
+      "baseAmount": 799.2,
+      "taxAmount": 143.86,
+      "cgstAmount": 71.93,
+      "sgstAmount": 71.93,
+      "igstAmount": 0,
+      "totalAmount": 943.06,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:18:21.333Z",
+      "dueDate": "2026-10-29T05:18:21.333Z",
+      "paymentDate": "2026-10-29T05:18:21.333Z",
+      "payuPaymentId": "mih_1793251101333",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Applied Coupon: RACE_1793251101293 (Discount: INR 199.80). Computer-generated tax invoice.",
+      "id": "inv_hdincuagz",
+      "createdAt": "2026-10-29T05:18:21.373Z",
+      "updatedAt": "2026-10-29T05:18:21.373Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0080",
+      "orderId": "ord_payu_ts9ighvsg",
+      "txnid": "TXN_1793251101467_AY1NEM",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Aria Vance",
+        "email": "aria.vance@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi",
+        "address": "12 Creative Studio Row, Connaught Place"
+      },
+      "couponId": "cpn_q8qolw49o",
+      "couponCode": "BILLINGDOC_1793251101454",
+      "discountAmount": 199,
+      "originalBaseAmount": 999,
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Basic - Monthly Subscription Coupon BILLINGDOC_1793251101454 applied",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 800,
+          "gstRate": 18,
+          "cgstAmount": 72,
+          "sgstAmount": 72,
+          "igstAmount": 0,
+          "totalAmount": 944
+        }
+      ],
+      "baseAmount": 800,
+      "taxAmount": 144,
+      "cgstAmount": 72,
+      "sgstAmount": 72,
+      "igstAmount": 0,
+      "totalAmount": 944,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:18:21.496Z",
+      "dueDate": "2026-10-29T05:18:21.496Z",
+      "paymentDate": "2026-10-29T05:18:21.496Z",
+      "payuPaymentId": "mih_1793251101496",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Applied Coupon: BILLINGDOC_1793251101454 (Discount: INR 199.00). Computer-generated tax invoice.",
+      "id": "inv_sm3638wpf",
+      "createdAt": "2026-10-29T05:18:21.536Z",
+      "updatedAt": "2026-10-29T05:18:21.536Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0081",
+      "orderId": "ord_payu_f3l3zciha",
+      "txnid": "TXN_1793251554023_AXV0SL",
+      "userId": "usr_gadlh60k",
+      "workspaceId": "ws_1qgo3oyg",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Fintech Tester",
+        "email": "payu_test_1793251553854@vidai.io",
+        "phone": "9876543210",
+        "state": "Karnataka"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1200 Credits Studio 1200 Credits",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 179.82,
+          "totalAmount": 1178.82
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 179.82,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 179.82,
+      "totalAmount": 1178.82,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:25:54.065Z",
+      "dueDate": "2026-10-29T05:25:54.065Z",
+      "paymentDate": "2026-10-29T05:25:54.065Z",
+      "payuPaymentId": "403993715530999999",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_yt5iijie8",
+      "createdAt": "2026-10-29T05:25:54.100Z",
+      "updatedAt": "2026-10-29T05:25:54.100Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0082",
+      "orderId": "ord_payu_qnruimku0",
+      "txnid": "TXN_ZERO_1793251560280_FYMWB4",
+      "userId": "usr_flow_1793251560027",
+      "workspaceId": "ws_flow_1793251560027",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Flow Tester",
+        "email": "flow_1793251560027@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_free100",
+      "couponCode": "FREE100",
+      "discountAmount": 999,
+      "originalBaseAmount": 999,
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1200 Credits Studio 1200 Credits Coupon FREE100 applied",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 0,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 0,
+          "totalAmount": 0
+        }
+      ],
+      "baseAmount": 0,
+      "taxAmount": 0,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 0,
+      "totalAmount": 0,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:26:00.306Z",
+      "dueDate": "2026-10-29T05:26:00.306Z",
+      "paymentDate": "2026-10-29T05:26:00.306Z",
+      "payuPaymentId": "mih_1793251560306",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Applied Coupon: FREE100 (Discount: INR 999.00). Computer-generated tax invoice.",
+      "id": "inv_wzmulioix",
+      "createdAt": "2026-10-29T05:26:00.342Z",
+      "updatedAt": "2026-10-29T05:26:00.342Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0083",
+      "orderId": "ord_payu_y8187rxmk",
+      "txnid": "TXN_1793251560402_ROIG0I",
+      "userId": "usr_flow_1793251560027",
+      "workspaceId": "ws_flow_1793251560027",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Flow Tester",
+        "email": "flow_1793251560027@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_save20",
+      "couponCode": "SAVE20",
+      "discountAmount": 199.8,
+      "originalBaseAmount": 999,
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 799.2,
+          "gstRate": 18,
+          "cgstAmount": 71.93,
+          "sgstAmount": 71.93,
+          "igstAmount": 0,
+          "totalAmount": 943.06
+        }
+      ],
+      "baseAmount": 799.2,
+      "taxAmount": 143.86,
+      "cgstAmount": 71.93,
+      "sgstAmount": 71.93,
+      "igstAmount": 0,
+      "totalAmount": 943.06,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:26:00.438Z",
+      "dueDate": "2026-10-29T05:26:00.438Z",
+      "paymentDate": "2026-10-29T05:26:00.438Z",
+      "payuPaymentId": "mih_test_1793251560027",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Applied Coupon: SAVE20 (Discount: INR 199.80). Computer-generated tax invoice.",
+      "id": "inv_g2qzy4m39",
+      "createdAt": "2026-10-29T05:26:00.470Z",
+      "updatedAt": "2026-10-29T05:26:00.470Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0084",
+      "orderId": "ord_payu_9s5nbtc7v",
+      "txnid": "TXN_1793251567225_99P7PJ",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Annual Subscriber",
+        "email": "creator@vidai.io",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Basic - Annual Subscription 12 Months at INR 799 mo",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 9588,
+          "taxableValue": 9588,
+          "gstRate": 18,
+          "cgstAmount": 862.92,
+          "sgstAmount": 862.92,
+          "igstAmount": 0,
+          "totalAmount": 11313.84
+        }
+      ],
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "cgstAmount": 862.92,
+      "sgstAmount": 862.92,
+      "igstAmount": 0,
+      "totalAmount": 11313.84,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:26:07.251Z",
+      "dueDate": "2026-10-29T05:26:07.251Z",
+      "paymentDate": "2026-10-29T05:26:07.251Z",
+      "payuPaymentId": "mih_1793251567251",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Computer-generated tax invoice.",
+      "id": "inv_q6ojmxlq5",
+      "createdAt": "2026-10-29T05:26:07.288Z",
+      "updatedAt": "2026-10-29T05:26:07.288Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0085",
+      "orderId": "ord_payu_zg2se48qk",
+      "txnid": "TXN_ZERO_1793251801870_OO2KDP",
+      "userId": "usr_flow_1793251801616",
+      "workspaceId": "ws_flow_1793251801616",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Flow Tester",
+        "email": "flow_1793251801616@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_free100",
+      "couponCode": "FREE100",
+      "discountAmount": 999,
+      "originalBaseAmount": 999,
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1200 Credits Studio 1200 Credits Coupon FREE100 applied",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 0,
+          "gstRate": 18,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 0,
+          "totalAmount": 0
+        }
+      ],
+      "baseAmount": 0,
+      "taxAmount": 0,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 0,
+      "totalAmount": 0,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:30:01.895Z",
+      "dueDate": "2026-10-29T05:30:01.895Z",
+      "paymentDate": "2026-10-29T05:30:01.895Z",
+      "payuPaymentId": "mih_1793251801895",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Applied Coupon: FREE100 (Discount: INR 999.00). Computer-generated tax invoice.",
+      "id": "inv_pjkcmytnv",
+      "createdAt": "2026-10-29T05:30:01.930Z",
+      "updatedAt": "2026-10-29T05:30:01.930Z"
+    },
+    {
+      "invoiceNumber": "INV-2026-0086",
+      "orderId": "ord_payu_pv329gumn",
+      "txnid": "TXN_1793251801982_XKCZMG",
+      "userId": "usr_flow_1793251801616",
+      "workspaceId": "ws_flow_1793251801616",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Innov8 Coworking, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Flow Tester",
+        "email": "flow_1793251801616@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_save20",
+      "couponCode": "SAVE20",
+      "discountAmount": 199.8,
+      "originalBaseAmount": 999,
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 799.2,
+          "gstRate": 18,
+          "cgstAmount": 71.93,
+          "sgstAmount": 71.93,
+          "igstAmount": 0,
+          "totalAmount": 943.06
+        }
+      ],
+      "baseAmount": 799.2,
+      "taxAmount": 143.86,
+      "cgstAmount": 71.93,
+      "sgstAmount": 71.93,
+      "igstAmount": 0,
+      "totalAmount": 943.06,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-10-29T05:30:02.016Z",
+      "dueDate": "2026-10-29T05:30:02.016Z",
+      "paymentDate": "2026-10-29T05:30:02.016Z",
+      "payuPaymentId": "mih_test_1793251801616",
+      "terms": "Payment received via PayU India Hosted Checkout. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Applied Coupon: SAVE20 (Discount: INR 199.80). Computer-generated tax invoice.",
+      "id": "inv_c45rkkjgs",
+      "createdAt": "2026-10-29T05:30:02.048Z",
+      "updatedAt": "2026-10-29T05:30:02.048Z"
     }
   ],
   "receipts": [
@@ -27581,6 +29721,234 @@
       "verificationReference": "VERIFIED-pay_starter_1",
       "footerNotice": "Official payment receipt.",
       "createdAt": "2026-10-21T06:14:19.599Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0078",
+      "orderId": "ord_payu_nm6pltwfy",
+      "txnid": "TXN_1793251101168_AAYFBW",
+      "invoiceId": "inv_9akabdeyy",
+      "invoiceNumber": "INV-2026-0078",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "customerName": "Aria Vance",
+      "customerEmail": "aria.vance@fluviaflow.ai",
+      "couponCode": "IDEMPOTENT_1793251101157",
+      "discountAmount": 150,
+      "originalAmount": 999,
+      "amountReceived": 1001.82,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1793251101210",
+      "payuBankRefNum": "BNK_1793251101210",
+      "productPurchased": "Fluvia Basic - Monthly Subscription Coupon IDEMPOTENT_1793251101157 applied",
+      "paymentDate": "2026-10-29T05:18:21.210Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1793251101168_AAYFBW-MVT3ELAL",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_ua4a2zi5i",
+      "createdAt": "2026-10-29T05:18:21.261Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0079",
+      "orderId": "ord_payu_czitdq38l",
+      "txnid": "TXN_1793251101304_1IY0SL",
+      "invoiceId": "inv_hdincuagz",
+      "invoiceNumber": "INV-2026-0079",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "customerName": "Aria Vance",
+      "customerEmail": "aria.vance@fluviaflow.ai",
+      "couponCode": "RACE_1793251101293",
+      "discountAmount": 199.8,
+      "originalAmount": 999,
+      "amountReceived": 943.06,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1793251101333",
+      "payuBankRefNum": "BNK_1793251101333",
+      "productPurchased": "Fluvia Basic - Monthly Subscription Coupon RACE_1793251101293 applied",
+      "paymentDate": "2026-10-29T05:18:21.333Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1793251101304_1IY0SL-MVT3ELDZ",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_dtq3wqyy6",
+      "createdAt": "2026-10-29T05:18:21.384Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0080",
+      "orderId": "ord_payu_ts9ighvsg",
+      "txnid": "TXN_1793251101467_AY1NEM",
+      "invoiceId": "inv_sm3638wpf",
+      "invoiceNumber": "INV-2026-0080",
+      "userId": "usr_test_coupon_1793251100619",
+      "workspaceId": "ws_test_coupon_1793251100619",
+      "customerName": "Aria Vance",
+      "customerEmail": "aria.vance@fluviaflow.ai",
+      "couponCode": "BILLINGDOC_1793251101454",
+      "discountAmount": 199,
+      "originalAmount": 999,
+      "amountReceived": 944,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1793251101496",
+      "payuBankRefNum": "BNK_1793251101496",
+      "productPurchased": "Fluvia Basic - Monthly Subscription Coupon BILLINGDOC_1793251101454 applied",
+      "paymentDate": "2026-10-29T05:18:21.496Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1793251101467_AY1NEM-MVT3ELII",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_sk3sujle9",
+      "createdAt": "2026-10-29T05:18:21.546Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0081",
+      "orderId": "ord_payu_f3l3zciha",
+      "txnid": "TXN_1793251554023_AXV0SL",
+      "invoiceId": "inv_yt5iijie8",
+      "invoiceNumber": "INV-2026-0081",
+      "userId": "usr_gadlh60k",
+      "workspaceId": "ws_1qgo3oyg",
+      "customerName": "Fintech Tester",
+      "customerEmail": "payu_test_1793251553854@vidai.io",
+      "amountReceived": 1178.82,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "403993715530999999",
+      "payuBankRefNum": "BNK_TEST_777",
+      "productPurchased": "1200 Credits Studio 1200 Credits",
+      "paymentDate": "2026-10-29T05:25:54.065Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1793251554023_AXV0SL-MVT3OAPS",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_6xvzx74j0",
+      "createdAt": "2026-10-29T05:25:54.113Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0082",
+      "orderId": "ord_payu_qnruimku0",
+      "txnid": "TXN_ZERO_1793251560280_FYMWB4",
+      "invoiceId": "inv_wzmulioix",
+      "invoiceNumber": "INV-2026-0082",
+      "userId": "usr_flow_1793251560027",
+      "workspaceId": "ws_flow_1793251560027",
+      "customerName": "Flow Tester",
+      "customerEmail": "flow_1793251560027@fluviaflow.ai",
+      "couponCode": "FREE100",
+      "discountAmount": 999,
+      "originalAmount": 999,
+      "amountReceived": 0,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1793251560306",
+      "payuBankRefNum": "BNK_1793251560306",
+      "productPurchased": "1200 Credits Studio 1200 Credits Coupon FREE100 applied",
+      "paymentDate": "2026-10-29T05:26:00.306Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_ZERO_1793251560280_FYMWB4-MVT3OFJ6",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_i7m5957wm",
+      "createdAt": "2026-10-29T05:26:00.354Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0083",
+      "orderId": "ord_payu_y8187rxmk",
+      "txnid": "TXN_1793251560402_ROIG0I",
+      "invoiceId": "inv_g2qzy4m39",
+      "invoiceNumber": "INV-2026-0083",
+      "userId": "usr_flow_1793251560027",
+      "workspaceId": "ws_flow_1793251560027",
+      "customerName": "Flow Tester",
+      "customerEmail": "flow_1793251560027@fluviaflow.ai",
+      "couponCode": "SAVE20",
+      "discountAmount": 199.8,
+      "originalAmount": 999,
+      "amountReceived": 943.06,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "mih_test_1793251560027",
+      "payuBankRefNum": "BNK_REF_1793251560027",
+      "productPurchased": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
+      "paymentDate": "2026-10-29T05:26:00.438Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1793251560402_ROIG0I-MVT3OFMP",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_ur7v8ke2m",
+      "createdAt": "2026-10-29T05:26:00.482Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0084",
+      "orderId": "ord_payu_9s5nbtc7v",
+      "txnid": "TXN_1793251567225_99P7PJ",
+      "invoiceId": "inv_q6ojmxlq5",
+      "invoiceNumber": "INV-2026-0084",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "customerName": "Annual Subscriber",
+      "customerEmail": "creator@vidai.io",
+      "amountReceived": 11313.84,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1793251567251",
+      "payuBankRefNum": "BNK_1793251567251",
+      "productPurchased": "Fluvia Basic - Annual Subscription 12 Months at INR 799 mo",
+      "paymentDate": "2026-10-29T05:26:07.251Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1793251567225_99P7PJ-MVT3OKW3",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_3lqkar5l3",
+      "createdAt": "2026-10-29T05:26:07.300Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0085",
+      "orderId": "ord_payu_zg2se48qk",
+      "txnid": "TXN_ZERO_1793251801870_OO2KDP",
+      "invoiceId": "inv_pjkcmytnv",
+      "invoiceNumber": "INV-2026-0085",
+      "userId": "usr_flow_1793251801616",
+      "workspaceId": "ws_flow_1793251801616",
+      "customerName": "Flow Tester",
+      "customerEmail": "flow_1793251801616@fluviaflow.ai",
+      "couponCode": "FREE100",
+      "discountAmount": 999,
+      "originalAmount": 999,
+      "amountReceived": 0,
+      "currency": "INR",
+      "paymentMethod": "UPI / Card",
+      "payuMihpayid": "mih_1793251801895",
+      "payuBankRefNum": "BNK_1793251801895",
+      "productPurchased": "1200 Credits Studio 1200 Credits Coupon FREE100 applied",
+      "paymentDate": "2026-10-29T05:30:01.895Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_ZERO_1793251801870_OO2KDP-MVT3TLY1",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_thcvfbz4l",
+      "createdAt": "2026-10-29T05:30:01.945Z"
+    },
+    {
+      "receiptNumber": "RCP-2026-0086",
+      "orderId": "ord_payu_pv329gumn",
+      "txnid": "TXN_1793251801982_XKCZMG",
+      "invoiceId": "inv_c45rkkjgs",
+      "invoiceNumber": "INV-2026-0086",
+      "userId": "usr_flow_1793251801616",
+      "workspaceId": "ws_flow_1793251801616",
+      "customerName": "Flow Tester",
+      "customerEmail": "flow_1793251801616@fluviaflow.ai",
+      "couponCode": "SAVE20",
+      "discountAmount": 199.8,
+      "originalAmount": 999,
+      "amountReceived": 943.06,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "payuMihpayid": "mih_test_1793251801616",
+      "payuBankRefNum": "BNK_REF_1793251801616",
+      "productPurchased": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
+      "paymentDate": "2026-10-29T05:30:02.016Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "PAYU-VERIFIED-TXN_1793251801982_XKCZMG-MVT3TM17",
+      "footerNotice": "Computer-generated payment receipt. Payment status is subject to verification against the merchant payment records.",
+      "id": "rcp_hpiljkhew",
+      "createdAt": "2026-10-29T05:30:02.059Z"
     }
   ],
   "creditNotes": [],
@@ -27614,6 +29982,26 @@
   },
   "coupons": [
     {
+      "id": "cpn_first20",
+      "code": "FIRST20",
+      "description": "A little something for your first campaign: ₹570 OFF on FLUVIA MAX",
+      "discountType": "fixed",
+      "discountValue": 570,
+      "applicableTypes": [
+        "subscription"
+      ],
+      "applicableItemIds": [
+        "plan_max"
+      ],
+      "perUserLimit": 1,
+      "usageLimit": 50000,
+      "usageCount": 0,
+      "isActive": true,
+      "createdBy": "usr_admin_master_1",
+      "createdAt": "2026-10-29T05:00:14.435Z",
+      "updatedAt": "2026-10-29T05:00:14.436Z"
+    },
+    {
       "id": "cpn_free100",
       "code": "FREE100",
       "description": "100% Full Discount - Instant Free Checkout",
@@ -27621,11 +30009,11 @@
       "discountValue": 100,
       "usageLimit": 10000,
       "perUserLimit": 10,
-      "usageCount": 6,
+      "usageCount": 8,
       "isActive": true,
       "createdBy": "usr_admin_master_1",
       "createdAt": "2026-10-22T12:44:56.955Z",
-      "updatedAt": "2026-10-23T05:24:15.769Z"
+      "updatedAt": "2026-10-29T05:30:01.917Z"
     },
     {
       "id": "cpn_creator100",
@@ -27681,11 +30069,11 @@
       "minimumOrderValue": 499,
       "usageLimit": 500,
       "perUserLimit": 2,
-      "usageCount": 4,
+      "usageCount": 6,
       "isActive": true,
       "createdBy": "usr_admin_master_1",
       "createdAt": "2026-10-22T12:31:40.672Z",
-      "updatedAt": "2026-10-23T05:24:15.860Z"
+      "updatedAt": "2026-10-29T05:30:02.036Z"
     },
     {
       "id": "cpn_fluvia100",
@@ -28770,6 +31158,181 @@
       "usageCount": 1,
       "createdAt": "2026-10-23T05:35:11.003Z",
       "updatedAt": "2026-10-23T05:35:11.052Z"
+    },
+    {
+      "code": "TESTPCT10_1793251100619",
+      "description": "10% discount test",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "isActive": true,
+      "id": "cpn_4kjeomtge",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.828Z",
+      "updatedAt": "2026-10-29T05:18:20.828Z"
+    },
+    {
+      "code": "FIXED200_1793251100839",
+      "description": "Flat INR 200 off",
+      "discountType": "fixed",
+      "discountValue": 200,
+      "isActive": true,
+      "id": "cpn_bfwzus6v0",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.839Z",
+      "updatedAt": "2026-10-29T05:18:20.839Z"
+    },
+    {
+      "code": "HALFMAX500_1793251100850",
+      "description": "50% off capped at INR 500",
+      "discountType": "percentage",
+      "discountValue": 50,
+      "maxDiscount": 500,
+      "isActive": true,
+      "id": "cpn_8gytlusbu",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.850Z",
+      "updatedAt": "2026-10-29T05:18:20.850Z"
+    },
+    {
+      "code": "EXPIRED_1793251100863",
+      "description": "Expired promo",
+      "discountType": "percentage",
+      "discountValue": 20,
+      "expiresAt": "2026-10-28T05:18:20.863Z",
+      "isActive": true,
+      "id": "cpn_zxfvd8t32",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.863Z",
+      "updatedAt": "2026-10-29T05:18:20.863Z"
+    },
+    {
+      "code": "FUTURE_1793251100875",
+      "description": "Future promo",
+      "discountType": "percentage",
+      "discountValue": 20,
+      "startsAt": "2026-10-30T05:18:20.875Z",
+      "isActive": true,
+      "id": "cpn_e9hicokiz",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.875Z",
+      "updatedAt": "2026-10-29T05:18:20.875Z"
+    },
+    {
+      "code": "MIN1000_1793251100886",
+      "description": "Requires min order of 1000",
+      "discountType": "fixed",
+      "discountValue": 150,
+      "minimumOrderValue": 1000,
+      "isActive": true,
+      "id": "cpn_3qci4bj3u",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.887Z",
+      "updatedAt": "2026-10-29T05:18:20.887Z"
+    },
+    {
+      "code": "SUBSONLY_1793251100929",
+      "description": "Subscriptions only",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "applicableTypes": [
+        "subscription"
+      ],
+      "isActive": true,
+      "id": "cpn_fit2goduz",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.930Z",
+      "updatedAt": "2026-10-29T05:18:20.930Z"
+    },
+    {
+      "code": "DISABLED_1793251100941",
+      "description": "Disabled coupon",
+      "discountType": "percentage",
+      "discountValue": 25,
+      "isActive": false,
+      "id": "cpn_t3xwqw5bv",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:20.941Z",
+      "updatedAt": "2026-10-29T05:18:20.941Z"
+    },
+    {
+      "code": "LIMIT2_1793251100952",
+      "description": "Only 2 redemptions globally",
+      "discountType": "fixed",
+      "discountValue": 100,
+      "usageLimit": 2,
+      "isActive": true,
+      "id": "cpn_msd3gwt4l",
+      "usageCount": 2,
+      "createdAt": "2026-10-29T05:18:20.952Z",
+      "updatedAt": "2026-10-29T05:18:20.991Z"
+    },
+    {
+      "code": "ONCEPERUSER_1793251101002",
+      "description": "1 per user",
+      "discountType": "fixed",
+      "discountValue": 50,
+      "perUserLimit": 1,
+      "isActive": true,
+      "id": "cpn_ueq1tge3x",
+      "usageCount": 1,
+      "createdAt": "2026-10-29T05:18:21.002Z",
+      "updatedAt": "2026-10-29T05:18:21.021Z"
+    },
+    {
+      "code": "HUGE10K_1793251101035",
+      "description": "Huge discount exceeding price",
+      "discountType": "fixed",
+      "discountValue": 10000,
+      "isActive": true,
+      "id": "cpn_7lzgymt6i",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:21.035Z",
+      "updatedAt": "2026-10-29T05:18:21.035Z"
+    },
+    {
+      "code": "CANCELTEST_1793251101101",
+      "description": "Testing cancelled order redemption lifecycle",
+      "discountType": "fixed",
+      "discountValue": 100,
+      "isActive": true,
+      "id": "cpn_kq47hs7b5",
+      "usageCount": 0,
+      "createdAt": "2026-10-29T05:18:21.101Z",
+      "updatedAt": "2026-10-29T05:18:21.101Z"
+    },
+    {
+      "code": "IDEMPOTENT_1793251101157",
+      "description": "Testing idempotent redemption",
+      "discountType": "fixed",
+      "discountValue": 150,
+      "isActive": true,
+      "id": "cpn_iddm5cxvv",
+      "usageCount": 1,
+      "createdAt": "2026-10-29T05:18:21.157Z",
+      "updatedAt": "2026-10-29T05:18:21.241Z"
+    },
+    {
+      "code": "RACE_1793251101293",
+      "description": "Race condition test",
+      "discountType": "percentage",
+      "discountValue": 20,
+      "usageLimit": 1,
+      "isActive": true,
+      "id": "cpn_sj0vbilah",
+      "usageCount": 1,
+      "createdAt": "2026-10-29T05:18:21.293Z",
+      "updatedAt": "2026-10-29T05:18:21.363Z"
+    },
+    {
+      "code": "BILLINGDOC_1793251101454",
+      "description": "Invoice verification promo",
+      "discountType": "fixed",
+      "discountValue": 199,
+      "isActive": true,
+      "id": "cpn_q8qolw49o",
+      "usageCount": 1,
+      "createdAt": "2026-10-29T05:18:21.454Z",
+      "updatedAt": "2026-10-29T05:18:21.527Z"
     }
   ],
   "couponRedemptions": [
@@ -29683,6 +32246,193 @@
       "status": "completed",
       "createdAt": "2026-10-23T05:35:11.024Z",
       "completedAt": "2026-10-23T05:35:11.052Z"
+    },
+    {
+      "id": "red_vagxnm35z",
+      "couponId": "cpn_msd3gwt4l",
+      "couponCode": "LIMIT2_1793251100952",
+      "userId": "user_a",
+      "txnid": "TXN_A_1793251100961_1",
+      "discountAmount": 100,
+      "originalAmount": 999,
+      "finalAmount": 899,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:18:20.962Z",
+      "completedAt": "2026-10-29T05:18:20.972Z"
+    },
+    {
+      "id": "red_hpkvsf8tb",
+      "couponId": "cpn_msd3gwt4l",
+      "couponCode": "LIMIT2_1793251100952",
+      "userId": "user_b",
+      "txnid": "TXN_B_1793251100981_2",
+      "discountAmount": 100,
+      "originalAmount": 999,
+      "finalAmount": 899,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:18:20.981Z",
+      "completedAt": "2026-10-29T05:18:20.991Z"
+    },
+    {
+      "id": "red_qdtr9pphh",
+      "couponId": "cpn_ueq1tge3x",
+      "couponCode": "ONCEPERUSER_1793251101002",
+      "userId": "usr_test_coupon_1793251100619",
+      "txnid": "TXN_U1_1793251101011",
+      "discountAmount": 50,
+      "originalAmount": 999,
+      "finalAmount": 949,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:18:21.011Z",
+      "completedAt": "2026-10-29T05:18:21.021Z"
+    },
+    {
+      "id": "red_1v1i2ysga",
+      "couponId": "cpn_4kjeomtge",
+      "couponCode": "TESTPCT10_1793251100619",
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_u5jdlbz0x",
+      "txnid": "TXN_1793251101049_R1XIKS",
+      "discountAmount": 99.9,
+      "originalAmount": 999,
+      "finalAmount": 1060.94,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "reserved",
+      "createdAt": "2026-10-29T05:18:21.059Z"
+    },
+    {
+      "id": "red_vv9kij3vd",
+      "couponId": "cpn_kq47hs7b5",
+      "couponCode": "CANCELTEST_1793251101101",
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_6n56aojit",
+      "txnid": "TXN_1793251101114_DB47R8",
+      "discountAmount": 100,
+      "originalAmount": 999,
+      "finalAmount": 1060.82,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "cancelled",
+      "createdAt": "2026-10-29T05:18:21.124Z"
+    },
+    {
+      "id": "red_4dfiohipu",
+      "couponId": "cpn_iddm5cxvv",
+      "couponCode": "IDEMPOTENT_1793251101157",
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_nm6pltwfy",
+      "txnid": "TXN_1793251101168_AAYFBW",
+      "discountAmount": 150,
+      "originalAmount": 999,
+      "finalAmount": 1001.82,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:18:21.177Z",
+      "completedAt": "2026-10-29T05:18:21.241Z"
+    },
+    {
+      "id": "red_kaxlwx9i9",
+      "couponId": "cpn_sj0vbilah",
+      "couponCode": "RACE_1793251101293",
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_czitdq38l",
+      "txnid": "TXN_1793251101304_1IY0SL",
+      "discountAmount": 199.8,
+      "originalAmount": 999,
+      "finalAmount": 943.06,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:18:21.314Z",
+      "completedAt": "2026-10-29T05:18:21.363Z"
+    },
+    {
+      "id": "red_v5x4ovj7x",
+      "couponId": "cpn_q8qolw49o",
+      "couponCode": "BILLINGDOC_1793251101454",
+      "userId": "usr_test_coupon_1793251100619",
+      "orderId": "ord_payu_ts9ighvsg",
+      "txnid": "TXN_1793251101467_AY1NEM",
+      "discountAmount": 199,
+      "originalAmount": 999,
+      "finalAmount": 944,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:18:21.478Z",
+      "completedAt": "2026-10-29T05:18:21.527Z"
+    },
+    {
+      "id": "red_pi7ghzql8",
+      "couponId": "cpn_free100",
+      "couponCode": "FREE100",
+      "userId": "usr_flow_1793251560027",
+      "orderId": "ord_payu_qnruimku0",
+      "txnid": "TXN_ZERO_1793251560280_FYMWB4",
+      "discountAmount": 999,
+      "originalAmount": 999,
+      "finalAmount": 0,
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:26:00.292Z",
+      "completedAt": "2026-10-29T05:26:00.329Z"
+    },
+    {
+      "id": "red_m2kk0t9wa",
+      "couponId": "cpn_save20",
+      "couponCode": "SAVE20",
+      "userId": "usr_flow_1793251560027",
+      "orderId": "ord_payu_y8187rxmk",
+      "txnid": "TXN_1793251560402_ROIG0I",
+      "discountAmount": 199.8,
+      "originalAmount": 999,
+      "finalAmount": 943.06,
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:26:00.413Z",
+      "completedAt": "2026-10-29T05:26:00.458Z"
+    },
+    {
+      "id": "red_qmxco3mit",
+      "couponId": "cpn_free100",
+      "couponCode": "FREE100",
+      "userId": "usr_flow_1793251801616",
+      "orderId": "ord_payu_zg2se48qk",
+      "txnid": "TXN_ZERO_1793251801870_OO2KDP",
+      "discountAmount": 999,
+      "originalAmount": 999,
+      "finalAmount": 0,
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:30:01.882Z",
+      "completedAt": "2026-10-29T05:30:01.917Z"
+    },
+    {
+      "id": "red_pfhvh1qmd",
+      "couponId": "cpn_save20",
+      "couponCode": "SAVE20",
+      "userId": "usr_flow_1793251801616",
+      "orderId": "ord_payu_pv329gumn",
+      "txnid": "TXN_1793251801982_XKCZMG",
+      "discountAmount": 199.8,
+      "originalAmount": 999,
+      "finalAmount": 943.06,
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "status": "completed",
+      "createdAt": "2026-10-29T05:30:01.993Z",
+      "completedAt": "2026-10-29T05:30:02.036Z"
     }
   ],
   "templateLikes": {

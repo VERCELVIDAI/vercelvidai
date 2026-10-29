@@ -140,10 +140,11 @@ async function runPayUBillingTests() {
   // TEST 5: Idempotent Payment Fulfillment & Wallet Crediting
   console.log('\n--- 5. Atomic Payment Fulfillment & Idempotency ---');
   const initialBal = dbStore.getCreditAccount(testUser.profile.id).availableBalance;
-  assert(initialBal === 100, 'Initial signup balance is 100');
+  assert(initialBal === 0, 'Initial signup balance is 0 credits');
 
-  // Generate valid response hash for this order
-  const orderReverseSequence = `${sampleSalt}|success||||||${orderResult.payuParams.udf5}|${orderResult.payuParams.udf4}|${orderResult.payuParams.udf3}|${orderResult.payuParams.udf2}|${orderResult.payuParams.udf1}|${orderResult.payuParams.email}|${orderResult.payuParams.firstname}|${orderResult.payuParams.productinfo}|${orderResult.order.totalAmount.toFixed(2)}|${orderResult.order.txnid}|${orderResult.payuParams.key}`;
+  // Generate valid response hash for this order using active merchant salt
+  const activeSalt = getPayUConfig().merchantSalt;
+  const orderReverseSequence = `${activeSalt}|success||||||${orderResult.payuParams.udf5}|${orderResult.payuParams.udf4}|${orderResult.payuParams.udf3}|${orderResult.payuParams.udf2}|${orderResult.payuParams.udf1}|${orderResult.payuParams.email}|${orderResult.payuParams.firstname}|${orderResult.payuParams.productinfo}|${orderResult.order.totalAmount.toFixed(2)}|${orderResult.order.txnid}|${orderResult.payuParams.key}`;
   const orderReverseHash = crypto.createHash('sha512').update(orderReverseSequence).digest('hex').toLowerCase();
 
   const fulfillment1 = await fulfillPayUPayment({
@@ -171,7 +172,7 @@ async function runPayUBillingTests() {
   assert(fulfillment1.success === true, 'First fulfillment succeeded');
   assert(fulfillment1.order.status === 'success', 'Order status marked success');
   const afterBal1 = dbStore.getCreditAccount(testUser.profile.id).availableBalance;
-  assert(afterBal1 === 1300, '1,200 credits credited to wallet (100 -> 1300)');
+  assert(afterBal1 === 1200, '1,200 credits credited to wallet (0 -> 1200)');
 
   // Replay fulfillment (duplicate webhook / callback / page refresh)
   const fulfillment2 = await fulfillPayUPayment({
@@ -180,7 +181,7 @@ async function runPayUBillingTests() {
 
   assert(fulfillment2.alreadyProcessed === true, 'Second fulfillment recognized as already processed');
   const afterBal2 = dbStore.getCreditAccount(testUser.profile.id).availableBalance;
-  assert(afterBal2 === 1300, 'Duplicate request prevented duplicate credit grants (balance remains 1300)');
+  assert(afterBal2 === 1200, 'Duplicate request prevented duplicate credit grants (balance remains 1200)');
 
   // TEST 6: Invoice and Receipt Creation & Number Uniqueness
   console.log('\n--- 6. Sequential Invoice & Receipt Generation ---');

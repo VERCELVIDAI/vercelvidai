@@ -90,7 +90,16 @@ export function validateCoupon(params: ValidateCouponParams): CouponValidationRe
     }
   }
 
-  // 6. Applicable Checkout Types
+  // 6. Applicable Checkout Types & Item Restrictions
+  if (normalizedCode === 'FIRST20') {
+    if (params.paymentType !== 'subscription' || params.itemPlanOrPackId !== 'plan_max') {
+      return {
+        valid: false,
+        error: 'Coupon FIRST20 is valid on FLUVIA MAX only.',
+      };
+    }
+  }
+
   if (coupon.applicableTypes && coupon.applicableTypes.length > 0) {
     if (!coupon.applicableTypes.includes(params.paymentType)) {
       const label = params.paymentType === 'subscription' ? 'subscriptions' : 'credit packs';
@@ -104,6 +113,12 @@ export function validateCoupon(params: ValidateCouponParams): CouponValidationRe
   // 7. Applicable Specific Item IDs
   if (coupon.applicableItemIds && coupon.applicableItemIds.length > 0) {
     if (!coupon.applicableItemIds.includes(params.itemPlanOrPackId)) {
+      if (normalizedCode === 'FIRST20') {
+        return {
+          valid: false,
+          error: 'Coupon FIRST20 is valid on FLUVIA MAX only.',
+        };
+      }
       return {
         valid: false,
         error: `Coupon ${coupon.code} cannot be applied to the selected plan or pack.`,

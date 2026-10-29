@@ -5,62 +5,61 @@
 @tailwind utilities;
 
 /* ==============================================================================
-   FLUVIA FLOW — MIDNIGHT PLUM × HOT PINK DESIGN SYSTEM
+   FLUVIA FLOW — BUSINESS-GRADE MINIMALIST AI SAAS DESIGN SYSTEM
+   Inspired by clean, professional business creative tools (Synthesia-grade UX)
+   Primary BG: #FFFFFF • Surfaces: #F7F8FA / #F1F3F5 • Text: #17191D • Borders: #E5E7EB • Accent: #5145CD
    ============================================================================== */
 
 @layer base {
   :root {
-    /* LOCKED BRAND COLORS */
-    --app-bg: #100A12; /* Primary Background */
-    --app-surface: #211522; /* Secondary Surfaces */
-    --app-sidebar: #170E1A; /* Sidebar Rail */
-    --app-card: #211522; /* Card Surface */
-    --app-card-hover: #2A1A2B;
-    --app-card-border: #39233B; /* Hairline Borders */
-    --app-card-border-hover: #553158;
+    /* BUSINESS BRAND COLORS */
+    --app-bg: #FFFFFF; /* Primary Background */
+    --app-surface: #F7F8FA; /* Secondary Surface */
+    --app-surface-alt: #F1F3F5; /* Tertiary Surface */
+    --app-sidebar: #FFFFFF; /* Sidebar Rail */
+    --app-card: #FFFFFF; /* Card Surface */
+    --app-card-hover: #F7F8FA;
+    --app-card-border: #E5E7EB; /* Clean Hairline Borders */
+    --app-card-border-hover: #D1D5DB;
 
-    --app-primary: #F05BCE; /* Primary Hot Pink Accent */
-    --app-primary-hover: #E046BD;
+    --app-primary: #5145CD; /* Restrained Deep Indigo Accent */
+    --app-primary-hover: #4338CA;
     --app-primary-foreground: #FFFFFF;
+    --app-primary-subtle: #EEF2FF;
 
-    --app-secondary: #C026D3; /* Deep Orchid Accent */
-    --app-cyan: #F05BCE;
+    --app-secondary: #4F46E5;
     --app-emerald: #10B981;
     --app-amber: #F59E0B;
-    --app-rose: #F05BCE;
+    --app-rose: #EF4444;
 
-    --app-text-primary: #F5EAF4; /* Soft Luminous Rose-White */
-    --app-text-secondary: #A99AAA; /* Warm Dusty Lavender-Slate */
-    --app-text-muted: #A99AAA;
+    --app-text-primary: #17191D; /* Deep Charcoal High Contrast */
+    --app-text-secondary: #667085; /* Professional Slate Gray */
+    --app-text-muted: #98A2B3;
 
-    --app-input-bg: rgba(33, 21, 34, 0.85);
-    --app-input-border: #39233B;
-    --app-ring: #F05BCE;
-
-    --app-gradient-primary: linear-gradient(135deg, #F05BCE 0%, #E046BD 50%, #C026D3 100%);
-    --app-gradient-cinema: linear-gradient(135deg, #211522 0%, #100A12 100%);
-    --app-gradient-glow: radial-gradient(circle, rgba(240, 91, 206, 0.18) 0%, rgba(16, 10, 18, 0) 70%);
+    --app-input-bg: #FFFFFF;
+    --app-input-border: #E5E7EB;
+    --app-ring: #5145CD;
 
     /* Tailwind HSL mappings */
-    --background: 288 29% 5%;
-    --foreground: 306 31% 94%;
-    --card: 295 24% 11%;
-    --card-foreground: 306 31% 94%;
-    --primary: 312 83% 65%;
+    --background: 0 0% 100%;
+    --foreground: 220 12% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 12% 10%;
+    --primary: 245 58% 54%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 295 24% 11%;
-    --secondary-foreground: 306 31% 94%;
-    --border: 294 25% 18%;
-    --input: 294 25% 18%;
-    --ring: 312 83% 65%;
-    --radius: 0.75rem;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 12% 10%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 245 58% 54%;
+    --radius: 0.625rem;
   }
 
-  /* Force Midnight Plum × Hot Pink theme across entire platform */
+  /* Force Minimalist Clean Business Theme */
   html, body {
-    color-scheme: dark !important;
-    background-color: #100A12 !important;
-    color: #F5EAF4 !important;
+    color-scheme: light !important;
+    background-color: #FFFFFF !important;
+    color: #17191D !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -69,9 +68,10 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
-    color: #F5EAF4;
-    letter-spacing: -0.02em;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #17191D;
+    letter-spacing: -0.025em;
+    font-weight: 700;
   }
 
   code, pre, .font-mono {
@@ -80,33 +80,55 @@
 }
 
 /* ==============================================================================
-   MIDNIGHT PLUM GLASSMORPHISM & SURFACE CLASSES
+   SUBTLE CARD ELEVATION & ACCESSIBLE TRANSITIONS
    ============================================================================== */
 
-.glass-panel {
-  background: rgba(33, 21, 34, 0.88) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid #39233B !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7) !important;
+.business-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(16, 24, 40, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card {
-  background: rgba(33, 21, 34, 0.88) !important;
-  backdrop-filter: blur(18px) !important;
-  -webkit-backdrop-filter: blur(18px) !important;
-  border: 1px solid #39233B !important;
-  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.6) !important;
+.business-card:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 12px 0 rgba(16, 24, 40, 0.08);
 }
 
-/* Custom Hot Pink Scrollbar */
+/* Accessible focus ring */
+.focus-indigo:focus-visible {
+  outline: 2px solid #5145CD;
+  outline-offset: 2px;
+}
+
+/* Clean Professional Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #100A12;
+  background: #F7F8FA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 ::-webkit-scrollbar-thumb {

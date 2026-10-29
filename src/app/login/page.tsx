@@ -113,25 +113,25 @@ function LoginForm() {
       <div>
         {/* Welcome Headline */}
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#F5EAF4] tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#17191D] tracking-tight">
             Welcome back
           </h1>
-          <p className="mt-2 text-sm text-[#A99AAA]">
-            Sign in to access your creative studio, video timelines and credit balance.
+          <p className="mt-2 text-sm text-[#667085]">
+            Sign in to access your AI ad studio, generation history, and projects.
           </p>
         </div>
 
         {/* Success Alert */}
         {successMessage && (
-          <div className="mb-5 p-3.5 rounded-xl bg-pink-500/10 border border-[#F05BCE]/30 text-xs text-pink-200 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
+          <div className="mb-5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 shrink-0 text-[#F05BCE]" />
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
               <span className="font-semibold leading-relaxed">{successMessage}</span>
             </div>
             <button
               type="button"
               onClick={() => setSuccessMessage(null)}
-              className="text-[#F05BCE] hover:text-white"
+              className="text-emerald-700 hover:text-emerald-950"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -140,15 +140,15 @@ function LoginForm() {
 
         {/* Error Alert */}
         {error && (
-          <div className="mb-5 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs text-rose-300 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
+          <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center justify-between gap-2.5 animate-in fade-in duration-200">
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
               <div className="leading-relaxed">
                 <span className="font-semibold">{error}</span>
                 {error.includes('Create an account') && (
                   <Link
                     href={`/signup?returnUrl=${encodeURIComponent(returnUrl)}`}
-                    className="ml-1.5 underline font-bold text-[#F05BCE] hover:brightness-125 inline-flex items-center gap-0.5"
+                    className="ml-1.5 underline font-bold text-[#5145CD] hover:text-[#4338CA] inline-flex items-center gap-0.5"
                   >
                     <span>Register now &rarr;</span>
                   </Link>
@@ -158,14 +158,14 @@ function LoginForm() {
             <button
               type="button"
               onClick={() => setError(null)}
-              className="text-rose-400 hover:text-rose-200"
+              className="text-rose-600 hover:text-rose-900"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           </div>
         )}
 
-        {/* Official Google Sign-In */}
+        {/* Google Sign-In */}
         <div className="mb-5">
           <GoogleSignInButton returnUrl={returnUrl} label="Continue with Google" />
         </div>
@@ -173,27 +173,27 @@ function LoginForm() {
         {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#39233B]" />
+            <div className="w-full border-t border-[#E5E7EB]" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-[#100A12] px-3 text-[#A99AAA] font-mono text-[11px]">
+            <span className="bg-white px-3 text-[#667085] font-mono text-[11px]">
               Or continue with email
             </span>
           </div>
         </div>
 
-        {/* Clean Sign-In Form */}
+        {/* Sign-In Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email Field */}
           <div>
             <label
               htmlFor="email-input"
-              className="block text-xs font-bold uppercase tracking-wider text-[#F5EAF4] mb-1.5"
+              className="block text-xs font-semibold uppercase tracking-wider text-[#17191D] mb-1.5"
             >
               Email Address
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-[#A99AAA] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Mail className="w-4 h-4 text-[#667085] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 id="email-input"
                 type="email"
@@ -201,8 +201,8 @@ function LoginForm() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                className="w-full bg-[#211522] text-[#F5EAF4] pl-10 pr-4 py-2.5 rounded-xl border border-[#39233B] focus:outline-none focus:ring-2 focus:ring-[#F05BCE]/20 focus:border-[#F05BCE] text-sm shadow-xs transition-all placeholder:text-[#A99AAA]/50"
+                placeholder="name@company.com"
+                className="w-full bg-white text-[#17191D] pl-10 pr-4 py-2.5 rounded-xl border border-[#E5E7EB] focus:outline-none focus:ring-2 focus:ring-[#5145CD]/20 focus:border-[#5145CD] text-sm shadow-2xs transition-all placeholder:text-[#667085]/60"
               />
             </div>
           </div>
@@ -212,19 +212,19 @@ function LoginForm() {
             <div className="flex justify-between items-center mb-1.5">
               <label
                 htmlFor="password-input"
-                className="block text-xs font-bold uppercase tracking-wider text-[#F5EAF4]"
+                className="block text-xs font-semibold uppercase tracking-wider text-[#17191D]"
               >
                 Password
               </label>
               <Link
                 href="/forgot-password"
-                className="text-xs font-semibold text-[#F05BCE] hover:brightness-125 hover:underline"
+                className="text-xs font-medium text-[#5145CD] hover:text-[#4338CA] hover:underline"
               >
                 Forgot password?
               </Link>
             </div>
             <div className="relative">
-              <Lock className="w-4 h-4 text-[#A99AAA] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Lock className="w-4 h-4 text-[#667085] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 id="password-input"
                 type={showPassword ? 'text' : 'password'}
@@ -233,62 +233,62 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full bg-[#211522] text-[#F5EAF4] pl-10 pr-11 py-2.5 rounded-xl border border-[#39233B] focus:outline-none focus:ring-2 focus:ring-[#F05BCE]/20 focus:border-[#F05BCE] text-sm shadow-xs transition-all placeholder:text-[#A99AAA]/50"
+                className="w-full bg-white text-[#17191D] pl-10 pr-11 py-2.5 rounded-xl border border-[#E5E7EB] focus:outline-none focus:ring-2 focus:ring-[#5145CD]/20 focus:border-[#5145CD] text-sm shadow-2xs transition-all placeholder:text-[#667085]/60"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A99AAA] hover:text-[#F5EAF4] p-1 rounded-md transition-colors cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#667085] hover:text-[#17191D] p-1 rounded-md transition-colors cursor-pointer"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
-          {/* Gradient Sign-in CTA */}
+          {/* Primary Submit Button */}
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-2 py-3 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold rounded-xl shadow-lg shadow-[rgba(240,91,206,0.25)] flex items-center justify-center gap-2 transition-all text-sm disabled:opacity-50 cursor-pointer border border-white/10"
+            className="w-full mt-2 py-3 bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all text-sm disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? (
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <span>Sign In to Fluvia Studio</span>
+                <span>Sign in to FLUVIA FLOW</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        {/* Development-Only Testing Component */}
+        {/* Development Shortcuts */}
         <DevDemoShortcuts onFill={handleDevFill} />
 
         {/* Signup Link */}
-        <div className="mt-8 text-center text-xs text-[#A99AAA]">
+        <div className="mt-8 text-center text-xs text-[#667085]">
           Don&apos;t have an account?{' '}
           <Link
             href={`/signup?returnUrl=${encodeURIComponent(returnUrl)}`}
-            className="text-[#F05BCE] font-bold hover:underline"
+            className="text-[#5145CD] font-semibold hover:underline"
           >
-            Create an account (+100 Free Credits)
+            Create an account
           </Link>
         </div>
       </div>
 
       {/* Footer Legal Links */}
-      <div className="pt-8 border-t border-[#39233B] flex items-center justify-center gap-4 text-[11px] text-[#A99AAA]">
-        <Link href="/privacy" className="hover:underline hover:text-[#F5EAF4]">
+      <div className="pt-8 border-t border-[#E5E7EB] flex items-center justify-center gap-4 text-[11px] text-[#667085]">
+        <Link href="/privacy" className="hover:underline hover:text-[#17191D]">
           Privacy Policy
         </Link>
         <span>•</span>
-        <Link href="/terms" className="hover:underline hover:text-[#F5EAF4]">
+        <Link href="/terms" className="hover:underline hover:text-[#17191D]">
           Terms of Service
         </Link>
         <span>•</span>
-        <Link href="/help" className="hover:underline hover:text-[#F5EAF4]">
+        <Link href="/help" className="hover:underline hover:text-[#17191D]">
           Help & Support
         </Link>
       </div>
@@ -298,14 +298,13 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 transition-colors duration-200 text-[#F5EAF4] bg-[#100A12]">
-      {/* LEFT SIDE: Brand Visual & 3D Interactive Media Composition */}
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 text-[#17191D] bg-white">
+      {/* LEFT SIDE: Brand Visual & Product Showcase */}
       <AuthHeroVisual />
 
       {/* RIGHT SIDE: Authentication Form Card */}
-      <div className="flex items-center justify-center p-4 sm:p-8 lg:p-12 relative overflow-hidden bg-[#100A12]">
-        <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-[#F05BCE]/10 rounded-full blur-[120px] pointer-events-none -z-10" />
-        <Suspense fallback={<div className="text-xs text-[#A99AAA] font-mono">Loading authentication portal...</div>}>
+      <div className="flex items-center justify-center p-4 sm:p-8 lg:p-12 relative overflow-hidden bg-white">
+        <Suspense fallback={<div className="text-xs text-[#667085] font-mono">Loading authentication portal...</div>}>
           <LoginForm />
         </Suspense>
       </div>

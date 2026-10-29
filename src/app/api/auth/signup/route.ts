@@ -72,11 +72,12 @@ export async function POST(req: NextRequest) {
           requiresEmailVerification: result.requiresEmailVerification ?? false,
           user: result.user,
           workspace: result.workspace,
+          eligibleForFirstCoupon: true,
           message:
             result.message ||
             (result.requiresEmailVerification
               ? 'Account registered successfully! Please check your email inbox to verify your address before signing in.'
-              : 'Account successfully registered with 100 free generative credits!'),
+              : 'Account successfully registered! Welcome to Fluvia Flow.'),
         });
       }
     }
@@ -127,7 +128,8 @@ export async function POST(req: NextRequest) {
       user: profile,
       workspace,
       vaultToken,
-      message: 'Account successfully registered with 100 free generative credits!',
+      eligibleForFirstCoupon: true,
+      message: 'Account successfully registered! Welcome to Fluvia Flow.',
     });
   } catch (err: any) {
     console.error('[Signup API Error]:', err);

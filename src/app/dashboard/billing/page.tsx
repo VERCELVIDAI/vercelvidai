@@ -8,19 +8,14 @@ import { DashboardHeader } from '@/components/dashboard/Header';
 import {
   CreditCard,
   Zap,
-  ArrowUpRight,
   Download,
   FileText,
-  Clock,
   ShieldCheck,
   CheckCircle2,
-  AlertCircle,
-  ExternalLink,
-  ChevronRight,
   TrendingUp,
   Receipt,
-  Layers,
   Sparkles,
+  ArrowRight,
 } from 'lucide-react';
 
 export default function BillingOverviewPage() {
@@ -58,8 +53,8 @@ export default function BillingOverviewPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -67,16 +62,15 @@ export default function BillingOverviewPage() {
   const user = data?.user || {};
   const credits = data?.credits || { availableBalance: 0, reservedBalance: 0 };
   const plan = billing?.plan;
-  const subscription = billing?.subscription;
   const recentTransactions = billing?.recentTransactions || [];
   const latestInvoices = billing?.latestInvoices || [];
   const latestReceipts = billing?.latestReceipts || [];
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#100A12] text-[#F5EAF4] relative">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#100A12]">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-white">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -86,191 +80,173 @@ export default function BillingOverviewPage() {
         />
 
         <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8 text-left">
-          {/* Header Title & Subnavigation */}
+          {/* Header Title */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#F5EAF4]">Billing & Financial Management</h1>
-              <p className="mt-1 text-xs sm:text-sm text-[#A99AAA]">
-                Manage your subscription plans, PayU India transactions, official invoices, and receipts.
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#17191D] tracking-tight">Credits & Billing</h1>
+              <p className="mt-1 text-xs sm:text-sm text-[#667085]">
+                Manage subscription plans, top-up packs, GST tax invoices, and receipts.
               </p>
             </div>
 
             <div className="flex items-center gap-2.5">
               <Link
-                href="/checkout?type=pack&id=pack_1200"
-                className="px-4 py-2 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-xl text-xs font-bold shadow-md shadow-[rgba(240,91,206,0.25)] flex items-center gap-1.5 transition-all cursor-pointer border border-white/10"
+                href="/checkout?type=pack&id=pack_5000"
+                className="px-4 py-2 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
               >
-                <Zap className="w-3.5 h-3.5 text-pink-200" />
-                <span>Buy Credits</span>
+                <Zap className="w-3.5 h-3.5" />
+                <span>Top Up Credits</span>
               </Link>
 
               <Link
                 href="/pricing"
-                className="px-4 py-2 bg-[#211522] hover:bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] rounded-xl text-xs font-bold transition-all shadow-xs"
-              >
-                Upgrade Plan
-              </Link>
-            </div>
-          </div>
-
-          {/* Subnavigation Pills */}
-          <div className="flex items-center gap-2 border-b border-[#39233B] pb-3 overflow-x-auto text-xs font-bold">
-            <Link
-              href="/dashboard/billing"
-              className="px-3.5 py-1.5 bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white rounded-lg shadow-xs"
-            >
-              Overview
-            </Link>
-            <Link
-              href="/dashboard/billing/invoices"
-              className="px-3.5 py-1.5 text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522] rounded-lg transition-colors"
-            >
-              Invoices ({latestInvoices.length})
-            </Link>
-            <Link
-              href="/dashboard/billing/receipts"
-              className="px-3.5 py-1.5 text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522] rounded-lg transition-colors"
-            >
-              Payment Receipts ({latestReceipts.length})
-            </Link>
-            <Link
-              href="/dashboard/billing/transactions"
-              className="px-3.5 py-1.5 text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522] rounded-lg transition-colors"
-            >
-              Transactions History
-            </Link>
-            <Link
-              href="/dashboard/billing/subscription"
-              className="px-3.5 py-1.5 text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-[#211522] rounded-lg transition-colors"
-            >
-              Subscription Details
-            </Link>
-          </div>
-
-          {/* Subscription & Active Plan Banner */}
-          <div className="p-6 rounded-2xl bg-gradient-to-r from-[#211522] via-[#2A1B2C] to-[#211522] border border-[#F05BCE]/30 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase text-[#F05BCE] bg-[#F05BCE]/15 px-2.5 py-0.5 rounded-full border border-[#F05BCE]/30 font-bold">
-                  Active Subscription
-                </span>
-                <span className="text-xs text-pink-300 font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F05BCE]" />
-                  Auto-Renewal Active
-                </span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#F5EAF4]">
-                {plan?.name || 'Fluvia Pro Plan'}
-              </h2>
-              <p className="text-xs text-[#A99AAA] max-w-xl">
-                Priority GPU queue, 4K rendering, access to Google Gemini Omni Flash, Veo, and ElevenLabs voices.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4 shrink-0">
-              <div className="text-right">
-                <div className="text-xs text-[#A99AAA] font-medium">Monthly Billing</div>
-                <div className="text-xl font-extrabold text-[#F5EAF4] font-mono">
-                  INR {plan?.priceInr || 2499}
-                  <span className="text-xs text-[#A99AAA] font-normal"> / mo</span>
-                </div>
-              </div>
-
-              <Link
-                href="/pricing"
-                className="px-4 py-2.5 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-xl text-xs font-bold shadow-md shadow-[rgba(240,91,206,0.25)] transition-all cursor-pointer border border-white/10"
+                className="px-4 py-2 bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] rounded-xl text-xs font-semibold transition-all shadow-2xs"
               >
                 Change Plan
               </Link>
             </div>
           </div>
 
-          {/* Financial Overview Metrics Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-[#211522] border border-[#39233B] space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-[#A99AAA] font-bold">
-                <span>Available Compute</span>
-                <Zap className="w-4 h-4 text-[#F05BCE]" />
+          {/* Subscription Banner */}
+          <div className="p-6 sm:p-8 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono uppercase text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#5145CD]/20 font-bold">
+                  Active Workspace Plan
+                </span>
+                <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  Active
+                </span>
               </div>
-              <div className="text-3xl font-black text-[#F5EAF4] font-mono">
-                {billing?.availableCredits ?? credits.availableBalance}
-              </div>
-              <p className="text-[11px] text-[#A99AAA] font-medium">Live spendable credits</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-[#17191D]">
+                {plan?.name || 'Fluvia Pro Plan'}
+              </h2>
+              <p className="text-xs text-[#667085] max-w-xl">
+                Priority GPU queue, 4K rendering, Gemini Omni 1.1 Flash Engine, and ElevenLabs voice synchronization.
+              </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#211522] border border-[#39233B] space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-[#A99AAA] font-bold">
-                <span>Purchased Credits</span>
-                <TrendingUp className="w-4 h-4 text-purple-400" />
+            <div className="flex items-center gap-4 shrink-0">
+              <div className="text-right">
+                <div className="text-xs text-[#667085]">Plan Price</div>
+                <div className="text-xl font-bold text-[#17191D] font-mono">
+                  ₹{plan?.priceInr || 2499}
+                  <span className="text-xs text-[#667085] font-normal"> / mo</span>
+                </div>
               </div>
-              <div className="text-3xl font-black text-[#F5EAF4] font-mono">
-                {billing?.purchasedCredits ?? 0}
-              </div>
-              <p className="text-[11px] text-[#A99AAA] font-medium">Total top-ups & plan allowances</p>
-            </div>
 
-            <div className="p-5 rounded-2xl bg-[#211522] border border-[#39233B] space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-[#A99AAA] font-bold">
-                <span>Total Spent (INR)</span>
-                <CreditCard className="w-4 h-4 text-[#F05BCE]" />
-              </div>
-              <div className="text-3xl font-black text-[#F05BCE] font-mono">
-                ₹{billing?.totalSpentInr?.toFixed(2) ?? '0.00'}
-              </div>
-              <p className="text-[11px] text-[#A99AAA] font-medium">Paid via PayU India</p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[#211522] border border-[#39233B] space-y-2 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-[#A99AAA] font-bold">
-                <span>Successful Orders</span>
-                <ShieldCheck className="w-4 h-4 text-[#F05BCE]" />
-              </div>
-              <div className="text-3xl font-black text-[#F5EAF4] font-mono">
-                {billing?.totalSuccessfulPayments ?? 0}
-              </div>
-              <p className="text-[11px] text-[#A99AAA] font-medium">Verified transactions on ledger</p>
+              <Link
+                href="/pricing"
+                className="px-4 py-2.5 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
+              >
+                Change Plan
+              </Link>
             </div>
           </div>
 
-          {/* Quick Credit Packs Section */}
-          <div className="rounded-2xl bg-[#211522] border border-[#39233B] p-6 space-y-4 shadow-sm">
+          {/* Metric Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-5 rounded-2xl bg-white border border-[#E5E7EB] space-y-2 shadow-2xs">
+              <div className="flex items-center justify-between text-xs text-[#667085] font-semibold">
+                <span>Available Balance</span>
+                <Zap className="w-4 h-4 text-[#5145CD]" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-[#17191D] font-mono">
+                {(billing?.availableCredits ?? credits.availableBalance).toLocaleString()}
+              </div>
+              <p className="text-[11px] text-[#667085]">Live spendable credits</p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-[#E5E7EB] space-y-2 shadow-2xs">
+              <div className="flex items-center justify-between text-xs text-[#667085] font-semibold">
+                <span>Total Purchased</span>
+                <TrendingUp className="w-4 h-4 text-emerald-600" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-[#17191D] font-mono">
+                {(billing?.purchasedCredits ?? 0).toLocaleString()}
+              </div>
+              <p className="text-[11px] text-[#667085]">Top-ups & plan allocations</p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-[#E5E7EB] space-y-2 shadow-2xs">
+              <div className="flex items-center justify-between text-xs text-[#667085] font-semibold">
+                <span>Total Spent</span>
+                <CreditCard className="w-4 h-4 text-[#5145CD]" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-[#5145CD] font-mono">
+                ₹{(billing?.totalSpentInr ?? 0).toFixed(2)}
+              </div>
+              <p className="text-[11px] text-[#667085]">Processed via PayU India</p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-[#E5E7EB] space-y-2 shadow-2xs">
+              <div className="flex items-center justify-between text-xs text-[#667085] font-semibold">
+                <span>Successful Orders</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-[#17191D] font-mono">
+                {billing?.totalSuccessfulPayments ?? 0}
+              </div>
+              <p className="text-[11px] text-[#667085]">Verified transactions on ledger</p>
+            </div>
+          </div>
+
+          {/* Featured Top-Up Banner */}
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-[#EEF2FF] to-white border border-[#5145CD]/30 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#5145CD] text-white text-[11px] font-semibold">
+                <Sparkles className="w-3 h-3" />
+                <span>Featured Pack</span>
+              </div>
+              <h3 className="text-lg font-bold text-[#17191D]">5,000 Credits Pro Top-Up</h3>
+              <p className="text-xs text-[#667085]">
+                Base ₹6,500 + 18% GST (₹1,170) = <strong className="text-[#17191D]">₹7,670 Total</strong>. Immediate wallet fulfillment.
+              </p>
+            </div>
+
+            <Link
+              href="/checkout?type=pack&id=pack_5000"
+              className="px-5 py-2.5 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 shrink-0"
+            >
+              <span>Buy 5,000 Credits (₹7,670)</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {/* Quick Credit Packs */}
+          <div className="rounded-2xl bg-white border border-[#E5E7EB] p-6 space-y-4 shadow-2xs">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-[#F5EAF4]">Instant Credit Top-Up Packs</h3>
-                <p className="text-xs text-[#A99AAA]">Never let rendering stop. Instant delivery via PayU UPI & Cards.</p>
+                <h3 className="text-base font-bold text-[#17191D]">Credit Top-Up Packs</h3>
+                <p className="text-xs text-[#667085]">One-time credit packs that never expire.</p>
               </div>
-              <Link href="/pricing" className="text-xs text-[#F05BCE] hover:brightness-125 font-bold flex items-center gap-1">
-                <span>View All Packs</span>
-                <ChevronRight className="w-4 h-4" />
-              </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
               {[
-                { id: 'pack_500', name: '500 Credits', price: 499, tag: 'Quick Refill' },
-                { id: 'pack_1200', name: '1,200 Credits', price: 999, tag: 'Most Popular' },
-                { id: 'pack_3500', name: '3,500 Credits', price: 2499, tag: 'Scale' },
-                { id: 'pack_10000', name: '10,000 Credits', price: 5999, tag: 'Agency' },
+                { id: 'pack_5000', name: '5,000 Credits', price: 6500, total: 7670, tag: 'Featured' },
+                { id: 'pack_1000', name: '1,000 Credits', price: 1400, total: 1652, tag: 'Starter' },
+                { id: 'pack_2500', name: '2,500 Credits', price: 3400, total: 4012, tag: 'Growth' },
+                { id: 'pack_10000', name: '10,000 Credits', price: 12500, total: 14750, tag: 'Agency' },
               ].map((pack) => (
                 <div
                   key={pack.id}
-                  className="p-4 rounded-xl bg-[#100A12] border border-[#39233B] hover:border-[#F05BCE]/50 hover:shadow-md transition-all flex flex-col justify-between"
+                  className="p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] hover:border-[#D1D5DB] transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-[10px] font-mono font-bold text-pink-200 bg-[#211522] px-2 py-0.5 rounded border border-[#39233B]">
-                        {pack.tag}
-                      </span>
-                    </div>
-                    <div className="font-bold text-[#F5EAF4] text-base mt-2">{pack.name}</div>
-                    <div className="text-sm font-extrabold text-[#F5EAF4] mt-1 font-mono">
-                      INR {pack.price}
+                    <span className="text-[10px] font-mono font-semibold text-[#5145CD] bg-white px-2 py-0.5 rounded border border-[#E5E7EB]">
+                      {pack.tag}
+                    </span>
+                    <div className="font-bold text-[#17191D] text-sm mt-2">{pack.name}</div>
+                    <div className="text-xs text-[#667085] mt-1 font-mono">
+                      ₹{pack.price.toLocaleString()} + GST (₹{pack.total.toLocaleString()} total)
                     </div>
                   </div>
 
                   <Link
                     href={`/checkout?type=pack&id=${pack.id}`}
-                    className="mt-4 w-full py-2 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-lg text-xs font-bold text-center block transition-all shadow-xs border border-white/10"
+                    className="mt-4 w-full py-2 bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] rounded-lg text-xs font-semibold text-center block transition-all shadow-2xs"
                   >
                     Purchase Pack
                   </Link>
@@ -279,120 +255,76 @@ export default function BillingOverviewPage() {
             </div>
           </div>
 
-          {/* Recent Transactions & Invoices Table */}
-          <div className="rounded-2xl bg-[#211522] border border-[#39233B] overflow-hidden shadow-sm">
-            <div className="p-5 border-b border-[#39233B] flex items-center justify-between">
+          {/* Transactions Table */}
+          <div className="rounded-2xl bg-white border border-[#E5E7EB] overflow-hidden shadow-2xs">
+            <div className="p-5 border-b border-[#E5E7EB] flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-[#F5EAF4] text-sm">Recent PayU Transactions</h3>
-                <p className="text-xs text-[#A99AAA]">Latest orders processed with immediate settlement</p>
+                <h3 className="font-bold text-[#17191D] text-sm">Recent Transactions</h3>
+                <p className="text-xs text-[#667085]">PayU orders settled on ledger with official tax invoices</p>
               </div>
-              <Link
-                href="/dashboard/billing/transactions"
-                className="text-xs text-[#F05BCE] hover:brightness-125 font-bold"
-              >
-                View Full Ledger →
-              </Link>
             </div>
 
             <div className="overflow-x-auto">
               {recentTransactions.length === 0 ? (
-                <div className="p-10 text-center text-[#A99AAA] text-xs space-y-2">
+                <div className="p-8 text-center text-[#667085] text-xs space-y-2">
                   <p>No transactions recorded yet in this workspace.</p>
-                  <Link href="/checkout?type=pack&id=pack_1200" className="text-[#F05BCE] font-bold underline">
-                    Make your first credit purchase
+                  <Link href="/checkout?type=pack&id=pack_5000" className="text-[#5145CD] font-semibold underline">
+                    Top up credits now
                   </Link>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-[#100A12] text-[#A99AAA] border-b border-[#39233B] uppercase text-[10px] font-mono font-bold">
+                  <thead className="bg-[#F7F8FA] text-[#667085] border-b border-[#E5E7EB] uppercase text-[10px] font-mono font-semibold">
                     <tr>
                       <th className="py-3 px-4">Transaction ID</th>
                       <th className="py-3 px-4">Item</th>
                       <th className="py-3 px-4">Amount</th>
                       <th className="py-3 px-4">Status</th>
                       <th className="py-3 px-4">Date</th>
-                      <th className="py-3 px-4 text-right">Documents</th>
+                      <th className="py-3 px-4 text-right">Invoices</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#39233B] text-[#F5EAF4]">
+                  <tbody className="divide-y divide-[#E5E7EB] text-[#17191D]">
                     {recentTransactions.map((tx: any) => (
-                      <tr key={tx.id} className="hover:bg-[#2A1B2C] transition-colors">
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#F5EAF4]">
-                          <Link href={`/dashboard/billing/transactions/${tx.id}`} className="hover:text-[#F05BCE] underline">
-                            {tx.txnid}
-                          </Link>
+                      <tr key={tx.id} className="hover:bg-[#F7F8FA] transition-colors">
+                        <td className="py-3.5 px-4 font-mono font-semibold text-[#17191D]">
+                          {tx.txnid}
                         </td>
-                        <td className="py-3.5 px-4 font-semibold text-[#F5EAF4] max-w-xs truncate">
+                        <td className="py-3.5 px-4 font-medium text-[#17191D] max-w-xs truncate">
                           {tx.productInfo}
                         </td>
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#F5EAF4]">
+                        <td className="py-3.5 px-4 font-mono font-semibold text-[#17191D]">
                           INR {tx.totalAmount.toFixed(2)}
                         </td>
                         <td className="py-3.5 px-4">
                           <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold ${
+                            className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-semibold ${
                               tx.status === 'success'
-                                ? 'bg-[#F05BCE]/20 text-pink-200 border border-[#F05BCE]/40'
+                                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                                 : tx.status === 'pending'
-                                ? 'bg-amber-500/20 text-amber-200 border border-amber-500/40'
-                                : 'bg-rose-500/20 text-rose-200 border border-rose-500/40'
+                                ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                                : 'bg-rose-50 text-rose-800 border border-rose-200'
                             }`}
                           >
                             {tx.status}
                           </span>
                         </td>
-                        <td className="py-3.5 px-4 text-[#A99AAA] font-medium">
-                          {new Date(tx.createdAt).toLocaleDateString('en-IN', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                          })}
+                        <td className="py-3.5 px-4 text-[#667085]">
+                          {new Date(tx.createdAt).toLocaleDateString()}
                         </td>
                         <td className="py-3.5 px-4 text-right">
-                          <div className="flex items-center justify-end flex-wrap gap-1.5">
-                            {tx.invoiceId && (
-                              <>
-                                <Link
-                                  href={`/dashboard/billing/invoices/${tx.invoiceId}`}
-                                  className="px-2 py-1 rounded-md bg-[#100A12] hover:bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] transition-colors text-[11px] font-bold inline-flex items-center gap-1"
-                                  title="View Official Tax Invoice"
-                                >
-                                  <FileText className="w-3 h-3 text-[#F05BCE]" />
-                                  <span>Invoice</span>
-                                </Link>
-                                <a
-                                  href={`/api/billing/invoices/${tx.invoiceId}/pdf`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="p-1 rounded-md bg-[#100A12] hover:bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] transition-colors text-[11px] font-bold inline-flex items-center"
-                                  title="Download Invoice PDF"
-                                >
-                                  <Download className="w-3 h-3 text-[#F05BCE]" />
-                                </a>
-                              </>
-                            )}
-                            {tx.receiptId && (
-                              <>
-                                <Link
-                                  href={`/dashboard/billing/receipts/${tx.receiptId}`}
-                                  className="px-2 py-1 rounded-md bg-[#100A12] hover:bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] transition-colors text-[11px] font-bold inline-flex items-center gap-1"
-                                  title="View Payment Receipt"
-                                >
-                                  <Receipt className="w-3 h-3 text-[#F05BCE]" />
-                                  <span>Receipt</span>
-                                </Link>
-                                <a
-                                  href={`/api/billing/receipts/${tx.receiptId}/pdf`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="p-1 rounded-md bg-[#100A12] hover:bg-[#2A1B2C] text-[#F5EAF4] border border-[#39233B] transition-colors text-[11px] font-bold inline-flex items-center"
-                                  title="Download Receipt PDF"
-                                >
-                                  <Download className="w-3 h-3 text-[#F05BCE]" />
-                                </a>
-                              </>
-                            )}
-                          </div>
+                          {tx.invoiceId && (
+                            <a
+                              href={`/api/billing/invoices/${tx.invoiceId}/pdf`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2.5 py-1 rounded-md bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-[11px] font-medium inline-flex items-center gap-1 shadow-2xs"
+                              title="Download GST Invoice"
+                            >
+                              <FileText className="w-3 h-3 text-[#5145CD]" />
+                              <span>Invoice PDF</span>
+                            </a>
+                          )}
                         </td>
                       </tr>
                     ))}
