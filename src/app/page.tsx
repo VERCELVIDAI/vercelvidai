@@ -318,27 +318,62 @@ function VerticalPresetCard({ preset }: { preset: AdPreset }) {
 }
 
 export default function HomePage() {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
-  const [activeHeroPreset, setActiveHeroPreset] = useState(HERO_PRESETS[0]);
+  const [heroStageMode, setHeroStageMode] = useState<'grid' | 'focus'>('grid');
+  const [selectedHeroIndex, setSelectedHeroIndex] = useState(0);
+  const [unmutedHeroIndex, setUnmutedHeroIndex] = useState<number | null>(null);
+  const heroVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const focusVideoRef = useRef<HTMLVideoElement | null>(null);
+  const [isFocusPlaying, setIsFocusPlaying] = useState(true);
+  const [isFocusMuted, setIsFocusMuted] = useState(true);
   const [galleryTab, setGalleryTab] = useState<'vertical' | 'widescreen'>('vertical');
 
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setIsPlaying(true);
+  const activeFocusPreset = VERTICAL_PRESETS[selectedHeroIndex] || VERTICAL_PRESETS[0];
+
+  const toggleSingleSound = (index: number) => {
+    if (unmutedHeroIndex === index) {
+      if (heroVideoRefs.current[index]) {
+        heroVideoRefs.current[index]!.muted = true;
+      }
+      setUnmutedHeroIndex(null);
     } else {
-      videoRef.current.pause();
-      setIsPlaying(false);
+      heroVideoRefs.current.forEach((v, idx) => {
+        if (v) {
+          v.muted = idx !== index;
+          if (idx === index) {
+            v.play().catch(() => {});
+          }
+        }
+      });
+      setUnmutedHeroIndex(index);
     }
   };
 
-  const toggleMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
+  const toggleGlobalMute = () => {
+    if (unmutedHeroIndex !== null) {
+      heroVideoRefs.current.forEach((v) => {
+        if (v) v.muted = true;
+      });
+      setUnmutedHeroIndex(null);
+    } else {
+      toggleSingleSound(selectedHeroIndex);
+    }
+  };
+
+  const toggleFocusPlay = () => {
+    if (!focusVideoRef.current) return;
+    if (focusVideoRef.current.paused) {
+      focusVideoRef.current.play();
+      setIsFocusPlaying(true);
+    } else {
+      focusVideoRef.current.pause();
+      setIsFocusPlaying(false);
+    }
+  };
+
+  const toggleFocusMute = () => {
+    if (!focusVideoRef.current) return;
+    focusVideoRef.current.muted = !isFocusMuted;
+    setIsFocusMuted(!isFocusMuted);
   };
 
   return (
@@ -409,114 +444,298 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* HERO PRESET QUICK SELECTOR CHIPS */}
-            <div className="mt-8 mb-4 flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#667085] mr-1">
-                Featured Presets:
-              </span>
-              {HERO_PRESETS.map((p) => {
-                const isActive = activeHeroPreset.id === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveHeroPreset(p);
-                      setIsPlaying(true);
-                    }}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                      isActive
-                        ? 'bg-[#5145CD] text-white shadow-sm ring-2 ring-[#5145CD]/20'
-                        : 'bg-white hover:bg-[#F7F8FA] text-[#17191D] border border-[#E5E7EB]'
-                    }`}
-                  >
-                    <span>{p.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* CINEMATIC WIDESCREEN / VERTICAL PRODUCT STAGE */}
-            <div className="relative rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF] shadow-xl p-2 sm:p-3 max-w-5xl mx-auto">
-              <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-[#17191D] flex items-center justify-center">
-                {/* Ambient Blurred Backdrop for 9:16 vertical videos in 16:9 frame */}
-                {activeHeroPreset.aspect === '9:16' && (
-                  <img
-                    src={activeHeroPreset.poster}
-                    alt=""
-                    aria-hidden="true"
-                    className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
-                  />
-                )}
-                <video
-                  ref={videoRef}
-                  key={activeHeroPreset.id}
-                  src={activeHeroPreset.videoUrl}
-                  poster={activeHeroPreset.poster}
-                  preload="metadata"
-                  autoPlay
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  className={`relative z-10 h-full ${
-                    activeHeroPreset.aspect === '9:16'
-                      ? 'w-auto max-w-[300px] sm:max-w-[400px] object-contain shadow-2xl rounded-lg'
-                      : 'w-full object-cover'
-                  }`}
-                />
-
-                {/* Overlaid Player Controls */}
-                <div className="absolute bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-4 flex items-center justify-between z-20 pointer-events-auto gap-2">
-                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                    <button
-                      type="button"
-                      onClick={togglePlay}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors cursor-pointer"
-                      aria-label={isPlaying ? 'Pause video' : 'Play video'}
-                    >
-                      {isPlaying ? <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current ml-0.5" />}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={toggleMute}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors cursor-pointer"
-                      aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-                    >
-                      {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
-                    </button>
-                  </div>
-
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-[10px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-1 rounded-full bg-[#17191D]/80 backdrop-blur-md text-white border border-white/20 truncate">
-                      {activeHeroPreset.badge}
-                    </span>
-                  </div>
+            {/* ========================================================================= */}
+            {/* HERO AI PRESET STUDIO STAGE (4-REEL LIVE SHOWCASE) */}
+            {/* ========================================================================= */}
+            <div className="relative rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF] shadow-xl p-3 sm:p-5 max-w-5xl mx-auto mt-6 sm:mt-8">
+              {/* Stage Top Bar: Live Status & View Controls */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 mb-4 border-b border-[#E5E7EB]">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
+                  <span className="font-bold text-xs sm:text-sm text-[#17191D]">
+                    Live AI Generation Presets
+                  </span>
+                  <span className="text-[11px] font-mono text-[#5145CD] bg-[#EEF2FF] px-2 py-0.5 rounded-full border border-[#C7D2FE] font-semibold">
+                    4 Curated 9:16 Reels • Gemini Omni (15 cr)
+                  </span>
                 </div>
 
-                {/* Director Framing Watermarks */}
-                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 pointer-events-none z-20">
-                  <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 sm:px-2.5 py-1 rounded-md bg-[#5145CD] text-white shadow-xs">
-                    Live Preset Output (15 cr)
-                  </span>
+                <div className="flex items-center gap-2 self-start sm:self-auto">
+                  {/* Mode Toggle: 4-Preset Grid vs Single Focus Player */}
+                  <div className="inline-flex p-0.5 rounded-lg bg-[#F1F3F5] border border-[#E5E7EB] text-xs">
+                    <button
+                      type="button"
+                      onClick={() => setHeroStageMode('grid')}
+                      className={`px-2.5 py-1 rounded-md font-semibold text-[11px] transition-all cursor-pointer flex items-center gap-1.5 ${
+                        heroStageMode === 'grid'
+                          ? 'bg-white text-[#5145CD] shadow-xs'
+                          : 'text-[#667085] hover:text-[#17191D]'
+                      }`}
+                    >
+                      <Layers className="w-3 h-3" />
+                      <span>4-Preset Grid</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setHeroStageMode('focus')}
+                      className={`px-2.5 py-1 rounded-md font-semibold text-[11px] transition-all cursor-pointer flex items-center gap-1.5 ${
+                        heroStageMode === 'focus'
+                          ? 'bg-white text-[#5145CD] shadow-xs'
+                          : 'text-[#667085] hover:text-[#17191D]'
+                      }`}
+                    >
+                      <Play className="w-3 h-3" />
+                      <span>Focus Player</span>
+                    </button>
+                  </div>
+
+                  {/* Sound Control */}
+                  <button
+                    type="button"
+                    onClick={toggleGlobalMute}
+                    className="px-2.5 py-1 rounded-lg bg-[#F7F8FA] hover:bg-[#EEF2FF] border border-[#E5E7EB] text-[#17191D] hover:text-[#5145CD] text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                    aria-label={unmutedHeroIndex === null ? 'Unmute active audio' : 'Mute all'}
+                  >
+                    {unmutedHeroIndex !== null ? (
+                      <>
+                        <Volume2 className="w-3.5 h-3.5 text-[#5145CD] animate-pulse" />
+                        <span className="hidden xs:inline">Sound On</span>
+                      </>
+                    ) : (
+                      <>
+                        <VolumeX className="w-3.5 h-3.5 text-[#667085]" />
+                        <span className="hidden xs:inline">Muted</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
 
-              {/* Quick Interactive Prompt Bar below the canvas */}
-              <div className="mt-3 p-3 sm:p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs overflow-hidden">
+              {/* STAGE VIEW 1: 4-PRESET GRID (ALL 4 REELS DISPLAYED SIMULTANEOUSLY) */}
+              {heroStageMode === 'grid' ? (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+                  {VERTICAL_PRESETS.map((preset, index) => {
+                    const isSelected = selectedHeroIndex === index;
+                    const isThisUnmuted = unmutedHeroIndex === index;
+                    return (
+                      <div
+                        key={preset.id}
+                        onClick={() => setSelectedHeroIndex(index)}
+                        className={`group relative rounded-xl sm:rounded-2xl overflow-hidden bg-[#17191D] border transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                          isSelected
+                            ? 'ring-2 ring-[#5145CD] border-[#5145CD] shadow-lg shadow-[#5145CD]/10 scale-[1.01]'
+                            : 'border-[#E5E7EB] hover:border-[#C7D2FE] hover:shadow-md'
+                        }`}
+                      >
+                        {/* 9:16 Video Container */}
+                        <div className="relative aspect-[9/16] w-full overflow-hidden bg-black">
+                          <video
+                            ref={(el) => {
+                              heroVideoRefs.current[index] = el;
+                            }}
+                            src={preset.videoUrl}
+                            poster={preset.poster}
+                            preload="metadata"
+                            autoPlay
+                            loop
+                            muted={!isThisUnmuted}
+                            playsInline
+                            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                          />
+
+                          {/* Top Badges */}
+                          <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-20 pointer-events-none">
+                            <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-[#FFFFFF]/95 text-[#17191D] backdrop-blur-sm shadow-xs border border-white/40 truncate max-w-[70%]">
+                              {preset.badge}
+                            </span>
+                            <span className="px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-mono font-bold bg-[#5145CD] text-white shadow-xs">
+                              {preset.duration}
+                            </span>
+                          </div>
+
+                          {/* Bottom Gradient Overlay & Sound Toggle */}
+                          <div className="absolute inset-x-0 bottom-0 pt-10 pb-2.5 px-2.5 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-20 flex items-end justify-between pointer-events-auto">
+                            <div className="min-w-0 pr-1">
+                              <span className="text-[9px] font-mono font-medium text-white/80 block">
+                                9:16 HD • 15 cr
+                              </span>
+                              <h4 className="text-xs font-bold text-white truncate drop-shadow-xs">
+                                {preset.title}
+                              </h4>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleSingleSound(index);
+                              }}
+                              className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors shadow-sm cursor-pointer ${
+                                isThisUnmuted
+                                  ? 'bg-[#5145CD] text-white'
+                                  : 'bg-black/60 hover:bg-black/80 text-white/90 border border-white/20'
+                              }`}
+                              title={isThisUnmuted ? 'Mute audio' : 'Play audio'}
+                            >
+                              {isThisUnmuted ? (
+                                <Volume2 className="w-3.5 h-3.5" />
+                              ) : (
+                                <VolumeX className="w-3.5 h-3.5" />
+                              )}
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Quick Action Pill below card */}
+                        <div className="p-2 sm:p-2.5 bg-white border-t border-[#E5E7EB] flex items-center justify-between gap-1.5">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedHeroIndex(index);
+                              setHeroStageMode('focus');
+                            }}
+                            className="text-[10px] font-semibold text-[#667085] hover:text-[#5145CD] transition-colors truncate"
+                          >
+                            Expand ↗
+                          </button>
+
+                          <Link
+                            href={`/create?prompt=${encodeURIComponent(preset.prompt)}&aspect=9:16&mode=video`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="px-2.5 py-1 rounded-md bg-[#EEF2FF] hover:bg-[#5145CD] text-[#5145CD] hover:text-white font-bold text-[10px] flex items-center gap-1 transition-all shadow-2xs"
+                          >
+                            <Sparkles className="w-3 h-3" />
+                            <span>Use</span>
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                /* STAGE VIEW 2: SINGLE CINEMA FOCUS PLAYER */
+                <div className="space-y-4">
+                  <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-[#17191D] flex items-center justify-center">
+                    {/* Ambient Blurred Backdrop for 9:16 vertical video */}
+                    <img
+                      src={activeFocusPreset.poster}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
+                    />
+
+                    <video
+                      ref={focusVideoRef}
+                      key={activeFocusPreset.id}
+                      src={activeFocusPreset.videoUrl}
+                      poster={activeFocusPreset.poster}
+                      preload="metadata"
+                      autoPlay
+                      loop
+                      muted={isFocusMuted}
+                      playsInline
+                      className="relative z-10 h-full w-auto max-w-[300px] sm:max-w-[400px] object-contain shadow-2xl rounded-lg"
+                    />
+
+                    {/* Overlaid Player Controls */}
+                    <div className="absolute bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-4 flex items-center justify-between z-20 pointer-events-auto gap-2">
+                      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                        <button
+                          type="button"
+                          onClick={toggleFocusPlay}
+                          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors cursor-pointer"
+                          aria-label={isFocusPlaying ? 'Pause video' : 'Play video'}
+                        >
+                          {isFocusPlaying ? (
+                            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          ) : (
+                            <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current ml-0.5" />
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={toggleFocusMute}
+                          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors cursor-pointer"
+                          aria-label={isFocusMuted ? 'Unmute video' : 'Mute video'}
+                        >
+                          {isFocusMuted ? (
+                            <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          ) : (
+                            <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          )}
+                        </button>
+                      </div>
+
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-[10px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-1 rounded-full bg-[#17191D]/80 backdrop-blur-md text-white border border-white/20 truncate">
+                          {activeFocusPreset.title} • {activeFocusPreset.duration}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Director Framing Watermarks */}
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 pointer-events-none z-20">
+                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 sm:px-2.5 py-1 rounded-md bg-[#5145CD] text-white shadow-xs">
+                        9:16 Vertical Preset Output (15 cr)
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Thumbnail Strip to Jump Between Presets */}
+                  <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                    {VERTICAL_PRESETS.map((preset, idx) => (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => setSelectedHeroIndex(idx)}
+                        className={`p-2 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-2 ${
+                          selectedHeroIndex === idx
+                            ? 'bg-[#EEF2FF] border-[#5145CD] ring-1 ring-[#5145CD]'
+                            : 'bg-[#F7F8FA] border-[#E5E7EB] hover:bg-white'
+                        }`}
+                      >
+                        <img
+                          src={preset.poster}
+                          alt=""
+                          className="w-7 h-10 object-cover rounded shrink-0"
+                        />
+                        <div className="min-w-0 hidden sm:block">
+                          <p className="text-[11px] font-bold text-[#17191D] truncate">{preset.title}</p>
+                          <span className="text-[9px] font-mono text-[#667085]">{preset.duration}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Dynamic Prompt Bar for Currently Selected Preset */}
+              <div className="mt-3.5 p-3 sm:p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs overflow-hidden">
                 <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
                   <div className="w-7 h-7 rounded-lg bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] flex items-center justify-center shrink-0">
                     <Sparkles className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-[#667085] font-mono text-xs truncate">
-                    &ldquo;{activeHeroPreset.prompt}&rdquo;
-                  </span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[10px] font-mono font-bold uppercase text-[#5145CD]">
+                        Active Preset: {activeFocusPreset.title} ({activeFocusPreset.duration})
+                      </span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#E5E7EB] text-[#17191D]">
+                        9:16 Vertical
+                      </span>
+                    </div>
+                    <p className="text-[#667085] font-mono text-xs truncate mt-0.5">
+                      &ldquo;{activeFocusPreset.prompt}&rdquo;
+                    </p>
+                  </div>
                 </div>
 
                 <Link
-                  href={`/create?prompt=${encodeURIComponent(activeHeroPreset.prompt)}&aspect=${activeHeroPreset.aspect}&mode=video`}
-                  className="w-full sm:w-auto px-3.5 py-2 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-xs"
+                  href={`/create?prompt=${encodeURIComponent(activeFocusPreset.prompt)}&aspect=9:16&mode=video`}
+                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-xs"
                 >
-                  <span>Use This Prompt</span>
+                  <span>Use This Preset in Studio</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
