@@ -1,36 +1,50 @@
-<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="neonGlow" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F05BCE" />
-      <stop offset="0.5" stop-color="#E046BD" />
-      <stop offset="1" stop-color="#C026D3" />
+    <linearGradient id="fluviaGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5145CD" />
+      <stop offset="0.5" stop-color="#4338CA" />
+      <stop offset="1" stop-color="#312E81" />
     </linearGradient>
-    <linearGradient id="glassBody" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2A142D" />
-      <stop offset="1" stop-color="#140A17" />
+    <linearGradient id="shimmer" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.25" />
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.05" />
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
     </linearGradient>
-    <linearGradient id="fGrad" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FF7EE5" />
-      <stop offset="0.5" stop-color="#F05BCE" />
-      <stop offset="1" stop-color="#D926B5" />
-    </linearGradient>
-    <filter id="pinkGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#F05BCE" flood-opacity="0.8" />
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#312E81" flood-opacity="0.3" />
     </filter>
   </defs>
 
-  <!-- Outer Dark Midnight Plum Canvas -->
-  <rect width="32" height="32" rx="7" fill="#100A12" />
+  <!-- Container Rounded Squircle -->
+  <rect width="64" height="64" rx="16" fill="url(#fluviaGrad)" />
+  <rect x="1" y="1" width="62" height="62" rx="15" stroke="white" stroke-opacity="0.18" stroke-width="1.5" />
+  
+  <!-- Subtle Ambient Top Shimmer -->
+  <rect width="64" height="64" rx="16" fill="url(#shimmer)" />
 
-  <!-- Glowing App Icon Shell with Neon Rim -->
-  <rect x="2" y="2" width="28" height="28" rx="8" fill="url(#glassBody)" stroke="url(#neonGlow)" stroke-width="1.5" filter="url(#pinkGlow)" />
-
-  <!-- Top Glass Sheen -->
-  <path d="M4 10C4 6.68629 6.68629 4 10 4H22C25.3137 4 28 6.68629 28 10C24 13 18 14 10 14C6 14 4 11 4 10Z" fill="white" fill-opacity="0.15" />
-
-  <!-- Stylized F Backbone and Upper Wing -->
-  <path d="M10 24V11.5C10 9 11.5 7.5 14 7.5H23C24 7.5 24.5 8.5 23.5 9.5L20 13C19.5 13.5 18.5 14 17.5 14H15V17H17C17.5 17 18 17.5 18 18V19C18 19.5 17.5 20 17 20H15V24C15 24.5 14.5 25 14 25H11C10.5 25 10 24.5 10 24Z" fill="url(#fGrad)" />
-
-  <!-- Play Arrow Triangle -->
-  <path d="M19 14.5L23.5 17.5C24.2 18 24.2 19 23.5 19.5L19 22.5C18.3 23 17.5 22.5 17.5 21.6V15.4C17.5 14.5 18.3 14 19 14.5Z" fill="url(#fGrad)" />
+  <!-- Centered Scaled Emblem -->
+  <g transform="translate(11, 11) scale(1.1667)">
+    <!-- Fluid F Spine -->
+    <path
+      d="M9.5 7.5C8.39543 7.5 7.5 8.39543 7.5 9.5V26.5C7.5 27.6046 8.39543 28.5 9.5 28.5H11.5C12.6046 28.5 13.5 27.6046 13.5 26.5V19.5H18.5C19.6046 19.5 20.5 18.6046 20.5 17.5C20.5 16.3954 19.6046 15.5 18.5 15.5H13.5V11.5H25.5C26.6046 11.5 27.5 10.6046 27.5 9.5C27.5 8.39543 26.6046 7.5 25.5 7.5H9.5Z"
+      fill="#FFFFFF"
+    />
+    <!-- Upper Flow Ribbon Swoosh -->
+    <path
+      d="M17.5 7.5C22.5 7.5 27.5 10.5 28.5 15.5C25.5 14 21 14 17.5 15.5V7.5Z"
+      fill="#FFFFFF"
+      fill-opacity="0.5"
+    />
+    <!-- Kinetic Video Lens -->
+    <circle
+      cx="26"
+      cy="23"
+      r="3.5"
+      fill="#FFFFFF"
+    />
+    <path
+      d="M24.75 21.75L27.75 23L24.75 24.25V21.75Z"
+      fill="#5145CD"
+    />
+  </g>
 </svg>
