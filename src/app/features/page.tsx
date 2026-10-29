@@ -151,7 +151,7 @@ export default function FeaturesPage() {
             Experience the future of video creation today
           </h3>
           <p className="mt-3 text-[#667085] max-w-lg mx-auto text-sm sm:text-base">
-            No credit card required for initial explorer tests. Get 100 free credits upon signup.
+            No credit card required to explore. Start creating commercial ads in minutes.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link

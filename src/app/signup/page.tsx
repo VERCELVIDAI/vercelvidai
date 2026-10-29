@@ -4,6 +4,7 @@ import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Logo } from '@/components/brand/Logo';
+import { AuthHeroVisual } from '@/components/auth/AuthHeroVisual';
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
 import {
   ArrowRight,
@@ -157,8 +158,8 @@ function SignupForm() {
 
   return (
     <div className="w-full max-w-md relative z-10 mx-auto text-left py-6 px-4 sm:px-0">
-      {/* Top Controls: Logo */}
-      <div className="flex items-center justify-between mb-6">
+      {/* Top Controls: Mobile Logo */}
+      <div className="flex items-center justify-between mb-6 lg:hidden">
         <Link href="/" className="hover:opacity-80 transition-opacity">
           <Logo size="md" />
         </Link>
@@ -381,10 +382,16 @@ function SignupForm() {
 
 export default function SignupPage() {
   return (
-    <div className="min-h-screen text-[#17191D] bg-[#F7F8FA] flex items-center justify-center p-4 sm:p-8 overflow-x-hidden max-w-full">
-      <Suspense fallback={<div className="text-xs text-[#667085] font-mono">Loading registration form...</div>}>
-        <SignupForm />
-      </Suspense>
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 text-[#17191D] bg-white overflow-x-hidden max-w-full">
+      {/* LEFT SIDE: Brand Visual & Commercial Video Showcase */}
+      <AuthHeroVisual />
+
+      {/* RIGHT SIDE: Authentication Form Card */}
+      <div className="flex items-center justify-center p-4 sm:p-8 lg:p-12 relative overflow-hidden bg-white">
+        <Suspense fallback={<div className="text-xs text-[#667085] font-mono">Loading registration portal...</div>}>
+          <SignupForm />
+        </Suspense>
+      </div>
     </div>
   );
 }

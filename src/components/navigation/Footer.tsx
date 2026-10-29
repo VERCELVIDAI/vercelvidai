@@ -15,11 +15,11 @@ export function Footer() {
           <div className="col-span-2 space-y-3">
             <Logo size="md" showTagline={true} />
             <p className="text-xs text-[#667085] max-w-sm leading-relaxed">
-              FLUVIA FLOW is the enterprise AI advertising creation studio. Generate studio-grade video commercials, product photography, and multilingual voiceovers from simple product inputs.
+              FLUVIA FLOW is the enterprise advertising creative platform. Generate broadcast-quality video commercials, product photography, and multilingual voiceovers from simple product inputs.
             </p>
             <div className="pt-2 flex items-center gap-2 text-xs text-[#5145CD] font-medium">
               <span className="inline-block w-2 h-2 rounded-full bg-[#10B981]" />
-              <span>Gemini Omni 1.1 Flash & ElevenLabs Neural Voice Active</span>
+              <span>Commercial Video Engine & Neural Voice Active</span>
             </div>
           </div>
 

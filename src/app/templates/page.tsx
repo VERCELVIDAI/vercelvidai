@@ -580,14 +580,14 @@ function DiscoveryFeedContent() {
                   className="px-4 py-2.5 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center gap-1.5 shadow-xs transition-all"
                 >
                   <Film className="w-3.5 h-3.5" />
-                  <span>Open Video Studio</span>
+                  <span>Create Video Ad</span>
                 </Link>
                 <Link
                   href="/create?mode=image"
                   className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-[#17191D] font-semibold text-xs flex items-center gap-1.5 border border-[#E5E7EB] transition-colors shadow-2xs"
                 >
                   <Wand2 className="w-3.5 h-3.5 text-[#5145CD]" />
-                  <span>AI Image Studio</span>
+                  <span>Create Product Image</span>
                 </Link>
               </div>
             </div>

@@ -24,8 +24,6 @@ import {
   Film,
   Sliders,
   ExternalLink,
-  ChevronLeft,
-  ChevronRight,
 } from 'lucide-react';
 
 interface AdPreset {
@@ -42,64 +40,6 @@ interface AdPreset {
   prompt: string;
   tags?: string[];
 }
-
-const HERO_SLIDES = [
-  {
-    id: 'slide_01',
-    slug: 'empire-cash-viral-ugc-hook',
-    title: 'Empire Drop — Viral Cash UGC Hook',
-    category: 'Viral UGC Hook',
-    aspect: '9:16' as const,
-    duration: '15s',
-    videoUrl: '/media/templates/tmpl-ugc-wealth-hook.mp4',
-    poster: '/media/templates/poster-vid-ugc-wealth.jpg',
-    prompt: 'High-energy viral social media hook of young creator in modern penthouse cascading thick brick stacks of hundred-dollar bills, dynamic handheld camera motion, luxury lifestyle aesthetic, natural bedroom window light, photorealistic 4k.',
-  },
-  {
-    id: 'slide_02',
-    slug: 'matchday-celebration-football-star',
-    title: 'Matchday Celebration — Football Star Reel',
-    category: 'Sports & Social Reels',
-    aspect: '9:16' as const,
-    duration: '6s',
-    videoUrl: '/media/templates/tmpl-sports-celebrity-reel.mp4',
-    poster: '/media/templates/poster-vid-sports-celebrity.jpg',
-    prompt: 'Cinematic celebration reel of football legend in red and green #7 national kit dancing with charismatic motion at gala banquet, studio softbox ambient fill light, sharp depth of field, 4k 60fps.',
-  },
-  {
-    id: 'slide_03',
-    slug: 'costa-privee-mediterranean-resort',
-    title: 'Costa Privée — Mediterranean Luxury Resort',
-    category: 'Luxury Travel & Hospitality',
-    aspect: '9:16' as const,
-    duration: '11s',
-    videoUrl: '/media/templates/tmpl-mediterranean-resort.mp4',
-    poster: '/media/templates/poster-vid-mediterranean-resort.jpg',
-    prompt: 'Cinematic luxury travel commercial featuring distinguished silver-haired gentleman in crisp white linen shirt relaxing at seaside Mediterranean beach club terrace, warm sunlight, gentle bokeh, luxury vacation vibe, 4k ultra-hd.',
-  },
-  {
-    id: 'slide_04',
-    slug: 'veloce-apex-cyber-hyperkart',
-    title: 'Veloce Apex — Cyber Hyperkart Reveal',
-    category: 'Cinematic Automotive',
-    aspect: '9:16' as const,
-    duration: '16s',
-    videoUrl: '/media/templates/tmpl-cyber-hyperkart.mp4',
-    poster: '/media/templates/poster-vid-cyber-hyperkart.jpg',
-    prompt: 'Dramatic low-angle commercial reveal of futuristic custom twin-seat electric racing hyperkart in industrial concrete hangar, glossy black aero bodywork, wide track tires, atmospheric volumetric lighting, photorealistic automotive cinematography.',
-  },
-  {
-    id: 'slide_05',
-    slug: 'aura-privee-luxury-perfume-commercial',
-    title: 'Aura Privée — Luxury Perfume Film',
-    category: 'Product Commercial',
-    aspect: '16:9' as const,
-    duration: '15s',
-    videoUrl: '/media/hero/fluvia-hero-showcase.mp4',
-    poster: '/media/templates/poster-vid-01-perfume.jpg',
-    prompt: 'Ultra-luxury midnight perfume bottle floating over liquid gold ripples, dramatic rim lighting, 4k cinematic commercial.',
-  },
-];
 
 const VERTICAL_PRESETS: AdPreset[] = [
   {
@@ -296,40 +236,12 @@ function VerticalPresetCard({ preset }: { preset: AdPreset }) {
 }
 
 export default function HomePage() {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const [isSlidePlaying, setIsSlidePlaying] = useState(true);
-  const [isSlideMuted, setIsSlideMuted] = useState(true);
-  const slideVideoRef = useRef<HTMLVideoElement | null>(null);
+  const [selectedHeroIndex, setSelectedHeroIndex] = useState(0);
+  const [unmutedHeroIndex, setUnmutedHeroIndex] = useState<number | null>(null);
+  const heroVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [galleryTab, setGalleryTab] = useState<'vertical' | 'widescreen'>('vertical');
 
-  const activeSlide = HERO_SLIDES[activeSlideIndex] || HERO_SLIDES[0];
-
-  const handlePrevSlide = () => {
-    setActiveSlideIndex((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
-    setIsSlidePlaying(true);
-  };
-
-  const handleNextSlide = () => {
-    setActiveSlideIndex((prev) => (prev === HERO_SLIDES.length - 1 ? 0 : prev + 1));
-    setIsSlidePlaying(true);
-  };
-
-  const toggleSlidePlay = () => {
-    if (!slideVideoRef.current) return;
-    if (slideVideoRef.current.paused) {
-      slideVideoRef.current.play().catch(() => {});
-      setIsSlidePlaying(true);
-    } else {
-      slideVideoRef.current.pause();
-      setIsSlidePlaying(false);
-    }
-  };
-
-  const toggleSlideMute = () => {
-    if (!slideVideoRef.current) return;
-    slideVideoRef.current.muted = !isSlideMuted;
-    setIsSlideMuted(!isSlideMuted);
-  };
+  const selectedPreset = VERTICAL_PRESETS[selectedHeroIndex] || VERTICAL_PRESETS[0];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD] overflow-x-hidden max-w-full">
@@ -338,10 +250,10 @@ export default function HomePage() {
 
       <main className="flex-1 w-full overflow-x-hidden">
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION: BUSINESS AI AD CREATION STUDIO */}
+        {/* 1. HERO SECTION: COMMERCIAL VIDEO CREATIVE ENGINE */}
         {/* ========================================================================= */}
         <section className="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F7F8FA] to-[#FFFFFF] border-b border-[#E5E7EB] w-full">
-          {/* Crazy Live Interactive Neural Canvas & Aurora Background */}
+          {/* Live Interactive Canvas & Aurora Background */}
           <LiveCrazyBackground />
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -349,18 +261,18 @@ export default function HomePage() {
               {/* Product Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EEF2FF] border border-[#C7D2FE] text-xs font-semibold text-[#5145CD] shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
-                <span>Next-Generation AI Ad Creation Studio</span>
+                <span>Commercial Video Creatives</span>
               </div>
 
               {/* Main Headline */}
               <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#17191D] leading-[1.15] break-words">
-                Create high-converting AI video ads{' '}
+                Create high-converting video ads{' '}
                 <span className="text-[#5145CD]">in minutes.</span>
               </h1>
 
               {/* Concise Supporting Copy */}
               <p className="text-base sm:text-lg text-[#667085] max-w-2xl mx-auto leading-relaxed">
-                Empower your marketing team to produce studio-grade product commercials, performance video ads, and localized voiceovers from simple product inputs with next-generation commercial AI models.
+                Empower your marketing team to produce broadcast-quality product commercials, performance video ads, and localized voiceovers from simple product inputs with next-generation commercial video engines.
               </p>
 
               {/* Strong Primary Actions */}
@@ -400,7 +312,7 @@ export default function HomePage() {
             </div>
 
             {/* ========================================================================= */}
-            {/* HERO 5-VIDEO SLIDE SHOWCASE (ZERO TEXT ON VIDEO, SLIDE FORMAT) */}
+            {/* HERO SIMULTANEOUS 4-VIDEO SHOWCASE (ALL PLAY TOGETHER, ZERO TEXT ON VIDEO) */}
             {/* ========================================================================= */}
             <div className="relative rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF] shadow-xl p-3 sm:p-5 max-w-5xl mx-auto mt-6 sm:mt-8">
               {/* Top Navigation & Status Bar */}
@@ -411,197 +323,169 @@ export default function HomePage() {
                     Commercial Ad Presets
                   </span>
                   <span className="text-[11px] font-mono text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#C7D2FE] font-semibold hidden sm:inline-flex">
-                    5 Curated Studio Presets
+                    4 Curated Video Reels
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* Play & Mute buttons outside video */}
-                  <button
-                    type="button"
-                    onClick={toggleSlidePlay}
-                    className="p-1.5 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-[#17191D] transition-colors cursor-pointer"
-                    aria-label={isSlidePlaying ? 'Pause video' : 'Play video'}
-                    title={isSlidePlaying ? 'Pause video' : 'Play video'}
-                  >
-                    {isSlidePlaying ? (
-                      <Pause className="w-3.5 h-3.5" />
-                    ) : (
-                      <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                    )}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={toggleSlideMute}
-                    className="p-1.5 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-[#17191D] transition-colors cursor-pointer"
-                    aria-label={isSlideMuted ? 'Unmute video' : 'Mute video'}
-                    title={isSlideMuted ? 'Unmute video' : 'Mute video'}
-                  >
-                    {isSlideMuted ? (
-                      <VolumeX className="w-3.5 h-3.5" />
-                    ) : (
-                      <Volume2 className="w-3.5 h-3.5" />
-                    )}
-                  </button>
-
-                  <span className="text-xs font-mono font-bold text-[#667085] bg-[#F7F8FA] px-2.5 py-1 rounded-lg border border-[#E5E7EB]">
-                    0{activeSlideIndex + 1} / 0{HERO_SLIDES.length}
+                  <span className="text-[11px] text-[#667085] hidden sm:inline-block">
+                    All playing live simultaneously
                   </span>
-
-                  <div className="inline-flex items-center rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] p-0.5">
-                    <button
-                      type="button"
-                      onClick={handlePrevSlide}
-                      className="p-1 sm:p-1.5 rounded-md hover:bg-white text-[#17191D] hover:text-[#5145CD] transition-colors cursor-pointer"
-                      title="Previous video slide"
-                      aria-label="Previous video slide"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleNextSlide}
-                      className="p-1 sm:p-1.5 rounded-md hover:bg-white text-[#17191D] hover:text-[#5145CD] transition-colors cursor-pointer"
-                      title="Next video slide"
-                      aria-label="Next video slide"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (unmutedHeroIndex !== null) {
+                        setUnmutedHeroIndex(null);
+                      } else {
+                        setUnmutedHeroIndex(selectedHeroIndex);
+                      }
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-xs font-medium text-[#17191D] transition-colors cursor-pointer"
+                    title={unmutedHeroIndex !== null ? 'Mute audio' : 'Unmute audio'}
+                  >
+                    {unmutedHeroIndex !== null ? (
+                      <>
+                        <Volume2 className="w-3.5 h-3.5 text-[#5145CD]" />
+                        <span>Sound On</span>
+                      </>
+                    ) : (
+                      <>
+                        <VolumeX className="w-3.5 h-3.5 text-[#667085]" />
+                        <span>Muted</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
 
-              {/* 100% PURE CLEAN VIDEO VIEWPORT — ABSOLUTELY NOTHING ON TOP */}
-              <div className="relative aspect-[16/10] sm:aspect-video w-full rounded-xl overflow-hidden bg-[#0D0E12] flex items-center justify-center shadow-inner">
-                {/* Ambient Blurred Backdrop for 9:16 vertical videos */}
-                {activeSlide.aspect === '9:16' && (
-                  <img
-                    src={activeSlide.poster}
-                    alt=""
-                    aria-hidden="true"
-                    className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-30 scale-125 pointer-events-none transition-all duration-700"
-                  />
-                )}
+              {/* 4-VIDEO SIMULTANEOUS GRID (ALL VIDEOS PLAY AT THE SAME TIME) */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+                {VERTICAL_PRESETS.map((preset, idx) => {
+                  const isSelected = selectedHeroIndex === idx;
+                  const isUnmuted = unmutedHeroIndex === idx;
 
-                {/* Main Video Player — ZERO OVERLAYS, CLEAN PLAYBACK */}
-                <video
-                  ref={slideVideoRef}
-                  key={activeSlide.id}
-                  src={activeSlide.videoUrl}
-                  poster={activeSlide.poster}
-                  preload="auto"
-                  autoPlay
-                  loop
-                  muted={isSlideMuted}
-                  playsInline
-                  className={`relative z-10 h-full w-auto max-h-[520px] object-contain shadow-2xl transition-all duration-500 ${
-                    activeSlide.aspect === '9:16'
-                      ? 'aspect-[9/16] rounded-lg'
-                      : 'w-full aspect-video object-cover'
-                  }`}
-                />
-              </div>
-
-              {/* 5 Slide Pagination Dots (Cleanly OUTSIDE the video) */}
-              <div className="flex items-center justify-center gap-2 pt-3 pb-1">
-                {HERO_SLIDES.map((_, dotIdx) => (
-                  <button
-                    key={dotIdx}
-                    type="button"
-                    onClick={() => setActiveSlideIndex(dotIdx)}
-                    className={`h-2 rounded-full transition-all cursor-pointer ${
-                      activeSlideIndex === dotIdx
-                        ? 'w-7 bg-[#5145CD]'
-                        : 'w-2 bg-[#E5E7EB] hover:bg-[#C7D2FE]'
-                    }`}
-                    aria-label={`Go to slide ${dotIdx + 1}`}
-                  />
-                ))}
-              </div>
-
-              {/* 5-THUMBNAIL STRIP: CLICKABLE SELECTOR TO SLIDE TO ANY OF THE 5 VIDEOS */}
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 mt-4">
-                {HERO_SLIDES.map((slide, idx) => {
-                  const isActive = activeSlideIndex === idx;
                   return (
-                    <button
-                      key={slide.id}
-                      type="button"
-                      onClick={() => setActiveSlideIndex(idx)}
-                      className={`group p-2 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-2.5 ${
-                        isActive
-                          ? 'bg-[#EEF2FF] border-[#5145CD] ring-2 ring-[#5145CD] shadow-sm'
-                          : 'bg-[#FFFFFF] border-[#E5E7EB] hover:border-[#C7D2FE] hover:bg-[#F7F8FA]'
+                    <div
+                      key={preset.id}
+                      onClick={() => setSelectedHeroIndex(idx)}
+                      className={`cursor-pointer rounded-xl sm:rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col justify-between ${
+                        isSelected
+                          ? 'bg-white border-[#5145CD] ring-2 ring-[#5145CD]/40 shadow-lg scale-[1.01]'
+                          : 'bg-white border-[#E5E7EB] hover:border-[#C7D2FE] hover:shadow-md'
                       }`}
                     >
-                      <div className="relative w-9 h-12 rounded-md overflow-hidden bg-black shrink-0">
-                        <img src={slide.poster} alt="" className="w-full h-full object-cover" />
-                        <span className="absolute bottom-0.5 right-0.5 px-1 py-0.2 rounded text-[8px] font-mono font-bold bg-black/80 text-white">
-                          {slide.duration}
-                        </span>
+                      {/* 100% PURE CLEAN VIDEO VIEWPORT — ABSOLUTELY ZERO OVERLAYS */}
+                      <div className="relative aspect-[9/16] w-full bg-[#0D0E12] overflow-hidden">
+                        <video
+                          ref={(el) => {
+                            heroVideoRefs.current[idx] = el;
+                          }}
+                          src={preset.videoUrl}
+                          poster={preset.poster}
+                          autoPlay
+                          loop
+                          muted={!isUnmuted}
+                          playsInline
+                          preload="auto"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-1">
-                          <span className={`text-[10px] font-mono font-bold ${isActive ? 'text-[#5145CD]' : 'text-[#667085]'}`}>
-                            0{idx + 1}
-                          </span>
-                          <span className="text-[9px] font-mono text-[#667085]">
-                            {slide.aspect}
-                          </span>
+
+                      {/* METADATA CLEANLY UNDERNEATH VIDEO (ZERO TEXT ON VIDEO) */}
+                      <div className="p-2.5 sm:p-3 bg-white border-t border-[#F1F3F5] flex-1 flex flex-col justify-between space-y-2">
+                        <div>
+                          <div className="flex items-center justify-between gap-1 mb-1">
+                            <span className="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] truncate">
+                              {preset.category}
+                            </span>
+                            <span className="text-[9px] sm:text-[10px] font-mono text-[#667085] bg-[#F1F3F5] px-1 py-0.5 rounded shrink-0">
+                              {preset.duration} • 9:16
+                            </span>
+                          </div>
+                          <h4 className="text-xs sm:text-sm font-bold text-[#17191D] line-clamp-1">
+                            {preset.title.split('—')[0].trim()}
+                          </h4>
                         </div>
-                        <p className="text-xs font-bold text-[#17191D] truncate group-hover:text-[#5145CD] transition-colors">
-                          {slide.title.split('—')[0].trim()}
-                        </p>
-                        <p className="text-[10px] text-[#667085] truncate">
-                          {slide.category}
-                        </p>
+
+                        <div className="flex items-center justify-between gap-1.5 pt-1 border-t border-[#F1F3F5]">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedHeroIndex(idx);
+                              setUnmutedHeroIndex(isUnmuted ? null : idx);
+                            }}
+                            className={`p-1.5 rounded-md border text-xs transition-colors cursor-pointer ${
+                              isUnmuted
+                                ? 'bg-[#5145CD] border-[#5145CD] text-white'
+                                : 'bg-[#F7F8FA] border-[#E5E7EB] text-[#667085] hover:text-[#17191D]'
+                            }`}
+                            title={isUnmuted ? 'Mute' : 'Listen with sound'}
+                            aria-label={isUnmuted ? 'Mute audio' : 'Unmute audio'}
+                          >
+                            {isUnmuted ? (
+                              <Volume2 className="w-3.5 h-3.5" />
+                            ) : (
+                              <VolumeX className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+
+                          <Link
+                            href={`/create?prompt=${encodeURIComponent(preset.prompt)}&aspect=9:16&mode=video`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex-1 py-1.5 px-2 rounded-md bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-[11px] sm:text-xs text-center transition-colors shadow-xs"
+                          >
+                            Use Preset
+                          </Link>
+                        </div>
                       </div>
-                    </button>
+                    </div>
                   );
                 })}
               </div>
 
-              {/* DYNAMIC STUDIO PROMPT BAR FOR ACTIVE SLIDE (PLACED CLEANLY BELOW VIDEO) */}
-              <div className="mt-3.5 p-3.5 sm:p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div className="flex items-start gap-2.5 min-w-0 flex-1">
-                  <div className="w-7 h-7 rounded-lg bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] flex items-center justify-center shrink-0 mt-0.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-xs font-bold text-[#17191D]">
-                        {activeSlide.title}
-                      </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF]">
-                        {activeSlide.category}
-                      </span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#E5E7EB] text-[#17191D]">
-                        {activeSlide.aspect} • {activeSlide.duration}
-                      </span>
+              {/* DYNAMIC PROMPT BAR FOR SELECTED PRESET (CLEANLY BELOW GRID) */}
+              {selectedPreset && (
+                <div className="mt-4 p-3.5 sm:p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                    <div className="w-7 h-7 rounded-lg bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] flex items-center justify-center shrink-0 mt-0.5">
+                      <Sparkles className="w-3.5 h-3.5" />
                     </div>
-                    <p className="text-[#667085] text-xs line-clamp-2 leading-relaxed">
-                      &ldquo;{activeSlide.prompt}&rdquo;
-                    </p>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <span className="text-xs font-bold text-[#17191D]">
+                          {selectedPreset.title}
+                        </span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF]">
+                          {selectedPreset.category}
+                        </span>
+                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#E5E7EB] text-[#17191D]">
+                          {selectedPreset.aspect} • {selectedPreset.duration}
+                        </span>
+                      </div>
+                      <p className="text-[#667085] text-xs line-clamp-2 leading-relaxed">
+                        &ldquo;{selectedPreset.prompt}&rdquo;
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                    <Link
+                      href={`/create?prompt=${encodeURIComponent(selectedPreset.prompt)}&aspect=9:16&mode=video`}
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Use This Preset</span>
+                    </Link>
+                    <Link
+                      href={`/templates/${selectedPreset.slug}`}
+                      className="hidden sm:inline-flex px-3 py-2.5 rounded-lg border border-[#E5E7EB] bg-white hover:bg-slate-50 text-[#17191D] font-medium text-xs transition-colors"
+                    >
+                      Explore Storyboard →
+                    </Link>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-                  <Link
-                    href={`/create?prompt=${encodeURIComponent(activeSlide.prompt)}&aspect=${activeSlide.aspect}&mode=video`}
-                    className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                  >
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Use This Preset</span>
-                  </Link>
-                  <Link
-                    href={`/templates/${activeSlide.slug}`}
-                    className="hidden sm:inline-flex px-3 py-2.5 rounded-lg border border-[#E5E7EB] bg-white hover:bg-slate-50 text-[#17191D] font-medium text-xs transition-colors"
-                  >
-                    Details
-                  </Link>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
@@ -653,7 +537,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-base font-bold text-[#17191D]">Generate Creatives</h3>
                 <p className="text-xs text-[#667085] leading-relaxed">
-                  Next-generation video engines render cinematic shots while studio-grade multilingual voiceovers are synthesized seamlessly.
+                  Next-generation video engines render cinematic shots while broadcast-grade multilingual voiceovers are synthesized seamlessly.
                 </p>
               </div>
 
@@ -919,7 +803,7 @@ export default function HomePage() {
               {[
                 {
                   q: 'How does generation credit pricing work?',
-                  a: 'Every video ad generated costs exactly 15 credits. High-resolution product images cost 5 credits, and studio voiceovers cost 2 credits. If an AI generation job ever encounters a provider error, credits are automatically refunded to your wallet atomically.',
+                  a: 'Every video ad generated costs exactly 15 credits. High-resolution product images cost 5 credits, and voiceovers cost 2 credits. If a generation job ever encounters a provider error, credits are automatically refunded to your wallet atomically.',
                 },
                 {
                   q: 'How do I use the FIRST20 coupon code?',
@@ -952,7 +836,7 @@ export default function HomePage() {
               Ready to elevate your ad creative production?
             </h2>
             <p className="text-sm text-[#667085] max-w-xl mx-auto">
-              Join marketing teams generating high-ROI video commercials with Fluvia Flow's AI studio.
+              Join marketing teams generating high-ROI video commercials with Fluvia Flow.
             </p>
             <div className="pt-2">
               <Link

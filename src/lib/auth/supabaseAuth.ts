@@ -142,7 +142,7 @@ export async function supabaseSignUp(params: {
         requiresEmailVerification: false,
         user: profile,
         workspace,
-        message: 'Account successfully registered with 100 free generative credits!',
+        message: 'Account successfully registered! Welcome to Fluvia Flow.',
       };
     }
 

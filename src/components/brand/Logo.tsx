@@ -75,7 +75,7 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
         </div>
       </div>
 
-      {/* Typography: Balanced Grotesque Wordmark + AI Studio Tag */}
+      {/* Typography: Balanced Grotesque Wordmark */}
       <div className="flex flex-col justify-center min-w-0">
         <div className="flex items-center tracking-tight leading-none gap-1 sm:gap-1.5">
           <span className={`font-black text-[#17191D] tracking-[-0.03em] ${textSizes[size]}`}>
@@ -84,13 +84,10 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
           <span className={`font-semibold text-[#5145CD] tracking-[-0.03em] ${textSizes[size]}`}>
             FLOW
           </span>
-          <span className={`hidden sm:inline-block font-mono font-bold rounded-md bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] uppercase tracking-wider ${badgeSizes[size]}`}>
-            AI STUDIO
-          </span>
         </div>
         {showTagline && (
           <span className="text-[11px] font-medium tracking-normal text-[#667085] mt-1">
-            AI Ad Creation & Creative Production
+            Commercial Video Creation & Creative Production
           </span>
         )}
       </div>

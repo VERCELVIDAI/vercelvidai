@@ -184,14 +184,14 @@ export default function ProjectsLibraryPage() {
               <FolderKanban className="w-12 h-12 text-[#667085]/40 mx-auto" />
               <h3 className="font-bold text-[#17191D] text-base">No Matching Projects Found</h3>
               <p className="text-xs text-[#667085] max-w-sm mx-auto">
-                Adjust your search query or start a new creation in the AI Studio.
+                Adjust your search query or start a new creative project.
               </p>
               <Link
                 href="/create"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs"
               >
                 <Plus className="w-3.5 h-3.5" />
-                <span>Launch Studio</span>
+                <span>Create Project</span>
               </Link>
             </div>
           ) : (
