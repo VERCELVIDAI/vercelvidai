@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { FirstCampaignModal } from '@/components/promotions/FirstCampaignModal';
+import { LiveCrazyBackground } from '@/components/home/LiveCrazyBackground';
 import {
   Sparkles,
   ArrowRight,
@@ -100,7 +101,10 @@ export default function HomePage() {
         {/* 1. HERO SECTION: BUSINESS AI AD CREATION STUDIO */}
         {/* ========================================================================= */}
         <section className="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F7F8FA] to-[#FFFFFF] border-b border-[#E5E7EB]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Crazy Live Interactive Neural Canvas & Aurora Background */}
+          <LiveCrazyBackground />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto space-y-5 mb-10">
               {/* Product Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EEF2FF] border border-[#C7D2FE] text-xs font-semibold text-[#5145CD] shadow-xs">
