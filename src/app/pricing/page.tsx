@@ -8,6 +8,7 @@ import { Footer } from '@/components/navigation/Footer';
 import { PlanRecommenderModal } from '@/components/pricing/PlanRecommenderModal';
 import { FeatureComparisonMatrix } from '@/components/pricing/FeatureComparisonMatrix';
 import { CreditTopUpSection } from '@/components/pricing/CreditTopUpSection';
+import { AnimatedDiscountGiftBox } from '@/components/pricing/AnimatedDiscountGiftBox';
 import {
   Check,
   X,
@@ -78,7 +79,27 @@ interface PlanDefinition {
     items: SpecItem[];
     extraCount: number;
   };
+  highlightBox?: {
+    title: string;
+    desc: string;
+    className: string;
+  };
   bottomChecklist: ChecklistItem[];
+}
+
+interface PlanTheme {
+  cardBorder: string;
+  titleColor: string;
+  discountBadge: string;
+  bestValueBadge?: string;
+  creditBoxBg: string;
+  creditIconColor: string;
+  creditAmountColor: string;
+  creditFooterClass: string;
+  ctaButton: string;
+  modelsPanelBg: string;
+  modelsPanelHeader: string;
+  specsPanelBg: string;
 }
 
 export default function PricingPage() {
@@ -129,7 +150,7 @@ export default function PricingPage() {
     }));
   };
 
-  // Structured plans matching the attached reference's layout & information hierarchy
+  // Structured plans with distinctive color personalities & screenshot hierarchy
   const allPlans: PlanDefinition[] = [
     {
       id: 'plan_starter',
@@ -237,6 +258,11 @@ export default function PricingPage() {
       ],
       fixedCreditsNote: 'Fixed amount of 4,000 credits/mo • Rolls over',
       ctaText: 'Get Ultra',
+      highlightBox: {
+        title: '⚡ VIP DEDICATED GPU CLUSTER & 4K 60FPS',
+        desc: 'Fastest render lane with Gemini Storyboard Director Mode',
+        className: 'bg-gradient-to-r from-pink-50 via-purple-50 to-pink-50 border border-pink-200 text-pink-950',
+      },
       modelsBox: {
         header: 'MODELS & RESOLUTION',
         items: [
@@ -282,6 +308,11 @@ export default function PricingPage() {
       ],
       fixedCreditsNote: 'Starting from 1,000 credits/seat/mo • Pooled',
       ctaText: 'Explore Team Plans',
+      highlightBox: {
+        title: '⚡ POOLED CREDITS & SHARED WORKSPACE',
+        desc: 'Collaborative asset pool across up to 10 team seats',
+        className: 'bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200 text-blue-950',
+      },
       modelsBox: {
         header: 'UNLIMITED MODELS & CLUSTER',
         items: [
@@ -311,6 +342,64 @@ export default function PricingPage() {
       ],
     },
   ];
+
+  // Card Color Themes mapping to the reference screenshot
+  const planThemes: Record<string, PlanTheme> = {
+    plan_starter: {
+      cardBorder: 'border-slate-300 hover:border-slate-500 shadow-sm bg-white',
+      titleColor: 'text-slate-900',
+      discountBadge: 'bg-slate-100 text-slate-700 border-slate-300',
+      creditBoxBg: 'bg-slate-50 border-slate-200',
+      creditIconColor: 'text-slate-600',
+      creditAmountColor: 'text-slate-900',
+      creditFooterClass: 'text-slate-600 border-slate-200',
+      ctaButton: 'bg-slate-900 hover:bg-slate-800 text-white font-bold shadow-xs',
+      modelsPanelBg: 'bg-slate-50/70 border-slate-200',
+      modelsPanelHeader: 'text-slate-800',
+      specsPanelBg: 'bg-slate-50/70 border-slate-200',
+    },
+    plan_creator: {
+      cardBorder: 'border-2 border-emerald-400 hover:border-emerald-500 shadow-md shadow-emerald-500/10 bg-white',
+      titleColor: 'text-emerald-950',
+      discountBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300 font-bold',
+      creditBoxBg: 'bg-emerald-50/70 border-emerald-200',
+      creditIconColor: 'text-emerald-600',
+      creditAmountColor: 'text-emerald-800',
+      creditFooterClass: 'text-emerald-700 border-emerald-200',
+      ctaButton: 'bg-[#10B981] hover:bg-[#059669] text-white font-black shadow-md shadow-emerald-500/25',
+      modelsPanelBg: 'bg-emerald-50/50 border-emerald-200',
+      modelsPanelHeader: 'text-emerald-900',
+      specsPanelBg: 'bg-emerald-50/50 border-emerald-200',
+    },
+    plan_max: {
+      cardBorder: 'border-2 border-[#EC4899] shadow-xl shadow-pink-500/15 ring-2 ring-pink-400/20 lg:-translate-y-1.5 bg-white',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-pink-100 text-pink-700 border-pink-300 font-bold',
+      bestValueBadge: 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-black shadow-xs',
+      creditBoxBg: 'bg-pink-50/70 border-pink-200',
+      creditIconColor: 'text-pink-600',
+      creditAmountColor: 'text-pink-800',
+      creditFooterClass: 'text-pink-700 border-pink-200',
+      ctaButton: 'bg-gradient-to-r from-[#EC4899] via-[#D946EF] to-[#5145CD] hover:opacity-95 text-white font-black shadow-lg shadow-pink-500/30',
+      modelsPanelBg: 'bg-pink-50/40 border-pink-200',
+      modelsPanelHeader: 'text-pink-900',
+      specsPanelBg: 'bg-pink-50/40 border-pink-200',
+    },
+    plan_business: {
+      cardBorder: 'border-2 border-blue-400 hover:border-blue-500 shadow-md shadow-blue-500/10 bg-white',
+      titleColor: 'text-blue-950',
+      discountBadge: 'bg-blue-100 text-blue-800 border-blue-300 font-bold',
+      bestValueBadge: 'bg-blue-600 text-white font-black shadow-xs',
+      creditBoxBg: 'bg-blue-50/70 border-blue-200',
+      creditIconColor: 'text-blue-600',
+      creditAmountColor: 'text-blue-800',
+      creditFooterClass: 'text-blue-700 border-blue-200',
+      ctaButton: 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-black shadow-md shadow-blue-500/25',
+      modelsPanelBg: 'bg-blue-50/50 border-blue-200',
+      modelsPanelHeader: 'text-blue-900',
+      specsPanelBg: 'bg-blue-50/50 border-blue-200',
+    },
+  };
 
   const handleSelectPlan = (planId: string) => {
     const couponParam = planId === 'plan_max' ? '&coupon=FIRST20' : '';
@@ -367,7 +456,7 @@ export default function PricingPage() {
         {/* ========================================================================= */}
         {/* TOP TOOLBAR (EXACT REFERENCE STRUCTURE: TABS + PILL + RECOMMENDER + TOGGLE) */}
         {/* ========================================================================= */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#E5E7EB]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-6 border-b border-[#E5E7EB]">
           {/* Left: Category Tabs + Promotional Pill */}
           <div className="flex items-center gap-3 flex-wrap">
             <div className="inline-flex p-1 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB]">
@@ -458,7 +547,15 @@ export default function PricingPage() {
         </div>
 
         {/* ========================================================================= */}
-        {/* FOUR-COLUMN PRICING GRID (EXACT ARCHITECTURE & DEPTH FROM SCREENSHOT) */}
+        {/* ANIMATED DISCOUNT GIFT BOX (UNWRAP VOUCHER BANNER & CELEBRATION MODAL) */}
+        {/* ========================================================================= */}
+        <AnimatedDiscountGiftBox
+          billingInterval={billingInterval}
+          onApplyCoupon={(code) => handleSelectPlan('plan_max')}
+        />
+
+        {/* ========================================================================= */}
+        {/* FOUR-COLUMN PRICING GRID (WITH DISTINCTIVE COLORS & SCREENSHOT DEPTH) */}
         {/* ========================================================================= */}
         <div
           className={`grid gap-4 sm:gap-5 items-stretch ${
@@ -473,32 +570,29 @@ export default function PricingPage() {
             const fullAnnualBilled = plan.annualMonthlyPrice * 12;
             const annualSavings = (plan.monthlyPrice - plan.annualMonthlyPrice) * 12;
             const isSpecsExpanded = !!expandedSpecs[plan.id];
+            const theme = planThemes[plan.id] || planThemes.plan_starter;
 
             return (
               <div
                 key={plan.id}
-                className={`rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-200 text-left bg-white ${
-                  plan.isRecommended
-                    ? 'border-2 border-[#5145CD] shadow-lg shadow-[#5145CD]/5 lg:-translate-y-1'
-                    : 'border border-[#E5E7EB] hover:border-[#D1D5DB] shadow-xs'
-                }`}
+                className={`rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 text-left ${theme.cardBorder}`}
               >
                 <div>
                   {/* Card Header: Title + Discount / Value Badges */}
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-xl font-black tracking-tight text-[#17191D]">
+                      <h3 className={`text-xl font-black tracking-tight ${theme.titleColor}`}>
                         {plan.title}
                       </h3>
                       {plan.discountBadge && isAnnual && (
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]">
+                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold border ${theme.discountBadge}`}>
                           {plan.discountBadge}
                         </span>
                       )}
                     </div>
 
                     {plan.bestValueBadge && (
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#5145CD] text-white">
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${theme.bestValueBadge}`}>
                         {plan.bestValueBadge}
                       </span>
                     )}
@@ -509,24 +603,24 @@ export default function PricingPage() {
                     {plan.subtitle}
                   </p>
 
-                  {/* Inner Credit Allowance Box (Exact Reference Pattern) */}
-                  <div className="mt-3.5 p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
-                    <div className="flex items-center gap-1.5 font-bold text-xs text-[#17191D]">
-                      <Coins className="w-3.5 h-3.5 text-[#5145CD]" />
-                      <span>{plan.creditsLabel}</span>
+                  {/* Inner Credit Allowance Box (Exact Reference Pattern with Colors) */}
+                  <div className={`mt-3.5 p-3.5 rounded-xl border space-y-2 ${theme.creditBoxBg}`}>
+                    <div className="flex items-center gap-1.5 font-bold text-xs">
+                      <Coins className={`w-3.5 h-3.5 ${theme.creditIconColor}`} />
+                      <span className={theme.creditAmountColor}>{plan.creditsLabel}</span>
                     </div>
 
                     <ul className="space-y-1 text-[11px] text-[#667085] pl-1">
                       {plan.creditsLines.map((line, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
-                          <span className="text-[#667085]">•</span>
+                          <span>•</span>
                           <span>{line}</span>
                         </li>
                       ))}
                     </ul>
 
-                    <div className="pt-2 border-t border-[#E5E7EB] flex items-center gap-1.5 text-[10px] font-medium text-[#10B981]">
-                      <Check className="w-3 h-3 text-[#10B981] shrink-0" />
+                    <div className={`pt-2 border-t flex items-center gap-1.5 text-[10px] font-semibold ${theme.creditFooterClass}`}>
+                      <Check className="w-3 h-3 shrink-0" />
                       <span>{plan.fixedCreditsNote}</span>
                     </div>
                   </div>
@@ -549,8 +643,8 @@ export default function PricingPage() {
 
                     {/* FIRST20 Coupon Callout on Ultra */}
                     {plan.couponTag && (
-                      <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-[10px] text-emerald-800 font-semibold font-mono">
-                        <Tag className="w-3 h-3 text-emerald-600 shrink-0" />
+                      <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-pink-100 border border-pink-300 text-[10px] text-pink-800 font-bold font-mono">
+                        <Tag className="w-3 h-3 text-pink-600 shrink-0" />
                         <span>{plan.couponTag}</span>
                       </div>
                     )}
@@ -561,11 +655,7 @@ export default function PricingPage() {
                     <button
                       type="button"
                       onClick={() => handleSelectPlan(plan.id)}
-                      className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs ${
-                        plan.isRecommended
-                          ? 'bg-[#5145CD] hover:bg-[#4338CA] text-white shadow-sm'
-                          : 'bg-[#F7F8FA] hover:bg-[#F1F3F5] text-[#17191D] border border-[#E5E7EB]'
-                      }`}
+                      className={`w-full py-2.5 px-4 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 transform hover:scale-[1.01] active:scale-98 ${theme.ctaButton}`}
                     >
                       <span>{plan.ctaText}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -578,9 +668,21 @@ export default function PricingPage() {
                     </p>
                   </div>
 
+                  {/* Optional Highlight Box (like in reference screenshot) */}
+                  {plan.highlightBox && (
+                    <div className={`mt-4 p-2.5 rounded-xl text-center border ${plan.highlightBox.className}`}>
+                      <p className="text-[10px] font-black uppercase tracking-wider">
+                        {plan.highlightBox.title}
+                      </p>
+                      <p className="text-[9px] opacity-80 mt-0.5">
+                        {plan.highlightBox.desc}
+                      </p>
+                    </div>
+                  )}
+
                   {/* Feature Box 1: MODELS & RESOLUTION (Exact Reference Inner Panel) */}
-                  <div className="mt-5 p-3 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#17191D]">
+                  <div className={`mt-4 p-3 rounded-xl border space-y-2 ${theme.modelsPanelBg}`}>
+                    <div className={`flex items-center justify-between text-[10px] font-black uppercase tracking-wider ${theme.modelsPanelHeader}`}>
                       <span>{plan.modelsBox.header}</span>
                       <button
                         type="button"
@@ -623,7 +725,7 @@ export default function PricingPage() {
                                 item.statusType === 'vip'
                                   ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]'
                                   : item.statusType === 'included'
-                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                                   : 'bg-white border border-[#E5E7EB] text-[#667085]/60'
                               }`}
                             >
@@ -636,8 +738,8 @@ export default function PricingPage() {
                   </div>
 
                   {/* Feature Box 2: PRODUCTION SPECS (Exact Reference Inner Panel) */}
-                  <div className="mt-3.5 p-3 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#17191D]">
+                  <div className={`mt-3.5 p-3 rounded-xl border space-y-2 ${theme.specsPanelBg}`}>
+                    <div className={`flex items-center justify-between text-[10px] font-black uppercase tracking-wider ${theme.modelsPanelHeader}`}>
                       <span>{plan.specsBox.header}</span>
                       <button
                         type="button"
