@@ -59,7 +59,7 @@ export const metadata: Metadata = {
         url: BRAND.ogImageAbsolute,
         width: 1200,
         height: 630,
-        alt: 'Fluvia Flow — Your imagination. In motion. AI Video & Creative Studio',
+        alt: 'Fluvia Flow — AI Ad Creation & Creative Production Studio',
         type: 'image/jpeg',
       },
     ],
