@@ -131,16 +131,4 @@
   }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #39233B;
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #F05BCE;
-}
-
-/* Safety Override ensuring legacy charcoal classes never render dark text */
-.text-\[\#17211D\] {
-  color: #F5EAF4 !important;
-}
+/* Clean scrollbar styling already defined above */

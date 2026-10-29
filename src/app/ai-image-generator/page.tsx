@@ -3,23 +3,23 @@ import Link from 'next/link';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { GeminiImageStudio } from '@/components/studio/GeminiImageStudio';
-import { Image as ImageIcon, Sparkles, ArrowRight, Wand2, Palette, Shield } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 
 export default function AIImageGeneratorPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#100A12] text-[#F5EAF4]">
+    <div className="min-h-screen flex flex-col bg-white text-[#17191D]">
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-left">
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F05BCE]/15 border border-[#F05BCE]/30 text-xs font-bold text-[#F05BCE] mb-4 shadow-xs font-mono">
-            <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EEF2FF] border border-[#E0E7FF] text-xs font-bold text-[#5145CD] mb-4 shadow-2xs font-mono">
+            <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
             <span>Google Gemini Imagen & Flux 1.1 Pro Vision</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#F5EAF4] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#17191D] tracking-tight">
             Gemini AI Image Studio
           </h1>
-          <p className="mt-3 text-sm sm:text-lg text-[#A99AAA]">
+          <p className="mt-3 text-sm sm:text-lg text-[#667085]">
             Generate ultra-high-fidelity concept art, luxury commercial advertisements, and product renderings powered by Google Gemini AI.
           </p>
         </div>
@@ -31,7 +31,7 @@ export default function AIImageGeneratorPage() {
 
         {/* Gallery of High Fidelity Visuals */}
         <div className="my-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#F5EAF4] mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] mb-8 text-center">
             Curated High-Fidelity Generations
           </h2>
 
@@ -68,8 +68,8 @@ export default function AIImageGeneratorPage() {
                 aspect: 'Cinema (16:9)',
               },
             ].map((card, idx) => (
-              <div key={idx} className="rounded-2xl bg-[#211522] border border-[#39233B] overflow-hidden group shadow-md hover:border-[#F05BCE]/40 transition-all">
-                <div className="aspect-square relative overflow-hidden bg-black">
+              <div key={idx} className="rounded-2xl bg-white border border-[#E5E7EB] overflow-hidden group shadow-xs hover:border-[#5145CD]/40 transition-all">
+                <div className="aspect-square relative overflow-hidden bg-[#17191D]">
                   <img
                     src={card.image}
                     alt={card.title}
@@ -78,7 +78,7 @@ export default function AIImageGeneratorPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                     <Link
                       href={`/create?mode=video&ref=${encodeURIComponent(card.image)}`}
-                      className="w-full py-2 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-md shadow-[#F05BCE]/25 cursor-pointer"
+                      className="w-full py-2 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
                     >
                       <span>Animate to Video</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -86,8 +86,8 @@ export default function AIImageGeneratorPage() {
                   </div>
                 </div>
                 <div className="p-4 flex items-center justify-between">
-                  <h4 className="font-bold text-[#F5EAF4] text-sm">{card.title}</h4>
-                  <span className="text-[11px] text-[#A99AAA] font-mono font-medium">{card.aspect}</span>
+                  <h4 className="font-bold text-[#17191D] text-sm">{card.title}</h4>
+                  <span className="text-[11px] text-[#667085] font-mono font-medium">{card.aspect}</span>
                 </div>
               </div>
             ))}

@@ -605,7 +605,7 @@ function DiscoveryFeedContent() {
             <button
               type="button"
               onClick={() => setActiveTab('recommended')}
-              className="mt-6 text-xs text-[#F05BCE] hover:underline font-semibold"
+              className="mt-6 text-xs text-[#5145CD] hover:underline font-semibold"
             >
               ← Back to Recommended Feed
             </button>
@@ -613,9 +613,9 @@ function DiscoveryFeedContent() {
         ) : displayedTemplates.length === 0 ? (
           /* EMPTY SEARCH / FILTER RESULTS */
           <div className="py-24 text-center max-w-md mx-auto space-y-4">
-            <Film className="w-12 h-12 text-[#A99AAA]/40 mx-auto" />
-            <h3 className="text-lg font-bold text-[#F5EAF4]">No Templates Found</h3>
-            <p className="text-xs text-[#A99AAA]">
+            <Film className="w-12 h-12 text-[#667085]/40 mx-auto" />
+            <h3 className="text-lg font-bold text-[#17191D]">No Templates Found</h3>
+            <p className="text-xs text-[#667085]">
               We couldn&apos;t find any templates matching your filter criteria. Try resetting the category, format, or search keywords.
             </p>
             <button
@@ -626,7 +626,7 @@ function DiscoveryFeedContent() {
                 setSelectedAspect('all');
                 setSearchQuery('');
               }}
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white text-xs font-bold shadow-md hover:brightness-110 transition-colors"
+              className="px-4 py-2 rounded-full bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs transition-colors"
             >
               Reset Filters
             </button>
@@ -695,8 +695,8 @@ export default function TemplatesPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#100A12] flex items-center justify-center text-white">
-          <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen bg-white flex items-center justify-center text-[#17191D]">
+          <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

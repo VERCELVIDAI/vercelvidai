@@ -173,32 +173,32 @@ export function GeminiImageStudio({
   };
 
   return (
-    <div className={`w-full text-left text-[#F5EAF4] ${className}`}>
+    <div className={`w-full text-left text-[#17191D] ${className}`}>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Form: Parameters & Prompt (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-[#211522] rounded-2xl p-6 border border-[#39233B] shadow-xl">
-            <div className="flex items-center justify-between pb-4 border-b border-[#39233B] mb-5">
+          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-xs">
+            <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB] mb-5">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#F05BCE] to-[#C026D3] flex items-center justify-center text-white shadow-xs">
+                <div className="w-9 h-9 rounded-xl bg-[#5145CD] flex items-center justify-center text-white shadow-2xs">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-[#F5EAF4] text-base sm:text-lg flex items-center gap-2">
+                  <h3 className="font-bold text-[#17191D] text-base sm:text-lg flex items-center gap-2">
                     <span>Gemini Image Synthesis</span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[10px] font-bold text-[#F05BCE] border border-[#F05BCE]/30">
+                    <span className="px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[10px] font-bold text-[#5145CD] border border-[#E0E7FF]">
                       Official SDK
                     </span>
                   </h3>
-                  <p className="text-xs text-[#A99AAA]">
+                  <p className="text-xs text-[#667085]">
                     Direct neural rendering with Google Gemini Imagen models
                   </p>
                 </div>
               </div>
 
               {userCredits !== null && (
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F05BCE]/15 border border-[#F05BCE]/30 text-xs font-bold text-[#F05BCE]">
-                  <Zap className="w-3.5 h-3.5 text-[#F05BCE]" />
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#EEF2FF] border border-[#E0E7FF] text-xs font-bold text-[#5145CD]">
+                  <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
                   <span>{userCredits} Credits</span>
                 </div>
               )}
@@ -207,7 +207,7 @@ export function GeminiImageStudio({
             {/* Prompt Input Container */}
             <div className="space-y-2 mb-5">
               <div className="flex items-center justify-between text-xs">
-                <label className="font-bold text-[#F5EAF4] uppercase tracking-wider text-[11px]">
+                <label className="font-bold text-[#17191D] uppercase tracking-wider text-[11px]">
                   Creative Prompt
                 </label>
                 <div className="flex items-center gap-3">
@@ -215,12 +215,12 @@ export function GeminiImageStudio({
                     type="button"
                     onClick={handleEnhancePrompt}
                     disabled={isEnhancingPrompt || !prompt.trim()}
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#F05BCE] hover:brightness-125 transition-colors disabled:opacity-40 cursor-pointer"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#5145CD] hover:text-[#4338CA] transition-colors disabled:opacity-40 cursor-pointer"
                   >
-                    <Sparkles className="w-3 h-3 text-[#F05BCE]" />
+                    <Sparkles className="w-3 h-3 text-[#5145CD]" />
                     <span>{isEnhancingPrompt ? 'Enhancing...' : 'Enhance with Gemini'}</span>
                   </button>
-                  <span className={`text-[11px] font-mono ${prompt.length > 1800 ? 'text-[#F05BCE] font-bold' : 'text-[#A99AAA]'}`}>
+                  <span className={`text-[11px] font-mono ${prompt.length > 1800 ? 'text-[#5145CD] font-bold' : 'text-[#667085]'}`}>
                     {prompt.length} / 2000
                   </span>
                 </div>
@@ -233,14 +233,14 @@ export function GeminiImageStudio({
                   maxLength={2000}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="Describe your scene in detail: subject, lighting, mood, materials, camera perspective..."
-                  className="w-full p-3.5 rounded-xl bg-[#100A12] border border-[#39233B] focus:border-[#F05BCE] focus:ring-2 focus:ring-[#F05BCE]/20 text-[#F5EAF4] text-xs sm:text-sm placeholder:text-[#A99AAA]/50 transition-all outline-none resize-none leading-relaxed shadow-xs"
+                  className="w-full p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] focus:border-[#5145CD] focus:bg-white focus:ring-2 focus:ring-[#5145CD]/20 text-[#17191D] text-xs sm:text-sm placeholder:text-[#667085]/60 transition-all outline-none resize-none leading-relaxed shadow-2xs"
                 />
 
                 {prompt && (
                   <button
                     type="button"
                     onClick={() => setPrompt('')}
-                    className="absolute right-2.5 bottom-2.5 text-[11px] text-[#A99AAA] hover:text-[#F05BCE] px-1.5 py-0.5 rounded cursor-pointer"
+                    className="absolute right-2.5 bottom-2.5 text-[11px] text-[#667085] hover:text-[#17191D] px-1.5 py-0.5 rounded cursor-pointer"
                   >
                     Clear
                   </button>
@@ -249,7 +249,7 @@ export function GeminiImageStudio({
 
               {/* Sample Prompts Pills */}
               <div className="pt-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#A99AAA] block mb-1.5 font-mono">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#667085] block mb-1.5 font-mono">
                   Try a curated prompt:
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -258,7 +258,7 @@ export function GeminiImageStudio({
                       key={idx}
                       type="button"
                       onClick={() => setPrompt(p)}
-                      className="text-[11px] text-[#A99AAA] hover:text-[#F5EAF4] bg-white/[0.04] hover:bg-white/[0.08] border border-[#39233B] rounded-lg px-2.5 py-1 text-left transition-all truncate max-w-full cursor-pointer"
+                      className="text-[11px] text-[#667085] hover:text-[#17191D] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#E5E7EB] rounded-lg px-2.5 py-1 text-left transition-all truncate max-w-full cursor-pointer"
                       title={p}
                     >
                       💡 {p.slice(0, 42)}...
@@ -270,7 +270,7 @@ export function GeminiImageStudio({
 
             {/* Aspect Ratio Selector */}
             <div className="space-y-2 mb-5">
-              <label className="block font-bold text-[#F5EAF4] uppercase tracking-wider text-[11px]">
+              <label className="block font-bold text-[#17191D] uppercase tracking-wider text-[11px]">
                 Aspect Ratio
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -283,17 +283,17 @@ export function GeminiImageStudio({
                       onClick={() => setAspectRatio(item.id)}
                       className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                         isSelected
-                          ? 'border-[#F05BCE] bg-[#F05BCE]/15 shadow-xs ring-1 ring-[#F05BCE]/30'
-                          : 'border-[#39233B] bg-[#100A12] hover:border-white/20 text-[#A99AAA]'
+                          ? 'border-[#5145CD] bg-[#EEF2FF] shadow-xs ring-1 ring-[#5145CD]/20'
+                          : 'border-[#E5E7EB] bg-white hover:border-[#D1D5DB] text-[#667085]'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className={`text-xs font-bold ${isSelected ? 'text-[#F5EAF4]' : 'text-[#A99AAA]'}`}>
+                        <span className={`text-xs font-bold ${isSelected ? 'text-[#5145CD]' : 'text-[#667085]'}`}>
                           {item.label}
                         </span>
-                        {isSelected && <Check className="w-3.5 h-3.5 text-[#F05BCE]" />}
+                        {isSelected && <Check className="w-3.5 h-3.5 text-[#5145CD]" />}
                       </div>
-                      <span className="text-[10px] text-[#A99AAA] block leading-tight">
+                      <span className="text-[10px] text-[#667085] block leading-tight">
                         {item.desc}
                       </span>
                     </button>
@@ -303,16 +303,16 @@ export function GeminiImageStudio({
             </div>
 
             {/* Model & Negative Prompt Accordion */}
-            <div className="space-y-4 pt-2 border-t border-[#39233B]">
+            <div className="space-y-4 pt-2 border-t border-[#E5E7EB]">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold text-[#F5EAF4] uppercase mb-1">
+                  <label className="block text-[11px] font-bold text-[#17191D] uppercase mb-1">
                     Gemini Model
                   </label>
                   <select
                     value={model}
                     onChange={(e: any) => setModel(e.target.value)}
-                    className="w-full p-2 rounded-lg bg-[#100A12] border border-[#39233B] text-xs text-[#F5EAF4] font-medium outline-none focus:border-[#F05BCE] cursor-pointer"
+                    className="w-full p-2 rounded-lg bg-[#F7F8FA] border border-[#E5E7EB] text-xs text-[#17191D] font-medium outline-none focus:border-[#5145CD] cursor-pointer"
                   >
                     <option value="gemini-3.1-flash-image">Gemini 3.1 Flash Image (5 Credits)</option>
                     <option value="gemini-3-pro-image">Gemini 3 Pro Image (10 Credits)</option>
@@ -320,7 +320,7 @@ export function GeminiImageStudio({
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-[#F5EAF4] uppercase mb-1">
+                  <label className="block text-[11px] font-bold text-[#17191D] uppercase mb-1">
                     Negative Prompt (Optional)
                   </label>
                   <input
@@ -328,7 +328,7 @@ export function GeminiImageStudio({
                     value={negativePrompt}
                     onChange={(e) => setNegativePrompt(e.target.value)}
                     placeholder="blurry, distorted, low quality, artifacts"
-                    className="w-full p-2 rounded-lg bg-[#100A12] border border-[#39233B] text-xs text-[#F5EAF4] placeholder:text-[#A99AAA]/50 outline-none focus:border-[#F05BCE]"
+                    className="w-full p-2 rounded-lg bg-[#F7F8FA] border border-[#E5E7EB] text-xs text-[#17191D] placeholder:text-[#667085]/60 outline-none focus:border-[#5145CD]"
                   />
                 </div>
               </div>
@@ -336,19 +336,19 @@ export function GeminiImageStudio({
 
             {/* Error Message with Quota guidance */}
             {errorInfo && (
-              <div className="mt-5 p-4 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-200 text-xs space-y-2 shadow-xs">
+              <div className="mt-5 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs space-y-2 shadow-xs">
                 <div className="flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-bold text-rose-100">Generation Error</span>
+                      <span className="font-bold text-rose-900">Generation Error</span>
                       {errorInfo.code && (
-                        <span className="px-1.5 py-0.5 rounded bg-rose-900/60 text-[10px] font-mono font-bold text-rose-300">
+                        <span className="px-1.5 py-0.5 rounded bg-rose-100 text-[10px] font-mono font-bold text-rose-700">
                           {errorInfo.code}
                         </span>
                       )}
                     </div>
-                    <p className="text-rose-300 leading-relaxed text-[11px] sm:text-xs">
+                    <p className="text-rose-700 leading-relaxed text-[11px] sm:text-xs">
                       {errorInfo.message}
                     </p>
                   </div>
@@ -360,12 +360,12 @@ export function GeminiImageStudio({
                       href="https://ai.google.dev/pricing"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 font-bold text-rose-300 underline hover:text-white"
+                      className="inline-flex items-center gap-1 font-bold text-rose-700 underline hover:text-rose-900"
                     >
                       <span>Enable Google AI Studio Pay-As-You-Go</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
-                    <span className="text-rose-400">• Your credits were not deducted.</span>
+                    <span className="text-rose-600">• Your credits were not deducted.</span>
                   </div>
                 )}
               </div>
@@ -373,14 +373,14 @@ export function GeminiImageStudio({
 
             {/* Success message */}
             {successMsg && (
-              <div className="mt-5 p-3.5 rounded-xl bg-[#F05BCE]/10 border border-[#F05BCE]/30 text-[#F5EAF4] text-xs flex items-center justify-between gap-2 shadow-xs">
+              <div className="mt-5 p-3.5 rounded-xl bg-[#EEF2FF] border border-[#E0E7FF] text-[#17191D] text-xs flex items-center justify-between gap-2 shadow-xs">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#5145CD] shrink-0" />
                   <span className="font-medium">{successMsg}</span>
                 </div>
                 <Link
                   href="/dashboard"
-                  className="font-bold text-[#F05BCE] underline hover:text-white text-[11px] shrink-0"
+                  className="font-bold text-[#5145CD] underline hover:text-[#4338CA] text-[11px] shrink-0"
                 >
                   View Assets
                 </Link>
@@ -388,10 +388,10 @@ export function GeminiImageStudio({
             )}
 
             {/* Action Bar */}
-            <div className="mt-6 pt-4 border-t border-[#39233B] flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs text-[#A99AAA]">
-                <Zap className="w-4 h-4 text-[#F05BCE]" />
-                <span className="font-bold text-[#F5EAF4]">Cost:</span>
+            <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs text-[#667085]">
+                <Zap className="w-4 h-4 text-[#5145CD]" />
+                <span className="font-bold text-[#17191D]">Cost:</span>
                 <span>{model === 'gemini-3-pro-image' ? '10' : '5'} Credits</span>
               </div>
 
@@ -399,7 +399,7 @@ export function GeminiImageStudio({
                 type="button"
                 onClick={handleGenerate}
                 disabled={isGenerating || !prompt.trim()}
-                className="px-6 py-3 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all disabled:opacity-50 cursor-pointer"
+                className="px-6 py-3 bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
               >
                 {isGenerating ? (
                   <>
@@ -419,15 +419,15 @@ export function GeminiImageStudio({
 
         {/* Right Preview Viewport (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="bg-[#211522] rounded-2xl p-5 border border-[#39233B] shadow-xl flex flex-col justify-between min-h-[460px]">
+          <div className="bg-white rounded-2xl p-5 border border-[#E5E7EB] shadow-xs flex flex-col justify-between min-h-[460px]">
             <div>
-              <div className="flex items-center justify-between pb-3 border-b border-[#39233B] mb-4">
-                <h4 className="font-bold text-[#F5EAF4] text-xs uppercase tracking-wider flex items-center gap-1.5">
-                  <ImageIcon className="w-4 h-4 text-[#F05BCE]" />
+              <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB] mb-4">
+                <h4 className="font-bold text-[#17191D] text-xs uppercase tracking-wider flex items-center gap-1.5">
+                  <ImageIcon className="w-4 h-4 text-[#5145CD]" />
                   <span>Preview & Export</span>
                 </h4>
                 {generatedImage && (
-                  <span className="px-2 py-0.5 rounded bg-[#F05BCE]/20 text-[10px] font-bold text-[#F05BCE]">
+                  <span className="px-2 py-0.5 rounded bg-[#EEF2FF] text-[10px] font-bold text-[#5145CD] border border-[#E0E7FF]">
                     Ready
                   </span>
                 )}
@@ -435,7 +435,7 @@ export function GeminiImageStudio({
 
               {/* Viewport Box */}
               <div
-                className={`w-full rounded-xl border border-[#39233B] bg-[#100A12] flex items-center justify-center overflow-hidden relative transition-all ${
+                className={`w-full rounded-xl border border-[#E5E7EB] bg-[#F7F8FA] flex items-center justify-center overflow-hidden relative transition-all ${
                   aspectRatio === '1:1'
                     ? 'aspect-square'
                     : aspectRatio === '16:9'
@@ -448,12 +448,12 @@ export function GeminiImageStudio({
                 {isGenerating ? (
                   <div className="p-6 text-center space-y-3">
                     <div className="relative w-12 h-12 mx-auto">
-                      <div className="w-12 h-12 rounded-full border-3 border-[#F05BCE]/30 border-t-[#F05BCE] animate-spin" />
-                      <Sparkles className="w-5 h-5 text-[#F05BCE] absolute inset-0 m-auto" />
+                      <div className="w-12 h-12 rounded-full border-3 border-[#EEF2FF] border-t-[#5145CD] animate-spin" />
+                      <Sparkles className="w-5 h-5 text-[#5145CD] absolute inset-0 m-auto" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-[#F5EAF4]">Gemini Neural Synthesis</p>
-                      <p className="text-[11px] text-[#A99AAA] mt-1">Generating high-fidelity visual asset...</p>
+                      <p className="text-xs font-bold text-[#17191D]">Gemini Neural Synthesis</p>
+                      <p className="text-[11px] text-[#667085] mt-1">Generating high-fidelity visual asset...</p>
                     </div>
                   </div>
                 ) : generatedImage ? (
@@ -464,19 +464,19 @@ export function GeminiImageStudio({
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <p className="text-[#F5EAF4] text-xs line-clamp-2 leading-relaxed">
+                      <p className="text-white text-xs line-clamp-2 leading-relaxed">
                         {prompt}
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="p-8 text-center space-y-3">
-                    <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-[#39233B] flex items-center justify-center mx-auto text-[#F05BCE] shadow-xs">
+                    <div className="w-14 h-14 rounded-2xl bg-[#EEF2FF] border border-[#E0E7FF] flex items-center justify-center mx-auto text-[#5145CD] shadow-2xs">
                       <ImageIcon className="w-7 h-7" />
                     </div>
                     <div className="max-w-[240px] mx-auto">
-                      <p className="text-xs font-bold text-[#F5EAF4]">No Image Rendered Yet</p>
-                      <p className="text-[11px] text-[#A99AAA] mt-1">
+                      <p className="text-xs font-bold text-[#17191D]">No Image Rendered Yet</p>
+                      <p className="text-[11px] text-[#667085] mt-1">
                         Enter your prompt or choose a curated sample, then click Generate Image.
                       </p>
                     </div>
@@ -487,11 +487,11 @@ export function GeminiImageStudio({
 
             {/* Bottom Actions */}
             {generatedImage && (
-              <div className="mt-4 pt-3 border-t border-[#39233B] flex flex-wrap items-center gap-2">
+              <div className="mt-4 pt-3 border-t border-[#E5E7EB] flex flex-wrap items-center gap-2">
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="flex-1 py-2 px-3 rounded-lg bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#F05BCE]/25 cursor-pointer"
+                  className="flex-1 py-2 px-3 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Image</span>
@@ -500,7 +500,7 @@ export function GeminiImageStudio({
                 <button
                   type="button"
                   onClick={handleGenerate}
-                  className="py-2 px-3 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] border border-[#39233B] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                  className="py-2 px-3 rounded-lg bg-white hover:bg-[#F1F3F5] border border-[#E5E7EB] text-[#17191D] text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-2xs"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Retry</span>
@@ -509,10 +509,10 @@ export function GeminiImageStudio({
                 <button
                   type="button"
                   onClick={copyPrompt}
-                  className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-[#A99AAA] text-xs cursor-pointer border border-[#39233B]"
+                  className="p-2 rounded-lg bg-white hover:bg-[#F1F3F5] text-[#667085] hover:text-[#17191D] text-xs cursor-pointer border border-[#E5E7EB]"
                   title="Copy Prompt"
                 >
-                  {copied ? <Check className="w-4 h-4 text-[#F05BCE]" /> : <Copy className="w-4 h-4" />}
+                  {copied ? <Check className="w-4 h-4 text-[#5145CD]" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>
             )}

@@ -21,7 +21,8 @@
         "completed": true
       },
       "createdAt": "2026-10-21T06:14:19.599Z",
-      "updatedAt": "2026-10-21T06:14:19.599Z"
+      "updatedAt": "2026-10-29T05:47:22.000Z",
+      "firstCampaignCouponSeen": true
     },
     {
       "id": "usr_admin_master_1",
@@ -1131,6 +1132,15 @@
       "role": "creator",
       "createdAt": "2026-10-29T05:30:01.616Z",
       "updatedAt": "2026-10-29T05:30:01.616Z"
+    },
+    {
+      "id": "usr_9z08klvd",
+      "email": "zero_1793254789258@test.fluviaflow.ai",
+      "displayName": "Zero Credits User",
+      "role": "creator",
+      "firstCampaignCouponSeen": true,
+      "createdAt": "2026-10-29T06:19:49.465Z",
+      "updatedAt": "2026-10-29T06:19:49.529Z"
     }
   ],
   "passwords": {
@@ -1337,7 +1347,9 @@
     "usr_gadlh60k": "scrypt:367566402582833a8027c49ac324551e:17c1218a246413a181fb0fdececdf01ccea4c595818bea87f5bab89c26f2e8a339bf98b2d3e257fae17561bfa1d5f6ba25f24ea0e420bdb3debf5a33bb57993d",
     "payu_test_1793251553854@vidai.io": "scrypt:367566402582833a8027c49ac324551e:17c1218a246413a181fb0fdececdf01ccea4c595818bea87f5bab89c26f2e8a339bf98b2d3e257fae17561bfa1d5f6ba25f24ea0e420bdb3debf5a33bb57993d",
     "usr_9qd3b2uv": "scrypt:56dfdcae0a72f0e699a4bf5ac41ae2fa:c539672ef45ba53a230b4c7d614e6119e74394fbb3221dc8f40e77ac7e1a37ce56fe7c674805adb86e774c6855c254d83ad27f79365e21a753a365620eae7203",
-    "zero_1793251795414@test.fluviaflow.ai": "scrypt:56dfdcae0a72f0e699a4bf5ac41ae2fa:c539672ef45ba53a230b4c7d614e6119e74394fbb3221dc8f40e77ac7e1a37ce56fe7c674805adb86e774c6855c254d83ad27f79365e21a753a365620eae7203"
+    "zero_1793251795414@test.fluviaflow.ai": "scrypt:56dfdcae0a72f0e699a4bf5ac41ae2fa:c539672ef45ba53a230b4c7d614e6119e74394fbb3221dc8f40e77ac7e1a37ce56fe7c674805adb86e774c6855c254d83ad27f79365e21a753a365620eae7203",
+    "usr_9z08klvd": "scrypt:a72ea0577e54108ffc475444882d063a:69fff0603ca6129a2fbacbdad41871341d3e6f083750398d80608edff5be909566eb569832c4f2a9fa93dcc9ab447313066161fa52fc2d346c98884cfe4fd0dc",
+    "zero_1793254789258@test.fluviaflow.ai": "scrypt:a72ea0577e54108ffc475444882d063a:69fff0603ca6129a2fbacbdad41871341d3e6f083750398d80608edff5be909566eb569832c4f2a9fa93dcc9ab447313066161fa52fc2d346c98884cfe4fd0dc"
   },
   "workspaces": [
     {
@@ -2298,6 +2310,13 @@
       "name": "Flow Tester's Studio",
       "createdAt": "2026-10-29T05:30:01.616Z",
       "updatedAt": "2026-10-29T05:30:01.616Z"
+    },
+    {
+      "id": "ws_jdq9tz9v",
+      "ownerId": "usr_9z08klvd",
+      "name": "Zero Credits User's Studio",
+      "createdAt": "2026-10-29T06:19:49.465Z",
+      "updatedAt": "2026-10-29T06:19:49.465Z"
     }
   ],
   "workspaceMembers": [
@@ -3086,6 +3105,12 @@
       "userId": "usr_9qd3b2uv",
       "role": "owner",
       "joinedAt": "2026-10-29T05:29:55.619Z"
+    },
+    {
+      "workspaceId": "ws_jdq9tz9v",
+      "userId": "usr_9z08klvd",
+      "role": "owner",
+      "joinedAt": "2026-10-29T06:19:49.465Z"
     }
   ],
   "creditAccounts": {
@@ -4090,6 +4115,12 @@
       "availableBalance": 2500,
       "reservedBalance": 0,
       "updatedAt": "2026-10-29T05:30:02.016Z"
+    },
+    "usr_9z08klvd": {
+      "userId": "usr_9z08klvd",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-10-29T06:19:49.465Z"
     }
   },
   "creditLedger": [
@@ -16634,6 +16665,26 @@
         "creditsAwarded": 1200
       },
       "createdAt": "2026-10-29T05:30:02.085Z"
+    },
+    {
+      "id": "aud_t7yr00tvsj",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGIN",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "metadata": {
+        "email": "creator@fluviaflow.ai",
+        "authProvider": "password"
+      },
+      "createdAt": "2026-10-29T05:47:15.079Z"
+    },
+    {
+      "id": "aud_rd0k9gl284",
+      "actorId": "usr_creator_demo_1",
+      "action": "USER_LOGOUT",
+      "resourceType": "profile",
+      "resourceId": "usr_creator_demo_1",
+      "createdAt": "2026-10-29T05:49:34.988Z"
     }
   ],
   "supportTickets": [

@@ -1646,6 +1646,8 @@ export function getTemplateBySlug(slug: string): CreativeTemplate | undefined {
   return ALL_CURATED_TEMPLATES.find((t) => t.slug === slug) || TEMPLATES_DATA.find((t) => t.slug === slug);
 }
 
+export const findTemplateBySlug = getTemplateBySlug;
+
 export function isVideoTemplate(template: CreativeTemplate): boolean {
   return (template.type || 'video') === 'video';
 }

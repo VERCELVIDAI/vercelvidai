@@ -144,26 +144,26 @@ export default function CinemaStudioPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden font-sans bg-[#100A12] text-[#F5EAF4]">
+    <div className="flex h-screen overflow-hidden font-sans bg-[#F7F8FA] text-[#17191D]">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#100A12]">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#F7F8FA]">
         <DashboardHeader user={authData?.user} />
 
         {/* Studio Subheader */}
-        <div className="h-14 border-b border-[#39233B] bg-[#100A12]/90 backdrop-blur-md px-6 flex items-center justify-between">
+        <div className="h-14 border-b border-[#E5E7EB] bg-white px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#F05BCE]/10 border border-[#F05BCE]/25 flex items-center justify-center">
-              <Film className="w-4 h-4 text-[#F05BCE]" />
+            <div className="w-8 h-8 rounded-lg bg-[#EEF2FF] border border-[#E0E7FF] flex items-center justify-center">
+              <Film className="w-4 h-4 text-[#5145CD]" />
             </div>
             <div className="text-left">
               <div className="flex items-center gap-2">
-                <h1 className="text-sm font-bold tracking-tight text-[#F5EAF4] uppercase">Cinema Studio</h1>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 font-bold font-mono">
+                <h1 className="text-sm font-bold tracking-tight text-[#17191D] uppercase">Cinema Studio</h1>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] font-bold font-mono">
                   Director Grade
                 </span>
               </div>
-              <p className="text-[11px] text-[#A99AAA]">Multi-axis camera motion, optical lens emulation & color grading</p>
+              <p className="text-[11px] text-[#667085]">Multi-axis camera motion, optical lens emulation & color grading</p>
             </div>
           </div>
 
@@ -172,8 +172,8 @@ export default function CinemaStudioPage() {
               onClick={() => setActiveTab('single')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'single'
-                  ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-md shadow-[#F05BCE]/25'
-                  : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-white/[0.04]'
+                  ? 'bg-[#5145CD] text-white shadow-xs'
+                  : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F1F3F5]'
               }`}
             >
               Shot Composer
@@ -182,13 +182,13 @@ export default function CinemaStudioPage() {
               onClick={() => setActiveTab('storyboard')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                 activeTab === 'storyboard'
-                  ? 'bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white shadow-md shadow-[#F05BCE]/25'
-                  : 'text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-white/[0.04]'
+                  ? 'bg-[#5145CD] text-white shadow-xs'
+                  : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F1F3F5]'
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
               <span>Storyboard Sequencer</span>
-              {storyboard && <span className="w-1.5 h-1.5 rounded-full bg-[#F05BCE]" />}
+              {storyboard && <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD]" />}
             </button>
           </div>
         </div>
@@ -196,20 +196,20 @@ export default function CinemaStudioPage() {
         {/* Studio Workspace Content */}
         <div className="flex-1 flex overflow-hidden">
           {/* Controls Column (Left) */}
-          <div className="w-[480px] border-r border-[#39233B] flex flex-col bg-[#211522] overflow-y-auto p-6 space-y-6 text-left">
+          <div className="w-[480px] border-r border-[#E5E7EB] flex flex-col bg-white overflow-y-auto p-6 space-y-6 text-left">
             {/* Prompt Composer & Gemini Enhancer */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
+                <label className="text-xs font-bold uppercase tracking-wider text-[#17191D] flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
                   Cinematic Scene Prompt
                 </label>
                 <button
                   onClick={handleEnhancePrompt}
                   disabled={isEnhancing}
-                  className="text-[11px] flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#F05BCE]/10 border border-[#F05BCE]/30 text-[#F05BCE] hover:bg-[#F05BCE]/20 transition-all font-semibold disabled:opacity-50 cursor-pointer"
+                  className="text-[11px] flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#EEF2FF] border border-[#C7D2FE] text-[#5145CD] hover:bg-[#E0E7FF] transition-all font-semibold disabled:opacity-50 cursor-pointer"
                 >
-                  <Sparkles className={`w-3 h-3 text-[#F05BCE] ${isEnhancing ? 'animate-spin' : ''}`} />
+                  <Sparkles className={`w-3 h-3 text-[#5145CD] ${isEnhancing ? 'animate-spin' : ''}`} />
                   {isEnhancing ? 'Gemini Enhancing...' : 'Gemini Director Polish'}
                 </button>
               </div>
@@ -218,15 +218,15 @@ export default function CinemaStudioPage() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 rows={4}
-                className="w-full bg-[#100A12] text-[#F5EAF4] p-3.5 rounded-xl border border-[#39233B] focus:outline-none focus:border-[#F05BCE] text-xs leading-relaxed resize-none placeholder:text-[#A99AAA]/60"
+                className="w-full bg-[#F7F8FA] text-[#17191D] p-3.5 rounded-xl border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] focus:bg-white text-xs leading-relaxed resize-none placeholder:text-[#667085]/60"
                 placeholder="Describe your scene lighting, environment, subject, and cinematic motion..."
               />
             </div>
 
             {/* Camera Motion Selector */}
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1.5">
-                <Camera className="w-3.5 h-3.5 text-[#F05BCE]" />
+              <label className="text-xs font-bold uppercase tracking-wider text-[#17191D] flex items-center gap-1.5">
+                <Camera className="w-3.5 h-3.5 text-[#5145CD]" />
                 Camera Motion Vector
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -236,12 +236,12 @@ export default function CinemaStudioPage() {
                     onClick={() => setCamera(c.id)}
                     className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                       camera === c.id
-                        ? 'border-[#F05BCE] bg-[#F05BCE]/15 text-[#F5EAF4] font-bold shadow-xs'
-                        : 'border-[#39233B] bg-[#100A12] text-[#A99AAA] hover:bg-white/[0.04]'
+                        ? 'border-[#5145CD] bg-[#EEF2FF] text-[#5145CD] font-bold shadow-2xs'
+                        : 'border-[#E5E7EB] bg-[#F7F8FA] text-[#667085] hover:bg-[#F1F3F5] hover:text-[#17191D]'
                     }`}
                   >
                     <div className="text-xs font-semibold">{c.label}</div>
-                    <div className="text-[10px] text-[#A99AAA] line-clamp-1">{c.desc}</div>
+                    <div className="text-[10px] text-[#667085] line-clamp-1">{c.desc}</div>
                   </button>
                 ))}
               </div>
@@ -249,8 +249,8 @@ export default function CinemaStudioPage() {
 
             {/* Optical Lens Profile */}
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1.5">
-                <SlidersHorizontal className="w-3.5 h-3.5 text-[#F05BCE]" />
+              <label className="text-xs font-bold uppercase tracking-wider text-[#17191D] flex items-center gap-1.5">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#5145CD]" />
                 Optical Cinema Lens
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -260,12 +260,12 @@ export default function CinemaStudioPage() {
                     onClick={() => setLens(l.id)}
                     className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                       lens === l.id
-                        ? 'border-[#F05BCE] bg-[#F05BCE]/15 text-[#F5EAF4] font-bold shadow-xs'
-                        : 'border-[#39233B] bg-[#100A12] text-[#A99AAA] hover:bg-white/[0.04]'
+                        ? 'border-[#5145CD] bg-[#EEF2FF] text-[#5145CD] font-bold shadow-2xs'
+                        : 'border-[#E5E7EB] bg-[#F7F8FA] text-[#667085] hover:bg-[#F1F3F5] hover:text-[#17191D]'
                     }`}
                   >
                     <div className="text-xs font-semibold">{l.label}</div>
-                    <div className="text-[10px] text-[#A99AAA] line-clamp-1">{l.desc}</div>
+                    <div className="text-[10px] text-[#667085] line-clamp-1">{l.desc}</div>
                   </button>
                 ))}
               </div>
@@ -273,8 +273,8 @@ export default function CinemaStudioPage() {
 
             {/* Color Emulation Chemistry */}
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1.5">
-                <Eye className="w-3.5 h-3.5 text-[#F05BCE]" />
+              <label className="text-xs font-bold uppercase tracking-wider text-[#17191D] flex items-center gap-1.5">
+                <Eye className="w-3.5 h-3.5 text-[#5145CD]" />
                 Color Grading Profile
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -284,21 +284,21 @@ export default function CinemaStudioPage() {
                     onClick={() => setColorGrade(cg.id)}
                     className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                       colorGrade === cg.id
-                        ? 'border-[#F05BCE] bg-[#F05BCE]/15 text-[#F5EAF4] font-bold shadow-xs'
-                        : 'border-[#39233B] bg-[#100A12] text-[#A99AAA] hover:bg-white/[0.04]'
+                        ? 'border-[#5145CD] bg-[#EEF2FF] text-[#5145CD] font-bold shadow-2xs'
+                        : 'border-[#E5E7EB] bg-[#F7F8FA] text-[#667085] hover:bg-[#F1F3F5] hover:text-[#17191D]'
                     }`}
                   >
                     <div className="text-xs font-semibold">{cg.label}</div>
-                    <div className="text-[10px] text-[#A99AAA] line-clamp-1">{cg.desc}</div>
+                    <div className="text-[10px] text-[#667085] line-clamp-1">{cg.desc}</div>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Aspect Ratio & Duration */}
-            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-[#39233B]">
+            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-[#E5E7EB]">
               <div>
-                <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] block mb-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#17191D] block mb-1.5">
                   Aspect Ratio
                 </label>
                 <div className="grid grid-cols-2 gap-1.5">
@@ -308,8 +308,8 @@ export default function CinemaStudioPage() {
                       onClick={() => setAspectRatio(r)}
                       className={`py-1.5 px-2 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer ${
                         aspectRatio === r
-                          ? 'border-[#F05BCE] bg-[#F05BCE]/20 text-[#F5EAF4]'
-                          : 'border-[#39233B] bg-[#100A12] text-[#A99AAA] hover:text-[#F5EAF4]'
+                          ? 'border-[#5145CD] bg-[#EEF2FF] text-[#5145CD]'
+                          : 'border-[#E5E7EB] bg-[#F7F8FA] text-[#667085] hover:text-[#17191D]'
                       }`}
                     >
                       {r}
@@ -319,7 +319,7 @@ export default function CinemaStudioPage() {
               </div>
 
               <div>
-                <label className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] block mb-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#17191D] block mb-1.5">
                   Clip Duration
                 </label>
                 <div className="grid grid-cols-2 gap-1.5">
@@ -329,8 +329,8 @@ export default function CinemaStudioPage() {
                       onClick={() => setDurationSec(s)}
                       className={`py-1.5 px-2 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer ${
                         durationSec === s
-                          ? 'border-[#F05BCE] bg-[#F05BCE]/20 text-[#F5EAF4]'
-                          : 'border-[#39233B] bg-[#100A12] text-[#A99AAA] hover:text-[#F5EAF4]'
+                          ? 'border-[#5145CD] bg-[#EEF2FF] text-[#5145CD]'
+                          : 'border-[#E5E7EB] bg-[#F7F8FA] text-[#667085] hover:text-[#17191D]'
                       }`}
                     >
                       {s}s ({s * 5} cr)
@@ -341,29 +341,29 @@ export default function CinemaStudioPage() {
             </div>
 
             {/* Launch CTA */}
-            <div className="pt-4 border-t border-[#39233B]">
+            <div className="pt-4 border-t border-[#E5E7EB]">
               <button
                 onClick={handleLaunchGeneration}
                 disabled={isGenerating}
-                className="w-full py-3.5 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all cursor-pointer disabled:opacity-50"
+                className="w-full py-3.5 bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer disabled:opacity-50"
               >
                 <Zap className="w-4 h-4 text-white" />
                 <span>Dispatch to Generation Pipeline</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <p className="text-[10px] text-center text-[#A99AAA] mt-2 font-mono">
+              <p className="text-[10px] text-center text-[#667085] mt-2 font-mono">
                 15 Credits Deducted on Generation • Gemini Omni 1.1 Flash Engine
               </p>
             </div>
           </div>
 
           {/* Viewport Column (Right) */}
-          <div className="flex-1 bg-[#100A12] p-8 flex flex-col justify-center items-center overflow-y-auto">
+          <div className="flex-1 bg-[#F7F8FA] p-8 flex flex-col justify-center items-center overflow-y-auto">
             {activeTab === 'single' ? (
               <div className="max-w-4xl w-full space-y-6">
                 {/* 4K Stage Viewport */}
                 <div
-                  className={`relative w-full rounded-2xl overflow-hidden bg-black border border-[#39233B] shadow-2xl mx-auto ${
+                  className={`relative w-full rounded-2xl overflow-hidden bg-[#17191D] border border-[#E5E7EB] shadow-md mx-auto ${
                     aspectRatio === '21:9'
                       ? 'aspect-[21/9]'
                       : aspectRatio === '16:9'
@@ -382,39 +382,39 @@ export default function CinemaStudioPage() {
                     className="w-full h-full object-cover"
                   />
                   {/* Subtle cinema letterboxing overlay */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#100A12]/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-[#39233B] text-[11px] font-mono text-[#F5EAF4]">
-                    <span className="w-2 h-2 rounded-full bg-[#F05BCE] animate-pulse" />
+                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg border border-[#E5E7EB] text-[11px] font-mono text-[#17191D]">
+                    <span className="w-2 h-2 rounded-full bg-[#5145CD] animate-pulse" />
                     <span>REC • {aspectRatio} • {camera.toUpperCase()}</span>
                   </div>
 
                   <div className="absolute bottom-4 right-4 flex items-center gap-2">
                     <button
                       onClick={() => router.push('/editor')}
-                      className="px-3 py-1.5 rounded-lg bg-[#211522]/90 hover:bg-[#211522] backdrop-blur-md border border-[#39233B] text-xs font-semibold text-[#F5EAF4] flex items-center gap-1.5 transition-all cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white backdrop-blur-md border border-[#E5E7EB] text-xs font-semibold text-[#17191D] flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
                     >
-                      <Sliders className="w-3.5 h-3.5 text-[#F05BCE]" />
+                      <Sliders className="w-3.5 h-3.5 text-[#5145CD]" />
                       <span>Open in Creative Canvas</span>
                     </button>
                   </div>
                 </div>
 
                 {/* Specs Readout Banner */}
-                <div className="grid grid-cols-4 gap-4 p-4 rounded-xl bg-[#211522] border border-[#39233B] text-left shadow-sm">
+                <div className="grid grid-cols-4 gap-4 p-4 rounded-xl bg-white border border-[#E5E7EB] text-left shadow-2xs">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-[#A99AAA] font-mono">Camera Engine</span>
-                    <p className="text-xs font-bold text-[#F5EAF4] mt-0.5">{camera}</p>
+                    <span className="text-[10px] uppercase font-bold text-[#667085] font-mono">Camera Engine</span>
+                    <p className="text-xs font-bold text-[#17191D] mt-0.5">{camera}</p>
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-[#A99AAA] font-mono">Optics Profile</span>
-                    <p className="text-xs font-bold text-[#F5EAF4] mt-0.5">35mm Anamorphic</p>
+                    <span className="text-[10px] uppercase font-bold text-[#667085] font-mono">Optics Profile</span>
+                    <p className="text-xs font-bold text-[#17191D] mt-0.5">35mm Anamorphic</p>
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-[#A99AAA] font-mono">Color Chemistry</span>
-                    <p className="text-xs font-bold text-[#F5EAF4] mt-0.5">{colorGrade}</p>
+                    <span className="text-[10px] uppercase font-bold text-[#667085] font-mono">Color Chemistry</span>
+                    <p className="text-xs font-bold text-[#17191D] mt-0.5">{colorGrade}</p>
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-[#A99AAA] font-mono">AI Director</span>
-                    <p className="text-xs font-bold text-[#F05BCE] mt-0.5">Gemini 2.0 Flash Verified</p>
+                    <span className="text-[10px] uppercase font-bold text-[#667085] font-mono">AI Director</span>
+                    <p className="text-xs font-bold text-[#5145CD] mt-0.5">Gemini 2.0 Flash Verified</p>
                   </div>
                 </div>
               </div>
@@ -423,17 +423,17 @@ export default function CinemaStudioPage() {
               <div className="max-w-5xl mx-auto w-full space-y-6 text-left">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-lg font-bold text-[#F5EAF4] flex items-center gap-2">
-                      <Layers className="w-5 h-5 text-[#F05BCE]" />
+                    <h2 className="text-lg font-bold text-[#17191D] flex items-center gap-2">
+                      <Layers className="w-5 h-5 text-[#5145CD]" />
                       {storyboard?.projectTitle || 'Cinematic Storyboard Sequence'}
                     </h2>
-                    <p className="text-xs text-[#A99AAA] mt-1">
+                    <p className="text-xs text-[#667085] mt-1">
                       {storyboard?.visualDirection || 'Structured multi-scene shotlist generated by Fluvia Flow Gemini Copilot.'}
                     </p>
                   </div>
                   <button
                     onClick={handleLaunchGeneration}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#F05BCE]/25 cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
                   >
                     <span>Render Entire Storyboard</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -469,14 +469,14 @@ export default function CinemaStudioPage() {
                   ]).map((sc: any, idx: number) => (
                     <div
                       key={idx}
-                      className="rounded-xl bg-[#211522] border border-[#39233B] p-4 flex flex-col justify-between space-y-4 hover:border-[#F05BCE]/50 hover:shadow-lg transition-all group"
+                      className="rounded-xl bg-white border border-[#E5E7EB] p-4 flex flex-col justify-between space-y-4 hover:border-[#5145CD]/50 hover:shadow-xs transition-all group"
                     >
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-xs font-mono">
-                          <span className="font-bold text-[#F05BCE]">SCENE {sc.sceneNumber || idx + 1}</span>
-                          <span className="text-[#A99AAA] font-medium">{sc.sceneDuration || 5}s • {sc.cameraDirection}</span>
+                          <span className="font-bold text-[#5145CD]">SCENE {sc.sceneNumber || idx + 1}</span>
+                          <span className="text-[#667085] font-medium">{sc.sceneDuration || 5}s • {sc.cameraDirection}</span>
                         </div>
-                        <div className="relative aspect-video rounded-lg overflow-hidden bg-black border border-[#39233B]">
+                        <div className="relative aspect-video rounded-lg overflow-hidden bg-[#17191D] border border-[#E5E7EB]">
                           <video
                             src={previewVideo}
                             muted
@@ -486,10 +486,10 @@ export default function CinemaStudioPage() {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         </div>
-                        <p className="text-xs text-[#F5EAF4] font-semibold line-clamp-3">{sc.visualPrompt}</p>
+                        <p className="text-xs text-[#17191D] font-semibold line-clamp-3">{sc.visualPrompt}</p>
                       </div>
 
-                      <div className="pt-2 border-t border-[#39233B] text-[11px] text-[#A99AAA] italic">
+                      <div className="pt-2 border-t border-[#E5E7EB] text-[11px] text-[#667085] italic">
                         &quot;{sc.narration}&quot;
                       </div>
                     </div>

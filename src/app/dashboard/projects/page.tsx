@@ -11,15 +11,9 @@ import {
   Star,
   Plus,
   Play,
-  Clock,
   Copy,
   Trash2,
   FolderOpen,
-  Film,
-  Sparkles,
-  ArrowRight,
-  Filter,
-  SlidersHorizontal,
 } from 'lucide-react';
 
 export default function ProjectsLibraryPage() {
@@ -90,8 +84,8 @@ export default function ProjectsLibraryPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -105,10 +99,10 @@ export default function ProjectsLibraryPage() {
     .filter((p) => p.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#100A12] text-[#F5EAF4] relative">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#100A12]">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA]">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -120,20 +114,20 @@ export default function ProjectsLibraryPage() {
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
           
           {/* Header Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl bg-[#211522] border border-[#39233B] shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white border border-[#E5E7EB] shadow-xs">
             <div>
               <div className="flex items-center gap-2">
-                <FolderOpen className="w-5 h-5 text-[#F05BCE]" />
-                <h1 className="text-xl font-black text-[#F5EAF4]">Project Vault & Timeline Media</h1>
+                <FolderOpen className="w-5 h-5 text-[#5145CD]" />
+                <h1 className="text-xl font-bold text-[#17191D]">Project Vault & Timeline Media</h1>
               </div>
-              <p className="mt-1 text-xs text-[#A99AAA]">
+              <p className="mt-1 text-sm text-[#667085]">
                 Organize, preview, duplicate, and remix your commercial video compositions and rendered assets.
               </p>
             </div>
 
             <Link
               href="/create"
-              className="px-4 py-2.5 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-[rgba(240,91,206,0.25)] shrink-0 transition-all cursor-pointer border border-white/10 self-start sm:self-auto"
+              className="px-4 py-2.5 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-xs shrink-0 transition-all cursor-pointer self-start sm:self-auto"
             >
               <Plus className="w-4 h-4" />
               <span>Create New Project</span>
@@ -141,15 +135,15 @@ export default function ProjectsLibraryPage() {
           </div>
 
           {/* Search, Filter Tabs & Metrics Bar */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-between items-center bg-[#211522] border border-[#39233B] p-3 rounded-2xl shadow-xl">
+          <div className="flex flex-col sm:flex-row gap-3 justify-between items-center bg-white border border-[#E5E7EB] p-3 rounded-2xl shadow-xs">
             <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 text-[#A99AAA] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#667085] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search projects by title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#100A12] text-[#F5EAF4] pl-10 pr-4 py-2 rounded-xl text-xs border border-[#39233B] focus:outline-none focus:border-[#F05BCE] placeholder:text-[#A99AAA]/50 font-medium"
+                className="w-full bg-[#F7F8FA] text-[#17191D] pl-10 pr-4 py-2 rounded-xl text-xs border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] placeholder:text-[#667085]/60 font-medium"
               />
             </div>
 
@@ -157,13 +151,13 @@ export default function ProjectsLibraryPage() {
               <button
                 type="button"
                 onClick={() => setOnlyFavorites(!onlyFavorites)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-all cursor-pointer ${
                   onlyFavorites
-                    ? 'bg-[#F05BCE]/20 text-pink-200 border border-[#F05BCE]/40 font-bold'
-                    : 'bg-[#100A12] text-[#A99AAA] hover:text-white border border-[#39233B]'
+                    ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/30 font-semibold'
+                    : 'bg-[#F7F8FA] text-[#667085] hover:text-[#17191D] border border-[#E5E7EB]'
                 }`}
               >
-                <Star className="w-3.5 h-3.5 fill-current text-[#F05BCE]" />
+                <Star className="w-3.5 h-3.5 fill-current text-amber-500" />
                 <span>Favorites</span>
               </button>
 
@@ -172,10 +166,10 @@ export default function ProjectsLibraryPage() {
                   key={f}
                   type="button"
                   onClick={() => setFilterType(f)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-medium capitalize transition-all cursor-pointer ${
                     filterType === f
-                      ? 'bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white shadow-xs'
-                      : 'bg-[#100A12] text-[#A99AAA] hover:text-white border border-[#39233B]'
+                      ? 'bg-[#5145CD] text-white shadow-xs'
+                      : 'bg-[#F7F8FA] text-[#667085] hover:text-[#17191D] border border-[#E5E7EB]'
                   }`}
                 >
                   {f}
@@ -186,15 +180,15 @@ export default function ProjectsLibraryPage() {
 
           {/* Project Media Grid */}
           {filtered.length === 0 ? (
-            <div className="p-16 text-center rounded-3xl bg-[#211522] border border-[#39233B] space-y-3 shadow-xl">
-              <FolderKanban className="w-12 h-12 text-[#A99AAA]/40 mx-auto" />
-              <h3 className="font-bold text-[#F5EAF4] text-base">No Matching Projects Found</h3>
-              <p className="text-xs text-[#A99AAA] max-w-sm mx-auto">
+            <div className="p-16 text-center rounded-2xl bg-white border border-[#E5E7EB] space-y-3 shadow-xs">
+              <FolderKanban className="w-12 h-12 text-[#667085]/40 mx-auto" />
+              <h3 className="font-bold text-[#17191D] text-base">No Matching Projects Found</h3>
+              <p className="text-xs text-[#667085] max-w-sm mx-auto">
                 Adjust your search query or start a new creation in the AI Studio.
               </p>
               <Link
                 href="/create"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white text-xs font-bold shadow"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Launch Studio</span>
@@ -205,31 +199,31 @@ export default function ProjectsLibraryPage() {
               {filtered.map((proj) => (
                 <div
                   key={proj.id}
-                  className="rounded-3xl bg-[#211522] border border-[#39233B] overflow-hidden group hover:border-[#F05BCE]/40 hover:bg-[#2A1B2C] transition-all flex flex-col justify-between shadow-xl"
+                  className="rounded-2xl bg-white border border-[#E5E7EB] overflow-hidden group hover:border-[#5145CD]/40 hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
                     {/* Media Thumbnail */}
-                    <div className="aspect-video relative overflow-hidden bg-black">
+                    <div className="aspect-video relative overflow-hidden bg-slate-100">
                       <img
                         src={proj.thumbnailUrl || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80'}
                         alt={proj.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
                       <button
                         type="button"
                         onClick={() => handleToggleFavorite(proj.id, proj.isFavorite)}
-                        className="absolute top-3 right-3 p-1.5 rounded-full bg-black/60 backdrop-blur-md text-[#A99AAA] hover:text-[#F05BCE] cursor-pointer border border-white/10"
+                        className="absolute top-3 right-3 p-1.5 rounded-full bg-white/80 backdrop-blur-md text-[#667085] hover:text-amber-500 cursor-pointer border border-[#E5E7EB] shadow-xs"
                       >
-                        <Star className={`w-3.5 h-3.5 ${proj.isFavorite ? 'text-[#F05BCE] fill-[#F05BCE]' : ''}`} />
+                        <Star className={`w-3.5 h-3.5 ${proj.isFavorite ? 'text-amber-500 fill-amber-500' : ''}`} />
                       </button>
 
                       <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[10px] font-mono">
-                        <span className="px-2 py-0.5 rounded bg-black/75 backdrop-blur-md text-white border border-[#39233B]">
+                        <span className="px-2 py-0.5 rounded bg-white/90 backdrop-blur-md text-[#17191D] font-medium border border-[#E5E7EB]">
                           {proj.aspectRatio || '16:9'}
                         </span>
-                        <span className="text-[#A99AAA]">
+                        <span className="text-white drop-shadow-sm font-medium">
                           {new Date(proj.updatedAt || proj.createdAt).toLocaleDateString()}
                         </span>
                       </div>
@@ -237,31 +231,31 @@ export default function ProjectsLibraryPage() {
 
                     {/* Content */}
                     <div className="p-4 space-y-1">
-                      <h3 className="font-bold text-[#F5EAF4] text-sm truncate group-hover:text-[#F05BCE] transition-colors">
+                      <h3 className="font-semibold text-[#17191D] text-sm truncate group-hover:text-[#5145CD] transition-colors">
                         {proj.title}
                       </h3>
-                      <p className="text-[11px] text-[#A99AAA] font-mono">
-                        Status: <span className="text-pink-200 capitalize">{proj.status || 'Active'}</span>
+                      <p className="text-[11px] text-[#667085]">
+                        Status: <span className="text-[#5145CD] font-medium capitalize">{proj.status || 'Active'}</span>
                       </p>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div className="p-4 pt-2 border-t border-[#39233B] flex items-center justify-between gap-2">
+                  <div className="p-4 pt-2 border-t border-[#E5E7EB] flex items-center justify-between gap-2">
                     <Link
                       href={`/editor/${proj.id}`}
-                      className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#C026D3] hover:brightness-110 text-white font-bold text-xs flex items-center gap-1.5 shadow"
+                      className="px-3 py-1.5 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-medium text-xs flex items-center gap-1.5 shadow-xs transition-colors"
                     >
-                      <Play className="w-3 h-3" />
+                      <Play className="w-3 h-3 fill-current" />
                       <span>Timeline Editor</span>
                     </Link>
 
-                    <div className="flex items-center gap-1 text-[#A99AAA]">
+                    <div className="flex items-center gap-1 text-[#667085]">
                       <button
                         type="button"
                         onClick={() => handleDuplicate(proj.id)}
                         title="Duplicate project"
-                        className="p-1.5 hover:text-white rounded-lg hover:bg-white/10 cursor-pointer"
+                        className="p-1.5 hover:text-[#17191D] rounded-lg hover:bg-slate-100 cursor-pointer transition-colors"
                       >
                         <Copy className="w-3.5 h-3.5" />
                       </button>
@@ -269,7 +263,7 @@ export default function ProjectsLibraryPage() {
                         type="button"
                         onClick={() => handleDelete(proj.id)}
                         title="Delete project"
-                        className="p-1.5 hover:text-rose-400 rounded-lg hover:bg-white/10 cursor-pointer"
+                        className="p-1.5 hover:text-rose-600 rounded-lg hover:bg-rose-50 cursor-pointer transition-colors"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

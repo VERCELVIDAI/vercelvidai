@@ -9,13 +9,11 @@ import {
   Play,
   Video,
   CheckCircle2,
-  Zap,
   Copy,
   Check,
   ExternalLink,
   Layers,
   Flame,
-  Film,
 } from 'lucide-react';
 
 export interface CoolVidsTemplate {
@@ -99,11 +97,7 @@ export const COOL_GOOGLE_VIDS_TEMPLATES: CoolVidsTemplate[] = [
   },
 ];
 
-interface GoogleVidsPromoPopupProps {
-  onClose?: () => void;
-}
-
-export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
+export function GoogleVidsPromoPopup() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false);
@@ -112,52 +106,10 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if dismissed before
-    try {
-      const isDismissed = localStorage.getItem('fluvia_hide_google_vids_promo') === 'true';
-      const sessionShown = sessionStorage.getItem('fluvia_vids_promo_session_shown') === 'true';
-
-      if (!isDismissed && !sessionShown) {
-        // Small delay so dashboard finishes initial render smoothly
-        const timer = setTimeout(() => {
-          setIsOpen(true);
-          sessionStorage.setItem('fluvia_vids_promo_session_shown', 'true');
-        }, 1200);
-        return () => clearTimeout(timer);
-      }
-    } catch (e) {
-      // Fallback for private mode without localStorage
-    }
-  }, []);
-
-  // Listen for custom trigger to open popup on demand (e.g., from Dashboard Google Vids Card)
-  useEffect(() => {
     const handleOpen = () => setIsOpen(true);
     window.addEventListener('open-google-vids-popup', handleOpen);
     return () => window.removeEventListener('open-google-vids-popup', handleOpen);
   }, []);
-
-  // Lock background scroll when popup is open
-  useEffect(() => {
-    if (isOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = prev;
-      };
-    }
-  }, [isOpen]);
-
-  // Handle escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        handleClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, dontShowAgain]);
 
   const handleClose = () => {
     if (dontShowAgain) {
@@ -166,38 +118,29 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
       } catch (e) {}
     }
     setIsOpen(false);
-    if (onClose) onClose();
   };
 
-  const handleNavigateToStudio = (targetSource: string, templateId?: string) => {
-    if (dontShowAgain) {
-      try {
-        localStorage.setItem('fluvia_hide_google_vids_promo', 'true');
-      } catch (e) {}
-    }
-    setIsOpen(false);
-    const dest = templateId
-      ? `/create?template=${encodeURIComponent(templateId)}&source=${encodeURIComponent(targetSource)}`
-      : `/create?source=${encodeURIComponent(targetSource)}`;
-    router.push(dest);
-  };
-
-  const handleCopyPrompt = (promptText: string) => {
-    navigator.clipboard.writeText(promptText);
+  const handleCopyPrompt = (prompt: string) => {
+    navigator.clipboard.writeText(prompt);
     setCopiedPrompt(true);
-    setTimeout(() => setCopiedPrompt(false), 2200);
+    setTimeout(() => setCopiedPrompt(false), 2000);
   };
 
-  const handleLaunchGoogleVids = (promptText: string) => {
-    navigator.clipboard.writeText(promptText);
+  const handleLaunchGoogleVids = (prompt: string) => {
+    navigator.clipboard.writeText(prompt);
     setCopiedPrompt(true);
     setTimeout(() => {
-      setCopiedPrompt(false);
-      window.open(
-        'https://workspace.google.com/intl/en_in/products/vids/?from=gafb-drive_6806271-def-en_in',
-        '_blank'
-      );
+      window.open('https://workspace.google.com/products/vids/', '_blank', 'noopener,noreferrer');
     }, 400);
+  };
+
+  const handleNavigateToStudio = (_source: string, templateId?: string) => {
+    setIsOpen(false);
+    if (templateId) {
+      router.push(`/create?source=google-vids-promo&templateId=${templateId}`);
+    } else {
+      router.push('/create?source=google-vids-promo');
+    }
   };
 
   if (!isOpen) return null;
@@ -207,76 +150,76 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="google-vids-promo-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/70 backdrop-blur-sm overscroll-contain animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-900/60 backdrop-blur-xs overscroll-contain animate-in fade-in duration-200"
     >
       <div
         ref={modalRef}
-        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#211522] border border-[#39233B] p-5 sm:p-7 shadow-2xl text-left text-[#F5EAF4] animate-in zoom-in-95 duration-200 scrollbar-thin"
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-white border border-[#E5E7EB] p-5 sm:p-7 shadow-2xl text-left text-[#17191D] animate-in zoom-in-95 duration-200"
       >
         {/* Close Button */}
         <button
           type="button"
           onClick={handleClose}
           aria-label="Close promotion dialog"
-          className="absolute right-4 top-4 p-2 rounded-full text-[#A99AAA] hover:text-[#F5EAF4] hover:bg-white/[0.06] transition-colors z-20 cursor-pointer"
+          className="absolute right-4 top-4 p-2 rounded-full text-[#667085] hover:text-[#17191D] hover:bg-slate-100 transition-colors z-20 cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Visual Artwork Banner */}
-        <div className="relative aspect-[24/9] sm:aspect-[28/9] w-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#100A12] via-[#211522] to-[#39233B] p-4 sm:p-5 flex flex-col justify-between mb-5 border border-[#39233B] shadow-inner">
-          <div className="flex items-center justify-between text-[11px] text-[#F05BCE] font-mono">
+        <div className="relative aspect-[24/9] sm:aspect-[28/9] w-full rounded-xl overflow-hidden bg-gradient-to-br from-[#EEF2FF] to-[#E0E7FF] p-4 sm:p-5 flex flex-col justify-between mb-5 border border-[#5145CD]/20 shadow-2xs">
+          <div className="flex items-center justify-between text-[11px] text-[#5145CD] font-mono">
             <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-[#F05BCE] animate-spin" />
+              <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
               GOOGLE VIDS WORKFLOW
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30 text-[10px] font-bold">
+            <span className="px-2.5 py-0.5 rounded-full bg-white text-[#5145CD] border border-[#5145CD]/30 text-[10px] font-bold shadow-2xs">
               15 Credits / Video
             </span>
           </div>
 
           <div className="flex items-center gap-3 my-auto">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#F05BCE]/20 border border-[#F05BCE]/40 flex items-center justify-center text-[#F05BCE] shadow-md">
-              <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-[#F05BCE] translate-x-0.5" />
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white border border-[#5145CD]/30 flex items-center justify-center text-[#5145CD] shadow-xs">
+              <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-[#5145CD] translate-x-0.5" />
             </div>
             <div>
-              <div className="text-[#F5EAF4] font-bold text-sm sm:text-base">AI Video Creative Engine</div>
-              <div className="text-[#A99AAA] text-xs font-mono">Powered by Google Gemini Omni Flash</div>
+              <div className="text-[#17191D] font-bold text-sm sm:text-base">AI Video Creative Engine</div>
+              <div className="text-[#667085] text-xs font-mono">Powered by Google Gemini Omni Flash</div>
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-[10px] text-[#A99AAA] font-mono border-t border-[#39233B] pt-2">
+          <div className="flex items-center justify-between text-[10px] text-[#667085] font-mono border-t border-[#5145CD]/20 pt-2">
             <span>Direct In-App Creation</span>
-            <span className="text-[#F05BCE] font-semibold">1080p & 4K Export Ready</span>
+            <span className="text-[#5145CD] font-semibold">1080p & 4K Export Ready</span>
           </div>
         </div>
 
         {/* Main Header Copy */}
         <div className="space-y-2 mb-5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F05BCE]/15 border border-[#F05BCE]/30 text-[#F05BCE] text-xs font-black uppercase tracking-wider">
-            <Video className="w-3.5 h-3.5 text-[#F05BCE]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] border border-[#5145CD]/20 text-[#5145CD] text-xs font-bold uppercase tracking-wider">
+            <Video className="w-3.5 h-3.5 text-[#5145CD]" />
             <span>Feature Spotlight</span>
           </div>
 
-          <h2 id="google-vids-promo-title" className="text-xl sm:text-2xl font-black text-[#F5EAF4] tracking-tight">
+          <h2 id="google-vids-promo-title" className="text-xl sm:text-2xl font-bold text-[#17191D] tracking-tight">
             Meet Google Vids in Fluvia Flow
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#A99AAA] leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#667085] leading-relaxed">
             Turn your ideas into videos with a simple prompt. Choose from cool production templates below or craft your own prompt to create right here or in Google Vids Workspace.
           </p>
         </div>
 
-        {/* 🌟 COOL TEMPLATES SHOWCASE SECTION */}
-        <div className="mb-5 rounded-2xl bg-[#100A12] border border-[#39233B] p-4 space-y-3.5">
+        {/* COOL TEMPLATES SHOWCASE SECTION */}
+        <div className="mb-5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] p-4 space-y-3.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Flame className="w-4 h-4 text-[#F05BCE]" />
-              <h3 className="font-bold text-xs sm:text-sm text-[#F5EAF4] uppercase tracking-wider">
-                Cool Video Templates for Google Vids
+              <Flame className="w-4 h-4 text-[#5145CD]" />
+              <h3 className="font-bold text-xs sm:text-sm text-[#17191D] uppercase tracking-wider">
+                Curated Video Templates
               </h3>
             </div>
-            <span className="text-[10px] font-mono text-[#F05BCE] bg-[#F05BCE]/15 border border-[#F05BCE]/30 px-2 py-0.5 rounded-full font-bold">
+            <span className="text-[10px] font-mono text-[#5145CD] bg-[#EEF2FF] border border-[#5145CD]/30 px-2 py-0.5 rounded-full font-semibold">
               6 Curated Starters
             </span>
           </div>
@@ -292,17 +235,17 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
                   onClick={() => setSelectedTemplate(tmpl)}
                   className={`text-left p-2.5 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? 'bg-[#F05BCE]/20 text-[#F5EAF4] border-[#F05BCE] shadow-md ring-2 ring-[#F05BCE]/40'
-                      : 'bg-[#211522] hover:bg-[#211522]/80 text-[#A99AAA] border-[#39233B] hover:border-[#F05BCE]/30'
+                      ? 'bg-white text-[#17191D] border-[#5145CD] shadow-xs ring-2 ring-[#5145CD]/20'
+                      : 'bg-white hover:bg-slate-50 text-[#667085] border-[#E5E7EB]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-base">{tmpl.emoji}</span>
                     <span
-                      className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                      className={`text-[9px] font-semibold px-1.5 py-0.5 rounded ${
                         isSelected
-                          ? 'bg-[#F05BCE]/30 text-[#F5EAF4]'
-                          : 'bg-[#100A12] text-[#A99AAA]'
+                          ? 'bg-[#EEF2FF] text-[#5145CD]'
+                          : 'bg-[#F7F8FA] text-[#667085]'
                       }`}
                     >
                       {tmpl.aspect}
@@ -310,15 +253,15 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
                   </div>
                   <div>
                     <h4
-                      className={`text-xs font-bold line-clamp-1 leading-snug ${
-                        isSelected ? 'text-[#F5EAF4]' : 'text-slate-300'
+                      className={`text-xs font-semibold line-clamp-1 leading-snug ${
+                        isSelected ? 'text-[#17191D]' : 'text-slate-700'
                       }`}
                     >
                       {tmpl.title}
                     </h4>
                     <p
                       className={`text-[10px] line-clamp-1 mt-0.5 ${
-                        isSelected ? 'text-[#F05BCE] font-mono' : 'text-[#A99AAA]'
+                        isSelected ? 'text-[#5145CD] font-medium' : 'text-[#667085]'
                       }`}
                     >
                       {tmpl.category}
@@ -330,26 +273,26 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
           </div>
 
           {/* Selected Template Details Box */}
-          <div className="p-3.5 rounded-xl bg-[#211522] border border-[#39233B] space-y-2.5 shadow-xs">
+          <div className="p-3.5 rounded-xl bg-white border border-[#E5E7EB] space-y-2.5 shadow-2xs">
             <div className="flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="text-lg">{selectedTemplate.emoji}</span>
                 <div>
-                  <h4 className="font-bold text-[#F5EAF4] text-xs sm:text-sm">
+                  <h4 className="font-semibold text-[#17191D] text-xs sm:text-sm">
                     {selectedTemplate.title}
                   </h4>
-                  <span className="text-[10px] text-[#A99AAA] font-mono">
+                  <span className="text-[10px] text-[#667085] font-mono">
                     {selectedTemplate.category} • {selectedTemplate.aspect} • {selectedTemplate.duration}
                   </span>
                 </div>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] border border-[#F05BCE]/30">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
                 {selectedTemplate.badge}
               </span>
             </div>
 
             {/* Prompt preview */}
-            <div className="relative p-2.5 rounded-lg bg-[#100A12] border border-[#39233B] text-[#F5EAF4] text-[11px] font-mono leading-relaxed select-all">
+            <div className="relative p-2.5 rounded-lg bg-[#F7F8FA] border border-[#E5E7EB] text-[#17191D] text-[11px] font-mono leading-relaxed select-all">
               {selectedTemplate.prompt}
             </div>
 
@@ -358,21 +301,21 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
               <button
                 type="button"
                 onClick={() => handleNavigateToStudio('google-vids-cool-template', selectedTemplate.id)}
-                className="flex-1 py-2 px-3 rounded-lg bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#F05BCE]/25 cursor-pointer transition-all border border-[#F05BCE]/40"
+                className="flex-1 py-2 px-3 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
               >
-                <Play className="w-3.5 h-3.5 fill-[#100A12]" />
+                <Play className="w-3.5 h-3.5 fill-white" />
                 <span>Use Template in Studio (15 cr)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleLaunchGoogleVids(selectedTemplate.prompt)}
-                className="py-2 px-3 rounded-lg bg-[#100A12] hover:bg-[#211522] text-[#F05BCE] border border-[#F05BCE]/30 font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer transition-colors"
+                className="py-2 px-3 rounded-lg bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] border border-[#5145CD]/20 font-semibold text-xs flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer transition-colors"
                 title="Copy prompt & open Google Vids workspace (0 credits)"
               >
                 {copiedPrompt ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#F05BCE]" />
+                    <Check className="w-3.5 h-3.5 text-[#5145CD]" />
                     <span>Opening Vids...</span>
                   </>
                 ) : (
@@ -386,17 +329,17 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
               <button
                 type="button"
                 onClick={() => handleCopyPrompt(selectedTemplate.prompt)}
-                className="py-2 px-3 rounded-lg bg-[#100A12] hover:bg-[#211522] text-[#A99AAA] hover:text-[#F5EAF4] font-semibold text-xs flex items-center justify-center gap-1.5 border border-[#39233B] cursor-pointer"
+                className="py-2 px-3 rounded-lg bg-white hover:bg-slate-50 text-[#667085] hover:text-[#17191D] font-medium text-xs flex items-center justify-center gap-1.5 border border-[#E5E7EB] cursor-pointer"
                 title="Copy prompt to clipboard"
               >
                 {copiedPrompt ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#F05BCE]" />
-                    <span className="text-[#F05BCE]">Copied</span>
+                    <Check className="w-3.5 h-3.5 text-[#5145CD]" />
+                    <span className="text-[#5145CD]">Copied</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5 text-[#A99AAA]" />
+                    <Copy className="w-3.5 h-3.5 text-[#667085]" />
                     <span>Copy</span>
                   </>
                 )}
@@ -406,22 +349,22 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
         </div>
 
         {/* Feature Highlights Grid */}
-        <div className="grid grid-cols-2 gap-2 text-xs text-[#A99AAA] font-medium pb-4 border-b border-[#39233B]">
+        <div className="grid grid-cols-2 gap-2 text-xs text-[#667085] font-medium pb-4 border-b border-[#E5E7EB]">
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
-            <span className="text-[#F5EAF4]">Prompt to Video</span>
+            <CheckCircle2 className="w-4 h-4 text-[#5145CD] shrink-0" />
+            <span className="text-[#17191D]">Prompt to Video</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
-            <span className="text-[#F5EAF4]">Fixed 15 Credits</span>
+            <CheckCircle2 className="w-4 h-4 text-[#5145CD] shrink-0" />
+            <span className="text-[#17191D]">Fixed 15 Credits</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
-            <span className="text-[#F5EAF4]">Image-to-Video</span>
+            <CheckCircle2 className="w-4 h-4 text-[#5145CD] shrink-0" />
+            <span className="text-[#17191D]">Image-to-Video</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#F05BCE] shrink-0" />
-            <span className="text-[#F5EAF4]">26 Curated Templates</span>
+            <CheckCircle2 className="w-4 h-4 text-[#5145CD] shrink-0" />
+            <span className="text-[#17191D]">26 Curated Templates</span>
           </div>
         </div>
 
@@ -431,7 +374,7 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
             <button
               type="button"
               onClick={() => handleNavigateToStudio('google-vids-promo-primary')}
-              className="w-full sm:flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] text-xs sm:text-sm font-black shadow-lg shadow-[#F05BCE]/25 transition-all flex items-center justify-center gap-2 cursor-pointer border border-[#F05BCE]/40"
+              className="w-full sm:flex-1 py-3 px-5 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs sm:text-sm font-semibold shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Create Video</span>
               <ArrowRight className="w-4 h-4" />
@@ -448,21 +391,21 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
                 setIsOpen(false);
                 router.push('/templates?type=video');
               }}
-              className="w-full sm:w-auto py-3 px-4 rounded-xl bg-[#100A12] hover:bg-[#211522] text-[#F5EAF4] border border-[#39233B] text-xs sm:text-sm font-bold transition-all cursor-pointer text-center flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto py-3 px-4 rounded-xl bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-xs sm:text-sm font-semibold transition-all cursor-pointer text-center flex items-center justify-center gap-1.5 shadow-2xs"
             >
-              <Layers className="w-4 h-4 text-[#F05BCE]" />
+              <Layers className="w-4 h-4 text-[#5145CD]" />
               <span>Browse All 26 Templates</span>
             </button>
           </div>
 
           {/* Dismissal Preference */}
           <div className="flex items-center justify-between pt-1">
-            <label className="flex items-center gap-2 text-xs text-[#A99AAA] cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-xs text-[#667085] cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={dontShowAgain}
                 onChange={(e) => setDontShowAgain(e.target.checked)}
-                className="w-3.5 h-3.5 rounded border-[#39233B] bg-[#100A12] text-[#F05BCE] focus:ring-[#F05BCE] cursor-pointer"
+                className="w-3.5 h-3.5 rounded border-[#E5E7EB] bg-white text-[#5145CD] focus:ring-[#5145CD] cursor-pointer"
               />
               <span>Don't show again</span>
             </label>
@@ -470,7 +413,7 @@ export function GoogleVidsPromoPopup({ onClose }: GoogleVidsPromoPopupProps) {
             <button
               type="button"
               onClick={handleClose}
-              className="text-xs text-[#A99AAA] hover:text-[#F5EAF4] underline cursor-pointer"
+              className="text-xs text-[#667085] hover:text-[#17191D] underline cursor-pointer"
             >
               Dismiss
             </button>

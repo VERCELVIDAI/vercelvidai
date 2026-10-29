@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Logo } from '@/components/brand/Logo';
 import { AuthHeroVisual } from '@/components/auth/AuthHeroVisual';
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
-import { DevDemoShortcuts } from '@/components/auth/DevDemoShortcuts';
 import {
   ArrowRight,
   Lock,
@@ -93,12 +92,6 @@ function LoginForm() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleDevFill = (demoEmail: string, demoPass: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setError(null);
   };
 
   return (
@@ -262,9 +255,6 @@ function LoginForm() {
             )}
           </button>
         </form>
-
-        {/* Development Shortcuts */}
-        <DevDemoShortcuts onFill={handleDevFill} />
 
         {/* Signup Link */}
         <div className="mt-8 text-center text-xs text-[#667085]">

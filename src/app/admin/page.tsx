@@ -786,13 +786,13 @@ export default function AdminConsolePage() {
                   <button
                     type="button"
                     onClick={() => setCouponModal(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-300 font-bold transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#667085] hover:text-[#17191D] font-medium transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold transition-all shadow-xs cursor-pointer"
+                    className="px-5 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold transition-all shadow-xs cursor-pointer"
                   >
                     {couponModal.mode === 'create' ? 'Create Coupon' : 'Save Changes'}
                   </button>
@@ -1484,13 +1484,13 @@ export default function AdminConsolePage() {
                   <button
                     type="button"
                     onClick={() => setCouponModal(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-300 font-bold transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#667085] hover:text-[#17191D] font-medium transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold transition-all shadow-xs cursor-pointer"
+                    className="px-5 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold transition-all shadow-xs cursor-pointer"
                   >
                     {couponModal.mode === 'create' ? 'Create Coupon' : 'Save Changes'}
                   </button>

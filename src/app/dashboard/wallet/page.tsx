@@ -51,8 +51,8 @@ export default function CreditWalletPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#100A12] text-[#F5EAF4] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#F05BCE] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -62,10 +62,10 @@ export default function CreditWalletPage() {
   const isLowBalance = credits.availableBalance < 30;
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#100A12] text-[#F5EAF4] relative">
+    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#100A12]">
+      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA]">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -76,22 +76,22 @@ export default function CreditWalletPage() {
 
         <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#F5EAF4]">Credit Wallet & Ledger</h1>
-            <p className="mt-1 text-xs sm:text-sm text-[#A99AAA]">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#17191D]">Credit Wallet & Ledger</h1>
+            <p className="mt-1 text-xs sm:text-sm text-[#667085]">
               Real-time audit log of your available balances, reservations, purchases, and refunds.
             </p>
           </div>
 
           {/* Low Balance Warning */}
           {isLowBalance && (
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs text-amber-200 shadow-sm">
+            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-800 shadow-xs">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>Your credit balance is low ({credits.availableBalance} credits remaining). Video generations require 15 credits.</span>
               </div>
               <Link
                 href="/pricing"
-                className="px-3 py-1.5 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] text-white font-bold rounded-lg shrink-0 ml-4 hover:brightness-110 transition-all shadow-sm"
+                className="px-3 py-1.5 bg-[#5145CD] hover:bg-[#4338CA] text-white font-medium rounded-lg shrink-0 ml-4 transition-colors shadow-xs"
               >
                 Top Up Now
               </Link>
@@ -100,37 +100,37 @@ export default function CreditWalletPage() {
 
           {/* Balances Overview Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="p-6 rounded-3xl bg-[#211522] border border-[#39233B] relative overflow-hidden shadow-sm">
+            <div className="p-6 rounded-2xl bg-white border border-[#E5E7EB] relative overflow-hidden shadow-xs">
               <div className="flex justify-between items-start mb-4">
-                <span className="text-xs text-[#A99AAA] font-semibold uppercase tracking-wider font-mono">Available Balance</span>
-                <div className="w-8 h-8 rounded-xl bg-[#F05BCE]/10 text-[#F05BCE] flex items-center justify-center border border-[#F05BCE]/30">
+                <span className="text-xs text-[#667085] font-semibold uppercase tracking-wider font-mono">Available Balance</span>
+                <div className="w-8 h-8 rounded-xl bg-[#EEF2FF] text-[#5145CD] flex items-center justify-center border border-[#5145CD]/20">
                   <Zap className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-4xl font-black text-[#F5EAF4] font-mono">{credits.availableBalance}</div>
-              <p className="mt-2 text-xs text-[#A99AAA]">Ready to spend on immediate AI jobs</p>
+              <div className="text-4xl font-extrabold text-[#17191D] font-mono">{credits.availableBalance}</div>
+              <p className="mt-2 text-xs text-[#667085]">Ready to spend on immediate AI jobs</p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-[#211522] border border-[#39233B] shadow-sm">
+            <div className="p-6 rounded-2xl bg-white border border-[#E5E7EB] shadow-xs">
               <div className="flex justify-between items-start mb-4">
-                <span className="text-xs text-[#A99AAA] font-semibold uppercase tracking-wider font-mono">In-Flight Reserved</span>
-                <div className="w-8 h-8 rounded-xl bg-pink-500/10 text-pink-300 flex items-center justify-center border border-pink-500/30">
+                <span className="text-xs text-[#667085] font-semibold uppercase tracking-wider font-mono">In-Flight Reserved</span>
+                <div className="w-8 h-8 rounded-xl bg-slate-100 text-[#667085] flex items-center justify-center border border-[#E5E7EB]">
                   <Clock className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-4xl font-black text-[#F5EAF4] font-mono">{credits.reservedBalance}</div>
-              <p className="mt-2 text-xs text-[#A99AAA]">Locked while rendering active jobs</p>
+              <div className="text-4xl font-extrabold text-[#17191D] font-mono">{credits.reservedBalance}</div>
+              <p className="mt-2 text-xs text-[#667085]">Locked while rendering active jobs</p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-[#211522] border border-[#39233B] flex flex-col justify-between shadow-sm">
+            <div className="p-6 rounded-2xl bg-white border border-[#E5E7EB] flex flex-col justify-between shadow-xs">
               <div>
-                <span className="text-xs text-[#A99AAA] font-semibold uppercase tracking-wider font-mono">Top-Up Wallet</span>
-                <h3 className="font-bold text-[#F5EAF4] text-base mt-1">Need additional compute?</h3>
-                <p className="mt-1 text-xs text-[#A99AAA]">Purchase instant top-up packs via UPI or Card.</p>
+                <span className="text-xs text-[#667085] font-semibold uppercase tracking-wider font-mono">Top-Up Wallet</span>
+                <h3 className="font-bold text-[#17191D] text-base mt-1">Need additional compute?</h3>
+                <p className="mt-1 text-xs text-[#667085]">Purchase instant top-up packs via UPI or Card.</p>
               </div>
               <Link
                 href="/pricing"
-                className="mt-4 w-full py-2.5 bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white rounded-xl text-xs font-bold text-center block shadow-md shadow-[rgba(240,91,206,0.25)] transition-all cursor-pointer border border-white/10"
+                className="mt-4 w-full py-2.5 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold text-center block shadow-xs transition-colors cursor-pointer"
               >
                 View Credit Packs
               </Link>
@@ -138,19 +138,19 @@ export default function CreditWalletPage() {
           </div>
 
           {/* Ledger Table */}
-          <div className="rounded-3xl bg-[#211522] border border-[#39233B] overflow-hidden shadow-sm">
-            <div className="p-4 border-b border-[#39233B] bg-[#2A1B2C] flex items-center justify-between">
-              <h3 className="font-bold text-[#F5EAF4] text-sm">Immutable Transaction Ledger</h3>
-              <span className="text-xs font-mono text-[#A99AAA]">{ledger.length} total entries</span>
+          <div className="rounded-2xl bg-white border border-[#E5E7EB] overflow-hidden shadow-xs">
+            <div className="p-4 border-b border-[#E5E7EB] bg-[#F7F8FA] flex items-center justify-between">
+              <h3 className="font-semibold text-[#17191D] text-sm">Immutable Transaction Ledger</h3>
+              <span className="text-xs font-mono text-[#667085]">{ledger.length} total entries</span>
             </div>
 
             {ledger.length === 0 ? (
-              <div className="p-8 text-center text-xs text-[#A99AAA]">No ledger transactions recorded yet.</div>
+              <div className="p-8 text-center text-xs text-[#667085]">No ledger transactions recorded yet.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-[#39233B] bg-[#100A12] text-[#A99AAA]">
+                    <tr className="border-b border-[#E5E7EB] bg-white text-[#667085]">
                       <th className="p-3.5 font-semibold">Transaction Type</th>
                       <th className="p-3.5 font-semibold">Amount</th>
                       <th className="p-3.5 font-semibold">Balance After</th>
@@ -158,31 +158,31 @@ export default function CreditWalletPage() {
                       <th className="p-3.5 font-semibold">Timestamp</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#39233B] text-[#F5EAF4]">
+                  <tbody className="divide-y divide-[#E5E7EB] text-[#17191D]">
                     {ledger.map((entry) => {
                       const isPositive = entry.amount > 0;
                       return (
-                        <tr key={entry.id} className="hover:bg-[#2A1B2C] transition-colors">
+                        <tr key={entry.id} className="hover:bg-[#F7F8FA] transition-colors">
                           <td className="p-3.5 flex items-center gap-2">
                             {isPositive ? (
-                              <ArrowDownLeft className="w-4 h-4 text-[#F05BCE]" />
+                              <ArrowDownLeft className="w-4 h-4 text-emerald-600" />
                             ) : (
-                              <ArrowUpRight className="w-4 h-4 text-rose-400" />
+                              <ArrowUpRight className="w-4 h-4 text-rose-500" />
                             )}
-                            <span className="font-semibold text-[#F5EAF4] capitalize">
+                            <span className="font-medium text-[#17191D] capitalize">
                               {entry.transactionType.replace(/_/g, ' ')}
                             </span>
                           </td>
-                          <td className={`p-3.5 font-mono font-bold ${isPositive ? 'text-[#F05BCE]' : 'text-rose-400'}`}>
+                          <td className={`p-3.5 font-mono font-semibold ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                             {isPositive ? `+${entry.amount}` : entry.amount} cr
                           </td>
-                          <td className="p-3.5 font-mono font-semibold text-[#F5EAF4]">
+                          <td className="p-3.5 font-mono font-medium text-[#17191D]">
                             {entry.balanceAfter} cr
                           </td>
-                          <td className="p-3.5 font-mono text-[#A99AAA] text-[11px]">
+                          <td className="p-3.5 font-mono text-[#667085] text-[11px]">
                             {entry.relatedJobId || entry.idempotencyKey || entry.metadata?.packName || 'System grant'}
                           </td>
-                          <td className="p-3.5 font-mono text-[#A99AAA] text-[11px]">
+                          <td className="p-3.5 font-mono text-[#667085] text-[11px]">
                             {new Date(entry.createdAt).toLocaleString()}
                           </td>
                         </tr>

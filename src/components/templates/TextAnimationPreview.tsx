@@ -222,28 +222,28 @@ export function TextAnimationPreview({
   };
 
   return (
-    <div className={`flex flex-col rounded-3xl bg-[#211522] border border-[#39233B] text-[#F5EAF4] overflow-hidden shadow-2xl ${className}`}>
+    <div className={`flex flex-col rounded-2xl bg-white border border-[#E5E7EB] text-[#17191D] overflow-hidden shadow-xs ${className}`}>
       {/* Top Header Bar */}
-      <div className="flex items-center justify-between px-5 py-3.5 bg-[#100A12]/80 border-b border-[#39233B]">
+      <div className="flex items-center justify-between px-5 py-3.5 bg-[#F7F8FA] border-b border-[#E5E7EB]">
         <div className="flex items-center gap-2.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#F05BCE] animate-pulse" />
-          <h3 className="font-bold text-sm tracking-tight text-[#F5EAF4] flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#5145CD] animate-pulse" />
+          <h3 className="font-bold text-sm tracking-tight text-[#17191D] flex items-center gap-1.5">
             <span>{template.title}</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#100A12] text-[#F05BCE] border border-[#F05BCE]/30">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
               Live Motion Engine
             </span>
           </h3>
         </div>
 
         {/* View Mode Tabs */}
-        <div className="flex items-center gap-1 bg-[#100A12] p-1 rounded-xl border border-[#39233B] text-xs">
+        <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-[#E5E7EB] text-xs">
           <button
             type="button"
             onClick={() => setActiveTab('preview')}
             className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'preview'
-                ? 'bg-[#F05BCE] text-white shadow-xs'
-                : 'text-[#A99AAA] hover:text-[#F5EAF4]'
+                ? 'bg-[#5145CD] text-white shadow-2xs'
+                : 'text-[#667085] hover:text-[#17191D]'
             }`}
           >
             Preview
@@ -253,8 +253,8 @@ export function TextAnimationPreview({
             onClick={() => setActiveTab('customize')}
             className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'customize'
-                ? 'bg-[#F05BCE] text-white shadow-xs'
-                : 'text-[#A99AAA] hover:text-[#F5EAF4]'
+                ? 'bg-[#5145CD] text-white shadow-2xs'
+                : 'text-[#667085] hover:text-[#17191D]'
             }`}
           >
             Customize
@@ -264,8 +264,8 @@ export function TextAnimationPreview({
             onClick={() => setActiveTab('code')}
             className={`px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'code'
-                ? 'bg-[#F05BCE] text-white shadow-xs'
-                : 'text-[#A99AAA] hover:text-[#F5EAF4]'
+                ? 'bg-[#5145CD] text-white shadow-2xs'
+                : 'text-[#667085] hover:text-[#17191D]'
             }`}
           >
             CSS/SVG
@@ -437,10 +437,10 @@ export function TextAnimationPreview({
             <button
               type="button"
               onClick={handleReplay}
-              className="p-2 rounded-xl bg-[#100A12] hover:bg-white/5 text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B] text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-white/90 hover:bg-white text-[#667085] hover:text-[#17191D] border border-[#E5E7EB] text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
               title="Replay Animation"
             >
-              <RotateCcw className="w-3.5 h-3.5 text-[#F05BCE]" />
+              <RotateCcw className="w-3.5 h-3.5 text-[#5145CD]" />
               <span>Replay</span>
             </button>
           </div>
@@ -449,13 +449,13 @@ export function TextAnimationPreview({
             <button
               type="button"
               onClick={handleCopyCss}
-              className="p-2 rounded-xl bg-[#100A12] hover:bg-white/5 text-[#A99AAA] hover:text-[#F5EAF4] border border-[#39233B] text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-white/90 hover:bg-white text-[#667085] hover:text-[#17191D] border border-[#E5E7EB] text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
               title="Copy CSS Snippet"
             >
               {copiedCss ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-[#F05BCE]" />
-                  <span className="text-[#F05BCE]">Copied</span>
+                  <Check className="w-3.5 h-3.5 text-[#5145CD]" />
+                  <span className="text-[#5145CD]">Copied</span>
                 </>
               ) : (
                 <>
@@ -470,33 +470,33 @@ export function TextAnimationPreview({
 
       {/* Interactive Customizer Panel (when customize tab active) */}
       {activeTab === 'customize' && (
-        <div className="p-5 bg-[#100A12] border-t border-[#39233B] space-y-4 text-xs animate-in slide-in-from-top-4 duration-300">
+        <div className="p-5 bg-[#F7F8FA] border-t border-[#E5E7EB] space-y-4 text-xs animate-in slide-in-from-top-4 duration-300">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-[#A99AAA]">Main Title / Brand Name</label>
+              <label className="text-[11px] font-bold text-[#667085]">Main Title / Brand Name</label>
               <input
                 type="text"
                 value={headline}
                 onChange={(e) => setHeadline(e.target.value)}
                 maxLength={40}
-                className="w-full px-3 py-2 rounded-xl bg-[#211522] border border-[#39233B] text-[#F5EAF4] focus:outline-none focus:border-[#F05BCE] font-medium"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-[#17191D] focus:outline-none focus:border-[#5145CD] font-medium"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-[#A99AAA]">Subtitle / Tagline</label>
+              <label className="text-[11px] font-bold text-[#667085]">Subtitle / Tagline</label>
               <input
                 type="text"
                 value={subtitle}
                 onChange={(e) => setSubtitle(e.target.value)}
                 maxLength={60}
-                className="w-full px-3 py-2 rounded-xl bg-[#211522] border border-[#39233B] text-[#F5EAF4] focus:outline-none focus:border-[#F05BCE] font-medium"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-[#17191D] focus:outline-none focus:border-[#5145CD] font-medium"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-[#A99AAA]">Accent Color</label>
+              <label className="text-[11px] font-bold text-[#667085]">Accent Color</label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -504,12 +504,12 @@ export function TextAnimationPreview({
                   onChange={(e) => setAccentColor(e.target.value)}
                   className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0"
                 />
-                <span className="font-mono text-[#F5EAF4]">{accentColor}</span>
+                <span className="font-mono text-[#17191D]">{accentColor}</span>
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-[#A99AAA]">Animation Speed</label>
+              <label className="text-[11px] font-bold text-[#667085]">Animation Speed</label>
               <div className="flex items-center gap-2">
                 <input
                   type="range"
@@ -518,9 +518,9 @@ export function TextAnimationPreview({
                   step="0.1"
                   value={speed}
                   onChange={(e) => setSpeed(parseFloat(e.target.value))}
-                  className="w-full accent-[#F05BCE]"
+                  className="w-full accent-[#5145CD]"
                 />
-                <span className="font-mono text-[#F5EAF4] w-10 text-right">{speed}x</span>
+                <span className="font-mono text-[#17191D] w-10 text-right">{speed}x</span>
               </div>
             </div>
 
@@ -528,9 +528,9 @@ export function TextAnimationPreview({
               <button
                 type="button"
                 onClick={handleReplay}
-                className="w-full py-2 px-3 rounded-xl bg-[#211522] hover:bg-[#100A12] border border-[#39233B] text-[#F5EAF4] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl bg-white hover:bg-[#F7F8FA] border border-[#E5E7EB] text-[#17191D] font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
                 <span>Apply & Replay</span>
               </button>
             </div>
@@ -539,9 +539,9 @@ export function TextAnimationPreview({
       )}
 
       {/* Bottom Action Footer */}
-      <div className="px-5 py-3.5 bg-[#100A12] border-t border-[#39233B] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2 text-[#A99AAA]">
-          <Zap className="w-4 h-4 text-[#F05BCE]" />
+      <div className="px-5 py-3.5 bg-white border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2 text-[#667085]">
+          <Zap className="w-4 h-4 text-[#5145CD]" />
           <span>Instant Client-Side Rendering • 100% Deterministic Text Precision</span>
         </div>
 
@@ -550,7 +550,7 @@ export function TextAnimationPreview({
             <button
               type="button"
               onClick={() => onOpenInEditor({ headline, subtitle, accentColor, preset, speed })}
-              className="flex-1 sm:flex-initial py-2 px-4 rounded-xl bg-gradient-to-r from-[#F05BCE] to-[#d641b6] hover:from-[#ff6ee0] hover:to-[#e64ec6] text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#F05BCE]/25 transition-all hover:scale-[1.02] cursor-pointer"
+              className="flex-1 sm:flex-initial py-2 px-4 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
             >
               <Film className="w-3.5 h-3.5" />
               <span>Use in Video Project (0 cr)</span>

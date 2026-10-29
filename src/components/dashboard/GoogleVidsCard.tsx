@@ -14,17 +14,7 @@ import {
 
 export function GoogleVidsCard() {
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-[#39233B] bg-gradient-to-br from-[#211522] via-[#100A12] to-[#211522] p-6 sm:p-8 shadow-xl transition-all hover:border-[#F05BCE]/30 min-w-0">
-      {/* Decorative background ambient glows */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#F05BCE]/10 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-[#C026D3]/10 blur-3xl"
-      />
-
+    <div className="relative overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white p-6 sm:p-8 shadow-xs transition-all hover:border-[#5145CD]/40 min-w-0">
       <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
         {/* Left Column: Copy & Badges */}
         <div className="space-y-4 max-w-xl min-w-0 flex-1">
@@ -32,46 +22,46 @@ export function GoogleVidsCard() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-google-vids-popup'))}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F05BCE]/15 hover:bg-[#F05BCE]/25 border border-[#F05BCE]/30 text-[#F05BCE] text-xs font-black tracking-wider uppercase transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] hover:bg-[#E0E7FF] border border-[#5145CD]/20 text-[#5145CD] text-xs font-bold tracking-wider uppercase transition-colors cursor-pointer"
               title="Click to view Cool Templates popup"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F05BCE] animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
               <span>GOOGLE VIDS</span>
             </button>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#100A12] border border-[#39233B] text-[#A99AAA] text-[11px] font-bold font-mono">
-              <Zap className="w-3 h-3 text-[#F05BCE] fill-[#F05BCE]" />
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#F7F8FA] border border-[#E5E7EB] text-[#667085] text-[11px] font-semibold font-mono">
+              <Zap className="w-3 h-3 text-[#5145CD]" />
               15 credits per video
             </span>
           </div>
 
           <div>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-[#F5EAF4] tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#17191D] tracking-tight">
               Turn your ideas into stunning videos
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-[#A99AAA] leading-relaxed font-normal">
+            <p className="mt-2 text-xs sm:text-sm text-[#667085] leading-relaxed font-normal">
               Create compelling video content with an AI-powered workflow. Describe your vision, customize camera lenses, and render high-resolution 1080p and 4K commercial videos right inside Fluvia Flow.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-[#A99AAA] font-medium">
+          <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-[#667085] font-medium">
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#F05BCE]" />
-              <span className="text-[#F5EAF4]">Text-to-Video & Image-to-Video</span>
+              <CheckCircle2 className="w-4 h-4 text-[#5145CD]" />
+              <span className="text-[#17191D]">Text-to-Video & Image-to-Video</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#F05BCE]" />
-              <span className="text-[#F5EAF4]">Google Gemini Omni Flash AI</span>
+              <CheckCircle2 className="w-4 h-4 text-[#5145CD]" />
+              <span className="text-[#17191D]">Google Gemini Omni Flash AI</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#F05BCE]" />
-              <span className="text-[#F5EAF4]">Direct MP4 Download</span>
+              <CheckCircle2 className="w-4 h-4 text-[#5145CD]" />
+              <span className="text-[#17191D]">Direct MP4 Download</span>
             </div>
           </div>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <Link
               href="/create?source=google-vids"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:opacity-95 text-[#100A12] font-black text-xs sm:text-sm shadow-lg shadow-[#F05BCE]/25 transition-all cursor-pointer group border border-[#F05BCE]/40"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all cursor-pointer group"
             >
               <span>Create Video</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
@@ -79,67 +69,67 @@ export function GoogleVidsCard() {
 
             <Link
               href="/templates"
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-[#100A12] hover:bg-[#211522] text-[#F5EAF4] border border-[#39233B] text-xs sm:text-sm font-semibold transition-all"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-xs sm:text-sm font-semibold transition-all shadow-xs"
             >
-              <Layers className="w-4 h-4 text-[#F05BCE]" />
+              <Layers className="w-4 h-4 text-[#5145CD]" />
               <span>Browse 26 Templates</span>
             </Link>
 
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-google-vids-popup'))}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-[#F05BCE]/15 hover:bg-[#F05BCE]/25 text-[#F05BCE] border border-[#F05BCE]/30 text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] border border-[#5145CD]/20 text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-xs"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F05BCE]" />
-              <span>Cool Templates Popup</span>
+              <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
+              <span>Featured Templates</span>
             </button>
           </div>
         </div>
 
         {/* Right Column: Custom Video Creation Illustration Artwork */}
         <div className="w-full lg:w-72 xl:w-80 shrink-0 flex items-center justify-center">
-          <div className="relative w-full max-w-[280px] lg:max-w-none rounded-2xl p-4 bg-[#211522] border border-[#39233B] shadow-2xl">
+          <div className="relative w-full max-w-[280px] lg:max-w-none rounded-2xl p-4 bg-[#F7F8FA] border border-[#E5E7EB] shadow-xs">
             {/* Visual Screen Preview */}
-            <div className="relative aspect-video rounded-xl overflow-hidden bg-[#100A12] border border-[#39233B] p-3 flex flex-col justify-between">
+            <div className="relative aspect-video rounded-xl overflow-hidden bg-white border border-[#E5E7EB] p-3 flex flex-col justify-between shadow-2xs">
               {/* Top controls in mockup */}
-              <div className="flex items-center justify-between text-[10px] text-[#F05BCE] font-mono">
-                <span className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F05BCE] animate-ping" />
+              <div className="flex items-center justify-between text-[10px] text-[#5145CD] font-mono">
+                <span className="flex items-center gap-1 font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-ping" />
                   REC • 4K 60FPS
                 </span>
-                <span>16:9 • 15 CR</span>
+                <span className="text-[#667085]">16:9 • 15 CR</span>
               </div>
 
               {/* Center Play Graphic */}
               <div className="my-auto flex flex-col items-center justify-center text-center py-2">
-                <div className="w-10 h-10 rounded-full bg-[#F05BCE]/20 border border-[#F05BCE]/40 flex items-center justify-center text-[#F05BCE] shadow-lg">
-                  <Play className="w-5 h-5 fill-[#F05BCE] translate-x-0.5" />
+                <div className="w-10 h-10 rounded-full bg-[#EEF2FF] border border-[#5145CD]/30 flex items-center justify-center text-[#5145CD] shadow-xs">
+                  <Play className="w-5 h-5 fill-[#5145CD] translate-x-0.5" />
                 </div>
-                <span className="text-[11px] font-bold text-[#F5EAF4] mt-2">
+                <span className="text-[11px] font-bold text-[#17191D] mt-2">
                   Gemini Video Studio
                 </span>
               </div>
 
               {/* Bottom timeline track */}
               <div className="space-y-1">
-                <div className="h-1.5 w-full bg-[#211522] rounded-full overflow-hidden flex border border-[#39233B]">
-                  <div className="w-2/3 bg-gradient-to-r from-[#F05BCE] to-[#C026D3] rounded-full" />
+                <div className="h-1.5 w-full bg-[#E5E7EB] rounded-full overflow-hidden flex">
+                  <div className="w-2/3 bg-[#5145CD] rounded-full" />
                 </div>
-                <div className="flex justify-between text-[9px] text-[#A99AAA] font-mono">
+                <div className="flex justify-between text-[9px] text-[#667085] font-mono">
                   <span>00:00</span>
-                  <span className="text-[#F05BCE] font-bold">15 Credits Fixed</span>
+                  <span className="text-[#5145CD] font-semibold">15 Credits Fixed</span>
                   <span>00:15</span>
                 </div>
               </div>
             </div>
 
             {/* Sub-label badge below preview */}
-            <div className="mt-3 flex items-center justify-between text-[11px] text-[#A99AAA] font-medium px-1">
-              <span className="flex items-center gap-1 text-[#F05BCE] font-bold">
-                <Video className="w-3.5 h-3.5 text-[#F05BCE]" />
+            <div className="mt-3 flex items-center justify-between text-[11px] text-[#667085] font-medium px-1">
+              <span className="flex items-center gap-1 text-[#5145CD] font-semibold">
+                <Video className="w-3.5 h-3.5 text-[#5145CD]" />
                 In-App Creation Studio
               </span>
-              <span className="text-[#A99AAA] font-mono text-[10px]">Zero Latency</span>
+              <span className="text-[#667085] font-mono text-[10px]">Zero Latency</span>
             </div>
           </div>
         </div>

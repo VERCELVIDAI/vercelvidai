@@ -148,19 +148,19 @@ export function VideoPreviewModal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto bg-[#211522] border border-[#39233B] rounded-3xl shadow-2xl flex flex-col text-[#F5EAF4]"
+        className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto bg-white border border-[#E5E7EB] rounded-2xl shadow-2xl flex flex-col text-[#17191D]"
       >
         {/* Modal Header */}
-        <div className="sticky top-0 z-30 px-5 py-4 border-b border-[#39233B] bg-[#211522]/95 backdrop-blur-md flex items-center justify-between">
+        <div className="sticky top-0 z-30 px-5 py-4 border-b border-[#E5E7EB] bg-white/95 backdrop-blur-md flex items-center justify-between">
           <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="px-3 py-1 rounded-full bg-[#F05BCE]/15 text-[#F05BCE] text-xs font-bold border border-[#F05BCE]/30">
+            <span className="px-3 py-1 rounded-full bg-[#EEF2FF] text-[#5145CD] text-xs font-semibold border border-[#5145CD]/20">
               {template.category}
             </span>
-            <span className="text-xs font-mono text-[#A99AAA]">
+            <span className="text-xs font-mono text-[#667085]">
               {template.aspectLabel} • {template.duration}
             </span>
           </div>
@@ -169,7 +169,7 @@ export function VideoPreviewModal({
             type="button"
             onClick={onClose}
             aria-label="Close template preview (Esc)"
-            className="p-2 min-h-[40px] min-w-[40px] rounded-xl bg-[#100A12] hover:bg-[#2A1B2C] text-[#A99AAA] hover:text-white flex items-center justify-center transition-colors cursor-pointer border border-[#39233B]"
+            className="p-2 min-h-[40px] min-w-[40px] rounded-xl bg-[#F7F8FA] hover:bg-slate-100 text-[#667085] hover:text-[#17191D] flex items-center justify-center transition-colors cursor-pointer border border-[#E5E7EB]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -181,7 +181,7 @@ export function VideoPreviewModal({
             {/* Left 7 Columns: Video Player */}
             <div className="lg:col-span-7 flex flex-col items-center">
               <div
-                className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#39233B] ${
+                className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-xl border border-slate-800 ${
                   template.aspect === '9:16'
                     ? 'aspect-[9/16] max-w-xs'
                     : template.aspect === '1:1'
@@ -221,10 +221,10 @@ export function VideoPreviewModal({
                     }`}
                   />
                 ) : (
-                  <div className="absolute inset-0 bg-[#100A12]/90 flex flex-col items-center justify-center p-6 text-center text-[#F5EAF4]">
-                    <AlertCircle className="w-8 h-8 text-[#F05BCE] mb-2" />
+                  <div className="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center p-6 text-center text-white">
+                    <AlertCircle className="w-8 h-8 text-indigo-400 mb-2" />
                     <p className="text-sm font-semibold">Video preview stream unavailable</p>
-                    <p className="text-xs text-[#A99AAA] mt-1 max-w-xs">
+                    <p className="text-xs text-slate-300 mt-1 max-w-xs">
                       The template asset is loading. You can still open this template directly into the studio editor.
                     </p>
                     <button
@@ -236,7 +236,7 @@ export function VideoPreviewModal({
                           videoRef.current.load();
                         }
                       }}
-                      className="mt-4 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#F05BCE] to-[#C026D3] text-white text-xs font-bold flex items-center gap-1.5"
+                      className="mt-4 px-3 py-1.5 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-medium flex items-center gap-1.5 transition-colors"
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       <span>Retry Playback</span>
@@ -247,7 +247,7 @@ export function VideoPreviewModal({
                 {/* Loading Spinner */}
                 {isLoading && !hasError && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none">
-                    <div className="w-8 h-8 border-3 border-[#F05BCE]/30 border-t-[#F05BCE] rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-3 border-[#5145CD]/30 border-t-[#5145CD] rounded-full animate-spin" />
                   </div>
                 )}
 
@@ -257,10 +257,10 @@ export function VideoPreviewModal({
                   <div
                     ref={progressBarRef}
                     onClick={handleSeek}
-                    className="h-1.5 w-full bg-white/20 hover:h-2 rounded-full cursor-pointer relative transition-all"
+                    className="h-1.5 w-full bg-white/30 hover:h-2 rounded-full cursor-pointer relative transition-all"
                   >
                     <div
-                      className="h-full bg-gradient-to-r from-[#F05BCE] to-[#C026D3] rounded-full"
+                      className="h-full bg-[#5145CD] rounded-full"
                       style={{
                         width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%`,
                       }}
@@ -273,7 +273,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={togglePlay}
-                        className="p-1 hover:text-[#F05BCE] transition-colors"
+                        className="p-1 hover:text-indigo-300 transition-colors"
                         aria-label={isPlaying ? 'Pause' : 'Play'}
                       >
                         {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
@@ -282,13 +282,13 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={toggleMute}
-                        className="p-1 hover:text-[#F05BCE] transition-colors"
+                        className="p-1 hover:text-indigo-300 transition-colors"
                         aria-label={isMuted ? 'Unmute' : 'Mute'}
                       >
-                        {isMuted ? <VolumeX className="w-4 h-4 text-[#F05BCE]" /> : <Volume2 className="w-4 h-4" />}
+                        {isMuted ? <VolumeX className="w-4 h-4 text-indigo-300" /> : <Volume2 className="w-4 h-4" />}
                       </button>
 
-                      <span className="font-mono text-[11px] text-[#A99AAA]">
+                      <span className="font-mono text-[11px] text-slate-300">
                         {formatTime(currentTime)} / {formatTime(duration || template.durationSec || 15)}
                       </span>
                     </div>
@@ -297,7 +297,7 @@ export function VideoPreviewModal({
                       <button
                         type="button"
                         onClick={handleFullscreen}
-                        className="p-1 hover:text-[#F05BCE] transition-colors"
+                        className="p-1 hover:text-indigo-300 transition-colors"
                         aria-label="Fullscreen"
                       >
                         <Maximize className="w-4 h-4" />
@@ -311,24 +311,24 @@ export function VideoPreviewModal({
             {/* Right 5 Columns: Metadata, Scenes & CTA */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#F5EAF4] leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] leading-tight">
                   {template.title}
                 </h2>
-                <p className="mt-3 text-sm text-[#A99AAA] leading-relaxed font-normal">
+                <p className="mt-3 text-sm text-[#667085] leading-relaxed font-normal">
                   {template.description}
                 </p>
 
                 {/* AI Models Used */}
-                <div className="mt-5 p-3.5 rounded-2xl bg-[#100A12] border border-[#39233B] space-y-2">
-                  <div className="text-[11px] font-bold text-[#F05BCE] uppercase tracking-wider flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-[#F05BCE]" />
+                <div className="mt-5 p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
+                  <div className="text-[11px] font-bold text-[#5145CD] uppercase tracking-wider flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-[#5145CD]" />
                     <span>AI Engine Pipeline</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {template.aiModelsUsed.map((m) => (
                       <span
                         key={m}
-                        className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-[#2A1B2C] text-pink-200 border border-[#39233B] font-semibold shadow-2xs"
+                        className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-white text-[#5145CD] border border-[#E5E7EB] font-semibold shadow-2xs"
                       >
                         {m}
                       </span>
@@ -339,22 +339,22 @@ export function VideoPreviewModal({
                 {/* Scene Timeline Structure */}
                 {template.scenes && template.scenes.length > 0 && (
                   <div className="mt-6 space-y-2.5">
-                    <div className="text-xs font-bold uppercase tracking-wider text-[#F5EAF4] flex items-center gap-1.5">
-                      <Film className="w-3.5 h-3.5 text-[#F05BCE]" />
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#17191D] flex items-center gap-1.5">
+                      <Film className="w-3.5 h-3.5 text-[#5145CD]" />
                       <span>Timeline Scene Breakdown</span>
                     </div>
                     <div className="space-y-2">
                       {template.scenes.map((scene, idx) => (
                         <div
                           key={idx}
-                          className="p-3 rounded-xl bg-[#100A12] border border-[#39233B] flex items-start gap-3 text-xs shadow-2xs"
+                          className="p-3 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex items-start gap-3 text-xs shadow-2xs"
                         >
-                          <span className="font-mono text-[11px] font-bold text-[#F05BCE] shrink-0 mt-0.5">
+                          <span className="font-mono text-[11px] font-semibold text-[#5145CD] shrink-0 mt-0.5">
                             {scene.time}
                           </span>
                           <div>
-                            <div className="font-semibold text-[#F5EAF4]">{scene.title}</div>
-                            <div className="text-[#A99AAA] text-[11px] leading-relaxed mt-0.5">
+                            <div className="font-semibold text-[#17191D]">{scene.title}</div>
+                            <div className="text-[#667085] text-[11px] leading-relaxed mt-0.5">
                               {scene.desc}
                             </div>
                           </div>
@@ -366,12 +366,12 @@ export function VideoPreviewModal({
               </div>
 
               {/* Primary Action Button */}
-              <div className="pt-4 border-t border-[#39233B]">
+              <div className="pt-4 border-t border-[#E5E7EB]">
                 <button
                   type="button"
                   onClick={handleCloneClick}
                   disabled={isCloning}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#F05BCE] via-[#E046BD] to-[#C026D3] hover:brightness-110 text-white font-bold text-sm shadow-xl shadow-[rgba(240,91,206,0.25)] flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer border border-white/10"
+                  className="w-full py-3.5 px-6 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-sm shadow-xs flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
                 >
                   {isCloning ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -382,7 +382,7 @@ export function VideoPreviewModal({
                     </>
                   )}
                 </button>
-                <p className="mt-2 text-center text-[11px] text-[#A99AAA] font-medium">
+                <p className="mt-2 text-center text-[11px] text-[#667085] font-medium">
                   Creates an independent editable project in your workspace without deducting credits.
                 </p>
               </div>
@@ -390,9 +390,9 @@ export function VideoPreviewModal({
           </div>
 
           {/* Related Templates Grid */}
-          <div className="pt-6 border-t border-[#39233B]">
-            <h3 className="font-bold text-[#F5EAF4] text-base mb-4 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#F05BCE]" />
+          <div className="pt-6 border-t border-[#E5E7EB]">
+            <h3 className="font-bold text-[#17191D] text-base mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#5145CD]" />
               <span>More Templates in this Style</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -400,7 +400,7 @@ export function VideoPreviewModal({
                 <div
                   key={r.id}
                   onClick={() => onSelectRelated(r)}
-                  className="group cursor-pointer rounded-2xl p-2.5 bg-[#100A12] hover:bg-[#2A1B2C] border border-[#39233B] hover:border-[#F05BCE]/40 transition-all flex items-center gap-3 shadow-xs"
+                  className="group cursor-pointer rounded-xl p-2.5 bg-[#F7F8FA] hover:bg-slate-100 border border-[#E5E7EB] hover:border-[#5145CD]/40 transition-all flex items-center gap-3 shadow-2xs"
                 >
                   <img
                     src={r.thumbnail}
@@ -411,10 +411,10 @@ export function VideoPreviewModal({
                     }}
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="font-bold text-xs text-[#F5EAF4] truncate group-hover:text-[#F05BCE] transition-colors">
+                    <div className="font-semibold text-xs text-[#17191D] truncate group-hover:text-[#5145CD] transition-colors">
                       {r.title}
                     </div>
-                    <div className="text-[10px] text-[#A99AAA] font-mono">
+                    <div className="text-[10px] text-[#667085] font-mono">
                       {r.aspectLabel} • {r.duration}
                     </div>
                   </div>
