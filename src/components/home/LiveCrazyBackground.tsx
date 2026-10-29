@@ -116,8 +116,8 @@ export function LiveCrazyBackground() {
       const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = width * dpr;
       canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
       initParticles();
@@ -448,13 +448,13 @@ export function LiveCrazyBackground() {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0"
+      className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0 max-w-full"
       aria-hidden="true"
     >
       {/* 1. CHROMATIC VOLUMETRIC AURORA LIGHT BLOBS */}
-      <div className="absolute -top-[15%] left-[10%] w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] rounded-full bg-gradient-to-br from-[#5145CD]/16 via-[#818CF8]/12 to-transparent blur-[80px] sm:blur-[110px] pointer-events-none" />
-      <div className="absolute top-[20%] right-[5%] w-[340px] sm:w-[550px] h-[340px] sm:h-[550px] rounded-full bg-gradient-to-bl from-[#38BDF8]/14 via-[#6366F1]/10 to-transparent blur-[90px] sm:blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[30%] w-[380px] sm:w-[600px] h-[280px] sm:h-[400px] rounded-full bg-gradient-to-t from-[#8B5CF6]/12 via-[#C7D2FE]/8 to-transparent blur-[70px] sm:blur-[100px] pointer-events-none" />
+      <div className="absolute -top-[15%] left-[10%] w-[240px] sm:w-[500px] h-[240px] sm:h-[500px] rounded-full bg-gradient-to-br from-[#5145CD]/16 via-[#818CF8]/12 to-transparent blur-[60px] sm:blur-[110px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[5%] w-[240px] sm:w-[550px] h-[240px] sm:h-[550px] rounded-full bg-gradient-to-bl from-[#38BDF8]/14 via-[#6366F1]/10 to-transparent blur-[70px] sm:blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[20%] w-[260px] sm:w-[600px] h-[220px] sm:h-[400px] rounded-full bg-gradient-to-t from-[#8B5CF6]/12 via-[#C7D2FE]/8 to-transparent blur-[60px] sm:blur-[100px] pointer-events-none" />
 
       {/* 2. SUBTLE ARCHITECTURAL CYBER-GRID OVERLAY */}
       <div

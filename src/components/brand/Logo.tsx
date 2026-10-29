@@ -76,15 +76,15 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
       </div>
 
       {/* Typography: Balanced Grotesque Wordmark + AI Studio Tag */}
-      <div className="flex flex-col justify-center">
-        <div className="flex items-center tracking-tight leading-none gap-1.5">
+      <div className="flex flex-col justify-center min-w-0">
+        <div className="flex items-center tracking-tight leading-none gap-1 sm:gap-1.5">
           <span className={`font-black text-[#17191D] tracking-[-0.03em] ${textSizes[size]}`}>
             FLUVIA
           </span>
           <span className={`font-semibold text-[#5145CD] tracking-[-0.03em] ${textSizes[size]}`}>
             FLOW
           </span>
-          <span className={`font-mono font-bold rounded-md bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] uppercase tracking-wider ${badgeSizes[size]}`}>
+          <span className={`hidden sm:inline-block font-mono font-bold rounded-md bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] uppercase tracking-wider ${badgeSizes[size]}`}>
             AI STUDIO
           </span>
         </div>

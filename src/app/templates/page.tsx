@@ -296,7 +296,7 @@ function DiscoveryFeedContent() {
   }, [templates, activeTab]);
 
   return (
-    <div className="min-h-screen bg-white text-[#17191D] flex flex-col">
+    <div className="min-h-screen bg-white text-[#17191D] flex flex-col overflow-x-hidden max-w-full">
       {/* ============================================================== */}
       {/* 1. TOP STICKY DISCOVERY HEADER & FORMAT NAVIGATION */}
       {/* ============================================================== */}
@@ -313,8 +313,8 @@ function DiscoveryFeedContent() {
             </Link>
           </div>
 
-          {/* Center: Feed Stream Tabs (Recommended, Following, Events) */}
-          <nav className="flex items-center bg-[#F7F8FA] border border-[#E5E7EB] rounded-full p-1 shrink-0">
+          {/* Center: Feed Stream Tabs (Recommended, Following, Events) - Desktop */}
+          <nav className="hidden md:flex items-center bg-[#F7F8FA] border border-[#E5E7EB] rounded-full p-1 shrink-0">
             <button
               type="button"
               onClick={() => setActiveTab('recommended')}
@@ -423,6 +423,48 @@ function DiscoveryFeedContent() {
               </Link>
             )}
           </div>
+        </div>
+
+        {/* Mobile Feed Stream Tabs */}
+        <div className="flex md:hidden items-center justify-center border-t border-[#E5E7EB] bg-white px-3 py-1.5 overflow-x-auto scrollbar-none">
+          <nav className="flex items-center bg-[#F7F8FA] border border-[#E5E7EB] rounded-full p-0.5">
+            <button
+              type="button"
+              onClick={() => setActiveTab('recommended')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
+                activeTab === 'recommended'
+                  ? 'bg-[#5145CD] text-white shadow-2xs'
+                  : 'text-[#667085] hover:text-[#17191D]'
+              }`}
+            >
+              <Sparkles className="w-3 h-3" />
+              <span>Recommended</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('following')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
+                activeTab === 'following'
+                  ? 'bg-[#5145CD] text-white shadow-2xs'
+                  : 'text-[#667085] hover:text-[#17191D]'
+              }`}
+            >
+              <Users className="w-3 h-3" />
+              <span>Following</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('events')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
+                activeTab === 'events'
+                  ? 'bg-[#5145CD] text-white shadow-2xs'
+                  : 'text-[#667085] hover:text-[#17191D]'
+              }`}
+            >
+              <Trophy className="w-3 h-3 text-amber-500" />
+              <span>Challenges</span>
+            </button>
+          </nav>
         </div>
 
         {/* Format Selector Bar: Video, Image, Text Animation */}

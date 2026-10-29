@@ -55,16 +55,30 @@
     --radius: 0.625rem;
   }
 
-  /* Force Minimalist Clean Business Theme */
-  html, body {
+  /* Force Minimalist Clean Business Theme & Safe Mobile Viewport */
+  *, ::before, ::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
     color-scheme: light !important;
     background-color: #FFFFFF !important;
     color: #17191D !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
     min-height: 100%;
+    overflow-x: hidden !important;
+    position: relative;
   }
 
   h1, h2, h3, h4, h5, h6 {

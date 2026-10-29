@@ -82,7 +82,7 @@ export function DashboardHeader({
         </button>
 
         {/* Workspace indicator */}
-        <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] text-xs font-semibold text-[#17191D] max-w-[120px] xs:max-w-[160px] sm:max-w-none truncate shrink">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] text-xs font-semibold text-[#17191D] max-w-[90px] xs:max-w-[140px] sm:max-w-none truncate shrink">
           <div className="w-2 h-2 rounded-full bg-[#5145CD] shrink-0" />
           <span className="truncate">{workspaceName}</span>
         </div>

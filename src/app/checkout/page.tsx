@@ -392,7 +392,7 @@ function CheckoutContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F7F8FA] text-[#17191D]">
+    <div className="min-h-screen flex flex-col bg-[#F7F8FA] text-[#17191D] overflow-x-hidden max-w-full">
       {/* Top Header */}
       <header className="h-16 bg-white border-b border-[#E5E7EB] px-4 sm:px-8 flex items-center justify-between">
         <Link href="/pricing" className="flex items-center gap-2 text-xs text-[#667085] hover:text-[#17191D] font-medium transition-colors">

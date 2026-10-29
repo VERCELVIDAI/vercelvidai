@@ -8,6 +8,8 @@ export const viewport: Viewport = {
   themeColor: '#5145CD',
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export const metadata: Metadata = {
@@ -116,7 +118,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased min-h-screen text-[#17191D] bg-[#FFFFFF] relative selection:bg-[#5145CD]/10 selection:text-[#5145CD]"
+        className="antialiased min-h-screen text-[#17191D] bg-[#FFFFFF] relative selection:bg-[#5145CD]/10 selection:text-[#5145CD] overflow-x-hidden max-w-full"
       >
         <FluviaMotionBackground />
         <ThemeProvider>

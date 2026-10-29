@@ -51,9 +51,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E5E7EB] transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
         {/* Left: Brand Logo */}
-        <div className="flex items-center gap-8 shrink-0">
+        <div className="flex items-center gap-4 sm:gap-8 min-w-0">
           <Logo size="md" />
 
           {/* Desktop Navigation */}
@@ -166,11 +166,11 @@ export function Header() {
         </div>
 
         {/* Mobile Hamburger Toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-1.5 sm:gap-2 shrink-0">
           {user && (
             <Link
               href="/dashboard"
-              className="px-3 py-1.5 rounded-lg bg-[#5145CD] text-white text-xs font-semibold"
+              className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#5145CD] text-white text-xs font-semibold shrink-0"
             >
               Dashboard
             </Link>
@@ -179,7 +179,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="p-2 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]"
+            className="p-1.5 sm:p-2 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA] shrink-0"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

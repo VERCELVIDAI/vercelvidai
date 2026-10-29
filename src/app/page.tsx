@@ -92,15 +92,15 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD]">
+    <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD] overflow-x-hidden max-w-full">
       <Header />
       <FirstCampaignModal />
 
-      <main className="flex-1">
+      <main className="flex-1 w-full overflow-x-hidden">
         {/* ========================================================================= */}
         {/* 1. HERO SECTION: BUSINESS AI AD CREATION STUDIO */}
         {/* ========================================================================= */}
-        <section className="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F7F8FA] to-[#FFFFFF] border-b border-[#E5E7EB]">
+        <section className="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F7F8FA] to-[#FFFFFF] border-b border-[#E5E7EB] w-full">
           {/* Crazy Live Interactive Neural Canvas & Aurora Background */}
           <LiveCrazyBackground />
 
@@ -113,7 +113,7 @@ export default function HomePage() {
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-[#17191D] leading-[1.12]">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#17191D] leading-[1.15] break-words">
                 Create high-converting AI video ads{' '}
                 <span className="text-[#5145CD]">in minutes.</span>
               </h1>
@@ -175,44 +175,44 @@ export default function HomePage() {
                 />
 
                 {/* Overlaid Player Controls */}
-                <div className="absolute bottom-4 inset-x-4 flex items-center justify-between z-20 pointer-events-auto">
-                  <div className="flex items-center gap-2">
+                <div className="absolute bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-4 flex items-center justify-between z-20 pointer-events-auto gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                     <button
                       type="button"
                       onClick={togglePlay}
-                      className="w-9 h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors"
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors"
                       aria-label={isPlaying ? 'Pause video' : 'Play video'}
                     >
-                      {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
+                      {isPlaying ? <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current ml-0.5" />}
                     </button>
                     <button
                       type="button"
                       onClick={toggleMute}
-                      className="w-9 h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors"
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] text-[#17191D] flex items-center justify-center shadow-md transition-colors"
                       aria-label={isMuted ? 'Unmute video' : 'Mute video'}
                     >
-                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#17191D]/80 backdrop-blur-md text-white border border-white/20">
-                      4K 60FPS • Google Gemini Omni 1.1 Flash
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="text-[10px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-1 rounded-full bg-[#17191D]/80 backdrop-blur-md text-white border border-white/20 truncate">
+                      <span className="hidden xs:inline">4K 60FPS • </span>Gemini Omni 1.1 Flash
                     </span>
                   </div>
                 </div>
 
                 {/* Director Framing Watermarks */}
-                <div className="absolute top-4 left-4 pointer-events-none">
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-[#5145CD] text-white shadow-xs">
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 pointer-events-none">
+                  <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 sm:px-2.5 py-1 rounded-md bg-[#5145CD] text-white shadow-xs">
                     Live Generation Output (15 cr)
                   </span>
                 </div>
               </div>
 
               {/* Quick Interactive Prompt Bar below the canvas */}
-              <div className="mt-3 p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div className="flex items-center gap-2.5 min-w-0">
+              <div className="mt-3 p-3 sm:p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs overflow-hidden">
+                <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
                   <div className="w-7 h-7 rounded-lg bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] flex items-center justify-center shrink-0">
                     <Sparkles className="w-3.5 h-3.5" />
                   </div>
@@ -223,7 +223,7 @@ export default function HomePage() {
 
                 <Link
                   href="/create?prompt=Ultra-luxury%20midnight%20perfume%20bottle%20floating%20over%20liquid%20gold%20ripples%2C%20dramatic%20rim%20lighting%2C%204k%20cinematic%20commercial&mode=video"
-                  className="px-3.5 py-2 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-xs"
+                  className="w-full sm:w-auto px-3.5 py-2 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-xs"
                 >
                   <span>Use This Prompt</span>
                   <ArrowRight className="w-3.5 h-3.5" />

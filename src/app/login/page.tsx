@@ -288,7 +288,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 text-[#17191D] bg-white">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 text-[#17191D] bg-white overflow-x-hidden max-w-full">
       {/* LEFT SIDE: Brand Visual & Product Showcase */}
       <AuthHeroVisual />
 
