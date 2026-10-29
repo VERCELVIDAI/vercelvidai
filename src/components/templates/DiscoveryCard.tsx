@@ -115,10 +115,11 @@ export function DiscoveryCard({
         }
       }}
       onMouseLeave={onHoverEnd}
-      className="break-inside-avoid mb-4 group relative rounded-2xl overflow-hidden bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all duration-300 cursor-pointer select-none"
+      className="inline-block w-full break-inside-avoid mb-5 group relative rounded-2xl overflow-hidden bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-xl transition-all duration-300 cursor-pointer select-none"
     >
-      <div className={`relative w-full ${getAspectClass()} overflow-hidden bg-slate-900`}>
-        {/* Poster Image */}
+      {/* 100% CLEAN MEDIA CONTAINER — NO TEXT, NO BADGES, NO GRADIENTS OVER MEDIA */}
+      <div className={`relative w-full ${getAspectClass()} overflow-hidden bg-[#17191D]`}>
+        {/* Clean Poster Image */}
         <img
           src={template.thumbnail}
           alt={template.title}
@@ -129,7 +130,7 @@ export function DiscoveryCard({
           }`}
         />
 
-        {/* Real Hover Video Preview */}
+        {/* Clean Video Preview (Zero Text Overlays) */}
         {isVideo && isActivePlaying && Boolean(template.videoPreview) && !hasError && (
           <video
             ref={videoRef}
@@ -141,117 +142,48 @@ export function DiscoveryCard({
             className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300"
           />
         )}
+      </div>
 
-        {/* Gradient Overlay for Readable Text */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 opacity-75 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none z-20" />
-
-        {/* Top Badges & Creator Info */}
-        <div className="absolute top-3 inset-x-3 flex items-center justify-between z-30 pointer-events-auto">
-          {/* Creator Chip */}
-          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 shadow-xs max-w-[70%]">
-            <img
-              src={template.creatorAvatar}
-              alt={template.creatorName}
-              className="w-5 h-5 rounded-full object-cover shrink-0"
-            />
-            <span className="text-[11px] font-medium text-white truncate">
-              {template.creatorName}
+      {/* CLEAN METADATA BODY BELOW MEDIA (ZERO TEXT ON THE VIDEO/IMAGE) */}
+      <div className="p-4 bg-white flex flex-col justify-between gap-3 border-t border-[#F1F3F5]">
+        <div>
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="text-[10px] font-semibold text-[#5145CD] bg-[#EEF2FF] px-2 py-0.5 rounded-md truncate max-w-[75%] border border-[#E0E7FF]">
+              {template.category}
             </span>
-            <button
-              type="button"
-              onClick={handleFollowClick}
-              title={isFollowing ? 'Following creator' : 'Follow creator'}
-              className="ml-0.5 text-white/70 hover:text-white transition-colors p-0.5"
-            >
-              {isFollowing ? (
-                <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
-              ) : (
-                <UserPlus className="w-3.5 h-3.5 hover:text-white" />
-              )}
-            </button>
-          </div>
-
-          {/* Format & Credit Badge */}
-          <div className="flex items-center gap-1.5">
-            {isImage ? (
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#5145CD] text-white flex items-center gap-1">
-                <ImageIcon className="w-3 h-3" />
-                <span>5 cr</span>
-              </span>
-            ) : isText ? (
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-white border border-white/10 flex items-center gap-1">
-                <Type className="w-3 h-3" />
-                <span>Text</span>
-              </span>
-            ) : (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#5145CD] text-white flex items-center gap-1 font-semibold">
-                <Film className="w-3 h-3" />
-                <span>15 cr</span>
-              </span>
-            )}
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10">
+            <span className="text-[10px] font-mono font-medium text-[#667085] bg-[#F1F3F5] px-1.5 py-0.5 rounded shrink-0">
               {template.aspect}
             </span>
           </div>
+
+          <h4 className="text-xs sm:text-sm font-bold text-[#17191D] line-clamp-1 group-hover:text-[#5145CD] transition-colors">
+            {template.title}
+          </h4>
         </div>
 
-        {/* Center Indicator: Play Icon for video cards when not playing */}
-        {isVideo && !isActivePlaying && (
-          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
-            <div className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform">
-              <Play className="w-4 h-4 fill-white text-white ml-0.5" />
-            </div>
-          </div>
-        )}
+        <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#F1F3F5]">
+          <button
+            type="button"
+            onClick={handleUseClick}
+            className="flex-1 py-2 px-3 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 bg-[#5145CD] hover:bg-[#4338CA] text-white shadow-xs transition-all cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Use Template</span>
+          </button>
 
-        {/* Bottom Content & Prompt Snippet */}
-        <div className="absolute bottom-3 inset-x-3 z-30 flex flex-col gap-2 pointer-events-auto text-left">
-          <div>
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white bg-white/20 backdrop-blur-xs px-2 py-0.5 rounded-md">
-                {template.category}
-              </span>
-              {template.badge && (
-                <span className="text-[10px] font-semibold text-amber-200 bg-amber-900/60 border border-amber-400/30 px-1.5 py-0.5 rounded-md">
-                  {template.badge}
-                </span>
-              )}
-            </div>
-            <h4 className="text-xs sm:text-sm font-bold text-white tracking-tight line-clamp-1 transition-colors">
-              {template.title}
-            </h4>
-            <p className="text-[11px] text-white/80 line-clamp-2 mt-0.5 font-normal leading-relaxed">
-              {template.prompt || template.description}
-            </p>
-          </div>
-
-          {/* Actions Bar */}
-          <div className="flex items-center justify-between pt-2 border-t border-white/15">
-            <button
-              type="button"
-              onClick={handleUseClick}
-              className="px-3 py-1.5 rounded-xl font-semibold text-[11px] flex items-center gap-1.5 bg-[#5145CD] hover:bg-[#4338CA] text-white shadow-sm transition-all hover:scale-[1.02] cursor-pointer"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Use Template</span>
-            </button>
-
-            {/* Like Button */}
-            <button
-              type="button"
-              onClick={handleLikeClick}
-              className="flex items-center gap-1 text-[11px] font-mono px-2.5 py-1.5 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-white transition-colors"
-            >
-              <Heart
-                className={`w-3.5 h-3.5 ${
-                  optimisticLiked
-                    ? 'fill-rose-500 text-rose-500'
-                    : 'text-white/80 group-hover:text-white'
-                } transition-colors`}
-              />
-              <span>{likeCount.toLocaleString()}</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={handleLikeClick}
+            className="flex items-center gap-1 py-1.5 px-2.5 rounded-xl border border-[#E5E7EB] hover:border-[#D1D5DB] text-[#667085] hover:text-[#17191D] bg-[#F7F8FA] hover:bg-white text-xs font-mono transition-colors cursor-pointer"
+            title="Like template"
+          >
+            <Heart
+              className={`w-3.5 h-3.5 ${
+                optimisticLiked ? 'fill-rose-500 text-rose-500' : ''
+              }`}
+            />
+            <span className="text-[11px]">{likeCount.toLocaleString()}</span>
+          </button>
         </div>
       </div>
     </div>

@@ -148,12 +148,6 @@ export default function TemplateDetailPage({ params }: PageProps) {
                     alt={tmpl.title}
                     className="max-h-[600px] w-auto object-contain rounded-lg"
                   />
-                  <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="bg-white/90 backdrop-blur-md px-2.5 py-1 rounded text-xs text-[#5145CD] font-mono border border-[#E5E7EB] flex items-center gap-1 shadow-2xs">
-                      <ImageIcon className="w-3.5 h-3.5 text-[#5145CD]" />
-                      <span>{tmpl.aspectLabel || tmpl.aspect}</span>
-                    </span>
-                  </div>
                 </div>
               ) : tmpl.type === 'text-animation' ? (
                 /* Interactive Deterministic Typography Engine Preview */
@@ -205,17 +199,7 @@ export default function TemplateDetailPage({ params }: PageProps) {
                     </div>
                   )}
 
-                  {/* Overlaid Badges */}
-                  <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-white font-mono">
-                      {tmpl.aspectLabel || tmpl.aspect}
-                    </span>
-                    <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-xs text-white font-mono">
-                      {tmpl.duration || '15s'}
-                    </span>
-                  </div>
-
-                  {/* Video Controls Overlay */}
+                  {/* Video Controls Overlay (Playback only, zero text on video) */}
                   <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-white text-xs">
                     <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
                       <button
@@ -265,7 +249,7 @@ export default function TemplateDetailPage({ params }: PageProps) {
                 <span>Integrated AI Pipeline</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {(tmpl.aiModelsUsed || ['Google Gemini (gemini-omni-1.1-flash)']).map((m) => (
+                {(tmpl.aiModelsUsed || ['Commercial Video Engine (Ultra HD)']).map((m) => (
                   <span
                     key={m}
                     className="text-xs font-mono px-2.5 py-1 rounded-lg bg-white text-[#5145CD] border border-[#E5E7EB] font-medium"

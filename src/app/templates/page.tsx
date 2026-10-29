@@ -286,7 +286,7 @@ function DiscoveryFeedContent() {
       likesCount: 0,
       tags: ['#ChallengeEntry'],
       scenes: [],
-      aiModelsUsed: ['Google Gemini (gemini-omni-1.1-flash)'],
+      aiModelsUsed: ['Commercial Video Engine (Ultra HD)'],
       estimatedCredits: 15,
       type: 'video',
       generationWorkflow: 'video_gemini',
@@ -575,7 +575,7 @@ function DiscoveryFeedContent() {
                   Production-Ready Ad Storyboards
                 </h2>
                 <p className="text-xs sm:text-sm text-[#667085] max-w-2xl">
-                  Curated across <strong>AI Video</strong> (Gemini Omni 1.1 Flash • 15 cr), <strong>AI Image</strong> (Gemini 3.1 Flash Image • 5 cr), and <strong>Kinetic Typography</strong>.
+                  Curated commercial templates across <strong>AI Video</strong>, <strong>AI Image</strong>, and <strong>Kinetic Motion</strong>. Clean visual layouts ready for instant campaign creation.
                 </p>
               </div>
 

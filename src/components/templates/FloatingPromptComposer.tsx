@@ -133,7 +133,7 @@ export function FloatingPromptComposer({
         } else if (job.status === 'failed') {
           if (pollingRef.current) clearInterval(pollingRef.current);
           setIsGenerating(false);
-          setErrorMessage(job.errorMessage || 'Gemini video generation failed. 15 credits refunded.');
+          setErrorMessage(job.errorMessage || 'Video generation failed. 15 credits refunded.');
           // Refresh credit balance (refund restored)
           fetch('/api/credits')
             .then((r) => (r.ok ? r.json() : null))
@@ -269,14 +269,14 @@ export function FloatingPromptComposer({
             </div>
 
             <div className="flex items-center justify-between text-xs text-[#667085]">
-              <span className="font-mono text-[#5145CD] font-medium">Engine: Google Gemini (gemini-omni-1.1-flash)</span>
+              <span className="font-mono text-[#5145CD] font-medium">Engine: Ultra HD Commercial Video (1080p)</span>
               <span className="font-mono text-[#667085]">Charged: 15 Credits</span>
             </div>
 
             <div className="flex items-center gap-3 pt-2">
               <a
                 href={completedVideo.url}
-                download={`fluvia_gemini_${completedVideo.jobId}.mp4`}
+                download={`fluvia_video_${completedVideo.jobId}.mp4`}
                 className="flex-1 py-3 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
               >
                 <Download className="w-4 h-4" />
@@ -407,7 +407,7 @@ export function FloatingPromptComposer({
             <div className="flex items-center gap-2 truncate">
               <span className="flex items-center gap-1 font-bold text-[#5145CD]">
                 <Sparkles className="w-3 h-3 text-[#5145CD] shrink-0" />
-                <span>Google Gemini (gemini-omni-1.1-flash)</span>
+                <span>Commercial Video Engine</span>
               </span>
               {selectedTemplate && (
                 <>
@@ -521,7 +521,7 @@ export function FloatingPromptComposer({
                 className="flex items-center gap-1.5 bg-[#F7F8FA] border border-[#E5E7EB] rounded-full px-2.5 py-1 text-[11px] font-medium text-[#17191D] hover:border-[#5145CD]/40 transition-colors cursor-pointer"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-pulse" />
-                <span>Gemini Omni Flash</span>
+                <span>Ultra HD Commercial Video</span>
                 <ChevronDown className="w-3 h-3 text-[#667085]" />
               </button>
 
@@ -532,7 +532,7 @@ export function FloatingPromptComposer({
                   </div>
                   <div className="p-2 rounded-xl bg-[#EEF2FF] border border-[#5145CD]/30 text-[#17191D] flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-[#17191D]">Google Gemini Omni 1.1 Flash</p>
+                      <p className="font-bold text-[#17191D]">Commercial Video Engine (Ultra HD)</p>
                       <p className="text-[10px] text-[#5145CD]">Active Model • 15 credits / video</p>
                     </div>
                     <Check className="w-4 h-4 text-[#5145CD]" />

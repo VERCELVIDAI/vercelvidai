@@ -156,18 +156,6 @@ export function DiscoveryDetailModal({
                 alt={template.title}
                 className="max-w-full max-h-[70vh] lg:max-h-[85vh] object-contain rounded-xl shadow-2xl"
               />
-              <div className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/40 text-[#5145CD] text-xs font-semibold shadow-md">
-                <Film className="w-3.5 h-3.5 text-[#5145CD]" />
-                <span>Creative Preview • Render via Gemini Omni Flash (15 cr)</span>
-              </div>
-              <div className="absolute bottom-4 inset-x-4 flex items-center justify-between z-30 pointer-events-auto">
-                <span className="text-xs font-mono px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white">
-                  {template.aspect} • {template.duration || '15s'}
-                </span>
-                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#5145CD]">
-                  Google Gemini (gemini-omni-1.1-flash)
-                </span>
-              </div>
             </div>
           ) : isVideo ? (
             <>
@@ -359,10 +347,10 @@ export function DiscoveryDetailModal({
                 <span className="text-xs font-semibold text-[#5145CD] flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-pulse" />
                   {isImage
-                    ? 'Google Gemini Imagen (gemini-3.1-flash-image)'
+                    ? 'Commercial Diffusion Image Engine (Ultra HD)'
                     : isText
                     ? 'Fluvia Deterministic Typography Engine'
-                    : 'Google Gemini (gemini-omni-1.1-flash)'}
+                    : 'Commercial AI Video Engine (1080p HD)'}
                 </span>
               </div>
             </div>
@@ -390,7 +378,7 @@ export function DiscoveryDetailModal({
                   className="w-full py-2.5 px-4 rounded-xl bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] border border-[#5145CD]/20 font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <ExternalLink className="w-3.5 h-3.5 text-[#5145CD]" />
-                  <span>Create in Google Vids Workspace (0 cr)</span>
+                  <span>Export to Studio Workspace</span>
                 </button>
 
                 <button
@@ -414,7 +402,7 @@ export function DiscoveryDetailModal({
                   className="w-full py-3.5 px-4 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   <Wand2 className="w-4 h-4 text-white" />
-                  <span>Generate with Gemini Imagen (5 cr)</span>
+                  <span>Generate AI Image (5 cr)</span>
                 </button>
 
                 <button
