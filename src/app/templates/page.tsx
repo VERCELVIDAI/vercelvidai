@@ -33,6 +33,9 @@ import { PublishTemplateModal } from '@/components/templates/PublishTemplateModa
 import { EventsView } from '@/components/templates/EventsView';
 import {
   ALL_CURATED_TEMPLATES,
+  VIDEO_TEMPLATES,
+  IMAGE_TEMPLATES,
+  TEXT_ANIMATION_TEMPLATES,
   TEMPLATES_DATA,
   TEMPLATE_CATEGORIES,
   CreativeTemplate,
@@ -90,10 +93,10 @@ function DiscoveryFeedContent() {
   // Data state
   const [templates, setTemplates] = useState<CreativeTemplate[]>(ALL_CURATED_TEMPLATES);
   const [formatCounts, setFormatCounts] = useState({
-    all: 53,
-    video: 26,
-    image: 15,
-    textAnimation: 12,
+    all: ALL_CURATED_TEMPLATES.length,
+    video: VIDEO_TEMPLATES.length,
+    image: IMAGE_TEMPLATES.length,
+    textAnimation: TEXT_ANIMATION_TEMPLATES.length,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedCreators, setSuggestedCreators] = useState<any[]>([]);

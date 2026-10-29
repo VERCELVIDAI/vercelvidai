@@ -54,6 +54,10 @@ const MODELS = [
 ];
 
 const PRODUCTIVE_PRESETS = [
+  'vid_09',
+  'vid_10',
+  'vid_11',
+  'vid_12',
   'tmpl_19',
   'tmpl_20',
   'tmpl_21',
@@ -485,9 +489,9 @@ function CreateWorkspaceContent() {
   const credits = authData?.credits || { availableBalance: 0 };
   const hasEnoughCredits = credits.availableBalance >= estimatedCost;
 
-  const productiveTemplates = TEMPLATES_DATA.filter((t) =>
-    PRODUCTIVE_PRESETS.includes(t.id)
-  );
+  const productiveTemplates = PRODUCTIVE_PRESETS.map((id) =>
+    ALL_CURATED_TEMPLATES.find((t) => t.id === id) || TEMPLATES_DATA.find((t) => t.id === id)
+  ).filter(Boolean) as (CreativeTemplate | VideoTemplate)[];
 
   return (
     <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden text-[#17191D] bg-[#F7F8FA] relative">
