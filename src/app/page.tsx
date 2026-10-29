@@ -416,6 +416,35 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  {/* Play & Mute buttons outside video */}
+                  <button
+                    type="button"
+                    onClick={toggleSlidePlay}
+                    className="p-1.5 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-[#17191D] transition-colors cursor-pointer"
+                    aria-label={isSlidePlaying ? 'Pause video' : 'Play video'}
+                    title={isSlidePlaying ? 'Pause video' : 'Play video'}
+                  >
+                    {isSlidePlaying ? (
+                      <Pause className="w-3.5 h-3.5" />
+                    ) : (
+                      <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={toggleSlideMute}
+                    className="p-1.5 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-[#17191D] transition-colors cursor-pointer"
+                    aria-label={isSlideMuted ? 'Unmute video' : 'Mute video'}
+                    title={isSlideMuted ? 'Unmute video' : 'Mute video'}
+                  >
+                    {isSlideMuted ? (
+                      <VolumeX className="w-3.5 h-3.5" />
+                    ) : (
+                      <Volume2 className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+
                   <span className="text-xs font-mono font-bold text-[#667085] bg-[#F7F8FA] px-2.5 py-1 rounded-lg border border-[#E5E7EB]">
                     0{activeSlideIndex + 1} / 0{HERO_SLIDES.length}
                   </span>
@@ -443,8 +472,8 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* SLIDE VIDEO STAGE — 100% CLEAN VIDEO, ZERO TEXT OVERLAY */}
-              <div className="relative aspect-[16/10] sm:aspect-video w-full rounded-xl overflow-hidden bg-[#0D0E12] flex items-center justify-center group shadow-inner">
+              {/* 100% PURE CLEAN VIDEO VIEWPORT — ABSOLUTELY NOTHING ON TOP */}
+              <div className="relative aspect-[16/10] sm:aspect-video w-full rounded-xl overflow-hidden bg-[#0D0E12] flex items-center justify-center shadow-inner">
                 {/* Ambient Blurred Backdrop for 9:16 vertical videos */}
                 {activeSlide.aspect === '9:16' && (
                   <img
@@ -455,7 +484,7 @@ export default function HomePage() {
                   />
                 )}
 
-                {/* Main Video Player */}
+                {/* Main Video Player — ZERO OVERLAYS, CLEAN PLAYBACK */}
                 <video
                   ref={slideVideoRef}
                   key={activeSlide.id}
@@ -472,74 +501,23 @@ export default function HomePage() {
                       : 'w-full aspect-video object-cover'
                   }`}
                 />
+              </div>
 
-                {/* Left Slide Arrow (Clean Hover Action) */}
-                <button
-                  type="button"
-                  onClick={handlePrevSlide}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 cursor-pointer shadow-lg border border-white/20"
-                  aria-label="Previous video slide"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-
-                {/* Right Slide Arrow (Clean Hover Action) */}
-                <button
-                  type="button"
-                  onClick={handleNextSlide}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 cursor-pointer shadow-lg border border-white/20"
-                  aria-label="Next video slide"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-
-                {/* Overlaid Functional Controls Only (ZERO TEXT OVERLAY) */}
-                <div className="absolute bottom-3 inset-x-3 sm:bottom-4 sm:inset-x-4 flex items-center justify-between z-20 pointer-events-auto">
-                  {/* Play & Mute Functional Buttons */}
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={toggleSlidePlay}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center shadow-md transition-all cursor-pointer border border-white/20"
-                      aria-label={isSlidePlaying ? 'Pause video' : 'Play video'}
-                    >
-                      {isSlidePlaying ? (
-                        <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      ) : (
-                        <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current ml-0.5" />
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={toggleSlideMute}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center shadow-md transition-all cursor-pointer border border-white/20"
-                      aria-label={isSlideMuted ? 'Unmute video' : 'Mute video'}
-                    >
-                      {isSlideMuted ? (
-                        <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      ) : (
-                        <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      )}
-                    </button>
-                  </div>
-
-                  {/* 5 Slide Pagination Dots */}
-                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10">
-                    {HERO_SLIDES.map((_, dotIdx) => (
-                      <button
-                        key={dotIdx}
-                        type="button"
-                        onClick={() => setActiveSlideIndex(dotIdx)}
-                        className={`h-2 rounded-full transition-all cursor-pointer ${
-                          activeSlideIndex === dotIdx
-                            ? 'w-6 bg-white'
-                            : 'w-2 bg-white/40 hover:bg-white/70'
-                        }`}
-                        aria-label={`Go to slide ${dotIdx + 1}`}
-                      />
-                    ))}
-                  </div>
-                </div>
+              {/* 5 Slide Pagination Dots (Cleanly OUTSIDE the video) */}
+              <div className="flex items-center justify-center gap-2 pt-3 pb-1">
+                {HERO_SLIDES.map((_, dotIdx) => (
+                  <button
+                    key={dotIdx}
+                    type="button"
+                    onClick={() => setActiveSlideIndex(dotIdx)}
+                    className={`h-2 rounded-full transition-all cursor-pointer ${
+                      activeSlideIndex === dotIdx
+                        ? 'w-7 bg-[#5145CD]'
+                        : 'w-2 bg-[#E5E7EB] hover:bg-[#C7D2FE]'
+                    }`}
+                    aria-label={`Go to slide ${dotIdx + 1}`}
+                  />
+                ))}
               </div>
 
               {/* 5-THUMBNAIL STRIP: CLICKABLE SELECTOR TO SLIDE TO ANY OF THE 5 VIDEOS */}
@@ -759,26 +737,26 @@ export default function HomePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {FEATURED_AD_TEMPLATES.map((tmpl) => (
                   <div key={tmpl.id} className="business-card overflow-hidden flex flex-col justify-between group">
+                    {/* 100% Clean Image/Video Container — Zero Overlays */}
                     <div className="relative aspect-video bg-[#17191D] overflow-hidden">
                       <img
                         src={tmpl.poster}
                         alt={tmpl.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#FFFFFF]/90 text-[#17191D] backdrop-blur-sm shadow-xs">
-                          {tmpl.category}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-3 right-3">
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#5145CD] text-white">
-                          {tmpl.credits} credits
-                        </span>
-                      </div>
                     </div>
 
-                    <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+                    {/* Metadata Cleanly Below Media */}
+                    <div className="p-4 space-y-3 flex-1 flex flex-col justify-between bg-white border-t border-[#F1F3F5]">
                       <div>
+                        <div className="flex items-center justify-between gap-2 mb-1.5">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] truncate">
+                            {tmpl.category}
+                          </span>
+                          <span className="text-[10px] font-mono text-[#667085] bg-[#F1F3F5] px-1.5 py-0.5 rounded shrink-0">
+                            {tmpl.duration} • 16:9
+                          </span>
+                        </div>
                         <h4 className="text-sm font-bold text-[#17191D] line-clamp-1">{tmpl.title}</h4>
                         <p className="text-[11px] text-[#667085] line-clamp-2 mt-1 leading-relaxed">
                           {tmpl.prompt}

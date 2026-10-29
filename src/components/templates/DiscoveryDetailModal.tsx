@@ -337,9 +337,9 @@ export function DiscoveryDetailModal({
                 <strong className="text-[#17191D] font-mono">{template.aspectLabel || template.aspect}</strong>
               </div>
               <div className="p-2.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB]">
-                <span className="text-[10px] text-[#667085] block">Generation Cost</span>
+                <span className="text-[10px] text-[#667085] block">Video Quality</span>
                 <strong className="font-mono text-[#5145CD]">
-                  {isVideo ? '15 Credits' : isImage ? '5 Credits' : '0 Credits (Free)'}
+                  1080p Ultra HD
                 </strong>
               </div>
               <div className="col-span-2 p-2.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex items-center justify-between">
@@ -369,7 +369,7 @@ export function DiscoveryDetailModal({
                   className="w-full py-3.5 px-4 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-white" />
-                  <span>Use in AI Video Studio (15 cr)</span>
+                  <span>Use in AI Video Studio</span>
                 </button>
 
                 <button
@@ -402,7 +402,7 @@ export function DiscoveryDetailModal({
                   className="w-full py-3.5 px-4 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   <Wand2 className="w-4 h-4 text-white" />
-                  <span>Generate AI Image (5 cr)</span>
+                  <span>Generate AI Image</span>
                 </button>
 
                 <button
@@ -414,7 +414,7 @@ export function DiscoveryDetailModal({
                   className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-[#F7F8FA] text-[#17191D] font-medium text-xs flex items-center justify-center gap-2 border border-[#E5E7EB] transition-colors cursor-pointer shadow-2xs"
                 >
                   <Film className="w-3.5 h-3.5 text-[#5145CD]" />
-                  <span>Animate Image to Video in Studio (15 cr)</span>
+                  <span>Animate Image to Video in Studio</span>
                 </button>
               </>
             ) : (
@@ -426,7 +426,7 @@ export function DiscoveryDetailModal({
                   className="w-full py-3.5 px-4 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   <Type className="w-4 h-4" />
-                  <span>Use Typography in Video Project (0 cr)</span>
+                  <span>Use Typography in Video Project</span>
                 </button>
 
                 <button
@@ -438,7 +438,7 @@ export function DiscoveryDetailModal({
                   className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-[#F7F8FA] text-[#17191D] font-medium text-xs flex items-center justify-center gap-2 border border-[#E5E7EB] transition-colors cursor-pointer shadow-2xs"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
-                  <span>Render Video with AI Background (15 cr)</span>
+                  <span>Render Video with AI Background</span>
                 </button>
               </>
             )}
@@ -483,7 +483,7 @@ export function DiscoveryDetailModal({
             <div className="space-y-1.5">
               <label className="text-[11px] text-[#667085] font-semibold flex items-center justify-between">
                 <span>Featured Video Templates:</span>
-                <span className="text-[10px] text-[#5145CD] font-mono">0 cr handoff</span>
+                <span className="text-[10px] text-[#5145CD] font-mono">Direct Export</span>
               </label>
               <div className="grid grid-cols-3 gap-1.5">
                 {[

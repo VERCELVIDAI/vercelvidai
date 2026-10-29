@@ -270,7 +270,7 @@ export function FloatingPromptComposer({
 
             <div className="flex items-center justify-between text-xs text-[#667085]">
               <span className="font-mono text-[#5145CD] font-medium">Engine: Ultra HD Commercial Video (1080p)</span>
-              <span className="font-mono text-[#667085]">Charged: 15 Credits</span>
+              <span className="font-mono text-[#10B981] font-semibold">Render Ready</span>
             </div>
 
             <div className="flex items-center gap-3 pt-2">
@@ -533,7 +533,7 @@ export function FloatingPromptComposer({
                   <div className="p-2 rounded-xl bg-[#EEF2FF] border border-[#5145CD]/30 text-[#17191D] flex items-center justify-between">
                     <div>
                       <p className="font-bold text-[#17191D]">Commercial Video Engine (Ultra HD)</p>
-                      <p className="text-[10px] text-[#5145CD]">Active Model • 15 credits / video</p>
+                      <p className="text-[10px] text-[#5145CD]">Active Commercial Model</p>
                     </div>
                     <Check className="w-4 h-4 text-[#5145CD]" />
                   </div>
@@ -584,16 +584,8 @@ export function FloatingPromptComposer({
               />
             </div>
 
-            {/* Right: Credits Badge (15 cr) & Generate Button */}
+            {/* Right: Generate Button */}
             <div className="flex items-center gap-2 shrink-0">
-              <span
-                title={`Cost: exactly 15 credits per video (Available: ${availableCredits})`}
-                className="hidden md:inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[#5145CD] bg-[#EEF2FF] border border-[#5145CD]/20 px-2.5 py-1.5 rounded-full"
-              >
-                <Zap className="w-3 h-3 text-[#5145CD]" />
-                <span>15 cr</span>
-              </span>
-
               <button
                 type="button"
                 onClick={handleGenerate}

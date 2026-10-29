@@ -67,9 +67,9 @@ interface FormatTab {
 
 const FORMAT_TABS: FormatTab[] = [
   { id: 'all', label: 'All Formats', icon: Layers },
-  { id: 'video', label: 'AI Video', icon: Film, badge: '15 cr' },
-  { id: 'image', label: 'AI Image', icon: ImageIcon, badge: '5 cr' },
-  { id: 'text-animation', label: 'Text Animation', icon: Type, badge: 'Free' },
+  { id: 'video', label: 'AI Video', icon: Film },
+  { id: 'image', label: 'AI Image', icon: ImageIcon },
+  { id: 'text-animation', label: 'Text Animation', icon: Type },
 ];
 
 function DiscoveryFeedContent() {
@@ -503,11 +503,6 @@ function DiscoveryFeedContent() {
                     <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-md bg-slate-100 text-[#17191D]">
                       {count}
                     </span>
-                    {tab.badge && (
-                      <span className="text-[9px] font-medium px-1.5 py-0.2 rounded bg-[#EEF2FF] text-[#5145CD]">
-                        {tab.badge}
-                      </span>
-                    )}
                   </button>
                 );
               })}
