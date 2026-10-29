@@ -10,6 +10,7 @@ import { FeatureComparisonMatrix } from '@/components/pricing/FeatureComparisonM
 import { CreditTopUpSection } from '@/components/pricing/CreditTopUpSection';
 import {
   Check,
+  X,
   Minus,
   Sparkles,
   Zap,
@@ -25,47 +26,71 @@ import {
   Tag,
   Users,
   CheckCircle2,
+  Coins,
   Clock,
   FileText,
   SlidersHorizontal,
+  ExternalLink,
 } from 'lucide-react';
 
-interface PlanFeatureItem {
+interface ModelBadgeItem {
+  name: string;
+  resBadge?: string;
+  statusBadge: string;
+  included: boolean;
+  statusType?: 'included' | 'unavailable' | 'vip' | 'new';
+}
+
+interface SpecItem {
+  label: string;
+  value: string;
+  included: boolean;
+}
+
+interface ChecklistItem {
   text: string;
   included: boolean;
-  highlight?: boolean;
+  badge?: string;
 }
 
 interface PlanDefinition {
   id: string;
-  name: string;
-  tier: 'starter' | 'plus' | 'ultra' | 'teams';
+  title: string;
+  subtitle: string;
   category: 'individual' | 'business';
-  headline: string;
+  discountBadge?: string;
+  bestValueBadge?: string;
   monthlyPrice: number;
   annualMonthlyPrice: number;
-  credits: number;
-  badge?: string;
-  isPopular?: boolean;
-  couponTag?: string;
-  outputDescription: string;
+  creditsMonthly: number;
+  creditsLabel: string;
+  creditsLines: string[];
+  fixedCreditsNote: string;
   ctaText: string;
-  storageGb: number;
-  maxResolution: string;
-  keyFeatures: PlanFeatureItem[];
-  moreFeatures: PlanFeatureItem[];
+  isRecommended?: boolean;
+  couponTag?: string;
+  modelsBox: {
+    header: string;
+    items: ModelBadgeItem[];
+  };
+  specsBox: {
+    header: string;
+    items: SpecItem[];
+    extraCount: number;
+  };
+  bottomChecklist: ChecklistItem[];
 }
 
 export default function PricingPage() {
   const router = useRouter();
 
   // Toolbar state
-  const [activeTab, setActiveTab] = useState<'all' | 'individual' | 'business'>('all');
-  const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('month');
+  const [activeTab, setActiveTab] = useState<'individual' | 'business'>('individual');
+  const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default like screenshot
   const [isRecommenderOpen, setIsRecommenderOpen] = useState(false);
-  const [expandedFeatures, setExpandedFeatures] = useState<Record<string, boolean>>({});
+  const [expandedSpecs, setExpandedSpecs] = useState<Record<string, boolean>>({});
 
-  // User & Promo eligibility
+  // Promo eligibility
   const [isEligibleForFirst20, setIsEligibleForFirst20] = useState(true);
 
   // FAQ Accordion state
@@ -79,7 +104,7 @@ export default function PricingPage() {
   });
 
   useEffect(() => {
-    // Check if user is logged in and eligible for FIRST20 coupon
+    // Check if user is eligible for FIRST20 coupon
     fetch('/api/user/first-coupon')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
@@ -90,8 +115,8 @@ export default function PricingPage() {
       .catch(() => {});
   }, []);
 
-  const toggleFeatureExpand = (planId: string) => {
-    setExpandedFeatures((prev) => ({
+  const toggleSpecsExpand = (planId: string) => {
+    setExpandedSpecs((prev) => ({
       ...prev,
       [planId]: !prev[planId],
     }));
@@ -104,141 +129,188 @@ export default function PricingPage() {
     }));
   };
 
-  // Canonical Plan Specifications
-  const plans: PlanDefinition[] = [
+  // Structured plans matching the attached reference's layout & information hierarchy
+  const allPlans: PlanDefinition[] = [
     {
       id: 'plan_starter',
-      name: 'Starter',
-      tier: 'starter',
+      title: 'STARTER',
+      subtitle: 'For first-time commercial AI video creators',
       category: 'individual',
-      headline: 'For solo creators and creators testing their first commercial AI ads.',
       monthlyPrice: 999,
       annualMonthlyPrice: 799,
-      credits: 500,
-      outputDescription: '≈ 33 video ads (15 cr/ad), 100 product photos (5 cr/photo), or 250 voiceovers (2 cr/vo)',
-      ctaText: 'Choose Starter',
-      storageGb: 10,
-      maxResolution: '1080p Full HD',
-      keyFeatures: [
-        { text: '500 Credits every month (rolls over)', included: true, highlight: true },
-        { text: '1080p Full HD video exports', included: true },
-        { text: 'Standard GPU rendering queue', included: true },
-        { text: '2 Timeline scene tracks', included: true },
-        { text: '10 GB Cloud asset storage', included: true },
-        { text: 'Full commercial advertising rights', included: true },
+      creditsMonthly: 500,
+      creditsLabel: '500 credits/mo.',
+      creditsLines: [
+        '≈ 33 Commercial Video Ads (15 cr/ad)',
+        '≈ 100 Studio Product Photos (5 cr/photo)',
       ],
-      moreFeatures: [
-        { text: '2 Saved Brand Kits (Logos & Colors)', included: true },
-        { text: 'Official 18% GST vector tax invoices', included: true },
-        { text: 'Standard community & email support', included: true },
-        { text: '4K Ultra HD video exports', included: false },
-        { text: 'Runway Gen-3 & Luma Ray motion engines', included: false },
-        { text: 'Multi-seat team workspace', included: false },
+      fixedCreditsNote: 'Fixed amount of 500 credits/mo • Rolls over',
+      ctaText: 'Get Starter',
+      modelsBox: {
+        header: 'MODELS & RESOLUTION',
+        items: [
+          { name: 'Fluvia Cinematic HD', resBadge: '1080p', statusBadge: 'Included', included: true, statusType: 'included' },
+          { name: 'Fal.ai Fast Media Engine', resBadge: 'HD', statusBadge: 'Included', included: true, statusType: 'included' },
+          { name: 'Runway Gen-3 Alpha', statusBadge: 'No access', included: false, statusType: 'unavailable' },
+          { name: 'Luma Ray Motion Engine', statusBadge: 'No access', included: false, statusType: 'unavailable' },
+        ],
+      },
+      specsBox: {
+        header: 'PRODUCTION SPECS',
+        items: [
+          { label: 'Max Video Length', value: '60 seconds', included: true },
+          { label: 'Timeline Tracks', value: '2 scenes', included: true },
+          { label: 'Saved Brand Kits', value: '2 Brand Kits', included: true },
+          { label: 'Cloud Storage', value: '10 GB', included: true },
+        ],
+        extraCount: 4,
+      },
+      bottomChecklist: [
+        { text: 'Parallel generations: up to 1 Video, 2 Images', included: true },
+        { text: 'Watermark-free 1080p Full HD exports', included: true },
+        { text: 'Access to standard commercial storyboard presets', included: true },
+        { text: 'Full commercial advertising rights included', included: true },
+        { text: 'Early access to Gemini Omni features', included: false },
+        { text: 'Multi-seat collaborative workspace', included: false },
       ],
     },
     {
       id: 'plan_creator',
-      name: 'Plus',
-      tier: 'plus',
+      title: 'PLUS',
+      subtitle: 'For regular commercial video and reel pipelines',
       category: 'individual',
-      headline: 'For regular commercial producers and growing brands needing consistent ad volume.',
+      discountBadge: '20% OFF',
       monthlyPrice: 2499,
       annualMonthlyPrice: 1999,
-      credits: 1600,
-      outputDescription: '≈ 106 video ads (15 cr/ad), 320 product photos (5 cr/photo), or 800 voiceovers (2 cr/vo)',
-      ctaText: 'Choose Plus',
-      storageGb: 50,
-      maxResolution: '4K Ultra HD',
-      keyFeatures: [
-        { text: '1,600 Credits every month (rolls over)', included: true, highlight: true },
-        { text: '4K Ultra HD video exports', included: true },
-        { text: 'Priority GPU rendering queue', included: true },
-        { text: 'Multi-scene timeline storyboard editor', included: true },
-        { text: 'ElevenLabs multilingual voiceover sync', included: true },
-        { text: '50 GB High-speed cloud storage', included: true },
+      creditsMonthly: 1600,
+      creditsLabel: '1,600 credits/mo.',
+      creditsLines: [
+        '≈ 106 Commercial Video Ads (15 cr/ad)',
+        '≈ 320 Studio Product Photos (5 cr/photo)',
       ],
-      moreFeatures: [
-        { text: '5 Brand Kits (Logos, Fonts, Colors)', included: true },
+      fixedCreditsNote: 'Fixed amount of 1,600 credits/mo • Rolls over',
+      ctaText: 'Get Plus',
+      modelsBox: {
+        header: 'MODELS & RESOLUTION',
+        items: [
+          { name: 'Fluvia Cinematic HD', resBadge: '4K Ultra', statusBadge: 'Included', included: true, statusType: 'included' },
+          { name: 'Runway Gen-3 Alpha', resBadge: '1080p', statusBadge: 'Priority Queue', included: true, statusType: 'included' },
+          { name: 'Luma Ray Motion Engine', resBadge: 'HD', statusBadge: 'Included', included: true, statusType: 'included' },
+          { name: 'ElevenLabs Voice Sync', statusBadge: 'Multilingual', included: true, statusType: 'included' },
+        ],
+      },
+      specsBox: {
+        header: 'PRODUCTION SPECS',
+        items: [
+          { label: 'Max Video Length', value: '180 seconds (3m)', included: true },
+          { label: 'Timeline Tracks', value: 'Unlimited tracks', included: true },
+          { label: 'Saved Brand Kits', value: '5 Brand Kits', included: true },
+          { label: 'Cloud Storage', value: '50 GB', included: true },
+        ],
+        extraCount: 6,
+      },
+      bottomChecklist: [
+        { text: 'Parallel generations: up to 2 Videos, 4 Images', included: true, badge: 'NEW' },
+        { text: 'Multi-scene timeline storyboard editor', included: true },
+        { text: 'Priority GPU hardware queue', included: true },
         { text: '10% discount on credit top-ups', included: true },
-        { text: 'Runway Gen-3 Alpha & Luma Ray models', included: true },
-        { text: 'Priority customer email & chat support', included: true },
-        { text: 'Full commercial advertising rights', included: true },
-        { text: 'Multi-seat team collaboration pool', included: false },
+        { text: 'Full commercial advertising rights included', included: true },
+        { text: 'Multi-seat collaborative workspace', included: false },
       ],
     },
     {
       id: 'plan_max',
-      name: 'Ultra',
-      tier: 'ultra',
+      title: 'ULTRA',
+      subtitle: 'For scaling digital agencies and high-performing ad teams',
       category: 'individual',
-      headline: 'High-volume studio for scaling digital agencies and high-performing advertising teams.',
+      discountBadge: '20% OFF',
+      bestValueBadge: 'BEST VALUE',
+      isRecommended: true,
       monthlyPrice: 4999,
       annualMonthlyPrice: 3999,
-      credits: 4000,
-      badge: 'Most Popular',
-      isPopular: true,
+      creditsMonthly: 4000,
+      creditsLabel: '4,000 credits/mo.',
       couponTag: isEligibleForFirst20 ? 'Use FIRST20 for ₹570 OFF' : undefined,
-      outputDescription: '≈ 266 video ads (15 cr/ad), 800 product photos (5 cr/photo), or 2,000 voiceovers (2 cr/vo)',
-      ctaText: 'Choose Ultra',
-      storageGb: 150,
-      maxResolution: '4K 60fps Cinema',
-      keyFeatures: [
-        { text: '4,000 Credits every month (rolls over)', included: true, highlight: true },
-        { text: '4K 60fps Cinema Master exports', included: true },
-        { text: 'Dedicated VIP priority GPU lane', included: true },
-        { text: 'Gemini Omni Storyboard & Director Mode', included: true },
-        { text: 'All flagship & beta video engines', included: true },
-        { text: '150 GB Cloud asset storage', included: true },
+      creditsLines: [
+        '≈ 266 Commercial Video Ads (15 cr/ad)',
+        '≈ 800 Studio Product Photos (5 cr/photo)',
       ],
-      moreFeatures: [
-        { text: '15 Brand Kits & custom presets', included: true },
-        { text: '15% discount on credit top-ups', included: true },
-        { text: 'Expedited 2-hour SLA support', included: true },
-        { text: 'Dedicated 1-on-1 account onboarding', included: true },
-        { text: 'Official GST vector tax invoices', included: true },
-        { text: 'Full commercial advertising rights', included: true },
+      fixedCreditsNote: 'Fixed amount of 4,000 credits/mo • Rolls over',
+      ctaText: 'Get Ultra',
+      modelsBox: {
+        header: 'MODELS & RESOLUTION',
+        items: [
+          { name: 'Fluvia Cinema Master', resBadge: '4K 60fps', statusBadge: 'VIP Lane', included: true, statusType: 'vip' },
+          { name: 'Runway Gen-3 Alpha', resBadge: '4K', statusBadge: 'Dedicated GPU', included: true, statusType: 'vip' },
+          { name: 'Gemini Omni Storyboard', resBadge: '2K', statusBadge: 'Director Mode', included: true, statusType: 'vip' },
+          { name: 'ElevenLabs Voice Design', statusBadge: 'Multilingual', included: true, statusType: 'vip' },
+        ],
+      },
+      specsBox: {
+        header: 'PRODUCTION SPECS',
+        items: [
+          { label: 'Max Video Length', value: '360 seconds (6m)', included: true },
+          { label: 'Timeline Tracks', value: 'Unlimited + Director', included: true },
+          { label: 'Saved Brand Kits', value: '15 Brand Kits', included: true },
+          { label: 'Cloud Storage', value: '150 GB', included: true },
+        ],
+        extraCount: 8,
+      },
+      bottomChecklist: [
+        { text: 'Parallel generations: up to 4 Videos, 8 Images', included: true, badge: 'NEW' },
+        { text: 'Dedicated VIP priority GPU rendering lane', included: true },
+        { text: '4K 60fps Cinema Master video exports', included: true },
+        { text: '15% discount on credit top-ups', included: true, badge: '15% OFF' },
+        { text: 'Expedited 2-hour SLA email & chat support', included: true },
+        { text: 'Full commercial advertising rights included', included: true },
       ],
     },
     {
       id: 'plan_business',
-      name: 'For Teams',
-      tier: 'teams',
+      title: 'FOR TEAMS',
+      subtitle: 'For agencies and marketing teams to create campaigns faster',
       category: 'business',
-      headline: 'Collaborative multi-seat workspace for marketing teams, creative agencies and production houses.',
+      discountBadge: '20% OFF',
+      bestValueBadge: 'ENTERPRISE',
       monthlyPrice: 9999,
       annualMonthlyPrice: 7999,
-      credits: 10000,
-      badge: 'Enterprise',
-      outputDescription: '≈ 666 video ads (15 cr/ad), 2,000 product photos (5 cr/photo), or 5,000 voiceovers (2 cr/vo)',
-      ctaText: 'Explore Team Plans',
-      storageGb: 500,
-      maxResolution: '4K 60fps Cinema',
-      keyFeatures: [
-        { text: '10,000 Pooled Credits / mo (rolls over)', included: true, highlight: true },
-        { text: 'Up to 10 Team member seats included', included: true },
-        { text: 'Shared credit wallet & asset pool', included: true },
-        { text: 'Concurrent GPU cluster rendering', included: true },
-        { text: '4K 60fps Cinema Master exports', included: true },
-        { text: '500 GB High-speed shared storage', included: true },
+      creditsMonthly: 10000,
+      creditsLabel: 'Shared workspaces & credits',
+      creditsLines: [
+        '≈ Up to 10 member seats per workspace',
+        '= 10,000 pooled credits/mo (≈ 666 Video Ads)',
       ],
-      moreFeatures: [
-        { text: 'Unlimited Brand Kits & shared templates', included: true },
-        { text: '20% discount on credit top-ups', included: true },
-        { text: 'Custom B2B Invoicing & 99.9% SLA', included: true },
-        { text: 'Dedicated Account Director', included: true },
-        { text: 'Custom contracts & PO support', included: true },
-        { text: 'Full commercial advertising rights', included: true },
+      fixedCreditsNote: 'Starting from 1,000 credits/seat/mo • Pooled',
+      ctaText: 'Explore Team Plans',
+      modelsBox: {
+        header: 'UNLIMITED MODELS & CLUSTER',
+        items: [
+          { name: 'Fluvia Cinema Master', resBadge: '4K 60fps', statusBadge: 'Cluster Queue', included: true, statusType: 'vip' },
+          { name: 'Concurrent Cluster GPU', resBadge: '8 Concurrent', statusBadge: 'Dedicated', included: true, statusType: 'vip' },
+          { name: 'Gemini Omni Storyboard', resBadge: '4K', statusBadge: 'Team Sharing', included: true, statusType: 'vip' },
+          { name: 'ElevenLabs Voice Design', statusBadge: 'Team Library', included: true, statusType: 'vip' },
+        ],
+      },
+      specsBox: {
+        header: 'PRODUCTION SPECS',
+        items: [
+          { label: 'Max Video Length', value: '600 seconds (10m)', included: true },
+          { label: 'Member Seats Included', value: 'Up to 10 Seats', included: true },
+          { label: 'Saved Brand Kits', value: 'Unlimited Kits', included: true },
+          { label: 'Cloud Storage', value: '500 GB Shared', included: true },
+        ],
+        extraCount: 10,
+      },
+      bottomChecklist: [
+        { text: 'Access to all features, models & storyboard tools', included: true },
+        { text: 'Dedicated capacity & 99.9% uptime SLA', included: true },
+        { text: 'Shared workspace, brand asset pool & credit wallet', included: true },
+        { text: 'Detailed usage analytics & team spend controls', included: true },
+        { text: 'Priority cluster queue for faster task processing', included: true },
+        { text: 'Custom B2B invoicing with 18% GST & PO support', included: true },
       ],
     },
   ];
-
-  // Filter plans according to active tab
-  const visiblePlans = plans.filter((p) => {
-    if (activeTab === 'all') return true;
-    if (activeTab === 'individual') return p.category === 'individual';
-    if (activeTab === 'business') return p.tier === 'ultra' || p.category === 'business';
-    return true;
-  });
 
   const handleSelectPlan = (planId: string) => {
     const couponParam = planId === 'plan_max' ? '&coupon=FIRST20' : '';
@@ -249,6 +321,11 @@ export default function PricingPage() {
 
   const handleBuyCreditPack = (packId: string) => {
     router.push(`/checkout?type=pack&id=${packId}`);
+  };
+
+  const scrollToMatrix = () => {
+    const el = document.getElementById('feature-matrix-section');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   const faqs = [
@@ -278,99 +355,56 @@ export default function PricingPage() {
     },
   ];
 
+  const visiblePlans = activeTab === 'business'
+    ? allPlans.filter((p) => p.category === 'business' || p.id === 'plan_max')
+    : allPlans;
+
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD] overflow-x-hidden max-w-full">
+    <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD] overflow-x-hidden max-w-full">
       <Header />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* ========================================================================= */}
-        {/* TOP TOOLBAR: CATEGORY TABS + BILLING TOGGLE + RECOMMENDER LINK */}
+        {/* TOP TOOLBAR (EXACT REFERENCE STRUCTURE: TABS + PILL + RECOMMENDER + TOGGLE) */}
         {/* ========================================================================= */}
-        <section className="text-center max-w-4xl mx-auto mb-10 sm:mb-14">
-          {/* Trust Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F7F8FA] border border-[#E5E7EB] text-xs font-semibold text-[#17191D] mb-4 shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-            <span>PayU India Verified • 18% GST Compliant • Instant Credit Fulfillment</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#17191D] tracking-tight leading-tight">
-            Predictable commercial pricing <br className="hidden sm:inline" />
-            <span className="text-[#5145CD]">engineered for scale.</span>
-          </h1>
-
-          <p className="mt-3 text-sm sm:text-base text-[#667085] max-w-2xl mx-auto leading-relaxed">
-            Choose a recurring subscription plan for regular commercial video production, or purchase one-time credit top-ups as your campaigns scale.
-          </p>
-
-          {/* Controls Bar: Category Selector + Billing Interval + Recommender */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 flex-wrap">
-            {/* Category Segmented Control */}
-            <div className="inline-flex p-1 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] shadow-2xs">
-              <button
-                type="button"
-                onClick={() => setActiveTab('all')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  activeTab === 'all'
-                    ? 'bg-white text-[#17191D] shadow-xs'
-                    : 'text-[#667085] hover:text-[#17191D]'
-                }`}
-              >
-                All Plans (4)
-              </button>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#E5E7EB]">
+          {/* Left: Category Tabs + Promotional Pill */}
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="inline-flex p-1 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB]">
               <button
                 type="button"
                 onClick={() => setActiveTab('individual')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'individual'
                     ? 'bg-white text-[#17191D] shadow-xs'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                Individual Plans
+                Individual plans
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('business')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'business'
                     ? 'bg-white text-[#17191D] shadow-xs'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                Business Plans
+                Business plans
               </button>
             </div>
 
-            {/* Monthly / Annual Billing Toggle */}
-            <div className="inline-flex items-center p-1 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] shadow-2xs">
-              <button
-                type="button"
-                onClick={() => setBillingInterval('month')}
-                className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  billingInterval === 'month'
-                    ? 'bg-white text-[#17191D] shadow-xs'
-                    : 'text-[#667085] hover:text-[#17191D]'
-                }`}
-              >
-                Monthly
-              </button>
-              <button
-                type="button"
-                onClick={() => setBillingInterval('year')}
-                className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  billingInterval === 'year'
-                    ? 'bg-white text-[#17191D] shadow-xs'
-                    : 'text-[#667085] hover:text-[#17191D]'
-                }`}
-              >
-                <span>Annual</span>
-                <span className="text-[10px] font-bold bg-[#EEF2FF] text-[#5145CD] px-1.5 py-0.2 rounded-full border border-[#C7D2FE]">
-                  Save 20%
-                </span>
-              </button>
+            {/* Subtle Promotional Pill Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] border border-[#C7D2FE] text-[#5145CD] text-[11px] font-semibold">
+              <Sparkles className="w-3 h-3 text-[#5145CD]" />
+              <span>18% GST Compliant • Rollover Included</span>
             </div>
+          </div>
 
-            {/* Plan Recommender Link */}
+          {/* Right: "Not sure which plan?" link + Monthly/Annual Toggle Switch */}
+          <div className="flex items-center gap-4 sm:gap-6 self-start md:self-auto">
+            {/* Recommender link */}
             <button
               type="button"
               onClick={() => setIsRecommenderOpen(true)}
@@ -379,44 +413,57 @@ export default function PricingPage() {
               <Sparkles className="w-3.5 h-3.5" />
               <span>Not sure which plan?</span>
             </button>
-          </div>
 
-          {/* Quick Credit Cost Reference */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-[#667085]">
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#5145CD]" />
-              <span>
-                <strong>15 credits</strong> / video ad
+            {/* Minimalist Switch Toggle */}
+            <div className="flex items-center gap-2">
+              <span
+                className={`text-xs font-semibold cursor-pointer ${
+                  billingInterval === 'month' ? 'text-[#17191D]' : 'text-[#667085]'
+                }`}
+                onClick={() => setBillingInterval('month')}
+              >
+                Monthly
               </span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#5145CD]" />
-              <span>
-                <strong>5 credits</strong> / product photo
+
+              {/* Physical Switch */}
+              <button
+                type="button"
+                role="switch"
+                aria-checked={billingInterval === 'year'}
+                onClick={() => setBillingInterval(billingInterval === 'year' ? 'month' : 'year')}
+                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
+                  billingInterval === 'year' ? 'bg-[#5145CD]' : 'bg-[#E5E7EB]'
+                }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                    billingInterval === 'year' ? 'translate-x-5' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+
+              <span
+                className={`text-xs font-semibold cursor-pointer flex items-center gap-1 ${
+                  billingInterval === 'year' ? 'text-[#5145CD]' : 'text-[#667085]'
+                }`}
+                onClick={() => setBillingInterval('year')}
+              >
+                <span>Annual</span>
+                <span className="text-[10px] font-bold bg-[#EEF2FF] text-[#5145CD] px-1.5 py-0.2 rounded-full border border-[#C7D2FE]">
+                  20% OFF
+                </span>
               </span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#5145CD]" />
-              <span>
-                <strong>2 credits</strong> / voiceover
-              </span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-              <span>Credits roll over while active</span>
-            </span>
+            </div>
           </div>
-        </section>
+        </div>
 
         {/* ========================================================================= */}
-        {/* FOUR-COLUMN PRICING COMPARISON GRID */}
+        {/* FOUR-COLUMN PRICING GRID (EXACT ARCHITECTURE & DEPTH FROM SCREENSHOT) */}
         {/* ========================================================================= */}
         <div
-          className={`grid gap-5 sm:gap-6 items-stretch ${
+          className={`grid gap-4 sm:gap-5 items-stretch ${
             visiblePlans.length === 4
               ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-              : visiblePlans.length === 3
-              ? 'grid-cols-1 md:grid-cols-3 max-w-5xl mx-auto'
               : 'grid-cols-1 md:grid-cols-2 max-w-3xl mx-auto'
           }`}
         >
@@ -425,46 +472,66 @@ export default function PricingPage() {
             const price = isAnnual ? plan.annualMonthlyPrice : plan.monthlyPrice;
             const fullAnnualBilled = plan.annualMonthlyPrice * 12;
             const annualSavings = (plan.monthlyPrice - plan.annualMonthlyPrice) * 12;
-            const isExpanded = !!expandedFeatures[plan.id];
+            const isSpecsExpanded = !!expandedSpecs[plan.id];
 
             return (
               <div
                 key={plan.id}
-                className={`relative rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-200 text-left bg-white ${
-                  plan.isPopular
+                className={`rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-200 text-left bg-white ${
+                  plan.isRecommended
                     ? 'border-2 border-[#5145CD] shadow-lg shadow-[#5145CD]/5 lg:-translate-y-1'
                     : 'border border-[#E5E7EB] hover:border-[#D1D5DB] shadow-xs'
                 }`}
               >
-                {/* Most Popular Badge on Ultra */}
-                {plan.badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap z-10">
-                    <span
-                      className={`text-[11px] font-semibold px-3 py-0.5 rounded-full border shadow-2xs ${
-                        plan.isPopular
-                          ? 'bg-[#5145CD] text-white border-[#5145CD]'
-                          : 'bg-[#F7F8FA] text-[#17191D] border-[#E5E7EB]'
-                      }`}
-                    >
-                      {plan.badge}
-                    </span>
-                  </div>
-                )}
-
                 <div>
-                  {/* Plan Name & Category */}
-                  <div className="flex items-center justify-between gap-2 mt-1">
-                    <h3 className="text-xl font-bold text-[#17191D]">{plan.name}</h3>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#667085] bg-[#F7F8FA] px-2 py-0.5 rounded border border-[#E5E7EB]">
-                      {plan.maxResolution}
-                    </span>
+                  {/* Card Header: Title + Discount / Value Badges */}
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-xl font-black tracking-tight text-[#17191D]">
+                        {plan.title}
+                      </h3>
+                      {plan.discountBadge && isAnnual && (
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]">
+                          {plan.discountBadge}
+                        </span>
+                      )}
+                    </div>
+
+                    {plan.bestValueBadge && (
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#5145CD] text-white">
+                        {plan.bestValueBadge}
+                      </span>
+                    )}
                   </div>
 
-                  <p className="mt-2 text-xs text-[#667085] leading-relaxed min-h-[36px]">
-                    {plan.headline}
+                  {/* Subtitle */}
+                  <p className="text-xs text-[#667085] mt-1 min-h-[34px] leading-relaxed">
+                    {plan.subtitle}
                   </p>
 
-                  {/* Price Block */}
+                  {/* Inner Credit Allowance Box (Exact Reference Pattern) */}
+                  <div className="mt-3.5 p-3.5 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
+                    <div className="flex items-center gap-1.5 font-bold text-xs text-[#17191D]">
+                      <Coins className="w-3.5 h-3.5 text-[#5145CD]" />
+                      <span>{plan.creditsLabel}</span>
+                    </div>
+
+                    <ul className="space-y-1 text-[11px] text-[#667085] pl-1">
+                      {plan.creditsLines.map((line, idx) => (
+                        <li key={idx} className="flex items-start gap-1.5">
+                          <span className="text-[#667085]">•</span>
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="pt-2 border-t border-[#E5E7EB] flex items-center gap-1.5 text-[10px] font-medium text-[#10B981]">
+                      <Check className="w-3 h-3 text-[#10B981] shrink-0" />
+                      <span>{plan.fixedCreditsNote}</span>
+                    </div>
+                  </div>
+
+                  {/* Price Section */}
                   <div className="mt-4 pb-4 border-b border-[#E5E7EB]">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
                       {isAnnual && (
@@ -472,127 +539,200 @@ export default function PricingPage() {
                           ₹{plan.monthlyPrice.toLocaleString()}
                         </span>
                       )}
-                      <span className="text-3xl font-extrabold text-[#17191D] font-mono">
+                      <span className="text-3xl font-black text-[#17191D] font-mono">
                         ₹{price.toLocaleString()}
                       </span>
-                      <span className="text-xs text-[#667085] font-medium">/ month</span>
+                      <span className="text-xs text-[#667085] font-medium">
+                        per month, {isAnnual ? 'billed annually' : 'billed monthly'}
+                      </span>
                     </div>
 
-                    {isAnnual ? (
-                      <p className="mt-1 text-[11px] text-[#5145CD] font-medium">
-                        Billed annually (₹{fullAnnualBilled.toLocaleString()} / yr) •{' '}
-                        <strong>Save ₹{annualSavings.toLocaleString()}</strong>
-                      </p>
-                    ) : (
-                      <p className="mt-1 text-[11px] text-[#667085]">
-                        Billed monthly • Cancel or switch anytime
-                      </p>
-                    )}
-
-                    {/* Genuine Coupon Promotion Tag on Ultra */}
+                    {/* FIRST20 Coupon Callout on Ultra */}
                     {plan.couponTag && (
-                      <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-800 font-semibold font-mono">
+                      <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-[10px] text-emerald-800 font-semibold font-mono">
                         <Tag className="w-3 h-3 text-emerald-600 shrink-0" />
                         <span>{plan.couponTag}</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Monthly Credit Allowance Card */}
-                  <div className="mt-4 p-3 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[#17191D]">
-                        {plan.tier === 'teams' ? 'Pooled Team Credits' : 'Monthly Credits'}
-                      </span>
-                      <span className="text-base font-extrabold text-[#5145CD] font-mono">
-                        {plan.credits.toLocaleString()} CR
-                      </span>
-                    </div>
-                    <p className="text-[10px] text-[#667085] leading-snug">
-                      {plan.outputDescription}
+                  {/* Primary CTA Button */}
+                  <div className="mt-4 space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => handleSelectPlan(plan.id)}
+                      className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs ${
+                        plan.isRecommended
+                          ? 'bg-[#5145CD] hover:bg-[#4338CA] text-white shadow-sm'
+                          : 'bg-[#F7F8FA] hover:bg-[#F1F3F5] text-[#17191D] border border-[#E5E7EB]'
+                      }`}
+                    >
+                      <span>{plan.ctaText}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+
+                    <p className="text-[11px] text-center text-[#667085]">
+                      {isAnnual
+                        ? `Save ₹${annualSavings.toLocaleString()} compared to monthly`
+                        : 'No difference compared to monthly'}
                     </p>
                   </div>
 
-                  {/* Primary Features List */}
-                  <div className="mt-5 space-y-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#667085] block mb-2">
-                      Included Capabilities
-                    </span>
-                    <ul className="space-y-2 text-xs text-[#17191D]">
-                      {plan.keyFeatures.map((feat, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <Check className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
-                          <span className={feat.highlight ? 'font-semibold text-[#17191D]' : 'text-[#17191D]'}>
-                            {feat.text}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Feature Box 1: MODELS & RESOLUTION (Exact Reference Inner Panel) */}
+                  <div className="mt-5 p-3 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
+                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#17191D]">
+                      <span>{plan.modelsBox.header}</span>
+                      <button
+                        type="button"
+                        onClick={scrollToMatrix}
+                        className="text-[#5145CD] hover:underline normal-case font-medium"
+                      >
+                        Learn more
+                      </button>
+                    </div>
 
-                    {/* Expandable Additional Features */}
-                    {isExpanded && (
-                      <ul className="pt-2 space-y-2 text-xs border-t border-[#F1F3F5] animate-in fade-in duration-200">
-                        {plan.moreFeatures.map((feat, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            {feat.included ? (
-                              <Check className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
+                    <div className="space-y-1.5">
+                      {plan.modelsBox.items.map((item, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center justify-between text-[11px] gap-1"
+                        >
+                          <div className="flex items-center gap-1.5 truncate">
+                            {item.included ? (
+                              <Check className="w-3 h-3 text-[#10B981] shrink-0" />
                             ) : (
-                              <Minus className="w-4 h-4 text-[#667085]/40 shrink-0 mt-0.5" />
+                              <X className="w-3 h-3 text-[#667085]/40 shrink-0" />
                             )}
-                            <span className={feat.included ? 'text-[#667085]' : 'text-[#667085]/60'}>
-                              {feat.text}
+                            <span
+                              className={`truncate ${
+                                item.included ? 'text-[#17191D] font-medium' : 'text-[#667085]/60'
+                              }`}
+                            >
+                              {item.name}
                             </span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                          </div>
 
-                    {/* Show more / Show less toggle */}
+                          <div className="flex items-center gap-1 shrink-0">
+                            {item.resBadge && (
+                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-white border border-[#E5E7EB] text-[#667085]">
+                                {item.resBadge}
+                              </span>
+                            )}
+                            <span
+                              className={`px-1.5 py-0.2 rounded text-[9px] font-semibold ${
+                                item.statusType === 'vip'
+                                  ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]'
+                                  : item.statusType === 'included'
+                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                  : 'bg-white border border-[#E5E7EB] text-[#667085]/60'
+                              }`}
+                            >
+                              {item.statusBadge}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Feature Box 2: PRODUCTION SPECS (Exact Reference Inner Panel) */}
+                  <div className="mt-3.5 p-3 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
+                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#17191D]">
+                      <span>{plan.specsBox.header}</span>
+                      <button
+                        type="button"
+                        onClick={scrollToMatrix}
+                        className="text-[#5145CD] hover:underline normal-case font-medium"
+                      >
+                        Learn more
+                      </button>
+                    </div>
+
+                    <div className="space-y-1.5 text-[11px]">
+                      {plan.specsBox.items.map((spec, i) => (
+                        <div key={i} className="flex items-center justify-between">
+                          <span className="text-[#667085]">{spec.label}</span>
+                          <span className="font-semibold text-[#17191D] font-mono text-[10px]">
+                            {spec.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Expand row */}
                     <button
                       type="button"
-                      onClick={() => toggleFeatureExpand(plan.id)}
-                      className="mt-2 text-[11px] font-semibold text-[#5145CD] hover:text-[#4338CA] flex items-center gap-1 cursor-pointer transition-colors"
+                      onClick={() => toggleSpecsExpand(plan.id)}
+                      className="pt-1 w-full text-center text-[10px] font-semibold text-[#5145CD] hover:text-[#4338CA] flex items-center justify-center gap-1 cursor-pointer"
                     >
-                      <span>{isExpanded ? 'Show less' : 'Show full feature list'}</span>
-                      {isExpanded ? (
-                        <ChevronUp className="w-3.5 h-3.5" />
+                      <span>
+                        {isSpecsExpanded
+                          ? 'Collapse specifications'
+                          : `+ ${plan.specsBox.extraCount} more production specs`}
+                      </span>
+                      {isSpecsExpanded ? (
+                        <ChevronUp className="w-3 h-3" />
                       ) : (
-                        <ChevronDown className="w-3.5 h-3.5" />
+                        <ChevronDown className="w-3 h-3" />
                       )}
                     </button>
                   </div>
+
+                  {/* Bottom Checklist */}
+                  <div className="mt-4 pt-3 border-t border-[#F1F3F5] space-y-1.5">
+                    {plan.bottomChecklist.map((item, i) => (
+                      <div key={i} className="flex items-start gap-1.5 text-[11px]">
+                        {item.included ? (
+                          <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0 mt-0.5" />
+                        ) : (
+                          <X className="w-3.5 h-3.5 text-[#667085]/40 shrink-0 mt-0.5" />
+                        )}
+                        <span
+                          className={`leading-snug ${
+                            item.included ? 'text-[#17191D]' : 'text-[#667085]/60'
+                          }`}
+                        >
+                          {item.text}
+                        </span>
+                        {item.badge && (
+                          <span className="px-1 py-0.2 rounded text-[8px] font-bold bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] shrink-0">
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Primary CTA Button */}
-                <div className="mt-6 pt-4 border-t border-[#E5E7EB]">
-                  <button
-                    type="button"
-                    onClick={() => handleSelectPlan(plan.id)}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs ${
-                      plan.isPopular
-                        ? 'bg-[#5145CD] hover:bg-[#4338CA] text-white shadow-[#5145CD]/20'
-                        : 'bg-[#F7F8FA] hover:bg-[#F1F3F5] text-[#17191D] border border-[#E5E7EB]'
-                    }`}
-                  >
-                    <span>{plan.ctaText}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                  <p className="mt-2 text-[10px] text-center text-[#667085]">
-                    + 18% GST • Instant setup • Roll over unused credits
-                  </p>
+                {/* Card Footer note */}
+                <div className="mt-5 pt-3 border-t border-[#E5E7EB] text-[10px] text-[#667085] flex items-center justify-between">
+                  <span>+ 18% GST at checkout</span>
+                  <span className="text-[#10B981] font-semibold">Instant setup</span>
                 </div>
               </div>
             );
           })}
         </div>
 
+        {/* Small Footnote below Cards (Matching Screenshot) */}
+        <div className="mt-6 text-center text-[11px] text-[#667085] max-w-3xl mx-auto space-y-1">
+          <p>
+            Generation speeds, resolution exports, and model access apply directly via the Fluvia Flow creative suite.
+          </p>
+          <p>
+            Prices exclude applicable 18% GST, calculated transparently at checkout. Unused subscription credits roll over into subsequent months while active. Cancel anytime.
+          </p>
+        </div>
+
         {/* ========================================================================= */}
-        {/* COMPREHENSIVE FEATURE COMPARISON MATRIX */}
+        {/* COMPREHENSIVE SIDE-BY-SIDE FEATURE COMPARISON MATRIX */}
         {/* ========================================================================= */}
-        <FeatureComparisonMatrix
-          billingInterval={billingInterval}
-          onSelectPlan={handleSelectPlan}
-        />
+        <div id="feature-matrix-section">
+          <FeatureComparisonMatrix
+            billingInterval={billingInterval}
+            onSelectPlan={handleSelectPlan}
+          />
+        </div>
 
         {/* ========================================================================= */}
         {/* DEDICATED CREDIT TOP-UP PACKS SECTION */}
@@ -600,18 +740,18 @@ export default function PricingPage() {
         <CreditTopUpSection onBuyPack={handleBuyCreditPack} />
 
         {/* ========================================================================= */}
-        {/* FREQUENTLY ASKED QUESTIONS (ACCORDION) */}
+        {/* FREQUENTLY ASKED QUESTIONS */}
         {/* ========================================================================= */}
         <section className="mt-20 pt-16 border-t border-[#E5E7EB] max-w-3xl mx-auto text-left">
           <div className="text-center mb-10">
             <span className="text-xs font-bold uppercase tracking-wider text-[#5145CD] bg-[#EEF2FF] px-3 py-1 rounded-full border border-[#C7D2FE]">
-              Frequently Asked Questions
+              Billing & Credit FAQ
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] tracking-tight mt-3">
-              Billing, credits & commercial rights.
+              Frequently Asked Questions
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-[#667085]">
-              Everything you need to know about Fluvia Flow subscriptions, GST invoicing, and rollovers.
+              Everything you need to know about Fluvia Flow plans, rollovers, and GST compliance.
             </p>
           </div>
 
