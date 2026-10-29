@@ -27,7 +27,7 @@ export default function SettingsPage() {
         }
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [router]);
 
   const handleUpdateProfile = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,8 +44,8 @@ export default function SettingsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -54,10 +54,10 @@ export default function SettingsPage() {
   const credits = data?.credits || { availableBalance: 0, reservedBalance: 0 };
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#090A0D] text-white relative">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#090A0D]">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -66,116 +66,120 @@ export default function SettingsPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-3xl mx-auto w-full space-y-8">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Account Settings</h1>
-            <p className="mt-1 text-xs sm:text-sm text-slate-400">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-3xl mx-auto w-full space-y-6 text-left">
+          <div className="p-6 rounded-2xl bg-white border border-[#E5E7EB] shadow-xs">
+            <h1 className="text-xl sm:text-2xl font-bold text-[#17191D]">Account Settings</h1>
+            <p className="mt-1 text-xs sm:text-sm text-[#667085]">
               Manage your personal credentials, workspace preferences, and privacy controls.
             </p>
           </div>
 
           {statusMsg && (
-            <div className="p-3 bg-indigo-500/15 border border-indigo-500/30 text-xs text-indigo-300 rounded-xl flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 shrink-0 text-indigo-400" />
-              <span>{statusMsg}</span>
+            <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 rounded-xl flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+              <span className="font-semibold">{statusMsg}</span>
             </div>
           )}
 
           {/* Profile Form */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/8 space-y-4 shadow-xl">
-            <h3 className="font-bold text-white text-base mb-4 flex items-center gap-2">
-              <User className="w-4 h-4 text-indigo-400" />
+          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5E7EB] space-y-4 shadow-xs">
+            <h3 className="font-bold text-[#17191D] text-sm mb-4 flex items-center gap-2">
+              <User className="w-4 h-4 text-[#5145CD]" />
               <span>Personal Details</span>
             </h3>
 
             <form onSubmit={handleUpdateProfile} className="space-y-4 text-xs">
               <div>
-                <label className="block text-slate-300 font-semibold mb-1">Display Name</label>
+                <label className="block text-[#17191D] font-semibold mb-1.5 uppercase text-[11px] tracking-wider">
+                  Display Name
+                </label>
                 <input
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full bg-[#11131A] border border-white/10 text-white px-3 py-2.5 rounded-xl text-xs focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-[#F7F8FA] border border-[#E5E7EB] text-[#17191D] px-3.5 py-2.5 rounded-xl text-xs focus:outline-none focus:border-[#5145CD]"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-300 font-semibold mb-1">Email Address</label>
+                <label className="block text-[#17191D] font-semibold mb-1.5 uppercase text-[11px] tracking-wider">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   disabled
                   value={email}
-                  className="w-full bg-[#11131A]/60 border border-white/5 text-slate-500 px-3 py-2.5 rounded-xl text-xs cursor-not-allowed"
+                  className="w-full bg-[#F7F8FA] border border-[#E5E7EB] text-[#667085] px-3.5 py-2.5 rounded-xl text-xs cursor-not-allowed"
                 />
-                <span className="text-[10px] text-slate-500 mt-1 block">
+                <span className="text-[10px] text-[#667085] mt-1 block">
                   Email verification active. Contact support to update primary address.
                 </span>
               </div>
 
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-600/30 cursor-pointer"
+                className="px-5 py-2.5 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold transition-all shadow-xs cursor-pointer"
               >
                 Save Changes
               </button>
             </form>
           </div>
 
-          {/* Appearance & Theme Display */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#0E1015] border border-white/8 space-y-3 shadow-xl">
+          {/* Workspace Standard */}
+          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5E7EB] space-y-3 shadow-xs">
             <div className="flex items-start justify-between flex-wrap gap-4">
               <div>
-                <h3 className="font-bold text-white text-base mb-1 flex items-center gap-2">
-                  <Palette className="w-4 h-4 text-indigo-400" />
+                <h3 className="font-bold text-[#17191D] text-sm mb-1 flex items-center gap-2">
+                  <Palette className="w-4 h-4 text-[#5145CD]" />
                   <span>Workspace Theme</span>
                 </h3>
-                <p className="text-xs text-slate-400">
-                  Fluvia Flow Kling AI Studio Theme (Near-black obsidian charcoal with electric indigo flares).
+                <p className="text-xs text-[#667085]">
+                  FLUVIA FLOW Executive Business Theme (Pure white with restrained deep indigo accents).
                 </p>
               </div>
 
-              <span className="px-3 py-1.5 rounded-full text-xs font-mono font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
-                Active Studio Standard
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
+                Active Standard
               </span>
             </div>
           </div>
 
           {/* Danger Zone: Account Deletion */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-rose-950/20 border border-rose-500/20 space-y-3 shadow-sm">
-            <h3 className="font-bold text-rose-300 text-base flex items-center gap-2">
-              <Trash2 className="w-4 h-4 text-rose-400" />
+          <div className="p-6 sm:p-8 rounded-2xl bg-rose-50/50 border border-rose-200 space-y-3">
+            <h3 className="font-bold text-rose-800 text-sm flex items-center gap-2">
+              <Trash2 className="w-4 h-4 text-rose-600" />
               <span>Danger Zone: Account Deletion</span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#667085] leading-relaxed">
               Permanently delete your profile, workspaces, private video projects, and ledger history. This action cannot be undone.
             </p>
 
             <button
               type="button"
               onClick={() => setDeleteConfirmOpen(true)}
-              className="px-4 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 rounded-xl text-xs font-bold transition-all border border-rose-500/30 cursor-pointer"
+              className="px-4 py-2 bg-white hover:bg-rose-50 text-rose-600 rounded-xl text-xs font-semibold transition-all border border-rose-200 cursor-pointer shadow-2xs"
             >
               Delete Account
             </button>
           </div>
 
           {deleteConfirmOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-              <div className="bg-[#0E1015] border border-white/10 rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-                <h3 className="font-bold text-rose-400 text-base">Confirm Account Purge</h3>
-                <p className="text-xs text-slate-400">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
+              <div className="bg-white border border-[#E5E7EB] rounded-2xl max-w-sm w-full p-6 shadow-xl space-y-4">
+                <h3 className="font-bold text-rose-600 text-base">Confirm Account Purge</h3>
+                <p className="text-xs text-[#667085] leading-relaxed">
                   Are you absolutely certain? All credits and video exports will be immediately purged.
                 </p>
                 <div className="flex gap-2 justify-end">
                   <button
                     onClick={() => setDeleteConfirmOpen(false)}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/[0.04] border border-white/8 text-slate-300 hover:text-white cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#F7F8FA] border border-[#E5E7EB] text-[#17191D] hover:bg-[#F1F3F5] cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleDeleteAccount}
-                    className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white cursor-pointer"
                   >
                     Yes, Delete Everything
                   </button>

@@ -67,10 +67,10 @@ export default function BillingOverviewPage() {
   const latestReceipts = billing?.latestReceipts || [];
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-white text-[#17191D] relative">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-white">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -79,7 +79,7 @@ export default function BillingOverviewPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8 text-left">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6 sm:space-y-8 text-left">
           {/* Header Title */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -89,10 +89,10 @@ export default function BillingOverviewPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex flex-wrap xs:flex-nowrap items-center gap-2.5 w-full sm:w-auto">
               <Link
                 href="/checkout?type=pack&id=pack_5000"
-                className="px-4 py-2 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                className="flex-1 sm:flex-initial text-center justify-center px-4 py-2 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
               >
                 <Zap className="w-3.5 h-3.5" />
                 <span>Top Up Credits</span>
@@ -100,7 +100,7 @@ export default function BillingOverviewPage() {
 
               <Link
                 href="/pricing"
-                className="px-4 py-2 bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] rounded-xl text-xs font-semibold transition-all shadow-2xs"
+                className="flex-1 sm:flex-initial text-center justify-center px-4 py-2 bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] rounded-xl text-xs font-semibold transition-all shadow-2xs"
               >
                 Change Plan
               </Link>
@@ -108,7 +108,7 @@ export default function BillingOverviewPage() {
           </div>
 
           {/* Subscription Banner */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5E7EB] flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xs">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-mono uppercase text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#5145CD]/20 font-bold">
@@ -127,8 +127,8 @@ export default function BillingOverviewPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-4 shrink-0">
-              <div className="text-right">
+            <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 w-full md:w-auto pt-2 md:pt-0 border-t md:border-t-0 border-[#E5E7EB]">
+              <div className="text-left sm:text-right">
                 <div className="text-xs text-[#667085]">Plan Price</div>
                 <div className="text-xl font-bold text-[#17191D] font-mono">
                   ₹{plan?.priceInr || 2499}

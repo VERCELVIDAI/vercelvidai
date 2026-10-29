@@ -166,6 +166,7 @@ export default function HomePage() {
                   ref={videoRef}
                   src="/media/hero/fluvia-hero-showcase.mp4"
                   poster="/media/templates/poster-vid-01-perfume.jpg"
+                  preload="metadata"
                   autoPlay
                   loop
                   muted={isMuted}

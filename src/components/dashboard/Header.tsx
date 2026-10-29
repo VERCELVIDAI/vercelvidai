@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   User,
@@ -33,9 +33,27 @@ export function DashboardHeader({
   user,
 }: DashboardHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuContainerRef = useRef<HTMLDivElement | null>(null);
   const effectiveDisplayName = user?.displayName || displayName;
   const effectiveRole = user?.role || role;
   const effectiveAvatar = user?.avatarUrl || avatarUrl;
+
+  // Handle outside clicks to close dropdown menu on mobile touch
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (menuContainerRef.current && !menuContainerRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('touchstart', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('touchstart', handleOutsideClick);
+    };
+  }, [menuOpen]);
 
   const handleOpenMobileSidebar = () => {
     if (typeof window !== 'undefined') {
@@ -51,8 +69,8 @@ export function DashboardHeader({
   };
 
   return (
-    <header className="h-16 bg-white border-b border-[#E5E7EB] px-4 sm:px-6 flex items-center justify-between gap-3 sticky top-0 z-40 shrink-0 w-full text-[#17191D]">
-      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+    <header className="h-16 bg-white border-b border-[#E5E7EB] px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-3 sticky top-0 z-30 shrink-0 w-full text-[#17191D]">
+      <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1">
         {/* Mobile Sidebar Hamburger Trigger */}
         <button
           type="button"
@@ -64,15 +82,15 @@ export function DashboardHeader({
         </button>
 
         {/* Workspace indicator */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] text-xs font-semibold text-[#17191D] truncate shrink-0">
-          <div className="w-2 h-2 rounded-full bg-[#5145CD]" />
+        <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] text-xs font-semibold text-[#17191D] max-w-[120px] xs:max-w-[160px] sm:max-w-none truncate shrink">
+          <div className="w-2 h-2 rounded-full bg-[#5145CD] shrink-0" />
           <span className="truncate">{workspaceName}</span>
         </div>
 
-        <span className="hidden sm:inline-block text-[#E5E7EB]">•</span>
+        <span className="hidden md:inline-block text-[#E5E7EB]">•</span>
 
         {/* Operational badge */}
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#667085] min-w-0 truncate">
+        <div className="hidden lg:flex items-center gap-1.5 text-xs text-[#667085] min-w-0 truncate">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
           <span className="truncate">Gemini Engine Operational</span>
         </div>
@@ -82,23 +100,22 @@ export function DashboardHeader({
         {/* Credit Quick Display */}
         <Link
           href="/dashboard/billing"
-          className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#EEF2FF]/80 transition-all border border-[#5145CD]/20 bg-[#EEF2FF] text-[#5145CD] shadow-2xs shrink-0"
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#EEF2FF]/80 transition-all border border-[#5145CD]/20 bg-[#EEF2FF] text-[#5145CD] shadow-2xs shrink-0"
         >
           <Zap className="w-3.5 h-3.5 text-[#5145CD] shrink-0" />
-          <span>{credits.toLocaleString()} <span className="hidden xs:inline">Credits</span></span>
+          <span>{credits.toLocaleString()} <span className="hidden sm:inline">Credits</span></span>
         </Link>
 
         {/* User Account Menu with Logout */}
         <div
+          ref={menuContainerRef}
           className="relative"
-          onMouseEnter={() => setMenuOpen(true)}
-          onMouseLeave={() => setMenuOpen(false)}
         >
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="User account options"
-            className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-[#F7F8FA] transition-all border border-[#E5E7EB] bg-white cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 p-1 pr-1.5 sm:pr-2 rounded-full hover:bg-[#F7F8FA] transition-all border border-[#E5E7EB] bg-white cursor-pointer"
           >
             <div className="w-7 h-7 rounded-full overflow-hidden bg-[#5145CD] flex items-center justify-center text-xs font-bold text-white">
               {effectiveAvatar ? (

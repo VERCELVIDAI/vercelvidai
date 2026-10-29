@@ -51,8 +51,8 @@ export default function SubscriptionManagementPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -63,10 +63,10 @@ export default function SubscriptionManagementPage() {
   const subscription = billing?.subscription;
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#090A0D] text-white relative">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#090A0D]">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -75,80 +75,80 @@ export default function SubscriptionManagementPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-4xl mx-auto w-full space-y-8">
-          <div>
-            <div className="flex items-center gap-2 text-xs text-slate-500 mb-2 font-medium">
-              <Link href="/dashboard/billing" className="hover:text-indigo-400 transition-colors">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto w-full space-y-6 text-left">
+          <div className="p-6 rounded-2xl bg-white border border-[#E5E7EB] shadow-xs">
+            <div className="flex items-center gap-2 text-xs text-[#667085] mb-1 font-medium">
+              <Link href="/dashboard/billing" className="hover:text-[#5145CD] transition-colors">
                 Billing
               </Link>
               <span>/</span>
-              <span className="text-white">Subscription</span>
+              <span className="text-[#17191D] font-semibold">Subscription</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Subscription Management</h1>
-            <p className="mt-1 text-xs sm:text-sm text-slate-400">
+            <h1 className="text-xl sm:text-2xl font-bold text-[#17191D]">Subscription Management</h1>
+            <p className="mt-1 text-xs sm:text-sm text-[#667085]">
               Your active recurring plan, auto-renewal settings, and computing quota.
             </p>
           </div>
 
           {/* Plan Card */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
-            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b border-white/8">
+          <div className="rounded-2xl bg-white border border-[#E5E7EB] p-6 sm:p-8 space-y-6 shadow-xs">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b border-[#E5E7EB]">
               <div>
-                <span className="text-[10px] font-mono uppercase text-indigo-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full border border-white/10 font-bold">
+                <span className="text-[10px] font-mono uppercase text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#5145CD]/20 font-semibold">
                   Active Subscription
                 </span>
-                <h2 className="text-2xl font-black text-white mt-2">
+                <h2 className="text-2xl font-bold text-[#17191D] mt-2">
                   {plan?.name || 'Studio Creator Plan'}
                 </h2>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-[#667085] mt-1">
                   1,500 creative credits replenished each billing cycle.
                 </p>
               </div>
 
-              <div className="text-right">
-                <div className="text-2xl font-black text-indigo-400 font-mono">
+              <div className="sm:text-right">
+                <div className="text-2xl font-bold text-[#5145CD] font-mono">
                   INR {plan?.priceInr || 2499}
-                  <span className="text-xs text-slate-500 font-normal"> / month</span>
+                  <span className="text-xs text-[#667085] font-normal"> / month</span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">All standard platform features included</p>
+                <p className="text-[11px] text-[#667085] mt-0.5">All standard platform features included</p>
               </div>
             </div>
 
             {/* Plan Details Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="p-4 rounded-2xl bg-white/[0.04]/40 border border-white/8 space-y-2">
-                <span className="text-[10px] uppercase font-mono font-bold text-slate-500">Plan Entitlements</span>
-                <div className="flex items-center gap-2 text-slate-300">
+              <div className="p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
+                <span className="text-[10px] uppercase font-mono font-bold text-[#667085]">Plan Entitlements</span>
+                <div className="flex items-center gap-2 text-[#17191D]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   <span>Maximum 1080p Full HD Video Rendering</span>
                 </div>
-                <div className="flex items-center gap-2 text-slate-300">
+                <div className="flex items-center gap-2 text-[#17191D]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   <span>Zero Watermarks on Exported Media</span>
                 </div>
-                <div className="flex items-center gap-2 text-slate-300">
+                <div className="flex items-center gap-2 text-[#17191D]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   <span>Runway Gen-3, Luma Ray & Flux Pro Access</span>
                 </div>
-                <div className="flex items-center gap-2 text-slate-300">
+                <div className="flex items-center gap-2 text-[#17191D]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   <span>Priority Cloud Rendering Queue</span>
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/[0.04]/40 border border-white/8 space-y-2">
-                <span className="text-[10px] uppercase font-mono font-bold text-slate-500">Billing Cycle & Payment</span>
-                <div className="flex justify-between text-slate-300">
-                  <span>Billing Interval:</span>
-                  <strong className="text-white">Monthly</strong>
+              <div className="p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-2">
+                <span className="text-[10px] uppercase font-mono font-bold text-[#667085]">Billing Cycle & Payment</span>
+                <div className="flex justify-between text-[#17191D]">
+                  <span className="text-[#667085]">Billing Interval:</span>
+                  <strong>Monthly</strong>
                 </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Payment Gateway:</span>
-                  <span className="text-white font-semibold">PayU India</span>
+                <div className="flex justify-between text-[#17191D]">
+                  <span className="text-[#667085]">Payment Gateway:</span>
+                  <span className="font-semibold">PayU India</span>
                 </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Next Renewal Date:</span>
-                  <span className="text-indigo-400 font-mono font-bold">
+                <div className="flex justify-between text-[#17191D]">
+                  <span className="text-[#667085]">Next Renewal Date:</span>
+                  <span className="text-[#5145CD] font-mono font-semibold">
                     {subscription?.currentPeriodEnd
                       ? new Date(subscription.currentPeriodEnd).toLocaleDateString('en-IN', { dateStyle: 'medium' })
                       : 'Active'}
@@ -157,14 +157,14 @@ export default function SubscriptionManagementPage() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/8 justify-between items-center">
-              <span className="text-xs text-slate-400">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#E5E7EB] justify-between items-center">
+              <span className="text-xs text-[#667085]">
                 Need more GPU hours or 4K resolution? Upgrade your subscription anytime.
               </span>
 
               <Link
                 href="/pricing"
-                className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20 transition-all shrink-0"
+                className="px-5 py-2.5 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold shadow-xs transition-all shrink-0 cursor-pointer"
               >
                 Upgrade to Agency Plan
               </Link>
@@ -172,14 +172,14 @@ export default function SubscriptionManagementPage() {
           </div>
 
           {/* Subscription Purchase History & Tax Documents */}
-          <div className="glass-card rounded-3xl overflow-hidden shadow-xl space-y-0">
-            <div className="p-6 border-b border-white/8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="rounded-2xl bg-white border border-[#E5E7EB] overflow-hidden shadow-xs space-y-0">
+            <div className="p-6 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="text-[10px] font-mono uppercase text-indigo-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full border border-white/10 font-bold">
+                <span className="text-[10px] font-mono uppercase text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#5145CD]/20 font-semibold">
                   Document History
                 </span>
-                <h3 className="text-lg font-bold text-white mt-1">Subscription Invoices & Receipts</h3>
-                <p className="text-xs text-slate-500">
+                <h3 className="text-lg font-bold text-[#17191D] mt-1">Subscription Invoices & Receipts</h3>
+                <p className="text-xs text-[#667085]">
                   Every subscription plan payment includes verified GST tax invoices and receipts with direct download links.
                 </p>
               </div>
@@ -187,16 +187,16 @@ export default function SubscriptionManagementPage() {
               <div className="flex items-center gap-2">
                 <Link
                   href="/dashboard/billing/invoices"
-                  className="px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-300 text-xs font-bold transition-all flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] border border-[#5145CD]/20 text-xs font-semibold transition-all flex items-center gap-1.5"
                 >
-                  <FileText className="w-3.5 h-3.5 text-teal-700" />
+                  <FileText className="w-3.5 h-3.5 text-[#5145CD]" />
                   <span>All Invoices</span>
                 </Link>
                 <Link
                   href="/dashboard/billing/receipts"
-                  className="px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-indigo-300 border border-emerald-300 text-xs font-bold transition-all flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg border border-[#E5E7EB] hover:bg-[#F7F8FA] text-[#17191D] text-xs font-semibold transition-all flex items-center gap-1.5"
                 >
-                  <Receipt className="w-3.5 h-3.5 text-indigo-400" />
+                  <Receipt className="w-3.5 h-3.5 text-[#667085]" />
                   <span>All Receipts</span>
                 </Link>
               </div>
@@ -204,14 +204,14 @@ export default function SubscriptionManagementPage() {
 
             <div className="overflow-x-auto">
               {subscriptionPurchases.length === 0 ? (
-                <div className="p-10 text-center text-slate-500 text-xs space-y-2">
-                  <CreditCard className="w-8 h-8 text-slate-400 mx-auto" />
-                  <p className="font-semibold text-white">No subscription purchases found yet.</p>
+                <div className="p-10 text-center text-[#667085] text-xs space-y-2">
+                  <CreditCard className="w-8 h-8 text-[#667085] opacity-50 mx-auto" />
+                  <p className="font-semibold text-[#17191D]">No subscription purchases found yet.</p>
                   <p>When you purchase or renew a subscription plan via PayU, your invoice and receipt will be available here.</p>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-indigo-500/10 text-slate-400 border-b border-white/8 uppercase text-[10px] font-mono font-bold">
+                  <thead className="bg-[#F7F8FA] text-[#667085] border-b border-[#E5E7EB] uppercase text-[10px] font-semibold tracking-wider">
                     <tr>
                       <th className="py-3 px-4">Plan Name</th>
                       <th className="py-3 px-4">Purchase Date</th>
@@ -220,32 +220,32 @@ export default function SubscriptionManagementPage() {
                       <th className="py-3 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-emerald-500/10 text-slate-300">
+                  <tbody className="divide-y divide-[#E5E7EB] text-[#17191D]">
                     {subscriptionPurchases.map((sub: any) => (
-                      <tr key={sub.id} className="hover:bg-white/[0.04]/40 transition-colors">
+                      <tr key={sub.id} className="hover:bg-[#F7F8FA] transition-colors">
                         <td className="py-3.5 px-4">
-                          <div className="font-bold text-white">
+                          <div className="font-semibold text-[#17191D]">
                             {sub.productInfo || (plan?.name || 'Fluvia Subscription Plan')}
                           </div>
-                          <div className="text-[11px] font-mono text-slate-500">{sub.txnid}</div>
+                          <div className="text-[11px] font-mono text-[#667085]">{sub.txnid}</div>
                         </td>
-                        <td className="py-3.5 px-4 text-slate-400 font-medium">
+                        <td className="py-3.5 px-4 text-[#667085] font-medium">
                           {new Date(sub.createdAt).toLocaleDateString('en-IN', {
                             month: 'short',
                             day: 'numeric',
                             year: 'numeric',
                           })}
                         </td>
-                        <td className="py-3.5 px-4 font-mono font-bold text-white">
+                        <td className="py-3.5 px-4 font-mono font-bold text-[#17191D]">
                           INR {sub.totalAmount ? Number(sub.totalAmount).toFixed(2) : (sub.baseAmount ? Number(sub.baseAmount).toFixed(2) : '0.00')}
                         </td>
                         <td className="py-3.5 px-4">
                           <span className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold ${
                             sub.status === 'success'
-                              ? 'bg-white/[0.08] text-indigo-300 border border-emerald-300'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : sub.status === 'pending'
-                              ? 'bg-amber-100 text-amber-800 border border-amber-300'
-                              : 'bg-rose-100 text-rose-800 border border-rose-300'
+                              ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                              : 'bg-rose-50 text-rose-800 border border-rose-200'
                           }`}>
                             {sub.status || 'Settled'}
                           </span>
@@ -256,20 +256,20 @@ export default function SubscriptionManagementPage() {
                               <>
                                 <Link
                                   href={`/dashboard/billing/invoices/${sub.invoiceId}`}
-                                  className="px-2.5 py-1 rounded-md bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-300 text-[11px] font-bold inline-flex items-center gap-1 transition-colors"
+                                  className="px-2.5 py-1 rounded-md bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] border border-[#5145CD]/20 text-[11px] font-semibold inline-flex items-center gap-1 transition-colors"
                                   title="View Invoice"
                                 >
-                                  <FileText className="w-3 h-3 text-teal-700" />
+                                  <FileText className="w-3 h-3 text-[#5145CD]" />
                                   <span>View Invoice</span>
                                 </Link>
                                 <a
                                   href={`/api/billing/invoices/${sub.invoiceId}/pdf`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="px-2 py-1 rounded-md bg-teal-100 hover:bg-teal-200 text-teal-800 border border-teal-300 text-[11px] font-bold inline-flex items-center gap-1 transition-colors"
+                                  className="px-2 py-1 rounded-md border border-[#E5E7EB] bg-white hover:bg-[#F7F8FA] text-[#17191D] text-[11px] font-semibold inline-flex items-center gap-1 transition-colors"
                                   title="Download Invoice PDF"
                                 >
-                                  <Download className="w-3 h-3 text-teal-700" />
+                                  <Download className="w-3 h-3 text-[#667085]" />
                                   <span>PDF</span>
                                 </a>
                               </>
@@ -278,20 +278,20 @@ export default function SubscriptionManagementPage() {
                               <>
                                 <Link
                                   href={`/dashboard/billing/receipts/${sub.receiptId}`}
-                                  className="px-2.5 py-1 rounded-md bg-white/[0.04] hover:bg-white/[0.08] text-indigo-300 border border-emerald-300 text-[11px] font-bold inline-flex items-center gap-1 transition-colors"
+                                  className="px-2.5 py-1 rounded-md border border-[#E5E7EB] bg-white hover:bg-[#F7F8FA] text-[#17191D] text-[11px] font-semibold inline-flex items-center gap-1 transition-colors"
                                   title="View Receipt"
                                 >
-                                  <Receipt className="w-3 h-3 text-indigo-400" />
+                                  <Receipt className="w-3 h-3 text-[#667085]" />
                                   <span>View Receipt</span>
                                 </Link>
                                 <a
                                   href={`/api/billing/receipts/${sub.receiptId}/pdf`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="px-2 py-1 rounded-md bg-white/[0.08] hover:bg-emerald-200 text-indigo-300 border border-emerald-300 text-[11px] font-bold inline-flex items-center gap-1 transition-colors"
+                                  className="px-2 py-1 rounded-md bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] border border-[#5145CD]/20 text-[11px] font-semibold inline-flex items-center gap-1 transition-colors"
                                   title="Download Receipt PDF"
                                 >
-                                  <Download className="w-3 h-3 text-indigo-400" />
+                                  <Download className="w-3 h-3 text-[#5145CD]" />
                                   <span>PDF</span>
                                 </a>
                               </>

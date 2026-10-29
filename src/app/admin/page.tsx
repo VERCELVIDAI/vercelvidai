@@ -376,8 +376,8 @@ export default function AdminConsolePage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F7F8FA] text-[#17191D]">
       {/* Admin Top Bar */}
-      <header className="h-16 border-b border-[#E5E7EB] bg-white px-6 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-4">
+      <header className="min-h-16 border-b border-[#E5E7EB] bg-white px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0">
+        <div className="flex items-center gap-3">
           <Link
             href="/dashboard"
             className="p-1.5 rounded-lg bg-[#F7F8FA] hover:bg-slate-100 text-[#667085] hover:text-[#17191D] border border-[#E5E7EB]"
@@ -388,7 +388,7 @@ export default function AdminConsolePage() {
           <div className="h-5 w-px bg-[#E5E7EB]" />
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-[#5145CD]" />
-            <span className="font-bold text-[#17191D] text-base">Fluvia Flow • Admin Console</span>
+            <span className="font-bold text-[#17191D] text-sm sm:text-base">Fluvia Flow • Admin Console</span>
             <span className="text-[10px] bg-[#EEF2FF] text-[#5145CD] font-mono px-2 py-0.5 rounded border border-[#5145CD]/20 uppercase font-bold">
               Super Admin
             </span>
@@ -396,7 +396,7 @@ export default function AdminConsolePage() {
         </div>
 
         {/* Tab navigation */}
-        <div className="flex gap-1 bg-[#F7F8FA] border border-[#E5E7EB] p-1 rounded-xl text-xs font-semibold">
+        <div className="flex items-center gap-1 bg-[#F7F8FA] border border-[#E5E7EB] p-1 rounded-xl text-xs font-semibold overflow-x-auto max-w-full">
           {[
             { id: 'overview', label: 'Metrics Overview' },
             { id: 'pricing', label: 'Pricing, Plans & Tax' },
@@ -410,7 +410,7 @@ export default function AdminConsolePage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === tab.id ? 'bg-[#5145CD] text-white shadow-2xs' : 'text-[#667085] hover:text-[#17191D] hover:bg-white'
               }`}
             >

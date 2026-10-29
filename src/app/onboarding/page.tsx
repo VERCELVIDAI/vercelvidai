@@ -41,33 +41,33 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090A0D] text-white flex flex-col justify-center items-center px-4 py-12 relative">
+    <div className="min-h-screen bg-[#F7F8FA] text-[#17191D] flex flex-col justify-center items-center px-4 py-12 relative">
       <div className="w-full max-w-2xl">
         <div className="flex justify-between items-center mb-8">
           <Logo size="md" />
-          <div className="flex items-center gap-1.5 text-xs font-mono text-slate-400 font-semibold">
+          <div className="flex items-center gap-1.5 text-xs font-mono text-[#667085] font-semibold">
             <span>Step {step} of 3</span>
-            <div className="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden ml-2">
+            <div className="w-24 h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden ml-2">
               <div
-                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-300"
+                className="h-full bg-[#5145CD] transition-all duration-300"
                 style={{ width: `${(step / 3) * 100}%` }}
               />
             </div>
           </div>
         </div>
 
-        <div className="p-8 sm:p-10 rounded-3xl bg-[#0E1015] border border-white/8 shadow-2xl relative">
+        <div className="p-6 sm:p-10 rounded-3xl bg-white border border-[#E5E7EB] shadow-xs relative">
           {/* STEP 1: PRIMARY USE CASE */}
           {step === 1 && (
             <div>
               <div className="mb-6">
-                <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[#5145CD] uppercase tracking-wider">
                   Personalize Your Studio
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] mt-1">
                   What is your primary focus?
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                <p className="text-xs sm:text-sm text-[#667085] mt-1">
                   We will optimize your dashboard templates and generative prompt defaults.
                 </p>
               </div>
@@ -85,15 +85,15 @@ export default function OnboardingPage() {
                     onClick={() => setPrimaryUseCase(item.id)}
                     className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
                       primaryUseCase === item.id
-                        ? 'bg-indigo-600/25 border-indigo-500 text-white shadow-md ring-2 ring-indigo-500/20'
-                        : 'bg-[#11131A] text-slate-300 border-white/8 hover:border-white/20'
+                        ? 'bg-[#EEF2FF] border-[#5145CD] text-[#17191D] shadow-xs ring-2 ring-[#5145CD]/20'
+                        : 'bg-[#F7F8FA] text-[#17191D] border-[#E5E7EB] hover:border-[#CBD5E1]'
                     }`}
                   >
                     <div className="flex justify-between items-center mb-1">
-                      <span className="font-bold text-sm text-white">{item.title}</span>
-                      {primaryUseCase === item.id && <Check className="w-4 h-4 text-indigo-400 font-bold" />}
+                      <span className="font-semibold text-sm text-[#17191D]">{item.title}</span>
+                      {primaryUseCase === item.id && <Check className="w-4 h-4 text-[#5145CD] font-bold" />}
                     </div>
-                    <p className="text-xs text-slate-400">{item.desc}</p>
+                    <p className="text-xs text-[#667085]">{item.desc}</p>
                   </button>
                 ))}
               </div>
@@ -102,7 +102,7 @@ export default function OnboardingPage() {
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="px-6 py-3 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
+                  className="px-6 py-3 bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold rounded-xl text-xs flex items-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   <span>Continue</span>
                   <ArrowRight className="w-4 h-4" />
@@ -115,13 +115,13 @@ export default function OnboardingPage() {
           {step === 2 && (
             <div>
               <div className="mb-6">
-                <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[#5145CD] uppercase tracking-wider">
                   Audience & Formats
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] mt-1">
                   Which platforms do you publish on?
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                <p className="text-xs sm:text-sm text-[#667085] mt-1">
                   Select all that apply to calibrate default aspect ratios.
                 </p>
               </div>
@@ -134,12 +134,12 @@ export default function OnboardingPage() {
                     onClick={() => togglePlatform(p)}
                     className={`p-3.5 rounded-2xl border text-xs font-semibold flex items-center justify-between transition-all cursor-pointer ${
                       platforms.includes(p)
-                        ? 'bg-indigo-600/25 border-indigo-500 text-white font-bold shadow-sm'
-                        : 'bg-[#11131A] text-slate-300 border-white/8 hover:border-white/20'
+                        ? 'bg-[#EEF2FF] border-[#5145CD] text-[#5145CD] font-bold shadow-xs'
+                        : 'bg-[#F7F8FA] text-[#17191D] border-[#E5E7EB] hover:border-[#CBD5E1]'
                     }`}
                   >
                     <span>{p}</span>
-                    {platforms.includes(p) && <Check className="w-3.5 h-3.5 text-indigo-400" />}
+                    {platforms.includes(p) && <Check className="w-3.5 h-3.5 text-[#5145CD]" />}
                   </button>
                 ))}
               </div>
@@ -148,14 +148,14 @@ export default function OnboardingPage() {
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="text-xs text-slate-400 hover:text-white font-medium cursor-pointer"
+                  className="text-xs text-[#667085] hover:text-[#17191D] font-medium cursor-pointer"
                 >
                   Back
                 </button>
                 <button
                   type="button"
                   onClick={() => setStep(3)}
-                  className="px-6 py-3 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
+                  className="px-6 py-3 bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold rounded-xl text-xs flex items-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   <span>Continue</span>
                   <ArrowRight className="w-4 h-4" />
@@ -168,13 +168,13 @@ export default function OnboardingPage() {
           {step === 3 && (
             <div>
               <div className="mb-6">
-                <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[#5145CD] uppercase tracking-wider">
                   Final Setup
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] mt-1">
                   What is your video editing experience?
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                <p className="text-xs sm:text-sm text-[#667085] mt-1">
                   Helps us tune whether you prefer one-click AI generation or timeline inspector controls.
                 </p>
               </div>
@@ -191,15 +191,15 @@ export default function OnboardingPage() {
                     onClick={() => setExperienceLevel(item.id)}
                     className={`w-full p-4 rounded-2xl border text-left transition-all cursor-pointer ${
                       experienceLevel === item.id
-                        ? 'bg-indigo-600/25 border-indigo-500 text-white shadow-md ring-2 ring-indigo-500/20'
-                        : 'bg-[#11131A] text-slate-300 border-white/8 hover:border-white/20'
+                        ? 'bg-[#EEF2FF] border-[#5145CD] text-[#17191D] shadow-xs ring-2 ring-[#5145CD]/20'
+                        : 'bg-[#F7F8FA] text-[#17191D] border-[#E5E7EB] hover:border-[#CBD5E1]'
                     }`}
                   >
                     <div className="flex justify-between items-center mb-0.5">
-                      <span className="font-bold text-sm text-white">{item.title}</span>
-                      {experienceLevel === item.id && <Check className="w-4 h-4 text-indigo-400 font-bold" />}
+                      <span className="font-semibold text-sm text-[#17191D]">{item.title}</span>
+                      {experienceLevel === item.id && <Check className="w-4 h-4 text-[#5145CD] font-bold" />}
                     </div>
-                    <p className="text-xs text-slate-400">{item.desc}</p>
+                    <p className="text-xs text-[#667085]">{item.desc}</p>
                   </button>
                 ))}
               </div>
@@ -208,7 +208,7 @@ export default function OnboardingPage() {
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="text-xs text-slate-400 hover:text-white font-medium cursor-pointer"
+                  className="text-xs text-[#667085] hover:text-[#17191D] font-medium cursor-pointer"
                 >
                   Back
                 </button>
@@ -216,12 +216,12 @@ export default function OnboardingPage() {
                   type="button"
                   onClick={handleFinish}
                   disabled={isFinishing}
-                  className="px-8 py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-xl shadow-indigo-600/30 transition-all cursor-pointer"
+                  className="px-8 py-3.5 bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold rounded-xl text-xs flex items-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   {isFinishing ? (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
-                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <Sparkles className="w-4 h-4" />
                   )}
                   <span>Launch Creative Studio</span>
                 </button>

@@ -162,7 +162,7 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="h-screen h-[100dvh] w-full bg-white flex text-[#17191D] overflow-hidden">
+      <div className="min-h-screen md:h-screen md:h-[100dvh] w-full bg-white flex flex-col md:flex-row text-[#17191D] overflow-x-hidden md:overflow-hidden">
         <div className="hidden md:block w-60 h-full shrink-0 border-r border-[#E5E7EB] bg-[#F7F8FA] p-4 space-y-4">
           <div className="h-8 w-32 bg-[#E5E7EB] rounded-lg animate-pulse" />
           <div className="space-y-2 pt-6">
@@ -171,7 +171,7 @@ export default function DashboardPage() {
             <div className="h-8 w-full bg-[#E5E7EB] rounded-lg animate-pulse" />
           </div>
         </div>
-        <div className="flex-1 h-full flex flex-col p-8 space-y-6">
+        <div className="flex-1 h-full flex flex-col p-4 sm:p-8 space-y-6">
           <div className="h-8 w-64 bg-[#F7F8FA] rounded-lg animate-pulse" />
           <div className="h-72 w-full bg-[#F7F8FA] rounded-2xl animate-pulse" />
         </div>
@@ -191,7 +191,7 @@ export default function DashboardPage() {
       : IMAGE_TEMPLATES.slice(0, 6);
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden text-[#17191D] bg-white relative">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden text-[#17191D] bg-white relative">
       {/* FIRST20 Modal for Eligible New Users */}
       <FirstCampaignModal />
 
@@ -199,7 +199,7 @@ export default function DashboardPage() {
       <Sidebar userRole={user.role} credits={credits} />
 
       {/* Main Viewport */}
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-white">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-white pb-24 md:pb-8">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -221,17 +221,17 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex flex-wrap xs:flex-nowrap items-center gap-2 shrink-0 w-full sm:w-auto">
               <Link
                 href="/checkout?type=pack&id=pack_5000"
-                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-xs font-semibold shadow-2xs transition-all flex items-center gap-1.5"
+                className="flex-1 sm:flex-initial text-center justify-center px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-xs font-semibold shadow-2xs transition-all flex items-center gap-1.5"
               >
                 <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
                 <span>Top Up (5,000 Credits)</span>
               </Link>
               <Link
                 href="/create"
-                className="px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5"
+                className="flex-1 sm:flex-initial text-center justify-center px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Create Ad</span>

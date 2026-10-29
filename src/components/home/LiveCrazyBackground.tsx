@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles, Activity, Eye, Zap, RefreshCw } from 'lucide-react';
+import { Sparkles, Zap } from 'lucide-react';
 
 type EffectMode = 'quantum' | 'neural' | 'vortex';
 
@@ -33,11 +33,9 @@ export function LiveCrazyBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [mode, setMode] = useState<EffectMode>('quantum');
-  const [isInteractive, setIsInteractive] = useState(true);
   const [particleCount, setParticleCount] = useState(0);
   const [showControls, setShowControls] = useState(false);
 
-  // References to keep state mutable inside requestAnimationFrame without re-triggering effect
   const mouseRef = useRef({
     x: -9999,
     y: -9999,
@@ -55,27 +53,22 @@ export function LiveCrazyBackground() {
   const modeRef = useRef<EffectMode>('quantum');
   modeRef.current = mode;
 
+  const isVisibleRef = useRef(true);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let width = 0;
+    let height = 0;
+    let isMobile = false;
 
-    const resize = () => {
-      if (!canvas || !canvas.parentElement) return;
-      width = canvas.parentElement.clientWidth;
-      height = canvas.parentElement.clientHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.scale(dpr, dpr);
-      initParticles();
+    // Detect mobile touch screen to disable heavy shadow blurs & touch gesture conflicts
+    const checkIsMobile = () => {
+      isMobile = window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024);
+      return isMobile;
     };
 
     const colorPalette = [
@@ -87,13 +80,13 @@ export function LiveCrazyBackground() {
     ];
 
     const initParticles = () => {
-      // Calculate responsive density
-      const density = width < 768 ? 45 : 90;
+      // Significantly fewer particles on mobile for 60fps buttery smooth scroll
+      const density = isMobile ? 22 : 65;
       const particles: Particle[] = [];
 
       for (let i = 0; i < density; i++) {
-        const baseVx = (Math.random() - 0.5) * 0.7;
-        const baseVy = (Math.random() - 0.5) * 0.7;
+        const baseVx = (Math.random() - 0.5) * 0.6;
+        const baseVy = (Math.random() - 0.5) * 0.6;
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
@@ -101,11 +94,11 @@ export function LiveCrazyBackground() {
           vy: baseVy,
           baseVx,
           baseVy,
-          size: Math.random() * 2.5 + 1.2,
+          size: Math.random() * 2 + 1.2,
           color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
-          alpha: Math.random() * 0.45 + 0.35,
+          alpha: Math.random() * 0.4 + 0.3,
           phase: Math.random() * Math.PI * 2,
-          pulseSpeed: 0.02 + Math.random() * 0.03,
+          pulseSpeed: 0.02 + Math.random() * 0.025,
           energy: 0,
         });
       }
@@ -113,11 +106,62 @@ export function LiveCrazyBackground() {
       setParticleCount(particles.length);
     };
 
-    resize();
-    window.addEventListener('resize', resize);
+    const resize = () => {
+      if (!canvas || !canvas.parentElement) return;
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      checkIsMobile();
 
-    // Mouse Tracking across entire container/window
+      // Cap DPR to 1 on mobile to prevent GPU thermal throttling, 1.5 on desktop
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      initParticles();
+    };
+
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    // Performance: Pause RAF when scrolled out of view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisibleRef.current = entry.isIntersecting;
+        if (entry.isIntersecting && !animFrameRef.current) {
+          animFrameRef.current = requestAnimationFrame(render);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    // Performance: Pause RAF when browser tab is inactive
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isVisibleRef.current = false;
+        if (animFrameRef.current) {
+          cancelAnimationFrame(animFrameRef.current);
+          animFrameRef.current = null;
+        }
+      } else {
+        isVisibleRef.current = true;
+        if (!animFrameRef.current) {
+          animFrameRef.current = requestAnimationFrame(render);
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Mouse Tracking (Only on desktop pointermove to avoid intercepting mobile touch scrolling)
     const onPointerMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return; // Do not hijack touch scroll on mobile
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
       const clientX = e.clientX - rect.left;
@@ -148,8 +192,9 @@ export function LiveCrazyBackground() {
       mouseRef.current.targetY = -9999;
     };
 
-    // Click Shockwave Burst
+    // Click Shockwave Burst (Desktop only to prevent accidental scroll agitation on mobile)
     const onPointerDown = (e: MouseEvent) => {
+      if ((e as any).pointerType === 'touch') return;
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
@@ -165,16 +210,15 @@ export function LiveCrazyBackground() {
           color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
         });
 
-        // Agitate surrounding particles instantly
         particlesRef.current.forEach((p) => {
           const dx = p.x - clickX;
           const dy = p.y - clickY;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 220 && dist > 1) {
-            const force = (1 - dist / 220) * 12;
+            const force = (1 - dist / 220) * 10;
             p.vx += (dx / dist) * force;
             p.vy += (dy / dist) * force;
-            p.energy = 1.0;
+            p.energy = 0.9;
           }
         });
       }
@@ -187,6 +231,11 @@ export function LiveCrazyBackground() {
     let time = 0;
 
     const render = () => {
+      if (!isVisibleRef.current) {
+        animFrameRef.current = null;
+        return;
+      }
+
       time += 0.016;
 
       // Smooth mouse interpolation
@@ -199,7 +248,7 @@ export function LiveCrazyBackground() {
       const currentMode = modeRef.current;
       const mouse = mouseRef.current;
 
-      // 1. RENDER & EXPAND SHOCKWAVES
+      // 1. RENDER SHOCKWAVES
       for (let s = shockwavesRef.current.length - 1; s >= 0; s--) {
         const sw = shockwavesRef.current[s];
         sw.radius += 7;
@@ -210,123 +259,100 @@ export function LiveCrazyBackground() {
           continue;
         }
 
-        ctx.save();
         ctx.beginPath();
         ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
         ctx.strokeStyle = `${sw.color}${sw.opacity.toFixed(2)})`;
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 2;
         ctx.stroke();
-
-        // Secondary subtle outer glow
-        ctx.beginPath();
-        ctx.arc(sw.x, sw.y, sw.radius * 0.85, 0, Math.PI * 2);
-        ctx.strokeStyle = `${sw.color}${(sw.opacity * 0.4).toFixed(2)})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.restore();
       }
 
-      // 2. CURSOR GRAVITATIONAL OR ENERGY HALO
-      if (mouse.isHovering) {
-        ctx.save();
+      // 2. CURSOR HALO (Desktop only)
+      if (mouse.isHovering && !isMobile) {
         const haloGrad = ctx.createRadialGradient(
           mouse.x,
           mouse.y,
           0,
           mouse.x,
           mouse.y,
-          currentMode === 'vortex' ? 240 : 160
+          currentMode === 'vortex' ? 220 : 150
         );
         haloGrad.addColorStop(0, 'rgba(81, 69, 205, 0.12)');
-        haloGrad.addColorStop(0.5, 'rgba(56, 189, 248, 0.06)');
+        haloGrad.addColorStop(0.5, 'rgba(56, 189, 248, 0.05)');
         haloGrad.addColorStop(1, 'rgba(81, 69, 205, 0)');
         ctx.fillStyle = haloGrad;
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, currentMode === 'vortex' ? 240 : 160, 0, Math.PI * 2);
+        ctx.arc(mouse.x, mouse.y, currentMode === 'vortex' ? 220 : 150, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
       }
 
-      // 3. UPDATE & DRAW PARTICLES
+      // 3. PARTICLES UPDATE & DRAW
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Breathing & pulse phase
         p.phase += p.pulseSpeed;
-        const currentAlpha = Math.min(1, Math.max(0.15, p.alpha + Math.sin(p.phase) * 0.2 + p.energy * 0.4));
-        const currentSize = p.size * (1 + Math.sin(p.phase) * 0.3 + p.energy * 0.6);
-
-        // Decay extra impulse energy
+        const currentAlpha = Math.min(1, Math.max(0.15, p.alpha + Math.sin(p.phase) * 0.2 + p.energy * 0.3));
+        const currentSize = p.size * (1 + Math.sin(p.phase) * 0.25 + p.energy * 0.4);
         p.energy *= 0.94;
 
-        // Mode-Specific Physics
         if (currentMode === 'quantum') {
-          // Flowfield wave effect
-          const angle = Math.sin(p.x * 0.005 + time * 0.8) * Math.cos(p.y * 0.005 + time * 0.8) * Math.PI * 2;
-          p.vx += Math.cos(angle) * 0.04;
-          p.vy += Math.sin(angle) * 0.04;
+          const angle = Math.sin(p.x * 0.005 + time * 0.7) * Math.cos(p.y * 0.005 + time * 0.7) * Math.PI * 2;
+          p.vx += Math.cos(angle) * 0.035;
+          p.vy += Math.sin(angle) * 0.035;
         } else if (currentMode === 'vortex') {
-          // Gravitational swirling vortex around cursor
-          if (mouse.isHovering) {
+          if (mouse.isHovering && !isMobile) {
             const dx = mouse.x - p.x;
             const dy = mouse.y - p.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 280 && dist > 10) {
+            if (dist < 260 && dist > 10) {
               const tangentAngle = Math.atan2(dy, dx) + Math.PI / 2;
-              const pullForce = (1 - dist / 280) * 0.6;
-              const swirlForce = (1 - dist / 280) * 1.2;
-
+              const pullForce = (1 - dist / 260) * 0.5;
+              const swirlForce = (1 - dist / 260) * 1.1;
               p.vx += (dx / dist) * pullForce + Math.cos(tangentAngle) * swirlForce;
               p.vy += (dy / dist) * pullForce + Math.sin(tangentAngle) * swirlForce;
             }
           }
         } else if (currentMode === 'neural') {
-          // Subtle synaptic Brownian motion
-          p.vx += (Math.random() - 0.5) * 0.15;
-          p.vy += (Math.random() - 0.5) * 0.15;
+          p.vx += (Math.random() - 0.5) * 0.12;
+          p.vy += (Math.random() - 0.5) * 0.12;
         }
 
-        // Natural cursor repulsion or attractor (if not vortex)
-        if (mouse.isHovering && currentMode !== 'vortex') {
+        if (mouse.isHovering && !isMobile && currentMode !== 'vortex') {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = 140;
-
-          if (dist < maxDist && dist > 1) {
-            const force = (1 - dist / maxDist) * 1.5;
+          if (dist < 130 && dist > 1) {
+            const force = (1 - dist / 130) * 1.3;
             p.vx += (dx / dist) * force;
             p.vy += (dy / dist) * force;
-            p.energy = Math.max(p.energy, force * 0.7);
+            p.energy = Math.max(p.energy, force * 0.6);
           }
         }
 
-        // Apply friction damping
         p.vx = p.vx * 0.95 + p.baseVx * 0.05;
         p.vy = p.vy * 0.95 + p.baseVy * 0.05;
 
-        // Position update
         p.x += p.vx;
         p.y += p.vy;
 
-        // Wrap around boundaries smoothly
         if (p.x < -20) p.x = width + 20;
         if (p.x > width + 20) p.x = -20;
         if (p.y < -20) p.y = height + 20;
         if (p.y > height + 20) p.y = -20;
 
-        // Draw particle node
         ctx.beginPath();
         ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
         ctx.fillStyle = `${p.color}${currentAlpha.toFixed(2)})`;
-        ctx.shadowColor = 'rgba(81, 69, 205, 0.4)';
-        ctx.shadowBlur = p.energy > 0.2 ? 10 : 3;
+        // NO shadowBlur on mobile to eliminate GPU bottleneck
+        if (!isMobile && p.energy > 0.3) {
+          ctx.shadowColor = 'rgba(81, 69, 205, 0.4)';
+          ctx.shadowBlur = 8;
+        }
         ctx.fill();
-        ctx.shadowBlur = 0; // Reset blur for lines
+        ctx.shadowBlur = 0;
       }
 
       // 4. DRAW CONNECTIVE SYNAPSE FILAMENTS
-      const maxConnectDistance = currentMode === 'neural' ? 140 : 100;
+      const maxConnectDistance = isMobile ? 80 : currentMode === 'neural' ? 130 : 95;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const p1 = particles[i];
@@ -336,35 +362,31 @@ export function LiveCrazyBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxConnectDistance) {
-            const lineAlpha = (1 - dist / maxConnectDistance) * 0.22 * Math.max(p1.alpha, p2.alpha);
+            const lineAlpha = (1 - dist / maxConnectDistance) * 0.2 * Math.max(p1.alpha, p2.alpha);
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-
-            // If excited by mouse or shockwave, draw brighter cyan/violet line
             if (p1.energy > 0.3 || p2.energy > 0.3) {
-              ctx.strokeStyle = `rgba(56, 189, 248, ${Math.min(0.6, lineAlpha * 2.5).toFixed(2)})`;
-              ctx.lineWidth = 1.2;
+              ctx.strokeStyle = `rgba(56, 189, 248, ${Math.min(0.5, lineAlpha * 2).toFixed(2)})`;
+              ctx.lineWidth = 1;
             } else {
               ctx.strokeStyle = `rgba(81, 69, 205, ${lineAlpha.toFixed(2)})`;
-              ctx.lineWidth = 0.8;
+              ctx.lineWidth = 0.7;
             }
             ctx.stroke();
           }
         }
       }
 
-      // 5. DRAW SYNAPSE FIBERS TO CURSOR
-      if (mouse.isHovering) {
+      // 5. DRAW SYNAPSE FIBERS TO CURSOR (Desktop only)
+      if (mouse.isHovering && !isMobile) {
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const cursorConnectDist = currentMode === 'neural' ? 170 : 130;
-
-          if (dist < cursorConnectDist) {
-            const alpha = (1 - dist / cursorConnectDist) * 0.4;
+          if (dist < 130) {
+            const alpha = (1 - dist / 130) * 0.35;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouse.x, mouse.y);
@@ -385,6 +407,8 @@ export function LiveCrazyBackground() {
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('mouseleave', onPointerLeave);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      observer.disconnect();
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current);
       }
@@ -393,11 +417,10 @@ export function LiveCrazyBackground() {
 
   const cycleMode = (nextMode: EffectMode) => {
     setMode(nextMode);
-    // Agitate particles on mode shift
     particlesRef.current.forEach((p) => {
-      p.energy = 1.0;
-      p.vx += (Math.random() - 0.5) * 4;
-      p.vy += (Math.random() - 0.5) * 4;
+      p.energy = 0.9;
+      p.vx += (Math.random() - 0.5) * 3;
+      p.vy += (Math.random() - 0.5) * 3;
     });
   };
 
@@ -416,9 +439,9 @@ export function LiveCrazyBackground() {
     });
 
     particlesRef.current.forEach((p) => {
-      p.energy = 1.0;
-      p.vx += (Math.random() - 0.5) * 6;
-      p.vy += (Math.random() - 0.5) * 6;
+      p.energy = 0.9;
+      p.vx += (Math.random() - 0.5) * 4;
+      p.vy += (Math.random() - 0.5) * 4;
     });
   };
 
@@ -429,13 +452,13 @@ export function LiveCrazyBackground() {
       aria-hidden="true"
     >
       {/* 1. CHROMATIC VOLUMETRIC AURORA LIGHT BLOBS */}
-      <div className="absolute -top-[15%] left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#5145CD]/18 via-[#818CF8]/14 to-transparent blur-[110px] animate-pulse duration-[7000ms] pointer-events-none" />
-      <div className="absolute top-[20%] right-[5%] w-[550px] h-[550px] rounded-full bg-gradient-to-bl from-[#38BDF8]/15 via-[#6366F1]/12 to-transparent blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[30%] w-[600px] h-[400px] rounded-full bg-gradient-to-t from-[#8B5CF6]/14 via-[#C7D2FE]/10 to-transparent blur-[100px] pointer-events-none" />
+      <div className="absolute -top-[15%] left-[10%] w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] rounded-full bg-gradient-to-br from-[#5145CD]/16 via-[#818CF8]/12 to-transparent blur-[80px] sm:blur-[110px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[5%] w-[340px] sm:w-[550px] h-[340px] sm:h-[550px] rounded-full bg-gradient-to-bl from-[#38BDF8]/14 via-[#6366F1]/10 to-transparent blur-[90px] sm:blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[30%] w-[380px] sm:w-[600px] h-[280px] sm:h-[400px] rounded-full bg-gradient-to-t from-[#8B5CF6]/12 via-[#C7D2FE]/8 to-transparent blur-[70px] sm:blur-[100px] pointer-events-none" />
 
       {/* 2. SUBTLE ARCHITECTURAL CYBER-GRID OVERLAY */}
       <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
+        className="absolute inset-0 opacity-[0.025] sm:opacity-[0.035] pointer-events-none"
         style={{
           backgroundImage: `
             linear-gradient(to right, #5145CD 1px, transparent 1px),
@@ -451,10 +474,9 @@ export function LiveCrazyBackground() {
         className="absolute inset-0 w-full h-full block"
       />
 
-      {/* 4. INTERACTIVE LIVE HUD CONTROLLER BADGE (POINTER EVENTS ENABLED) */}
-      <div className="absolute bottom-4 right-4 z-20 pointer-events-auto">
+      {/* 4. INTERACTIVE LIVE HUD CONTROLLER BADGE (Desktop Only or Compact on Mobile) */}
+      <div className="hidden sm:block absolute bottom-4 right-4 z-20 pointer-events-auto">
         <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/90 backdrop-blur-md border border-[#E5E7EB] shadow-md text-xs transition-all hover:shadow-lg">
-          {/* Live Pulsing Status Pill */}
           <button
             type="button"
             onClick={() => setShowControls(!showControls)}
@@ -471,7 +493,6 @@ export function LiveCrazyBackground() {
             <Sparkles className="w-3 h-3 text-[#5145CD]" />
           </button>
 
-          {/* Quick Energy Shockwave Trigger */}
           <button
             type="button"
             onClick={triggerQuantumShockwave}
@@ -482,7 +503,6 @@ export function LiveCrazyBackground() {
             <Zap className="w-3.5 h-3.5" />
           </button>
 
-          {/* Expanded Mode Controls Popup */}
           {showControls && (
             <div className="absolute bottom-11 right-0 p-2 rounded-2xl bg-white border border-[#E5E7EB] shadow-xl flex flex-col gap-1 min-w-[170px] animate-in fade-in slide-in-from-bottom-2 duration-150 z-30">
               <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#667085] border-b border-[#E5E7EB] flex items-center justify-between">
@@ -535,7 +555,7 @@ export function LiveCrazyBackground() {
                 {mode === 'vortex' && <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD]" />}
               </button>
               <div className="pt-1 mt-1 border-t border-[#E5E7EB] px-2 py-1 text-[10px] text-[#667085]">
-                💡 Click anywhere to pulse
+                💡 Move cursor to interact
               </div>
             </div>
           )}

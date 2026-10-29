@@ -62,10 +62,10 @@ export default function CreditWalletPage() {
   const isLowBalance = credits.availableBalance < 30;
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-white text-[#17191D] relative">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA]">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -74,7 +74,7 @@ export default function CreditWalletPage() {
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-7xl mx-auto w-full space-y-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6 sm:space-y-8">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-[#17191D]">Credit Wallet & Ledger</h1>
             <p className="mt-1 text-xs sm:text-sm text-[#667085]">
@@ -84,14 +84,14 @@ export default function CreditWalletPage() {
 
           {/* Low Balance Warning */}
           {isLowBalance && (
-            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-800 shadow-xs">
+            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-800 shadow-xs">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>Your credit balance is low ({credits.availableBalance} credits remaining). Video generations require 15 credits.</span>
               </div>
               <Link
                 href="/pricing"
-                className="px-3 py-1.5 bg-[#5145CD] hover:bg-[#4338CA] text-white font-medium rounded-lg shrink-0 ml-4 transition-colors shadow-xs"
+                className="px-3 py-1.5 bg-[#5145CD] hover:bg-[#4338CA] text-white font-medium rounded-lg shrink-0 sm:ml-4 transition-colors shadow-xs self-start sm:self-auto cursor-pointer"
               >
                 Top Up Now
               </Link>

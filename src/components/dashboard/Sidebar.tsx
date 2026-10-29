@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Logo } from '../brand/Logo';
+import { MobileBottomNav } from './MobileBottomNav';
 import {
   Home,
   Plus,
@@ -277,6 +278,9 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
         {renderContent(false, isCollapsed)}
       </aside>
 
+      {/* Dedicated Mobile Bottom Navigation Bar */}
+      <MobileBottomNav onOpenMenu={() => setIsMobileOpen(true)} />
+
       {/* Mobile Drawer Overlay */}
       {isMobileOpen && (
         <div
@@ -285,10 +289,10 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
           className="fixed inset-0 z-50 md:hidden flex"
         >
           <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
             onClick={() => setIsMobileOpen(false)}
           />
-          <div className="relative w-72 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200">
+          <div className="relative w-72 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200 pb-[max(1rem,env(safe-area-inset-bottom))]">
             {renderContent(true, false)}
           </div>
         </div>

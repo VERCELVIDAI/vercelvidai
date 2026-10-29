@@ -108,10 +108,10 @@ export default function AssetLibraryPage() {
     .filter((a) => a.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#F7F8FA] text-[#17191D] relative">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-[#F7F8FA] text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA]">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}

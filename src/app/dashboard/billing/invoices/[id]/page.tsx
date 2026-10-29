@@ -38,8 +38,8 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
 
   if (isLoading || !invoice) {
     return (
-      <div className="min-h-screen bg-[#090A0D] text-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -48,10 +48,10 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
   const credits = data?.credits || { availableBalance: 0, reservedBalance: 0 };
 
   return (
-    <div className="h-screen h-[100dvh] w-full flex overflow-hidden bg-[#090A0D] text-white relative">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#090A0D]">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -60,142 +60,116 @@ export default function InvoiceDetailPage({ params }: { params: { id: string } }
           workspaceName={data?.workspace?.name}
         />
 
-        <main className="flex-1 p-6 sm:p-8 max-w-4xl mx-auto w-full space-y-6">
-          <div className="flex items-center justify-between">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto w-full space-y-6 text-left">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <Link
               href="/dashboard/billing/invoices"
-              className="text-xs text-slate-500 hover:text-indigo-400 flex items-center gap-1.5 transition-colors font-medium"
+              className="text-xs text-[#667085] hover:text-[#17191D] flex items-center gap-1.5 transition-colors font-medium"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Invoices</span>
             </Link>
 
-            <div className="flex items-center gap-3">
-              <a
-                href={`/api/billing/invoices/${invoice.id}/pdf`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition-all"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download Official PDF</span>
-              </a>
-            </div>
+            <a
+              href={`/api/billing/invoices/${invoice.id}/pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-xs transition-all"
+            >
+              <Download className="w-4 h-4" />
+              <span>Download Official PDF</span>
+            </a>
           </div>
 
           {/* Visual Invoice Paper Container */}
-          <div className="glass-card rounded-3xl p-8 sm:p-12 space-y-8 shadow-xl relative overflow-hidden">
+          <div className="bg-white rounded-2xl p-6 sm:p-10 space-y-8 border border-[#E5E7EB] shadow-sm">
             {/* Header Badge */}
-            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b border-white/8">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b border-[#E5E7EB]">
               <div>
-                <span className="text-xl font-extrabold text-white tracking-tight">
-                  FLUVIA <span className="text-emerald-600">FLOW</span>
+                <span className="text-xl font-black text-[#17191D] tracking-tight">
+                  FLUVIA <span className="text-[#5145CD]">FLOW</span>
                 </span>
-                <p className="text-xs text-slate-500 mt-0.5">AI Video Creative Infrastructure</p>
+                <p className="text-xs text-[#667085] mt-0.5">AI Ad Creation Studio</p>
               </div>
 
               <div className="text-right">
-                <span className="text-xs font-mono uppercase font-bold text-indigo-400 bg-white/[0.04] px-3 py-1 rounded-md border border-white/10">
-                  Official Invoice
+                <span className="text-xs font-mono uppercase font-semibold text-[#5145CD] bg-[#EEF2FF] px-3 py-1 rounded-md border border-[#5145CD]/20">
+                  Official Tax Invoice
                 </span>
-                <h1 className="text-xl font-black text-white mt-2 font-mono">{invoice.invoiceNumber}</h1>
-                <p className="text-xs text-slate-500 mt-1">
-                  Issued: {new Date(invoice.issueDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
-                </p>
+                <p className="text-xs font-mono text-[#667085] mt-2">#{invoice.invoiceNumber}</p>
               </div>
             </div>
 
-            {/* Supplier and Customer Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-xs">
-              <div className="space-y-1.5">
-                <span className="text-[10px] font-mono font-bold uppercase text-slate-400">Supplier Details</span>
-                <h3 className="font-bold text-white text-sm">{invoice.supplier.legalName}</h3>
-                <p className="text-slate-400 leading-relaxed">{invoice.supplier.registeredAddress}</p>
-                <p className="text-slate-400">State: {invoice.supplier.state}</p>
-                <p className="text-slate-400">Email: {invoice.supplier.supportEmail}</p>
+            {/* Bill To & Metadata */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-[#667085]">
+              <div>
+                <span className="font-semibold text-[#17191D] uppercase text-[10px] tracking-wider block mb-1">
+                  Billed To
+                </span>
+                <p className="font-medium text-[#17191D]">{invoice.customerName || user.displayName}</p>
+                <p>{invoice.customerEmail || user.email}</p>
+                {invoice.customerAddress && <p>{invoice.customerAddress}</p>}
+                {invoice.customerGstin && <p className="font-mono mt-1">GSTIN: {invoice.customerGstin}</p>}
               </div>
 
-              <div className="space-y-1.5 sm:text-right">
-                <span className="text-[10px] font-mono font-bold uppercase text-slate-400">Billed To</span>
-                <h3 className="font-bold text-white text-sm">{invoice.customer.name}</h3>
-                <p className="text-slate-400">{invoice.customer.email}</p>
-                {invoice.customer.address && <p className="text-slate-400">{invoice.customer.address}</p>}
-                <p className="text-slate-400">Place of Supply: {invoice.customer.state || 'Delhi'}</p>
+              <div className="sm:text-right space-y-1">
+                <div>
+                  <span className="font-semibold text-[#17191D]">Issue Date:</span>{' '}
+                  {new Date(invoice.issueDate).toLocaleDateString()}
+                </div>
+                <div>
+                  <span className="font-semibold text-[#17191D]">Status:</span>{' '}
+                  <span className="uppercase font-mono font-bold text-emerald-600">{invoice.status}</span>
+                </div>
+                {invoice.paidAt && (
+                  <div>
+                    <span className="font-semibold text-[#17191D]">Settled:</span>{' '}
+                    {new Date(invoice.paidAt).toLocaleDateString()}
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Items Table */}
-            <div className="overflow-x-auto rounded-xl border border-white/8 bg-white/[0.04]/20">
+            <div className="border border-[#E5E7EB] rounded-xl overflow-hidden">
               <table className="w-full text-left text-xs">
-                <thead className="bg-white/[0.04]/60 text-slate-400 border-b border-white/8 uppercase text-[10px] font-mono">
+                <thead className="bg-[#F7F8FA] text-[#667085] border-b border-[#E5E7EB] uppercase text-[10px] font-mono">
                   <tr>
-                    <th className="py-3 px-4">Item Description</th>
-                    <th className="py-3 px-4">Qty</th>
-                    <th className="py-3 px-4">Unit Price</th>
-                    <th className="py-3 px-4 text-right">Total (INR)</th>
+                    <th className="p-3">Item Description</th>
+                    <th className="p-3 text-right">Qty</th>
+                    <th className="p-3 text-right">Unit Price</th>
+                    <th className="p-3 text-right">Amount</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-emerald-500/10 text-slate-300">
-                  {invoice.items.map((item: any) => (
-                    <tr key={item.id}>
-                      <td className="py-3 px-4 font-bold text-white">{item.description}</td>
-                      <td className="py-3 px-4 font-mono">{item.quantity || 1}</td>
-                      <td className="py-3 px-4 font-mono">INR {(item.unitPrice || item.taxableValue).toFixed(2)}</td>
-                      <td className="py-3 px-4 text-right font-mono font-bold text-white">
-                        INR {item.totalAmount.toFixed(2)}
-                      </td>
+                <tbody className="divide-y divide-[#E5E7EB] text-[#17191D]">
+                  {invoice.items?.map((item: any, idx: number) => (
+                    <tr key={idx}>
+                      <td className="p-3 font-medium">{item.description}</td>
+                      <td className="p-3 text-right font-mono">{item.quantity || 1}</td>
+                      <td className="p-3 text-right font-mono">INR {item.unitPrice?.toFixed(2)}</td>
+                      <td className="p-3 text-right font-mono font-semibold">INR {item.amount?.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            {/* Calculation & Summary Box */}
-            <div className="flex justify-end pt-2">
-              <div className="w-full sm:w-72 bg-white/[0.04]/40 border border-white/8 rounded-2xl p-4 space-y-2 text-xs">
-                {invoice.discountAmount && invoice.discountAmount > 0 ? (
-                  <>
-                    {invoice.originalBaseAmount && (
-                      <div className="flex justify-between text-slate-400">
-                        <span>Original Subtotal:</span>
-                        <span className="font-mono text-slate-500 line-through">INR {invoice.originalBaseAmount.toFixed(2)}</span>
-                      </div>
-                    )}
-                    <div className="flex justify-between text-indigo-400 font-medium">
-                      <span>Coupon Discount ({invoice.couponCode || 'PROMO'}):</span>
-                      <span className="font-mono">-INR {invoice.discountAmount.toFixed(2)}</span>
-                    </div>
-                  </>
-                ) : null}
-
-                <div className="flex justify-between text-slate-400">
-                  <span>Subtotal:</span>
-                  <span className="font-mono text-white font-semibold">INR {invoice.baseAmount.toFixed(2)}</span>
+            {/* Total Breakdown */}
+            <div className="flex justify-end text-xs">
+              <div className="w-full sm:w-72 space-y-2 border-t border-[#E5E7EB] pt-4">
+                <div className="flex justify-between text-[#667085]">
+                  <span>Subtotal</span>
+                  <span className="font-mono">INR {invoice.baseAmount?.toFixed(2)}</span>
                 </div>
-
-                {invoice.taxAmount && invoice.taxAmount > 0 ? (
-                  <div className="flex justify-between text-slate-400">
-                    <span>Taxes & Fees:</span>
-                    <span className="font-mono text-white">INR {invoice.taxAmount.toFixed(2)}</span>
-                  </div>
-                ) : null}
-
-                <div className="pt-2 border-t border-white/8 flex justify-between items-baseline font-bold">
-                  <span className="text-white text-sm">Total Amount:</span>
-                  <span className="text-indigo-400 text-base font-mono">
-                    INR {invoice.totalAmount.toFixed(2)}
-                  </span>
+                <div className="flex justify-between text-[#667085]">
+                  <span>GST (18%)</span>
+                  <span className="font-mono">INR {invoice.taxAmount?.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between font-bold text-base text-[#17191D] pt-2 border-t border-[#E5E7EB]">
+                  <span>Total Paid</span>
+                  <span className="font-mono text-[#5145CD]">INR {invoice.totalAmount?.toFixed(2)}</span>
                 </div>
               </div>
-            </div>
-
-            {/* Terms and Verification Stamp */}
-            <div className="pt-6 border-t border-white/8 text-[11px] text-slate-500 space-y-1">
-              <p>
-                <strong>Payment Settlement:</strong> Settled via PayU India Hosted Checkout. Merchant Txn ID:{' '}
-                <span className="font-mono text-slate-300">{invoice.txnid}</span>
-              </p>
-              <p>This is a computer-generated invoice and requires no physical signature.</p>
             </div>
           </div>
         </main>
