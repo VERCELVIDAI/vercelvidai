@@ -255,18 +255,25 @@ export default function BillingOverviewPage() {
             </div>
           </div>
 
-          {/* Transactions Table */}
-          <div className="rounded-2xl bg-white border border-[#E5E7EB] overflow-hidden shadow-2xs">
-            <div className="p-5 border-b border-[#E5E7EB] flex items-center justify-between">
+          {/* Transactions Table (Frosted Glass Table) */}
+          <div className="rounded-3xl bg-white/85 backdrop-blur-xl border border-white/80 overflow-hidden shadow-xl shadow-[#5145CD]/5">
+            <div className="p-6 border-b border-[#E5E7EB]/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h3 className="font-bold text-[#17191D] text-sm">Recent Transactions</h3>
-                <p className="text-xs text-[#667085]">PayU orders settled on ledger with official tax invoices</p>
+                <h3 className="font-bold text-[#17191D] text-base">Recent Billing Transactions</h3>
+                <p className="text-xs text-[#667085]">PayU orders settled on ledger with official tax invoices and vouchers</p>
               </div>
+              <Link
+                href="/dashboard/billing/transactions"
+                className="text-xs text-[#5145CD] hover:underline font-semibold flex items-center gap-1 self-start sm:self-auto"
+              >
+                <span>View Full Transaction History</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
             <div className="overflow-x-auto">
               {recentTransactions.length === 0 ? (
-                <div className="p-8 text-center text-[#667085] text-xs space-y-2">
+                <div className="p-10 text-center text-[#667085] text-xs space-y-2">
                   <p>No transactions recorded yet in this workspace.</p>
                   <Link href="/checkout?type=pack&id=pack_5000" className="text-[#5145CD] font-semibold underline">
                     Top up credits now
@@ -274,57 +281,88 @@ export default function BillingOverviewPage() {
                 </div>
               ) : (
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-[#F7F8FA] text-[#667085] border-b border-[#E5E7EB] uppercase text-[10px] font-mono font-semibold">
+                  <thead className="bg-[#F7F8FA]/80 backdrop-blur-xs text-[#667085] border-b border-[#E5E7EB] uppercase text-[10px] font-mono font-bold tracking-wider">
                     <tr>
-                      <th className="py-3 px-4">Transaction ID</th>
-                      <th className="py-3 px-4">Item</th>
-                      <th className="py-3 px-4">Amount</th>
-                      <th className="py-3 px-4">Status</th>
-                      <th className="py-3 px-4">Date</th>
-                      <th className="py-3 px-4 text-right">Invoices</th>
+                      <th className="py-3.5 px-5">Merchant Txn ID</th>
+                      <th className="py-3.5 px-4">Invoice #</th>
+                      <th className="py-3.5 px-4">Item</th>
+                      <th className="py-3.5 px-4">Amount</th>
+                      <th className="py-3.5 px-4">Status</th>
+                      <th className="py-3.5 px-4">Date</th>
+                      <th className="py-3.5 px-5 text-right">Documents</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E5E7EB] text-[#17191D]">
+                  <tbody className="divide-y divide-[#E5E7EB]/70 text-[#17191D]">
                     {recentTransactions.map((tx: any) => (
-                      <tr key={tx.id} className="hover:bg-[#F7F8FA] transition-colors">
-                        <td className="py-3.5 px-4 font-mono font-semibold text-[#17191D]">
-                          {tx.txnid}
+                      <tr key={tx.id} className="hover:bg-white/60 transition-colors">
+                        <td className="py-4 px-5 font-mono font-bold text-[#17191D]">
+                          <Link href={`/dashboard/billing/transactions/${tx.id}`} className="hover:text-[#5145CD] underline">
+                            {tx.txnid}
+                          </Link>
                         </td>
-                        <td className="py-3.5 px-4 font-medium text-[#17191D] max-w-xs truncate">
+                        <td className="py-4 px-4 font-mono font-semibold text-[#5145CD]">
+                          {tx.invoiceNumber || tx.invoiceId ? (
+                            <Link href={`/dashboard/billing/invoices/${tx.invoiceId || tx.invoiceNumber}`} className="hover:underline">
+                              #{tx.invoiceNumber || tx.invoiceId}
+                            </Link>
+                          ) : (
+                            <span className="text-[#667085]">-</span>
+                          )}
+                        </td>
+                        <td className="py-4 px-4 font-semibold text-[#17191D] max-w-xs truncate">
                           {tx.productInfo}
                         </td>
-                        <td className="py-3.5 px-4 font-mono font-semibold text-[#17191D]">
-                          INR {tx.totalAmount.toFixed(2)}
+                        <td className="py-4 px-4 font-mono font-black text-[#5145CD]">
+                          INR {Number(tx.totalAmount || 0).toFixed(2)}
                         </td>
-                        <td className="py-3.5 px-4">
+                        <td className="py-4 px-4">
                           <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase font-semibold ${
+                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase font-bold ${
                               tx.status === 'success'
-                                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                                 : tx.status === 'pending'
                                 ? 'bg-amber-50 text-amber-800 border border-amber-200'
                                 : 'bg-rose-50 text-rose-800 border border-rose-200'
                             }`}
                           >
-                            {tx.status}
+                            {tx.status === 'success' && <ShieldCheck className="w-3 h-3 text-emerald-600" />}
+                            <span>{tx.status}</span>
                           </span>
                         </td>
-                        <td className="py-3.5 px-4 text-[#667085]">
-                          {new Date(tx.createdAt).toLocaleDateString()}
+                        <td className="py-4 px-4 text-[#667085]">
+                          {new Date(tx.createdAt).toLocaleDateString('en-IN', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
                         </td>
-                        <td className="py-3.5 px-4 text-right">
-                          {tx.invoiceId && (
-                            <a
-                              href={`/api/billing/invoices/${tx.invoiceId}/pdf`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-2.5 py-1 rounded-md bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-[11px] font-medium inline-flex items-center gap-1 shadow-2xs"
-                              title="Download GST Invoice"
-                            >
-                              <FileText className="w-3 h-3 text-[#5145CD]" />
-                              <span>Invoice PDF</span>
-                            </a>
-                          )}
+                        <td className="py-4 px-5 text-right">
+                          <div className="flex items-center justify-end flex-wrap gap-1.5">
+                            {tx.invoiceId && (
+                              <a
+                                href={`/api/billing/invoices/${tx.invoiceId}/pdf`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-2.5 py-1.5 rounded-lg bg-[#5145CD]/10 hover:bg-[#5145CD] text-[#5145CD] hover:text-white border border-[#5145CD]/20 text-[11px] font-bold inline-flex items-center gap-1 transition-all shadow-2xs"
+                                title="Download Official Tax Invoice PDF"
+                              >
+                                <FileText className="w-3.5 h-3.5" />
+                                <span>Invoice</span>
+                              </a>
+                            )}
+                            {tx.receiptId && (
+                              <a
+                                href={`/api/billing/receipts/${tx.receiptId}/pdf`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-200 text-[11px] font-bold inline-flex items-center gap-1 transition-all shadow-2xs"
+                                title="Download Official Receipt PDF"
+                              >
+                                <Receipt className="w-3.5 h-3.5" />
+                                <span>Receipt</span>
+                              </a>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}

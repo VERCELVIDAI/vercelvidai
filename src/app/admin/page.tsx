@@ -1088,6 +1088,20 @@ export default function AdminConsolePage() {
                       />
                     </div>
                     <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Company PAN (10 characters)</label>
+                      <input
+                        type="text"
+                        value={billingConfig.pan || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, pan: e.target.value.toUpperCase() })}
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white font-mono font-bold"
+                        placeholder="AAAAA0000A"
+                        maxLength={10}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
                       <label className="block text-slate-400 font-semibold mb-1">Billing Support Email</label>
                       <input
                         type="email"
@@ -1097,6 +1111,60 @@ export default function AdminConsolePage() {
                         placeholder="billing@fluviaflow.ai"
                       />
                     </div>
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Support Phone</label>
+                      <input
+                        type="text"
+                        value={billingConfig.supportPhone || ''}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, supportPhone: e.target.value })}
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white font-mono"
+                        placeholder="+91 11 4000 5000"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Default GST Rate (%)</label>
+                      <input
+                        type="number"
+                        value={billingConfig.taxRatePercent ?? 18}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, taxRatePercent: Number(e.target.value) })}
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white font-mono"
+                        placeholder="18"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Invoice Number Prefix</label>
+                      <input
+                        type="text"
+                        value={billingConfig.invoicePrefix || 'FF-INV-'}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, invoicePrefix: e.target.value.toUpperCase() })}
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white font-mono font-bold"
+                        placeholder="FF-INV-"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-400 font-semibold mb-1">Receipt Number Prefix</label>
+                      <input
+                        type="text"
+                        value={billingConfig.receiptPrefix || 'FF-RCP-'}
+                        onChange={(e) => setBillingConfig({ ...billingConfig, receiptPrefix: e.target.value.toUpperCase() })}
+                        className="w-full glass-input rounded-xl px-3.5 py-2 text-white font-mono font-bold"
+                        placeholder="FF-RCP-"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-400 font-semibold mb-1">Invoice Footer Terms & Declarations</label>
+                    <textarea
+                      rows={2}
+                      value={billingConfig.terms || 'This is a computer-generated tax invoice issued in accordance with Section 31 of CGST Act, 2017 read with Rule 46.'}
+                      onChange={(e) => setBillingConfig({ ...billingConfig, terms: e.target.value })}
+                      className="w-full glass-input rounded-xl px-3.5 py-2 text-white text-xs"
+                      placeholder="Custom terms appearing on all generated invoices..."
+                    />
                   </div>
 
                   <div className="pt-2 flex justify-end">

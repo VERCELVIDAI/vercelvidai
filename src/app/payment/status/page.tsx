@@ -4,7 +4,6 @@ import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
-  CheckCircle2,
   AlertTriangle,
   XCircle,
   Clock,
@@ -15,8 +14,15 @@ import {
   ShieldCheck,
   RefreshCw,
   Receipt as ReceiptIcon,
+  Copy,
+  Check,
+  CreditCard,
+  Calendar,
+  Zap,
 } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
+import { LiquidGlassCard } from '@/components/billing/LiquidGlassCard';
+import { AnimatedCheckmark } from '@/components/billing/AnimatedCheckmark';
 
 function PaymentStatusContent() {
   const searchParams = useSearchParams();
@@ -27,6 +33,7 @@ function PaymentStatusContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [verificationData, setVerificationData] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState(urlError);
+  const [copiedTxn, setCopiedTxn] = useState(false);
 
   const checkVerification = async () => {
     setIsLoading(true);
@@ -60,6 +67,14 @@ function PaymentStatusContent() {
   useEffect(() => {
     checkVerification();
   }, [txnid]);
+
+  const copyTxnId = () => {
+    if (txnid) {
+      navigator.clipboard.writeText(txnid);
+      setCopiedTxn(true);
+      setTimeout(() => setCopiedTxn(false), 2000);
+    }
+  };
 
   const order = verificationData?.order;
   const invoice = verificationData?.invoice;
@@ -95,132 +110,175 @@ function PaymentStatusContent() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-2xl mx-auto w-full p-4 sm:p-8 sm:py-12 flex flex-col items-center justify-center text-center relative z-10">
+      <main className="flex-1 max-w-xl mx-auto w-full p-4 sm:p-6 sm:py-10 flex flex-col items-center justify-center text-center relative z-10">
         {isLoading ? (
-          <div className="p-10 rounded-3xl bg-white/80 backdrop-blur-xl border border-white/80 space-y-4 w-full shadow-xl shadow-[#5145CD]/5">
+          <div className="p-10 rounded-3xl bg-white/85 backdrop-blur-xl border border-white/80 space-y-4 w-full shadow-2xl shadow-[#5145CD]/5">
             <div className="w-12 h-12 border-3 border-[#5145CD] border-t-transparent rounded-full animate-spin mx-auto" />
-            <h2 className="text-lg font-bold text-[#17191D]">Verifying Payment with PayU India...</h2>
+            <h2 className="text-lg font-bold text-[#17191D]">Verifying Settlement with PayU India...</h2>
             <p className="text-xs text-[#667085] max-w-md mx-auto">
               Reconciling cryptographic reverse hash and confirming credit grant. Please do not close this window.
             </p>
           </div>
         ) : isSuccess ? (
-          /* SUCCESS STATE — GLASS BLUR UI */
-          <div className="p-6 sm:p-10 rounded-3xl bg-white/85 backdrop-blur-xl border border-white/80 space-y-6 w-full shadow-2xl shadow-[#5145CD]/5 relative overflow-hidden">
+          /* SUCCESS STATE — FLOATING LIQUID GLASS RECEIPT CARD */
+          <LiquidGlassCard
+            interactive={true}
+            tiltMax={3}
+            className="w-full text-center"
+          >
             {/* Top Brand Accent Line */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#5145CD] via-[#818CF8] to-[#10B981]" />
+            <div className="h-1.5 w-full bg-gradient-to-r from-[#5145CD] via-[#818CF8] to-[#10B981]" />
 
-            {/* Brand Logo inside receipt confirmation */}
-            <div className="flex justify-center pt-2">
-              <Logo size="md" />
-            </div>
-
-            <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto ring-8 ring-emerald-50/50 shadow-xs">
-              <CheckCircle2 className="w-8 h-8" />
-            </div>
-
-            <div>
-              <span className="text-[11px] font-bold font-mono uppercase text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                Payment Verified & Settled
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#17191D] mt-3 tracking-tight">
-                Welcome to Fluvia Flow
-              </h1>
-              <p className="mt-2 text-xs sm:text-sm text-[#667085] max-w-md mx-auto">
-                Your payment was processed securely by PayU. Your workspace credits are ready to spend immediately.
-              </p>
-            </div>
-
-            {/* Order Details Frosted Glass Card */}
-            <div className="p-5 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 text-xs text-left space-y-3 shadow-xs">
-              <div className="flex justify-between items-center text-[#667085]">
-                <span>Product / Plan:</span>
-                <strong className="text-[#17191D] font-bold">{order?.productInfo || 'Fluvia Flow Credits'}</strong>
+            <div className="p-6 sm:p-8 space-y-6">
+              {/* Header: Brand Logo & Animated Checkmark */}
+              <div className="flex flex-col items-center gap-4">
+                <Logo size="md" />
+                <AnimatedCheckmark size={68} />
               </div>
-              <div className="flex justify-between items-center text-[#667085]">
-                <span>Amount Paid (INR):</span>
-                <strong className="text-[#5145CD] font-mono font-extrabold text-base">
-                  INR {order?.totalAmount ? order.totalAmount.toFixed(2) : '---'}
-                </strong>
-              </div>
-              <div className="flex justify-between items-center text-[#667085]">
-                <span>Merchant Txn ID:</span>
-                <span className="font-mono text-[#17191D] font-semibold">{txnid}</span>
-              </div>
-              {order?.payuMihpayid && (
-                <div className="flex justify-between items-center text-[#667085]">
-                  <span>PayU Payment ID:</span>
-                  <span className="font-mono text-[#17191D]">{order.payuMihpayid}</span>
-                </div>
-              )}
-              {invoice?.invoiceNumber && (
-                <div className="flex justify-between items-center text-[#667085]">
-                  <span>Linked Invoice:</span>
-                  <Link
-                    href={`/dashboard/billing/invoices/${invoice.id || invoice.invoiceNumber}`}
-                    className="font-mono text-[#5145CD] font-bold hover:underline"
-                  >
-                    #{invoice.invoiceNumber}
-                  </Link>
-                </div>
-              )}
-              {receipt?.receiptNumber && (
-                <div className="flex justify-between items-center text-[#667085]">
-                  <span>Official Receipt:</span>
-                  <Link
-                    href={`/dashboard/billing/receipts/${receipt.id || receipt.receiptNumber}`}
-                    className="font-mono text-[#5145CD] font-bold hover:underline"
-                  >
-                    {receipt.receiptNumber}
-                  </Link>
-                </div>
-              )}
-            </div>
 
-            {/* Action Buttons */}
-            <div className="space-y-3 pt-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {receipt?.id && (
-                  <a
-                    href={`/api/billing/receipts/${receipt.id}/pdf`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-3 px-4 bg-white/80 hover:bg-white text-[#17191D] border border-white/80 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-xs backdrop-blur-md"
-                  >
-                    <ReceiptIcon className="w-4 h-4 text-[#5145CD]" />
-                    <span>Download Receipt (PDF)</span>
-                  </a>
+              {/* Title & Status */}
+              <div>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold font-mono uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Payment Verified & Settled</span>
+                </span>
+                <h1 className="text-2xl sm:text-3xl font-black text-[#17191D] mt-3 tracking-tight">
+                  Payment Successful
+                </h1>
+                <p className="mt-1 text-xs sm:text-sm text-[#667085]">
+                  Funds cleared via PayU India. Your workspace credits are active immediately.
+                </p>
+              </div>
+
+              {/* Prominent Amount Display Card */}
+              <div className="p-5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 shadow-xs space-y-1">
+                <span className="text-[10px] uppercase font-bold text-[#667085] tracking-wider block">
+                  Amount Received
+                </span>
+                <div className="text-3xl sm:text-4xl font-black text-[#5145CD] font-mono tracking-tight">
+                  INR {order?.totalAmount ? Number(order.totalAmount).toFixed(2) : '---'}
+                </div>
+                <div className="text-[11px] text-[#667085] pt-1">
+                  Includes applicable GST (18%) • Zero additional gateway surcharge
+                </div>
+              </div>
+
+              {/* Order Specifications Table */}
+              <div className="p-5 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 text-xs text-left space-y-3 shadow-xs">
+                <div className="flex justify-between items-center text-[#667085]">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
+                    <span>Product / Pack:</span>
+                  </span>
+                  <strong className="text-[#17191D] font-bold text-right">
+                    {order?.productInfo || 'Fluvia Flow Credits'}
+                  </strong>
+                </div>
+
+                <div className="flex justify-between items-center text-[#667085]">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Calendar className="w-3.5 h-3.5 text-[#667085]" />
+                    <span>Payment Date:</span>
+                  </span>
+                  <span className="text-[#17191D] font-mono">
+                    {new Date(order?.updatedAt || Date.now()).toLocaleString('en-IN', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center text-[#667085]">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <CreditCard className="w-3.5 h-3.5 text-[#667085]" />
+                    <span>Payment Method:</span>
+                  </span>
+                  <span className="text-[#17191D] font-medium">
+                    {order?.payuPaymentMode || 'PayU India (256-bit Secure)'}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center text-[#667085] pt-1 border-t border-[#E5E7EB]/60">
+                  <span>Merchant Txn ID:</span>
+                  <div className="flex items-center gap-1">
+                    <span className="font-mono text-[#17191D] font-semibold text-[11px]">{txnid}</span>
+                    <button
+                      type="button"
+                      onClick={copyTxnId}
+                      className="p-1 rounded text-[#667085] hover:text-[#5145CD] hover:bg-white/80 transition-colors"
+                      title="Copy Txn ID"
+                    >
+                      {copiedTxn ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                </div>
+
+                {order?.payuMihpayid && (
+                  <div className="flex justify-between items-center text-[#667085]">
+                    <span>PayU Payment ID:</span>
+                    <span className="font-mono text-[#17191D] text-[11px]">{order.payuMihpayid}</span>
+                  </div>
                 )}
 
-                {invoice?.id && (
-                  <a
-                    href={`/api/billing/invoices/${invoice.id}/pdf`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-3 px-4 bg-white/80 hover:bg-white text-[#17191D] border border-white/80 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-xs backdrop-blur-md"
-                  >
-                    <FileText className="w-4 h-4 text-[#5145CD]" />
-                    <span>Download Invoice (PDF)</span>
-                  </a>
+                {invoice?.invoiceNumber && (
+                  <div className="flex justify-between items-center text-[#667085]">
+                    <span>Tax Invoice:</span>
+                    <Link
+                      href={`/dashboard/billing/invoices/${invoice.id || invoice.invoiceNumber}`}
+                      className="font-mono text-[#5145CD] font-bold hover:underline"
+                    >
+                      #{invoice.invoiceNumber}
+                    </Link>
+                  </div>
                 )}
               </div>
 
-              <Link
-                href="/create"
-                className="w-full py-3.5 px-6 bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all block text-center cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4 text-white" />
-                <span>Launch Creative Video Studio</span>
-              </Link>
+              {/* Action Buttons */}
+              <div className="space-y-3 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {receipt?.id && (
+                    <a
+                      href={`/api/billing/receipts/${receipt.id}/pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-3 px-4 bg-white/80 hover:bg-white text-[#17191D] border border-white/80 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-2xs backdrop-blur-md"
+                    >
+                      <ReceiptIcon className="w-4 h-4 text-[#5145CD]" />
+                      <span>Download Receipt</span>
+                    </a>
+                  )}
 
-              <Link
-                href="/dashboard/billing"
-                className="block text-xs text-[#667085] hover:text-[#5145CD] pt-2 transition-colors font-semibold"
-              >
-                View Full Billing History & Receipts →
-              </Link>
+                  {invoice?.id && (
+                    <Link
+                      href={`/dashboard/billing/invoices/${invoice.id}`}
+                      className="py-3 px-4 bg-white/80 hover:bg-white text-[#17191D] border border-white/80 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-2xs backdrop-blur-md"
+                    >
+                      <FileText className="w-4 h-4 text-[#5145CD]" />
+                      <span>View Tax Invoice</span>
+                    </Link>
+                  )}
+                </div>
+
+                <Link
+                  href="/create"
+                  className="w-full py-3.5 px-6 bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all block text-center cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-white" />
+                  <span>Launch Creative AI Studio</span>
+                </Link>
+
+                <Link
+                  href="/dashboard/billing"
+                  className="block text-xs text-[#667085] hover:text-[#5145CD] pt-1 transition-colors font-semibold"
+                >
+                  View Full Billing History & Receipts →
+                </Link>
+              </div>
             </div>
-          </div>
+          </LiquidGlassCard>
         ) : isPending ? (
           /* PENDING STATE */
           <div className="p-8 sm:p-10 rounded-3xl bg-white/85 backdrop-blur-xl border border-amber-200/80 space-y-6 w-full text-center shadow-xl">

@@ -409,7 +409,14 @@ export interface SupplierLegalDetails {
   gstin?: string;
   pan?: string;
   supportEmail: string;
+  supportPhone?: string;
   website: string;
+  brandLogoUrl?: string;
+  invoicePrefix?: string;
+  receiptPrefix?: string;
+  taxRatePercent?: number;
+  footerNotes?: string;
+  terms?: string;
   isGstRegistered: boolean;
 }
 

@@ -2993,7 +2993,8 @@ class Store {
     const db = this.load();
     const year = new Date().getFullYear();
     const count = (db.invoices?.length || 0) + 1;
-    return `INV-${year}-${count.toString().padStart(4, '0')}`;
+    const prefix = db.billingSettings?.invoicePrefix ? db.billingSettings.invoicePrefix.replace(/-$/, '') : 'INV';
+    return `${prefix}-${year}-${count.toString().padStart(4, '0')}`;
   }
 
   createInvoice(params: Omit<Invoice, 'id' | 'createdAt' | 'updatedAt'>): Invoice {
@@ -3044,7 +3045,8 @@ class Store {
     const db = this.load();
     const year = new Date().getFullYear();
     const count = (db.receipts?.length || 0) + 1;
-    return `RCP-${year}-${count.toString().padStart(4, '0')}`;
+    const prefix = db.billingSettings?.receiptPrefix ? db.billingSettings.receiptPrefix.replace(/-$/, '') : 'RCP';
+    return `${prefix}-${year}-${count.toString().padStart(4, '0')}`;
   }
 
   createReceipt(params: Omit<PaymentReceipt, 'id' | 'createdAt'>): PaymentReceipt {

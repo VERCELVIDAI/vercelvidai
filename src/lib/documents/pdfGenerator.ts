@@ -211,7 +211,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
 
   // 4. PARTIES CARDS (TWO COLUMNS: SUPPLIER & CUSTOMER)
   const cardWidth = (width - 80 - 16) / 2;
-  const cardHeight = 100;
+  const cardHeight = 112;
 
   // Left Card: Supplier Box
   page.drawRectangle({
@@ -226,13 +226,15 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
 
   let supY = cursorY - 14;
   page.drawText('ISSUED BY (SUPPLIER)', { x: 52, y: supY, size: 7.5, font: fontBold, color: colorIndigo });
-  supY -= 14;
-  page.drawText(supplierObj.legalName.slice(0, 36), { x: 52, y: supY, size: 9.5, font: fontBold, color: colorDark });
-  supY -= 12;
+  supY -= 13;
+  page.drawText(supplierObj.legalName.slice(0, 36), { x: 52, y: supY, size: 9, font: fontBold, color: colorDark });
+  supY -= 11;
   page.drawText(supplierObj.registeredAddress.slice(0, 48), { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
   supY -= 11;
-  page.drawText(`State: ${supplierObj.state}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
-  supY -= 12;
+  page.drawText(`State: ${supplierObj.state} (State Code 07)`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
+  supY -= 11;
+  page.drawText(`GSTIN: ${supplierObj.gstin || '07AAAAA0000A1Z5'} | PAN: ${supplierObj.pan || 'AAAAA0000A'}`, { x: 52, y: supY, size: 7.5, font: fontBold, color: colorDark });
+  supY -= 11;
   page.drawText(`Support: ${supplierObj.supportEmail}`, { x: 52, y: supY, size: 7.5, font: fontRegular, color: colorSlate });
 
   // Right Card: Customer Box
@@ -249,9 +251,9 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
 
   let custY = cursorY - 14;
   page.drawText('BILLED TO (CUSTOMER)', { x: custX + 12, y: custY, size: 7.5, font: fontBold, color: colorIndigo });
-  custY -= 14;
-  page.drawText(customerObj.name.slice(0, 36), { x: custX + 12, y: custY, size: 9.5, font: fontBold, color: colorDark });
-  custY -= 12;
+  custY -= 13;
+  page.drawText(customerObj.name.slice(0, 36), { x: custX + 12, y: custY, size: 9, font: fontBold, color: colorDark });
+  custY -= 11;
   page.drawText((customerObj.email || '').slice(0, 42), { x: custX + 12, y: custY, size: 7.5, font: fontRegular, color: colorSlate });
   custY -= 11;
   page.drawText(customerObj.address ? customerObj.address.slice(0, 46) : 'Registered SaaS Creator Account', {
@@ -261,14 +263,27 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     font: fontRegular,
     color: colorSlate,
   });
-  custY -= 12;
-  page.drawText(`Place of Supply: ${customerObj.state || supplierObj.state || 'India'}`, {
+  custY -= 11;
+  page.drawText(`Place of Supply: ${customerObj.state || supplierObj.state || 'Delhi (07)'}`, {
     x: custX + 12,
     y: custY,
     size: 7.5,
     font: fontRegular,
     color: colorSlate,
   });
+  custY -= 11;
+  page.drawText(
+    customerObj.gstin
+      ? `Customer GSTIN: ${customerObj.gstin}`
+      : 'GST Status: Unregistered Consumer (B2C)',
+    {
+      x: custX + 12,
+      y: custY,
+      size: 7.5,
+      font: fontBold,
+      color: customerObj.gstin ? colorIndigo : colorSlate,
+    }
+  );
 
   cursorY -= cardHeight + 20;
 
@@ -363,14 +378,24 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   const safeTax = Number(invoice.taxAmount ?? 0);
   const safeTotal = Number(invoice.totalAmount ?? safeBase + safeTax);
 
-  page.drawText('Subtotal:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
-  drawRightText(page, `INR ${safeBase.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
-  sumY -= 15;
+  page.drawText('Taxable Base Value:', { x: labelX, y: sumY, size: 7.5, font: fontRegular, color: colorSlate });
+  drawRightText(page, `INR ${safeBase.toFixed(2)}`, valRight, sumY, fontRegular, 7.5, colorDark);
+  sumY -= 13;
 
+  const isIntraStateTax = !customerObj.state || customerObj.state.toLowerCase() === supplierObj.state.toLowerCase();
   if (hasTaxes) {
-    page.drawText('Taxes & Fees:', { x: labelX, y: sumY, size: 8, font: fontRegular, color: colorSlate });
-    drawRightText(page, `INR ${safeTax.toFixed(2)}`, valRight, sumY, fontRegular, 8, colorDark);
-    sumY -= 15;
+    if (isIntraStateTax) {
+      page.drawText('Central GST (CGST @ 9%):', { x: labelX, y: sumY, size: 7.5, font: fontRegular, color: colorSlate });
+      drawRightText(page, `INR ${(safeTax / 2).toFixed(2)}`, valRight, sumY, fontRegular, 7.5, colorDark);
+      sumY -= 13;
+      page.drawText('State GST (SGST @ 9%):', { x: labelX, y: sumY, size: 7.5, font: fontRegular, color: colorSlate });
+      drawRightText(page, `INR ${(safeTax / 2).toFixed(2)}`, valRight, sumY, fontRegular, 7.5, colorDark);
+      sumY -= 13;
+    } else {
+      page.drawText('Integrated GST (IGST @ 18%):', { x: labelX, y: sumY, size: 7.5, font: fontRegular, color: colorSlate });
+      drawRightText(page, `INR ${safeTax.toFixed(2)}`, valRight, sumY, fontRegular, 7.5, colorDark);
+      sumY -= 13;
+    }
   }
 
   // Divider inside summary box
@@ -381,8 +406,8 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     color: colorBorder,
   });
 
-  page.drawText('Total Amount:', { x: labelX, y: sumY - 11, size: 10, font: fontBold, color: colorDark });
-  drawRightText(page, `INR ${safeTotal.toFixed(2)}`, valRight, sumY - 11, fontBold, 11, colorIndigoDark);
+  page.drawText('Total Amount:', { x: labelX, y: sumY - 11, size: 9.5, font: fontBold, color: colorDark });
+  drawRightText(page, `INR ${safeTotal.toFixed(2)}`, valRight, sumY - 11, fontBold, 10.5, colorIndigoDark);
 
   // Left Note Beside Totals
   const leftNoteWidth = summaryBoxX - 40 - 16;
@@ -391,21 +416,21 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     y: cursorY - summaryBoxHeight,
     width: leftNoteWidth,
     height: summaryBoxHeight,
-    color: colorIndigoBg,
-    borderColor: colorIndigo,
-    borderWidth: 0.5,
+    color: colorCardBg,
+    borderColor: colorBorder,
+    borderWidth: 1,
   });
 
   let noteY = cursorY - 18;
-  page.drawText('PAYMENT SETTLEMENT & CLEARANCE NOTE', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorIndigoDark });
-  noteY -= 14;
-  page.drawText('- Payment processed securely through PayU Payments Private Limited.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
-  noteY -= 11;
-  page.drawText('- Creative generative tokens and compute units active on account.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
-  noteY -= 11;
-  page.drawText(`- Linked Merchant Ref: ${txnIdSafe.slice(0, 24)}`, { x: 52, y: noteY, size: 7, font: fontBold, color: colorDark });
+  page.drawText('STATUTORY TAX DECLARATION & PAYMENT CLEARANCE', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorIndigoDark });
   noteY -= 13;
-  page.drawText('[VERIFIED] DIGITAL CERTIFICATION: PAID IN FULL', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorEmeraldDark });
+  page.drawText('- Computer-generated tax invoice under Section 31 & Rule 46 of CGST Act, 2017.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
+  noteY -= 11;
+  page.drawText('- Input Tax Credit (ITC) available to registered businesses based on this invoice.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
+  noteY -= 11;
+  page.drawText(`- Payment settled via PayU India (Merchant Ref: ${txnIdSafe.slice(0, 22)})`, { x: 52, y: noteY, size: 7, font: fontBold, color: colorDark });
+  noteY -= 13;
+  page.drawText('[VERIFIED] DIGITAL RECORD: PAID IN FULL & CREDITED', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorEmeraldDark });
 
   // 7. STATUTORY FOOTER & TERMS
   cursorY = 88;
@@ -532,15 +557,15 @@ export async function generateReceiptPdf(
 
   cursorY -= 20;
 
-  // HERO AMOUNT RECEIVED CALLOUT CARD
+  // HERO AMOUNT RECEIVED CALLOUT CARD (Ink-friendly, crisp business print)
   const heroCardHeight = 76;
   page.drawRectangle({
     x: 40,
     y: cursorY - heroCardHeight,
     width: width - 80,
     height: heroCardHeight,
-    color: colorIndigoBg,
-    borderColor: colorIndigo,
+    color: colorCardBg,
+    borderColor: colorBorder,
     borderWidth: 1,
   });
 

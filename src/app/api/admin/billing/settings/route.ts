@@ -34,7 +34,25 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { legalName, tradeName, registeredAddress, city, state, pincode, gstin, isGstRegistered, supportEmail, pan } = body;
+    const {
+      legalName,
+      tradeName,
+      registeredAddress,
+      city,
+      state,
+      pincode,
+      gstin,
+      isGstRegistered,
+      supportEmail,
+      supportPhone,
+      pan,
+      brandLogoUrl,
+      invoicePrefix,
+      receiptPrefix,
+      taxRatePercent,
+      footerNotes,
+      terms,
+    } = body;
 
     const updates: any = {};
     if (legalName !== undefined) updates.legalName = String(legalName).trim();
@@ -46,7 +64,14 @@ export async function POST(req: NextRequest) {
     if (gstin !== undefined) updates.gstin = String(gstin).trim().toUpperCase();
     if (isGstRegistered !== undefined) updates.isGstRegistered = Boolean(isGstRegistered);
     if (supportEmail !== undefined) updates.supportEmail = String(supportEmail).trim();
+    if (supportPhone !== undefined) updates.supportPhone = String(supportPhone).trim();
     if (pan !== undefined) updates.pan = String(pan).trim().toUpperCase();
+    if (brandLogoUrl !== undefined) updates.brandLogoUrl = String(brandLogoUrl).trim();
+    if (invoicePrefix !== undefined) updates.invoicePrefix = String(invoicePrefix).trim().toUpperCase();
+    if (receiptPrefix !== undefined) updates.receiptPrefix = String(receiptPrefix).trim().toUpperCase();
+    if (taxRatePercent !== undefined) updates.taxRatePercent = Number(taxRatePercent);
+    if (footerNotes !== undefined) updates.footerNotes = String(footerNotes).trim();
+    if (terms !== undefined) updates.terms = String(terms).trim();
 
     const updated = dbStore.updateBillingSettings(updates);
 
