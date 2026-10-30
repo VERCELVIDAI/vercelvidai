@@ -68,15 +68,18 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   const fontRegular = await doc.embedFont(StandardFonts.Helvetica);
   const fontBold = await doc.embedFont(StandardFonts.HelveticaBold);
 
-  // Fluvia Flow Design System Palette
-  const colorDark = rgb(0.06, 0.09, 0.16); // #0f172a slate-900
-  const colorEmerald = rgb(0.02, 0.59, 0.41); // #059669 emerald-600
-  const colorEmeraldDark = rgb(0.02, 0.37, 0.27); // #065f46 emerald-800
-  const colorEmeraldBg = rgb(0.92, 0.99, 0.96); // #ecfdf5 emerald-50
-  const colorSlate = rgb(0.28, 0.35, 0.45); // #475569 slate-600
-  const colorLightSlate = rgb(0.55, 0.60, 0.68); // #94a3b8 slate-400
-  const colorBorder = rgb(0.88, 0.91, 0.94); // #e2e8f0 slate-200
-  const colorCardBg = rgb(0.97, 0.98, 0.99); // #f8fafc slate-50
+  // Fluvia Flow Design System Palette (Synced with website)
+  const colorDark = rgb(0.09, 0.10, 0.11); // #17191D charcoal
+  const colorIndigo = rgb(0.318, 0.271, 0.804); // #5145CD Fluvia Indigo
+  const colorIndigoDark = rgb(0.263, 0.22, 0.792); // #4338CA Indigo Dark
+  const colorIndigoBg = rgb(0.933, 0.949, 1.0); // #EEF2FF Indigo 50
+  const colorEmerald = rgb(0.06, 0.72, 0.51); // #10B981 emerald
+  const colorEmeraldDark = rgb(0.02, 0.59, 0.41); // #059669
+  const colorEmeraldBg = rgb(0.925, 0.992, 0.961); // #ecfdf5
+  const colorSlate = rgb(0.40, 0.44, 0.52); // #667085
+  const colorLightSlate = rgb(0.58, 0.64, 0.72); // #94a3b8
+  const colorBorder = rgb(0.90, 0.91, 0.93); // #e5e7eb
+  const colorCardBg = rgb(0.969, 0.973, 0.980); // #f7f8fa
   const colorWhite = rgb(1, 1, 1);
   const colorPinkAccent = rgb(0.86, 0.15, 0.47); // #db2777 pink-600
   const colorPinkBg = rgb(0.99, 0.90, 0.95); // #fce7f3 pink-100
@@ -87,7 +90,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     y: height - 5,
     width,
     height: 5,
-    color: colorEmerald,
+    color: colorIndigo,
   });
 
   let cursorY = height - 42;
@@ -107,7 +110,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     y: cursorY - 14,
     size: 7.5,
     font: fontBold,
-    color: colorEmerald,
+    color: colorIndigo,
   });
 
   page.drawText('fluviaflow.ai | Official Billing Document', {
@@ -121,7 +124,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   // Right: Document Title & Invoice Number
   const docTitle = 'INVOICE';
   drawRightText(page, docTitle, width - 40, cursorY + 2, fontBold, 17, colorDark);
-  drawRightText(page, `#${invoice.invoiceNumber}`, width - 40, cursorY - 14, fontBold, 11, colorEmeraldDark);
+  drawRightText(page, `#${invoice.invoiceNumber}`, width - 40, cursorY - 14, fontBold, 11, colorIndigo);
 
   // Status Badge (Paid / Cleared)
   const isPaid = invoice.status === 'paid';
@@ -222,7 +225,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   });
 
   let supY = cursorY - 14;
-  page.drawText('ISSUED BY (SUPPLIER)', { x: 52, y: supY, size: 7.5, font: fontBold, color: colorEmerald });
+  page.drawText('ISSUED BY (SUPPLIER)', { x: 52, y: supY, size: 7.5, font: fontBold, color: colorIndigo });
   supY -= 14;
   page.drawText(supplierObj.legalName.slice(0, 36), { x: 52, y: supY, size: 9.5, font: fontBold, color: colorDark });
   supY -= 12;
@@ -245,7 +248,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   });
 
   let custY = cursorY - 14;
-  page.drawText('BILLED TO (CUSTOMER)', { x: custX + 12, y: custY, size: 7.5, font: fontBold, color: colorEmerald });
+  page.drawText('BILLED TO (CUSTOMER)', { x: custX + 12, y: custY, size: 7.5, font: fontBold, color: colorIndigo });
   custY -= 14;
   page.drawText(customerObj.name.slice(0, 36), { x: custX + 12, y: custY, size: 9.5, font: fontBold, color: colorDark });
   custY -= 12;
@@ -379,7 +382,7 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
   });
 
   page.drawText('Total Amount:', { x: labelX, y: sumY - 11, size: 10, font: fontBold, color: colorDark });
-  drawRightText(page, `INR ${safeTotal.toFixed(2)}`, valRight, sumY - 11, fontBold, 11, colorEmeraldDark);
+  drawRightText(page, `INR ${safeTotal.toFixed(2)}`, valRight, sumY - 11, fontBold, 11, colorIndigoDark);
 
   // Left Note Beside Totals
   const leftNoteWidth = summaryBoxX - 40 - 16;
@@ -388,13 +391,13 @@ export async function generateInvoicePdf(invoice: Invoice): Promise<Uint8Array> 
     y: cursorY - summaryBoxHeight,
     width: leftNoteWidth,
     height: summaryBoxHeight,
-    color: colorEmeraldBg,
-    borderColor: colorEmerald,
+    color: colorIndigoBg,
+    borderColor: colorIndigo,
     borderWidth: 0.5,
   });
 
   let noteY = cursorY - 18;
-  page.drawText('PAYMENT SETTLEMENT & CLEARANCE NOTE', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorEmeraldDark });
+  page.drawText('PAYMENT SETTLEMENT & CLEARANCE NOTE', { x: 52, y: noteY, size: 7.5, font: fontBold, color: colorIndigoDark });
   noteY -= 14;
   page.drawText('- Payment processed securely through PayU Payments Private Limited.', { x: 52, y: noteY, size: 7, font: fontRegular, color: colorSlate });
   noteY -= 11;
@@ -450,23 +453,26 @@ export async function generateReceiptPdf(
   const fontBold = await doc.embedFont(StandardFonts.HelveticaBold);
 
   // Palette
-  const colorDark = rgb(0.06, 0.09, 0.16); // #0f172a
-  const colorEmerald = rgb(0.02, 0.59, 0.41); // #059669
-  const colorEmeraldDark = rgb(0.02, 0.37, 0.27); // #065f46
-  const colorEmeraldBg = rgb(0.92, 0.99, 0.96); // #ecfdf5
-  const colorSlate = rgb(0.28, 0.35, 0.45); // #475569
-  const colorLightSlate = rgb(0.55, 0.60, 0.68); // #94a3b8
-  const colorBorder = rgb(0.88, 0.91, 0.94); // #e2e8f0
-  const colorCardBg = rgb(0.97, 0.98, 0.99); // #f8fafc
+  const colorDark = rgb(0.09, 0.10, 0.11); // #17191D charcoal
+  const colorIndigo = rgb(0.318, 0.271, 0.804); // #5145CD Fluvia Indigo
+  const colorIndigoDark = rgb(0.263, 0.22, 0.792); // #4338CA Indigo Dark
+  const colorIndigoBg = rgb(0.933, 0.949, 1.0); // #EEF2FF Indigo 50
+  const colorEmerald = rgb(0.06, 0.72, 0.51); // #10B981 emerald
+  const colorEmeraldDark = rgb(0.02, 0.59, 0.41); // #059669
+  const colorEmeraldBg = rgb(0.925, 0.992, 0.961); // #ecfdf5
+  const colorSlate = rgb(0.40, 0.44, 0.52); // #667085
+  const colorLightSlate = rgb(0.58, 0.64, 0.72); // #94a3b8
+  const colorBorder = rgb(0.90, 0.91, 0.93); // #e5e7eb
+  const colorCardBg = rgb(0.969, 0.973, 0.980); // #f7f8fa
   const colorWhite = rgb(1, 1, 1);
 
-  // Top Emerald Accent Stripe
+  // Top Fluvia Indigo Accent Stripe
   page.drawRectangle({
     x: 0,
     y: height - 5,
     width,
     height: 5,
-    color: colorEmerald,
+    color: colorIndigo,
   });
 
   let cursorY = height - 42;
@@ -485,7 +491,7 @@ export async function generateReceiptPdf(
     y: cursorY - 14,
     size: 7.5,
     font: fontBold,
-    color: colorEmerald,
+    color: colorIndigo,
   });
 
   page.drawText('fluviaflow.ai | Customer Payment Voucher', {
@@ -498,7 +504,7 @@ export async function generateReceiptPdf(
 
   // Right Title
   drawRightText(page, 'OFFICIAL PAYMENT RECEIPT', width - 40, cursorY + 2, fontBold, 15, colorDark);
-  drawRightText(page, `#${receipt.receiptNumber}`, width - 40, cursorY - 14, fontBold, 11, colorEmeraldDark);
+  drawRightText(page, `#${receipt.receiptNumber}`, width - 40, cursorY - 14, fontBold, 11, colorIndigoDark);
 
   // Verified Badge
   const verifiedBadge = '[PAYMENT VERIFIED & SETTLED]';
@@ -533,8 +539,8 @@ export async function generateReceiptPdf(
     y: cursorY - heroCardHeight,
     width: width - 80,
     height: heroCardHeight,
-    color: colorEmeraldBg,
-    borderColor: colorEmerald,
+    color: colorIndigoBg,
+    borderColor: colorIndigo,
     borderWidth: 1,
   });
 
@@ -543,7 +549,7 @@ export async function generateReceiptPdf(
     y: cursorY - 20,
     size: 8.5,
     font: fontBold,
-    color: colorEmeraldDark,
+    color: colorIndigoDark,
   });
 
   page.drawText(`INR ${receipt.amountReceived.toFixed(2)}`, {
@@ -581,7 +587,7 @@ export async function generateReceiptPdf(
 
   if (receipt.discountAmount && receipt.discountAmount > 0) {
     const couponInfo = `Coupon ${receipt.couponCode || 'PROMO'} Applied (Saved INR ${receipt.discountAmount.toFixed(2)})`;
-    drawRightText(page, couponInfo, width - 56, cursorY - 54, fontBold, 8, colorEmeraldDark);
+    drawRightText(page, couponInfo, width - 56, cursorY - 54, fontBold, 8, colorIndigoDark);
   }
 
   cursorY -= heroCardHeight + 24;
@@ -602,7 +608,7 @@ export async function generateReceiptPdf(
   });
 
   let gY = cursorY - 18;
-  page.drawText('GATEWAY & SETTLEMENT DETAILS', { x: 52, y: gY, size: 8, font: fontBold, color: colorEmerald });
+  page.drawText('GATEWAY & SETTLEMENT DETAILS', { x: 52, y: gY, size: 8, font: fontBold, color: colorIndigo });
   gY -= 16;
 
   const gatewayItems = [
@@ -634,7 +640,7 @@ export async function generateReceiptPdf(
   });
 
   let oY = cursorY - 18;
-  page.drawText('CUSTOMER & ORDER SPECIFICATIONS', { x: cX + 12, y: oY, size: 8, font: fontBold, color: colorEmerald });
+  page.drawText('CUSTOMER & ORDER SPECIFICATIONS', { x: cX + 12, y: oY, size: 8, font: fontBold, color: colorIndigo });
   oY -= 16;
 
   const orderItems = [
