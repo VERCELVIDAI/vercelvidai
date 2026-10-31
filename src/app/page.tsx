@@ -240,6 +240,22 @@ export default function HomePage() {
   const [unmutedHeroIndex, setUnmutedHeroIndex] = useState<number | null>(null);
   const heroVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [galleryTab, setGalleryTab] = useState<'vertical' | 'widescreen'>('vertical');
+  const showcaseRef = useRef<HTMLDivElement | null>(null);
+  const [showcaseMouse, setShowcaseMouse] = useState<{ x: number; y: number; isHovered: boolean }>({
+    x: 0,
+    y: 0,
+    isHovered: false,
+  });
+
+  const handleShowcaseMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!showcaseRef.current) return;
+    const rect = showcaseRef.current.getBoundingClientRect();
+    setShowcaseMouse({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      isHovered: true,
+    });
+  };
 
   const selectedPreset = VERTICAL_PRESETS[selectedHeroIndex] || VERTICAL_PRESETS[0];
 
@@ -279,7 +295,7 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                 <Link
                   href="/create"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-[#5145CD] hover:bg-[#4338CA] shadow-sm transition-all text-sm group"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-[#5145CD] hover:bg-[#4338CA] shadow-sm hover:shadow-[0_10px_25px_rgba(81,69,205,0.3)] transition-all text-sm group"
                 >
                   <span>Start Creating Free</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -287,7 +303,7 @@ export default function HomePage() {
 
                 <Link
                   href="/templates"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-[#17191D] bg-[#FFFFFF] hover:bg-[#F7F8FA] border border-[#E5E7EB] shadow-xs transition-colors text-sm"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-[#17191D] bg-[#FFFFFF] hover:bg-[#F7F8FA] border border-[#E5E7EB] shadow-xs hover:border-[#C7D2FE] transition-all text-sm"
                 >
                   <Film className="w-4 h-4 text-[#5145CD]" />
                   <span>Browse Ad Templates</span>
@@ -314,9 +330,25 @@ export default function HomePage() {
             {/* ========================================================================= */}
             {/* HERO SIMULTANEOUS 4-VIDEO SHOWCASE (ALL PLAY TOGETHER, ZERO TEXT ON VIDEO) */}
             {/* ========================================================================= */}
-            <div className="relative rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF] shadow-xl p-3 sm:p-5 max-w-5xl mx-auto mt-6 sm:mt-8">
+            <div
+              ref={showcaseRef}
+              onMouseMove={handleShowcaseMouseMove}
+              onMouseEnter={() => setShowcaseMouse((prev) => ({ ...prev, isHovered: true }))}
+              onMouseLeave={() => setShowcaseMouse((prev) => ({ ...prev, isHovered: false }))}
+              className="relative rounded-3xl border border-[#E5E7EB] bg-white/90 backdrop-blur-md shadow-2xl p-3 sm:p-5 max-w-5xl mx-auto mt-6 sm:mt-8 overflow-hidden transition-all duration-300"
+            >
+              {/* Dynamic Mouse Sheen Reflection on Showcase Card */}
+              {showcaseMouse.isHovered && (
+                <div
+                  className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 rounded-3xl"
+                  style={{
+                    background: `radial-gradient(450px circle at ${showcaseMouse.x}px ${showcaseMouse.y}px, rgba(81, 69, 205, 0.07), rgba(56, 189, 248, 0.03) 40%, transparent 70%)`,
+                  }}
+                />
+              )}
+
               {/* Top Navigation & Status Bar */}
-              <div className="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-[#E5E7EB]">
+              <div className="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-[#E5E7EB] relative z-10">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
                   <span className="font-bold text-xs sm:text-sm text-[#17191D]">
@@ -370,8 +402,8 @@ export default function HomePage() {
                       onClick={() => setSelectedHeroIndex(idx)}
                       className={`cursor-pointer rounded-xl sm:rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col justify-between ${
                         isSelected
-                          ? 'bg-white border-[#5145CD] ring-2 ring-[#5145CD]/40 shadow-lg scale-[1.01]'
-                          : 'bg-white border-[#E5E7EB] hover:border-[#C7D2FE] hover:shadow-md'
+                          ? 'bg-white border-[#5145CD] ring-2 ring-[#5145CD]/40 shadow-xl scale-[1.01]'
+                          : 'bg-white border-[#E5E7EB] hover:border-[#5145CD]/60 hover:shadow-xl hover:-translate-y-1.5'
                       }`}
                     >
                       {/* 100% PURE CLEAN VIDEO VIEWPORT — ABSOLUTELY ZERO OVERLAYS */}

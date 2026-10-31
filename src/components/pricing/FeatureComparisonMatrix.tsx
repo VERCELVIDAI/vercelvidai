@@ -23,6 +23,7 @@ import {
 interface FeatureComparisonMatrixProps {
   billingInterval: 'month' | 'year';
   onSelectPlan: (planId: string) => void;
+  isDark?: boolean;
 }
 
 interface MatrixRow {
@@ -43,6 +44,7 @@ interface MatrixCategory {
 export function FeatureComparisonMatrix({
   billingInterval,
   onSelectPlan,
+  isDark = true,
 }: FeatureComparisonMatrixProps) {
   const router = useRouter();
 
@@ -314,88 +316,124 @@ export function FeatureComparisonMatrix({
       return val ? (
         <Check className="w-4 h-4 text-[#10B981] mx-auto" />
       ) : (
-        <Minus className="w-4 h-4 text-[#667085]/40 mx-auto" />
+        <Minus className={`w-4 h-4 mx-auto ${isDark ? 'text-slate-600' : 'text-[#667085]/40'}`} />
       );
     }
-    return <span className="text-xs font-semibold text-[#17191D]">{val}</span>;
+    return <span className={`text-xs font-semibold ${isDark ? 'text-slate-200' : 'text-[#17191D]'}`}>{val}</span>;
   };
 
   return (
-    <div className="w-full mt-16 sm:mt-24 pt-12 border-t border-[#E5E7EB] text-left">
+    <div className={`w-full mt-16 sm:mt-24 pt-12 border-t text-left ${isDark ? 'border-white/10' : 'border-[#E5E7EB]'}`}>
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#5145CD] bg-[#EEF2FF] px-3 py-1 rounded-full border border-[#C7D2FE]">
+        <span
+          className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${
+            isDark
+              ? 'text-[#818CF8] bg-[#1E1B4B]/80 border-[#6366F1]/40'
+              : 'text-[#5145CD] bg-[#EEF2FF] border-[#C7D2FE]'
+          }`}
+        >
           Detailed Plan Matrix
         </span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] tracking-tight mt-3">
+        <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight mt-3 ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
           Compare plans side-by-side.
         </h2>
-        <p className="mt-2 text-xs sm:text-sm text-[#667085]">
+        <p className={`mt-2 text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
           A complete, transparent feature-by-feature breakdown of all four FLUVIA FLOW tiers.
         </p>
       </div>
 
       {/* Comparison Table Container */}
-      <div className="overflow-x-auto rounded-2xl border border-[#E5E7EB] bg-white shadow-xs">
+      <div
+        className={`overflow-x-auto rounded-2xl border shadow-xs ${
+          isDark
+            ? 'border-white/10 bg-[#111420]'
+            : 'border-[#E5E7EB] bg-white'
+        }`}
+      >
         <table className="w-full min-w-[760px] border-collapse text-left">
           {/* Table Header: Sticky Plan Names & Quick CTAs */}
           <thead>
-            <tr className="border-b border-[#E5E7EB] bg-[#F7F8FA]">
-              <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#667085] w-2/5">
+            <tr className={`border-b ${isDark ? 'border-white/10 bg-[#161B2B]' : 'border-[#E5E7EB] bg-[#F7F8FA]'}`}>
+              <th className={`p-4 sm:p-5 text-xs font-bold uppercase tracking-wider w-2/5 ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
                 Features & Entitlements
               </th>
               <th className="p-4 text-center w-[15%]">
-                <span className="text-sm font-bold text-[#17191D] block">Starter</span>
-                <span className="text-[11px] font-mono text-[#667085]">
+                <span className={`text-sm font-bold block ${isDark ? 'text-white' : 'text-[#17191D]'}`}>Starter</span>
+                <span className={`text-[11px] font-mono ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
                   {billingInterval === 'year' ? '₹799/mo' : '₹999/mo'}
                 </span>
                 <button
                   type="button"
                   onClick={() => onSelectPlan('plan_starter')}
-                  className="mt-2 w-full py-1.5 px-2 rounded-lg bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-[11px] font-semibold transition-colors cursor-pointer"
+                  className={`mt-2 w-full py-1.5 px-2 rounded-lg text-[11px] font-semibold transition-colors cursor-pointer ${
+                    isDark
+                      ? 'bg-white hover:bg-slate-200 text-black shadow-xs'
+                      : 'bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB]'
+                  }`}
                 >
                   Choose Starter
                 </button>
               </th>
               <th className="p-4 text-center w-[15%]">
-                <span className="text-sm font-bold text-[#17191D] block">Plus</span>
-                <span className="text-[11px] font-mono text-[#667085]">
+                <span className={`text-sm font-bold block ${isDark ? 'text-[#CCFF00]' : 'text-[#17191D]'}`}>Plus</span>
+                <span className={`text-[11px] font-mono ${isDark ? 'text-[#A3E635]' : 'text-[#667085]'}`}>
                   {billingInterval === 'year' ? '₹1,999/mo' : '₹2,499/mo'}
                 </span>
                 <button
                   type="button"
                   onClick={() => onSelectPlan('plan_creator')}
-                  className="mt-2 w-full py-1.5 px-2 rounded-lg bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-[11px] font-semibold transition-colors cursor-pointer"
+                  className={`mt-2 w-full py-1.5 px-2 rounded-lg text-[11px] font-black transition-colors cursor-pointer ${
+                    isDark
+                      ? 'bg-[#CCFF00] hover:bg-[#B6E600] text-black shadow-[0_0_15px_rgba(204,255,0,0.3)]'
+                      : 'bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB]'
+                  }`}
                 >
                   Choose Plus
                 </button>
               </th>
-              <th className="p-4 text-center w-[15%] bg-[#EEF2FF]/40 border-x border-[#5145CD]/20">
+              <th className={`p-4 text-center w-[15%] border-x ${
+                isDark
+                  ? 'bg-[#FF2D78]/10 border-[#FF2D78]/30'
+                  : 'bg-[#EEF2FF]/40 border-[#5145CD]/20'
+              }`}>
                 <div className="flex items-center justify-center gap-1">
-                  <span className="text-sm font-bold text-[#5145CD] block">Ultra</span>
-                  <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#5145CD] text-white">
+                  <span className={`text-sm font-bold block ${isDark ? 'text-[#FF2D78]' : 'text-[#5145CD]'}`}>Ultra</span>
+                  <span className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
+                    isDark
+                      ? 'bg-[#FF2D78] text-white shadow-xs'
+                      : 'bg-[#5145CD] text-white'
+                  }`}>
                     Popular
                   </span>
                 </div>
-                <span className="text-[11px] font-mono text-[#5145CD] font-bold">
+                <span className={`text-[11px] font-mono font-bold ${isDark ? 'text-[#FF66B2]' : 'text-[#5145CD]'}`}>
                   {billingInterval === 'year' ? '₹3,999/mo' : '₹4,999/mo'}
                 </span>
                 <button
                   type="button"
                   onClick={() => onSelectPlan('plan_max')}
-                  className="mt-2 w-full py-1.5 px-2 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white text-[11px] font-semibold transition-colors shadow-xs cursor-pointer"
+                  className={`mt-2 w-full py-1.5 px-2 rounded-lg text-[11px] font-black transition-colors shadow-xs cursor-pointer ${
+                    isDark
+                      ? 'bg-[#FF2D78] hover:bg-[#E02469] text-white shadow-[0_0_15px_rgba(255,45,120,0.4)]'
+                      : 'bg-[#5145CD] hover:bg-[#4338CA] text-white'
+                  }`}
                 >
                   Choose Ultra
                 </button>
               </th>
               <th className="p-4 text-center w-[15%]">
-                <span className="text-sm font-bold text-[#17191D] block">For Teams</span>
-                <span className="text-[11px] font-mono text-[#667085]">
+                <span className={`text-sm font-bold block ${isDark ? 'text-[#60A5FA]' : 'text-[#17191D]'}`}>For Teams</span>
+                <span className={`text-[11px] font-mono ${isDark ? 'text-[#93C5FD]' : 'text-[#667085]'}`}>
                   {billingInterval === 'year' ? '₹7,999/mo' : '₹9,999/mo'}
                 </span>
                 <button
                   type="button"
                   onClick={() => onSelectPlan('plan_business')}
-                  className="mt-2 w-full py-1.5 px-2 rounded-lg bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-[11px] font-semibold transition-colors cursor-pointer"
+                  className={`mt-2 w-full py-1.5 px-2 rounded-lg text-[11px] font-black transition-colors cursor-pointer ${
+                    isDark
+                      ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white shadow-[0_0_15px_rgba(37,99,235,0.35)]'
+                      : 'bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB]'
+                  }`}
                 >
                   Explore Teams
                 </button>
@@ -408,10 +446,12 @@ export function FeatureComparisonMatrix({
             {categories.map((cat, catIdx) => (
               <React.Fragment key={catIdx}>
                 {/* Category Header Row */}
-                <tr className="bg-[#F7F8FA] border-t border-b border-[#E5E7EB]">
+                <tr className={`border-t border-b ${isDark ? 'bg-[#151928] border-white/10' : 'bg-[#F7F8FA] border-[#E5E7EB]'}`}>
                   <td
                     colSpan={5}
-                    className="py-3 px-4 sm:px-5 text-xs font-bold uppercase tracking-wider text-[#17191D] flex items-center gap-2"
+                    className={`py-3 px-4 sm:px-5 text-xs font-bold uppercase tracking-wider flex items-center gap-2 ${
+                      isDark ? 'text-white' : 'text-[#17191D]'
+                    }`}
                   >
                     {cat.icon}
                     <span>{cat.title}</span>
@@ -422,14 +462,18 @@ export function FeatureComparisonMatrix({
                 {cat.rows.map((row, rowIdx) => (
                   <tr
                     key={rowIdx}
-                    className="border-b border-[#F1F3F5] hover:bg-[#F7F8FA]/60 transition-colors"
+                    className={`border-b transition-colors ${
+                      isDark
+                        ? 'border-white/5 hover:bg-white/[0.03]'
+                        : 'border-[#F1F3F5] hover:bg-[#F7F8FA]/60'
+                    }`}
                   >
-                    <td className="p-3.5 sm:p-4 text-xs font-medium text-[#17191D]">
+                    <td className={`p-3.5 sm:p-4 text-xs font-medium ${isDark ? 'text-slate-300' : 'text-[#17191D]'}`}>
                       <div className="flex items-center gap-1.5">
                         <span>{row.name}</span>
                         {row.tooltip && (
                           <span
-                            className="text-[#667085] hover:text-[#5145CD] cursor-help"
+                            className={`cursor-help ${isDark ? 'text-slate-500 hover:text-white' : 'text-[#667085] hover:text-[#5145CD]'}`}
                             title={row.tooltip}
                           >
                             <HelpCircle className="w-3.5 h-3.5 inline" />
@@ -439,7 +483,9 @@ export function FeatureComparisonMatrix({
                     </td>
                     <td className="p-3.5 text-center">{renderValue(row.starter)}</td>
                     <td className="p-3.5 text-center">{renderValue(row.plus)}</td>
-                    <td className="p-3.5 text-center bg-[#EEF2FF]/20 border-x border-[#5145CD]/10">
+                    <td className={`p-3.5 text-center border-x ${
+                      isDark ? 'bg-[#FF2D78]/5 border-[#FF2D78]/20' : 'bg-[#EEF2FF]/20 border-[#5145CD]/10'
+                    }`}>
                       {renderValue(row.ultra)}
                     </td>
                     <td className="p-3.5 text-center">{renderValue(row.teams)}</td>

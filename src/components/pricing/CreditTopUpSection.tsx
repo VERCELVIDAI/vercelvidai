@@ -27,9 +27,10 @@ interface CreditPack {
 
 interface CreditTopUpSectionProps {
   onBuyPack: (packId: string) => void;
+  isDark?: boolean;
 }
 
-export function CreditTopUpSection({ onBuyPack }: CreditTopUpSectionProps) {
+export function CreditTopUpSection({ onBuyPack, isDark = true }: CreditTopUpSectionProps) {
   const router = useRouter();
 
   const creditPacks: CreditPack[] = [
@@ -105,26 +106,32 @@ export function CreditTopUpSection({ onBuyPack }: CreditTopUpSectionProps) {
   const standardPacks = creditPacks.filter((p) => p.id !== 'pack_5000');
 
   return (
-    <div id="credit-topups" className="w-full mt-20 pt-16 border-t border-[#E5E7EB] text-left">
+    <div id="credit-topups" className={`w-full mt-20 pt-16 border-t text-left ${isDark ? 'border-white/10' : 'border-[#E5E7EB]'}`}>
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#5145CD] bg-[#EEF2FF] px-3 py-1 rounded-full border border-[#C7D2FE]">
+        <span
+          className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${
+            isDark
+              ? 'text-[#818CF8] bg-[#1E1B4B]/80 border-[#6366F1]/40'
+              : 'text-[#5145CD] bg-[#EEF2FF] border-[#C7D2FE]'
+          }`}
+        >
           One-Time Credit Top-Ups
         </span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#17191D] tracking-tight mt-3">
+        <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight mt-3 ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
           Purchase Credits on Demand
         </h2>
-        <p className="mt-2 text-xs sm:text-sm text-[#667085]">
+        <p className={`mt-2 text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
           Need additional credits without changing your subscription plan? Purchase one-time top-ups that never expire.
         </p>
 
         {/* Top-up Rules Trust Badges */}
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-5 text-xs text-[#667085]">
+        <div className={`mt-4 flex flex-wrap items-center justify-center gap-5 text-xs ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
           <span className="flex items-center gap-1.5 font-medium">
             <Clock className="w-3.5 h-3.5 text-[#10B981]" />
             <span>Credits never expire</span>
           </span>
           <span className="flex items-center gap-1.5 font-medium">
-            <Coins className="w-3.5 h-3.5 text-[#5145CD]" />
+            <Coins className={`w-3.5 h-3.5 ${isDark ? 'text-[#818CF8]' : 'text-[#5145CD]'}`} />
             <span>Fixed consumption rates (15 cr/video)</span>
           </span>
           <span className="flex items-center gap-1.5 font-medium">
@@ -135,26 +142,32 @@ export function CreditTopUpSection({ onBuyPack }: CreditTopUpSectionProps) {
       </div>
 
       {/* Featured 5,000 Credits Pack Highlight Banner */}
-      <div className="mb-8 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-[#EEF2FF] via-white to-[#EEF2FF] border-2 border-[#5145CD] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <div
+        className={`mb-8 p-6 sm:p-8 rounded-2xl border-2 flex flex-col md:flex-row items-center justify-between gap-6 transition-all ${
+          isDark
+            ? 'bg-gradient-to-r from-[#1E1B4B]/80 via-[#111422] to-[#1E1B4B]/80 border-[#6366F1] shadow-[0_0_30px_rgba(99,102,241,0.2)]'
+            : 'bg-gradient-to-r from-[#EEF2FF] via-white to-[#EEF2FF] border-[#5145CD] shadow-sm'
+        }`}
+      >
         <div className="space-y-2 text-left">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#5145CD] text-white text-[11px] font-semibold">
             <Sparkles className="w-3 h-3" />
             <span>Featured Business Pack</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold text-[#17191D]">
+          <h3 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
             5,000 Credits Pro Top-Up Pack
           </h3>
-          <p className="text-xs sm:text-sm text-[#667085] max-w-xl leading-relaxed">
+          <p className={`text-xs sm:text-sm max-w-xl leading-relaxed ${isDark ? 'text-slate-300' : 'text-[#667085]'}`}>
             {featuredPack.desc}
           </p>
-          <div className="pt-1 flex flex-wrap items-center gap-3 text-xs text-[#17191D]">
-            <span className="bg-white border border-[#E5E7EB] px-2.5 py-1 rounded-lg font-mono">
+          <div className="pt-1 flex flex-wrap items-center gap-3 text-xs">
+            <span className={`px-2.5 py-1 rounded-lg font-mono border ${isDark ? 'bg-white/5 border-white/10 text-slate-200' : 'bg-white border-[#E5E7EB] text-[#17191D]'}`}>
               Base Price: <strong>₹6,500</strong>
             </span>
-            <span className="bg-white border border-[#E5E7EB] px-2.5 py-1 rounded-lg font-mono">
+            <span className={`px-2.5 py-1 rounded-lg font-mono border ${isDark ? 'bg-white/5 border-white/10 text-slate-200' : 'bg-white border-[#E5E7EB] text-[#17191D]'}`}>
               18% GST: <strong>₹1,170</strong>
             </span>
-            <span className="bg-[#EEF2FF] border border-[#C7D2FE] text-[#5145CD] px-2.5 py-1 rounded-lg font-mono font-bold">
+            <span className={`px-2.5 py-1 rounded-lg font-mono font-bold border ${isDark ? 'bg-[#5145CD]/30 border-[#5145CD] text-[#A5B4FC]' : 'bg-[#EEF2FF] border-[#C7D2FE] text-[#5145CD]'}`}>
               Total: ₹7,670
             </span>
           </div>
@@ -162,10 +175,10 @@ export function CreditTopUpSection({ onBuyPack }: CreditTopUpSectionProps) {
 
         <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full md:w-auto">
           <div className="text-center sm:text-right">
-            <p className="text-2xl sm:text-3xl font-extrabold text-[#5145CD] font-mono">
+            <p className={`text-2xl sm:text-3xl font-extrabold font-mono ${isDark ? 'text-[#818CF8]' : 'text-[#5145CD]'}`}>
               ₹6,500
             </p>
-            <p className="text-[11px] text-[#667085] font-mono">
+            <p className={`text-[11px] font-mono ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
               + 18% GST (₹7,670 Total)
             </p>
             <p className="text-[10px] text-[#10B981] font-semibold mt-0.5">
@@ -188,33 +201,43 @@ export function CreditTopUpSection({ onBuyPack }: CreditTopUpSectionProps) {
         {standardPacks.map((pack) => (
           <div
             key={pack.id}
-            className="p-5 rounded-xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all flex flex-col justify-between text-left shadow-2xs group"
+            className={`p-5 rounded-xl border transition-all flex flex-col justify-between text-left group ${
+              isDark
+                ? 'bg-[#111422] border-white/10 hover:border-[#818CF8]/60 hover:shadow-lg hover:shadow-[#5145CD]/10'
+                : 'bg-white border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md'
+            }`}
           >
             <div>
               <div className="flex items-center justify-between gap-1">
-                <span className="text-[10px] font-mono font-bold text-[#5145CD] bg-[#EEF2FF] px-2 py-0.5 rounded-full border border-[#E0E7FF]">
+                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${
+                  isDark
+                    ? 'bg-[#5145CD]/20 text-[#A5B4FC] border-[#5145CD]/40'
+                    : 'bg-[#EEF2FF] text-[#5145CD] border-[#E0E7FF]'
+                }`}>
                   {pack.credits.toLocaleString()} CR
                 </span>
-                <span className="text-[10px] text-[#667085] font-mono">
+                <span className={`text-[10px] font-mono ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
                   {pack.perCredit}/cr
                 </span>
               </div>
 
-              <h4 className="font-bold text-sm text-[#17191D] mt-2 group-hover:text-[#5145CD] transition-colors">
+              <h4 className={`font-bold text-sm mt-2 transition-colors ${
+                isDark ? 'text-white group-hover:text-[#A5B4FC]' : 'text-[#17191D] group-hover:text-[#5145CD]'
+              }`}>
                 {pack.name}
               </h4>
-              <p className="text-[11px] text-[#667085] mt-1 line-clamp-2 leading-relaxed">
+              <p className={`text-[11px] mt-1 line-clamp-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
                 {pack.desc}
               </p>
 
-              <div className="mt-4 pb-3 border-b border-[#E5E7EB]">
+              <div className={`mt-4 pb-3 border-b ${isDark ? 'border-white/10' : 'border-[#E5E7EB]'}`}>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-xl font-extrabold text-[#17191D] font-mono">
+                  <span className={`text-xl font-extrabold font-mono ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
                     ₹{pack.priceInr.toLocaleString()}
                   </span>
-                  <span className="text-[10px] text-[#667085]">+ 18% GST</span>
+                  <span className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>+ 18% GST</span>
                 </div>
-                <p className="text-[10px] text-[#667085] font-mono mt-0.5">
+                <p className={`text-[10px] font-mono mt-0.5 ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
                   ₹{Math.round(pack.totalInr).toLocaleString()} total incl. taxes
                 </p>
               </div>
@@ -223,7 +246,11 @@ export function CreditTopUpSection({ onBuyPack }: CreditTopUpSectionProps) {
             <button
               type="button"
               onClick={() => onBuyPack(pack.id)}
-              className="mt-4 w-full py-2 px-3 rounded-lg bg-[#F7F8FA] hover:bg-[#5145CD] text-[#17191D] hover:text-white border border-[#E5E7EB] hover:border-[#5145CD] text-xs font-semibold transition-all cursor-pointer text-center"
+              className={`mt-4 w-full py-2 px-3 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
+                isDark
+                  ? 'bg-white/10 hover:bg-[#5145CD] text-white border border-white/10 hover:border-[#5145CD]'
+                  : 'bg-[#F7F8FA] hover:bg-[#5145CD] text-[#17191D] hover:text-white border border-[#E5E7EB] hover:border-[#5145CD]'
+              }`}
             >
               Buy Pack
             </button>
