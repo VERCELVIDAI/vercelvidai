@@ -98,7 +98,7 @@ export default function PricingPage() {
   const router = useRouter();
 
   // Toolbar state
-  const [activeTab, setActiveTab] = useState<'individual' | 'business'>('individual');
+  const [activeTab, setActiveTab] = useState<'individual' | 'business' | 'openhiggs'>('individual');
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default like screenshot
   const [currency, setCurrency] = useState<'usd' | 'inr'>('usd'); // USD default to match screenshot exactly, toggleable to INR
   const [themeMode, setThemeMode] = useState<'dark' | 'light'>('dark'); // Dark mode by default to match screenshot 1:1
@@ -427,10 +427,73 @@ export default function PricingPage() {
         { text: 'Delegated top-up access', included: true },
       ],
     },
+    {
+      id: 'plan_openhiggs',
+      title: 'OPENHIGGS',
+      subtitle: 'Unlimited open-source AI studio engine with 38 models',
+      category: 'individual',
+      discountBadge: 'SPECIAL EDITION',
+      bestValueBadge: '38 MODELS',
+      usdPriceAnnual: 39,
+      usdPriceMonthly: 49,
+      usdStrikethrough: 49,
+      inrPriceAnnual: 2399,
+      inrPriceMonthly: 2999,
+      inrStrikethrough: 2999,
+      creditsMonthly: currency === 'usd' ? 3000 : 3500,
+      creditsLabel: currency === 'usd' ? '3,000 credits/mo.' : '3,500 credits/mo.',
+      creditsLines: [
+        '= Full access to all 38 OpenHiggs Models',
+        '~ 200 Seedance 2.5 & Kling 3.0 Pro Videos',
+      ],
+      fixedCreditsNote: 'BYOK (Bring Your Own Key) + Cloud GPU acceleration',
+      ctaText: 'Get OpenHiggs Pass',
+      specialBanner: {
+        title: '38 FOUNDATION MODELS UNLOCKED',
+        subtitle: 'Seedance 2.5, Soul Cinema, Kling 3.0, Wan 3, Flux 3',
+      },
+      freeGensBox: {
+        header: 'OPEN HIGGS ENGINE',
+        items: [
+          { name: 'Soul Cinema 4K', resBadge: '4K', gensBadge: 'Included', included: true },
+          { name: 'Seedance 2.5 Director', resBadge: '4K', gensBadge: '7-day unlimited', included: true },
+          { name: 'Kling 3.0 Motion Pro', resBadge: '2K', gensBadge: '7-day unlimited', included: true },
+          { name: 'Wan 3 Prime & Flux 3', gensBadge: 'Unlimited', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'UNLIMITED & FREE GENS',
+        items: [
+          { name: 'Kling 3 Turbo & Std', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Seedance 2.0 Fast & Mini', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Ideogram 4 & Recraft 4.1', unlimitedBadge: 'Unlimited', included: true },
+        ],
+        extraCount: 7,
+        extraItems: [
+          { name: 'Minimax Hailuo 2.3 & H3', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'LTX 2.5 Pro & Fast', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Happy Horse 1.0 & 1.1', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Grok Imagine Video 1.5', unlimitedBadge: 'Priority Queue', included: true },
+          { name: 'PixVerse 6', unlimitedBadge: 'Included', included: true },
+          { name: 'Qwen Image 3 & Z-Image Turbo', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Soul 2 & DOP Model', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-[#d1fe17] text-[#141a02] font-black' },
+        { text: 'Full access to all 38 OpenHiggs models in catalog', included: true },
+        { text: 'BYOK (Your own platform key) + Cloud fallback', included: true },
+        { text: 'Parallel generations: up to 4 concurrent runs', included: true },
+        { text: 'Per-model settings (aspect ratio, duration, audio)', included: true },
+        { text: 'Masonry gallery with IndexedDB browser persistence', included: true },
+      ],
+    },
   ];
 
   const visiblePlans = activeTab === 'business'
     ? plansData.filter((p) => p.category === 'business' || p.id === 'plan_max')
+    : activeTab === 'openhiggs'
+    ? plansData.filter((p) => p.id === 'plan_openhiggs' || p.id === 'plan_max' || p.id === 'plan_creator')
     : plansData;
 
   const faqs = [
@@ -513,6 +576,19 @@ export default function PricingPage() {
                 }`}
               >
                 Business plans
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('openhiggs')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === 'openhiggs'
+                    ? 'bg-[#d1fe17] text-[#141a02] shadow-[0_0_15px_rgba(209,254,23,0.4)]'
+                    : isDark
+                    ? 'text-[#d1fe17] hover:text-[#ddfe51]'
+                    : 'text-emerald-700 hover:text-emerald-950'
+                }`}
+              >
+                <span>⚡ OpenHiggs Special</span>
               </button>
             </div>
 
@@ -672,6 +748,10 @@ export default function PricingPage() {
           className={`grid gap-4 lg:gap-5 items-stretch ${
             visiblePlans.length === 4
               ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+              : visiblePlans.length === 3
+              ? 'grid-cols-1 md:grid-cols-3 max-w-5xl mx-auto'
+              : visiblePlans.length === 5
+              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
               : 'grid-cols-1 md:grid-cols-2 max-w-3xl mx-auto'
           }`}
         >
@@ -692,6 +772,7 @@ export default function PricingPage() {
             const isPlus = plan.id === 'plan_creator';
             const isUltra = plan.id === 'plan_max';
             const isTeams = plan.id === 'plan_business';
+            const isOpenHiggs = plan.id === 'plan_openhiggs';
 
             // Distinct card styling
             let cardWrapperClass = '';
@@ -768,6 +849,22 @@ export default function PricingPage() {
               unlimitedBoxClass = isDark
                 ? 'bg-[#101D33]/70 border border-[#2563EB]/20'
                 : 'bg-blue-50/50 border-blue-200';
+            } else if (isOpenHiggs) {
+              cardWrapperClass = isDark
+                ? 'bg-[#0E150F] border-2 border-[#d1fe17] shadow-[0_0_35px_rgba(209,254,23,0.22)] ring-1 ring-[#d1fe17]/40'
+                : 'bg-white border-2 border-[#84CC16] shadow-xl';
+              allowanceBoxClass = isDark
+                ? 'bg-[#152117] border border-[#d1fe17]/30'
+                : 'bg-lime-50/70 border-lime-200';
+              allowanceHeaderColor = 'text-[#d1fe17]';
+              ctaButtonClass = 'bg-[#d1fe17] hover:bg-[#ddfe51] text-[#141a02] font-black shadow-[0_0_20px_rgba(209,254,23,0.45)]';
+              freeGensHeaderColor = 'text-[#d1fe17]';
+              freeGensBoxClass = isDark
+                ? 'bg-[#152117]/70 border border-[#d1fe17]/25'
+                : 'bg-lime-50/50 border-lime-200';
+              unlimitedBoxClass = isDark
+                ? 'bg-[#152117]/70 border border-[#d1fe17]/25'
+                : 'bg-lime-50/50 border-lime-200';
             }
 
             return (

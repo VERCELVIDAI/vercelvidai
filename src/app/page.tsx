@@ -24,6 +24,7 @@ import {
   Film,
   Sliders,
   ExternalLink,
+  Camera,
 } from 'lucide-react';
 
 interface AdPreset {
@@ -518,6 +519,111 @@ export default function HomePage() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 1.5 OPENHIGGS STUDIO SPOTLIGHT (38 MODELS • 1 COMPOSER • OPEN-SOURCE) */}
+        {/* ========================================================================= */}
+        <section className="py-20 bg-[#0B0D14] text-white border-b border-white/10 relative overflow-hidden">
+          {/* Ambient Glows */}
+          <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[#d1fe17]/10 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-[#5145CD]/20 blur-3xl pointer-events-none" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Header Badge & Title */}
+            <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#152117] border border-[#d1fe17]/40 text-[#d1fe17] text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(209,254,23,0.25)]">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>OpenHiggs AI Integration</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
+                38 Foundation Models. <span className="text-[#d1fe17]">One Universal Prompt Bar.</span>
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                The free, open-source alternative to Higgsfield AI is now integrated directly into FLUVIA FLOW. Generate cinematic video and high-resolution images across 38 models with zero vendor lock-in.
+              </p>
+
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href="/openhiggs"
+                  className="px-6 py-3 rounded-xl bg-[#d1fe17] hover:bg-[#ddfe51] text-[#141a02] font-black text-sm shadow-[0_0_25px_rgba(209,254,23,0.4)] transition-all flex items-center gap-2 transform hover:scale-[1.02] active:scale-98"
+                >
+                  <Zap className="w-4 h-4 fill-current" />
+                  <span>Launch OpenHiggs Studio</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+
+                <Link
+                  href="/pricing"
+                  className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-sm border border-white/15 transition-all flex items-center gap-2"
+                >
+                  <span>Explore OpenHiggs Plan</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Model Capability Showcase Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-5 rounded-2xl bg-[#121622] border border-white/10 hover:border-[#d1fe17]/50 transition-all group">
+                <div className="w-10 h-10 rounded-xl bg-[#d1fe17]/20 border border-[#d1fe17]/30 flex items-center justify-center text-[#d1fe17] mb-4 group-hover:scale-110 transition-transform">
+                  <Film className="w-5 h-5" />
+                </div>
+                <h3 className="font-extrabold text-base text-white">Seedance 2.5 Ecosystem</h3>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                  Full support for Seedance 2.5 Director Mode, Frame Edit, Video Extend, plus Seedance 2.0 Fast and Mini engines.
+                </p>
+                <div className="mt-3 flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">4K Director</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Extend & Edit</span>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-[#121622] border border-white/10 hover:border-[#d1fe17]/50 transition-all group">
+                <div className="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-pink-400 mb-4 group-hover:scale-110 transition-transform">
+                  <Video className="w-5 h-5" />
+                </div>
+                <h3 className="font-extrabold text-base text-white">Kling 3.0 Full Suite</h3>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                  Kling 3.0 Turbo, Standard, Pro, 4K, and Motion Pro algorithms with fine-grained camera controls and start/end frames.
+                </p>
+                <div className="mt-3 flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Motion Pro</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">4K Photoreal</span>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-[#121622] border border-white/10 hover:border-[#d1fe17]/50 transition-all group">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 transition-transform">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <h3 className="font-extrabold text-base text-white">Soul Cinema & Wan 3</h3>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                  Soul 2, Soul Cinema 4K, Wan 2.6, Wan 2.7, and Wan 3 Prime with harmonic fluid dynamics and cinematic motion blur.
+                </p>
+                <div className="mt-3 flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Fluid Physics</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Soul Cinema</span>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-[#121622] border border-white/10 hover:border-[#d1fe17]/50 transition-all group">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+                  <Camera className="w-5 h-5" />
+                </div>
+                <h3 className="font-extrabold text-base text-white">Flux, Ideogram & Recraft</h3>
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                  8 cutting-edge image models: Flux 2, Flux 3, Ideogram 4, Recraft 4.1, Grok Imagine 2, and Qwen Image 3.
+                </p>
+                <div className="mt-3 flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Typography 4K</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Flux 3</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>

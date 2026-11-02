@@ -27,6 +27,7 @@ export function Footer() {
           <div>
             <h4 className="text-xs font-bold text-[#17191D] tracking-wider uppercase mb-4">Product</h4>
             <ul className="space-y-2.5 text-xs">
+              <li><Link href="/openhiggs" className="text-[#5145CD] font-bold hover:underline flex items-center gap-1"><span>OpenHiggs Studio</span><span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-black">38 Models</span></Link></li>
               <li><Link href="/create?mode=video" className="hover:text-[#5145CD] transition-colors">AI Video Ads</Link></li>
               <li><Link href="/ai-image-generator" className="hover:text-[#5145CD] transition-colors">Product Photography</Link></li>
               <li><Link href="/create?mode=audio" className="hover:text-[#5145CD] transition-colors">Neural Voiceover</Link></li>

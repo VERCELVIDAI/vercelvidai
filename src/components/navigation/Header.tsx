@@ -44,6 +44,7 @@ export function Header() {
 
   const navLinks = [
     { label: 'Product', href: '/#features' },
+    { label: 'OpenHiggs', href: '/openhiggs', isSpecial: true, badge: '38 Models' },
     { label: 'Templates', href: '/templates' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Resources', href: '/blog' },
@@ -64,13 +65,18 @@ export function Header() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 ${
                     isActive
                       ? 'text-[#5145CD] bg-[#EEF2FF]'
                       : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]'
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  {link.badge && (
+                    <span className="px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-2xs">
+                      {link.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -196,9 +202,14 @@ export function Header() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-[#17191D] hover:bg-[#F7F8FA]"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-[#17191D] hover:bg-[#F7F8FA] flex items-center justify-between"
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.badge && (
+                  <span className="px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    {link.badge}
+                  </span>
+                )}
               </Link>
             ))}
           </nav>
