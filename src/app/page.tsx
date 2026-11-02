@@ -699,7 +699,7 @@ export default function HomePage() {
                   className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-sm border border-white/15 transition-all flex items-center gap-2"
                 >
                   <Tag className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Explore OpenHiggs Plan ($39/mo)</span>
+                  <span>Explore OpenHiggs Plan (₹4,999 • 35% OFF)</span>
                   <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
                 </Link>
               </div>

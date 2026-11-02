@@ -23,7 +23,7 @@ interface AnimatedDiscountGiftBoxProps {
 export function AnimatedDiscountGiftBox({
   onApplyCoupon,
   billingInterval = 'year',
-  isDark = true,
+  isDark = false,
 }: AnimatedDiscountGiftBoxProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);

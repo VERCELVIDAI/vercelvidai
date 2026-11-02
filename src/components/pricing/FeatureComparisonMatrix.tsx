@@ -44,7 +44,7 @@ interface MatrixCategory {
 export function FeatureComparisonMatrix({
   billingInterval,
   onSelectPlan,
-  isDark = true,
+  isDark = false,
 }: FeatureComparisonMatrixProps) {
   const router = useRouter();
 

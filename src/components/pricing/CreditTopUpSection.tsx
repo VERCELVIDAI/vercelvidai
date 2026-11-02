@@ -30,7 +30,7 @@ interface CreditTopUpSectionProps {
   isDark?: boolean;
 }
 
-export function CreditTopUpSection({ onBuyPack, isDark = true }: CreditTopUpSectionProps) {
+export function CreditTopUpSection({ onBuyPack, isDark = false }: CreditTopUpSectionProps) {
   const router = useRouter();
 
   const creditPacks: CreditPack[] = [

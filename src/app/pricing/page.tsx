@@ -34,8 +34,6 @@ import {
   ExternalLink,
   ChevronLeft,
   ChevronRight,
-  Sun,
-  Moon,
 } from 'lucide-react';
 
 interface FreeGenItem {
@@ -99,9 +97,9 @@ export default function PricingPage() {
 
   // Toolbar state
   const [activeTab, setActiveTab] = useState<'individual' | 'business' | 'openhiggs'>('individual');
-  const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default like screenshot
-  const [currency, setCurrency] = useState<'usd' | 'inr'>('usd'); // USD default to match screenshot exactly, toggleable to INR
-  const [themeMode, setThemeMode] = useState<'dark' | 'light'>('dark'); // Dark mode by default to match screenshot 1:1
+  const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default with savings
+  const [currency, setCurrency] = useState<'inr' | 'usd'>('inr'); // INR default (₹4,999 OpenHiggs), toggleable to $ USD
+  const isDark = false; // Pure light mode SaaS aesthetic
   const [isRecommenderOpen, setIsRecommenderOpen] = useState(false);
   const [expandedAccordions, setExpandedAccordions] = useState<Record<string, boolean>>({});
 
@@ -121,7 +119,6 @@ export default function PricingPage() {
     5: false,
   });
 
-  const isDark = themeMode === 'dark';
 
   useEffect(() => {
     // Check if user is eligible for FIRST20 coupon
@@ -432,19 +429,19 @@ export default function PricingPage() {
       title: 'OPENHIGGS',
       subtitle: 'Unlimited open-source AI studio engine with 38 models',
       category: 'individual',
-      discountBadge: 'SPECIAL EDITION',
+      discountBadge: '35% OFF',
       bestValueBadge: '38 MODELS',
-      usdPriceAnnual: 39,
-      usdPriceMonthly: 49,
-      usdStrikethrough: 49,
-      inrPriceAnnual: 2399,
-      inrPriceMonthly: 2999,
-      inrStrikethrough: 2999,
+      usdPriceAnnual: 38,
+      usdPriceMonthly: 59,
+      usdStrikethrough: 59,
+      inrPriceAnnual: 3249,
+      inrPriceMonthly: 4999,
+      inrStrikethrough: 4999,
       creditsMonthly: currency === 'usd' ? 3000 : 3500,
       creditsLabel: currency === 'usd' ? '3,000 credits/mo.' : '3,500 credits/mo.',
       creditsLines: [
         '= Full access to all 38 OpenHiggs Models',
-        '~ 200 Seedance 2.5 & Kling 3.0 Pro Videos',
+        '~ 230 Seedance 2.5 & Kling 3.0 Pro Videos',
       ],
       fixedCreditsNote: 'BYOK (Bring Your Own Key) + Cloud GPU acceleration',
       ctaText: 'Get OpenHiggs Pass',
@@ -480,7 +477,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
-        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-[#d1fe17] text-[#141a02] font-black' },
+        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-emerald-100 text-emerald-800 font-bold' },
         { text: 'Full access to all 38 OpenHiggs models in catalog', included: true },
         { text: 'BYOK (Your own platform key) + Cloud fallback', included: true },
         { text: 'Parallel generations: up to 4 concurrent runs', included: true },
@@ -494,7 +491,7 @@ export default function PricingPage() {
     ? plansData.filter((p) => p.category === 'business' || p.id === 'plan_max')
     : activeTab === 'openhiggs'
     ? plansData.filter((p) => p.id === 'plan_openhiggs' || p.id === 'plan_max' || p.id === 'plan_creator')
-    : plansData;
+    : plansData.filter((p) => p.id !== 'plan_business');
 
   const faqs = [
     {
@@ -524,39 +521,23 @@ export default function PricingPage() {
   ];
 
   return (
-    <div
-      className={`min-h-screen flex flex-col transition-colors duration-300 selection:bg-[#5145CD] selection:text-white ${
-        isDark ? 'bg-[#0B0D14] text-white' : 'bg-[#FFFFFF] text-[#17191D]'
-      }`}
-    >
+    <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD]">
       <Header />
 
       <main className="flex-1 w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* ========================================================================= */}
-        {/* TOP TOOLBAR (EXACT REFERENCE SCREENSHOT STRUCTURE) */}
+        {/* TOP TOOLBAR (CLEAN, MINIMALIST SAAS LIGHT LAYOUT) */}
         {/* ========================================================================= */}
-        <div
-          className={`flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b ${
-            isDark ? 'border-white/10' : 'border-[#E5E7EB]'
-          }`}
-        >
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#E5E7EB]">
           {/* Left: Category Tabs + Promotional Pill */}
           <div className="flex items-center gap-3 flex-wrap">
-            <div
-              className={`inline-flex p-1 rounded-xl border ${
-                isDark ? 'bg-[#141824] border-white/10' : 'bg-[#F7F8FA] border-[#E5E7EB]'
-              }`}
-            >
+            <div className="inline-flex p-1 rounded-xl border bg-[#F7F8FA] border-[#E5E7EB]">
               <button
                 type="button"
                 onClick={() => setActiveTab('individual')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'individual'
-                    ? isDark
-                      ? 'bg-[#22293D] text-white shadow-xs'
-                      : 'bg-white text-[#17191D] shadow-xs'
-                    : isDark
-                    ? 'text-slate-400 hover:text-white'
+                    ? 'bg-white text-[#17191D] shadow-xs'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
@@ -567,11 +548,7 @@ export default function PricingPage() {
                 onClick={() => setActiveTab('business')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'business'
-                    ? isDark
-                      ? 'bg-[#22293D] text-white shadow-xs'
-                      : 'bg-white text-[#17191D] shadow-xs'
-                    : isDark
-                    ? 'text-slate-400 hover:text-white'
+                    ? 'bg-white text-[#17191D] shadow-xs'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
@@ -582,78 +559,57 @@ export default function PricingPage() {
                 onClick={() => setActiveTab('openhiggs')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'openhiggs'
-                    ? 'bg-[#d1fe17] text-[#141a02] shadow-[0_0_15px_rgba(209,254,23,0.4)]'
-                    : isDark
-                    ? 'text-[#d1fe17] hover:text-[#ddfe51]'
-                    : 'text-emerald-700 hover:text-emerald-950'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-emerald-700 hover:text-emerald-950 font-extrabold'
                 }`}
               >
                 <span>⚡ OpenHiggs Special</span>
+                <span className="text-[10px] bg-red-500 text-white px-1.5 py-0.2 rounded font-black">35% OFF</span>
               </button>
             </div>
 
-            {/* Glowing Promotional Pill Badge (Matching Screenshot) */}
-            <div
-              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${
-                isDark
-                  ? 'bg-gradient-to-r from-blue-950/80 via-indigo-950/80 to-blue-950/80 border-blue-500/40 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.2)]'
-                  : 'bg-[#EEF2FF] border-[#C7D2FE] text-[#5145CD]'
-              }`}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            {/* Promotional Pill Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border bg-[#EEF2FF] border-[#C7D2FE] text-[#5145CD]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-pulse" />
               <span>⚡ 30-DAY UNLIMITED SEEDANCE 2.5</span>
             </div>
           </div>
 
-          {/* Right: Recommender + Currency Switch + Monthly/Annual Toggle + Theme Toggle */}
+          {/* Right: Recommender + Currency Switch + Monthly/Annual Toggle */}
           <div className="flex items-center gap-3 sm:gap-5 flex-wrap self-start md:self-auto">
             {/* Recommender link */}
             <button
               type="button"
               onClick={() => setIsRecommenderOpen(true)}
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                isDark ? 'text-slate-300 hover:text-white' : 'text-[#5145CD] hover:text-[#4338CA]'
-              }`}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold transition-all cursor-pointer text-[#5145CD] hover:text-[#4338CA]"
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>Not sure which plan?</span>
             </button>
 
             {/* Currency Selector Pill */}
-            <div
-              className={`inline-flex p-0.5 rounded-lg border text-[11px] font-bold ${
-                isDark ? 'bg-[#141824] border-white/10' : 'bg-[#F1F3F5] border-[#E5E7EB]'
-              }`}
-            >
-              <button
-                type="button"
-                onClick={() => setCurrency('usd')}
-                className={`px-2 py-0.5 rounded-md transition-all ${
-                  currency === 'usd'
-                    ? isDark
-                      ? 'bg-white text-black'
-                      : 'bg-white text-[#17191D] shadow-xs'
-                    : isDark
-                    ? 'text-slate-400 hover:text-white'
-                    : 'text-[#667085]'
-                }`}
-              >
-                $ USD
-              </button>
+            <div className="inline-flex p-0.5 rounded-lg border text-[11px] font-bold bg-[#F1F3F5] border-[#E5E7EB]">
               <button
                 type="button"
                 onClick={() => setCurrency('inr')}
                 className={`px-2 py-0.5 rounded-md transition-all ${
                   currency === 'inr'
-                    ? isDark
-                      ? 'bg-white text-black'
-                      : 'bg-white text-[#17191D] shadow-xs'
-                    : isDark
-                    ? 'text-slate-400 hover:text-white'
-                    : 'text-[#667085]'
+                    ? 'bg-white text-[#17191D] shadow-xs font-black'
+                    : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
                 ₹ INR
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrency('usd')}
+                className={`px-2 py-0.5 rounded-md transition-all ${
+                  currency === 'usd'
+                    ? 'bg-white text-[#17191D] shadow-xs font-black'
+                    : 'text-[#667085] hover:text-[#17191D]'
+                }`}
+              >
+                $ USD
               </button>
             </div>
 
@@ -661,13 +617,7 @@ export default function PricingPage() {
             <div className="flex items-center gap-2">
               <span
                 className={`text-xs font-semibold cursor-pointer ${
-                  billingInterval === 'month'
-                    ? isDark
-                      ? 'text-white'
-                      : 'text-[#17191D]'
-                    : isDark
-                    ? 'text-slate-400'
-                    : 'text-[#667085]'
+                  billingInterval === 'month' ? 'text-[#17191D]' : 'text-[#667085]'
                 }`}
                 onClick={() => setBillingInterval('month')}
               >
@@ -681,15 +631,11 @@ export default function PricingPage() {
                 aria-checked={billingInterval === 'year'}
                 onClick={() => setBillingInterval(billingInterval === 'year' ? 'month' : 'year')}
                 className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
-                  billingInterval === 'year'
-                    ? 'bg-[#A3E635]'
-                    : isDark
-                    ? 'bg-slate-700'
-                    : 'bg-[#E5E7EB]'
+                  billingInterval === 'year' ? 'bg-[#5145CD]' : 'bg-[#D1D5DB]'
                 }`}
               >
                 <span
-                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-black shadow-sm ring-0 transition duration-200 ease-in-out ${
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
                     billingInterval === 'year' ? 'translate-x-5' : 'translate-x-0'
                   }`}
                 />
@@ -697,38 +643,18 @@ export default function PricingPage() {
 
               <span
                 className={`text-xs font-semibold cursor-pointer flex items-center gap-1 ${
-                  billingInterval === 'year'
-                    ? isDark
-                      ? 'text-white'
-                      : 'text-[#5145CD]'
-                    : isDark
-                    ? 'text-slate-400'
-                    : 'text-[#667085]'
+                  billingInterval === 'year' ? 'text-[#5145CD]' : 'text-[#667085]'
                 }`}
                 onClick={() => setBillingInterval('year')}
               >
                 <span>Annual</span>
                 {billingInterval === 'year' && (
-                  <span className="text-[10px] font-bold bg-[#EF4444] text-white px-1.5 py-0.2 rounded">
-                    20% OFF
+                  <span className="text-[10px] font-black bg-[#EF4444] text-white px-1.5 py-0.2 rounded shadow-xs">
+                    UP TO 35% OFF
                   </span>
                 )}
               </span>
             </div>
-
-            {/* Dark / Light Toggle */}
-            <button
-              type="button"
-              onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
-              className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
-                isDark
-                  ? 'bg-[#141824] border-white/10 text-slate-300 hover:text-white'
-                  : 'bg-white border-[#E5E7EB] text-slate-600 hover:text-black'
-              }`}
-              title={isDark ? 'Switch to Studio Light' : 'Switch to Obsidian Dark'}
-            >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#5145CD]" />}
-            </button>
           </div>
         </div>
 
@@ -784,87 +710,45 @@ export default function PricingPage() {
             let unlimitedBoxClass = '';
 
             if (isStarter) {
-              cardWrapperClass = isDark
-                ? 'bg-[#12151D] border border-[#2B303C] hover:border-slate-500'
-                : 'bg-white border border-slate-300 shadow-sm';
-              allowanceBoxClass = isDark
-                ? 'bg-[#181D29] border border-white/5'
-                : 'bg-slate-50 border-slate-200';
-              allowanceHeaderColor = isDark ? 'text-white' : 'text-slate-900';
-              ctaButtonClass = isDark
-                ? 'bg-white hover:bg-slate-200 text-black font-extrabold shadow-md'
-                : 'bg-slate-900 hover:bg-slate-800 text-white font-extrabold';
-              freeGensHeaderColor = isDark ? 'text-white' : 'text-slate-800';
-              freeGensBoxClass = isDark
-                ? 'bg-[#181D29]/60 border border-white/5'
-                : 'bg-slate-50/80 border-slate-200';
-              unlimitedBoxClass = isDark
-                ? 'bg-[#181D29]/60 border border-white/5'
-                : 'bg-slate-50/80 border-slate-200';
+              cardWrapperClass = 'bg-white border border-[#E5E7EB] hover:border-slate-400 shadow-xs hover:shadow-md transition-all';
+              allowanceBoxClass = 'bg-[#F8F9FA] border border-[#E5E7EB]';
+              allowanceHeaderColor = 'text-[#17191D]';
+              ctaButtonClass = 'bg-[#17191D] hover:bg-[#2B303C] text-white font-extrabold shadow-xs';
+              freeGensHeaderColor = 'text-[#17191D]';
+              freeGensBoxClass = 'bg-[#F8F9FA] border border-[#E5E7EB]';
+              unlimitedBoxClass = 'bg-[#F8F9FA] border border-[#E5E7EB]';
             } else if (isPlus) {
-              cardWrapperClass = isDark
-                ? 'bg-[#0F1813] border-2 border-[#84CC16] shadow-[0_0_30px_rgba(132,204,22,0.18)]'
-                : 'bg-white border-2 border-[#84CC16] shadow-md shadow-emerald-500/10';
-              allowanceBoxClass = isDark
-                ? 'bg-[#142318] border border-[#84CC16]/30'
-                : 'bg-emerald-50/70 border-emerald-200';
-              allowanceHeaderColor = 'text-[#A3E635]';
-              ctaButtonClass = 'bg-[#CCFF00] hover:bg-[#B6E600] text-black font-black shadow-[0_0_20px_rgba(204,255,0,0.35)]';
-              freeGensHeaderColor = 'text-[#A3E635]';
-              freeGensBoxClass = isDark
-                ? 'bg-[#142318]/70 border border-[#84CC16]/20'
-                : 'bg-emerald-50/50 border-emerald-200';
-              unlimitedBoxClass = isDark
-                ? 'bg-[#142318]/70 border border-[#84CC16]/20'
-                : 'bg-emerald-50/50 border-emerald-200';
+              cardWrapperClass = 'bg-white border-2 border-[#84CC16] shadow-sm hover:shadow-lg transition-all';
+              allowanceBoxClass = 'bg-lime-50/70 border border-lime-200';
+              allowanceHeaderColor = 'text-lime-800 font-extrabold';
+              ctaButtonClass = 'bg-[#84CC16] hover:bg-[#65A30D] text-white font-black shadow-xs';
+              freeGensHeaderColor = 'text-lime-800';
+              freeGensBoxClass = 'bg-lime-50/40 border border-lime-200/80';
+              unlimitedBoxClass = 'bg-lime-50/40 border border-lime-200/80';
             } else if (isUltra) {
-              cardWrapperClass = isDark
-                ? 'bg-[#1E0F1A] border-2 border-[#FF2D78] shadow-[0_0_40px_rgba(255,45,120,0.3)] ring-1 ring-[#FF2D78]/40 lg:-translate-y-2'
-                : 'bg-white border-2 border-[#EC4899] shadow-xl shadow-pink-500/15 ring-2 ring-pink-400/20 lg:-translate-y-2';
-              allowanceBoxClass = isDark
-                ? 'bg-[#271323] border border-[#FF2D78]/35'
-                : 'bg-pink-50/70 border-pink-200';
-              allowanceHeaderColor = 'text-[#FF66B2]';
-              ctaButtonClass = 'bg-[#FF2D78] hover:bg-[#E02469] text-white font-black shadow-[0_0_25px_rgba(255,45,120,0.55)]';
-              freeGensHeaderColor = 'text-[#FF66B2]';
-              freeGensBoxClass = isDark
-                ? 'bg-[#271323]/60 border border-[#FF2D78]/25'
-                : 'bg-pink-50/40 border-pink-200';
-              unlimitedBoxClass = isDark
-                ? 'bg-[#271323]/60 border border-[#FF2D78]/25'
-                : 'bg-pink-50/40 border-pink-200';
+              cardWrapperClass = 'bg-white border-2 border-[#5145CD] shadow-lg shadow-indigo-500/10 ring-2 ring-[#5145CD]/20 lg:-translate-y-2 transition-all relative';
+              allowanceBoxClass = 'bg-[#EEF2FF] border border-[#C7D2FE]';
+              allowanceHeaderColor = 'text-[#5145CD] font-extrabold';
+              ctaButtonClass = 'bg-[#5145CD] hover:bg-[#4338CA] text-white font-black shadow-md shadow-indigo-500/25';
+              freeGensHeaderColor = 'text-[#5145CD]';
+              freeGensBoxClass = 'bg-[#EEF2FF]/50 border border-[#C7D2FE]/70';
+              unlimitedBoxClass = 'bg-[#EEF2FF]/50 border border-[#C7D2FE]/70';
             } else if (isTeams) {
-              cardWrapperClass = isDark
-                ? 'bg-[#0D1628] border-2 border-[#2563EB] shadow-[0_0_30px_rgba(37,99,235,0.25)]'
-                : 'bg-white border-2 border-blue-400 shadow-md shadow-blue-500/10';
-              allowanceBoxClass = isDark
-                ? 'bg-[#101D33] border border-[#2563EB]/35'
-                : 'bg-blue-50/70 border-blue-200';
-              allowanceHeaderColor = 'text-[#60A5FA]';
-              ctaButtonClass = 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-black shadow-[0_0_20px_rgba(37,99,235,0.4)]';
-              freeGensHeaderColor = 'text-[#60A5FA]';
-              freeGensBoxClass = isDark
-                ? 'bg-[#101D33]/70 border border-[#2563EB]/20'
-                : 'bg-blue-50/50 border-blue-200';
-              unlimitedBoxClass = isDark
-                ? 'bg-[#101D33]/70 border border-[#2563EB]/20'
-                : 'bg-blue-50/50 border-blue-200';
+              cardWrapperClass = 'bg-white border-2 border-blue-500 shadow-sm hover:shadow-lg transition-all';
+              allowanceBoxClass = 'bg-blue-50/70 border border-blue-200';
+              allowanceHeaderColor = 'text-blue-800 font-extrabold';
+              ctaButtonClass = 'bg-blue-600 hover:bg-blue-700 text-white font-black shadow-xs';
+              freeGensHeaderColor = 'text-blue-800';
+              freeGensBoxClass = 'bg-blue-50/50 border border-blue-200';
+              unlimitedBoxClass = 'bg-blue-50/50 border border-blue-200';
             } else if (isOpenHiggs) {
-              cardWrapperClass = isDark
-                ? 'bg-[#0E150F] border-2 border-[#d1fe17] shadow-[0_0_35px_rgba(209,254,23,0.22)] ring-1 ring-[#d1fe17]/40'
-                : 'bg-white border-2 border-[#84CC16] shadow-xl';
-              allowanceBoxClass = isDark
-                ? 'bg-[#152117] border border-[#d1fe17]/30'
-                : 'bg-lime-50/70 border-lime-200';
-              allowanceHeaderColor = 'text-[#d1fe17]';
-              ctaButtonClass = 'bg-[#d1fe17] hover:bg-[#ddfe51] text-[#141a02] font-black shadow-[0_0_20px_rgba(209,254,23,0.45)]';
-              freeGensHeaderColor = 'text-[#d1fe17]';
-              freeGensBoxClass = isDark
-                ? 'bg-[#152117]/70 border border-[#d1fe17]/25'
-                : 'bg-lime-50/50 border-lime-200';
-              unlimitedBoxClass = isDark
-                ? 'bg-[#152117]/70 border border-[#d1fe17]/25'
-                : 'bg-lime-50/50 border-lime-200';
+              cardWrapperClass = 'bg-white border-2 border-[#10B981] shadow-lg shadow-emerald-500/10 hover:shadow-xl hover:border-[#059669] transition-all relative';
+              allowanceBoxClass = 'bg-emerald-50/70 border border-emerald-200';
+              allowanceHeaderColor = 'text-emerald-900 font-extrabold';
+              ctaButtonClass = 'bg-[#059669] hover:bg-[#047857] text-white font-black shadow-md shadow-emerald-600/25';
+              freeGensHeaderColor = 'text-emerald-900';
+              freeGensBoxClass = 'bg-emerald-50/40 border border-emerald-200/80';
+              unlimitedBoxClass = 'bg-emerald-50/40 border border-emerald-200/80';
             }
 
             return (
@@ -876,7 +760,7 @@ export default function PricingPage() {
                   {/* Card Header: Title + Discount / Value Badges */}
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <div className="flex items-center gap-2">
-                      <h3 className={`text-xl font-black tracking-tight ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
+                      <h3 className={`text-xl font-black tracking-tight text-[#17191D]`}>
                         {plan.title}
                       </h3>
                       {plan.discountBadge && isAnnual && (
@@ -895,7 +779,7 @@ export default function PricingPage() {
                   </div>
 
                   {/* Subtitle */}
-                  <p className={`text-xs mt-1 min-h-[32px] leading-relaxed ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
+                  <p className={`text-xs mt-1 min-h-[32px] leading-relaxed text-[#667085]`}>
                     {plan.subtitle}
                   </p>
 
@@ -910,7 +794,7 @@ export default function PricingPage() {
                       <span>{plan.creditsLabel}</span>
                     </div>
 
-                    <ul className={`space-y-1 text-[11px] pl-1 ${isDark ? 'text-slate-300' : 'text-[#667085]'}`}>
+                    <ul className={`space-y-1 text-[11px] pl-1 text-[#667085]`}>
                       {plan.creditsLines.map((line, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
                           <span className="opacity-60">•</span>
@@ -921,11 +805,11 @@ export default function PricingPage() {
 
                     {/* Interactive Ultra Tier Slider if Ultra */}
                     {isUltra ? (
-                      <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-1 text-[10px]">
+                      <div className="pt-2 border-t border-indigo-200/80 flex items-center justify-between gap-1 text-[10px]">
                         <button
                           type="button"
                           onClick={() => setUltraTierIndex((prev) => (prev > 0 ? prev - 1 : 2))}
-                          className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-white cursor-pointer"
+                          className="p-1 rounded hover:bg-indigo-100 text-[#5145CD] cursor-pointer"
                           title="Previous credit tier"
                         >
                           <ChevronLeft className="w-3.5 h-3.5" />
@@ -939,10 +823,8 @@ export default function PricingPage() {
                               onClick={() => setUltraTierIndex(idx)}
                               className={`px-1.5 py-0.5 rounded font-bold cursor-pointer transition-all ${
                                 ultraTierIndex === idx
-                                  ? 'bg-[#FF2D78] text-white shadow-xs'
-                                  : isDark
-                                  ? 'text-slate-400 hover:text-white'
-                                  : 'text-slate-600 hover:text-black'
+                                  ? 'bg-[#5145CD] text-white shadow-xs'
+                                  : 'text-indigo-700 hover:text-indigo-950 hover:bg-indigo-100/70'
                               }`}
                             >
                               {tier.credits.toLocaleString()}
@@ -953,18 +835,14 @@ export default function PricingPage() {
                         <button
                           type="button"
                           onClick={() => setUltraTierIndex((prev) => (prev < 2 ? prev + 1 : 0))}
-                          className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-white cursor-pointer"
+                          className="p-1 rounded hover:bg-indigo-100 text-[#5145CD] cursor-pointer"
                           title="Next credit tier"
                         >
                           <ChevronRight className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     ) : (
-                      <div
-                        className={`pt-2 border-t flex items-center gap-1.5 text-[10px] font-semibold ${
-                          isDark ? 'border-white/10 text-slate-400' : 'border-slate-200 text-[#667085]'
-                        }`}
-                      >
+                      <div className="pt-2 border-t border-[#E5E7EB] flex items-center gap-1.5 text-[10px] font-semibold text-[#667085]">
                         <Check className="w-3 h-3 shrink-0 text-[#10B981]" />
                         <span>{plan.fixedCreditsNote}</span>
                       </div>
@@ -972,25 +850,25 @@ export default function PricingPage() {
                   </div>
 
                   {/* Price Section */}
-                  <div className={`mt-4 pb-4 border-b ${isDark ? 'border-white/10' : 'border-[#E5E7EB]'}`}>
+                  <div className="mt-4 pb-4 border-b border-[#E5E7EB]">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
                       {isAnnual && strikethroughPrice && (
-                        <span className="text-base line-through font-mono text-[#FF1F66] font-bold">
+                        <span className="text-base line-through font-mono text-[#EF4444] font-bold">
                           {currencySymbol}{strikethroughPrice.toLocaleString()}
                         </span>
                       )}
-                      <span className={`text-3xl font-black font-mono tracking-tight ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
+                      <span className="text-3xl font-black font-mono tracking-tight text-[#17191D]">
                         {isTeams ? 'From ' : ''}{currencySymbol}{price.toLocaleString()}
                       </span>
-                      <span className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
+                      <span className="text-xs font-medium text-[#667085]">
                         {isTeams ? 'per seat/month' : `per month, ${isAnnual ? 'billed annually' : 'billed monthly'}`}
                       </span>
                     </div>
 
                     {/* FIRST20 Coupon Tag Callout on Ultra */}
                     {plan.couponTag && (
-                      <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-[#FF2D78]/20 border border-[#FF2D78]/40 text-[10px] text-[#FF66B2] font-black font-mono">
-                        <Tag className="w-3 h-3 text-[#FF2D78] shrink-0" />
+                      <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-pink-50 border border-pink-200 text-[10px] text-pink-700 font-black font-mono">
+                        <Tag className="w-3 h-3 text-pink-600 shrink-0" />
                         <span>{plan.couponTag}</span>
                       </div>
                     )}
@@ -1007,7 +885,7 @@ export default function PricingPage() {
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
 
-                    <p className={`text-[11px] text-center ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
+                    <p className={`text-[11px] text-center text-[#667085]`}>
                       {isTeams
                         ? 'Save up to 30% with annual billing'
                         : isAnnual
@@ -1016,14 +894,14 @@ export default function PricingPage() {
                     </p>
                   </div>
 
-                  {/* Special Banner for Teams (Matching Screenshot) */}
+                  {/* Special Banner for Teams & OpenHiggs */}
                   {plan.specialBanner && (
-                    <div className="mt-4 p-3 rounded-xl bg-gradient-to-r from-blue-950 via-indigo-950 to-blue-950 border border-blue-500/40 text-center shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                      <p className="text-[11px] font-black text-blue-300 uppercase tracking-wider flex items-center justify-center gap-1">
-                        <Sparkles className="w-3 h-3 text-blue-400" />
+                    <div className="mt-4 p-3 rounded-xl bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200/80 text-center">
+                      <p className="text-[11px] font-black text-blue-800 uppercase tracking-wider flex items-center justify-center gap-1">
+                        <Sparkles className="w-3.5 h-3.5 text-blue-600" />
                         <span>{plan.specialBanner.title}</span>
                       </p>
-                      <p className="text-[10px] text-blue-400/80 mt-0.5">
+                      <p className="text-[10px] text-blue-600 mt-0.5 font-medium">
                         {plan.specialBanner.subtitle}
                       </p>
                     </div>
@@ -1040,7 +918,7 @@ export default function PricingPage() {
                         type="button"
                         onClick={scrollToMatrix}
                         className={`hover:underline normal-case font-medium text-[10px] ${
-                          isDark ? 'text-slate-400 hover:text-white' : 'text-[#5145CD]'
+                          'text-[#5145CD] hover:text-[#4338CA]'
                         }`}
                       >
                         Learn more
@@ -1054,17 +932,11 @@ export default function PricingPage() {
                             {item.included ? (
                               <Check className="w-3 h-3 text-[#10B981] shrink-0" />
                             ) : (
-                              <X className={`w-3 h-3 shrink-0 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
+                              <X className={`w-3 h-3 shrink-0 text-slate-400`} />
                             )}
                             <span
                               className={`truncate ${
-                                item.included
-                                  ? isDark
-                                    ? 'text-slate-200 font-medium'
-                                    : 'text-[#17191D] font-medium'
-                                  : isDark
-                                  ? 'text-slate-500'
-                                  : 'text-slate-400'
+                                item.included ? 'text-[#17191D] font-medium' : 'text-slate-400'
                               }`}
                             >
                               {item.name}
@@ -1073,23 +945,15 @@ export default function PricingPage() {
 
                           <div className="flex items-center gap-1 shrink-0">
                             {item.resBadge && (
-                              <span
-                                className={`px-1.5 py-0.2 rounded text-[9px] font-mono border ${
-                                  isDark
-                                    ? 'bg-white/5 border-white/10 text-slate-300'
-                                    : 'bg-white border-[#E5E7EB] text-[#667085]'
-                                }`}
-                              >
+                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
                                 {item.resBadge}
                               </span>
                             )}
                             <span
                               className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
                                 item.included
-                                  ? 'bg-[#393113] text-[#FACC15] border border-[#CA8A04]/40'
-                                  : isDark
-                                  ? 'bg-white/5 text-slate-500 border border-white/5'
-                                  : 'bg-slate-100 text-slate-500 border border-slate-200'
+                                  ? 'bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]'
+                                  : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                               }`}
                             >
                               {item.gensBadge}
@@ -1111,7 +975,7 @@ export default function PricingPage() {
                         type="button"
                         onClick={scrollToMatrix}
                         className={`hover:underline normal-case font-medium text-[10px] ${
-                          isDark ? 'text-slate-400 hover:text-white' : 'text-[#5145CD]'
+                          'text-[#5145CD] hover:text-[#4338CA]'
                         }`}
                       >
                         Learn more
@@ -1125,17 +989,11 @@ export default function PricingPage() {
                             {item.included ? (
                               <Check className="w-3 h-3 text-[#10B981] shrink-0" />
                             ) : (
-                              <X className={`w-3 h-3 shrink-0 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
+                              <X className={`w-3 h-3 shrink-0 text-slate-400`} />
                             )}
                             <span
                               className={`truncate ${
-                                item.included
-                                  ? isDark
-                                    ? 'text-slate-200 font-medium'
-                                    : 'text-[#17191D] font-medium'
-                                  : isDark
-                                  ? 'text-slate-500'
-                                  : 'text-slate-400'
+                                item.included ? 'text-[#17191D] font-medium' : 'text-slate-400'
                               }`}
                             >
                               {item.name}
@@ -1144,23 +1002,15 @@ export default function PricingPage() {
 
                           <div className="flex items-center gap-1 shrink-0">
                             {item.resBadge && (
-                              <span
-                                className={`px-1.5 py-0.2 rounded text-[9px] font-mono border ${
-                                  isDark
-                                    ? 'bg-white/5 border-white/10 text-slate-300'
-                                    : 'bg-white border-[#E5E7EB] text-[#667085]'
-                                }`}
-                              >
+                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
                                 {item.resBadge}
                               </span>
                             )}
                             <span
                               className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
                                 item.included
-                                  ? 'bg-[#393113] text-[#FACC15] border border-[#CA8A04]/40'
-                                  : isDark
-                                  ? 'bg-white/5 text-slate-500 border border-white/5'
-                                  : 'bg-slate-100 text-slate-500 border border-slate-200'
+                                  ? 'bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]'
+                                  : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                               }`}
                             >
                               {item.unlimitedBadge}
@@ -1177,24 +1027,24 @@ export default function PricingPage() {
                               {item.included ? (
                                 <Check className="w-3 h-3 text-[#10B981] shrink-0" />
                               ) : (
-                                <X className={`w-3 h-3 shrink-0 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
+                                <X className="w-3 h-3 shrink-0 text-slate-400" />
                               )}
-                              <span className={`truncate ${item.included ? 'text-slate-200 font-medium' : 'text-slate-500'}`}>
+                              <span className={`truncate ${item.included ? 'text-[#17191D] font-medium' : 'text-slate-400'}`}>
                                 {item.name}
                               </span>
                             </div>
 
                             <div className="flex items-center gap-1 shrink-0">
                               {item.resBadge && (
-                                <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white/5 border-white/10 text-slate-300">
+                                <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
                                   {item.resBadge}
                                 </span>
                               )}
                               <span
                                 className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
                                   item.included
-                                    ? 'bg-[#393113] text-[#FACC15] border border-[#CA8A04]/40'
-                                    : 'bg-white/5 text-slate-500 border border-white/5'
+                                    ? 'bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]'
+                                    : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                                 }`}
                               >
                                 {item.unlimitedBadge}
@@ -1209,7 +1059,7 @@ export default function PricingPage() {
                       type="button"
                       onClick={() => toggleAccordion(plan.id)}
                       className={`pt-1 w-full text-center text-[10px] font-semibold flex items-center justify-center gap-1 cursor-pointer transition-colors ${
-                        isDark ? 'text-slate-400 hover:text-white' : 'text-[#5145CD] hover:text-[#4338CA]'
+                        'text-[#5145CD] hover:text-[#4338CA]'
                       }`}
                     >
                       <span>
@@ -1226,23 +1076,17 @@ export default function PricingPage() {
                   </div>
 
                   {/* Bottom Checklist */}
-                  <div className={`mt-4 pt-3 border-t space-y-1.5 ${isDark ? 'border-white/10' : 'border-[#F1F3F5]'}`}>
+                  <div className={`mt-4 pt-3 border-t space-y-1.5 border-[#F1F3F5]`}>
                     {plan.bottomChecklist.map((item, i) => (
                       <div key={i} className="flex items-start gap-1.5 text-[11px]">
                         {item.included ? (
                           <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0 mt-0.5" />
                         ) : (
-                          <X className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
+                          <X className={`w-3.5 h-3.5 shrink-0 mt-0.5 text-slate-400`} />
                         )}
                         <span
                           className={`leading-snug ${
-                            item.included
-                              ? isDark
-                                ? 'text-slate-200'
-                                : 'text-[#17191D]'
-                              : isDark
-                              ? 'text-slate-500'
-                              : 'text-slate-400'
+                            item.included ? 'text-[#17191D]' : 'text-slate-400'
                           }`}
                         >
                           {item.text}
@@ -1250,7 +1094,7 @@ export default function PricingPage() {
                         {item.badge && (
                           <span
                             className={`px-1 py-0.2 rounded text-[8px] font-black shrink-0 ${
-                              item.badgeColor || (isDark ? 'bg-[#5145CD]/30 text-[#A5B4FC] border border-[#5145CD]/40' : 'bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]')
+                              item.badgeColor || 'bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]'
                             }`}
                           >
                             {item.badge}
@@ -1264,7 +1108,7 @@ export default function PricingPage() {
                 {/* Card Footer note */}
                 <div
                   className={`mt-5 pt-3 border-t text-[10px] flex items-center justify-between ${
-                    isDark ? 'border-white/10 text-slate-400' : 'border-[#E5E7EB] text-[#667085]'
+                    'border-[#E5E7EB] text-[#667085]'
                   }`}
                 >
                   <span>{currency === 'usd' ? 'Excl. local taxes' : '+ 18% GST at checkout'}</span>
@@ -1278,7 +1122,7 @@ export default function PricingPage() {
         {/* Small Footnote below Cards (Matching Screenshot) */}
         <div
           className={`mt-6 text-center text-[11px] max-w-3xl mx-auto space-y-1 leading-relaxed ${
-            isDark ? 'text-slate-400' : 'text-[#667085]'
+            'text-[#667085]'
           }`}
         >
           <p>
@@ -1289,7 +1133,7 @@ export default function PricingPage() {
             <button
               type="button"
               onClick={scrollToMatrix}
-              className={`underline font-medium ${isDark ? 'text-slate-300 hover:text-white' : 'text-[#5145CD]'}`}
+              className={`underline font-medium ${'text-[#5145CD]'}`}
             >
               Learn more
             </button>
@@ -1319,24 +1163,18 @@ export default function PricingPage() {
         {/* FREQUENTLY ASKED QUESTIONS */}
         {/* ========================================================================= */}
         <section
-          className={`mt-20 pt-16 border-t max-w-3xl mx-auto text-left ${
-            isDark ? 'border-white/10' : 'border-[#E5E7EB]'
-          }`}
+          className="mt-20 pt-16 border-t border-[#E5E7EB] max-w-3xl mx-auto text-left"
         >
           <div className="text-center mb-10">
             <span
-              className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${
-                isDark
-                  ? 'text-[#818CF8] bg-[#1E1B4B]/80 border-[#6366F1]/40'
-                  : 'text-[#5145CD] bg-[#EEF2FF] border-[#C7D2FE]'
-              }`}
+              className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border text-[#5145CD] bg-[#EEF2FF] border-[#C7D2FE]"
             >
               Billing & Credit FAQ
             </span>
-            <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight mt-3 ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
+            <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight mt-3 text-[#17191D]`}>
               Frequently Asked Questions
             </h2>
-            <p className={`mt-2 text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
+            <p className={`mt-2 text-xs sm:text-sm text-[#667085]`}>
               Everything you need to know about Fluvia Flow plans, rollovers, and tax compliance.
             </p>
           </div>
@@ -1345,35 +1183,23 @@ export default function PricingPage() {
             {faqs.map((faq, i) => (
               <div
                 key={i}
-                className={`rounded-xl border overflow-hidden transition-all ${
-                  isDark
-                    ? 'border-white/10 bg-[#121522]'
-                    : 'border-[#E5E7EB] bg-white shadow-2xs'
-                }`}
+                className="rounded-xl border border-[#E5E7EB] bg-white shadow-2xs overflow-hidden transition-all"
               >
                 <button
                   type="button"
                   onClick={() => toggleFaq(i)}
-                  className={`w-full p-4 sm:p-5 flex items-center justify-between text-left text-xs sm:text-sm font-semibold transition-colors cursor-pointer ${
-                    isDark
-                      ? 'text-white hover:bg-white/[0.03]'
-                      : 'text-[#17191D] hover:bg-[#F7F8FA]'
-                  }`}
+                  className="w-full p-4 sm:p-5 flex items-center justify-between text-left text-xs sm:text-sm font-semibold transition-colors cursor-pointer text-[#17191D] hover:bg-[#F7F8FA]"
                 >
                   <span className="pr-4">{faq.q}</span>
                   {openFaqs[i] ? (
-                    <ChevronUp className={`w-4 h-4 shrink-0 ${isDark ? 'text-slate-400' : 'text-[#667085]'}`} />
+                    <ChevronUp className={`w-4 h-4 shrink-0 text-[#667085]`} />
                   ) : (
-                    <ChevronDown className={`w-4 h-4 shrink-0 ${isDark ? 'text-slate-400' : 'text-[#667085]'}`} />
+                    <ChevronDown className={`w-4 h-4 shrink-0 text-[#667085]`} />
                   )}
                 </button>
                 {openFaqs[i] && (
                   <div
-                    className={`px-4 pb-5 sm:px-5 text-xs leading-relaxed border-t pt-3 ${
-                      isDark
-                        ? 'border-white/10 text-slate-300'
-                        : 'border-[#E5E7EB] text-[#667085]'
-                    }`}
+                    className="px-4 pb-5 sm:px-5 text-xs leading-relaxed border-t border-[#E5E7EB] text-[#667085] pt-3"
                   >
                     {faq.a}
                   </div>
@@ -1387,13 +1213,9 @@ export default function PricingPage() {
         {/* CONCISE BILLING & COMPLIANCE FOOTER NOTE */}
         {/* ========================================================================= */}
         <div
-          className={`mt-16 p-6 rounded-2xl border text-center max-w-3xl mx-auto text-xs space-y-2 ${
-            isDark
-              ? 'bg-[#121522] border-white/10 text-slate-400'
-              : 'bg-[#F7F8FA] border-[#E5E7EB] text-[#667085]'
-          }`}
+          className="mt-16 p-6 rounded-2xl border border-[#E5E7EB] bg-[#F7F8FA] text-[#667085] text-center max-w-3xl mx-auto text-xs space-y-2"
         >
-          <div className={`flex items-center justify-center gap-2 font-semibold ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
+          <div className={`flex items-center justify-center gap-2 font-semibold text-[#17191D]`}>
             <ShieldCheck className="w-4 h-4 text-[#10B981]" />
             <span>Secure Indian Payment Gateway & Enterprise Tax Compliance</span>
           </div>
