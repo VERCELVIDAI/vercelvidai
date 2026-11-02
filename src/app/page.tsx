@@ -236,12 +236,117 @@ function VerticalPresetCard({ preset }: { preset: AdPreset }) {
   );
 }
 
+const OPENHIGGS_FEATURED_MODELS = [
+  {
+    id: 'seedance',
+    name: 'Seedance 2.5 Director',
+    provider: 'Seedance Engine',
+    badge: 'Flagship Video',
+    tagColor: 'text-[#d1fe17] bg-[#152212] border-[#d1fe17]/40',
+    description: 'Next-generation cinematic video synthesis with frame-accurate multi-angle director control and video extension.',
+    specs: {
+      maxRes: '4K Ultra HD',
+      modes: 'T2V, I2V, Frame Edit, Extend',
+      fps: '24 / 30 / 60 FPS',
+      cameraControl: 'Pan, Tilt, Zoom, Roll, Dolly',
+    },
+    samplePrompt: 'Cinematic wide tracking shot of a matte-black electric hypercar accelerating through neon-lit rainy Tokyo highway at night, anamorphic reflections, 4k 60fps.',
+  },
+  {
+    id: 'kling',
+    name: 'Kling 3.0 Motion Pro',
+    provider: 'Kling AI',
+    badge: 'Fluid Motion',
+    tagColor: 'text-pink-400 bg-pink-950/40 border-pink-500/40',
+    description: 'Master of high-speed fluid motion, physics simulation, and complex character interactions with start and end keyframes.',
+    specs: {
+      maxRes: '4K Cinema',
+      modes: 'T2V, I2V, Start/End Frames',
+      fps: '30 / 60 FPS',
+      cameraControl: 'Trajectory Path, Orbital 360',
+    },
+    samplePrompt: 'High-speed camera tracking a glass perfume bottle splashing into turquoise glacial water in super slow-motion, liquid droplets shimmering with sunlight.',
+  },
+  {
+    id: 'soul',
+    name: 'Soul Cinema 4K',
+    provider: 'Soul Engine',
+    badge: 'Photoreal Color',
+    tagColor: 'text-blue-400 bg-blue-950/40 border-blue-500/40',
+    description: 'Photorealistic film-grade color science with natural organic light scatter, depth-of-field, and emotional closeups.',
+    specs: {
+      maxRes: '4K 10-Bit Log',
+      modes: 'T2V, I2V, Master Grades',
+      fps: '24 FPS Cinematic',
+      cameraControl: 'Handheld organic, Steadicam',
+    },
+    samplePrompt: 'Intimate cinematic 35mm portrait shot of an artisan barista pouring micro-foam latte art, warm morning volumetric light through café window.',
+  },
+  {
+    id: 'wan',
+    name: 'Wan 3 Prime',
+    provider: 'Wan AI',
+    badge: 'Dynamic Range',
+    tagColor: 'text-indigo-400 bg-indigo-950/40 border-indigo-500/40',
+    description: 'Extreme dynamic range model handling high-contrast scenes, volumetric fog, explosive action, and sci-fi environments.',
+    specs: {
+      maxRes: '4K HDR',
+      modes: 'T2V, I2V, Video FX',
+      fps: '30 FPS',
+      cameraControl: 'Drone fly-through, Crane shot',
+    },
+    samplePrompt: 'FPV drone fly-through traversing deep into an ethereal bioluminescent cavern with glowing crystalline flora and floating neon particles.',
+  },
+  {
+    id: 'flux',
+    name: 'Flux 3 Ultra',
+    provider: 'Black Forest Labs',
+    badge: 'Studio Image',
+    tagColor: 'text-purple-400 bg-purple-950/40 border-purple-500/40',
+    description: 'The pinnacle of studio photography and typographical accuracy. Renders exact logos, billboards, and clean text.',
+    specs: {
+      maxRes: '4K / 8K Still',
+      modes: 'T2I, I2I, Inpaint',
+      fps: 'Ultra Still Rendering',
+      cameraControl: 'Studio Lighting, Macro 100mm',
+    },
+    samplePrompt: 'Luxury titanium watch on dark marble slab, crisp engraved brand typography on dial, sharp macro studio lighting, Hasselblad photorealism.',
+  },
+  {
+    id: 'ideogram',
+    name: 'Ideogram 4 Text Pro',
+    provider: 'Ideogram',
+    badge: 'Typography Leader',
+    tagColor: 'text-amber-400 bg-amber-950/40 border-amber-500/40',
+    description: 'Flawless poster and typographic layouts. Renders exact slogans, multi-line packaging, and brand identities with zero distortions.',
+    specs: {
+      maxRes: '4K Poster Graphic',
+      modes: 'T2I, Design Style, Lettering',
+      fps: 'Vector-Grade Raster',
+      cameraControl: 'Graphic Flatlay, Isometric',
+    },
+    samplePrompt: 'Vintage retro travel poster with bold typography stating "SUMMER ESCAPE", sunset over Amalfi coast, vibrant grain and pastel palette.',
+  },
+];
+
+const OPENHIGGS_MODELS_TICKER = [
+  'Seedance 2.5 Director', 'Seedance 2.5 Frame Edit', 'Seedance 2.5 Extend', 'Seedance 2.0 Fast', 'Seedance 2.0 Mini',
+  'Kling 3.0 Pro', 'Kling 3.0 Standard', 'Kling 3.0 Turbo', 'Kling 2.6', 'Kling 2.5', 'Kling O1', 'Kling O3',
+  'Soul Cinema 4K', 'Soul 2', 'DOP Camera Control',
+  'Wan 3 Prime', 'Wan 3.0', 'Wan 2.7', 'Wan 2.6',
+  'MiniMax Hailuo 2.3', 'MiniMax H3',
+  'Flux 3 Ultra', 'Flux 2 Pro', 'Ideogram 4', 'Recraft 4.1', 'Grok Imagine 2', 'Grok Imagine Video 1.5',
+  'PixVerse 6', 'LTX 2.5 Pro', 'LTX 2.5 Fast', 'Qwen Image 3', 'Happy Horse 1.1', 'Happy Horse 1.0', 'Z-Image Turbo',
+];
+
 export default function HomePage() {
   const [selectedHeroIndex, setSelectedHeroIndex] = useState(0);
   const [unmutedHeroIndex, setUnmutedHeroIndex] = useState<number | null>(null);
   const heroVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [galleryTab, setGalleryTab] = useState<'vertical' | 'widescreen'>('vertical');
   const showcaseRef = useRef<HTMLDivElement | null>(null);
+  const [activeModelTab, setActiveModelTab] = useState<'seedance' | 'kling' | 'soul' | 'wan' | 'flux' | 'ideogram'>('seedance');
+  const [openHiggsPrompt, setOpenHiggsPrompt] = useState('');
   const [showcaseMouse, setShowcaseMouse] = useState<{ x: number; y: number; isHovered: boolean }>({
     x: 0,
     y: 0,
@@ -275,6 +380,29 @@ export default function HomePage() {
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto space-y-5 mb-10">
+              {/* Flagship OpenHiggs Announcement Pill */}
+              <div className="flex justify-center mb-1">
+                <Link
+                  href="/openhiggs"
+                  className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#0E150F] border border-[#d1fe17]/60 text-xs text-white shadow-lg hover:border-[#d1fe17] hover:shadow-[0_0_25px_rgba(209,254,23,0.35)] transition-all group max-w-full truncate"
+                >
+                  <span className="flex h-2 w-2 relative shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d1fe17] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d1fe17]" />
+                  </span>
+                  <span className="text-[#d1fe17] font-black uppercase tracking-wider text-[10px] sm:text-[11px] shrink-0">
+                    New Studio
+                  </span>
+                  <span className="text-slate-200 font-medium truncate">
+                    OpenHiggs Studio is live with 38 Foundation Models
+                  </span>
+                  <span className="text-[10px] font-mono bg-[#d1fe17]/20 text-[#d1fe17] px-1.5 py-0.2 rounded font-bold hidden md:inline shrink-0">
+                    Seedance 2.5 • Kling 3.0 • Wan 3
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#d1fe17] group-hover:translate-x-1 transition-transform shrink-0" />
+                </Link>
+              </div>
+
               {/* Product Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EEF2FF] border border-[#C7D2FE] text-xs font-semibold text-[#5145CD] shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
@@ -295,8 +423,17 @@ export default function HomePage() {
               {/* Strong Primary Actions */}
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                 <Link
+                  href="/openhiggs"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-[#0F1607] bg-[#d1fe17] hover:bg-[#ddfe50] shadow-sm hover:shadow-[0_0_25px_rgba(209,254,23,0.4)] transition-all text-sm group"
+                >
+                  <Zap className="w-4 h-4 fill-current text-[#0F1607]" />
+                  <span>OpenHiggs Studio (38 Models)</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
                   href="/create"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-[#5145CD] hover:bg-[#4338CA] shadow-sm hover:shadow-[0_10px_25px_rgba(81,69,205,0.3)] transition-all text-sm group"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-[#5145CD] hover:bg-[#4338CA] shadow-sm hover:shadow-[0_10px_25px_rgba(81,69,205,0.3)] transition-all text-sm group"
                 >
                   <span>Start Creating Free</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -304,7 +441,7 @@ export default function HomePage() {
 
                 <Link
                   href="/templates"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-[#17191D] bg-[#FFFFFF] hover:bg-[#F7F8FA] border border-[#E5E7EB] shadow-xs hover:border-[#C7D2FE] transition-all text-sm"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-semibold text-[#17191D] bg-[#FFFFFF] hover:bg-[#F7F8FA] border border-[#E5E7EB] shadow-xs hover:border-[#C7D2FE] transition-all text-sm"
                 >
                   <Film className="w-4 h-4 text-[#5145CD]" />
                   <span>Browse Ad Templates</span>
@@ -533,39 +670,148 @@ export default function HomePage() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Header Badge & Title */}
-            <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#152117] border border-[#d1fe17]/40 text-[#d1fe17] text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(209,254,23,0.25)]">
+            <div className="text-center max-w-3xl mx-auto space-y-4 mb-10">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#152117] border border-[#d1fe17]/50 text-[#d1fe17] text-xs font-black uppercase tracking-wider shadow-[0_0_20px_rgba(209,254,23,0.3)]">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>OpenHiggs AI Integration</span>
               </div>
 
-              <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
+              <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
                 38 Foundation Models. <span className="text-[#d1fe17]">One Universal Prompt Bar.</span>
               </h2>
 
-              <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl mx-auto">
-                The free, open-source alternative to Higgsfield AI is now integrated directly into FLUVIA FLOW. Generate cinematic video and high-resolution images across 38 models with zero vendor lock-in.
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                The open creative alternative to fragmented AI subscriptions is now integrated directly into FLUVIA FLOW. Generate cinematic video and studio 4K images across 38 models with zero vendor lock-in.
               </p>
 
               <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/openhiggs"
-                  className="px-6 py-3 rounded-xl bg-[#d1fe17] hover:bg-[#ddfe51] text-[#141a02] font-black text-sm shadow-[0_0_25px_rgba(209,254,23,0.4)] transition-all flex items-center gap-2 transform hover:scale-[1.02] active:scale-98"
+                  className="px-6 py-3 rounded-xl bg-[#d1fe17] hover:bg-[#ddfe51] text-[#141a02] font-black text-sm shadow-[0_0_25px_rgba(209,254,23,0.45)] transition-all flex items-center gap-2 transform hover:scale-[1.02] active:scale-98"
                 >
-                  <Zap className="w-4 h-4 fill-current" />
+                  <Zap className="w-4 h-4 fill-current text-[#141a02]" />
                   <span>Launch OpenHiggs Studio</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-[#141a02]" />
                 </Link>
 
                 <Link
                   href="/pricing"
                   className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-sm border border-white/15 transition-all flex items-center gap-2"
                 >
-                  <span>Explore OpenHiggs Plan</span>
+                  <Tag className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Explore OpenHiggs Plan ($39/mo)</span>
                   <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
                 </Link>
               </div>
             </div>
+
+            {/* INTERACTIVE MODEL TEST-DRIVE DECK */}
+            {(() => {
+              const currentModel = OPENHIGGS_FEATURED_MODELS.find((m) => m.id === activeModelTab) || OPENHIGGS_FEATURED_MODELS[0];
+              return (
+                <div className="mb-14 rounded-3xl bg-[#121622] border-2 border-white/10 p-5 sm:p-7 shadow-2xl relative overflow-hidden">
+                  <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none border-b border-white/10">
+                    {OPENHIGGS_FEATURED_MODELS.map((model) => {
+                      const isActive = activeModelTab === model.id;
+                      return (
+                        <button
+                          key={model.id}
+                          type="button"
+                          onClick={() => {
+                            setActiveModelTab(model.id as any);
+                            setOpenHiggsPrompt(model.samplePrompt);
+                          }}
+                          className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-2 ${
+                            isActive
+                              ? 'bg-[#d1fe17] text-[#0f1505] shadow-[0_0_15px_rgba(209,254,23,0.35)]'
+                              : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/5'
+                          }`}
+                        >
+                          <span>{model.name.split(' ')[0]}</span>
+                          <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded font-semibold ${
+                            isActive ? 'bg-[#0f1505]/20 text-[#0f1505]' : 'bg-white/10 text-slate-400'
+                          }`}>
+                            {model.badge}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Active Model Details & Spec Grid */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                    <div className="lg:col-span-1 space-y-3 text-left">
+                      <div className="flex items-center gap-2">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider border ${currentModel.tagColor}`}>
+                          {currentModel.badge}
+                        </span>
+                        <span className="text-xs text-slate-400 font-mono">by {currentModel.provider}</span>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl font-black text-white">
+                        {currentModel.name}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        {currentModel.description}
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-2 pt-2 text-[11px]">
+                        <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                          <span className="text-slate-400 block text-[10px] uppercase font-bold">Max Resolution</span>
+                          <span className="text-white font-bold font-mono">{currentModel.specs.maxRes}</span>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                          <span className="text-slate-400 block text-[10px] uppercase font-bold">Frame Rates</span>
+                          <span className="text-white font-bold font-mono">{currentModel.specs.fps}</span>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-white/5 border border-white/5 col-span-2">
+                          <span className="text-slate-400 block text-[10px] uppercase font-bold">Camera Controls</span>
+                          <span className="text-slate-200 font-medium">{currentModel.specs.cameraControl}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Interactive Prompt Runner */}
+                    <div className="lg:col-span-2 bg-[#0A0D14] rounded-2xl p-5 border border-white/10 space-y-4 text-left">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-[#d1fe17]" />
+                          <span>Interactive Test-Drive Prompt:</span>
+                        </span>
+                        <span className="text-[10px] font-mono text-slate-400">
+                          Preloaded for {currentModel.name}
+                        </span>
+                      </div>
+
+                      <textarea
+                        rows={3}
+                        value={openHiggsPrompt || currentModel.samplePrompt}
+                        onChange={(e) => setOpenHiggsPrompt(e.target.value)}
+                        className="w-full bg-[#141824] rounded-xl p-3.5 text-xs text-slate-200 border border-white/10 focus:outline-none focus:border-[#d1fe17] font-mono resize-none leading-relaxed"
+                        placeholder="Enter your prompt for OpenHiggs..."
+                      />
+
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+                        <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#d1fe17] shrink-0" />
+                          <span>Auto-configures resolution, seed & camera trajectory</span>
+                        </div>
+
+                        <Link
+                          href={`/openhiggs?model=${currentModel.id}&prompt=${encodeURIComponent(openHiggsPrompt || currentModel.samplePrompt)}`}
+                          className="px-5 py-2.5 rounded-xl bg-[#d1fe17] hover:bg-[#ddfe50] text-[#0f1505] font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 shrink-0"
+                        >
+                          <Zap className="w-3.5 h-3.5 fill-current" />
+                          <span>Run in OpenHiggs Studio</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Model Capability Showcase Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -623,6 +869,24 @@ export default function HomePage() {
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Typography 4K</span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">Flux 3</span>
                 </div>
+              </div>
+            </div>
+
+            {/* 38-MODEL TICKER STRIP */}
+            <div className="mt-10 p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3 overflow-x-auto scrollbar-none">
+              <span className="text-[11px] font-mono font-bold text-[#d1fe17] shrink-0 uppercase tracking-wider flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 fill-current" />
+                <span>All 38 Models:</span>
+              </span>
+              <div className="flex items-center gap-2 shrink-0">
+                {OPENHIGGS_MODELS_TICKER.map((m, idx) => (
+                  <span
+                    key={idx}
+                    className="text-[11px] font-mono px-2 py-0.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 whitespace-nowrap"
+                  >
+                    {m}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

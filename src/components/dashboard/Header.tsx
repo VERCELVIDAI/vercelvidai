@@ -97,6 +97,19 @@ export function DashboardHeader({
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {/* OpenHiggs Studio Direct Shortcut */}
+        <Link
+          href="/openhiggs"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border border-[#d1fe17]/50 bg-[#0E150F] text-[#d1fe17] hover:bg-[#152216] hover:border-[#d1fe17] shadow-xs shrink-0 group"
+          title="OpenHiggs Studio — 38 Foundation Models"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#d1fe17] animate-pulse" />
+          <span>OpenHiggs</span>
+          <span className="text-[10px] bg-[#d1fe17]/20 text-[#d1fe17] px-1.5 py-0.2 rounded font-mono font-bold">
+            38 Models
+          </span>
+        </Link>
+
         {/* Credit Quick Display */}
         <Link
           href="/dashboard/billing"

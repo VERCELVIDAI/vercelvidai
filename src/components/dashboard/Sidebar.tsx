@@ -91,6 +91,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
 
   const creationItems: SidebarNavItem[] = [
     { label: 'Overview', href: '/dashboard', icon: Home },
+    { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap, badge: '38 Models' },
     { label: 'Create', href: '/create', icon: Plus },
     { label: 'Video Studio', href: '/create?mode=video', icon: Video, badge: '15 cr' },
     { label: 'Image Studio', href: '/create?mode=image', icon: ImageIcon, badge: '5 cr' },
@@ -155,7 +156,9 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             {!collapsed && item.badge && (
               <span
                 className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium shrink-0 ${
-                  item.badge.includes('cr')
+                  item.badge === '38 Models'
+                    ? 'bg-[#121a10] text-[#d1fe17] border border-[#d1fe17]/40 font-bold shadow-xs'
+                    : item.badge.includes('cr')
                     ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20'
                     : 'bg-[#F7F8FA] text-[#667085] border border-[#E5E7EB]'
                 }`}

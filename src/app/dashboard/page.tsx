@@ -239,76 +239,184 @@ export default function DashboardPage() {
             </div>
           </div>
 
+          {/* ========================================================================= */}
+          {/* FLAGSHIP OPENHIGGS STUDIO HERO & QUICK-GENERATOR */}
+          {/* ========================================================================= */}
+          <div className="relative rounded-3xl p-6 sm:p-7 bg-[#0B0F17] text-white border-2 border-[#d1fe17]/40 shadow-[0_10px_35px_rgba(209,254,23,0.12)] overflow-hidden">
+            {/* Background Glow Accents */}
+            <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#d1fe17]/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#5145CD]/20 blur-3xl" />
+
+            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-3 max-w-2xl">
+                {/* Status Badges */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#152212] border border-[#d1fe17]/50 text-[#d1fe17] text-[11px] font-black uppercase tracking-wider shadow-xs">
+                    <span className="w-2 h-2 rounded-full bg-[#d1fe17] animate-ping" />
+                    <span>OpenHiggs Studio</span>
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-white/10 text-slate-300 border border-white/10">
+                    38 Foundation Models Live
+                  </span>
+                  <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-[#FF2D78]/20 text-[#FF66B2] border border-[#FF2D78]/30 font-bold">
+                    Seedance 2.5 • Kling 3.0 • Wan 3 • Flux 3
+                  </span>
+                </div>
+
+                {/* Main Heading */}
+                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
+                  Direct Foundation Model Generation Engine
+                </h2>
+
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Generate broadcast-grade cinematic videos, 4K camera trajectories, and photorealistic imagery with all 38 OpenHiggs foundation models. Run via cloud credits or bring your own API key.
+                </p>
+
+                {/* Quick Model Launchers */}
+                <div className="pt-1 flex items-center gap-2 flex-wrap">
+                  <span className="text-[11px] font-bold text-slate-400">Popular Engines:</span>
+                  {[
+                    { name: 'Seedance 2.5', tag: 'Director 4K', color: 'border-[#d1fe17]/40 text-[#d1fe17] bg-[#121c10]' },
+                    { name: 'Kling 3.0 Pro', tag: 'Motion Pro', color: 'border-pink-500/40 text-pink-300 bg-pink-950/30' },
+                    { name: 'Soul Cinema', tag: 'Fluid Physics', color: 'border-blue-500/40 text-blue-300 bg-blue-950/30' },
+                    { name: 'Wan 3 Prime', tag: 'HDR Cinema', color: 'border-indigo-500/40 text-indigo-300 bg-indigo-950/30' },
+                    { name: 'Flux 3', tag: 'Typography', color: 'border-purple-500/40 text-purple-300 bg-purple-950/30' },
+                  ].map((m, idx) => (
+                    <Link
+                      key={idx}
+                      href="/openhiggs"
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-all hover:scale-105 ${m.color}`}
+                    >
+                      <span>{m.name}</span>
+                      <span className="text-[9px] opacity-75 font-mono">({m.tag})</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0 sm:w-auto">
+                <Link
+                  href="/openhiggs"
+                  className="px-6 py-3 rounded-xl bg-[#d1fe17] hover:bg-[#ddfe50] text-[#0f1505] font-black text-xs sm:text-sm shadow-[0_0_20px_rgba(209,254,23,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#0f1505]" />
+                  <span>Launch OpenHiggs Studio</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/pricing"
+                  className="px-6 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs border border-white/15 transition-all text-center flex items-center justify-center gap-1.5"
+                >
+                  <Tag className="w-3.5 h-3.5 text-slate-400" />
+                  <span>View OpenHiggs Plan ($39/mo)</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
           {/* Quick Start Creation Deck */}
           <div>
             <h2 className="text-sm font-bold uppercase tracking-wider text-[#667085] mb-3">
               What would you like to create today?
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Card 1: AI Video Ad */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Card 1: OpenHiggs Studio */}
+              <Link
+                href="/openhiggs"
+                className="p-5 rounded-2xl bg-[#0B0F17] text-white border-2 border-[#d1fe17]/40 hover:border-[#d1fe17] hover:shadow-[0_0_25px_rgba(209,254,23,0.2)] transition-all group relative overflow-hidden flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#d1fe17]/20 border border-[#d1fe17]/30 text-[#d1fe17] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-extrabold text-base text-white">OpenHiggs Studio</h3>
+                    <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#121c10] text-[#d1fe17] border border-[#d1fe17]/40">
+                      38 Models
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                    Seedance 2.5, Kling 3.0, Soul Cinema, Wan 3, and Flux 3 in one unified studio.
+                  </p>
+                </div>
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#d1fe17]">
+                  <span>Open Studio</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+              {/* Card 2: AI Video Ad */}
               <Link
                 href="/create?mode=video"
-                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden"
+                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                  <Video className="w-5 h-5" />
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <Video className="w-5 h-5" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-base text-[#17191D]">AI Video Ad</h3>
+                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
+                      15 cr / video
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
+                    Turn product URLs or descriptions into multi-scene cinematic commercial spots with Gemini Omni.
+                  </p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-[#17191D]">AI Video Ad</h3>
-                  <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
-                    15 cr / video
-                  </span>
-                </div>
-                <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
-                  Turn product URLs or descriptions into multi-scene cinematic commercial spots with Gemini Omni.
-                </p>
                 <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#5145CD]">
                   <span>Launch Video Studio</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
 
-              {/* Card 2: AI Product Photography */}
+              {/* Card 3: AI Product Photography */}
               <Link
                 href="/create?mode=image"
-                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden"
+                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                  <ImageIcon className="w-5 h-5" />
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <ImageIcon className="w-5 h-5" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-base text-[#17191D]">Product Photography</h3>
+                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
+                      5 cr / image
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
+                    Generate 4K studio-lit product imagery, advertising banners, and social catalog shots.
+                  </p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-[#17191D]">Product Photography</h3>
-                  <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
-                    5 cr / image
-                  </span>
-                </div>
-                <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
-                  Generate 4K studio-lit product imagery, advertising banners, and social catalog shots.
-                </p>
                 <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#5145CD]">
                   <span>Launch Image Studio</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
 
-              {/* Card 3: AI Voiceover */}
+              {/* Card 4: AI Voiceover */}
               <Link
                 href="/create?mode=audio"
-                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden"
+                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                  <Mic className="w-5 h-5" />
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <Mic className="w-5 h-5" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-base text-[#17191D]">AI Voice-Over</h3>
+                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
+                      2 cr / voice
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
+                    Generate studio-quality voice-overs in 29+ languages with emotional pacing and ElevenLabs.
+                  </p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-[#17191D]">AI Voice-Over</h3>
-                  <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
-                    2 cr / voice
-                  </span>
-                </div>
-                <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
-                  Generate studio-quality voice-overs in 29+ languages with emotional pacing and ElevenLabs.
-                </p>
                 <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#5145CD]">
                   <span>Launch Voice Studio</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
