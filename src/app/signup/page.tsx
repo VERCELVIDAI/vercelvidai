@@ -23,7 +23,7 @@ import {
 function SignupForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const returnUrl = searchParams.get('returnUrl') || '/dashboard';
+  const returnUrl = searchParams.get('returnUrl') || searchParams.get('redirect') || '/dashboard';
 
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');

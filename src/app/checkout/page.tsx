@@ -44,9 +44,33 @@ const INDIAN_STATES = [
 function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const itemType = searchParams.get('type') || 'pack';
-  const itemId = searchParams.get('id') || 'pack_5000';
-  const interval = (searchParams.get('interval') || 'month') as 'month' | 'year';
+
+  // Intelligent parameter parsing for any link format (?plan=..., ?pack=..., ?type=...&id=...)
+  const rawPlan = searchParams.get('plan');
+  const rawPack = searchParams.get('pack');
+  const rawId = searchParams.get('id');
+  const rawType = searchParams.get('type');
+
+  const planAliases: Record<string, string> = {
+    basic: 'plan_starter',
+    starter: 'plan_starter',
+    pro: 'plan_creator',
+    plus: 'plan_creator',
+    max: 'plan_max',
+    ultra: 'plan_max',
+    teams: 'plan_business',
+    business: 'plan_business',
+    openhiggs: 'plan_openhiggs',
+    openhiggs_lite: 'plan_openhiggs_lite',
+    openhiggs_max: 'plan_openhiggs_max',
+  };
+
+  const rawTargetId = rawPlan || rawPack || rawId || '';
+  const isPlan = Boolean(rawPlan || (rawId && rawId.startsWith('plan_')) || (rawType === 'subscription') || planAliases[rawTargetId.toLowerCase()]);
+  const itemType = isPlan ? 'subscription' : 'pack';
+  const resolvedTarget = rawPlan || rawPack || rawId || (isPlan ? 'plan_openhiggs' : 'pack_5000');
+  const itemId = planAliases[resolvedTarget.toLowerCase()] || resolvedTarget;
+  const interval = (searchParams.get('interval') || 'year') as 'month' | 'year';
   const initialCoupon = searchParams.get('coupon') || searchParams.get('code') || '';
 
   const [user, setUser] = useState<any>(null);
@@ -109,7 +133,8 @@ function CheckoutContent() {
     fetch('/api/auth/me')
       .then((res) => {
         if (!res.ok) {
-          router.push(`/login?redirect=/checkout?type=${itemType}&id=${itemId}&interval=${interval}`);
+          const currentPath = `/checkout?type=${itemType}&id=${itemId}&interval=${interval}${initialCoupon ? `&coupon=${encodeURIComponent(initialCoupon)}` : ''}`;
+          router.push(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
           return;
         }
         return res.json();
@@ -127,31 +152,98 @@ function CheckoutContent() {
     // Resolve plan or pack details
     if (itemType === 'pack') {
       const packs: Record<string, any> = {
-        pack_500: { name: '500 Credits Boost', basePrice: 499, credits: 500 },
-        pack_1000: { name: '1,000 Credits Starter Pack', basePrice: 1400, credits: 1000 },
-        pack_1200: { name: '1,200 Credits Studio', basePrice: 999, credits: 1200 },
-        pack_2500: { name: '2,500 Credits Growth Pack', basePrice: 3400, credits: 2500 },
-        pack_3500: { name: '3,500 Credits Scale', basePrice: 2499, credits: 3500 },
-        pack_5000: { name: '5,000 Credits Pro Top-Up', basePrice: 6500, credits: 5000 },
-        pack_10000: { name: '10,000 Credits Agency Pack', basePrice: 12500, credits: 10000 },
-        pack_25000: { name: '25,000 Credits Enterprise Pack', basePrice: 29000, credits: 25000 },
+        pack_500: { name: '500 Credits Boost', basePrice: 499, credits: 500, desc: 'Quick top-up for fast video and image generation.' },
+        pack_1000: { name: '1,000 Credits Starter Pack', basePrice: 1500, credits: 1000, desc: 'Ideal for testing campaigns and quick creative generation tasks.' },
+        pack_1200: { name: '1,200 Credits Studio', basePrice: 999, credits: 1200, desc: 'Special edition generation credits pack.' },
+        pack_2500: { name: '2,500 Credits Growth Pack', basePrice: 3500, credits: 2500, desc: 'For regular video ad creators producing weekly social content.' },
+        pack_3500: { name: '3,500 Credits Scale', basePrice: 2499, credits: 3500, desc: 'Scale pack for high-concurrency production workflows.' },
+        pack_5000: { name: '5,000 Credits Pro Top-Up', basePrice: 6500, credits: 5000, desc: 'Most popular top-up for scaling e-commerce brands & agencies.' },
+        pack_10000: { name: '10,000 Credits Agency Pack', basePrice: 12000, credits: 10000, desc: 'Designed for production studios running high-concurrency 4K jobs.' },
+        pack_25000: { name: '25,000 Credits Enterprise Pack', basePrice: 27500, credits: 25000, desc: 'High-volume commercial pack with dedicated GPU processing queue.' },
       };
+      packs['500'] = packs.pack_500;
+      packs['1000'] = packs.pack_1000;
+      packs['2500'] = packs.pack_2500;
+      packs['5000'] = packs.pack_5000;
+      packs['10000'] = packs.pack_10000;
+      packs['25000'] = packs.pack_25000;
+
       const p = packs[itemId] || packs.pack_5000;
       setItemDetails({
         name: p.name,
-        description: 'Instant creative computing credits. Valid for all models.',
+        description: p.desc || 'Instant creative computing credits. Valid for all models.',
         basePrice: p.basePrice,
         credits: p.credits,
         isSubscription: false,
       });
     } else {
       const plans: Record<string, any> = {
-        plan_starter: { name: 'Fluvia Basic', monthly: 999, annualPerMo: 799, credits: 500, desc: '1080p Full HD exports with Fluvia Cinematic & Flux.' },
-        plan_creator: { name: 'Fluvia Pro', monthly: 2499, annualPerMo: 1999, credits: 1600, desc: '4K Ultra HD exports, priority queue & timeline editor.' },
-        plan_max: { name: 'Fluvia Max', monthly: 4999, annualPerMo: 3999, credits: 4000, desc: '4K 60fps cinema master, dedicated GPU & Gemini storyboard.' },
-        plan_business: { name: 'Fluvia Teams', monthly: 9999, annualPerMo: 7999, credits: 10000, desc: 'Multi-seat team workspace, shared wallet & custom SLA.' },
+        plan_starter: {
+          name: 'Fluvia Starter (Basic)',
+          monthly: 999,
+          annualPerMo: 799,
+          credits: 500,
+          desc: '1080p Full HD video generations with Fluvia Cinematic & Seedance 2.0 Fast.',
+        },
+        plan_creator: {
+          name: 'Fluvia Plus (Pro)',
+          monthly: 2499,
+          annualPerMo: 1999,
+          credits: 1600,
+          desc: '4K Ultra HD exports, priority queue, Kling 3.0 & timeline editor.',
+        },
+        plan_max: {
+          name: 'Fluvia Ultra (Most Popular)',
+          monthly: 4999,
+          annualPerMo: 3999,
+          credits: 4000,
+          desc: '4K 60fps cinema master, dedicated GPU queue, Gemini storyboard director.',
+        },
+        plan_business: {
+          name: 'Fluvia Teams',
+          monthly: 9999,
+          annualPerMo: 7999,
+          credits: 10000,
+          desc: 'Multi-seat team workspace, shared credits pool, dedicated capacity & SLA.',
+        },
+        plan_openhiggs_lite: {
+          name: 'OpenHiggs Lite',
+          monthly: 2499,
+          annualPerMo: 1624,
+          credits: 1500,
+          desc: '15 Core open-source AI models (Seedance 2.0 Fast, Kling 3.0 Turbo, Ideogram 4).',
+        },
+        plan_openhiggs: {
+          name: 'OpenHiggs Studio Pro',
+          monthly: 5100,
+          annualPerMo: 3315,
+          credits: 3500,
+          desc: 'Full access to all 38 OpenHiggs foundation models, Soul Cinema 4K & Seedance 2.5 Director.',
+        },
+        plan_openhiggs_max: {
+          name: 'OpenHiggs GPU Cluster Max',
+          monthly: 9999,
+          annualPerMo: 6499,
+          credits: 8000,
+          desc: 'Dedicated A100 GPU cluster priority, zero-wait queue, direct REST API & automated webhooks.',
+        },
       };
-      const pl = plans[itemId] || plans.plan_max;
+
+      plans['plan_pro'] = plans.plan_creator;
+      plans['pro'] = plans.plan_creator;
+      plans['plan_basic'] = plans.plan_starter;
+      plans['basic'] = plans.plan_starter;
+      plans['starter'] = plans.plan_starter;
+      plans['plus'] = plans.plan_creator;
+      plans['ultra'] = plans.plan_max;
+      plans['max'] = plans.plan_max;
+      plans['teams'] = plans.plan_business;
+      plans['business'] = plans.plan_business;
+      plans['openhiggs'] = plans.plan_openhiggs;
+      plans['openhiggs_lite'] = plans.plan_openhiggs_lite;
+      plans['openhiggs_max'] = plans.plan_openhiggs_max;
+
+      const pl = plans[itemId] || plans.plan_openhiggs;
       const isAnnual = interval === 'year';
       const calculatedPrice = isAnnual ? pl.annualPerMo * 12 : pl.monthly;
 
@@ -161,7 +253,9 @@ function CheckoutContent() {
         basePrice: calculatedPrice,
         credits: pl.credits,
         isSubscription: true,
-        intervalLabel: isAnnual ? `Annual (₹${pl.annualPerMo}/mo billed ₹${calculatedPrice}/yr)` : 'Monthly',
+        intervalLabel: isAnnual
+          ? `Annual (₹${pl.annualPerMo.toLocaleString('en-IN')}/mo • Billed ₹${calculatedPrice.toLocaleString('en-IN')}/yr)`
+          : `Monthly (Billed ₹${pl.monthly.toLocaleString('en-IN')}/mo)`,
       });
     }
   }, [itemType, itemId, interval, router]);
@@ -650,10 +744,82 @@ function CheckoutContent() {
                 </strong>
               </div>
 
-              {itemDetails.intervalLabel && (
+              {itemDetails.isSubscription ? (
+                <>
+                  <div className="flex items-center justify-between text-xs text-[#667085] pt-2 border-t border-[#E5E7EB]">
+                    <span>Billing Cycle:</span>
+                    <div className="inline-flex p-0.5 rounded-lg border bg-[#F1F3F5] border-[#E5E7EB]">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const url = `/checkout?type=subscription&id=${itemId}&interval=month${appliedCoupon ? `&coupon=${appliedCoupon.code}` : ''}`;
+                          router.push(url);
+                        }}
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                          interval === 'month'
+                            ? 'bg-white text-[#17191D] shadow-xs'
+                            : 'text-[#667085] hover:text-[#17191D]'
+                        }`}
+                      >
+                        Monthly
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const url = `/checkout?type=subscription&id=${itemId}&interval=year${appliedCoupon ? `&coupon=${appliedCoupon.code}` : ''}`;
+                          router.push(url);
+                        }}
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                          interval === 'year'
+                            ? 'bg-[#5145CD] text-white shadow-xs'
+                            : 'text-[#667085] hover:text-[#17191D]'
+                        }`}
+                      >
+                        <span>Annual</span>
+                        <span className="px-1 py-0.2 rounded text-[9px] bg-red-500 text-white font-black">
+                          35% OFF
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Instant Plan Switcher */}
+                  <div className="pt-2 border-t border-[#E5E7EB]">
+                    <div className="flex items-center justify-between text-xs text-[#667085] mb-1.5">
+                      <span>Select Different Plan:</span>
+                      <Link href="/pricing" className="text-[11px] font-bold text-[#5145CD] hover:underline">
+                        Pricing Matrix →
+                      </Link>
+                    </div>
+                    <select
+                      value={itemId}
+                      onChange={(e) => {
+                        const newId = e.target.value;
+                        const url = `/checkout?type=subscription&id=${newId}&interval=${interval}${appliedCoupon ? `&coupon=${appliedCoupon.code}` : ''}`;
+                        router.push(url);
+                      }}
+                      className="w-full bg-white border border-[#E5E7EB] rounded-xl px-3 py-2 text-xs font-semibold text-[#17191D] focus:outline-none focus:border-[#5145CD] cursor-pointer"
+                    >
+                      <optgroup label="Creative Studio Plans">
+                        <option value="plan_starter">Fluvia Starter (₹999/mo • 500 Credits)</option>
+                        <option value="plan_creator">Fluvia Plus (₹2,499/mo • 1,600 Credits)</option>
+                        <option value="plan_max">Fluvia Ultra (₹4,999/mo • 4,000 Credits)</option>
+                      </optgroup>
+                      <optgroup label="OpenHiggs Studio Suite (38 Foundation Models)">
+                        <option value="plan_openhiggs_lite">OpenHiggs Lite (₹2,499/mo • 1,500 Credits)</option>
+                        <option value="plan_openhiggs">OpenHiggs Studio Pro (₹5,100/mo • 3,500 Credits)</option>
+                        <option value="plan_openhiggs_max">OpenHiggs GPU Cluster Max (₹9,999/mo • 8,000 Credits)</option>
+                      </optgroup>
+                      <optgroup label="Business & Teams">
+                        <option value="plan_business">Fluvia For Teams (₹9,999/mo • 10,000 Credits)</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </>
+              ) : (
                 <div className="flex items-center justify-between text-xs text-[#667085] pt-2 border-t border-[#E5E7EB]">
-                  <span>Billing Cycle:</span>
-                  <span className="text-[#17191D] font-semibold">{itemDetails.intervalLabel}</span>
+                  <span>Package Type:</span>
+                  <span className="text-[#17191D] font-semibold">One-Time Credit Pack (Never Expires)</span>
                 </div>
               )}
             </div>

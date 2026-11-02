@@ -20,7 +20,7 @@ import {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const returnUrl = searchParams.get('returnUrl') || '/dashboard';
+  const returnUrl = searchParams.get('returnUrl') || searchParams.get('redirect') || '/dashboard';
   const useTemplate = searchParams.get('useTemplate');
 
   const queryError = searchParams.get('error');
