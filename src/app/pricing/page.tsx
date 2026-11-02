@@ -85,21 +85,42 @@ interface PlanCardData {
     text: string;
     included: boolean;
     badge?: string;
+    badgeColor?: string;
   }[];
+}
+
+interface PlanColorTheme {
+  headerGlow: string;
+  cardBorder: string;
+  titleColor: string;
+  discountBadge: string;
+  bestValueBadge?: string;
+  creditBoxBg: string;
+  creditIconColor: string;
+  creditHeaderColor: string;
+  ctaButton: string;
+  freeGensBoxBg: string;
+  freeGensHeaderColor: string;
+  freeGensBadge: string;
+  unlimitedBoxBg: string;
+  unlimitedHeaderColor: string;
+  unlimitedBadge: string;
 }
 
 export default function PricingPage() {
   const router = useRouter();
 
-  // Toolbar state
+  // Toolbar state: 'individual' (4 sample plans) or 'openhiggs' (3 OpenHiggs studio tiers) or 'business'
   const [activeTab, setActiveTab] = useState<'individual' | 'openhiggs' | 'business'>('individual');
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default with savings
   const [currency, setCurrency] = useState<'inr' | 'usd'>('inr'); // INR default, toggleable to USD
   const [isRecommenderOpen, setIsRecommenderOpen] = useState(false);
   const [expandedAccordions, setExpandedAccordions] = useState<Record<string, boolean>>({});
 
-  // Ultra Tier selector: 0 = 3,000, 1 = 6,000, 2 = 9,000
-  const [ultraTierIndex, setUltraTierIndex] = useState<number>(0);
+  // Pro tier selector: 600 or 900
+  const [proTierIndex, setProTierIndex] = useState<number>(0);
+  // Ultra/Max Tier selector: 0 = 1,800 / 3,000, 1 = 3,600 / 6,000, 2 = 5,400 / 9,000
+  const [maxTierIndex, setMaxTierIndex] = useState<number>(0);
 
   // Promo eligibility
   const [isEligibleForFirst20, setIsEligibleForFirst20] = useState(true);
@@ -155,384 +176,343 @@ export default function PricingPage() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Ultra Tier definitions matching < 3,000 • 6,000 • 9,000 >
-  const ultraTiers = [
+  // Max / Ultra Tier definitions matching sample image < 1,800 • 3,600 • 5,400 > (or INR 3,000 • 6,000 • 9,000)
+  const maxTiers = [
     {
-      credits: 3000,
-      gens: 1500,
-      videos: 200,
-      usdAnnual: 99,
-      usdMonthly: 129,
-      usdStrikethrough: 129,
+      credits: 1800,
+      inrCredits: 3000,
+      gens: 900,
+      videos: 120,
+      usdAnnual: 59,
+      usdMonthly: 79,
+      usdStrikethrough: 79,
       inrAnnual: 3999,
       inrMonthly: 4999,
       inrStrikethrough: 4999,
     },
     {
-      credits: 6000,
-      gens: 3000,
-      videos: 400,
-      usdAnnual: 189,
-      usdMonthly: 249,
-      usdStrikethrough: 249,
+      credits: 3600,
+      inrCredits: 6000,
+      gens: 1800,
+      videos: 240,
+      usdAnnual: 119,
+      usdMonthly: 149,
+      usdStrikethrough: 149,
       inrAnnual: 7499,
       inrMonthly: 9499,
       inrStrikethrough: 9499,
     },
     {
-      credits: 9000,
-      gens: 4500,
-      videos: 600,
-      usdAnnual: 269,
-      usdMonthly: 349,
-      usdStrikethrough: 349,
+      credits: 5400,
+      inrCredits: 9000,
+      gens: 2700,
+      videos: 360,
+      usdAnnual: 179,
+      usdMonthly: 219,
+      usdStrikethrough: 219,
       inrAnnual: 10999,
       inrMonthly: 13999,
       inrStrikethrough: 13999,
     },
   ];
 
-  const currentUltraTier = ultraTiers[ultraTierIndex];
+  const currentMaxTier = maxTiers[maxTierIndex];
 
-  // All Plans Definition
+  // Distinct Color Themes for each card in Light Mode
+  const planColorThemes: Record<string, PlanColorTheme> = {
+    plan_starter: {
+      headerGlow: 'bg-gradient-to-b from-slate-100/90 via-slate-50/40 to-white',
+      cardBorder: 'border border-slate-300 hover:border-slate-500 shadow-sm hover:shadow-md',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-slate-100 text-slate-700 border border-slate-200',
+      creditBoxBg: 'bg-[#F8F9FA] border border-[#E5E7EB]',
+      creditIconColor: 'text-slate-600',
+      creditHeaderColor: 'text-[#17191D]',
+      ctaButton: 'bg-white hover:bg-slate-50 text-[#17191D] font-extrabold border-2 border-slate-300 hover:border-slate-800 shadow-xs',
+      freeGensBoxBg: 'bg-[#F8F9FA] border border-[#E5E7EB]',
+      freeGensHeaderColor: 'text-emerald-800',
+      freeGensBadge: 'bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]',
+      unlimitedBoxBg: 'bg-[#F8F9FA] border border-[#E5E7EB]',
+      unlimitedHeaderColor: 'text-slate-800',
+      unlimitedBadge: 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]',
+    },
+    plan_creator: {
+      headerGlow: 'bg-gradient-to-b from-lime-100/90 via-lime-50/30 to-white',
+      cardBorder: 'border-2 border-[#84CC16] hover:border-[#65A30D] shadow-md shadow-lime-500/10 hover:shadow-xl',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-[#FF1F66] text-white font-black',
+      creditBoxBg: 'bg-lime-50/70 border border-lime-200',
+      creditIconColor: 'text-lime-700',
+      creditHeaderColor: 'text-lime-900',
+      ctaButton: 'bg-[#CCFF00] hover:bg-[#B8E600] text-black font-black shadow-md shadow-lime-500/25',
+      freeGensBoxBg: 'bg-lime-50/50 border border-lime-200',
+      freeGensHeaderColor: 'text-emerald-900',
+      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
+      unlimitedBoxBg: 'bg-lime-50/50 border border-lime-200',
+      unlimitedHeaderColor: 'text-lime-950',
+      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+    },
+    plan_max: {
+      headerGlow: 'bg-gradient-to-b from-pink-100/90 via-purple-50/30 to-white',
+      cardBorder: 'border-2 border-[#FF1F66] shadow-xl shadow-pink-500/15 ring-2 ring-pink-400/20 lg:-translate-y-2',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-[#FF1F66] text-white font-black',
+      bestValueBadge: 'bg-[#0284C7] text-white font-black',
+      creditBoxBg: 'bg-pink-50/70 border border-pink-200',
+      creditIconColor: 'text-pink-600',
+      creditHeaderColor: 'text-pink-950',
+      ctaButton: 'bg-gradient-to-r from-[#FF1F66] via-[#E11D48] to-[#D946EF] hover:opacity-95 text-white font-black shadow-lg shadow-pink-500/30',
+      freeGensBoxBg: 'bg-pink-50/40 border border-pink-200',
+      freeGensHeaderColor: 'text-pink-950',
+      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
+      unlimitedBoxBg: 'bg-pink-50/40 border border-pink-200',
+      unlimitedHeaderColor: 'text-pink-950',
+      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+    },
+    plan_business: {
+      headerGlow: 'bg-gradient-to-b from-blue-100/90 via-blue-50/30 to-white',
+      cardBorder: 'border-2 border-blue-500 hover:border-blue-600 shadow-md shadow-blue-500/15',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-[#FF1F66] text-white font-black',
+      creditBoxBg: 'bg-blue-50/70 border border-blue-200',
+      creditIconColor: 'text-blue-700',
+      creditHeaderColor: 'text-blue-950',
+      ctaButton: 'bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:bg-[#1D4ED8] text-white font-black shadow-md shadow-blue-500/30',
+      freeGensBoxBg: 'bg-blue-50/50 border border-blue-200',
+      freeGensHeaderColor: 'text-blue-900',
+      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
+      unlimitedBoxBg: 'bg-blue-50/50 border border-blue-200',
+      unlimitedHeaderColor: 'text-blue-900',
+      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+    },
+    // OpenHiggs Studio Color Themes
+    plan_openhiggs_lite: {
+      headerGlow: 'bg-gradient-to-b from-cyan-100/90 via-cyan-50/30 to-white',
+      cardBorder: 'border-2 border-cyan-400 hover:border-cyan-500 shadow-md shadow-cyan-500/10',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-[#FF1F66] text-white font-black',
+      bestValueBadge: 'bg-cyan-600 text-white font-black',
+      creditBoxBg: 'bg-cyan-50/70 border border-cyan-200',
+      creditIconColor: 'text-cyan-700',
+      creditHeaderColor: 'text-cyan-950',
+      ctaButton: 'bg-gradient-to-r from-cyan-600 to-teal-600 hover:opacity-95 text-white font-black shadow-md shadow-cyan-500/25',
+      freeGensBoxBg: 'bg-cyan-50/50 border border-cyan-200',
+      freeGensHeaderColor: 'text-cyan-950',
+      freeGensBadge: 'bg-cyan-100 text-cyan-900 font-extrabold border border-cyan-300',
+      unlimitedBoxBg: 'bg-cyan-50/50 border border-cyan-200',
+      unlimitedHeaderColor: 'text-cyan-950',
+      unlimitedBadge: 'bg-cyan-100 text-cyan-900 font-extrabold',
+    },
+    plan_openhiggs: {
+      headerGlow: 'bg-gradient-to-b from-emerald-100/95 via-emerald-50/40 to-white',
+      cardBorder: 'border-2 border-[#059669] shadow-xl shadow-emerald-500/20 ring-2 ring-emerald-500/20 lg:-translate-y-2',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-[#FF1F66] text-white font-black',
+      bestValueBadge: 'bg-emerald-600 text-white font-black',
+      creditBoxBg: 'bg-emerald-50/80 border border-emerald-300',
+      creditIconColor: 'text-emerald-700',
+      creditHeaderColor: 'text-emerald-950',
+      ctaButton: 'bg-[#059669] hover:bg-[#047857] text-white font-black shadow-lg shadow-emerald-600/30',
+      freeGensBoxBg: 'bg-emerald-50/60 border border-emerald-200',
+      freeGensHeaderColor: 'text-emerald-950',
+      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
+      unlimitedBoxBg: 'bg-emerald-50/60 border border-emerald-200',
+      unlimitedHeaderColor: 'text-emerald-950',
+      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+    },
+    plan_openhiggs_max: {
+      headerGlow: 'bg-gradient-to-b from-purple-100/90 via-purple-50/30 to-white',
+      cardBorder: 'border-2 border-purple-500 hover:border-purple-600 shadow-lg shadow-purple-500/15',
+      titleColor: 'text-[#17191D]',
+      discountBadge: 'bg-[#FF1F66] text-white font-black',
+      bestValueBadge: 'bg-purple-700 text-white font-black',
+      creditBoxBg: 'bg-purple-50/70 border border-purple-200',
+      creditIconColor: 'text-purple-700',
+      creditHeaderColor: 'text-purple-950',
+      ctaButton: 'bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:opacity-95 text-white font-black shadow-md shadow-purple-500/25',
+      freeGensBoxBg: 'bg-purple-50/50 border border-purple-200',
+      freeGensHeaderColor: 'text-purple-950',
+      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
+      unlimitedBoxBg: 'bg-purple-50/50 border border-purple-200',
+      unlimitedHeaderColor: 'text-purple-950',
+      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+    },
+  };
+
+  // All Plans Data
   const plansData: PlanCardData[] = [
+    // 1. BASIC / STARTER
     {
       id: 'plan_starter',
-      title: 'STARTER',
-      subtitle: 'For first-time AI creators and testing video ad concepts',
+      title: 'BASIC',
+      subtitle: 'For first-time AI creators',
       category: 'individual',
-      usdPriceAnnual: 15,
-      usdPriceMonthly: 15,
+      usdPriceAnnual: 9,
+      usdPriceMonthly: 9,
       inrPriceAnnual: 799,
       inrPriceMonthly: 999,
-      creditsMonthly: currency === 'usd' ? 200 : 500,
-      creditsLabel: currency === 'usd' ? '200 credits/mo.' : '500 credits/mo.',
+      creditsMonthly: currency === 'usd' ? 120 : 500,
+      creditsLabel: currency === 'usd' ? '120 credits/mo.' : '500 credits/mo.',
       creditsLines: [
-        '= 100 Nano Banana Pro Generations',
-        '~ 11 Seedance 2.0 Fast videos',
+        currency === 'usd' ? '= 60 Nano Banana Pro Generations' : '= 100 Nano Banana Pro Generations',
+        currency === 'usd' ? '~ 7 Seedance 2.0 Fast videos' : '~ 11 Seedance 2.0 Fast videos',
       ],
-      fixedCreditsNote: currency === 'usd' ? 'Fixed 200 credits/mo' : 'Fixed 500 credits/mo',
-      ctaText: 'Get Starter',
+      fixedCreditsNote: currency === 'usd' ? 'Fixed amount of 120 credits/mo' : 'Fixed amount of 500 credits/mo',
+      ctaText: 'Get Basic',
       freeGensBox: {
-        header: 'MODELS & CAPABILITIES',
+        header: 'FREE GENERATIONS',
         items: [
-          { name: 'Seedance 2.0 Fast', resBadge: '1080p', gensBadge: 'Included', included: true },
-          { name: 'Genjutsu Lite', resBadge: '720p', gensBadge: 'Included', included: true },
-          { name: 'Higgsfield Ads Studio', gensBadge: '10 free gens', included: true },
-          { name: 'ElevenLabs Voice Sync', gensBadge: 'Standard', included: true },
+          { name: 'Genjutsu Lite', resBadge: '1080p', gensBadge: '5 free gens', included: true },
+          { name: 'Higgsfield AI Influencer', gensBadge: '10 free gens', included: true },
+          { name: 'Higgsfield Genjutsu', gensBadge: 'No free gens', included: false },
         ],
       },
       unlimitedGensBox: {
-        header: 'PERKS & SPECS',
+        header: 'UNLIMITED & FREE GENS',
         items: [
-          { name: 'Nano Banana 2', unlimitedBadge: 'Standard speed', included: true },
-          { name: 'Fluvia Cinematic HD', resBadge: '1080p', unlimitedBadge: 'Included', included: true },
-          { name: 'Runway Gen-3 Alpha', unlimitedBadge: 'Priority Queue', included: false },
-        ],
-        extraCount: 3,
-        extraItems: [
+          { name: 'Nano Banana Pro', unlimitedBadge: 'No unlimited', included: false },
           { name: 'Seedream 5.0 Pro', unlimitedBadge: 'No unlimited', included: false },
-          { name: 'Luma Ray Motion', unlimitedBadge: 'No unlimited', included: false },
-          { name: 'Director Storyboard Mode', unlimitedBadge: 'Pro only', included: false },
+          { name: 'GPT Image 2.5', unlimitedBadge: 'No unlimited', included: false },
+          { name: 'Seedance 2.5', unlimitedBadge: 'No unlimited', included: false },
+        ],
+        extraCount: 2,
+        extraItems: [
+          { name: 'Luma Ray Motion', unlimitedBadge: 'Standard', included: false },
+          { name: 'ElevenLabs Voice Sync', unlimitedBadge: 'Standard', included: false },
         ],
       },
       bottomChecklist: [
-        { text: 'Parallel generations: up to 2 Videos, 4 Images', included: true },
+        { text: 'Parallel generations: up to 2 Videos, 2 Images', included: true },
         { text: 'Access to Seedance 2.0 Fast & 2.0 Mini', included: true },
-        { text: '1080p Full HD video exports with no watermark', included: true },
-        { text: 'Full commercial advertising rights', included: true },
+        { text: 'Access to selected models & features', included: false },
         { text: 'Early access to advanced AI features', included: false },
+        { text: 'Access to unlimited marketplace', included: false },
         { text: 'Lowest cost per credit', included: false },
       ],
     },
+    // 2. PRO / PLUS
     {
       id: 'plan_creator',
-      title: 'PLUS',
-      subtitle: 'For everyday AI creation and scaling social video campaigns',
+      title: 'PRO',
+      subtitle: 'For everyday AI creation',
       category: 'individual',
-      discountBadge: '20% OFF',
-      usdPriceAnnual: 39,
-      usdPriceMonthly: 49,
-      usdStrikethrough: 49,
+      discountBadge: '21% OFF',
+      usdPriceAnnual: 23,
+      usdPriceMonthly: 29,
+      usdStrikethrough: 29,
       inrPriceAnnual: 1999,
       inrPriceMonthly: 2499,
       inrStrikethrough: 2499,
-      creditsMonthly: currency === 'usd' ? 1000 : 1600,
-      creditsLabel: currency === 'usd' ? '1,000 credits/mo.' : '1,600 credits/mo.',
+      creditsMonthly: currency === 'usd' ? (proTierIndex === 0 ? 600 : 900) : 1600,
+      creditsLabel: currency === 'usd' ? `${proTierIndex === 0 ? '600' : '900'} credits/mo.` : '1,600 credits/mo.',
       creditsLines: [
-        '= 500 Nano Banana Pro Generations',
-        '~ 67 Seedance 2.5 videos',
+        currency === 'usd' ? '= 300 Nano Banana Pro Generations' : '= 500 Nano Banana Pro Generations',
+        currency === 'usd' ? '~ 40 Seedance 2.5 videos' : '~ 67 Seedance 2.5 videos',
       ],
-      fixedCreditsNote: currency === 'usd' ? 'Fixed 1,000 credits/mo' : 'Fixed 1,600 credits/mo',
-      ctaText: 'Get Plus',
+      fixedCreditsNote: currency === 'usd' ? `Selected allowance: ${proTierIndex === 0 ? '600' : '900'} credits/mo` : 'Fixed amount of 1,600 credits/mo',
+      ctaText: 'Get Pro',
       freeGensBox: {
-        header: 'MODELS & CAPABILITIES',
+        header: 'FREE GENERATIONS',
         items: [
-          { name: 'Seedance 2.5 Cinema', resBadge: '4K Ultra', gensBadge: 'Included', included: true },
-          { name: 'Kling 3.0 Turbo', resBadge: '2K', gensBadge: 'Included', included: true },
+          { name: 'Genjutsu Lite', resBadge: '1080p', gensBadge: '5 free gens', included: true },
           { name: 'Higgsfield AI Influencer', gensBadge: '30 free gens', included: true },
-          { name: 'Higgsfield Ads Studio', gensBadge: 'Unlimited', included: true },
+          { name: 'Higgsfield Genjutsu', resBadge: '720p', gensBadge: '3 free gens', included: true },
         ],
       },
       unlimitedGensBox: {
-        header: 'PERKS & SPECS',
-        items: [
-          { name: 'Nano Banana 2', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
-          { name: 'Kling 3.0', unlimitedBadge: '7-day unlimited', included: true },
-          { name: 'Seedream 5.0 Pro', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
-        ],
-        extraCount: 4,
-        extraItems: [
-          { name: 'Luma Ray Motion', unlimitedBadge: '7-day unlimited', included: true },
-          { name: 'Runway Gen-3 Alpha', resBadge: '1080p', unlimitedBadge: 'Priority Queue', included: true },
-          { name: 'ElevenLabs Voice Sync', unlimitedBadge: 'Multilingual', included: true },
-          { name: 'Ad Studio Templates', unlimitedBadge: 'Full Library', included: true },
-        ],
-      },
-      bottomChecklist: [
-        { text: 'Unlimited paid parallel generations', included: true, badge: 'NEW' },
-        { text: 'Access to all Seedance models & features', included: true },
-        { text: '4K Ultra HD video exports with priority rendering', included: true },
-        { text: 'Multi-scene timeline storyboard editor', included: true },
-        { text: '10% discount on credit top-ups', included: true },
-        { text: 'Full commercial advertising rights', included: true },
-      ],
-    },
-    {
-      id: 'plan_max',
-      title: 'ULTRA',
-      subtitle: 'For performance marketing agencies and high-output teams',
-      category: 'individual',
-      discountBadge: '23% OFF',
-      bestValueBadge: 'BEST VALUE',
-      isRecommended: true,
-      usdPriceAnnual: currentUltraTier.usdAnnual,
-      usdPriceMonthly: currentUltraTier.usdMonthly,
-      usdStrikethrough: currentUltraTier.usdStrikethrough,
-      inrPriceAnnual: currentUltraTier.inrAnnual,
-      inrPriceMonthly: currentUltraTier.inrMonthly,
-      inrStrikethrough: currentUltraTier.inrStrikethrough,
-      creditsMonthly: currentUltraTier.credits,
-      creditsLabel: `${currentUltraTier.credits.toLocaleString()} credits/mo.`,
-      creditsLines: [
-        `= ${currentUltraTier.gens.toLocaleString()} Nano Banana Pro Generations`,
-        `~ ${currentUltraTier.videos} Seedance 2.5 videos`,
-      ],
-      fixedCreditsNote: `Tiered allowance: ${currentUltraTier.credits.toLocaleString()} credits/mo`,
-      ctaText: 'Get Ultra',
-      couponTag: isEligibleForFirst20 ? (currency === 'usd' ? 'Use FIRST20 for $7 OFF' : 'Use FIRST20 for ₹570 OFF') : undefined,
-      freeGensBox: {
-        header: 'VIP MODELS & CAPABILITIES',
-        items: [
-          { name: 'Fluvia Cinema Master', resBadge: '4K 60fps', gensBadge: 'VIP Lane', included: true },
-          { name: 'Seedance 2.5 Director', resBadge: '4K', gensBadge: '7-day unlimited', included: true },
-          { name: 'Kling 3.0 Pro Studio', resBadge: '4K', gensBadge: '7-day unlimited', included: true },
-          { name: 'Gemini Omni Storyboard', resBadge: '4K', gensBadge: 'VIP Dedicated', included: true },
-        ],
-      },
-      unlimitedGensBox: {
-        header: 'VIP CLUSTER PERKS',
+        header: 'UNLIMITED & FREE GENS',
         items: [
           { name: 'Nano Banana Pro', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
-          { name: 'Runway Gen-3 Alpha GPU', resBadge: '4K', unlimitedBadge: 'VIP Lane', included: true },
-          { name: 'ElevenLabs Voice Design', unlimitedBadge: 'Multilingual VIP', included: true },
+          { name: 'Seedream 5.0 Pro', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'GPT Image 2.5', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Seedance 2.5', resBadge: '720p', unlimitedBadge: '7-day unlimited', included: true },
         ],
-        extraCount: 4,
+        extraCount: 7,
         extraItems: [
-          { name: 'Seedream 5.0 Pro', resBadge: '4K', unlimitedBadge: '7-day unlimited', included: true },
-          { name: 'Cinema Master 60fps', resBadge: '4K 60fps', unlimitedBadge: 'VIP Queue', included: true },
-          { name: 'Custom Brand Kit Engine', unlimitedBadge: '15 Kits', included: true },
-          { name: 'Expedited 2-hour SLA Support', unlimitedBadge: 'Priority', included: true },
+          { name: 'Kling 3.0', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Seedance 2.0 Fast', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Luma Ray Motion Engine', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'ElevenLabs Voice Sync', unlimitedBadge: 'Multilingual', included: true },
+          { name: 'Higgsfield Ads Studio', unlimitedBadge: 'Full Library', included: true },
+          { name: 'Fast Media Processing Engine', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Priority Generation Queue', unlimitedBadge: 'VIP Fast', included: true },
         ],
       },
       bottomChecklist: [
-        { text: 'Unlimited paid parallel generations', included: true, badge: 'NEW' },
-        { text: 'Dedicated VIP priority GPU rendering lane', included: true },
-        { text: '4K 60fps Cinema Master exports & Gemini Storyboard', included: true },
-        { text: '15% discount on credit top-ups', included: true, badge: '15% OFF' },
-        { text: 'Lowest cost per credit across all models', included: true, badge: '60% CHEAPER' },
-        { text: 'Full commercial advertising rights & dedicated SLA', included: true },
+        { text: 'Unlimited paid parallel generations', included: true, badge: 'NEW', badgeColor: 'bg-[#CCFF00] text-black font-black' },
+        { text: 'Access to all Seedance models', included: true },
+        { text: 'Access to all models & features', included: true },
+        { text: 'Early access to advanced AI features', included: true },
+        { text: 'Access to unlimited marketplace', included: true },
+        { text: 'Lowest cost per credit', included: false },
       ],
     },
+    // 3. MAX / ULTRA
     {
-      id: 'plan_openhiggs_lite',
-      title: 'OPENHIGGS LITE',
-      subtitle: 'Starter open-source engine for creator video & image generation',
-      category: 'openhiggs',
-      discountBadge: '35% OFF',
-      bestValueBadge: '15 MODELS',
-      usdPriceAnnual: 19,
-      usdPriceMonthly: 29,
-      usdStrikethrough: 29,
-      inrPriceAnnual: 1624,
-      inrPriceMonthly: 2499,
-      inrStrikethrough: 2499,
-      creditsMonthly: currency === 'usd' ? 1200 : 1500,
-      creditsLabel: currency === 'usd' ? '1,200 credits/mo.' : '1,500 credits/mo.',
-      creditsLines: [
-        '= Access to 15 Core Open-Source Models',
-        '~ 100 Seedance 2.0 Fast & Kling Turbo Videos',
-      ],
-      fixedCreditsNote: 'BYOK + Standard Cloud Compute',
-      ctaText: 'Get OpenHiggs Lite',
-      freeGensBox: {
-        header: 'OPEN LITE ENGINE',
-        items: [
-          { name: 'Seedance 2.0 Fast', resBadge: '1080p', gensBadge: 'Included', included: true },
-          { name: 'Kling 3.0 Turbo', resBadge: '720p', gensBadge: 'Included', included: true },
-          { name: 'Ideogram 4', gensBadge: 'Included', included: true },
-          { name: 'Flux 3 Schnell', gensBadge: 'Included', included: true },
-        ],
-      },
-      unlimitedGensBox: {
-        header: 'MODEL ACCESS',
-        items: [
-          { name: 'Happy Horse 1.1', resBadge: '1080p', unlimitedBadge: 'Standard', included: true },
-          { name: 'LTX 2.5 Fast', unlimitedBadge: 'Standard', included: true },
-          { name: 'Recraft 4.1', unlimitedBadge: 'Included', included: true },
-        ],
-        extraCount: 4,
-        extraItems: [
-          { name: 'Wan 3 Standard', unlimitedBadge: 'Standard queue', included: true },
-          { name: 'PixVerse 6 Lite', unlimitedBadge: 'Standard', included: true },
-          { name: 'Qwen Image 3', unlimitedBadge: 'Included', included: true },
-          { name: 'Z-Image Turbo', unlimitedBadge: 'Included', included: true },
-        ],
-      },
-      bottomChecklist: [
-        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED' },
-        { text: 'Access to 15 Core open models in catalog', included: true },
-        { text: 'Parallel generations: up to 2 concurrent runs', included: true },
-        { text: '1080p Full HD video exports with zero watermarks', included: true },
-        { text: 'Full commercial rights & instant setup', included: true },
-        { text: 'Access to all 38 foundation models', included: false },
-      ],
-    },
-    {
-      id: 'plan_openhiggs',
-      title: 'OPENHIGGS STUDIO PRO',
-      subtitle: 'The complete flagship open-source AI studio engine with all 38 models',
-      category: 'openhiggs',
-      discountBadge: '35% OFF',
-      bestValueBadge: 'ALL 38 MODELS',
+      id: 'plan_max',
+      title: 'MAX',
+      subtitle: 'For ambitious AI projects',
+      category: 'individual',
+      discountBadge: '25% OFF',
+      bestValueBadge: 'BEST VALUE',
       isRecommended: true,
-      usdPriceAnnual: 39,
-      usdPriceMonthly: 61,
-      usdStrikethrough: 61,
-      inrPriceAnnual: 3315,
-      inrPriceMonthly: 5100,
-      inrStrikethrough: 5100,
-      creditsMonthly: currency === 'usd' ? 3000 : 3500,
-      creditsLabel: currency === 'usd' ? '3,000 credits/mo.' : '3,500 credits/mo.',
+      usdPriceAnnual: currentMaxTier.usdAnnual,
+      usdPriceMonthly: currentMaxTier.usdMonthly,
+      usdStrikethrough: currentMaxTier.usdStrikethrough,
+      inrPriceAnnual: currentMaxTier.inrAnnual,
+      inrPriceMonthly: currentMaxTier.inrMonthly,
+      inrStrikethrough: currentMaxTier.inrStrikethrough,
+      creditsMonthly: currency === 'usd' ? currentMaxTier.credits : currentMaxTier.inrCredits,
+      creditsLabel: currency === 'usd' ? `${currentMaxTier.credits.toLocaleString()} credits/mo.` : `${currentMaxTier.inrCredits.toLocaleString()} credits/mo.`,
       creditsLines: [
-        '= Full unrestricted access to all 38 OpenHiggs Models',
-        '~ 235 Seedance 2.5 & Kling 3.0 Pro Videos',
+        `= ${currentMaxTier.gens.toLocaleString()} Nano Banana Pro Generations`,
+        `~ ${currentMaxTier.videos} Seedance 2.5 videos`,
       ],
-      fixedCreditsNote: 'BYOK (Bring Your Own Key) + Cloud GPU acceleration',
-      ctaText: 'Get OpenHiggs Studio',
-      specialBanner: {
-        title: 'ALL 38 FOUNDATION MODELS UNLOCKED',
-        subtitle: 'Soul Cinema 4K, Seedance 2.5, Kling 3.0, Wan 3 Prime, Flux 3 Schnell',
-      },
+      fixedCreditsNote: `Selected allowance: ${(currency === 'usd' ? currentMaxTier.credits : currentMaxTier.inrCredits).toLocaleString()} credits/mo`,
+      ctaText: 'Get Max',
+      couponTag: isEligibleForFirst20 ? (currency === 'usd' ? 'Use FIRST20 for $7 OFF' : 'Use FIRST20 for ₹570 OFF') : undefined,
       freeGensBox: {
-        header: 'FLAGSHIP OPEN ENGINES',
+        header: 'FREE GENERATIONS',
         items: [
-          { name: 'Soul Cinema 4K', resBadge: '4K Ultra', gensBadge: 'Included', included: true },
-          { name: 'Seedance 2.5 Director', resBadge: '4K', gensBadge: '7-day unlimited', included: true },
-          { name: 'Kling 3.0 Motion Pro', resBadge: '2K', gensBadge: '7-day unlimited', included: true },
-          { name: 'Wan 3 Prime & Flux 3', gensBadge: 'Unlimited', included: true },
+          { name: 'Genjutsu Lite', resBadge: '1080p', gensBadge: '5 free gens', included: true },
+          { name: 'Higgsfield AI Influencer', gensBadge: '30 free gens', included: true },
+          { name: 'Higgsfield Genjutsu', resBadge: '720p', gensBadge: '3 free gens', included: true },
         ],
       },
       unlimitedGensBox: {
-        header: 'UNLIMITED & EXPANDED ACCESS',
+        header: 'UNLIMITED & FREE GENS',
         items: [
-          { name: 'Minimax Hailuo 2.3 & H3', unlimitedBadge: '7-day unlimited', included: true },
-          { name: 'LTX 2.5 Pro & Fast', unlimitedBadge: '7-day unlimited', included: true },
-          { name: 'Ideogram 4 & Recraft 4.1', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Nano Banana Pro', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Seedream 5.0 Pro', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'GPT Image 2.5', resBadge: '2K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Seedance 2.5', resBadge: '720p', unlimitedBadge: '7-day unlimited', included: true },
         ],
-        extraCount: 5,
+        extraCount: 6,
         extraItems: [
-          { name: 'Happy Horse 1.0 & 1.1', unlimitedBadge: 'Unlimited', included: true },
-          { name: 'Grok Imagine Video 1.5', unlimitedBadge: 'Priority Queue', included: true },
-          { name: 'PixVerse 6', unlimitedBadge: 'Included', included: true },
-          { name: 'Qwen Image 3 & Z-Image Turbo', unlimitedBadge: 'Unlimited', included: true },
-          { name: 'Soul 2 & DOP Model', unlimitedBadge: 'Included', included: true },
+          { name: 'Kling 3.0 Pro Studio', resBadge: '4K', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Fluvia Cinema Master 60fps', resBadge: '4K 60fps', unlimitedBadge: 'VIP Dedicated', included: true },
+          { name: 'Gemini Omni Storyboard Director', resBadge: '4K', unlimitedBadge: 'VIP Lane', included: true },
+          { name: 'Runway Gen-3 Alpha Dedicated GPU', resBadge: '4K', unlimitedBadge: 'Dedicated GPU', included: true },
+          { name: 'ElevenLabs Voice Design', unlimitedBadge: 'Multilingual VIP', included: true },
+          { name: 'Full Commercial Ad Rights', unlimitedBadge: 'Unrestricted', included: true },
         ],
       },
       bottomChecklist: [
-        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED' },
-        { text: 'Full access to all 38 OpenHiggs models in catalog', included: true },
-        { text: 'BYOK (Your own platform key) + Cloud fallback', included: true },
-        { text: 'Parallel generations: up to 4 concurrent runs', included: true },
-        { text: 'Per-model settings (aspect ratio, duration, audio)', included: true },
-        { text: '100 GB Cloud Storage & Priority VIP processing lane', included: true },
+        { text: 'Unlimited paid parallel generations', included: true, badge: 'NEW', badgeColor: 'bg-[#CCFF00] text-black font-black' },
+        { text: 'Access to all Seedance models', included: true },
+        { text: 'Access to all models & features', included: true },
+        { text: 'Early access to advanced AI features', included: true },
+        { text: 'Access to unlimited marketplace', included: true },
+        { text: 'Lowest cost per credit', included: true, badge: '60% CHEAPER', badgeColor: 'bg-[#CCFF00] text-black font-black' },
       ],
     },
-    {
-      id: 'plan_openhiggs_max',
-      title: 'OPENHIGGS GPU MAX',
-      subtitle: 'Dedicated A100 GPU cluster acceleration for high-volume studio production',
-      category: 'openhiggs',
-      discountBadge: '35% OFF',
-      bestValueBadge: 'DEDICATED A100',
-      usdPriceAnnual: 77,
-      usdPriceMonthly: 119,
-      usdStrikethrough: 119,
-      inrPriceAnnual: 6499,
-      inrPriceMonthly: 9999,
-      inrStrikethrough: 9999,
-      creditsMonthly: currency === 'usd' ? 7000 : 8000,
-      creditsLabel: currency === 'usd' ? '7,000 credits/mo.' : '8,000 credits/mo.',
-      creditsLines: [
-        '= Dedicated A100 GPU Cluster Acceleration',
-        '~ 530 Ultra HD 4K 60fps Cinema Videos',
-      ],
-      fixedCreditsNote: 'Instant zero-queue cluster GPU processing',
-      ctaText: 'Get OpenHiggs Max',
-      specialBanner: {
-        title: 'DEDICATED A100 COMPUTE CLUSTER',
-        subtitle: 'Zero-wait rendering & direct automated API access',
-      },
-      freeGensBox: {
-        header: 'CLUSTER PIPELINE',
-        items: [
-          { name: 'Dedicated A100 Pool', resBadge: '8x A100', gensBadge: 'Zero Queue', included: true },
-          { name: 'Soul Cinema 4K 60fps', resBadge: '4K 60fps', gensBadge: 'Unlimited', included: true },
-          { name: 'Seedance 2.5 RAW ProRes', resBadge: 'ProRes', gensBadge: 'Unlimited', included: true },
-          { name: 'Kling 3.0 Pro Studio Lane', resBadge: 'VIP Lane', gensBadge: 'Instant', included: true },
-        ],
-      },
-      unlimitedGensBox: {
-        header: 'ENTERPRISE CAPABILITIES',
-        items: [
-          { name: 'Full 38 Model Unrestricted Access', unlimitedBadge: 'Unlimited', included: true },
-          { name: 'Automated REST & WebSocket API', unlimitedBadge: 'Direct Key', included: true },
-          { name: 'Team Multi-User Concurrency', unlimitedBadge: '10 Seats', included: true },
-        ],
-        extraCount: 4,
-        extraItems: [
-          { name: 'Custom LoRA fine-tuning sandbox', unlimitedBadge: 'Included', included: true },
-          { name: 'Dedicated Account Engineer', unlimitedBadge: '24/7 SLA', included: true },
-          { name: 'Custom SSO & SAML Authentication', unlimitedBadge: 'Included', included: true },
-          { name: 'Shared Team Assets & Presets', unlimitedBadge: 'Unlimited', included: true },
-        ],
-      },
-      bottomChecklist: [
-        { text: 'Dedicated A100 GPU cluster acceleration lane', included: true, badge: 'A100 CLUSTER' },
-        { text: 'Full access to all 38 OpenHiggs foundation models', included: true },
-        { text: 'Zero queue rendering & highest concurrency (8 concurrent)', included: true },
-        { text: 'ProRes 4K 60fps Cinema Master exports', included: true },
-        { text: 'Direct REST API & programmatic webhooks', included: true },
-        { text: '24/7 dedicated support & 99.9% uptime SLA', included: true },
-      ],
-    },
+    // 4. FOR TEAMS (BUSINESS)
     {
       id: 'plan_business',
       title: 'FOR TEAMS',
-      subtitle: 'For agencies and marketing teams to create campaigns faster together',
-      category: 'business',
+      subtitle: 'For agencies and small teams to create faster',
+      category: 'individual', // shown in 4-col view on individual tab matching screenshot
       discountBadge: 'UP TO 30% OFF',
-      bestValueBadge: 'ENTERPRISE',
       usdPriceAnnual: 65,
       usdPriceMonthly: 85,
       inrPriceAnnual: 7999,
@@ -576,22 +556,204 @@ export default function PricingPage() {
         { text: 'Access to all features & models', included: true },
         { text: 'Dedicated capacity (SLA)', included: true },
         { text: 'Shared workspace & credit pool', included: true },
+        { text: 'Early access to advanced AI features', included: true },
         { text: 'Detailed analytics & priority support', included: true },
-        { text: 'Admin spend control & delegated access', included: true },
+        { text: 'Admin spend control', included: true },
         { text: 'Priority queue for faster task processing', included: true },
+        { text: 'Custom SSO', included: true },
+        { text: 'Delegated top-up access', included: true },
+      ],
+    },
+
+    // 5. OPENHIGGS LITE
+    {
+      id: 'plan_openhiggs_lite',
+      title: 'OPENHIGGS LITE',
+      subtitle: 'Starter open-source engine for creator video & image generation',
+      category: 'openhiggs',
+      discountBadge: '35% OFF',
+      bestValueBadge: '15 MODELS',
+      usdPriceAnnual: 19,
+      usdPriceMonthly: 29,
+      usdStrikethrough: 29,
+      inrPriceAnnual: 1624,
+      inrPriceMonthly: 2499,
+      inrStrikethrough: 2499,
+      creditsMonthly: currency === 'usd' ? 1200 : 1500,
+      creditsLabel: currency === 'usd' ? '1,200 credits/mo.' : '1,500 credits/mo.',
+      creditsLines: [
+        '= Access to 15 Core Open-Source Models',
+        '~ 100 Seedance 2.0 Fast & Kling Turbo Videos',
+      ],
+      fixedCreditsNote: 'BYOK + Standard Cloud Compute',
+      ctaText: 'Get OpenHiggs Lite',
+      freeGensBox: {
+        header: 'OPEN LITE ENGINE',
+        items: [
+          { name: 'Seedance 2.0 Fast', resBadge: '1080p', gensBadge: 'Included', included: true },
+          { name: 'Kling 3.0 Turbo', resBadge: '720p', gensBadge: 'Included', included: true },
+          { name: 'Ideogram 4', gensBadge: 'Included', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'MODEL ACCESS',
+        items: [
+          { name: 'Happy Horse 1.1', resBadge: '1080p', unlimitedBadge: 'Standard', included: true },
+          { name: 'LTX 2.5 Fast', unlimitedBadge: 'Standard', included: true },
+          { name: 'Recraft 4.1', unlimitedBadge: 'Included', included: true },
+          { name: 'Flux 3 Schnell', unlimitedBadge: 'Fast queue', included: true },
+        ],
+        extraCount: 3,
+        extraItems: [
+          { name: 'Wan 3 Standard', unlimitedBadge: 'Standard queue', included: true },
+          { name: 'PixVerse 6 Lite', unlimitedBadge: 'Standard', included: true },
+          { name: 'Qwen Image 3', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-cyan-100 text-cyan-900 font-bold' },
+        { text: 'Access to 15 Core open models in catalog', included: true },
+        { text: 'Parallel generations: up to 2 concurrent runs', included: true },
+        { text: '1080p Full HD video exports with zero watermarks', included: true },
+        { text: 'Full commercial rights & instant setup', included: true },
+        { text: 'Access to all 38 foundation models', included: false },
+      ],
+    },
+    // 6. OPENHIGGS STUDIO PRO (FLAGSHIP ₹5,100 / mo)
+    {
+      id: 'plan_openhiggs',
+      title: 'OPENHIGGS STUDIO PRO',
+      subtitle: 'The complete flagship open-source AI studio engine with all 38 foundation models',
+      category: 'openhiggs',
+      discountBadge: '35% OFF',
+      bestValueBadge: 'ALL 38 MODELS',
+      isRecommended: true,
+      usdPriceAnnual: 39,
+      usdPriceMonthly: 61,
+      usdStrikethrough: 61,
+      inrPriceAnnual: 3315,
+      inrPriceMonthly: 5100,
+      inrStrikethrough: 5100,
+      creditsMonthly: currency === 'usd' ? 3000 : 3500,
+      creditsLabel: currency === 'usd' ? '3,000 credits/mo.' : '3,500 credits/mo.',
+      creditsLines: [
+        '= Full unrestricted access to all 38 OpenHiggs Models',
+        '~ 235 Seedance 2.5 & Kling 3.0 Pro Videos',
+      ],
+      fixedCreditsNote: 'BYOK (Bring Your Own Key) + Cloud GPU acceleration',
+      ctaText: 'Get OpenHiggs Studio',
+      specialBanner: {
+        title: 'ALL 38 FOUNDATION MODELS UNLOCKED',
+        subtitle: 'Soul Cinema 4K, Seedance 2.5, Kling 3.0, Wan 3 Prime, Flux 3',
+      },
+      freeGensBox: {
+        header: 'FLAGSHIP OPEN ENGINES',
+        items: [
+          { name: 'Soul Cinema 4K', resBadge: '4K Ultra', gensBadge: 'Included', included: true },
+          { name: 'Seedance 2.5 Director', resBadge: '4K', gensBadge: '7-day unlimited', included: true },
+          { name: 'Kling 3.0 Motion Pro', resBadge: '2K', gensBadge: '7-day unlimited', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'UNLIMITED & EXPANDED ACCESS',
+        items: [
+          { name: 'Minimax Hailuo 2.3 & H3', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'LTX 2.5 Pro & Fast', unlimitedBadge: '7-day unlimited', included: true },
+          { name: 'Wan 3 Prime & Flux 3', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Ideogram 4 & Recraft 4.1', unlimitedBadge: 'Unlimited', included: true },
+        ],
+        extraCount: 5,
+        extraItems: [
+          { name: 'Happy Horse 1.0 & 1.1', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Grok Imagine Video 1.5', unlimitedBadge: 'Priority Queue', included: true },
+          { name: 'PixVerse 6', unlimitedBadge: 'Included', included: true },
+          { name: 'Qwen Image 3 & Z-Image Turbo', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Soul 2 & DOP Model', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-emerald-100 text-emerald-900 font-bold' },
+        { text: 'Full access to all 38 OpenHiggs models in catalog', included: true },
+        { text: 'BYOK (Your own platform key) + Cloud fallback', included: true },
+        { text: 'Parallel generations: up to 4 concurrent runs', included: true },
+        { text: 'Per-model settings (aspect ratio, duration, audio)', included: true },
+        { text: '100 GB Cloud Storage & Priority VIP processing lane', included: true },
+      ],
+    },
+    // 7. OPENHIGGS GPU MAX
+    {
+      id: 'plan_openhiggs_max',
+      title: 'OPENHIGGS GPU MAX',
+      subtitle: 'Dedicated A100 GPU cluster acceleration for high-volume studio production',
+      category: 'openhiggs',
+      discountBadge: '35% OFF',
+      bestValueBadge: 'DEDICATED A100',
+      usdPriceAnnual: 77,
+      usdPriceMonthly: 119,
+      usdStrikethrough: 119,
+      inrPriceAnnual: 6499,
+      inrPriceMonthly: 9999,
+      inrStrikethrough: 9999,
+      creditsMonthly: currency === 'usd' ? 7000 : 8000,
+      creditsLabel: currency === 'usd' ? '7,000 credits/mo.' : '8,000 credits/mo.',
+      creditsLines: [
+        '= Dedicated A100 GPU Cluster Acceleration',
+        '~ 530 Ultra HD 4K 60fps Cinema Videos',
+      ],
+      fixedCreditsNote: 'Instant zero-queue cluster GPU processing',
+      ctaText: 'Get OpenHiggs Max',
+      specialBanner: {
+        title: 'DEDICATED A100 COMPUTE CLUSTER',
+        subtitle: 'Zero-wait rendering & direct automated API access',
+      },
+      freeGensBox: {
+        header: 'CLUSTER PIPELINE',
+        items: [
+          { name: 'Dedicated A100 Pool', resBadge: '8x A100', gensBadge: 'Zero Queue', included: true },
+          { name: 'Soul Cinema 4K 60fps', resBadge: '4K 60fps', gensBadge: 'Unlimited', included: true },
+          { name: 'Seedance 2.5 RAW ProRes', resBadge: 'ProRes', gensBadge: 'Unlimited', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'ENTERPRISE CAPABILITIES',
+        items: [
+          { name: 'Full 38 Model Unrestricted Access', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Automated REST & WebSocket API', unlimitedBadge: 'Direct Key', included: true },
+          { name: 'Team Multi-User Concurrency', unlimitedBadge: '10 Seats', included: true },
+          { name: 'Kling 3.0 Pro Studio Lane', resBadge: 'VIP Lane', unlimitedBadge: 'Instant', included: true },
+        ],
+        extraCount: 4,
+        extraItems: [
+          { name: 'Custom LoRA fine-tuning sandbox', unlimitedBadge: 'Included', included: true },
+          { name: 'Dedicated Account Engineer', unlimitedBadge: '24/7 SLA', included: true },
+          { name: 'Custom SSO & SAML Authentication', unlimitedBadge: 'Included', included: true },
+          { name: 'Shared Team Assets & Presets', unlimitedBadge: 'Unlimited', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: 'Dedicated A100 GPU cluster acceleration lane', included: true, badge: 'A100 CLUSTER', badgeColor: 'bg-purple-100 text-purple-900 font-bold' },
+        { text: 'Full access to all 38 OpenHiggs foundation models', included: true },
+        { text: 'Zero queue rendering & highest concurrency (8 concurrent)', included: true },
+        { text: 'ProRes 4K 60fps Cinema Master exports', included: true },
+        { text: 'Direct REST API & programmatic webhooks', included: true },
+        { text: '24/7 dedicated support & 99.9% uptime SLA', included: true },
       ],
     },
   ];
 
-  const visiblePlans = plansData.filter((p) => p.category === activeTab);
+  const visiblePlans = plansData.filter((p) => {
+    if (activeTab === 'openhiggs') return p.category === 'openhiggs';
+    if (activeTab === 'business') return p.id === 'plan_business';
+    return p.category === 'individual'; // 4 sample plans
+  });
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD]">
+    <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#CCFF00] selection:text-black">
       <Header />
 
-      <main className="flex-1 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <main className="flex-1 w-full max-w-[1520px] mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* ========================================================================= */}
-        {/* TOP CONTROLS & NAVIGATION BAR */}
+        {/* TOP CONTROLS & NAVIGATION BAR (MATCHING SCREENSHOT) */}
         {/* ========================================================================= */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#E5E7EB]">
           {/* Left: Category Segmented Switcher + Promotional Pill */}
@@ -606,7 +768,7 @@ export default function PricingPage() {
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                Individual Plans
+                Individual plans
               </button>
 
               <button
@@ -614,14 +776,14 @@ export default function PricingPage() {
                 onClick={() => setActiveTab('openhiggs')}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'openhiggs'
-                    ? 'bg-white text-[#5145CD] shadow-xs font-extrabold'
-                    : 'text-[#667085] hover:text-[#5145CD]'
+                    ? 'bg-white text-emerald-700 shadow-xs font-black'
+                    : 'text-emerald-700 hover:text-emerald-950 font-bold'
                 }`}
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
-                <span>OpenHiggs Studio</span>
-                <span className="text-[10px] bg-[#EEF2FF] text-[#5145CD] px-1.5 py-0.2 rounded font-extrabold border border-[#C7D2FE]">
-                  38 Models • 35% OFF
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                <span>OpenHiggs Studio (3 Plans)</span>
+                <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-black border border-emerald-200">
+                  35% OFF
                 </span>
               </button>
 
@@ -634,7 +796,7 @@ export default function PricingPage() {
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                Business & Teams
+                Business plans
               </button>
             </div>
 
@@ -719,8 +881,8 @@ export default function PricingPage() {
               >
                 <span>Annual</span>
                 {billingInterval === 'year' && (
-                  <span className="text-[10px] font-extrabold bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] px-2 py-0.5 rounded-full shadow-xs">
-                    35% OFF
+                  <span className="text-[10px] font-black bg-[#EF4444] text-white px-2 py-0.5 rounded shadow-xs">
+                    UP TO 35% OFF
                   </span>
                 )}
               </span>
@@ -737,15 +899,15 @@ export default function PricingPage() {
         />
 
         {/* ========================================================================= */}
-        {/* PRICING CARDS GRID (LUXURY FINTECH LIQUID GLASS DESIGN) */}
+        {/* FOUR-COLUMN PRICING GRID (EXACT SCREENSHOT COLOURS, SHADOWS & HIERARCHY) */}
         {/* ========================================================================= */}
         <div
-          className={`grid gap-6 lg:gap-8 items-stretch ${
-            visiblePlans.length === 3
+          className={`grid gap-4 sm:gap-5 lg:gap-6 items-stretch ${
+            visiblePlans.length === 4
+              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+              : visiblePlans.length === 3
               ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto'
-              : visiblePlans.length === 2
-              ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto'
-              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto'
+              : 'grid-cols-1 max-w-md mx-auto'
           }`}
         >
           {visiblePlans.map((plan) => {
@@ -760,63 +922,55 @@ export default function PricingPage() {
               : (plan.inrPriceMonthly - plan.inrPriceAnnual) * 12;
             const isAccordionExpanded = !!expandedAccordions[plan.id];
 
-            const isUltra = plan.id === 'plan_max';
+            const isStarter = plan.id === 'plan_starter';
+            const isPro = plan.id === 'plan_creator';
+            const isMax = plan.id === 'plan_max';
             const isTeams = plan.id === 'plan_business';
-            const isOpenHiggs = plan.id === 'plan_openhiggs';
-            const isHighlighted = plan.isRecommended;
+
+            const theme = planColorThemes[plan.id] || planColorThemes.plan_starter;
 
             return (
               <div
                 key={plan.id}
-                className={`rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 text-left bg-white border ${
-                  isHighlighted
-                    ? 'border-2 border-[#5145CD] shadow-xl shadow-indigo-500/10 ring-2 ring-[#5145CD]/10 relative lg:-translate-y-2'
-                    : 'border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-xl hover:shadow-[#5145CD]/5 hover:-translate-y-1'
-                }`}
+                className={`rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 text-left bg-white relative overflow-hidden ${theme.cardBorder}`}
               >
-                {/* Floating "Most Popular" / "Best Value" Ribbon for Highlighted Cards */}
-                {isHighlighted && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-[#5145CD] text-white text-[10px] font-extrabold uppercase tracking-widest shadow-md shadow-indigo-500/25 flex items-center gap-1.5 z-10">
-                    <Sparkles className="w-3 h-3 text-amber-300" />
-                    <span>{plan.bestValueBadge || 'MOST POPULAR'}</span>
-                  </div>
-                )}
+                {/* Colored Ambient Glow at Top matching screenshot glow tint */}
+                <div className={`absolute top-0 left-0 right-0 h-28 pointer-events-none ${theme.headerGlow}`} />
 
-                <div>
-                  {/* Card Header: Title + Discount Badges */}
+                <div className="relative z-10">
+                  {/* Card Header: Title + Discount / Value Badges */}
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-xl font-extrabold tracking-tight text-[#17191D]">
+                      <h3 className="text-xl sm:text-2xl font-black tracking-tight text-[#17191D]">
                         {plan.title}
                       </h3>
                       {plan.discountBadge && isAnnual && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-rose-50 text-rose-600 border border-rose-200">
+                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider shadow-xs ${theme.discountBadge}`}>
                           {plan.discountBadge}
                         </span>
                       )}
                     </div>
 
-                    {!isHighlighted && plan.bestValueBadge && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#F1F3F5] text-[#4B5563] border border-[#E5E7EB]">
-                        {plan.bestValueBadge}
+                    {plan.bestValueBadge && (
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-xs ${theme.bestValueBadge}`}>
+                        <span>◆</span>
+                        <span>{plan.bestValueBadge}</span>
                       </span>
                     )}
                   </div>
 
                   {/* Subtitle */}
-                  <p className="text-xs mt-1.5 min-h-[36px] leading-relaxed text-[#667085]">
+                  <p className="text-xs mt-1 min-h-[32px] leading-relaxed text-[#667085]">
                     {plan.subtitle}
                   </p>
 
-                  {/* Credit & Resource Allowance Box */}
-                  <div className="mt-4 p-3.5 rounded-xl border border-[#E5E7EB] bg-[#F8F9FA] space-y-2">
-                    <div className="flex items-center gap-2 font-extrabold text-xs text-[#17191D]">
+                  {/* 1. Credit Allowance Box (Matching Screenshot Pattern) */}
+                  <div className={`mt-3.5 p-3.5 rounded-xl border space-y-2 ${theme.creditBoxBg}`}>
+                    <div className={`flex items-center gap-1.5 font-black text-xs ${theme.creditHeaderColor}`}>
                       {isTeams ? (
-                        <Users className="w-4 h-4 text-[#5145CD] shrink-0" />
-                      ) : isOpenHiggs ? (
-                        <Cpu className="w-4 h-4 text-[#5145CD] shrink-0" />
+                        <Users className="w-3.5 h-3.5 shrink-0" />
                       ) : (
-                        <Coins className="w-4 h-4 text-[#5145CD] shrink-0" />
+                        <Coins className="w-3.5 h-3.5 shrink-0" />
                       )}
                       <span>{plan.creditsLabel}</span>
                     </div>
@@ -824,93 +978,128 @@ export default function PricingPage() {
                     <ul className="space-y-1 text-[11px] pl-1 text-[#667085]">
                       {plan.creditsLines.map((line, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
-                          <span className="text-[#5145CD] font-bold">•</span>
+                          <span className="opacity-60">•</span>
                           <span>{line}</span>
                         </li>
                       ))}
                     </ul>
 
-                    {/* Interactive Ultra Tier Selector if Ultra */}
-                    {isUltra ? (
-                      <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-between gap-1 text-[10px]">
+                    {/* Pro Slider if Pro and in USD */}
+                    {isPro && currency === 'usd' ? (
+                      <div className="pt-2 border-t border-lime-200 flex items-center justify-between gap-1 text-[10px]">
                         <button
                           type="button"
-                          onClick={() => setUltraTierIndex((prev) => (prev > 0 ? prev - 1 : 2))}
-                          className="p-1 rounded hover:bg-slate-200 text-[#5145CD] cursor-pointer"
+                          onClick={() => setProTierIndex((prev) => (prev === 0 ? 1 : 0))}
+                          className="p-0.5 rounded hover:bg-lime-200 text-lime-900 cursor-pointer"
+                        >
+                          <ChevronLeft className="w-3 h-3" />
+                        </button>
+                        <div className="flex items-center gap-2 font-mono">
+                          <button
+                            type="button"
+                            onClick={() => setProTierIndex(0)}
+                            className={`px-1.5 py-0.5 rounded font-bold cursor-pointer transition-all ${
+                              proTierIndex === 0 ? 'bg-[#CCFF00] text-black shadow-xs font-black' : 'text-lime-800'
+                            }`}
+                          >
+                            600
+                          </button>
+                          <span>•</span>
+                          <button
+                            type="button"
+                            onClick={() => setProTierIndex(1)}
+                            className={`px-1.5 py-0.5 rounded font-bold cursor-pointer transition-all ${
+                              proTierIndex === 1 ? 'bg-[#CCFF00] text-black shadow-xs font-black' : 'text-lime-800'
+                            }`}
+                          >
+                            900
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setProTierIndex((prev) => (prev === 1 ? 0 : 1))}
+                          className="p-0.5 rounded hover:bg-lime-200 text-lime-900 cursor-pointer"
+                        >
+                          <ChevronRight className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : isMax ? (
+                      /* Interactive Max Tier Slider */
+                      <div className="pt-2 border-t border-pink-200 flex items-center justify-between gap-1 text-[10px]">
+                        <button
+                          type="button"
+                          onClick={() => setMaxTierIndex((prev) => (prev > 0 ? prev - 1 : 2))}
+                          className="p-0.5 rounded hover:bg-pink-200 text-pink-900 cursor-pointer"
                           title="Previous credit tier"
                         >
-                          <ChevronLeft className="w-3.5 h-3.5" />
+                          <ChevronLeft className="w-3 h-3" />
                         </button>
 
                         <div className="flex items-center gap-1.5 font-mono">
-                          {ultraTiers.map((tier, idx) => (
+                          {maxTiers.map((tier, idx) => (
                             <button
                               key={idx}
                               type="button"
-                              onClick={() => setUltraTierIndex(idx)}
-                              className={`px-2 py-0.5 rounded font-bold cursor-pointer transition-all ${
-                                ultraTierIndex === idx
-                                  ? 'bg-[#5145CD] text-white shadow-xs'
-                                  : 'text-[#667085] hover:text-[#17191D] hover:bg-slate-200'
+                              onClick={() => setMaxTierIndex(idx)}
+                              className={`px-1.5 py-0.5 rounded font-bold cursor-pointer transition-all ${
+                                maxTierIndex === idx
+                                  ? 'bg-[#FF1F66] text-white shadow-xs'
+                                  : 'text-pink-800 hover:bg-pink-100'
                               }`}
                             >
-                              {tier.credits.toLocaleString()}
+                              {(currency === 'usd' ? tier.credits : tier.inrCredits).toLocaleString()}
                             </button>
                           ))}
                         </div>
 
                         <button
                           type="button"
-                          onClick={() => setUltraTierIndex((prev) => (prev < 2 ? prev + 1 : 0))}
-                          className="p-1 rounded hover:bg-slate-200 text-[#5145CD] cursor-pointer"
+                          onClick={() => setMaxTierIndex((prev) => (prev < 2 ? prev + 1 : 0))}
+                          className="p-0.5 rounded hover:bg-pink-200 text-pink-900 cursor-pointer"
                           title="Next credit tier"
                         >
-                          <ChevronRight className="w-3.5 h-3.5" />
+                          <ChevronRight className="w-3 h-3" />
                         </button>
                       </div>
                     ) : (
-                      <div className="pt-2 border-t border-[#E5E7EB] flex items-center gap-1.5 text-[10px] font-medium text-[#667085]">
-                        <Check className="w-3.5 h-3.5 shrink-0 text-[#10B981]" />
+                      <div className="pt-2 border-t border-[#E5E7EB] flex items-center gap-1.5 text-[10px] font-semibold text-[#667085]">
+                        <Check className="w-3 h-3 shrink-0 text-[#10B981]" />
                         <span>{plan.fixedCreditsNote}</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Pricing Display */}
+                  {/* 2. Price Section */}
                   <div className="mt-4 pb-4 border-b border-[#E5E7EB]">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
                       {isAnnual && strikethroughPrice && (
-                        <span className="text-sm line-through font-mono text-[#9CA3AF] font-bold">
+                        <span className="text-base line-through font-mono text-[#FF1F66] font-bold">
                           {currencySymbol}{strikethroughPrice.toLocaleString()}
                         </span>
                       )}
-                      <span className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-[#17191D]">
+                      <span className="text-3xl font-black font-mono tracking-tight text-[#17191D]">
                         {isTeams ? 'From ' : ''}{currencySymbol}{price.toLocaleString()}
                       </span>
                       <span className="text-xs font-medium text-[#667085]">
-                        {isTeams ? 'per seat/mo' : `per month, ${isAnnual ? 'billed annually' : 'billed monthly'}`}
+                        {isTeams ? 'per seat/month' : `per month, ${isAnnual ? 'billed annually' : 'billed monthly'}`}
                       </span>
                     </div>
 
-                    {/* FIRST20 Coupon Tag Callout on Ultra */}
+                    {/* FIRST20 Coupon Tag Callout on Max */}
                     {plan.couponTag && (
-                      <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#EEF2FF] border border-[#C7D2FE] text-[11px] text-[#5145CD] font-bold font-mono">
-                        <Tag className="w-3.5 h-3.5 text-[#5145CD] shrink-0" />
+                      <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-pink-50 border border-pink-200 text-[10px] text-pink-700 font-black font-mono">
+                        <Tag className="w-3 h-3 text-pink-600 shrink-0" />
                         <span>{plan.couponTag}</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Primary Call to Action Button */}
+                  {/* 3. Primary CTA Button (Screenshot Colors) */}
                   <div className="mt-4 space-y-2">
                     <button
                       type="button"
                       onClick={() => handleSelectPlan(plan.id)}
-                      className={`w-full py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 transform hover:scale-[1.01] active:scale-98 ${
-                        isHighlighted
-                          ? 'bg-[#5145CD] hover:bg-[#4338CA] text-white shadow-md shadow-indigo-500/25'
-                          : 'bg-[#17191D] hover:bg-black text-white shadow-xs'
-                      }`}
+                      className={`w-full py-2.5 px-4 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 transform hover:scale-[1.01] active:scale-98 ${theme.ctaButton}`}
                     >
                       <span>{plan.ctaText}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -927,41 +1116,44 @@ export default function PricingPage() {
 
                   {/* Special Banner for Teams & OpenHiggs */}
                   {plan.specialBanner && (
-                    <div className="mt-4 p-3 rounded-xl bg-[#EEF2FF] border border-[#C7D2FE] text-center">
-                      <p className="text-[11px] font-extrabold text-[#5145CD] uppercase tracking-wider flex items-center justify-center gap-1">
-                        <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
+                    <div className="mt-4 p-3 rounded-xl bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200 text-center">
+                      <p className="text-[11px] font-black text-blue-800 uppercase tracking-wider flex items-center justify-center gap-1">
+                        <Sparkles className="w-3.5 h-3.5 text-blue-600" />
                         <span>{plan.specialBanner.title}</span>
                       </p>
-                      <p className="text-[10px] text-[#5145CD]/80 mt-0.5 font-medium">
+                      <p className="text-[10px] text-blue-600 mt-0.5 font-medium">
                         {plan.specialBanner.subtitle}
                       </p>
                     </div>
                   )}
 
-                  {/* Models & Capabilities List */}
-                  <div className="mt-5 space-y-3">
-                    <div className="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-[#667085]">
-                      <span>{plan.freeGensBox.header}</span>
+                  {/* 4. Feature Box 1: FREE GENERATIONS / UNLIMITED MODELS */}
+                  <div className={`mt-4 p-3 rounded-xl border space-y-2 ${theme.freeGensBoxBg}`}>
+                    <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-wider">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-amber-500">🎁</span>
+                        <span className={theme.freeGensHeaderColor}>{plan.freeGensBox.header}</span>
+                      </div>
                       <button
                         type="button"
                         onClick={scrollToMatrix}
                         className="text-[#5145CD] hover:underline normal-case font-medium text-[10px]"
                       >
-                        Compare all
+                        Learn more
                       </button>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {plan.freeGensBox.items.map((item, i) => (
-                        <div key={i} className="flex items-center justify-between text-xs gap-2">
-                          <div className="flex items-center gap-2 truncate">
+                        <div key={i} className="flex items-center justify-between text-[11px] gap-1">
+                          <div className="flex items-center gap-1.5 truncate">
                             {item.included ? (
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                              <Check className="w-3 h-3 text-[#10B981] shrink-0" />
                             ) : (
-                              <X className="w-3.5 h-3.5 text-slate-300 shrink-0" />
+                              <X className="w-3 h-3 shrink-0 text-slate-400" />
                             )}
                             <span
-                              className={`truncate text-xs ${
+                              className={`truncate ${
                                 item.included ? 'text-[#17191D] font-medium' : 'text-slate-400'
                               }`}
                             >
@@ -971,14 +1163,14 @@ export default function PricingPage() {
 
                           <div className="flex items-center gap-1 shrink-0">
                             {item.resBadge && (
-                              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
+                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
                                 {item.resBadge}
                               </span>
                             )}
                             <span
-                              className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
+                              className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
                                 item.included
-                                  ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]'
+                                  ? theme.freeGensBadge
                                   : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                               }`}
                             >
@@ -990,23 +1182,33 @@ export default function PricingPage() {
                     </div>
                   </div>
 
-                  {/* Unlimited Perks / Extended Features Section */}
-                  <div className="mt-4 pt-4 border-t border-[#E5E7EB] space-y-2.5">
-                    <div className="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-[#667085]">
-                      <span>{plan.unlimitedGensBox.header}</span>
+                  {/* 5. Feature Box 2: UNLIMITED & FREE GENS */}
+                  <div className={`mt-3.5 p-3 rounded-xl border space-y-2 ${theme.unlimitedBoxBg}`}>
+                    <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-wider">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-blue-500 font-bold">∞</span>
+                        <span className={theme.unlimitedHeaderColor}>{plan.unlimitedGensBox.header}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={scrollToMatrix}
+                        className="text-[#5145CD] hover:underline normal-case font-medium text-[10px]"
+                      >
+                        Learn more
+                      </button>
                     </div>
 
-                    <div className="space-y-2 text-xs">
+                    <div className="space-y-1.5 text-[11px]">
                       {plan.unlimitedGensBox.items.map((item, i) => (
-                        <div key={i} className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2 truncate">
+                        <div key={i} className="flex items-center justify-between gap-1">
+                          <div className="flex items-center gap-1.5 truncate">
                             {item.included ? (
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                              <Check className="w-3 h-3 text-[#10B981] shrink-0" />
                             ) : (
-                              <X className="w-3.5 h-3.5 text-slate-300 shrink-0" />
+                              <X className="w-3 h-3 shrink-0 text-slate-400" />
                             )}
                             <span
-                              className={`truncate text-xs ${
+                              className={`truncate ${
                                 item.included ? 'text-[#17191D] font-medium' : 'text-slate-400'
                               }`}
                             >
@@ -1016,14 +1218,14 @@ export default function PricingPage() {
 
                           <div className="flex items-center gap-1 shrink-0">
                             {item.resBadge && (
-                              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
+                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
                                 {item.resBadge}
                               </span>
                             )}
                             <span
-                              className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
+                              className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
                                 item.included
-                                  ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]'
+                                  ? theme.unlimitedBadge
                                   : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                               }`}
                             >
@@ -1034,23 +1236,23 @@ export default function PricingPage() {
                       ))}
                     </div>
 
-                    {/* Expandable Extra Items */}
+                    {/* Expandable Extra Models */}
                     {plan.unlimitedGensBox.extraCount > 0 && (
                       <div className="pt-1">
                         <button
                           type="button"
                           onClick={() => toggleAccordion(plan.id)}
-                          className="w-full py-1.5 px-2 rounded-lg text-[10px] font-bold text-[#5145CD] hover:bg-[#EEF2FF] flex items-center justify-between transition-colors cursor-pointer"
+                          className="w-full py-1 px-1.5 rounded text-[10px] font-bold text-[#5145CD] hover:bg-slate-100/70 flex items-center justify-between transition-colors cursor-pointer"
                         >
                           <span>
                             {isAccordionExpanded
                               ? 'Hide extra models'
-                              : `+ ${plan.unlimitedGensBox.extraCount} more models & perks`}
+                              : `+ ${plan.unlimitedGensBox.extraCount} unlimited & free generation models`}
                           </span>
                           {isAccordionExpanded ? (
                             <ChevronUp className="w-3 h-3" />
                           ) : (
-                            <ChevronDown className="w-3 h-3" />
+                            <ChevronRight className="w-3 h-3" />
                           )}
                         </button>
 
@@ -1064,7 +1266,7 @@ export default function PricingPage() {
                                 <span className="text-[#667085] truncate">
                                   {extra.name}
                                 </span>
-                                <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-[#F7F8FA] border border-[#E5E7EB] text-[#5145CD] font-bold">
+                                <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-white border border-[#E5E7EB] text-[#5145CD] font-bold">
                                   {extra.unlimitedBadge}
                                 </span>
                               </div>
@@ -1076,11 +1278,11 @@ export default function PricingPage() {
                   </div>
                 </div>
 
-                {/* Bottom Checklist */}
-                <div className="mt-6 pt-5 border-t border-[#E5E7EB]">
-                  <ul className="space-y-2.5 text-xs text-[#667085]">
+                {/* 6. Bottom Checklist */}
+                <div className="mt-5 pt-4 border-t border-[#E5E7EB]">
+                  <ul className="space-y-2 text-[11px] text-[#667085]">
                     {plan.bottomChecklist.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
+                      <li key={idx} className="flex items-start gap-1.5">
                         {item.included ? (
                           <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0 mt-0.5" />
                         ) : (
@@ -1094,7 +1296,11 @@ export default function PricingPage() {
                           {item.text}
                         </span>
                         {item.badge && (
-                          <span className="ml-auto text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] shrink-0">
+                          <span
+                            className={`ml-auto text-[9px] font-black uppercase px-1.5 py-0.2 rounded shrink-0 ${
+                              item.badgeColor || 'bg-[#FEF08A] text-[#854D0E]'
+                            }`}
+                          >
                             {item.badge}
                           </span>
                         )}
