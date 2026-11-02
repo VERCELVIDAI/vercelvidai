@@ -54,7 +54,7 @@ interface PlanCardData {
   id: string;
   title: string;
   subtitle: string;
-  category: 'individual' | 'business';
+  category: 'individual' | 'business' | 'openhiggs';
   discountBadge?: string;
   bestValueBadge?: string;
   usdPriceAnnual: number;
@@ -425,29 +425,85 @@ export default function PricingPage() {
       ],
     },
     {
+      id: 'plan_openhiggs_lite',
+      title: 'OPENHIGGS LITE',
+      subtitle: 'Starter open-source engine for creator video & image generation',
+      category: 'openhiggs',
+      discountBadge: '35% OFF',
+      bestValueBadge: '15 MODELS',
+      usdPriceAnnual: 19,
+      usdPriceMonthly: 29,
+      usdStrikethrough: 29,
+      inrPriceAnnual: 1624,
+      inrPriceMonthly: 2499,
+      inrStrikethrough: 2499,
+      creditsMonthly: currency === 'usd' ? 1200 : 1500,
+      creditsLabel: currency === 'usd' ? '1,200 credits/mo.' : '1,500 credits/mo.',
+      creditsLines: [
+        '= Access to 15 Core Open-Source Models',
+        '~ 100 Seedance 2.0 Fast & Kling Turbo Videos',
+      ],
+      fixedCreditsNote: 'BYOK + Standard Cloud Compute',
+      ctaText: 'Get OpenHiggs Lite',
+      freeGensBox: {
+        header: 'OPEN LITE ENGINE',
+        items: [
+          { name: 'Seedance 2.0 Fast', resBadge: '720p/1080p', gensBadge: 'Included', included: true },
+          { name: 'Kling 3.0 Turbo', resBadge: '720p', gensBadge: 'Included', included: true },
+          { name: 'Ideogram 4', gensBadge: 'Included', included: true },
+          { name: 'Soul Cinema 4K', gensBadge: 'Studio tier', included: false },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'MODEL ACCESS',
+        items: [
+          { name: 'Happy Horse 1.1', resBadge: '1080p', unlimitedBadge: 'Standard', included: true },
+          { name: 'LTX 2.5 Fast', unlimitedBadge: 'Standard', included: true },
+          { name: 'Recraft 4.1', unlimitedBadge: 'Included', included: true },
+        ],
+        extraCount: 4,
+        extraItems: [
+          { name: 'Wan 3 Standard', unlimitedBadge: 'Standard queue', included: true },
+          { name: 'Flux 3 Schnell', unlimitedBadge: 'Fast queue', included: true },
+          { name: 'PixVerse 6 Lite', unlimitedBadge: 'Standard', included: true },
+          { name: 'Qwen Image 3', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-emerald-100 text-emerald-800 font-bold' },
+        { text: 'Access to 15 Core open models in catalog', included: true },
+        { text: 'Parallel generations: up to 2 concurrent runs', included: true },
+        { text: '1080p Full HD video exports with zero watermarks', included: true },
+        { text: 'Full commercial rights & instant setup', included: true },
+        { text: 'Access to all 38 foundation models', included: false },
+        { text: 'Dedicated A100 GPU cluster priority', included: false },
+      ],
+    },
+    {
       id: 'plan_openhiggs',
-      title: 'OPENHIGGS',
-      subtitle: 'Unlimited open-source AI studio engine with 38 models',
-      category: 'individual',
+      title: 'OPENHIGGS STUDIO',
+      subtitle: 'The complete open-source AI studio engine with all 38 foundation models',
+      category: 'openhiggs',
       discountBadge: '35% OFF',
       bestValueBadge: '38 MODELS',
-      usdPriceAnnual: 38,
-      usdPriceMonthly: 59,
-      usdStrikethrough: 59,
-      inrPriceAnnual: 3249,
-      inrPriceMonthly: 4999,
-      inrStrikethrough: 4999,
+      isRecommended: true,
+      usdPriceAnnual: 39,
+      usdPriceMonthly: 61,
+      usdStrikethrough: 61,
+      inrPriceAnnual: 3315,
+      inrPriceMonthly: 5100,
+      inrStrikethrough: 5100,
       creditsMonthly: currency === 'usd' ? 3000 : 3500,
       creditsLabel: currency === 'usd' ? '3,000 credits/mo.' : '3,500 credits/mo.',
       creditsLines: [
-        '= Full access to all 38 OpenHiggs Models',
-        '~ 230 Seedance 2.5 & Kling 3.0 Pro Videos',
+        '= Full unrestricted access to all 38 OpenHiggs Models',
+        '~ 235 Seedance 2.5 & Kling 3.0 Pro Videos',
       ],
       fixedCreditsNote: 'BYOK (Bring Your Own Key) + Cloud GPU acceleration',
-      ctaText: 'Get OpenHiggs Pass',
+      ctaText: 'Get OpenHiggs Studio',
       specialBanner: {
-        title: '38 FOUNDATION MODELS UNLOCKED',
-        subtitle: 'Seedance 2.5, Soul Cinema, Kling 3.0, Wan 3, Flux 3',
+        title: 'ALL 38 FOUNDATION MODELS UNLOCKED',
+        subtitle: 'Soul Cinema 4K, Seedance 2.5, Kling 3.0, Wan 3, Flux 3',
       },
       freeGensBox: {
         header: 'OPEN HIGGS ENGINE',
@@ -483,15 +539,75 @@ export default function PricingPage() {
         { text: 'Parallel generations: up to 4 concurrent runs', included: true },
         { text: 'Per-model settings (aspect ratio, duration, audio)', included: true },
         { text: 'Masonry gallery with IndexedDB browser persistence', included: true },
+        { text: '100 GB Cloud Storage & Priority VIP processing lane', included: true },
+      ],
+    },
+    {
+      id: 'plan_openhiggs_max',
+      title: 'OPENHIGGS GPU MAX',
+      subtitle: 'Dedicated A100 GPU cluster acceleration for high-volume studio production',
+      category: 'openhiggs',
+      discountBadge: '35% OFF',
+      bestValueBadge: 'DEDICATED A100',
+      usdPriceAnnual: 77,
+      usdPriceMonthly: 119,
+      usdStrikethrough: 119,
+      inrPriceAnnual: 6499,
+      inrPriceMonthly: 9999,
+      inrStrikethrough: 9999,
+      creditsMonthly: currency === 'usd' ? 7000 : 8000,
+      creditsLabel: currency === 'usd' ? '7,000 credits/mo.' : '8,000 credits/mo.',
+      creditsLines: [
+        '= Dedicated A100 GPU Cluster Acceleration',
+        '~ 530 Ultra HD 4K 60fps Cinema Videos',
+      ],
+      fixedCreditsNote: 'Instant zero-queue cluster GPU processing',
+      ctaText: 'Get OpenHiggs Max',
+      specialBanner: {
+        title: 'DEDICATED A100 COMPUTE CLUSTER',
+        subtitle: 'Zero-wait rendering & direct automated API access',
+      },
+      freeGensBox: {
+        header: 'CLUSTER PIPELINE',
+        items: [
+          { name: 'Dedicated A100 Pool', resBadge: '8x A100', gensBadge: 'Zero Queue', included: true },
+          { name: 'Soul Cinema 4K 60fps', resBadge: '4K 60fps', gensBadge: 'Unlimited', included: true },
+          { name: 'Seedance 2.5 RAW ProRes', resBadge: 'ProRes', gensBadge: 'Unlimited', included: true },
+          { name: 'Kling 3.0 Pro Studio Lane', resBadge: 'VIP Lane', gensBadge: 'Instant', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'ENTERPRISE CAPABILITIES',
+        items: [
+          { name: 'Parallel Concurrency', resBadge: '8 Runs', unlimitedBadge: 'Concurrent', included: true },
+          { name: 'Direct REST API & Webhooks', unlimitedBadge: 'Full Access', included: true },
+          { name: 'Custom LoRA Model Training', unlimitedBadge: 'Supported', included: true },
+        ],
+        extraCount: 4,
+        extraItems: [
+          { name: 'Automated Batch Render Engine', unlimitedBadge: 'Unlimited', included: true },
+          { name: '500 GB High-Speed Asset Storage', unlimitedBadge: 'Enterprise', included: true },
+          { name: 'Custom Webhook Callbacks', unlimitedBadge: 'Realtime', included: true },
+          { name: '24/7 Dedicated GPU Engineer Support', unlimitedBadge: 'Direct Slack', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: 'Full access to all 38 OpenHiggs foundation models', included: true },
+        { text: 'Dedicated A100 GPU Cluster priority execution', included: true, badge: 'A100 GPU', badgeColor: 'bg-teal-100 text-teal-800 font-bold' },
+        { text: 'Parallel generations: up to 8 concurrent runs', included: true },
+        { text: 'Cinema Master 4K 60fps & RAW ProRes exports', included: true },
+        { text: 'Direct REST API integration & webhooks', included: true },
+        { text: 'Custom LoRA weights fine-tuning support', included: true },
+        { text: '500 GB High-Speed Storage + 24/7 dedicated support', included: true },
       ],
     },
   ];
 
   const visiblePlans = activeTab === 'business'
-    ? plansData.filter((p) => p.category === 'business' || p.id === 'plan_max')
+    ? [plansData.find((p) => p.id === 'plan_business')!, plansData.find((p) => p.id === 'plan_max')!]
     : activeTab === 'openhiggs'
-    ? plansData.filter((p) => p.id === 'plan_openhiggs' || p.id === 'plan_max' || p.id === 'plan_creator')
-    : plansData.filter((p) => p.id !== 'plan_business');
+    ? plansData.filter((p) => p.category === 'openhiggs')
+    : plansData.filter((p) => p.category === 'individual');
 
   const faqs = [
     {
@@ -524,7 +640,7 @@ export default function PricingPage() {
     <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD]">
       <Header />
 
-      <main className="flex-1 w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <main className="flex-1 w-full max-w-[1560px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* ========================================================================= */}
         {/* TOP TOOLBAR (CLEAN, MINIMALIST SAAS LIGHT LAYOUT) */}
         {/* ========================================================================= */}
@@ -535,36 +651,39 @@ export default function PricingPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('individual')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'individual'
                     ? 'bg-white text-[#17191D] shadow-xs'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                Individual plans
+                Individual Plans (3)
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('openhiggs')}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === 'openhiggs'
+                    ? 'bg-white text-emerald-700 shadow-xs font-black'
+                    : 'text-emerald-700 hover:text-emerald-950 font-bold'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                <span>OpenHiggs Studio (3 Plans)</span>
+                <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-black border border-emerald-200">
+                  35% OFF
+                </span>
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('business')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'business'
                     ? 'bg-white text-[#17191D] shadow-xs'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                Business plans
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('openhiggs')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  activeTab === 'openhiggs'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-emerald-700 hover:text-emerald-950 font-extrabold'
-                }`}
-              >
-                <span>⚡ OpenHiggs Special</span>
-                <span className="text-[10px] bg-red-500 text-white px-1.5 py-0.2 rounded font-black">35% OFF</span>
+                Business & Teams (2)
               </button>
             </div>
 
@@ -671,14 +790,12 @@ export default function PricingPage() {
         {/* FOUR-COLUMN PRICING GRID (EXACT SCREENSHOT COLOURS, SHADOWS & HIERARCHY) */}
         {/* ========================================================================= */}
         <div
-          className={`grid gap-4 lg:gap-5 items-stretch ${
-            visiblePlans.length === 4
-              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-              : visiblePlans.length === 3
-              ? 'grid-cols-1 md:grid-cols-3 max-w-5xl mx-auto'
-              : visiblePlans.length === 5
-              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
-              : 'grid-cols-1 md:grid-cols-2 max-w-3xl mx-auto'
+          className={`grid gap-6 lg:gap-8 items-stretch ${
+            visiblePlans.length === 3
+              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto'
+              : visiblePlans.length === 2
+              ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto'
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto'
           }`}
         >
           {visiblePlans.map((plan) => {
@@ -698,7 +815,9 @@ export default function PricingPage() {
             const isPlus = plan.id === 'plan_creator';
             const isUltra = plan.id === 'plan_max';
             const isTeams = plan.id === 'plan_business';
+            const isOpenHiggsLite = plan.id === 'plan_openhiggs_lite';
             const isOpenHiggs = plan.id === 'plan_openhiggs';
+            const isOpenHiggsMax = plan.id === 'plan_openhiggs_max';
 
             // Distinct card styling
             let cardWrapperClass = '';
@@ -713,7 +832,7 @@ export default function PricingPage() {
               cardWrapperClass = 'bg-white border border-[#E5E7EB] hover:border-slate-400 shadow-xs hover:shadow-md transition-all';
               allowanceBoxClass = 'bg-[#F8F9FA] border border-[#E5E7EB]';
               allowanceHeaderColor = 'text-[#17191D]';
-              ctaButtonClass = 'bg-[#17191D] hover:bg-[#2B303C] text-white font-extrabold shadow-xs';
+              ctaButtonClass = 'bg-slate-900 hover:bg-slate-800 text-white font-extrabold shadow-xs';
               freeGensHeaderColor = 'text-[#17191D]';
               freeGensBoxClass = 'bg-[#F8F9FA] border border-[#E5E7EB]';
               unlimitedBoxClass = 'bg-[#F8F9FA] border border-[#E5E7EB]';
@@ -741,20 +860,36 @@ export default function PricingPage() {
               freeGensHeaderColor = 'text-blue-800';
               freeGensBoxClass = 'bg-blue-50/50 border border-blue-200';
               unlimitedBoxClass = 'bg-blue-50/50 border border-blue-200';
-            } else if (isOpenHiggs) {
-              cardWrapperClass = 'bg-white border-2 border-[#10B981] shadow-lg shadow-emerald-500/10 hover:shadow-xl hover:border-[#059669] transition-all relative';
+            } else if (isOpenHiggsLite) {
+              cardWrapperClass = 'bg-white border-2 border-emerald-300 shadow-sm hover:shadow-lg transition-all relative';
               allowanceBoxClass = 'bg-emerald-50/70 border border-emerald-200';
               allowanceHeaderColor = 'text-emerald-900 font-extrabold';
-              ctaButtonClass = 'bg-[#059669] hover:bg-[#047857] text-white font-black shadow-md shadow-emerald-600/25';
+              ctaButtonClass = 'bg-emerald-600 hover:bg-emerald-700 text-white font-black shadow-xs';
               freeGensHeaderColor = 'text-emerald-900';
               freeGensBoxClass = 'bg-emerald-50/40 border border-emerald-200/80';
               unlimitedBoxClass = 'bg-emerald-50/40 border border-emerald-200/80';
+            } else if (isOpenHiggs) {
+              cardWrapperClass = 'bg-white border-2 border-[#059669] shadow-xl shadow-emerald-500/10 ring-2 ring-emerald-500/20 lg:-translate-y-2 transition-all relative';
+              allowanceBoxClass = 'bg-emerald-50 border border-emerald-300';
+              allowanceHeaderColor = 'text-emerald-950 font-black';
+              ctaButtonClass = 'bg-[#059669] hover:bg-[#047857] text-white font-black shadow-md shadow-emerald-600/25';
+              freeGensHeaderColor = 'text-emerald-950';
+              freeGensBoxClass = 'bg-emerald-50/60 border border-emerald-200';
+              unlimitedBoxClass = 'bg-emerald-50/60 border border-emerald-200';
+            } else if (isOpenHiggsMax) {
+              cardWrapperClass = 'bg-white border-2 border-teal-600 shadow-md hover:shadow-xl transition-all relative';
+              allowanceBoxClass = 'bg-teal-50/70 border border-teal-200';
+              allowanceHeaderColor = 'text-teal-950 font-black';
+              ctaButtonClass = 'bg-teal-700 hover:bg-teal-800 text-white font-black shadow-xs';
+              freeGensHeaderColor = 'text-teal-900';
+              freeGensBoxClass = 'bg-teal-50/40 border border-teal-200/80';
+              unlimitedBoxClass = 'bg-teal-50/40 border border-teal-200/80';
             }
 
             return (
               <div
                 key={plan.id}
-                className={`rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 text-left ${cardWrapperClass}`}
+                className={`rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 text-left ${cardWrapperClass}`}
               >
                 <div>
                   {/* Card Header: Title + Discount / Value Badges */}
@@ -1118,6 +1253,36 @@ export default function PricingPage() {
             );
           })}
         </div>
+
+        {/* Highlight Banner for OpenHiggs when viewing Individual Plans */}
+        {activeTab === 'individual' && (
+          <div className="mt-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-6xl mx-auto shadow-2xs">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-sm">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-emerald-950">Looking for Open-Source Foundation Models?</h4>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    35% OFF ANNUAL
+                  </span>
+                </div>
+                <p className="text-xs text-emerald-800 mt-0.5">
+                  Explore <strong>OpenHiggs Studio</strong> with 38 models (Soul Cinema 4K, Seedance 2.5, Kling 3.0 Pro) starting at ₹2,499/mo and ₹5,100/mo.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActiveTab('openhiggs')}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
+            >
+              <span>View OpenHiggs Plans</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
 
         {/* Small Footnote below Cards (Matching Screenshot) */}
         <div

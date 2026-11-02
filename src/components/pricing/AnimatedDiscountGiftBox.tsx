@@ -23,7 +23,6 @@ interface AnimatedDiscountGiftBoxProps {
 export function AnimatedDiscountGiftBox({
   onApplyCoupon,
   billingInterval = 'year',
-  isDark = false,
 }: AnimatedDiscountGiftBoxProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -56,21 +55,15 @@ export function AnimatedDiscountGiftBox({
       {/* ========================================================================= */}
       <div className="relative mx-auto max-w-4xl mb-8 group">
         {/* Animated Aurora Glow behind the banner */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 rounded-2xl blur-xs opacity-40 group-hover:opacity-75 transition duration-500 animate-pulse" />
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 rounded-2xl blur-xs opacity-30 group-hover:opacity-50 transition duration-500 animate-pulse" />
 
-        <div
-          className={`relative flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl transition-colors shadow-md ${
-            isDark
-              ? 'bg-[#121624] border border-[#FF2D78]/30 shadow-[0_0_25px_rgba(255,45,120,0.15)] text-white'
-              : 'bg-white border border-pink-200 shadow-md text-[#17191D]'
-          }`}
-        >
+        <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl transition-colors shadow-sm bg-white border border-pink-200 text-[#17191D]">
           {/* Left: Animated 3D/SVG Gift Icon with Particles */}
           <div className="flex items-center gap-3.5 text-left">
             {/* Animated Bouncy Gift Container */}
             <div
               onClick={() => setIsOpen(true)}
-              className="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#FF2D78] via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-pink-500/30 cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300 shrink-0 group/gift"
+              className="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#FF2D78] via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-pink-500/20 cursor-pointer transform hover:scale-105 active:scale-95 transition-all duration-300 shrink-0 group/gift"
               title="Click to unwrap your welcome gift!"
             >
               {/* Shimmer overlay */}
@@ -88,26 +81,20 @@ export function AnimatedDiscountGiftBox({
 
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span
-                  className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
-                    isDark
-                      ? 'bg-[#FF2D78]/20 text-[#FF66B2] border border-[#FF2D78]/40'
-                      : 'bg-pink-100 text-pink-700 border border-pink-300'
-                  }`}
-                >
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-pink-100 text-pink-700 border border-pink-300">
                   🎁 Unlocked Welcome Gift
                 </span>
-                <span className="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-emerald-400" />
+                <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-emerald-500" />
                   <span>Instant ₹570 Discount</span>
                 </span>
               </div>
 
-              <h4 className={`text-sm sm:text-base font-extrabold mt-0.5 ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
+              <h4 className="text-sm sm:text-base font-extrabold mt-0.5 text-[#17191D]">
                 New Creator Special Voucher: <span className="text-[#FF2D78] font-mono font-black">FIRST20</span>
               </h4>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
-                Get a flat ₹570 off exclusively on the <strong className={isDark ? 'text-white' : 'text-slate-900'}>Ultra Plan</strong>. Tap the gift box to reveal and claim.
+              <p className="text-xs text-[#667085]">
+                Get a flat ₹570 off exclusively on the <strong className="text-slate-900">Ultra Plan</strong>. Tap the gift box to reveal and claim.
               </p>
             </div>
           </div>
@@ -132,28 +119,22 @@ export function AnimatedDiscountGiftBox({
       {/* ========================================================================= */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200"
           onClick={() => setIsOpen(false)}
         >
           <div
-            className={`relative w-full max-w-md rounded-3xl border shadow-2xl p-6 sm:p-8 text-center overflow-hidden animate-in zoom-in-95 duration-200 ${
-              isDark
-                ? 'bg-[#151928] border-[#FF2D78]/40 text-white shadow-[0_0_50px_rgba(255,45,120,0.25)]'
-                : 'bg-white border-pink-200 text-[#17191D]'
-            }`}
+            className="relative w-full max-w-md rounded-3xl border border-pink-200 bg-white shadow-2xl p-6 sm:p-8 text-center overflow-hidden animate-in zoom-in-95 duration-200 text-[#17191D]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Festive ambient background gradient circles */}
-            <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-pink-400/20 blur-2xl pointer-events-none" />
-            <div className="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-purple-400/20 blur-2xl pointer-events-none" />
+            <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-pink-100/60 blur-2xl pointer-events-none" />
+            <div className="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-purple-100/60 blur-2xl pointer-events-none" />
 
             {/* Close button */}
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className={`absolute top-4 right-4 p-1 rounded-full transition-colors cursor-pointer ${
-                isDark ? 'text-slate-400 hover:text-white hover:bg-white/10' : 'text-[#667085] hover:text-[#17191D] hover:bg-slate-100'
-              }`}
+              className="absolute top-4 right-4 p-1.5 rounded-full text-[#667085] hover:text-[#17191D] hover:bg-slate-100 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -161,9 +142,9 @@ export function AnimatedDiscountGiftBox({
             {/* Floating Animated 3D Gift Box Graphic */}
             <div className="relative mx-auto w-20 h-20 mb-4 flex items-center justify-center">
               {/* Outer Pulsing Glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-pink-500 to-rose-400 blur-md opacity-60 animate-pulse" />
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-pink-400 to-rose-300 blur-md opacity-40 animate-pulse" />
 
-              <div className="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-xl shadow-pink-500/30">
+              <div className="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-xl shadow-pink-500/20">
                 <Gift className="w-10 h-10 animate-bounce text-white drop-shadow-md" />
               </div>
 
@@ -176,37 +157,25 @@ export function AnimatedDiscountGiftBox({
               </span>
             </div>
 
-            <span
-              className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider inline-block mb-2 ${
-                isDark
-                  ? 'bg-[#FF2D78]/20 text-[#FF66B2] border border-[#FF2D78]/40'
-                  : 'bg-pink-100 text-pink-700 border border-pink-300'
-              }`}
-            >
+            <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider inline-block mb-2 bg-pink-100 text-pink-700 border border-pink-300">
               🎉 Congratulations! Welcome Reward
             </span>
 
-            <h3 className={`text-2xl font-black tracking-tight ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
+            <h3 className="text-2xl font-black tracking-tight text-[#17191D]">
               You Unlocked <span className="text-[#FF2D78]">₹570 Instant Discount</span>!
             </h3>
 
-            <p className={`text-xs mt-2 leading-relaxed max-w-sm mx-auto ${isDark ? 'text-slate-300' : 'text-[#667085]'}`}>
+            <p className="text-xs mt-2 leading-relaxed max-w-sm mx-auto text-[#667085]">
               Your welcome voucher gives you a verified flat <strong>₹570 OFF</strong> on the flagship <strong>FLUVIA MAX (Ultra) Plan</strong>.
             </p>
 
             {/* Voucher Coupon Box */}
-            <div
-              className={`mt-5 p-4 rounded-2xl border-2 border-dashed flex items-center justify-between gap-3 ${
-                isDark
-                  ? 'bg-[#0E121E] border-[#FF2D78]/50'
-                  : 'bg-gradient-to-r from-pink-50 via-purple-50 to-indigo-50 border-pink-300'
-              }`}
-            >
+            <div className="mt-5 p-4 rounded-2xl border-2 border-dashed border-pink-300 bg-gradient-to-r from-pink-50 via-purple-50 to-indigo-50 flex items-center justify-between gap-3">
               <div className="text-left">
-                <span className={`text-[10px] font-bold uppercase tracking-wider block ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
+                <span className="text-[10px] font-bold uppercase tracking-wider block text-[#667085]">
                   Promo Voucher Code
                 </span>
-                <span className={`text-xl font-black font-mono tracking-wider ${isDark ? 'text-[#FF2D78]' : 'text-[#17191D]'}`}>
+                <span className="text-xl font-black font-mono tracking-wider text-[#17191D]">
                   {couponCode}
                 </span>
               </div>
@@ -214,16 +183,12 @@ export function AnimatedDiscountGiftBox({
               <button
                 type="button"
                 onClick={handleCopyCode}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 ${
-                  isDark
-                    ? 'bg-white/10 hover:bg-white/20 border border-[#FF2D78]/50 text-white'
-                    : 'bg-white hover:bg-slate-50 border border-pink-300 text-[#EC4899]'
-                }`}
+                className="px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 bg-white hover:bg-slate-50 border border-pink-300 text-[#EC4899]"
               >
                 {copied ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-400">Copied!</span>
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-emerald-600 font-bold">Copied!</span>
                   </>
                 ) : (
                   <>
@@ -235,13 +200,7 @@ export function AnimatedDiscountGiftBox({
             </div>
 
             {/* Key Benefits */}
-            <div
-              className={`mt-4 text-left p-3 rounded-xl border text-xs space-y-1.5 ${
-                isDark
-                  ? 'bg-[#0E121E] border-white/10 text-slate-300'
-                  : 'bg-slate-50 border-slate-200 text-[#17191D]'
-              }`}
-            >
+            <div className="mt-4 text-left p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs space-y-1.5 text-[#17191D]">
               <div className="flex items-center gap-2">
                 <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Applies immediately at checkout on Ultra Plan</span>
