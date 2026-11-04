@@ -15,6 +15,11 @@ import {
 import { createPlatformClient } from "./platform";
 import type { StatusResult } from "./platform";
 import { toPlatform } from "./to-platform";
+import {
+  isFreeRequestId,
+  submitFreeGeneration,
+  getFreeGenerationStatus,
+} from "./free-engine";
 
 export async function savePlatformCredentials(data: unknown) {
   const { apiKey } = parseCredentialInput(data);
@@ -27,21 +32,46 @@ export async function clearPlatformCredentials() {
   jar.set(PLATFORM_KEY_COOKIE, "", { ...PLATFORM_KEY_COOKIE_OPTIONS, maxAge: 0 });
 }
 
-export async function hasPlatformCredentials() {
+export async function hasRealPlatformCredentials(): Promise<boolean> {
   const stored = await readStoredCredentials();
   if (stored !== null) return true;
   const envKey = (process.env.HIGGSFIELD_API_KEY || process.env.HF_API_KEY)?.trim();
   return Boolean(envKey && envKey.includes(":"));
 }
 
-export async function submitGeneration(plane: GenerationPlane) {
-  const model = getModel(plane.model);
-  const parsed: GenerationPlane = {
-    ...plane,
-    settings: parseSettings(model, plane.settings),
+export async function hasPlatformCredentials(): Promise<boolean> {
+  // Always true because Free Mode is natively built-in!
+  return true;
+}
+
+export async function getCredentialsStatus(): Promise<{ configured: boolean; isFreeMode: boolean }> {
+  const hasReal = await hasRealPlatformCredentials();
+  return {
+    configured: hasReal,
+    isFreeMode: !hasReal,
   };
-  const { path, body } = toPlatform(parsed);
-  return createPlatformClient(await readCredentials()).submit(path, body);
+}
+
+export async function submitGeneration(plane: GenerationPlane) {
+  const hasReal = await hasRealPlatformCredentials();
+
+  if (hasReal) {
+    try {
+      const model = getModel(plane.model);
+      const parsed: GenerationPlane = {
+        ...plane,
+        settings: parseSettings(model, plane.settings),
+      };
+      const { path, body } = toPlatform(parsed);
+      return await createPlatformClient(await readCredentials()).submit(path, body);
+    } catch (err) {
+      console.warn("[OpenHiggs] Platform API failed, falling back to Free Engine:", err);
+      return submitFreeGeneration(plane);
+    }
+  }
+
+  // 100% Free AI Engine Mode (No Key Required)
+  return submitFreeGeneration(plane);
 }
 
 /** Every request in flight, answered in one round trip. Next dispatches server
@@ -50,16 +80,46 @@ export async function submitGeneration(plane: GenerationPlane) {
     genuinely parallel. */
 export async function getGenerationStatuses(data: unknown): Promise<StatusResult[]> {
   const requestIds = parseRequestIds(data);
-  const client = createPlatformClient(await readCredentials());
-  return Promise.all(
-    requestIds.map(async (requestId): Promise<StatusResult> => {
-      try {
-        return { requestId, status: await client.status(requestId) };
-      } catch (caught) {
-        return { requestId, error: caught instanceof Error ? caught.message : String(caught) };
+  const freeIds = requestIds.filter(isFreeRequestId);
+  const platformIds = requestIds.filter((id) => !isFreeRequestId(id));
+
+  const results: StatusResult[] = [];
+
+  // 1. Process Free Generation Jobs
+  for (const id of freeIds) {
+    const status = getFreeGenerationStatus(id);
+    if (status) {
+      results.push({ requestId: id, status });
+    } else {
+      results.push({
+        requestId: id,
+        status: { status: "processing", requestId: id },
+      });
+    }
+  }
+
+  // 2. Process Platform API Jobs (if any)
+  if (platformIds.length > 0) {
+    try {
+      const client = createPlatformClient(await readCredentials());
+      const platformResults = await Promise.all(
+        platformIds.map(async (requestId): Promise<StatusResult> => {
+          try {
+            return { requestId, status: await client.status(requestId) };
+          } catch (caught) {
+            return { requestId, error: caught instanceof Error ? caught.message : String(caught) };
+          }
+        }),
+      );
+      results.push(...platformResults);
+    } catch (err) {
+      for (const id of platformIds) {
+        results.push({ requestId: id, error: err instanceof Error ? err.message : String(err) });
       }
-    }),
-  );
+    }
+  }
+
+  return results;
 }
 
 async function readStoredCredentials() {

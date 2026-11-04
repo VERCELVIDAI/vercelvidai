@@ -128,13 +128,13 @@ export function Topbar({
           type="button"
           className="ohf-key"
           data-busy={busy}
-          data-ready={keyConfigured}
+          data-ready={true}
           onClick={onKeys}
-          aria-label={keyConfigured ? "Edit platform key" : "Add platform key"}
-          title={keyConfigured ? "Edit platform key" : "Add platform key"}
+          aria-label={keyConfigured ? "Higgsfield Platform Key Connected" : "Free AI Engine Active • Click to configure key"}
+          title={keyConfigured ? "Higgsfield Platform Key Connected" : "Free AI Engine Active • Click to configure key"}
         >
           <KeyIcon />
-          <span className="ohf-key-text">{keyConfigured ? "Your key" : "Add key"}</span>
+          <span className="ohf-key-text">{keyConfigured ? "Platform Key" : "⚡ Free Mode"}</span>
           <span className="ohf-lamp" />
         </button>
       </div>

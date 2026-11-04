@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { hasPlatformCredentials, submitGeneration } from "@/generation/actions";
+import { getCredentialsStatus, hasPlatformCredentials, submitGeneration } from "@/generation/actions";
 import { MissingCredentialsError } from "@/generation/credentials";
 import { MODELS, getModel } from "@/generation/catalog";
 import type { Surface } from "@/generation/catalog";
@@ -221,9 +221,8 @@ export function OpenHiggsfieldApp({ fontClassName = "" }: { fontClassName?: stri
   }, [historyLoaded, history]);
 
   useEffect(() => {
-    void hasPlatformCredentials().then((ready) => {
-      setKeyConfigured(ready);
-      if (!ready) setKeysOpen(true);
+    void getCredentialsStatus().then((status) => {
+      setKeyConfigured(status.configured);
     });
   }, []);
 
@@ -324,13 +323,12 @@ export function OpenHiggsfieldApp({ fontClassName = "" }: { fontClassName?: stri
      its own skeletons and keeps its own watch, so the composer is free the
      moment the tiles appear and any number of runs can be in flight. */
   const generate = useCallback(async () => {
-    if (!keyConfigured) {
-      setKeysOpen(true);
-      setError("Add your platform key to generate.");
+    setError(null);
+    const plane = assemblePlane();
+    if (!plane.prompt.text.trim()) {
+      setError("Please enter a creative prompt to generate.");
       return;
     }
-    const plane = assemblePlane();
-    if (!plane.prompt.text.trim()) return;
 
     const entry = getModel(plane.model);
     const ratio = ratioToCss(

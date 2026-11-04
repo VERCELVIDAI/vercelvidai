@@ -122,6 +122,14 @@ export function KeyModal({
                 Remove key
               </button>
             )}
+            <button
+              type="button"
+              className="ohf-btn-quiet"
+              style={{ color: "#d1fe17", border: "1px solid rgba(209, 254, 23, 0.3)", borderRadius: "6px", padding: "6px 12px" }}
+              onClick={onClose}
+            >
+              ⚡ Continue in Free Mode
+            </button>
             <button type="submit" className="ohf-keys-save" disabled={busy || !apiKey.trim()}>
               {busy ? "Saving…" : configured ? "Replace key" : "Save key"}
             </button>

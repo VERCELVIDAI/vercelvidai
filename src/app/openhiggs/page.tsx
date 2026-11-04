@@ -28,7 +28,7 @@ export default function OpenHiggsPage() {
               OpenHiggs AI
             </span>
             <span className="text-[#a8aeaf] font-medium hidden sm:inline">
-              Open-source alternative to Higgsfield AI • 38 Image & Video Models
+              Open-source AI Studio • 100% Free AI Engine (No API Key Required) • 38 Image & Video Models
             </span>
           </div>
 
