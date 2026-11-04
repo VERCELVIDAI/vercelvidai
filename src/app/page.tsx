@@ -115,69 +115,123 @@ const FLAGSHIP_HERO_VIDEOS: AdPreset[] = [
   },
 ];
 
-// Alias for backwards compatibility
-const VERTICAL_PRESETS = FLAGSHIP_HERO_VIDEOS;
+// Original 9:16 Vertical Viral UGC & Social Reel Presets (Restored)
+const VERTICAL_PRESETS: AdPreset[] = [
+  {
+    id: 'vid_09',
+    slug: 'empire-cash-viral-ugc-hook',
+    title: 'Empire Drop — Viral Cash UGC Hook',
+    category: 'AI Influencer & UGC Hook',
+    aspect: '9:16',
+    duration: '15s',
+    credits: 15,
+    badge: 'Viral Hook',
+    videoUrl: '/media/templates/tmpl-ugc-wealth-hook.mp4',
+    poster: '/media/templates/poster-vid-ugc-wealth.jpg',
+    prompt: 'High-energy viral social media hook of young creator in modern penthouse cascading thick brick stacks of hundred-dollar bills, dynamic handheld camera motion, luxury lifestyle aesthetic, natural bedroom window light, photorealistic 4k.',
+    tags: ['#ViralHook', '#UGCCreator', '#TikTokAd'],
+  },
+  {
+    id: 'vid_10',
+    slug: 'matchday-celebration-football-star',
+    title: 'Matchday Celebration — Football Star Reel',
+    category: 'Sports & Social Reels',
+    aspect: '9:16',
+    duration: '6s',
+    credits: 15,
+    badge: 'Trending',
+    videoUrl: '/media/templates/tmpl-sports-celebrity-reel.mp4',
+    poster: '/media/templates/poster-vid-sports-celebrity.jpg',
+    prompt: 'Cinematic celebration reel of football legend in red and green #7 national kit dancing with charismatic motion at gala banquet, studio softbox ambient fill light, sharp depth of field, 4k 60fps.',
+    tags: ['#FootballStar', '#CelebrationReel', '#CR7Vibe'],
+  },
+  {
+    id: 'vid_11',
+    slug: 'costa-privee-mediterranean-resort',
+    title: 'Costa Privée — Mediterranean Resort',
+    category: 'Luxury Travel & Hospitality',
+    aspect: '9:16',
+    duration: '11s',
+    credits: 15,
+    badge: 'Featured',
+    videoUrl: '/media/templates/tmpl-mediterranean-resort.mp4',
+    poster: '/media/templates/poster-vid-mediterranean-resort.jpg',
+    prompt: 'Cinematic luxury travel commercial featuring distinguished silver-haired gentleman in crisp white linen shirt relaxing at seaside Mediterranean beach club terrace, warm sunlight, gentle bokeh, luxury vacation vibe, 4k ultra-hd.',
+    tags: ['#LuxuryTravel', '#ResortCommercial', '#QuietLuxury'],
+  },
+  {
+    id: 'vid_12',
+    slug: 'veloce-apex-cyber-hyperkart',
+    title: 'Veloce Apex — Cyber Hyperkart',
+    category: 'Automotive & Cinematic Ad',
+    aspect: '9:16',
+    duration: '16s',
+    credits: 15,
+    badge: 'Hot Reveal',
+    videoUrl: '/media/templates/tmpl-cyber-hyperkart.mp4',
+    poster: '/media/templates/poster-vid-cyber-hyperkart.jpg',
+    prompt: 'Dramatic low-angle commercial reveal of futuristic custom twin-seat electric racing hyperkart in industrial concrete hangar, glossy black aero bodywork, wide track tires, atmospheric volumetric lighting, photorealistic automotive cinematography.',
+    tags: ['#Hyperkart', '#ElectricRacing', '#AutomotiveCommercial'],
+  },
+];
 
-const FEATURED_AD_TEMPLATES = [
+// Original 16:9 Widescreen Commercial Ad Presets (Restored)
+const FEATURED_AD_TEMPLATES: AdPreset[] = [
   {
-    id: 'vid_astronaut_spacewalk',
-    slug: 'orbital-spacewalk-cinematic-sci-fi',
-    title: 'Orbital Spacewalk — Cinematic Sci-Fi Film',
-    category: 'Cinematic Sci-Fi',
-    aspect: '16:9',
-    duration: '8s',
-    credits: 15,
-    videoUrl: '/media/showcase/vidai-astronaut-spacewalk.mp4',
-    poster: '/media/showcase/vidai-astronaut-spacewalk.jpg',
-    prompt: 'Photorealistic IMAX 70mm cinematic space sequence of an astronaut performing high-orbit spacewalk outside exterior solar truss, planet Earth curve glowing beneath.',
-  },
-  {
-    id: 'vid_jungle_expedition',
-    slug: 'amazonia-expedition-cinematic-adventure',
-    title: 'Amazonia Expedition — Cinematic Adventure',
-    category: 'Adventure Film',
-    aspect: '16:9',
-    duration: '9s',
-    credits: 15,
-    videoUrl: '/media/showcase/vidai-jungle-expedition.mp4',
-    poster: '/media/showcase/vidai-jungle-expedition.jpg',
-    prompt: 'Cinematic action adventure film close-up of determined female explorer in rugged khaki jacket carefully parting giant wet monstera leaf in dense humid rainforest.',
-  },
-  {
-    id: 'vid_haute_couture_skaters',
-    slug: 'swan-elegance-haute-couture-ice-gala',
-    title: 'Swan Elegance — Haute Couture Ice Gala',
-    category: 'Luxury Fashion',
+    id: 'tmpl_01',
+    slug: 'cinematic-product-commercial',
+    title: 'Aura Privée — Luxury Perfume Film',
+    category: 'Product Commercial',
     aspect: '16:9',
     duration: '15s',
     credits: 15,
-    videoUrl: '/media/showcase/vidai-haute-couture-skaters.mp4',
-    poster: '/media/showcase/vidai-haute-couture-skaters.jpg',
-    prompt: 'Haute couture fashion editorial commercial of synchronized female ice skaters in shimmering crystal-embellished swan feather gowns gliding across mist-covered arena ice rink.',
+    badge: 'Top Seller',
+    videoUrl: '/media/templates/tmpl-02-luxury-perfume.mp4',
+    poster: '/media/templates/poster-vid-01-perfume.jpg',
+    prompt: 'Ultra-luxury midnight perfume bottle floating over liquid gold ripples, dramatic rim lighting, 4k cinematic commercial.',
+    tags: ['#LuxuryPerfume', '#ProductFilm', '#Cinematic4K'],
   },
   {
-    id: 'vid_snow_avalanche',
-    slug: 'apex-descent-extreme-powder-snowboarding',
-    title: 'Apex Descent — Extreme Powder Snowboarding',
-    category: 'Action Sports',
+    id: 'tmpl_02',
+    slug: 'automotive-cinematic-film',
+    title: 'AeroGT Hypercar Launch Campaign',
+    category: 'Cinematic Automotive',
     aspect: '16:9',
     duration: '15s',
     credits: 15,
-    videoUrl: '/media/showcase/vidai-snow-avalanche.mp4',
-    poster: '/media/showcase/vidai-snow-avalanche.jpg',
-    prompt: 'Action sports commercial tracking shot of snowboarder in high-tech grey storm jacket bombing down steep untouched alpine glacier, massive billowing powder cloud rising behind.',
+    badge: 'Hot',
+    videoUrl: '/media/templates/tmpl-05-automotive-film.mp4',
+    poster: '/media/templates/poster-vid-03-automotive.jpg',
+    prompt: 'Sleek aerodynamic concept hypercar drifting through twilight mountain pass, laser grid reflections, photorealistic 8k.',
+    tags: ['#Hypercar', '#AutomotiveCommercial', '#TwilightDrift'],
   },
   {
-    id: 'vid_cyberpunk_superbike',
-    slug: 'neo-tokyo-gp-cyberpunk-superbike-street-race',
-    title: 'Neo-Tokyo GP — Cyberpunk Superbike Street Race',
-    category: 'Automotive & Cinematic',
+    id: 'tmpl_03',
+    slug: 'skincare-product-reel',
+    title: 'HydraLuxe Bio-Cellular Serum',
+    category: 'Skincare & Beauty',
     aspect: '16:9',
     duration: '15s',
     credits: 15,
-    videoUrl: '/media/showcase/vidai-cyberpunk-superbike.mp4',
-    poster: '/media/showcase/vidai-cyberpunk-superbike.jpg',
-    prompt: 'Cyberpunk racing commercial shot of modified bright orange sports superbike drifting aggressively through wet rain-drenched neon Tokyo city boulevard at midnight.',
+    badge: 'Trending',
+    videoUrl: '/media/templates/tmpl-03-skincare-reel.mp4',
+    poster: '/media/templates/poster-vid-02-skincare.jpg',
+    prompt: 'Macro slow-motion droplet of golden hydration serum falling onto frosted glass podium, luxury cosmetic aesthetic.',
+    tags: ['#Skincare', '#SerumCommercial', '#BeautyCreative'],
+  },
+  {
+    id: 'tmpl_04',
+    slug: 'technology-product-launch',
+    title: 'Apex Titanium Pro Smartphone',
+    category: 'Technology & Hardware',
+    aspect: '16:9',
+    duration: '15s',
+    credits: 15,
+    badge: 'Flagship',
+    videoUrl: '/media/templates/tmpl-09-tech-product.mp4',
+    poster: '/media/templates/poster-vid-04-smartphone.jpg',
+    prompt: 'Futuristic titanium smartphone rotating seamlessly in zero-gravity space, micro lens reflections, clean studio lighting.',
+    tags: ['#SmartphoneLaunch', '#TechHardware', '#StudioLighting'],
   },
 ];
 
@@ -252,6 +306,88 @@ function VerticalPresetCard({ preset }: { preset: AdPreset }) {
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Use This Preset</span>
+          </Link>
+          <Link
+            href={`/templates/${preset.slug}`}
+            className="w-full py-1 text-center text-[11px] font-medium text-[#667085] hover:text-[#5145CD] transition-colors block"
+          >
+            Explore Storyboard →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WidescreenPresetCard({ preset }: { preset: AdPreset }) {
+  const cardVideoRef = useRef<HTMLVideoElement | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (cardVideoRef.current) {
+      cardVideoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (cardVideoRef.current) {
+      cardVideoRef.current.pause();
+      cardVideoRef.current.currentTime = 0;
+    }
+  };
+
+  return (
+    <div
+      className="business-card overflow-hidden flex flex-col justify-between group rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all duration-300"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="relative aspect-video w-full bg-[#17191D] overflow-hidden">
+        <img
+          src={preset.poster}
+          alt={preset.title}
+          className={`w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 ${
+            isHovered ? 'opacity-0' : 'opacity-100'
+          }`}
+        />
+        <video
+          ref={cardVideoRef}
+          src={preset.videoUrl}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        />
+      </div>
+
+      <div className="p-4 space-y-3 flex-1 flex flex-col justify-between bg-white border-t border-[#F1F3F5]">
+        <div>
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] truncate">
+              {preset.category}
+            </span>
+            <span className="text-[10px] font-mono text-[#667085] bg-[#F1F3F5] px-1.5 py-0.5 rounded shrink-0">
+              {preset.duration} • 16:9
+            </span>
+          </div>
+          <h4 className="text-sm font-bold text-[#17191D] line-clamp-1">{preset.title}</h4>
+          <p className="text-[11px] text-[#667085] line-clamp-2 mt-1 leading-relaxed">
+            {preset.prompt}
+          </p>
+        </div>
+
+        <div className="space-y-2 pt-1 border-t border-[#F1F3F5]">
+          <Link
+            href={`/create?prompt=${encodeURIComponent(preset.prompt)}&aspect=16:9&mode=video`}
+            className="w-full py-2 px-3 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Use Template</span>
           </Link>
           <Link
             href={`/templates/${preset.slug}`}
@@ -369,6 +505,7 @@ const OPENHIGGS_MODELS_TICKER = [
 ];
 
 export default function HomePage() {
+  const [heroChannel, setHeroChannel] = useState<'flagship' | 'vertical' | 'commercials'>('flagship');
   const [selectedHeroIndex, setSelectedHeroIndex] = useState(0);
   const [unmutedHeroIndex, setUnmutedHeroIndex] = useState<number | null>(null);
   const [heroVideoProgress, setHeroVideoProgress] = useState(0);
@@ -377,13 +514,19 @@ export default function HomePage() {
   const mainHeroVideoRef = useRef<HTMLVideoElement | null>(null);
   const heroVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
+  const activeHeroList = heroChannel === 'flagship'
+    ? FLAGSHIP_HERO_VIDEOS
+    : heroChannel === 'vertical'
+    ? VERTICAL_PRESETS
+    : FEATURED_AD_TEMPLATES;
+
   // Advance to next video in continuous loop
   const advanceToNextHeroVideo = useCallback(() => {
-    setSelectedHeroIndex((prev) => (prev + 1) % FLAGSHIP_HERO_VIDEOS.length);
+    setSelectedHeroIndex((prev) => (prev + 1) % activeHeroList.length);
     setHeroVideoProgress(0);
-  }, []);
+  }, [activeHeroList.length]);
 
-  // When selected video changes, auto-play it
+  // When selected video or channel changes, auto-play it
   useEffect(() => {
     const video = mainHeroVideoRef.current;
     if (!video) return;
@@ -394,25 +537,24 @@ export default function HomePage() {
       playPromise
         .then(() => setIsHeroPlaying(true))
         .catch(() => {
-          // If browser blocked unmuted autoplay, mute and retry
           video.muted = true;
           video.play().catch(() => {});
         });
     }
-  }, [selectedHeroIndex]);
+  }, [selectedHeroIndex, heroChannel]);
 
   // Fallback safety timer: in case onEnded is delayed or skipped by browser
   useEffect(() => {
     if (autoAdvancePaused || !isHeroPlaying) return;
 
-    const currentItem = FLAGSHIP_HERO_VIDEOS[selectedHeroIndex] || FLAGSHIP_HERO_VIDEOS[0];
+    const currentItem = activeHeroList[selectedHeroIndex] || activeHeroList[0];
     const durationSec = parseInt(currentItem.duration, 10) || 10;
     const timer = setTimeout(() => {
       advanceToNextHeroVideo();
     }, (durationSec + 0.8) * 1000);
 
     return () => clearTimeout(timer);
-  }, [selectedHeroIndex, autoAdvancePaused, isHeroPlaying, advanceToNextHeroVideo]);
+  }, [selectedHeroIndex, heroChannel, autoAdvancePaused, isHeroPlaying, advanceToNextHeroVideo, activeHeroList]);
 
   const togglePlayPause = () => {
     const v = mainHeroVideoRef.current;
@@ -430,7 +572,7 @@ export default function HomePage() {
       setAutoAdvancePaused(true);
     }
   };
-  const [galleryTab, setGalleryTab] = useState<'vertical' | 'widescreen'>('vertical');
+  const [galleryTab, setGalleryTab] = useState<'vertical' | 'widescreen' | 'flagship'>('vertical');
   const showcaseRef = useRef<HTMLDivElement | null>(null);
   const [activeModelTab, setActiveModelTab] = useState<'seedance' | 'kling' | 'soul' | 'wan' | 'flux' | 'ideogram'>('seedance');
   const [openHiggsPrompt, setOpenHiggsPrompt] = useState('');
@@ -450,7 +592,7 @@ export default function HomePage() {
     });
   };
 
-  const selectedPreset = VERTICAL_PRESETS[selectedHeroIndex] || VERTICAL_PRESETS[0];
+  const selectedPreset = activeHeroList[selectedHeroIndex] || activeHeroList[0];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD] overflow-x-hidden max-w-full">
@@ -577,11 +719,64 @@ export default function HomePage() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
                   <span className="font-bold text-xs sm:text-sm text-[#17191D]">
-                    Flagship 4K Cinema Showcase
+                    Flagship Cinema Showcase
                   </span>
-                  <span className="text-[11px] font-mono text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#C7D2FE] font-semibold flex items-center gap-1.5">
+                  
+                  {/* Channels / Categories Switcher */}
+                  <div className="inline-flex p-0.5 rounded-lg bg-[#F1F3F5] border border-[#E5E7EB] text-[11px]">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHeroChannel('flagship');
+                        setSelectedHeroIndex(0);
+                        setAutoAdvancePaused(false);
+                      }}
+                      className={`px-2.5 py-1 rounded-md font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                        heroChannel === 'flagship'
+                          ? 'bg-white text-[#5145CD] shadow-xs'
+                          : 'text-[#667085] hover:text-[#17191D]'
+                      }`}
+                    >
+                      <span>🎬 4K Cinema</span>
+                      <span className="text-[10px] font-mono opacity-80">(5)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHeroChannel('vertical');
+                        setSelectedHeroIndex(0);
+                        setAutoAdvancePaused(false);
+                      }}
+                      className={`px-2.5 py-1 rounded-md font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                        heroChannel === 'vertical'
+                          ? 'bg-white text-[#5145CD] shadow-xs'
+                          : 'text-[#667085] hover:text-[#17191D]'
+                      }`}
+                    >
+                      <span>⚡ 9:16 Viral</span>
+                      <span className="text-[10px] font-mono opacity-80">(4)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHeroChannel('commercials');
+                        setSelectedHeroIndex(0);
+                        setAutoAdvancePaused(false);
+                      }}
+                      className={`px-2.5 py-1 rounded-md font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                        heroChannel === 'commercials'
+                          ? 'bg-white text-[#5145CD] shadow-xs'
+                          : 'text-[#667085] hover:text-[#17191D]'
+                      }`}
+                    >
+                      <span>💎 Brand Ads</span>
+                      <span className="text-[10px] font-mono opacity-80">(4)</span>
+                    </button>
+                  </div>
+
+                  <span className="text-[11px] font-mono text-[#5145CD] bg-[#EEF2FF] px-2 py-0.5 rounded-full border border-[#C7D2FE] font-semibold hidden md:inline-flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-ping" />
-                    Auto-Playing ({selectedHeroIndex + 1}/5)
+                    Auto-Play ({selectedHeroIndex + 1}/{activeHeroList.length})
                   </span>
                 </div>
 
@@ -721,7 +916,7 @@ export default function HomePage() {
                   <div className="flex items-center gap-2 sm:gap-3">
                     <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
                     <span className="font-mono text-slate-200 text-[11px]">
-                      Scene {selectedHeroIndex + 1} of {FLAGSHIP_HERO_VIDEOS.length}: {selectedPreset.title} • {selectedPreset.duration}
+                      Scene {selectedHeroIndex + 1} of {activeHeroList.length}: {selectedPreset.title} • {selectedPreset.duration}
                     </span>
                   </div>
 
@@ -736,9 +931,11 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* 5-VIDEO INTERACTIVE SCENE SELECTOR STRIP (CLEANLY BELOW MAIN THEATER) */}
-              <div className="mt-4 grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3">
-                {FLAGSHIP_HERO_VIDEOS.map((preset, idx) => {
+              {/* ACTIVE CHANNEL SCENE SELECTOR STRIP */}
+              <div className={`mt-4 grid gap-2.5 sm:gap-3 ${
+                activeHeroList.length === 5 ? 'grid-cols-2 sm:grid-cols-5' : 'grid-cols-2 sm:grid-cols-4'
+              }`}>
+                {activeHeroList.map((preset, idx) => {
                   const isSelected = selectedHeroIndex === idx;
 
                   return (
@@ -827,7 +1024,7 @@ export default function HomePage() {
                           {selectedPreset.category}
                         </span>
                         <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#E5E7EB] text-[#17191D]">
-                          16:9 Cinema • {selectedPreset.duration}
+                          {selectedPreset.aspect} Cinema • {selectedPreset.duration}
                         </span>
                       </div>
                       <p className="text-[#667085] text-xs line-clamp-2 leading-relaxed">
@@ -838,7 +1035,7 @@ export default function HomePage() {
 
                   <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                     <Link
-                      href={`/create?prompt=${encodeURIComponent(selectedPreset.prompt)}&aspect=16:9&mode=video`}
+                      href={`/create?prompt=${encodeURIComponent(selectedPreset.prompt)}&aspect=${selectedPreset.aspect}&mode=video`}
                       className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
@@ -1162,18 +1359,18 @@ export default function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
               <div className="space-y-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#5145CD]">
-                  Curated Commercial Presets
+                  Curated Commercial Library
                 </span>
                 <h2 className="text-3xl font-extrabold text-[#17191D] tracking-tight">
                   High-converting ad presets for every vertical.
                 </h2>
                 <p className="text-sm text-[#667085]">
-                  Start from proven commercial storyboards engineered for high retention, viral hooks, and product elevation.
+                  Start from proven commercial storyboards engineered for high retention, viral hooks, and product elevation across 9:16 and 16:9 formats.
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="inline-flex p-1 rounded-xl bg-[#E5E7EB]/70 border border-[#E5E7EB]">
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="inline-flex p-1 rounded-xl bg-[#E5E7EB]/70 border border-[#E5E7EB] flex-wrap">
                   <button
                     type="button"
                     onClick={() => setGalleryTab('vertical')}
@@ -1184,8 +1381,9 @@ export default function HomePage() {
                     }`}
                   >
                     <span>⚡ 9:16 Viral Reels</span>
-                    <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#EEF2FF] text-[#5145CD]">4</span>
+                    <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#EEF2FF] text-[#5145CD] font-mono">4</span>
                   </button>
+
                   <button
                     type="button"
                     onClick={() => setGalleryTab('widescreen')}
@@ -1195,8 +1393,21 @@ export default function HomePage() {
                         : 'text-[#667085] hover:text-[#17191D]'
                     }`}
                   >
-                    <span>🎬 16:9 Widescreen</span>
-                    <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#EEF2FF] text-[#5145CD]">4</span>
+                    <span>🎬 16:9 Commercials</span>
+                    <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#EEF2FF] text-[#5145CD] font-mono">4</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setGalleryTab('flagship')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      galleryTab === 'flagship'
+                        ? 'bg-white text-[#5145CD] shadow-xs'
+                        : 'text-[#667085] hover:text-[#17191D]'
+                    }`}
+                  >
+                    <span>✨ 4K Flagship Spots</span>
+                    <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#EEF2FF] text-[#5145CD] font-mono">5</span>
                   </button>
                 </div>
 
@@ -1210,51 +1421,29 @@ export default function HomePage() {
               </div>
             </div>
 
-            {galleryTab === 'vertical' ? (
+            {/* TAB 1: 9:16 VIRAL SOCIAL HOOKS (THE 4 CLASSIC VERTICAL PRESETS) */}
+            {galleryTab === 'vertical' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {VERTICAL_PRESETS.map((tmpl) => (
                   <VerticalPresetCard key={tmpl.id} preset={tmpl} />
                 ))}
               </div>
-            ) : (
+            )}
+
+            {/* TAB 2: 16:9 WIDESCREEN COMMERCIALS (THE 4 CLASSIC BRAND PRESETS) */}
+            {galleryTab === 'widescreen' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {FEATURED_AD_TEMPLATES.map((tmpl) => (
-                  <div key={tmpl.id} className="business-card overflow-hidden flex flex-col justify-between group">
-                    {/* 100% Clean Image/Video Container — Zero Overlays */}
-                    <div className="relative aspect-video bg-[#17191D] overflow-hidden">
-                      <img
-                        src={tmpl.poster}
-                        alt={tmpl.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
+                  <WidescreenPresetCard key={tmpl.id} preset={tmpl} />
+                ))}
+              </div>
+            )}
 
-                    {/* Metadata Cleanly Below Media */}
-                    <div className="p-4 space-y-3 flex-1 flex flex-col justify-between bg-white border-t border-[#F1F3F5]">
-                      <div>
-                        <div className="flex items-center justify-between gap-2 mb-1.5">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] truncate">
-                            {tmpl.category}
-                          </span>
-                          <span className="text-[10px] font-mono text-[#667085] bg-[#F1F3F5] px-1.5 py-0.5 rounded shrink-0">
-                            {tmpl.duration} • 16:9
-                          </span>
-                        </div>
-                        <h4 className="text-sm font-bold text-[#17191D] line-clamp-1">{tmpl.title}</h4>
-                        <p className="text-[11px] text-[#667085] line-clamp-2 mt-1 leading-relaxed">
-                          {tmpl.prompt}
-                        </p>
-                      </div>
-
-                      <Link
-                        href={`/create?prompt=${encodeURIComponent(tmpl.prompt)}&mode=video`}
-                        className="w-full py-2 px-3 rounded-lg bg-[#F7F8FA] hover:bg-[#EEF2FF] text-[#17191D] hover:text-[#5145CD] border border-[#E5E7EB] font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
-                      >
-                        <span>Use Template</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-                  </div>
+            {/* TAB 3: 4K CINEMA FLAGSHIP SPOTS (THE 5 NEW SHOWCASE PRESETS) */}
+            {galleryTab === 'flagship' && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {FLAGSHIP_HERO_VIDEOS.map((tmpl) => (
+                  <WidescreenPresetCard key={tmpl.id} preset={tmpl} />
                 ))}
               </div>
             )}
