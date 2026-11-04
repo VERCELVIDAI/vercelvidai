@@ -387,7 +387,7 @@ export default function DashboardPage() {
 
               {/* Card 3: Vox AI Motion Graphics Studio */}
               <Link
-                href="/studios/motion-graphics"
+                href="/dashboard/vox-motion"
                 className="p-5 rounded-3xl bg-[#160B24]/95 text-white border-2 border-violet-500/40 hover:border-violet-400 hover:shadow-[0_0_35px_rgba(139,92,246,0.3)] transition-all group relative overflow-hidden flex flex-col justify-between"
               >
                 <div>

@@ -120,7 +120,7 @@ export function DashboardHeader({
 
         {/* Quick Studio Shortcut: Vox Motion */}
         <Link
-          href="/studios/motion-graphics"
+          href="/dashboard/vox-motion"
           className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border border-violet-500/50 bg-violet-950/40 text-violet-300 hover:bg-violet-950/60 hover:border-violet-400 shadow-[0_0_12px_rgba(139,92,246,0.25)] shrink-0"
           title="Vox AI Motion Graphics — 2 Free Tries"
         >
