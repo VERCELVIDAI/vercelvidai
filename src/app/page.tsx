@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
@@ -371,7 +371,65 @@ const OPENHIGGS_MODELS_TICKER = [
 export default function HomePage() {
   const [selectedHeroIndex, setSelectedHeroIndex] = useState(0);
   const [unmutedHeroIndex, setUnmutedHeroIndex] = useState<number | null>(null);
+  const [heroVideoProgress, setHeroVideoProgress] = useState(0);
+  const [isHeroPlaying, setIsHeroPlaying] = useState(true);
+  const [autoAdvancePaused, setAutoAdvancePaused] = useState(false);
+  const mainHeroVideoRef = useRef<HTMLVideoElement | null>(null);
   const heroVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  // Advance to next video in continuous loop
+  const advanceToNextHeroVideo = useCallback(() => {
+    setSelectedHeroIndex((prev) => (prev + 1) % FLAGSHIP_HERO_VIDEOS.length);
+    setHeroVideoProgress(0);
+  }, []);
+
+  // When selected video changes, auto-play it
+  useEffect(() => {
+    const video = mainHeroVideoRef.current;
+    if (!video) return;
+    setHeroVideoProgress(0);
+    video.currentTime = 0;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setIsHeroPlaying(true))
+        .catch(() => {
+          // If browser blocked unmuted autoplay, mute and retry
+          video.muted = true;
+          video.play().catch(() => {});
+        });
+    }
+  }, [selectedHeroIndex]);
+
+  // Fallback safety timer: in case onEnded is delayed or skipped by browser
+  useEffect(() => {
+    if (autoAdvancePaused || !isHeroPlaying) return;
+
+    const currentItem = FLAGSHIP_HERO_VIDEOS[selectedHeroIndex] || FLAGSHIP_HERO_VIDEOS[0];
+    const durationSec = parseInt(currentItem.duration, 10) || 10;
+    const timer = setTimeout(() => {
+      advanceToNextHeroVideo();
+    }, (durationSec + 0.8) * 1000);
+
+    return () => clearTimeout(timer);
+  }, [selectedHeroIndex, autoAdvancePaused, isHeroPlaying, advanceToNextHeroVideo]);
+
+  const togglePlayPause = () => {
+    const v = mainHeroVideoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play()
+        .then(() => {
+          setIsHeroPlaying(true);
+          setAutoAdvancePaused(false);
+        })
+        .catch(() => {});
+    } else {
+      v.pause();
+      setIsHeroPlaying(false);
+      setAutoAdvancePaused(true);
+    }
+  };
   const [galleryTab, setGalleryTab] = useState<'vertical' | 'widescreen'>('vertical');
   const showcaseRef = useRef<HTMLDivElement | null>(null);
   const [activeModelTab, setActiveModelTab] = useState<'seedance' | 'kling' | 'soul' | 'wan' | 'flux' | 'ideogram'>('seedance');
@@ -515,21 +573,54 @@ export default function HomePage() {
               )}
 
               {/* Top Navigation & Status Bar */}
-              <div className="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-[#E5E7EB] relative z-10">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-[#E5E7EB] relative z-10 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
                   <span className="font-bold text-xs sm:text-sm text-[#17191D]">
                     Flagship 4K Cinema Showcase
                   </span>
-                  <span className="text-[11px] font-mono text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#C7D2FE] font-semibold hidden sm:inline-flex">
-                    5 Photorealistic Video Spots
+                  <span className="text-[11px] font-mono text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#C7D2FE] font-semibold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-ping" />
+                    Auto-Playing ({selectedHeroIndex + 1}/5)
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-[#667085] hidden md:inline-block">
-                    Click any scene to switch cinema playback
-                  </span>
+                  {/* Play / Pause Toggle Button */}
+                  <button
+                    type="button"
+                    onClick={togglePlayPause}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-xs font-semibold text-[#17191D] transition-colors cursor-pointer shadow-2xs"
+                    title={isHeroPlaying ? 'Pause rotation' : 'Resume auto-play'}
+                  >
+                    {isHeroPlaying ? (
+                      <>
+                        <Pause className="w-3.5 h-3.5 text-[#5145CD]" />
+                        <span>Pause</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3.5 h-3.5 text-[#10B981] fill-[#10B981]" />
+                        <span>Play</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* Next Video Button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      advanceToNextHeroVideo();
+                      setAutoAdvancePaused(false);
+                    }}
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-xs font-medium text-[#17191D] transition-colors cursor-pointer shadow-2xs"
+                    title="Next Scene"
+                  >
+                    <span>Next</span>
+                    <ArrowRight className="w-3 h-3 text-[#5145CD]" />
+                  </button>
+
+                  {/* Sound Toggle Button */}
                   <button
                     type="button"
                     onClick={() => {
@@ -559,6 +650,14 @@ export default function HomePage() {
 
               {/* MAIN 16:9 CINEMA THEATER VIEWPORT */}
               <div className="relative aspect-[16/9] w-full bg-[#0D0E12] rounded-2xl overflow-hidden shadow-2xl border border-slate-900 group">
+                {/* Thin Cinema Live Progress Bar at Top of Video */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-black/40 z-30 pointer-events-none">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#5145CD] via-[#818CF8] to-[#d1fe17] transition-all duration-150 ease-linear shadow-[0_0_10px_rgba(81,69,205,0.8)]"
+                    style={{ width: `${heroVideoProgress}%` }}
+                  />
+                </div>
+
                 {/* Ambient Blurred Colored Glow Backdrop */}
                 <img
                   src={selectedPreset.poster}
@@ -567,19 +666,30 @@ export default function HomePage() {
                   className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-35 scale-125 pointer-events-none"
                 />
 
-                {/* Primary High-Resolution Video */}
+                {/* Primary High-Resolution Video with Automatic Next Trigger */}
                 <video
-                  ref={(el) => {
-                    heroVideoRefs.current[selectedHeroIndex] = el;
-                  }}
+                  ref={mainHeroVideoRef}
                   key={selectedPreset.videoUrl}
                   src={selectedPreset.videoUrl}
                   poster={selectedPreset.poster}
                   autoPlay
-                  loop
                   muted={unmutedHeroIndex === null}
                   playsInline
-                  className="relative z-10 w-full h-full object-cover"
+                  preload="auto"
+                  onPlay={() => setIsHeroPlaying(true)}
+                  onPause={() => setIsHeroPlaying(false)}
+                  onTimeUpdate={(e) => {
+                    const v = e.currentTarget;
+                    if (v.duration && !isNaN(v.duration) && v.duration > 0) {
+                      const pct = (v.currentTime / v.duration) * 100;
+                      setHeroVideoProgress(pct);
+                    }
+                  }}
+                  onEnded={() => {
+                    advanceToNextHeroVideo();
+                  }}
+                  className="relative z-10 w-full h-full object-cover cursor-pointer"
+                  onClick={togglePlayPause}
                 />
 
                 {/* In-Video Motion Headline Tag */}
@@ -592,12 +702,26 @@ export default function HomePage() {
                   </h3>
                 </div>
 
+                {/* Floating Center Pause/Play Status Indicator (Click to toggle) */}
+                <div
+                  onClick={togglePlayPause}
+                  className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer bg-black/20"
+                >
+                  <div className="p-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 transition-transform">
+                    {isHeroPlaying ? (
+                      <Pause className="w-6 h-6 text-white" />
+                    ) : (
+                      <Play className="w-6 h-6 text-[#d1fe17] fill-[#d1fe17]" />
+                    )}
+                  </div>
+                </div>
+
                 {/* Bottom Video Controls Overlay */}
                 <div className="absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-center justify-between text-white text-xs">
                   <div className="flex items-center gap-2 sm:gap-3">
                     <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
                     <span className="font-mono text-slate-200 text-[11px]">
-                      {selectedPreset.title} • {selectedPreset.duration}
+                      Scene {selectedHeroIndex + 1} of {FLAGSHIP_HERO_VIDEOS.length}: {selectedPreset.title} • {selectedPreset.duration}
                     </span>
                   </div>
 
@@ -622,6 +746,7 @@ export default function HomePage() {
                       key={preset.id}
                       onClick={() => {
                         setSelectedHeroIndex(idx);
+                        setAutoAdvancePaused(false);
                         if (unmutedHeroIndex !== null) setUnmutedHeroIndex(idx);
                       }}
                       className={`cursor-pointer rounded-xl border transition-all duration-200 overflow-hidden flex flex-col justify-between text-left group/card ${
@@ -652,24 +777,34 @@ export default function HomePage() {
                           className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
                         />
                         <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between text-white text-[9px] font-mono">
-                          <span>Scene ${idx + 1}</span>
-                          <span>${preset.duration}</span>
+                          <span>Scene {idx + 1}</span>
+                          <span>{preset.duration}</span>
                         </div>
                       </div>
 
-                      {/* Card Label */}
+                      {/* Card Label & Active Progress Fill */}
                       <div className="p-2 sm:p-2.5 space-y-1">
                         <div className="flex items-center justify-between gap-1">
                           <span className="text-[9px] font-semibold text-[#5145CD] truncate">
-                            ${preset.category}
+                            {preset.category}
                           </span>
                           {isSelected && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD]" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-ping" />
                           )}
                         </div>
                         <h4 className="text-xs font-bold text-[#17191D] truncate">
-                          ${preset.title.split('—')[0].trim()}
+                          {preset.title.split('—')[0].trim()}
                         </h4>
+
+                        {/* Individual Scene Live Progress Bar */}
+                        {isSelected && (
+                          <div className="w-full h-1 bg-[#EEF2FF] border border-[#5145CD]/20 rounded-full overflow-hidden mt-1">
+                            <div
+                              className="h-full bg-[#5145CD] transition-all duration-150 ease-linear rounded-full"
+                              style={{ width: `${heroVideoProgress}%` }}
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
