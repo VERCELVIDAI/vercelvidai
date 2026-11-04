@@ -42,64 +42,81 @@ interface AdPreset {
   tags?: string[];
 }
 
-const VERTICAL_PRESETS: AdPreset[] = [
+const FLAGSHIP_HERO_VIDEOS: AdPreset[] = [
   {
-    id: 'vid_09',
-    slug: 'empire-cash-viral-ugc-hook',
-    title: 'Empire Drop — Viral Cash UGC Hook',
-    category: 'AI Influencer & UGC Hook',
-    aspect: '9:16',
-    duration: '15s',
-    credits: 15,
-    badge: 'Viral Hook',
-    videoUrl: '/media/templates/tmpl-ugc-wealth-hook.mp4',
-    poster: '/media/templates/poster-vid-ugc-wealth.jpg',
-    prompt: 'High-energy viral social media hook of young creator in modern penthouse cascading thick brick stacks of hundred-dollar bills, dynamic handheld camera motion, luxury lifestyle aesthetic, natural bedroom window light, photorealistic 4k.',
-    tags: ['#ViralHook', '#UGCCreator', '#TikTokAd'],
-  },
-  {
-    id: 'vid_10',
-    slug: 'matchday-celebration-football-star',
-    title: 'Matchday Celebration — Football Star Reel',
-    category: 'Sports & Social Reels',
-    aspect: '9:16',
-    duration: '6s',
+    id: 'vid_astronaut_spacewalk',
+    slug: 'orbital-spacewalk-cinematic-sci-fi',
+    title: 'Orbital Spacewalk — Cinematic Sci-Fi Film',
+    category: 'Cinematic Sci-Fi',
+    aspect: '16:9',
+    duration: '8s',
     credits: 15,
     badge: 'Trending',
-    videoUrl: '/media/templates/tmpl-sports-celebrity-reel.mp4',
-    poster: '/media/templates/poster-vid-sports-celebrity.jpg',
-    prompt: 'Cinematic celebration reel of football legend in red and green #7 national kit dancing with charismatic motion at gala banquet, studio softbox ambient fill light, sharp depth of field, 4k 60fps.',
-    tags: ['#FootballStar', '#CelebrationReel', '#CR7Vibe'],
+    videoUrl: '/media/showcase/vidai-astronaut-spacewalk.mp4',
+    poster: '/media/showcase/vidai-astronaut-spacewalk.jpg',
+    prompt: 'Photorealistic IMAX 70mm cinematic space sequence of an astronaut performing high-orbit spacewalk outside exterior solar truss, planet Earth curve glowing beneath with atmospheric blue haze, intense specular sun reflection on gold helmet visor, 8k masterpiece.',
+    tags: ['#Spacewalk', '#SciFiCommercial', '#Cinematic4K', '#Astronaut', '#IMAXSpace'],
   },
   {
-    id: 'vid_11',
-    slug: 'costa-privee-mediterranean-resort',
-    title: 'Costa Privée — Mediterranean Resort',
-    category: 'Luxury Travel & Hospitality',
-    aspect: '9:16',
-    duration: '11s',
+    id: 'vid_jungle_expedition',
+    slug: 'amazonia-expedition-cinematic-adventure',
+    title: 'Amazonia Expedition — Cinematic Adventure',
+    category: 'Adventure Film',
+    aspect: '16:9',
+    duration: '9s',
     credits: 15,
     badge: 'Featured',
-    videoUrl: '/media/templates/tmpl-mediterranean-resort.mp4',
-    poster: '/media/templates/poster-vid-mediterranean-resort.jpg',
-    prompt: 'Cinematic luxury travel commercial featuring distinguished silver-haired gentleman in crisp white linen shirt relaxing at seaside Mediterranean beach club terrace, warm sunlight, gentle bokeh, luxury vacation vibe, 4k ultra-hd.',
-    tags: ['#LuxuryTravel', '#ResortCommercial', '#QuietLuxury'],
+    videoUrl: '/media/showcase/vidai-jungle-expedition.mp4',
+    poster: '/media/showcase/vidai-jungle-expedition.jpg',
+    prompt: 'Cinematic action adventure film close-up of determined female explorer in rugged khaki jacket carefully parting giant wet monstera leaf in dense humid rainforest, water droplets glinting on skin, soft volumetric god rays piercing misty canopy, 4k 60fps.',
+    tags: ['#JungleAdventure', '#CinematicFilm', '#Expedition', '#OutdoorBrand'],
   },
   {
-    id: 'vid_12',
-    slug: 'veloce-apex-cyber-hyperkart',
-    title: 'Veloce Apex — Cyber Hyperkart',
-    category: 'Automotive & Cinematic Ad',
-    aspect: '9:16',
-    duration: '16s',
+    id: 'vid_haute_couture_skaters',
+    slug: 'swan-elegance-haute-couture-ice-gala',
+    title: 'Swan Elegance — Haute Couture Ice Gala',
+    category: 'Haute Couture',
+    aspect: '16:9',
+    duration: '15s',
     credits: 15,
-    badge: 'Hot Reveal',
-    videoUrl: '/media/templates/tmpl-cyber-hyperkart.mp4',
-    poster: '/media/templates/poster-vid-cyber-hyperkart.jpg',
-    prompt: 'Dramatic low-angle commercial reveal of futuristic custom twin-seat electric racing hyperkart in industrial concrete hangar, glossy black aero bodywork, wide track tires, atmospheric volumetric lighting, photorealistic automotive cinematography.',
-    tags: ['#Hyperkart', '#ElectricRacing', '#AutomotiveCommercial'],
+    badge: 'Hot',
+    videoUrl: '/media/showcase/vidai-haute-couture-skaters.mp4',
+    poster: '/media/showcase/vidai-haute-couture-skaters.jpg',
+    prompt: 'Haute couture fashion editorial commercial of synchronized female ice skaters in shimmering crystal-embellished swan feather gowns gliding gracefully across mist-covered arena ice rink, moody stadium floodlights, vogue elegance, slow motion 4k.',
+    tags: ['#HauteCouture', '#FashionFilm', '#IceGala', '#LuxuryCampaign'],
+  },
+  {
+    id: 'vid_snow_avalanche',
+    slug: 'apex-descent-extreme-powder-snowboarding',
+    title: 'Apex Descent — Extreme Powder Snowboarding',
+    category: 'Action Sports',
+    aspect: '16:9',
+    duration: '15s',
+    credits: 15,
+    badge: 'Viral',
+    videoUrl: '/media/showcase/vidai-snow-avalanche.mp4',
+    poster: '/media/showcase/vidai-snow-avalanche.jpg',
+    prompt: 'Action sports commercial tracking shot of snowboarder in high-tech grey storm jacket bombing down steep untouched alpine glacier, massive billowing powder cloud rising behind, blinding blue sky, high shutter speed action 4k.',
+    tags: ['#ExtremeSports', '#Snowboarding', '#AvalancheAction', '#WinterCampaign'],
+  },
+  {
+    id: 'vid_cyberpunk_superbike',
+    slug: 'neo-tokyo-gp-cyberpunk-superbike-street-race',
+    title: 'Neo-Tokyo GP — Cyberpunk Superbike Street Race',
+    category: 'Automotive & Cinematic',
+    aspect: '16:9',
+    duration: '15s',
+    credits: 15,
+    badge: 'New',
+    videoUrl: '/media/showcase/vidai-cyberpunk-superbike.mp4',
+    poster: '/media/showcase/vidai-cyberpunk-superbike.jpg',
+    prompt: 'Cyberpunk racing commercial shot of modified bright orange sports superbike drifting aggressively through wet rain-drenched neon Tokyo city boulevard at midnight, water spray mist illuminated by passing car headlights, Akira racing aesthetic, 4k 60fps.',
+    tags: ['#CyberpunkRacing', '#Superbike', '#TokyoNight', '#AutomotiveAd'],
   },
 ];
+
+// Alias for backwards compatibility
+const VERTICAL_PRESETS = FLAGSHIP_HERO_VIDEOS;
 
 const FEATURED_AD_TEMPLATES = [
   {
@@ -478,21 +495,21 @@ export default function HomePage() {
             </div>
 
             {/* ========================================================================= */}
-            {/* HERO SIMULTANEOUS 4-VIDEO SHOWCASE (ALL PLAY TOGETHER, ZERO TEXT ON VIDEO) */}
+            {/* HERO 16:9 FLAGSHIP CINEMATIC THEATER & 5-VIDEO INTERACTIVE SHOWCASE */}
             {/* ========================================================================= */}
             <div
               ref={showcaseRef}
               onMouseMove={handleShowcaseMouseMove}
               onMouseEnter={() => setShowcaseMouse((prev) => ({ ...prev, isHovered: true }))}
               onMouseLeave={() => setShowcaseMouse((prev) => ({ ...prev, isHovered: false }))}
-              className="relative rounded-3xl border border-[#E5E7EB] bg-white/90 backdrop-blur-md shadow-2xl p-3 sm:p-5 max-w-5xl mx-auto mt-6 sm:mt-8 overflow-hidden transition-all duration-300"
+              className="relative rounded-3xl border border-[#E5E7EB] bg-white/95 backdrop-blur-md shadow-2xl p-4 sm:p-6 max-w-5xl mx-auto mt-6 sm:mt-8 overflow-hidden transition-all duration-300"
             >
               {/* Dynamic Mouse Sheen Reflection on Showcase Card */}
               {showcaseMouse.isHovered && (
                 <div
                   className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 rounded-3xl"
                   style={{
-                    background: `radial-gradient(450px circle at ${showcaseMouse.x}px ${showcaseMouse.y}px, rgba(81, 69, 205, 0.07), rgba(56, 189, 248, 0.03) 40%, transparent 70%)`,
+                    background: `radial-gradient(550px circle at ${showcaseMouse.x}px ${showcaseMouse.y}px, rgba(81, 69, 205, 0.08), rgba(56, 189, 248, 0.03) 40%, transparent 70%)`,
                   }}
                 />
               )}
@@ -502,16 +519,16 @@ export default function HomePage() {
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
                   <span className="font-bold text-xs sm:text-sm text-[#17191D]">
-                    Commercial Ad Presets
+                    Flagship 4K Cinema Showcase
                   </span>
                   <span className="text-[11px] font-mono text-[#5145CD] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#C7D2FE] font-semibold hidden sm:inline-flex">
-                    4 Curated Video Reels
+                    5 Photorealistic Video Spots
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-[#667085] hidden sm:inline-block">
-                    All playing live simultaneously
+                  <span className="text-[11px] text-[#667085] hidden md:inline-block">
+                    Click any scene to switch cinema playback
                   </span>
                   <button
                     type="button"
@@ -522,7 +539,7 @@ export default function HomePage() {
                         setUnmutedHeroIndex(selectedHeroIndex);
                       }
                     }}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-xs font-medium text-[#17191D] transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E5E7EB] bg-[#F7F8FA] hover:bg-white text-xs font-semibold text-[#17191D] transition-colors cursor-pointer shadow-2xs"
                     title={unmutedHeroIndex !== null ? 'Mute audio' : 'Unmute audio'}
                   >
                     {unmutedHeroIndex !== null ? (
@@ -533,93 +550,126 @@ export default function HomePage() {
                     ) : (
                       <>
                         <VolumeX className="w-3.5 h-3.5 text-[#667085]" />
-                        <span>Muted</span>
+                        <span>Audio Muted</span>
                       </>
                     )}
                   </button>
                 </div>
               </div>
 
-              {/* 4-VIDEO SIMULTANEOUS GRID (ALL VIDEOS PLAY AT THE SAME TIME) */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
-                {VERTICAL_PRESETS.map((preset, idx) => {
+              {/* MAIN 16:9 CINEMA THEATER VIEWPORT */}
+              <div className="relative aspect-[16/9] w-full bg-[#0D0E12] rounded-2xl overflow-hidden shadow-2xl border border-slate-900 group">
+                {/* Ambient Blurred Colored Glow Backdrop */}
+                <img
+                  src={selectedPreset.poster}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-35 scale-125 pointer-events-none"
+                />
+
+                {/* Primary High-Resolution Video */}
+                <video
+                  ref={(el) => {
+                    heroVideoRefs.current[selectedHeroIndex] = el;
+                  }}
+                  key={selectedPreset.videoUrl}
+                  src={selectedPreset.videoUrl}
+                  poster={selectedPreset.poster}
+                  autoPlay
+                  loop
+                  muted={unmutedHeroIndex === null}
+                  playsInline
+                  className="relative z-10 w-full h-full object-cover"
+                />
+
+                {/* In-Video Motion Headline Tag */}
+                <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-20 pointer-events-none text-left">
+                  <span className="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-mono text-[#5145CD] font-bold border border-white/40 shadow-xs">
+                    FLUVIA FLOW • {selectedPreset.category.toUpperCase()} • 1080P
+                  </span>
+                  <h3 className="mt-2 text-lg sm:text-2xl font-black tracking-tight text-white drop-shadow-lg">
+                    {selectedPreset.title.split('—')[0].trim().toUpperCase()}
+                  </h3>
+                </div>
+
+                {/* Bottom Video Controls Overlay */}
+                <div className="absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-center justify-between text-white text-xs">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                    <span className="font-mono text-slate-200 text-[11px]">
+                      {selectedPreset.title} • {selectedPreset.duration}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-[#5145CD] text-white font-bold hidden sm:inline">
+                      Gemini Omni 1.1 Flash
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-black/70 font-mono border border-white/20">
+                      15 cr
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 5-VIDEO INTERACTIVE SCENE SELECTOR STRIP (CLEANLY BELOW MAIN THEATER) */}
+              <div className="mt-4 grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3">
+                {FLAGSHIP_HERO_VIDEOS.map((preset, idx) => {
                   const isSelected = selectedHeroIndex === idx;
-                  const isUnmuted = unmutedHeroIndex === idx;
 
                   return (
                     <div
                       key={preset.id}
-                      onClick={() => setSelectedHeroIndex(idx)}
-                      className={`cursor-pointer rounded-xl sm:rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col justify-between ${
+                      onClick={() => {
+                        setSelectedHeroIndex(idx);
+                        if (unmutedHeroIndex !== null) setUnmutedHeroIndex(idx);
+                      }}
+                      className={`cursor-pointer rounded-xl border transition-all duration-200 overflow-hidden flex flex-col justify-between text-left group/card ${
                         isSelected
-                          ? 'bg-white border-[#5145CD] ring-2 ring-[#5145CD]/40 shadow-xl scale-[1.01]'
-                          : 'bg-white border-[#E5E7EB] hover:border-[#5145CD]/60 hover:shadow-xl hover:-translate-y-1.5'
+                          ? 'bg-[#EEF2FF] border-[#5145CD] ring-2 ring-[#5145CD]/40 shadow-md scale-[1.02]'
+                          : 'bg-white border-[#E5E7EB] hover:border-[#5145CD]/50 hover:shadow-md'
                       }`}
                     >
-                      {/* 100% PURE CLEAN VIDEO VIEWPORT — ABSOLUTELY ZERO OVERLAYS */}
-                      <div className="relative aspect-[9/16] w-full bg-[#0D0E12] overflow-hidden">
+                      {/* Video Thumbnail with Hover Preview */}
+                      <div className="relative aspect-[16/10] w-full bg-[#0D0E12] overflow-hidden">
+                        <img
+                          src={preset.poster}
+                          alt={preset.title}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
+                        />
                         <video
-                          ref={(el) => {
-                            heroVideoRefs.current[idx] = el;
-                          }}
                           src={preset.videoUrl}
                           poster={preset.poster}
-                          autoPlay
+                          muted
                           loop
-                          muted={!isUnmuted}
                           playsInline
-                          preload="auto"
-                          className="w-full h-full object-cover"
+                          preload="metadata"
+                          onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.pause();
+                            e.currentTarget.currentTime = 0;
+                          }}
+                          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
                         />
+                        <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between text-white text-[9px] font-mono">
+                          <span>Scene ${idx + 1}</span>
+                          <span>${preset.duration}</span>
+                        </div>
                       </div>
 
-                      {/* METADATA CLEANLY UNDERNEATH VIDEO (ZERO TEXT ON VIDEO) */}
-                      <div className="p-2.5 sm:p-3 bg-white border-t border-[#F1F3F5] flex-1 flex flex-col justify-between space-y-2">
-                        <div>
-                          <div className="flex items-center justify-between gap-1 mb-1">
-                            <span className="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-[#EEF2FF] text-[#5145CD] border border-[#E0E7FF] truncate">
-                              {preset.category}
-                            </span>
-                            <span className="text-[9px] sm:text-[10px] font-mono text-[#667085] bg-[#F1F3F5] px-1 py-0.5 rounded shrink-0">
-                              {preset.duration} • 9:16
-                            </span>
-                          </div>
-                          <h4 className="text-xs sm:text-sm font-bold text-[#17191D] line-clamp-1">
-                            {preset.title.split('—')[0].trim()}
-                          </h4>
+                      {/* Card Label */}
+                      <div className="p-2 sm:p-2.5 space-y-1">
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="text-[9px] font-semibold text-[#5145CD] truncate">
+                            ${preset.category}
+                          </span>
+                          {isSelected && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD]" />
+                          )}
                         </div>
-
-                        <div className="flex items-center justify-between gap-1.5 pt-1 border-t border-[#F1F3F5]">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedHeroIndex(idx);
-                              setUnmutedHeroIndex(isUnmuted ? null : idx);
-                            }}
-                            className={`p-1.5 rounded-md border text-xs transition-colors cursor-pointer ${
-                              isUnmuted
-                                ? 'bg-[#5145CD] border-[#5145CD] text-white'
-                                : 'bg-[#F7F8FA] border-[#E5E7EB] text-[#667085] hover:text-[#17191D]'
-                            }`}
-                            title={isUnmuted ? 'Mute' : 'Listen with sound'}
-                            aria-label={isUnmuted ? 'Mute audio' : 'Unmute audio'}
-                          >
-                            {isUnmuted ? (
-                              <Volume2 className="w-3.5 h-3.5" />
-                            ) : (
-                              <VolumeX className="w-3.5 h-3.5" />
-                            )}
-                          </button>
-
-                          <Link
-                            href={`/create?prompt=${encodeURIComponent(preset.prompt)}&aspect=9:16&mode=video`}
-                            onClick={(e) => e.stopPropagation()}
-                            className="flex-1 py-1.5 px-2 rounded-md bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-[11px] sm:text-xs text-center transition-colors shadow-xs"
-                          >
-                            Use Preset
-                          </Link>
-                        </div>
+                        <h4 className="text-xs font-bold text-[#17191D] truncate">
+                          ${preset.title.split('—')[0].trim()}
+                        </h4>
                       </div>
                     </div>
                   );
@@ -628,7 +678,7 @@ export default function HomePage() {
 
               {/* DYNAMIC PROMPT BAR FOR SELECTED PRESET (CLEANLY BELOW GRID) */}
               {selectedPreset && (
-                <div className="mt-4 p-3.5 sm:p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div className="mt-4 p-3.5 sm:p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-left">
                   <div className="flex items-start gap-2.5 min-w-0 flex-1">
                     <div className="w-7 h-7 rounded-lg bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE] flex items-center justify-center shrink-0 mt-0.5">
                       <Sparkles className="w-3.5 h-3.5" />
@@ -642,7 +692,7 @@ export default function HomePage() {
                           {selectedPreset.category}
                         </span>
                         <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#E5E7EB] text-[#17191D]">
-                          {selectedPreset.aspect} • {selectedPreset.duration}
+                          16:9 Cinema • {selectedPreset.duration}
                         </span>
                       </div>
                       <p className="text-[#667085] text-xs line-clamp-2 leading-relaxed">
@@ -653,7 +703,7 @@ export default function HomePage() {
 
                   <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                     <Link
-                      href={`/create?prompt=${encodeURIComponent(selectedPreset.prompt)}&aspect=9:16&mode=video`}
+                      href={`/create?prompt=${encodeURIComponent(selectedPreset.prompt)}&aspect=16:9&mode=video`}
                       className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
