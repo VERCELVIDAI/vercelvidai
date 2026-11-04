@@ -28,7 +28,10 @@ export async function clearPlatformCredentials() {
 }
 
 export async function hasPlatformCredentials() {
-  return (await readStoredCredentials()) !== null;
+  const stored = await readStoredCredentials();
+  if (stored !== null) return true;
+  const envKey = (process.env.HIGGSFIELD_API_KEY || process.env.HF_API_KEY)?.trim();
+  return Boolean(envKey && envKey.includes(":"));
 }
 
 export async function submitGeneration(plane: GenerationPlane) {
@@ -66,9 +69,18 @@ async function readStoredCredentials() {
 
 async function readCredentials() {
   const stored = await readStoredCredentials();
-  if (!stored) throw new MissingCredentialsError();
   const baseUrl = process.env.HF_API_BASE_URL || "https://api.higgsfield.ai";
-  return { ...stored, baseUrl };
+  if (stored) {
+    return { ...stored, baseUrl };
+  }
+
+  // Fallback to server-side configured master key if available
+  const envKey = (process.env.HIGGSFIELD_API_KEY || process.env.HF_API_KEY)?.trim();
+  if (envKey && envKey.includes(":")) {
+    return { apiKey: envKey, baseUrl };
+  }
+
+  throw new MissingCredentialsError();
 }
 
 function parseRequestIds(data: unknown): string[] {

@@ -69,12 +69,25 @@ export function KeyModal({
         <div className="ohf-keys-head">
           <div>
             <div id="ohf-keys-title" className="ohf-keys-title">
-              API key
+              Higgsfield Platform API Key
             </div>
             <p className="ohf-keys-copy">
-              {configured
-                ? "A key is saved in this browser. Enter a new id:secret pair to replace it."
-                : "Paste your platform key as id:secret. It stays in an httpOnly cookie and is sent as Authorization: Key id:secret."}
+              {configured ? (
+                "A platform key is saved in this browser. Enter a new key_id:key_secret pair to replace it."
+              ) : (
+                <>
+                  OpenHiggs runs on the{" "}
+                  <a
+                    href="https://platform.higgsfield.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#d1fe17", textDecoration: "underline" }}
+                  >
+                    Higgsfield AI Platform API
+                  </a>
+                  . Enter your key pair as <strong>id:secret</strong>. It is stored in an encrypted httpOnly cookie.
+                </>
+              )}
             </p>
           </div>
           <button type="button" className="ohf-icon-btn" aria-label="Close" onClick={onClose}>
@@ -84,11 +97,12 @@ export function KeyModal({
 
         <form className="ohf-keys-form" onSubmit={(event) => void onSubmit(event)}>
           <label className="ohf-field">
-            <div className="ohf-field-label">API key</div>
+            <div className="ohf-field-label">API Key (Format: id:secret)</div>
             <input
               className="ohf-input ohf-input--mono"
               name="api_key"
               type="password"
+              placeholder="e.g. hf_key_id:hf_key_secret"
               autoComplete="off"
               spellCheck={false}
               value={apiKey}
