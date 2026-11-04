@@ -8,9 +8,16 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   href?: string;
   showTagline?: boolean;
+  isDark?: boolean;
 }
 
-export function Logo({ className = '', size = 'md', href = '/', showTagline = false }: LogoProps) {
+export function Logo({
+  className = '',
+  size = 'md',
+  href = '/',
+  showTagline = false,
+  isDark = false,
+}: LogoProps) {
   const iconSizes = {
     sm: 'w-7 h-7',
     md: 'w-8 h-8',
@@ -78,15 +85,15 @@ export function Logo({ className = '', size = 'md', href = '/', showTagline = fa
       {/* Typography: Balanced Grotesque Wordmark */}
       <div className="flex flex-col justify-center min-w-0">
         <div className="flex items-center tracking-tight leading-none gap-1 sm:gap-1.5">
-          <span className={`font-black text-[#17191D] tracking-[-0.03em] ${textSizes[size]}`}>
+          <span className={`font-black tracking-[-0.03em] ${textSizes[size]} ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
             FLUVIA
           </span>
-          <span className={`font-semibold text-[#5145CD] tracking-[-0.03em] ${textSizes[size]}`}>
+          <span className={`font-semibold tracking-[-0.03em] ${textSizes[size]} ${isDark ? 'text-violet-400' : 'text-[#5145CD]'}`}>
             FLOW
           </span>
         </div>
         {showTagline && (
-          <span className="text-[11px] font-medium tracking-normal text-[#667085] mt-1">
+          <span className={`text-[11px] font-medium tracking-normal mt-1 ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
             Commercial Video Creation & Creative Production
           </span>
         )}
