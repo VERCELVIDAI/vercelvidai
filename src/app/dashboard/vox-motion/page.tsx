@@ -24,10 +24,10 @@ export default function DashboardVoxMotionPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#070A0F] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-slate-400">Loading Vox Motion Studio...</span>
+          <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-[#667085]">Loading Vox Motion Studio...</span>
         </div>
       </div>
     );
@@ -37,12 +37,12 @@ export default function DashboardVoxMotionPage() {
   const credits = data?.credits || { availableBalance: 0, reservedBalance: 0 };
 
   return (
-    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-[#070A0F] text-white relative selection:bg-[#d4ff00] selection:text-black">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-[#F7F8FA] text-[#17191D] relative">
       {/* Studio Nav Rail */}
       <Sidebar userRole={user.role} credits={credits} />
 
       {/* Main Studio Viewport */}
-      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#070A0F] pb-24 md:pb-8">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA] pb-24 md:pb-8">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}

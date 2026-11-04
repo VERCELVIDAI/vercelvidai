@@ -124,15 +124,17 @@ interface PlanColorTheme {
 export default function PricingPage() {
   const router = useRouter();
 
-  // Dark / Light Theme state: default to 'dark' for the exact Higgsfield screenshot cyber-aesthetic
-  const [pricingTheme, setPricingTheme] = useState<'dark' | 'light'>('dark');
+  // Dark / Light Theme state: default to 'light' matching website UI
+  const [pricingTheme, setPricingTheme] = useState<'dark' | 'light'>('light');
   const isDark = pricingTheme === 'dark';
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem('fluvia_pricing_theme');
-      if (saved === 'light' || saved === 'dark') {
-        setPricingTheme(saved);
+      if (saved === 'dark') {
+        setPricingTheme('dark');
+      } else {
+        setPricingTheme('light');
       }
     } catch {}
   }, []);
