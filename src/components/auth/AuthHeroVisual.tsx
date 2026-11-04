@@ -13,10 +13,65 @@ import {
   VolumeX,
 } from 'lucide-react';
 
+const AUTH_VIDEOS = [
+  {
+    id: 'spacewalk',
+    title: 'Orbital Spacewalk — Cinematic Space',
+    category: 'Cinematic Sci-Fi • 1080p',
+    video: '/media/showcase/vidai-astronaut-spacewalk.mp4',
+    poster: '/media/showcase/vidai-astronaut-spacewalk.jpg',
+    pill: '🚀 Spacewalk',
+  },
+  {
+    id: 'jungle',
+    title: 'Amazonia Expedition — Jungle Adventure',
+    category: 'Adventure Film • 1080p',
+    video: '/media/showcase/vidai-jungle-expedition.mp4',
+    poster: '/media/showcase/vidai-jungle-expedition.jpg',
+    pill: '🌿 Amazonia',
+  },
+  {
+    id: 'skaters',
+    title: 'Swan Elegance — Haute Couture Ice Gala',
+    category: 'Haute Couture • 1080p',
+    video: '/media/showcase/vidai-haute-couture-skaters.mp4',
+    poster: '/media/showcase/vidai-haute-couture-skaters.jpg',
+    pill: '⛸️ Haute Couture',
+  },
+  {
+    id: 'snow',
+    title: 'Apex Powder Descent — Avalanche Carve',
+    category: 'Action Sports • 720p',
+    video: '/media/showcase/vidai-snow-avalanche.mp4',
+    poster: '/media/showcase/vidai-snow-avalanche.jpg',
+    pill: '🏂 Avalanche',
+  },
+  {
+    id: 'superbike',
+    title: 'Neo-Tokyo GP — Cyberpunk Night Drift',
+    category: 'Cyberpunk Automotive • 720p',
+    video: '/media/showcase/vidai-cyberpunk-superbike.mp4',
+    poster: '/media/showcase/vidai-cyberpunk-superbike.jpg',
+    pill: '🏍️ Superbike',
+  },
+];
+
 export function AuthHeroVisual() {
+  const [activeIdx, setActiveIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const activeVideo = AUTH_VIDEOS[activeIdx];
+
+  const handleSelectVideo = (idx: number) => {
+    setActiveIdx(idx);
+    setIsPlaying(true);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  };
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -73,11 +128,11 @@ export function AuthHeroVisual() {
 
         {/* Cinematic Video Showcase Card */}
         <div className="mt-8 relative rounded-2xl overflow-hidden bg-white border border-[#E5E7EB] shadow-lg">
-          {/* 100% PURE CLEAN VIDEO VIEWPORT — ABSOLUTELY ZERO OVERLAYS */}
+          {/* Pure Clean Video Viewport */}
           <div className="relative aspect-[16/10] w-full bg-[#0D0E12] overflow-hidden flex items-center justify-center">
             {/* Ambient Blurred Backdrop */}
             <img
-              src="/media/templates/poster-vid-cyber-hyperkart.jpg"
+              src={activeVideo.poster}
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-35 scale-125 pointer-events-none"
@@ -86,14 +141,33 @@ export function AuthHeroVisual() {
             {/* Pure Video Element */}
             <video
               ref={videoRef}
-              src="/media/templates/tmpl-cyber-hyperkart.mp4"
-              poster="/media/templates/poster-vid-cyber-hyperkart.jpg"
+              key={activeVideo.video}
+              src={activeVideo.video}
+              poster={activeVideo.poster}
               autoPlay
               muted={isMuted}
               loop
               playsInline
-              className="relative z-10 h-full w-auto aspect-[9/16] object-cover shadow-2xl rounded-lg"
+              className="relative z-10 w-full h-full object-cover shadow-2xl"
             />
+          </div>
+
+          {/* Quick Video Switcher Pills */}
+          <div className="p-2.5 bg-[#F7F8FA] border-t border-[#E5E7EB] flex items-center gap-1.5 overflow-x-auto">
+            {AUTH_VIDEOS.map((item, idx) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleSelectVideo(idx)}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
+                  idx === activeIdx
+                    ? 'bg-[#5145CD] text-white shadow-2xs'
+                    : 'bg-white text-[#667085] hover:text-[#17191D] border border-[#E5E7EB]'
+                }`}
+              >
+                {item.pill}
+              </button>
+            ))}
           </div>
 
           {/* Controls & Metadata Cleanly Placed UNDER the Video */}
@@ -102,10 +176,10 @@ export function AuthHeroVisual() {
               <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse shrink-0" />
               <div className="min-w-0">
                 <p className="font-bold text-xs text-[#17191D] truncate">
-                  Veloce Apex — Cyber Hyperkart Reveal
+                  {activeVideo.title}
                 </p>
                 <p className="text-[11px] text-[#667085]">
-                  Automotive Commercial Reel • 9:16
+                  {activeVideo.category}
                 </p>
               </div>
             </div>

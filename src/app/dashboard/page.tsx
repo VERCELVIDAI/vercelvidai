@@ -658,6 +658,63 @@ export default function DashboardPage() {
             )}
           </div>
 
+          {/* Flagship Cinematic Video Showcases */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#5145CD]/10 text-[#5145CD] text-[11px] font-semibold mb-1">
+                  <Film className="w-3.5 h-3.5" />
+                  <span>Cinematic 1080p Engine Showcases</span>
+                </div>
+                <h3 className="text-base font-bold text-[#17191D]">Production-Ready Flagship Video Spots</h3>
+                <p className="text-xs text-[#667085]">Hover to preview photorealistic scenes generated with Google Gemini Omni & Kling</p>
+              </div>
+              <Link
+                href="/create"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs transition-colors self-start sm:self-auto"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Create Video Ad</span>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+              {[
+                { title: 'Orbital Spacewalk', tag: 'Sci-Fi 1080p', video: '/media/showcase/vidai-astronaut-spacewalk.mp4', poster: '/media/showcase/vidai-astronaut-spacewalk.jpg', href: '/templates/orbital-spacewalk-cinematic-sci-fi' },
+                { title: 'Amazonia Expedition', tag: 'Adventure 1080p', video: '/media/showcase/vidai-jungle-expedition.mp4', poster: '/media/showcase/vidai-jungle-expedition.jpg', href: '/templates/amazonia-expedition-cinematic-adventure' },
+                { title: 'Swan Elegance Gala', tag: 'Haute Couture 1080p', video: '/media/showcase/vidai-haute-couture-skaters.mp4', poster: '/media/showcase/vidai-haute-couture-skaters.jpg', href: '/templates/swan-elegance-haute-couture-ice-gala' },
+                { title: 'Apex Powder Descent', tag: 'Extreme Sports 720p', video: '/media/showcase/vidai-snow-avalanche.mp4', poster: '/media/showcase/vidai-snow-avalanche.jpg', href: '/templates/apex-descent-extreme-powder-snowboarding' },
+                { title: 'Neo-Tokyo GP Drift', tag: 'Cyberpunk 720p', video: '/media/showcase/vidai-cyberpunk-superbike.mp4', poster: '/media/showcase/vidai-cyberpunk-superbike.jpg', href: '/templates/neo-tokyo-gp-cyberpunk-superbike-street-race' },
+              ].map((v) => (
+                <Link
+                  key={v.title}
+                  href={v.href}
+                  className="group relative rounded-xl overflow-hidden bg-[#17191D] aspect-[16/10] border border-[#E5E7EB] hover:border-[#5145CD] hover:shadow-md transition-all flex flex-col justify-end"
+                >
+                  <img src={v.poster} alt={v.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <video
+                    src={v.video}
+                    poster={v.poster}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.pause();
+                      e.currentTarget.currentTime = 0;
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <div className="relative z-10 p-2.5 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-white">
+                    <span className="text-[9px] font-mono font-semibold px-1.5 py-0.2 rounded bg-white/20 backdrop-blur-xs">{v.tag}</span>
+                    <p className="text-xs font-bold truncate mt-1 text-white">{v.title}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
           {/* Curated Ad Templates Shelf */}
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
@@ -710,13 +767,29 @@ export default function DashboardPage() {
                   key={tmpl.id}
                   className="rounded-xl bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] hover:shadow-sm transition-all overflow-hidden flex flex-col justify-between"
                 >
-                  <div className="relative aspect-video w-full bg-[#17191D] overflow-hidden">
+                  <div className="relative aspect-video w-full bg-[#17191D] overflow-hidden group/card">
                     <img
                       src={tmpl.thumbnail}
                       alt={tmpl.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                    {tmpl.videoPreview && (
+                      <video
+                        src={tmpl.videoPreview}
+                        poster={tmpl.thumbnail}
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.pause();
+                          e.currentTarget.currentTime = 0;
+                        }}
+                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
+                      />
+                    )}
+                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/20 text-white backdrop-blur-xs font-semibold">
                         {tmpl.category}
                       </span>
