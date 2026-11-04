@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { PlanRecommenderModal } from '@/components/pricing/PlanRecommenderModal';
@@ -32,6 +34,9 @@ import {
   ChevronRight,
   ShieldCheck,
   Cpu,
+  Moon,
+  Sun,
+  Flame,
 } from 'lucide-react';
 
 interface FreeGenItem {
@@ -91,14 +96,20 @@ interface PlanCardData {
 }
 
 interface PlanColorTheme {
+  cardBg: string;
   headerGlow: string;
   cardBorder: string;
   titleColor: string;
+  subtitleColor?: string;
   discountBadge: string;
   bestValueBadge?: string;
   creditBoxBg: string;
   creditIconColor: string;
   creditHeaderColor: string;
+  creditTextColor?: string;
+  priceColor?: string;
+  strikethroughColor?: string;
+  periodColor?: string;
   ctaButton: string;
   freeGensBoxBg: string;
   freeGensHeaderColor: string;
@@ -106,10 +117,33 @@ interface PlanColorTheme {
   unlimitedBoxBg: string;
   unlimitedHeaderColor: string;
   unlimitedBadge: string;
+  checklistText?: string;
+  checkIconColor?: string;
 }
 
 export default function PricingPage() {
   const router = useRouter();
+
+  // Dark / Light Theme state: default to 'dark' for the exact Higgsfield screenshot cyber-aesthetic
+  const [pricingTheme, setPricingTheme] = useState<'dark' | 'light'>('dark');
+  const isDark = pricingTheme === 'dark';
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('fluvia_pricing_theme');
+      if (saved === 'light' || saved === 'dark') {
+        setPricingTheme(saved);
+      }
+    } catch {}
+  }, []);
+
+  const togglePricingTheme = () => {
+    const next = pricingTheme === 'dark' ? 'light' : 'dark';
+    setPricingTheme(next);
+    try {
+      localStorage.setItem('fluvia_pricing_theme', next);
+    } catch {}
+  };
 
   // Toolbar state: 'individual' (4 sample plans) or 'openhiggs' (3 OpenHiggs studio tiers) or 'business'
   const [activeTab, setActiveTab] = useState<'individual' | 'openhiggs' | 'business'>('individual');
@@ -236,16 +270,196 @@ export default function PricingPage() {
 
   const currentMaxTier = maxTiers[maxTierIndex];
 
-  // Distinct Multi-Colour SaaS Themes matching the Screenshot in Light Theme
-  const planColorThemes: Record<string, PlanColorTheme> = {
+  // -------------------------------------------------------------------------
+  // HIGGSFIELD OBSIDIAN DARK STUDIO THEMES (1:1 EXACT MATCH TO USER SCREENSHOT)
+  // -------------------------------------------------------------------------
+  const darkPlanColorThemes: Record<string, PlanColorTheme> = {
     plan_starter: {
+      cardBg: 'bg-[#0E121B]/95',
+      headerGlow: 'bg-gradient-to-b from-slate-700/25 to-transparent',
+      cardBorder: 'border-2 border-slate-800 hover:border-slate-700 shadow-2xl shadow-black/60',
+      titleColor: 'text-white font-black',
+      subtitleColor: 'text-slate-400',
+      discountBadge: '',
+      creditBoxBg: 'bg-[#141A26] border border-slate-800',
+      creditIconColor: 'text-slate-400',
+      creditHeaderColor: 'text-slate-200 font-bold',
+      creditTextColor: 'text-slate-400',
+      priceColor: 'text-white',
+      periodColor: 'text-slate-400',
+      ctaButton: 'bg-white hover:bg-slate-200 text-black font-black shadow-lg shadow-white/10',
+      freeGensBoxBg: 'bg-[#141A26]/70 border border-slate-800/80',
+      freeGensHeaderColor: 'text-slate-300 font-extrabold',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-[#141A26]/70 border border-slate-800/80',
+      unlimitedHeaderColor: 'text-slate-300 font-extrabold',
+      unlimitedBadge: 'bg-slate-800/80 text-slate-400 font-bold border border-slate-700',
+      checklistText: 'text-slate-300',
+      checkIconColor: 'text-slate-400',
+    },
+    plan_creator: {
+      cardBg: 'bg-[#0E180B]/95',
+      headerGlow: 'bg-gradient-to-b from-[#d4ff00]/20 via-[#d4ff00]/5 to-transparent',
+      cardBorder: 'border-2 border-[#a3e635] shadow-[0_0_35px_rgba(163,230,53,0.18)] hover:shadow-[0_0_55px_rgba(163,230,53,0.28)]',
+      titleColor: 'text-white font-black',
+      subtitleColor: 'text-slate-400',
+      discountBadge: 'bg-[#ff1f66] text-white font-black shadow-[0_0_12px_rgba(255,31,102,0.5)]',
+      creditBoxBg: 'bg-[#14230E] border border-[#a3e635]/40',
+      creditIconColor: 'text-[#d4ff00]',
+      creditHeaderColor: 'text-white font-black',
+      creditTextColor: 'text-slate-300',
+      priceColor: 'text-white',
+      strikethroughColor: 'text-[#ff1f66]',
+      periodColor: 'text-slate-400',
+      ctaButton: 'bg-[#d4ff00] hover:bg-[#c2eb00] text-black font-black shadow-[0_0_30px_rgba(212,255,0,0.45)] hover:scale-[1.02] active:scale-[0.98]',
+      freeGensBoxBg: 'bg-[#14230E]/70 border border-[#a3e635]/30',
+      freeGensHeaderColor: 'text-lime-300 font-extrabold',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-[#14230E]/70 border border-[#a3e635]/30',
+      unlimitedHeaderColor: 'text-lime-300 font-extrabold',
+      unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
+      checklistText: 'text-slate-300',
+      checkIconColor: 'text-[#a3e635]',
+    },
+    plan_max: {
+      cardBg: 'bg-[#1B0B18]/95',
+      headerGlow: 'bg-gradient-to-b from-[#ff1f66]/25 via-[#ff1f66]/5 to-transparent',
+      cardBorder: 'border-2 border-[#ff1f66] shadow-[0_0_40px_rgba(255,31,102,0.25)] hover:shadow-[0_0_60px_rgba(255,31,102,0.38)] ring-1 ring-[#ff1f66]/40 lg:-translate-y-2',
+      titleColor: 'text-white font-black',
+      subtitleColor: 'text-slate-400',
+      discountBadge: 'bg-[#ff1f66] text-white font-black shadow-[0_0_12px_rgba(255,31,102,0.6)]',
+      bestValueBadge: 'bg-[#0284c7] text-white font-black shadow-[0_0_12px_rgba(2,132,199,0.6)]',
+      creditBoxBg: 'bg-[#270E21] border border-[#ff1f66]/40',
+      creditIconColor: 'text-[#ff1f66]',
+      creditHeaderColor: 'text-white font-black',
+      creditTextColor: 'text-slate-300',
+      priceColor: 'text-white',
+      strikethroughColor: 'text-[#ff1f66]',
+      periodColor: 'text-slate-400',
+      ctaButton: 'bg-gradient-to-r from-[#ff007a] via-[#ff1f66] to-[#e11d48] text-white font-black shadow-[0_0_35px_rgba(255,0,122,0.5)] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98]',
+      freeGensBoxBg: 'bg-[#270E21]/70 border border-[#ff1f66]/30',
+      freeGensHeaderColor: 'text-pink-300 font-extrabold',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-[#270E21]/70 border border-[#ff1f66]/30',
+      unlimitedHeaderColor: 'text-pink-300 font-extrabold',
+      unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
+      checklistText: 'text-slate-300',
+      checkIconColor: 'text-[#ff1f66]',
+    },
+    plan_business: {
+      cardBg: 'bg-[#0B1022]/95',
+      headerGlow: 'bg-gradient-to-b from-blue-600/25 via-blue-600/5 to-transparent',
+      cardBorder: 'border-2 border-blue-500 shadow-[0_0_35px_rgba(37,99,235,0.22)] hover:shadow-[0_0_50px_rgba(37,99,235,0.32)]',
+      titleColor: 'text-white font-black',
+      subtitleColor: 'text-slate-400',
+      discountBadge: 'bg-[#ff1f66] text-white font-black shadow-[0_0_12px_rgba(255,31,102,0.6)]',
+      creditBoxBg: 'bg-[#101935] border border-blue-500/40',
+      creditIconColor: 'text-blue-400',
+      creditHeaderColor: 'text-white font-black',
+      creditTextColor: 'text-slate-300',
+      priceColor: 'text-white',
+      periodColor: 'text-slate-400',
+      ctaButton: 'bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-black shadow-[0_0_30px_rgba(37,99,235,0.45)] hover:scale-[1.02] active:scale-[0.98]',
+      freeGensBoxBg: 'bg-[#101935]/70 border border-blue-500/30',
+      freeGensHeaderColor: 'text-blue-300 font-extrabold',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-[#101935]/70 border border-blue-500/30',
+      unlimitedHeaderColor: 'text-blue-300 font-extrabold',
+      unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
+      checklistText: 'text-slate-300',
+      checkIconColor: 'text-blue-400',
+    },
+    plan_openhiggs_lite: {
+      cardBg: 'bg-[#0B151C]/95',
+      headerGlow: 'bg-gradient-to-b from-cyan-500/20 to-transparent',
+      cardBorder: 'border-2 border-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.18)] hover:shadow-[0_0_45px_rgba(6,182,212,0.28)]',
+      titleColor: 'text-white font-black',
+      subtitleColor: 'text-slate-400',
+      discountBadge: 'bg-[#ff1f66] text-white font-black',
+      bestValueBadge: 'bg-cyan-600 text-white font-black',
+      creditBoxBg: 'bg-[#0E202B] border border-cyan-400/40',
+      creditIconColor: 'text-cyan-400',
+      creditHeaderColor: 'text-white font-black',
+      creditTextColor: 'text-slate-300',
+      priceColor: 'text-white',
+      periodColor: 'text-slate-400',
+      ctaButton: 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-black shadow-[0_0_25px_rgba(6,182,212,0.4)]',
+      freeGensBoxBg: 'bg-[#0E202B]/70 border border-cyan-400/30',
+      freeGensHeaderColor: 'text-cyan-300 font-extrabold',
+      freeGensBadge: 'bg-cyan-300 text-cyan-950 font-extrabold',
+      unlimitedBoxBg: 'bg-[#0E202B]/70 border border-cyan-400/30',
+      unlimitedHeaderColor: 'text-cyan-300 font-extrabold',
+      unlimitedBadge: 'bg-cyan-300 text-cyan-950 font-extrabold',
+      checklistText: 'text-slate-300',
+      checkIconColor: 'text-cyan-400',
+    },
+    plan_openhiggs: {
+      cardBg: 'bg-[#081811]/95',
+      headerGlow: 'bg-gradient-to-b from-emerald-500/25 to-transparent',
+      cardBorder: 'border-2 border-emerald-400 shadow-[0_0_40px_rgba(16,185,129,0.22)] hover:shadow-[0_0_55px_rgba(16,185,129,0.32)] ring-1 ring-emerald-500/30 lg:-translate-y-2',
+      titleColor: 'text-white font-black',
+      subtitleColor: 'text-slate-400',
+      discountBadge: 'bg-[#ff1f66] text-white font-black',
+      bestValueBadge: 'bg-emerald-600 text-white font-black',
+      creditBoxBg: 'bg-[#0E261A] border border-emerald-400/40',
+      creditIconColor: 'text-emerald-400',
+      creditHeaderColor: 'text-white font-black',
+      creditTextColor: 'text-slate-300',
+      priceColor: 'text-white',
+      periodColor: 'text-slate-400',
+      ctaButton: 'bg-emerald-500 hover:bg-emerald-400 text-black font-black shadow-[0_0_30px_rgba(16,185,129,0.45)]',
+      freeGensBoxBg: 'bg-[#0E261A]/70 border border-emerald-400/30',
+      freeGensHeaderColor: 'text-emerald-300 font-extrabold',
+      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      unlimitedBoxBg: 'bg-[#0E261A]/70 border border-emerald-400/30',
+      unlimitedHeaderColor: 'text-emerald-300 font-extrabold',
+      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      checklistText: 'text-slate-300',
+      checkIconColor: 'text-emerald-400',
+    },
+    plan_openhiggs_max: {
+      cardBg: 'bg-[#150B20]/95',
+      headerGlow: 'bg-gradient-to-b from-purple-600/25 to-transparent',
+      cardBorder: 'border-2 border-purple-500 shadow-[0_0_35px_rgba(168,85,247,0.2)] hover:shadow-[0_0_50px_rgba(168,85,247,0.3)]',
+      titleColor: 'text-white font-black',
+      subtitleColor: 'text-slate-400',
+      discountBadge: 'bg-[#ff1f66] text-white font-black',
+      bestValueBadge: 'bg-purple-600 text-white font-black',
+      creditBoxBg: 'bg-[#201032] border border-purple-400/40',
+      creditIconColor: 'text-purple-400',
+      creditHeaderColor: 'text-white font-black',
+      creditTextColor: 'text-slate-300',
+      priceColor: 'text-white',
+      periodColor: 'text-slate-400',
+      ctaButton: 'bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-black shadow-[0_0_30px_rgba(168,85,247,0.45)]',
+      freeGensBoxBg: 'bg-[#201032]/70 border border-purple-400/30',
+      freeGensHeaderColor: 'text-purple-300 font-extrabold',
+      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      unlimitedBoxBg: 'bg-[#201032]/70 border border-purple-400/30',
+      unlimitedHeaderColor: 'text-purple-300 font-extrabold',
+      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      checklistText: 'text-slate-300',
+      checkIconColor: 'text-purple-400',
+    },
+  };
+
+  // -------------------------------------------------------------------------
+  // CLEAN LIGHT SAAS THEMES (FALLBACK)
+  // -------------------------------------------------------------------------
+  const lightPlanColorThemes: Record<string, PlanColorTheme> = {
+    plan_starter: {
+      cardBg: 'bg-white',
       headerGlow: 'bg-gradient-to-b from-slate-100/90 via-slate-50/40 to-transparent',
       cardBorder: 'border-2 border-slate-200 hover:border-slate-400 shadow-sm hover:shadow-md',
       titleColor: 'text-[#17191D]',
+      subtitleColor: 'text-[#667085]',
       discountBadge: '',
       creditBoxBg: 'bg-slate-50/90 border border-slate-200',
       creditIconColor: 'text-slate-600',
       creditHeaderColor: 'text-slate-900',
+      creditTextColor: 'text-[#667085]',
+      priceColor: 'text-[#17191D]',
+      periodColor: 'text-[#667085]',
       ctaButton: 'bg-white hover:bg-slate-100 text-slate-900 font-black border-2 border-slate-900 shadow-sm',
       freeGensBoxBg: 'bg-slate-50/90 border border-slate-200',
       freeGensHeaderColor: 'text-slate-800',
@@ -253,15 +467,23 @@ export default function PricingPage() {
       unlimitedBoxBg: 'bg-slate-50/90 border border-slate-200',
       unlimitedHeaderColor: 'text-slate-800',
       unlimitedBadge: 'bg-slate-100 text-slate-500 border border-slate-200 font-bold',
+      checklistText: 'text-[#17191D]',
+      checkIconColor: 'text-[#10B981]',
     },
     plan_creator: {
+      cardBg: 'bg-white',
       headerGlow: 'bg-gradient-to-b from-[#d4ff00]/25 via-lime-50/40 to-transparent',
       cardBorder: 'border-2 border-[#84cc16] hover:border-[#65a30d] shadow-md shadow-lime-500/10 hover:shadow-xl',
       titleColor: 'text-[#17191D]',
+      subtitleColor: 'text-[#667085]',
       discountBadge: 'bg-[#ff1f66] text-white font-black',
       creditBoxBg: 'bg-[#f7fee7] border border-[#bef264]',
       creditIconColor: 'text-lime-700',
       creditHeaderColor: 'text-lime-950',
+      creditTextColor: 'text-[#667085]',
+      priceColor: 'text-[#17191D]',
+      strikethroughColor: 'text-[#ff1f66]',
+      periodColor: 'text-[#667085]',
       ctaButton: 'bg-[#d4ff00] hover:bg-[#c2eb00] text-black font-black shadow-md shadow-lime-500/30',
       freeGensBoxBg: 'bg-[#f7fee7] border border-[#d9f99d]',
       freeGensHeaderColor: 'text-emerald-950',
@@ -269,16 +491,24 @@ export default function PricingPage() {
       unlimitedBoxBg: 'bg-[#f7fee7] border border-[#d9f99d]',
       unlimitedHeaderColor: 'text-lime-950',
       unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
+      checklistText: 'text-[#17191D]',
+      checkIconColor: 'text-[#10B981]',
     },
     plan_max: {
+      cardBg: 'bg-white',
       headerGlow: 'bg-gradient-to-b from-pink-200/60 via-rose-50/40 to-transparent',
       cardBorder: 'border-2 border-[#ff1f66] shadow-xl shadow-pink-500/20 ring-2 ring-pink-400/25 lg:-translate-y-2',
       titleColor: 'text-[#17191D]',
+      subtitleColor: 'text-[#667085]',
       discountBadge: 'bg-[#ff1f66] text-white font-black',
       bestValueBadge: 'bg-[#0284c7] text-white font-black',
       creditBoxBg: 'bg-[#fff1f2] border border-[#fecdd3]',
       creditIconColor: 'text-pink-600',
       creditHeaderColor: 'text-pink-950',
+      creditTextColor: 'text-[#667085]',
+      priceColor: 'text-[#17191D]',
+      strikethroughColor: 'text-[#ff1f66]',
+      periodColor: 'text-[#667085]',
       ctaButton: 'bg-gradient-to-r from-[#ff007a] via-[#ff1f66] to-[#e11d48] hover:opacity-95 text-white font-black shadow-lg shadow-pink-500/35',
       freeGensBoxBg: 'bg-[#fff1f2] border border-[#fecdd3]',
       freeGensHeaderColor: 'text-pink-950',
@@ -286,15 +516,22 @@ export default function PricingPage() {
       unlimitedBoxBg: 'bg-[#fff1f2] border border-[#fecdd3]',
       unlimitedHeaderColor: 'text-pink-950',
       unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
+      checklistText: 'text-[#17191D]',
+      checkIconColor: 'text-[#10B981]',
     },
     plan_business: {
+      cardBg: 'bg-white',
       headerGlow: 'bg-gradient-to-b from-blue-200/60 via-blue-50/40 to-transparent',
       cardBorder: 'border-2 border-blue-500 hover:border-blue-600 shadow-md shadow-blue-500/15',
       titleColor: 'text-[#17191D]',
+      subtitleColor: 'text-[#667085]',
       discountBadge: 'bg-[#ff1f66] text-white font-black',
       creditBoxBg: 'bg-[#eff6ff] border border-[#bfdbfe]',
       creditIconColor: 'text-blue-700',
       creditHeaderColor: 'text-blue-950',
+      creditTextColor: 'text-[#667085]',
+      priceColor: 'text-[#17191D]',
+      periodColor: 'text-[#667085]',
       ctaButton: 'bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-black shadow-md shadow-blue-500/30',
       freeGensBoxBg: 'bg-[#eff6ff] border border-[#bfdbfe]',
       freeGensHeaderColor: 'text-blue-900',
@@ -302,17 +539,23 @@ export default function PricingPage() {
       unlimitedBoxBg: 'bg-[#eff6ff] border border-[#bfdbfe]',
       unlimitedHeaderColor: 'text-blue-900',
       unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
+      checklistText: 'text-[#17191D]',
+      checkIconColor: 'text-[#10B981]',
     },
-    // OpenHiggs Studio Color Themes
     plan_openhiggs_lite: {
+      cardBg: 'bg-white',
       headerGlow: 'bg-gradient-to-b from-cyan-100/90 via-cyan-50/30 to-white',
       cardBorder: 'border-2 border-cyan-400 hover:border-cyan-500 shadow-md shadow-cyan-500/10',
       titleColor: 'text-[#17191D]',
+      subtitleColor: 'text-[#667085]',
       discountBadge: 'bg-[#FF1F66] text-white font-black',
       bestValueBadge: 'bg-cyan-600 text-white font-black',
       creditBoxBg: 'bg-cyan-50/70 border border-cyan-200',
       creditIconColor: 'text-cyan-700',
       creditHeaderColor: 'text-cyan-950',
+      creditTextColor: 'text-[#667085]',
+      priceColor: 'text-[#17191D]',
+      periodColor: 'text-[#667085]',
       ctaButton: 'bg-gradient-to-r from-cyan-600 to-teal-600 hover:opacity-95 text-white font-black shadow-md shadow-cyan-500/25',
       freeGensBoxBg: 'bg-cyan-50/50 border border-cyan-200',
       freeGensHeaderColor: 'text-cyan-950',
@@ -320,16 +563,23 @@ export default function PricingPage() {
       unlimitedBoxBg: 'bg-cyan-50/50 border border-cyan-200',
       unlimitedHeaderColor: 'text-cyan-950',
       unlimitedBadge: 'bg-cyan-100 text-cyan-900 font-extrabold',
+      checklistText: 'text-[#17191D]',
+      checkIconColor: 'text-[#10B981]',
     },
     plan_openhiggs: {
+      cardBg: 'bg-white',
       headerGlow: 'bg-gradient-to-b from-emerald-100/95 via-emerald-50/40 to-white',
       cardBorder: 'border-2 border-[#059669] shadow-xl shadow-emerald-500/20 ring-2 ring-emerald-500/20 lg:-translate-y-2',
       titleColor: 'text-[#17191D]',
+      subtitleColor: 'text-[#667085]',
       discountBadge: 'bg-[#FF1F66] text-white font-black',
       bestValueBadge: 'bg-emerald-600 text-white font-black',
       creditBoxBg: 'bg-emerald-50/80 border border-emerald-300',
       creditIconColor: 'text-emerald-700',
       creditHeaderColor: 'text-emerald-950',
+      creditTextColor: 'text-[#667085]',
+      priceColor: 'text-[#17191D]',
+      periodColor: 'text-[#667085]',
       ctaButton: 'bg-[#059669] hover:bg-[#047857] text-white font-black shadow-lg shadow-emerald-600/30',
       freeGensBoxBg: 'bg-emerald-50/60 border border-emerald-200',
       freeGensHeaderColor: 'text-emerald-950',
@@ -337,16 +587,23 @@ export default function PricingPage() {
       unlimitedBoxBg: 'bg-emerald-50/60 border border-emerald-200',
       unlimitedHeaderColor: 'text-emerald-950',
       unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      checklistText: 'text-[#17191D]',
+      checkIconColor: 'text-[#10B981]',
     },
     plan_openhiggs_max: {
+      cardBg: 'bg-white',
       headerGlow: 'bg-gradient-to-b from-purple-100/90 via-purple-50/30 to-white',
       cardBorder: 'border-2 border-purple-500 hover:border-purple-600 shadow-lg shadow-purple-500/15',
       titleColor: 'text-[#17191D]',
+      subtitleColor: 'text-[#667085]',
       discountBadge: 'bg-[#FF1F66] text-white font-black',
       bestValueBadge: 'bg-purple-700 text-white font-black',
       creditBoxBg: 'bg-purple-50/70 border border-purple-200',
       creditIconColor: 'text-purple-700',
       creditHeaderColor: 'text-purple-950',
+      creditTextColor: 'text-[#667085]',
+      priceColor: 'text-[#17191D]',
+      periodColor: 'text-[#667085]',
       ctaButton: 'bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:opacity-95 text-white font-black shadow-md shadow-purple-500/25',
       freeGensBoxBg: 'bg-purple-50/50 border border-purple-200',
       freeGensHeaderColor: 'text-purple-950',
@@ -354,8 +611,12 @@ export default function PricingPage() {
       unlimitedBoxBg: 'bg-purple-50/50 border border-purple-200',
       unlimitedHeaderColor: 'text-purple-950',
       unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      checklistText: 'text-[#17191D]',
+      checkIconColor: 'text-[#10B981]',
     },
   };
+
+  const planColorThemes = isDark ? darkPlanColorThemes : lightPlanColorThemes;
 
   // All Plans Data
   const plansData: PlanCardData[] = [
@@ -777,23 +1038,42 @@ export default function PricingPage() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#CCFF00] selection:text-black">
+    <div className={`min-h-screen flex flex-col transition-colors duration-500 relative overflow-hidden ${
+      isDark ? 'bg-[#070A0F] text-white selection:bg-[#CCFF00] selection:text-black' : 'bg-[#FFFFFF] text-[#17191D] selection:bg-[#CCFF00] selection:text-black'
+    }`}>
+      {/* Ambient Moving Aurora Lights in Dark Studio Mode */}
+      {isDark && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-32 left-1/4 w-[520px] h-[520px] bg-[#d4ff00]/8 rounded-full blur-[140px] animate-pulse-glass" />
+          <div className="absolute top-1/4 -right-28 w-[600px] h-[600px] bg-[#ff1f66]/10 rounded-full blur-[160px] animate-pulse-glass" style={{ animationDelay: '2.5s' }} />
+          <div className="absolute bottom-1/4 -left-28 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[160px] animate-pulse-glass" style={{ animationDelay: '5s' }} />
+        </div>
+      )}
+
       <Header />
 
-      <main className="flex-1 w-full max-w-[1520px] mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <main className="flex-1 w-full max-w-[1520px] mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
         {/* ========================================================================= */}
         {/* TOP CONTROLS & NAVIGATION BAR (MATCHING SCREENSHOT) */}
         {/* ========================================================================= */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#E5E7EB]">
+        <div className={`flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b ${
+          isDark ? 'border-slate-800' : 'border-[#E5E7EB]'
+        }`}>
           {/* Left: Category Segmented Switcher + Promotional Pill */}
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="inline-flex p-1 rounded-xl border bg-[#F7F8FA] border-[#E5E7EB]">
+            <div className={`inline-flex p-1 rounded-xl border ${
+              isDark ? 'bg-[#101522] border-slate-800' : 'bg-[#F7F8FA] border-[#E5E7EB]'
+            }`}>
               <button
                 type="button"
                 onClick={() => setActiveTab('individual')}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'individual'
-                    ? 'bg-white text-[#17191D] shadow-xs'
+                    ? isDark
+                      ? 'bg-[#1C2538] text-white shadow-sm border border-slate-700'
+                      : 'bg-white text-[#17191D] shadow-xs'
+                    : isDark
+                    ? 'text-slate-400 hover:text-white'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
@@ -805,13 +1085,19 @@ export default function PricingPage() {
                 onClick={() => setActiveTab('openhiggs')}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'openhiggs'
-                    ? 'bg-white text-emerald-700 shadow-xs font-black'
+                    ? isDark
+                      ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 font-black shadow-sm'
+                      : 'bg-white text-emerald-700 shadow-xs font-black'
+                    : isDark
+                    ? 'text-emerald-400 hover:text-emerald-200 font-bold'
                     : 'text-emerald-700 hover:text-emerald-950 font-bold'
                 }`}
               >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
                 <span>OpenHiggs Studio (3 Plans)</span>
-                <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-black border border-emerald-200">
+                <span className={`text-[10px] px-1.5 py-0.2 rounded font-black border ${
+                  isDark ? 'bg-emerald-900/60 text-emerald-200 border-emerald-600/50' : 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                }`}>
                   20% OFF
                 </span>
               </button>
@@ -821,7 +1107,11 @@ export default function PricingPage() {
                 onClick={() => setActiveTab('business')}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'business'
-                    ? 'bg-white text-[#17191D] shadow-xs'
+                    ? isDark
+                      ? 'bg-[#1C2538] text-white shadow-sm border border-slate-700'
+                      : 'bg-white text-[#17191D] shadow-xs'
+                    : isDark
+                    ? 'text-slate-400 hover:text-white'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
@@ -830,32 +1120,59 @@ export default function PricingPage() {
             </div>
 
             {/* Promotional Pill Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border bg-[#EEF2FF] border-[#C7D2FE] text-[#5145CD]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5145CD] animate-pulse" />
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold border ${
+              isDark
+                ? 'bg-blue-950/70 border-blue-500/40 text-blue-300'
+                : 'bg-[#EEF2FF] border-[#C7D2FE] text-[#5145CD]'
+            }`}>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
               <span>⚡ 30-DAY UNLIMITED SEEDANCE 2.5</span>
             </div>
           </div>
 
-          {/* Right: Recommender + Currency Switch + Monthly/Annual Toggle */}
-          <div className="flex items-center gap-3 sm:gap-5 flex-wrap self-start md:self-auto">
+          {/* Right: Theme Switcher + Recommender + Currency Switch + Monthly/Annual Toggle */}
+          <div className="flex items-center gap-3 sm:gap-4 flex-wrap self-start md:self-auto">
+            {/* Theme Toggle Button (Dark Studio vs Light SaaS) */}
+            <button
+              type="button"
+              onClick={togglePricingTheme}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 text-xs font-bold transition-all cursor-pointer ${
+                isDark
+                  ? 'bg-[#121824] hover:bg-[#1A2234] border-slate-700 text-yellow-300 shadow-xs'
+                  : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'
+              }`}
+              title="Toggle between Dark Cyber Studio and Light SaaS Mode"
+            >
+              {isDark ? <Sun className="w-3.5 h-3.5 text-yellow-300" /> : <Moon className="w-3.5 h-3.5 text-slate-700" />}
+              <span>{isDark ? 'Dark Studio' : 'Light SaaS'}</span>
+            </button>
+
             {/* Recommender link */}
             <button
               type="button"
               onClick={() => setIsRecommenderOpen(true)}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold transition-all cursor-pointer text-[#5145CD] hover:text-[#4338CA]"
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold transition-all cursor-pointer ${
+                isDark ? 'text-slate-300 hover:text-white' : 'text-[#5145CD] hover:text-[#4338CA]'
+              }`}
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>Not sure which plan?</span>
             </button>
 
             {/* Currency Switcher */}
-            <div className="inline-flex p-0.5 rounded-lg border text-[11px] font-bold bg-[#F1F3F5] border-[#E5E7EB]">
+            <div className={`inline-flex p-0.5 rounded-lg border text-[11px] font-bold ${
+              isDark ? 'bg-[#101522] border-slate-800' : 'bg-[#F1F3F5] border-[#E5E7EB]'
+            }`}>
               <button
                 type="button"
                 onClick={() => setCurrency('inr')}
                 className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
                   currency === 'inr'
-                    ? 'bg-white text-[#17191D] shadow-xs font-black'
+                    ? isDark
+                      ? 'bg-[#1C2538] text-white shadow-xs font-black'
+                      : 'bg-white text-[#17191D] shadow-xs font-black'
+                    : isDark
+                    ? 'text-slate-400 hover:text-white'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
@@ -866,7 +1183,11 @@ export default function PricingPage() {
                 onClick={() => setCurrency('usd')}
                 className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
                   currency === 'usd'
-                    ? 'bg-white text-[#17191D] shadow-xs font-black'
+                    ? isDark
+                      ? 'bg-[#1C2538] text-white shadow-xs font-black'
+                      : 'bg-white text-[#17191D] shadow-xs font-black'
+                    : isDark
+                    ? 'text-slate-400 hover:text-white'
                     : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
@@ -878,7 +1199,9 @@ export default function PricingPage() {
             <div className="flex items-center gap-2">
               <span
                 className={`text-xs font-semibold cursor-pointer ${
-                  billingInterval === 'month' ? 'text-[#17191D]' : 'text-[#667085]'
+                  billingInterval === 'month'
+                    ? isDark ? 'text-white font-bold' : 'text-[#17191D]'
+                    : isDark ? 'text-slate-400' : 'text-[#667085]'
                 }`}
                 onClick={() => {
                   if (billingInterval === 'year') {
@@ -900,11 +1223,19 @@ export default function PricingPage() {
                     setIsAnnualPassModalOpen(true);
                     setBillingInterval('month');
                   } else {
+                    try {
+                      confetti({
+                        particleCount: 50,
+                        spread: 70,
+                        origin: { y: 0.25 },
+                        colors: ['#d4ff00', '#ff1f66', '#2563eb', '#10b981'],
+                      });
+                    } catch {}
                     setBillingInterval('year');
                   }
                 }}
                 className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
-                  billingInterval === 'year' ? 'bg-[#22c55e]' : 'bg-[#D1D5DB]'
+                  billingInterval === 'year' ? 'bg-[#22c55e]' : isDark ? 'bg-slate-700' : 'bg-[#D1D5DB]'
                 }`}
               >
                 <span
@@ -916,13 +1247,25 @@ export default function PricingPage() {
 
               <span
                 className={`text-xs font-semibold cursor-pointer flex items-center gap-1.5 ${
-                  billingInterval === 'year' ? 'text-[#5145CD]' : 'text-[#667085]'
+                  billingInterval === 'year'
+                    ? isDark ? 'text-[#d4ff00] font-black' : 'text-[#5145CD] font-black'
+                    : isDark ? 'text-slate-400' : 'text-[#667085]'
                 }`}
-                onClick={() => setBillingInterval('year')}
+                onClick={() => {
+                  try {
+                    confetti({
+                      particleCount: 50,
+                      spread: 70,
+                      origin: { y: 0.25 },
+                      colors: ['#d4ff00', '#ff1f66', '#2563eb', '#10b981'],
+                    });
+                  } catch {}
+                  setBillingInterval('year');
+                }}
               >
                 <span>Annual</span>
                 {billingInterval === 'year' && (
-                  <span className="text-[10px] font-black bg-[#EF4444] text-white px-2 py-0.5 rounded shadow-xs">
+                  <span className="text-[10px] font-black bg-[#EF4444] text-white px-2 py-0.5 rounded shadow-xs animate-bounce">
                     SAVE UP TO 30%
                   </span>
                 )}
@@ -936,6 +1279,7 @@ export default function PricingPage() {
         {/* ========================================================================= */}
         <AnimatedDiscountGiftBox
           billingInterval={billingInterval}
+          isDark={isDark}
           onApplyCoupon={(code) => handleSelectPlan('plan_max')}
         />
 
@@ -951,7 +1295,7 @@ export default function PricingPage() {
               : 'grid-cols-1 max-w-md mx-auto'
           }`}
         >
-          {visiblePlans.map((plan) => {
+          {visiblePlans.map((plan, planIdx) => {
             const isAnnual = billingInterval === 'year';
             const price = currency === 'usd'
               ? (isAnnual ? plan.usdPriceAnnual : plan.usdPriceMonthly)
@@ -971,22 +1315,26 @@ export default function PricingPage() {
             const theme = planColorThemes[plan.id] || planColorThemes.plan_starter;
 
             return (
-              <div
+              <motion.div
                 key={plan.id}
-                className={`rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 text-left bg-white relative overflow-hidden ${theme.cardBorder}`}
+                initial={{ opacity: 0, y: 35 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: planIdx * 0.08, ease: 'easeOut' }}
+                whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.22 } }}
+                className={`rounded-3xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 text-left relative overflow-hidden backdrop-blur-xl ${theme.cardBorder} ${theme.cardBg}`}
               >
                 {/* Colored Ambient Glow at Top matching screenshot glow tint */}
-                <div className={`absolute top-0 left-0 right-0 h-28 pointer-events-none ${theme.headerGlow}`} />
+                <div className={`absolute top-0 left-0 right-0 h-32 pointer-events-none ${theme.headerGlow}`} />
 
                 <div className="relative z-10">
                   {/* Card Header: Title + Discount / Value Badges */}
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-xl sm:text-2xl font-black tracking-tight text-[#17191D]">
+                      <h3 className={`text-xl sm:text-2xl font-black tracking-tight ${theme.titleColor}`}>
                         {plan.title}
                       </h3>
                       {plan.discountBadge && isAnnual && (
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider shadow-xs ${theme.discountBadge}`}>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider shadow-xs ${theme.discountBadge}`}>
                           {plan.discountBadge}
                         </span>
                       )}
@@ -1001,22 +1349,22 @@ export default function PricingPage() {
                   </div>
 
                   {/* Subtitle */}
-                  <p className="text-xs mt-1 min-h-[32px] leading-relaxed text-[#667085]">
+                  <p className={`text-xs mt-1.5 min-h-[32px] leading-relaxed ${theme.subtitleColor || (isDark ? 'text-slate-400' : 'text-[#667085]')}`}>
                     {plan.subtitle}
                   </p>
 
                   {/* 1. Credit Allowance Box (Matching Screenshot Pattern) */}
-                  <div className={`mt-3.5 p-3.5 rounded-xl border space-y-2 ${theme.creditBoxBg}`}>
+                  <div className={`mt-3.5 p-3.5 rounded-2xl border space-y-2 ${theme.creditBoxBg}`}>
                     <div className={`flex items-center gap-1.5 font-black text-xs ${theme.creditHeaderColor}`}>
                       {isTeams ? (
-                        <Users className="w-3.5 h-3.5 shrink-0" />
+                        <Users className={`w-3.5 h-3.5 shrink-0 ${theme.creditIconColor}`} />
                       ) : (
-                        <Coins className="w-3.5 h-3.5 shrink-0" />
+                        <Coins className={`w-3.5 h-3.5 shrink-0 ${theme.creditIconColor}`} />
                       )}
                       <span>{plan.creditsLabel}</span>
                     </div>
 
-                    <ul className="space-y-1 text-[11px] pl-1 text-[#667085]">
+                    <ul className={`space-y-1 text-[11px] pl-1 ${theme.creditTextColor || (isDark ? 'text-slate-300' : 'text-[#667085]')}`}>
                       {plan.creditsLines.map((line, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
                           <span className="opacity-60">•</span>
@@ -1027,30 +1375,36 @@ export default function PricingPage() {
 
                     {/* Pro Slider if Pro and in USD */}
                     {isPro && currency === 'usd' ? (
-                      <div className="pt-2 border-t border-lime-200 flex items-center justify-between gap-1 text-[10px]">
+                      <div className={`pt-2 border-t flex items-center justify-between gap-1 text-[10px] ${
+                        isDark ? 'border-lime-500/30' : 'border-lime-200'
+                      }`}>
                         <button
                           type="button"
                           onClick={() => setProTierIndex((prev) => (prev === 0 ? 1 : 0))}
-                          className="p-0.5 rounded hover:bg-lime-200 text-lime-900 cursor-pointer"
+                          className="p-0.5 rounded hover:bg-lime-500/20 text-[#d4ff00] cursor-pointer"
                         >
-                          <ChevronLeft className="w-3 h-3" />
+                          <ChevronLeft className="w-3.5 h-3.5" />
                         </button>
                         <div className="flex items-center gap-2 font-mono">
                           <button
                             type="button"
                             onClick={() => setProTierIndex(0)}
-                            className={`px-1.5 py-0.5 rounded font-bold cursor-pointer transition-all ${
-                              proTierIndex === 0 ? 'bg-[#CCFF00] text-black shadow-xs font-black' : 'text-lime-800'
+                            className={`px-2 py-0.5 rounded-md font-bold cursor-pointer transition-all ${
+                              proTierIndex === 0
+                                ? 'bg-[#d4ff00] text-black shadow-xs font-black scale-105'
+                                : isDark ? 'text-lime-300 hover:text-white' : 'text-lime-800'
                             }`}
                           >
                             600
                           </button>
-                          <span>•</span>
+                          <span className="text-slate-500">•</span>
                           <button
                             type="button"
                             onClick={() => setProTierIndex(1)}
-                            className={`px-1.5 py-0.5 rounded font-bold cursor-pointer transition-all ${
-                              proTierIndex === 1 ? 'bg-[#CCFF00] text-black shadow-xs font-black' : 'text-lime-800'
+                            className={`px-2 py-0.5 rounded-md font-bold cursor-pointer transition-all ${
+                              proTierIndex === 1
+                                ? 'bg-[#d4ff00] text-black shadow-xs font-black scale-105'
+                                : isDark ? 'text-lime-300 hover:text-white' : 'text-lime-800'
                             }`}
                           >
                             900
@@ -1059,21 +1413,23 @@ export default function PricingPage() {
                         <button
                           type="button"
                           onClick={() => setProTierIndex((prev) => (prev === 1 ? 0 : 1))}
-                          className="p-0.5 rounded hover:bg-lime-200 text-lime-900 cursor-pointer"
+                          className="p-0.5 rounded hover:bg-lime-500/20 text-[#d4ff00] cursor-pointer"
                         >
-                          <ChevronRight className="w-3 h-3" />
+                          <ChevronRight className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     ) : isMax ? (
                       /* Interactive Max Tier Slider */
-                      <div className="pt-2 border-t border-pink-200 flex items-center justify-between gap-1 text-[10px]">
+                      <div className={`pt-2 border-t flex items-center justify-between gap-1 text-[10px] ${
+                        isDark ? 'border-pink-500/30' : 'border-pink-200'
+                      }`}>
                         <button
                           type="button"
                           onClick={() => setMaxTierIndex((prev) => (prev > 0 ? prev - 1 : 2))}
-                          className="p-0.5 rounded hover:bg-pink-200 text-pink-900 cursor-pointer"
+                          className="p-0.5 rounded hover:bg-pink-500/20 text-[#ff1f66] cursor-pointer"
                           title="Previous credit tier"
                         >
-                          <ChevronLeft className="w-3 h-3" />
+                          <ChevronLeft className="w-3.5 h-3.5" />
                         </button>
 
                         <div className="flex items-center gap-1.5 font-mono">
@@ -1082,10 +1438,10 @@ export default function PricingPage() {
                               key={idx}
                               type="button"
                               onClick={() => setMaxTierIndex(idx)}
-                              className={`px-1.5 py-0.5 rounded font-bold cursor-pointer transition-all ${
+                              className={`px-2 py-0.5 rounded-md font-bold cursor-pointer transition-all ${
                                 maxTierIndex === idx
-                                  ? 'bg-[#FF1F66] text-white shadow-xs'
-                                  : 'text-pink-800 hover:bg-pink-100'
+                                  ? 'bg-[#ff1f66] text-white shadow-xs font-black scale-105'
+                                  : isDark ? 'text-pink-300 hover:text-white hover:bg-pink-950/40' : 'text-pink-800 hover:bg-pink-100'
                               }`}
                             >
                               {(currency === 'usd' ? tier.credits : tier.inrCredits).toLocaleString()}
@@ -1096,14 +1452,16 @@ export default function PricingPage() {
                         <button
                           type="button"
                           onClick={() => setMaxTierIndex((prev) => (prev < 2 ? prev + 1 : 0))}
-                          className="p-0.5 rounded hover:bg-pink-200 text-pink-900 cursor-pointer"
+                          className="p-0.5 rounded hover:bg-pink-500/20 text-[#ff1f66] cursor-pointer"
                           title="Next credit tier"
                         >
-                          <ChevronRight className="w-3 h-3" />
+                          <ChevronRight className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     ) : (
-                      <div className="pt-2 border-t border-[#E5E7EB] flex items-center gap-1.5 text-[10px] font-semibold text-[#667085]">
+                      <div className={`pt-2 border-t flex items-center gap-1.5 text-[10px] font-semibold ${
+                        isDark ? 'border-slate-800 text-slate-400' : 'border-[#E5E7EB] text-[#667085]'
+                      }`}>
                         <Check className="w-3 h-3 shrink-0 text-[#10B981]" />
                         <span>{plan.fixedCreditsNote}</span>
                       </div>
@@ -1111,42 +1469,56 @@ export default function PricingPage() {
                   </div>
 
                   {/* 2. Price Section */}
-                  <div className="mt-4 pb-4 border-b border-[#E5E7EB]">
-                    <div className="flex items-baseline gap-1.5 flex-wrap">
+                  <div className={`mt-4 pb-4 border-b ${isDark ? 'border-slate-800' : 'border-[#E5E7EB]'}`}>
+                    <div className="flex items-baseline gap-2 flex-wrap">
                       {isAnnual && strikethroughPrice && (
-                        <span className="text-base line-through font-mono text-[#FF1F66] font-bold">
+                        <span className={`text-base line-through font-mono font-bold ${
+                          theme.strikethroughColor || 'text-[#FF1F66]'
+                        }`}>
                           {currencySymbol}{strikethroughPrice.toLocaleString()}
                         </span>
                       )}
-                      <span className="text-3xl font-black font-mono tracking-tight text-[#17191D]">
+                      <span className={`text-3xl sm:text-4xl font-black font-mono tracking-tight ${
+                        theme.priceColor || (isDark ? 'text-white' : 'text-[#17191D]')
+                      }`}>
                         {isTeams ? 'From ' : ''}{currencySymbol}{price.toLocaleString()}
                       </span>
-                      <span className="text-xs font-medium text-[#667085]">
+                      <span className={`text-xs font-medium ${
+                        theme.periodColor || (isDark ? 'text-slate-400' : 'text-[#667085]')
+                      }`}>
                         {isTeams ? 'per seat/month' : `per month, ${isAnnual ? 'billed annually' : 'billed monthly'}`}
                       </span>
                     </div>
 
                     {/* FIRST20 Coupon Tag Callout on Max */}
                     {plan.couponTag && (
-                      <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-pink-50 border border-pink-200 text-[10px] text-pink-700 font-black font-mono">
-                        <Tag className="w-3 h-3 text-pink-600 shrink-0" />
+                      <div className={`mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-black font-mono border ${
+                        isDark
+                          ? 'bg-pink-950/70 border-pink-500/40 text-pink-300'
+                          : 'bg-pink-50 border-pink-200 text-pink-700'
+                      }`}>
+                        <Tag className="w-3 h-3 text-pink-400 shrink-0" />
                         <span>{plan.couponTag}</span>
                       </div>
                     )}
                   </div>
 
-                  {/* 3. Primary CTA Button (Screenshot Colors) */}
+                  {/* 3. Primary CTA Button (Screenshot Colors with Shimmer Animation) */}
                   <div className="mt-4 space-y-2">
                     <button
                       type="button"
                       onClick={() => handleSelectPlan(plan.id)}
-                      className={`w-full py-2.5 px-4 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 transform hover:scale-[1.01] active:scale-98 ${theme.ctaButton}`}
+                      className={`relative overflow-hidden group w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer flex items-center justify-center gap-1.5 transform hover:scale-[1.01] active:scale-98 ${theme.ctaButton}`}
                     >
-                      <span>{plan.ctaText}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      {/* Animated Shimmer sweep */}
+                      <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+                      <span className="relative z-10 flex items-center gap-1.5">
+                        <span>{plan.ctaText}</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      </span>
                     </button>
 
-                    <p className="text-[11px] text-center text-[#667085]">
+                    <p className={`text-[11px] text-center ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
                       {isTeams
                         ? 'Save up to 30% with annual billing'
                         : isAnnual
@@ -1157,28 +1529,36 @@ export default function PricingPage() {
 
                   {/* Special Banner for Teams & OpenHiggs */}
                   {plan.specialBanner && (
-                    <div className="mt-4 p-3 rounded-xl bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200 text-center">
-                      <p className="text-[11px] font-black text-blue-800 uppercase tracking-wider flex items-center justify-center gap-1">
-                        <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                    <div className={`mt-4 p-3 rounded-xl border text-center ${
+                      isDark
+                        ? 'bg-blue-950/60 border-blue-500/40 text-blue-200'
+                        : 'bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border-blue-200'
+                    }`}>
+                      <p className={`text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1 ${
+                        isDark ? 'text-blue-300' : 'text-blue-800'
+                      }`}>
+                        <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                         <span>{plan.specialBanner.title}</span>
                       </p>
-                      <p className="text-[10px] text-blue-600 mt-0.5 font-medium">
+                      <p className={`text-[10px] mt-0.5 font-medium ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
                         {plan.specialBanner.subtitle}
                       </p>
                     </div>
                   )}
 
                   {/* 4. Feature Box 1: FREE GENERATIONS / UNLIMITED MODELS */}
-                  <div className={`mt-4 p-3 rounded-xl border space-y-2 ${theme.freeGensBoxBg}`}>
+                  <div className={`mt-4 p-3.5 rounded-2xl border space-y-2.5 ${theme.freeGensBoxBg}`}>
                     <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-wider">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-amber-500">🎁</span>
+                        <span className="text-amber-400">🎁</span>
                         <span className={theme.freeGensHeaderColor}>{plan.freeGensBox.header}</span>
                       </div>
                       <button
                         type="button"
                         onClick={scrollToMatrix}
-                        className="text-[#5145CD] hover:underline normal-case font-medium text-[10px]"
+                        className={`hover:underline normal-case font-semibold text-[10px] cursor-pointer ${
+                          isDark ? 'text-slate-400 hover:text-white' : 'text-[#5145CD]'
+                        }`}
                       >
                         Learn more
                       </button>
@@ -1189,13 +1569,15 @@ export default function PricingPage() {
                         <div key={i} className="flex items-center justify-between text-[11px] gap-1">
                           <div className="flex items-center gap-1.5 truncate">
                             {item.included ? (
-                              <Check className="w-3 h-3 text-[#10B981] shrink-0" />
+                              <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
                             ) : (
-                              <X className="w-3 h-3 shrink-0 text-slate-400" />
+                              <X className={`w-3.5 h-3.5 shrink-0 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
                             )}
                             <span
                               className={`truncate ${
-                                item.included ? 'text-[#17191D] font-medium' : 'text-slate-400'
+                                item.included
+                                  ? isDark ? 'text-slate-200 font-medium' : 'text-[#17191D] font-medium'
+                                  : isDark ? 'text-slate-500' : 'text-slate-400'
                               }`}
                             >
                               {item.name}
@@ -1204,7 +1586,9 @@ export default function PricingPage() {
 
                           <div className="flex items-center gap-1 shrink-0">
                             {item.resBadge && (
-                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
+                              <span className={`px-1.5 py-0.2 rounded text-[9px] font-mono border ${
+                                isDark ? 'bg-black/50 border-white/10 text-slate-400' : 'bg-white border-[#E5E7EB] text-[#667085]'
+                              }`}>
                                 {item.resBadge}
                               </span>
                             )}
@@ -1212,6 +1596,8 @@ export default function PricingPage() {
                               className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
                                 item.included
                                   ? theme.freeGensBadge
+                                  : isDark
+                                  ? 'bg-slate-800 text-slate-500 border border-slate-700'
                                   : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                               }`}
                             >
@@ -1224,16 +1610,18 @@ export default function PricingPage() {
                   </div>
 
                   {/* 5. Feature Box 2: UNLIMITED & FREE GENS */}
-                  <div className={`mt-3.5 p-3 rounded-xl border space-y-2 ${theme.unlimitedBoxBg}`}>
+                  <div className={`mt-3.5 p-3.5 rounded-2xl border space-y-2.5 ${theme.unlimitedBoxBg}`}>
                     <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-wider">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-blue-500 font-bold">∞</span>
+                        <span className="text-blue-400 font-bold">∞</span>
                         <span className={theme.unlimitedHeaderColor}>{plan.unlimitedGensBox.header}</span>
                       </div>
                       <button
                         type="button"
                         onClick={scrollToMatrix}
-                        className="text-[#5145CD] hover:underline normal-case font-medium text-[10px]"
+                        className={`hover:underline normal-case font-semibold text-[10px] cursor-pointer ${
+                          isDark ? 'text-slate-400 hover:text-white' : 'text-[#5145CD]'
+                        }`}
                       >
                         Learn more
                       </button>
@@ -1244,13 +1632,15 @@ export default function PricingPage() {
                         <div key={i} className="flex items-center justify-between gap-1">
                           <div className="flex items-center gap-1.5 truncate">
                             {item.included ? (
-                              <Check className="w-3 h-3 text-[#10B981] shrink-0" />
+                              <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
                             ) : (
-                              <X className="w-3 h-3 shrink-0 text-slate-400" />
+                              <X className={`w-3.5 h-3.5 shrink-0 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
                             )}
                             <span
                               className={`truncate ${
-                                item.included ? 'text-[#17191D] font-medium' : 'text-slate-400'
+                                item.included
+                                  ? isDark ? 'text-slate-200 font-medium' : 'text-[#17191D] font-medium'
+                                  : isDark ? 'text-slate-500' : 'text-slate-400'
                               }`}
                             >
                               {item.name}
@@ -1259,7 +1649,9 @@ export default function PricingPage() {
 
                           <div className="flex items-center gap-1 shrink-0">
                             {item.resBadge && (
-                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono border bg-white border-[#E5E7EB] text-[#667085]">
+                              <span className={`px-1.5 py-0.2 rounded text-[9px] font-mono border ${
+                                isDark ? 'bg-black/50 border-white/10 text-slate-400' : 'bg-white border-[#E5E7EB] text-[#667085]'
+                              }`}>
                                 {item.resBadge}
                               </span>
                             )}
@@ -1267,6 +1659,8 @@ export default function PricingPage() {
                               className={`px-1.5 py-0.2 rounded text-[9px] font-bold ${
                                 item.included
                                   ? theme.unlimitedBadge
+                                  : isDark
+                                  ? 'bg-slate-800 text-slate-500 border border-slate-700'
                                   : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                               }`}
                             >
@@ -1283,7 +1677,11 @@ export default function PricingPage() {
                         <button
                           type="button"
                           onClick={() => toggleAccordion(plan.id)}
-                          className="w-full py-1 px-1.5 rounded text-[10px] font-bold text-[#5145CD] hover:bg-slate-100/70 flex items-center justify-between transition-colors cursor-pointer"
+                          className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-bold flex items-center justify-between transition-colors cursor-pointer ${
+                            isDark
+                              ? 'text-lime-300 hover:bg-white/10'
+                              : 'text-[#5145CD] hover:bg-slate-100/70'
+                          }`}
                         >
                           <span>
                             {isAccordionExpanded
@@ -1291,9 +1689,9 @@ export default function PricingPage() {
                               : `+ ${plan.unlimitedGensBox.extraCount} unlimited & free generation models`}
                           </span>
                           {isAccordionExpanded ? (
-                            <ChevronUp className="w-3 h-3" />
+                            <ChevronUp className="w-3.5 h-3.5" />
                           ) : (
-                            <ChevronRight className="w-3 h-3" />
+                            <ChevronRight className="w-3.5 h-3.5" />
                           )}
                         </button>
 
@@ -1304,10 +1702,14 @@ export default function PricingPage() {
                                 key={idx}
                                 className="flex items-center justify-between text-[11px] gap-2 py-0.5"
                               >
-                                <span className="text-[#667085] truncate">
+                                <span className={`truncate ${isDark ? 'text-slate-300' : 'text-[#667085]'}`}>
                                   {extra.name}
                                 </span>
-                                <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-white border border-[#E5E7EB] text-[#5145CD] font-bold">
+                                <span className={`px-1.5 py-0.2 rounded text-[9px] font-mono border font-bold ${
+                                  isDark
+                                    ? 'bg-white/10 border-white/15 text-[#d4ff00]'
+                                    : 'bg-white border-[#E5E7EB] text-[#5145CD]'
+                                }`}>
                                   {extra.unlimitedBadge}
                                 </span>
                               </div>
@@ -1320,26 +1722,28 @@ export default function PricingPage() {
                 </div>
 
                 {/* 6. Bottom Checklist */}
-                <div className="mt-5 pt-4 border-t border-[#E5E7EB]">
-                  <ul className="space-y-2 text-[11px] text-[#667085]">
+                <div className={`mt-5 pt-4 border-t ${isDark ? 'border-slate-800' : 'border-[#E5E7EB]'}`}>
+                  <ul className="space-y-2 text-[11px]">
                     {plan.bottomChecklist.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5">
+                      <li key={idx} className="flex items-start gap-2">
                         {item.included ? (
-                          <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0 mt-0.5" />
+                          <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${theme.checkIconColor || 'text-[#10B981]'}`} />
                         ) : (
-                          <X className="w-3.5 h-3.5 text-slate-300 shrink-0 mt-0.5" />
+                          <X className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isDark ? 'text-slate-600' : 'text-slate-300'}`} />
                         )}
                         <span
                           className={`leading-relaxed ${
-                            item.included ? 'text-[#17191D]' : 'text-slate-400'
+                            item.included
+                              ? theme.checklistText || (isDark ? 'text-slate-200 font-medium' : 'text-[#17191D]')
+                              : isDark ? 'text-slate-500' : 'text-slate-400'
                           }`}
                         >
                           {item.text}
                         </span>
                         {item.badge && (
                           <span
-                            className={`ml-auto text-[9px] font-black uppercase px-1.5 py-0.2 rounded shrink-0 ${
-                              item.badgeColor || 'bg-[#FEF08A] text-[#854D0E]'
+                            className={`ml-auto text-[9px] font-black uppercase px-2 py-0.5 rounded shrink-0 shadow-xs ${
+                              item.badgeColor || (isDark ? 'bg-[#d4ff00] text-black' : 'bg-[#FEF08A] text-[#854D0E]')
                             }`}
                           >
                             {item.badge}
@@ -1349,7 +1753,7 @@ export default function PricingPage() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -1357,14 +1761,18 @@ export default function PricingPage() {
         {/* ========================================================================= */}
         {/* SCREENSHOT MATCHING DISCLAIMER FOOTER BAR */}
         {/* ========================================================================= */}
-        <div className="mt-8 pt-5 pb-2 text-center text-[11px] text-[#667085] max-w-4xl mx-auto leading-relaxed border-t border-[#E5E7EB]">
+        <div className={`mt-8 pt-5 pb-2 text-center text-[11px] max-w-4xl mx-auto leading-relaxed border-t ${
+          isDark ? 'border-slate-800 text-slate-500' : 'border-[#E5E7EB] text-[#667085]'
+        }`}>
           <p>
             Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer.
             Prices exclude VAT and local taxes, calculated at checkout. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods.{' '}
             <button
               type="button"
               onClick={scrollToMatrix}
-              className="text-[#5145CD] hover:underline font-semibold cursor-pointer"
+              className={`hover:underline font-semibold cursor-pointer ${
+                isDark ? 'text-lime-400' : 'text-[#5145CD]'
+              }`}
             >
               Learn more
             </button>
@@ -1376,7 +1784,7 @@ export default function PricingPage() {
         {/* ONE-TIME CREDIT TOP-UP SECTION */}
         {/* ========================================================================= */}
         <div className="mt-16 sm:mt-24">
-          <CreditTopUpSection onBuyPack={handleBuyCreditPack} />
+          <CreditTopUpSection onBuyPack={handleBuyCreditPack} isDark={isDark} />
         </div>
 
         {/* ========================================================================= */}
@@ -1386,21 +1794,28 @@ export default function PricingPage() {
           <FeatureComparisonMatrix
             billingInterval={billingInterval}
             onSelectPlan={handleSelectPlan}
+            isDark={isDark}
           />
         </div>
 
         {/* ========================================================================= */}
         {/* ENTERPRISE & SECURITY ASSURANCE */}
         {/* ========================================================================= */}
-        <div className="mt-16 sm:mt-20 p-8 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB] max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className={`mt-16 sm:mt-20 p-8 rounded-2xl border max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 transition-colors ${
+          isDark
+            ? 'bg-[#0E131E] border-slate-800 text-white shadow-xl'
+            : 'bg-[#F7F8FA] border-[#E5E7EB] text-[#17191D]'
+        }`}>
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#5145CD]">
+            <span className={`text-[11px] font-extrabold uppercase tracking-widest ${
+              isDark ? 'text-indigo-400' : 'text-[#5145CD]'
+            }`}>
               Security & Compliance
             </span>
-            <h4 className="text-xl font-extrabold text-[#17191D]">
+            <h4 className={`text-xl font-extrabold ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
               Enterprise-Grade Privacy & Transparent Pricing
             </h4>
-            <p className="text-xs text-[#667085] max-w-xl leading-relaxed">
+            <p className={`text-xs max-w-xl leading-relaxed ${isDark ? 'text-slate-400' : 'text-[#667085]'}`}>
               All subscription tiers include 18% GST tax invoices, immediate Razorpay/PayU digital receipts, and end-to-end data encryption. Your prompts and media assets are never used to train public foundation models without explicit consent.
             </p>
           </div>
@@ -1420,10 +1835,12 @@ export default function PricingPage() {
         {/* ========================================================================= */}
         <div className="mt-16 sm:mt-24 max-w-4xl mx-auto text-left">
           <div className="text-center mb-10">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#5145CD]">
+            <span className={`text-xs font-extrabold uppercase tracking-widest ${
+              isDark ? 'text-indigo-400' : 'text-[#5145CD]'
+            }`}>
               Got Questions?
             </span>
-            <h3 className="text-2xl sm:text-3xl font-black text-[#17191D] mt-1">
+            <h3 className={`text-2xl sm:text-3xl font-black mt-1 ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
               Frequently Asked Questions
             </h3>
           </div>
@@ -1453,22 +1870,34 @@ export default function PricingPage() {
             ].map((faq, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl border border-[#E5E7EB] bg-white overflow-hidden transition-all"
+                className={`rounded-2xl border overflow-hidden transition-all ${
+                  isDark
+                    ? 'border-slate-800 bg-[#0E131E] shadow-lg'
+                    : 'border-[#E5E7EB] bg-white'
+                }`}
               >
                 <button
                   type="button"
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-[#F7F8FA] transition-colors"
+                  className={`w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer transition-colors ${
+                    isDark ? 'hover:bg-white/5' : 'hover:bg-[#F7F8FA]'
+                  }`}
                 >
-                  <span className="text-sm font-extrabold text-[#17191D]">{faq.q}</span>
+                  <span className={`text-sm font-extrabold ${isDark ? 'text-white' : 'text-[#17191D]'}`}>
+                    {faq.q}
+                  </span>
                   {openFaqs[idx] ? (
-                    <ChevronUp className="w-4 h-4 text-[#5145CD] shrink-0" />
+                    <ChevronUp className={`w-4 h-4 shrink-0 ${isDark ? 'text-indigo-400' : 'text-[#5145CD]'}`} />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-[#667085] shrink-0" />
+                    <ChevronDown className={`w-4 h-4 shrink-0 ${isDark ? 'text-slate-500' : 'text-[#667085]'}`} />
                   )}
                 </button>
                 {openFaqs[idx] && (
-                  <div className="px-5 pb-5 text-xs text-[#667085] leading-relaxed border-t border-[#E5E7EB] pt-3">
+                  <div className={`px-5 pb-5 text-xs leading-relaxed border-t pt-3 ${
+                    isDark
+                      ? 'border-slate-800/80 text-slate-400'
+                      : 'border-[#E5E7EB] text-[#667085]'
+                  }`}>
                     {faq.a}
                   </div>
                 )}

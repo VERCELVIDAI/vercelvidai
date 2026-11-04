@@ -91,11 +91,26 @@ const config: Config = {
           "0%, 100%": { opacity: "0.7" },
           "50%": { opacity: "0.95" },
         },
+        shimmer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(200%)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.6", transform: "scale(1)" },
+          "50%": { opacity: "1", transform: "scale(1.04)" },
+        },
+        "sound-wave": {
+          "0%, 100%": { height: "4px" },
+          "50%": { height: "20px" },
+        },
       },
       animation: {
         "float-slow": "float-slow 8s ease-in-out infinite",
         "flow-ribbon": "flow-ribbon 24s ease-in-out infinite",
         "pulse-glass": "pulse-glass 6s ease-in-out infinite",
+        shimmer: "shimmer 2.5s infinite linear",
+        "glow-pulse": "glow-pulse 4s ease-in-out infinite",
+        "sound-wave": "sound-wave 1.2s ease-in-out infinite",
       },
     },
   },

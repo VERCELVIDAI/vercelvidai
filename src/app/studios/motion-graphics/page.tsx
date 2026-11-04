@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function MotionGraphicsStudioPage() {
   return (
-    <div className="min-h-screen bg-[#FDFDFE] flex flex-col justify-between">
+    <div className="min-h-screen bg-[#07090E] text-white flex flex-col justify-between selection:bg-[#d4ff00] selection:text-black">
       <Header />
       <main className="flex-1">
         <VoxMotionGraphicsStudio />
