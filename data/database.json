@@ -1141,6 +1141,60 @@
       "firstCampaignCouponSeen": true,
       "createdAt": "2026-10-29T06:19:49.465Z",
       "updatedAt": "2026-10-29T06:19:49.529Z"
+    },
+    {
+      "id": "usr_rl0lch78",
+      "email": "test.creator@fluviaflow.ai",
+      "displayName": "Test Creator",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-11-04T06:44:45.832Z",
+      "updatedAt": "2026-11-04T06:44:45.832Z"
+    },
+    {
+      "id": "usr_baaf7v8l",
+      "email": "saurav.creator@fluviaflow.ai",
+      "displayName": "Saurav Creator",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-11-04T06:45:15.926Z",
+      "updatedAt": "2026-11-04T06:45:15.926Z"
+    },
+    {
+      "id": "usr_2f6v282o",
+      "email": "saurav.agency@fluviaflow.ai",
+      "displayName": "Saurav Agency",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-11-04T06:45:39.860Z",
+      "updatedAt": "2026-11-04T06:45:39.860Z"
+    },
+    {
+      "id": "usr_w5aho3qr",
+      "email": "artist@openhiggs.ai",
+      "displayName": "OpenHiggs Artist",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-11-04T06:45:46.819Z",
+      "updatedAt": "2026-11-04T06:45:46.819Z"
+    },
+    {
+      "id": "usr_g474hrlf",
+      "email": "lite@openhiggs.ai",
+      "displayName": "OpenHiggs Lite Creator",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-11-04T06:49:54.144Z",
+      "updatedAt": "2026-11-04T06:49:54.144Z"
+    },
+    {
+      "id": "usr_7vqqf0cd",
+      "email": "max@openhiggs.ai",
+      "displayName": "OpenHiggs Max Studio",
+      "role": "creator",
+      "firstCampaignCouponSeen": false,
+      "createdAt": "2026-11-04T06:50:05.976Z",
+      "updatedAt": "2026-11-04T06:50:05.976Z"
     }
   ],
   "passwords": {
@@ -1349,7 +1403,19 @@
     "usr_9qd3b2uv": "scrypt:56dfdcae0a72f0e699a4bf5ac41ae2fa:c539672ef45ba53a230b4c7d614e6119e74394fbb3221dc8f40e77ac7e1a37ce56fe7c674805adb86e774c6855c254d83ad27f79365e21a753a365620eae7203",
     "zero_1793251795414@test.fluviaflow.ai": "scrypt:56dfdcae0a72f0e699a4bf5ac41ae2fa:c539672ef45ba53a230b4c7d614e6119e74394fbb3221dc8f40e77ac7e1a37ce56fe7c674805adb86e774c6855c254d83ad27f79365e21a753a365620eae7203",
     "usr_9z08klvd": "scrypt:a72ea0577e54108ffc475444882d063a:69fff0603ca6129a2fbacbdad41871341d3e6f083750398d80608edff5be909566eb569832c4f2a9fa93dcc9ab447313066161fa52fc2d346c98884cfe4fd0dc",
-    "zero_1793254789258@test.fluviaflow.ai": "scrypt:a72ea0577e54108ffc475444882d063a:69fff0603ca6129a2fbacbdad41871341d3e6f083750398d80608edff5be909566eb569832c4f2a9fa93dcc9ab447313066161fa52fc2d346c98884cfe4fd0dc"
+    "zero_1793254789258@test.fluviaflow.ai": "scrypt:a72ea0577e54108ffc475444882d063a:69fff0603ca6129a2fbacbdad41871341d3e6f083750398d80608edff5be909566eb569832c4f2a9fa93dcc9ab447313066161fa52fc2d346c98884cfe4fd0dc",
+    "usr_rl0lch78": "scrypt:2c907051f7eb60404e9d4d791569a174:c263a8dc41c10990c73848d0bba85103689b9b08477813f0a855b5875b2b5eaadebe33dcfe7cb0d35a2293def1ca3f723c7a0c1db37151a70713fb940834fa93",
+    "test.creator@fluviaflow.ai": "scrypt:2c907051f7eb60404e9d4d791569a174:c263a8dc41c10990c73848d0bba85103689b9b08477813f0a855b5875b2b5eaadebe33dcfe7cb0d35a2293def1ca3f723c7a0c1db37151a70713fb940834fa93",
+    "usr_baaf7v8l": "scrypt:38e724693f3f32ed65d9cfd5d9e0b157:109130823cc2966c537230d5efec240f77a822a9b9667b9eb93185f2de025720ad6fd8a4ceb53109b0c4107107a8eee6aad99a9e30061c476dacdef86a8b1f8f",
+    "saurav.creator@fluviaflow.ai": "scrypt:38e724693f3f32ed65d9cfd5d9e0b157:109130823cc2966c537230d5efec240f77a822a9b9667b9eb93185f2de025720ad6fd8a4ceb53109b0c4107107a8eee6aad99a9e30061c476dacdef86a8b1f8f",
+    "usr_2f6v282o": "scrypt:5ab6d64f3c9664f4e63ead3f9f61629d:f387ff261d544fddaf4d126a35c1ceb8cbfb4f314e68b74e9cc69807b04c8dd209c8ae040b88a0b5174db107d8d830ab5e332a5ad0d6c13a24019da79eef3c05",
+    "saurav.agency@fluviaflow.ai": "scrypt:5ab6d64f3c9664f4e63ead3f9f61629d:f387ff261d544fddaf4d126a35c1ceb8cbfb4f314e68b74e9cc69807b04c8dd209c8ae040b88a0b5174db107d8d830ab5e332a5ad0d6c13a24019da79eef3c05",
+    "usr_w5aho3qr": "scrypt:dfb5e0df112d819a508a7af28d100f07:2105e17cce224fda1e0ae428d66fd20f18b2e093755552d39e0282cfef7c371f81a0011328f42ad67c366d77c78803455f2ccf613a2a82278f5bd5e5730db18b",
+    "artist@openhiggs.ai": "scrypt:dfb5e0df112d819a508a7af28d100f07:2105e17cce224fda1e0ae428d66fd20f18b2e093755552d39e0282cfef7c371f81a0011328f42ad67c366d77c78803455f2ccf613a2a82278f5bd5e5730db18b",
+    "usr_g474hrlf": "scrypt:8d6029f19ebfc7ea362ea26525ef0573:898d07d7ba2923ed9271bb702e491c1ec32113869538ffdb22f40578eff635b05e6c33a57e993fb3e696c1e8d2b3779d3f5bf5c38860b0aaf62be558a0f5164c",
+    "lite@openhiggs.ai": "scrypt:8d6029f19ebfc7ea362ea26525ef0573:898d07d7ba2923ed9271bb702e491c1ec32113869538ffdb22f40578eff635b05e6c33a57e993fb3e696c1e8d2b3779d3f5bf5c38860b0aaf62be558a0f5164c",
+    "usr_7vqqf0cd": "scrypt:d6ad6984156a43934ff8e55f3c06a860:712f7c4735f55bce4e63c85401b79969630e3edea4fc3995836ad59f4884f4381c46479dcb78a013ec943668629840121f1c2f4114c6df92ef63abbf66d87d49",
+    "max@openhiggs.ai": "scrypt:d6ad6984156a43934ff8e55f3c06a860:712f7c4735f55bce4e63c85401b79969630e3edea4fc3995836ad59f4884f4381c46479dcb78a013ec943668629840121f1c2f4114c6df92ef63abbf66d87d49"
   },
   "workspaces": [
     {
@@ -2317,6 +2383,48 @@
       "name": "Zero Credits User's Studio",
       "createdAt": "2026-10-29T06:19:49.465Z",
       "updatedAt": "2026-10-29T06:19:49.465Z"
+    },
+    {
+      "id": "ws_36xb63ve",
+      "ownerId": "usr_rl0lch78",
+      "name": "Test Creator's Studio",
+      "createdAt": "2026-11-04T06:44:45.832Z",
+      "updatedAt": "2026-11-04T06:44:45.832Z"
+    },
+    {
+      "id": "ws_rkqfiqn0",
+      "ownerId": "usr_baaf7v8l",
+      "name": "Saurav Creator's Studio",
+      "createdAt": "2026-11-04T06:45:15.926Z",
+      "updatedAt": "2026-11-04T06:45:15.926Z"
+    },
+    {
+      "id": "ws_nj3ymx53",
+      "ownerId": "usr_2f6v282o",
+      "name": "Saurav Agency's Studio",
+      "createdAt": "2026-11-04T06:45:39.860Z",
+      "updatedAt": "2026-11-04T06:45:39.860Z"
+    },
+    {
+      "id": "ws_59051vex",
+      "ownerId": "usr_w5aho3qr",
+      "name": "OpenHiggs Artist's Studio",
+      "createdAt": "2026-11-04T06:45:46.819Z",
+      "updatedAt": "2026-11-04T06:45:46.819Z"
+    },
+    {
+      "id": "ws_jvpi5spl",
+      "ownerId": "usr_g474hrlf",
+      "name": "OpenHiggs Lite Creator's Studio",
+      "createdAt": "2026-11-04T06:49:54.144Z",
+      "updatedAt": "2026-11-04T06:49:54.144Z"
+    },
+    {
+      "id": "ws_ywbdl803",
+      "ownerId": "usr_7vqqf0cd",
+      "name": "OpenHiggs Max Studio's Studio",
+      "createdAt": "2026-11-04T06:50:05.976Z",
+      "updatedAt": "2026-11-04T06:50:05.976Z"
     }
   ],
   "workspaceMembers": [
@@ -3111,6 +3219,42 @@
       "userId": "usr_9z08klvd",
       "role": "owner",
       "joinedAt": "2026-10-29T06:19:49.465Z"
+    },
+    {
+      "workspaceId": "ws_36xb63ve",
+      "userId": "usr_rl0lch78",
+      "role": "owner",
+      "joinedAt": "2026-11-04T06:44:45.832Z"
+    },
+    {
+      "workspaceId": "ws_rkqfiqn0",
+      "userId": "usr_baaf7v8l",
+      "role": "owner",
+      "joinedAt": "2026-11-04T06:45:15.926Z"
+    },
+    {
+      "workspaceId": "ws_nj3ymx53",
+      "userId": "usr_2f6v282o",
+      "role": "owner",
+      "joinedAt": "2026-11-04T06:45:39.860Z"
+    },
+    {
+      "workspaceId": "ws_59051vex",
+      "userId": "usr_w5aho3qr",
+      "role": "owner",
+      "joinedAt": "2026-11-04T06:45:46.819Z"
+    },
+    {
+      "workspaceId": "ws_jvpi5spl",
+      "userId": "usr_g474hrlf",
+      "role": "owner",
+      "joinedAt": "2026-11-04T06:49:54.144Z"
+    },
+    {
+      "workspaceId": "ws_ywbdl803",
+      "userId": "usr_7vqqf0cd",
+      "role": "owner",
+      "joinedAt": "2026-11-04T06:50:05.976Z"
     }
   ],
   "creditAccounts": {
@@ -4121,6 +4265,42 @@
       "availableBalance": 0,
       "reservedBalance": 0,
       "updatedAt": "2026-10-29T06:19:49.465Z"
+    },
+    "usr_rl0lch78": {
+      "userId": "usr_rl0lch78",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-11-04T06:44:45.832Z"
+    },
+    "usr_baaf7v8l": {
+      "userId": "usr_baaf7v8l",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-11-04T06:45:15.926Z"
+    },
+    "usr_2f6v282o": {
+      "userId": "usr_2f6v282o",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-11-04T06:45:39.860Z"
+    },
+    "usr_w5aho3qr": {
+      "userId": "usr_w5aho3qr",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-11-04T06:45:46.819Z"
+    },
+    "usr_g474hrlf": {
+      "userId": "usr_g474hrlf",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-11-04T06:49:54.144Z"
+    },
+    "usr_7vqqf0cd": {
+      "userId": "usr_7vqqf0cd",
+      "availableBalance": 0,
+      "reservedBalance": 0,
+      "updatedAt": "2026-11-04T06:50:05.976Z"
     }
   },
   "creditLedger": [
@@ -8786,22 +8966,9 @@
     {
       "id": "plan_free",
       "name": "Free Explorer",
-      "description": "Ideal for testing AI video generation workflows.",
       "priceInr": 0,
-      "priceAnnualInr": 0,
       "billingInterval": "month",
       "creditsPerPeriod": 60,
-      "category": "individual",
-      "accentTheme": "basic",
-      "features": [
-        "60 Credits every month",
-        "720p HD Exports",
-        "Watermarked exports",
-        "30s max clip duration",
-        "Fluvia Core & Flux AI models",
-        "1 GB Cloud Storage",
-        "Standard Community Support"
-      ],
       "entitlements": {
         "maxResolution": "720p",
         "watermark": true,
@@ -8817,7 +8984,19 @@
         "apiAccess": false,
         "supportLevel": "community"
       },
-      "isActive": true
+      "isActive": true,
+      "description": "Ideal for testing AI video generation workflows.",
+      "category": "individual",
+      "accentTheme": "basic",
+      "features": [
+        "60 Credits every month",
+        "720p HD Exports",
+        "Watermarked exports",
+        "30s max clip duration",
+        "Fluvia Core & Flux AI models",
+        "1 GB Cloud Storage",
+        "Standard Community Support"
+      ]
     },
     {
       "id": "plan_starter",
@@ -8971,6 +9150,123 @@
         "commercialLicense": true,
         "apiAccess": true,
         "supportLevel": "dedicated"
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_openhiggs_lite",
+      "name": "OpenHiggs Lite",
+      "description": "Starter engine for creators exploring open-source AI video & image models.",
+      "priceInr": 2499,
+      "priceAnnualInr": 1999,
+      "billingInterval": "month",
+      "creditsPerPeriod": 1500,
+      "category": "individual",
+      "badge": "20% OFF",
+      "accentTheme": "openhiggs",
+      "features": [
+        "1,500 Credits every month",
+        "Access to 15 Core open-source models",
+        "Seedance 2.0 Fast, Kling 3.0 Turbo & Ideogram 4",
+        "Standard Cloud GPU compute pipeline",
+        "Parallel generation: up to 2 concurrent runs",
+        "Watermark-free 1080p exports & commercial rights",
+        "30 GB Asset Storage & browser caching",
+        "Standard queue priority"
+      ],
+      "entitlements": {
+        "maxResolution": "1080p",
+        "watermark": false,
+        "maxVideoLengthSec": 180,
+        "supportedModels": [
+          "openhiggs-15"
+        ],
+        "storageMb": 30000,
+        "priorityQueue": false,
+        "brandKitsAllowed": 3,
+        "seatsAllowed": 1,
+        "commercialLicense": true,
+        "apiAccess": false,
+        "supportLevel": "standard"
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_openhiggs",
+      "name": "OpenHiggs Studio Pro",
+      "description": "Flagship open-source AI studio engine with unrestricted access to all 38 foundation models.",
+      "priceInr": 5100,
+      "priceAnnualInr": 4080,
+      "billingInterval": "month",
+      "creditsPerPeriod": 3500,
+      "category": "individual",
+      "badge": "20% OFF",
+      "accentTheme": "openhiggs",
+      "features": [
+        "3,500 Credits every month",
+        "Full unrestricted access to all 38 OpenHiggs foundation models",
+        "Soul Cinema 4K, Seedance 2.5 Director & Kling 3.0 Pro",
+        "BYOK (Bring Your Own Key) + Cloud GPU acceleration",
+        "Parallel generation: up to 4 concurrent runs",
+        "Watermark-free 4K exports & commercial rights",
+        "100 GB Cloud Storage & IndexedDB persistence",
+        "Priority VIP queue for batch tasks"
+      ],
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 360,
+        "supportedModels": [
+          "all",
+          "openhiggs-38"
+        ],
+        "storageMb": 100000,
+        "priorityQueue": true,
+        "brandKitsAllowed": 10,
+        "seatsAllowed": 1,
+        "commercialLicense": true,
+        "apiAccess": true,
+        "supportLevel": "priority"
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_openhiggs_max",
+      "name": "OpenHiggs GPU Cluster Max",
+      "description": "Enterprise dedicated compute tier for heavy production teams needing dedicated A100 GPU cluster acceleration.",
+      "priceInr": 9999,
+      "priceAnnualInr": 7999,
+      "billingInterval": "month",
+      "creditsPerPeriod": 8000,
+      "category": "individual",
+      "badge": "20% OFF",
+      "accentTheme": "openhiggs",
+      "features": [
+        "8,000 Credits every month",
+        "All 38 models + Dedicated A100 GPU cluster priority lane",
+        "Instant zero-wait generation queue",
+        "Parallel generation: up to 8 concurrent runs",
+        "Cinema Master 4K 60fps & raw ProRes exports",
+        "Direct REST API & automated webhooks",
+        "Custom LoRA weights & fine-tuning support",
+        "500 GB High-Speed Storage & 24/7 dedicated engineer support"
+      ],
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 600,
+        "supportedModels": [
+          "all",
+          "openhiggs-38",
+          "a100-cluster"
+        ],
+        "storageMb": 500000,
+        "priorityQueue": true,
+        "brandKitsAllowed": 25,
+        "seatsAllowed": 3,
+        "commercialLicense": true,
+        "apiAccess": true,
+        "supportLevel": "priority"
       },
       "isActive": true
     }
@@ -16685,6 +16981,97 @@
       "resourceType": "profile",
       "resourceId": "usr_creator_demo_1",
       "createdAt": "2026-10-29T05:49:34.988Z"
+    },
+    {
+      "id": "aud_3e6xsd0k7j",
+      "actorId": "usr_baaf7v8l",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_4l3up8kzr",
+      "metadata": {
+        "txnid": "TXN_1793774716006_I39H01",
+        "totalAmount": 11313.84,
+        "productInfo": "Fluvia Basic - Annual Subscription 12 Months at INR 799 mo"
+      },
+      "createdAt": "2026-11-04T06:45:16.022Z"
+    },
+    {
+      "id": "aud_791mz717a1",
+      "actorId": "usr_baaf7v8l",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_7e976m21y",
+      "metadata": {
+        "txnid": "TXN_1793774722109_IR774S",
+        "totalAmount": 28305.84,
+        "productInfo": "Fluvia Pro - Annual Subscription 12 Months at INR 1999 mo"
+      },
+      "createdAt": "2026-11-04T06:45:22.121Z"
+    },
+    {
+      "id": "aud_9d0uzuk2kh",
+      "actorId": "usr_baaf7v8l",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_mxgzn8ss0",
+      "metadata": {
+        "txnid": "TXN_1793774729360_87MXVT",
+        "totalAmount": 55953.24,
+        "productInfo": "Fluvia Max - Annual Subscription 12 Months at INR 3999 mo Coupon FIRST20 applied"
+      },
+      "createdAt": "2026-11-04T06:45:29.384Z"
+    },
+    {
+      "id": "aud_v8jvh78nw7",
+      "actorId": "usr_2f6v282o",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_0nkc3ix7x",
+      "metadata": {
+        "txnid": "TXN_1793774739942_XGKQQL",
+        "totalAmount": 113265.84,
+        "productInfo": "Fluvia Teams - Annual Subscription 12 Months at INR 7999 mo"
+      },
+      "createdAt": "2026-11-04T06:45:39.955Z"
+    },
+    {
+      "id": "aud_ho4o47qfa5",
+      "actorId": "usr_w5aho3qr",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_x4wihjwd0",
+      "metadata": {
+        "txnid": "TXN_1793774986598_4TCR95",
+        "totalAmount": 57772.8,
+        "productInfo": "OpenHiggs Studio Pro - Annual Subscription 12 Months at INR 4080 mo"
+      },
+      "createdAt": "2026-11-04T06:49:46.613Z"
+    },
+    {
+      "id": "aud_aqgxyvpz2h",
+      "actorId": "usr_g474hrlf",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_403ifkl9t",
+      "metadata": {
+        "txnid": "TXN_1793774994241_FXB4QG",
+        "totalAmount": 28305.84,
+        "productInfo": "OpenHiggs Lite - Annual Subscription 12 Months at INR 1999 mo"
+      },
+      "createdAt": "2026-11-04T06:49:54.254Z"
+    },
+    {
+      "id": "aud_6ckzwuduu5",
+      "actorId": "usr_7vqqf0cd",
+      "action": "PAYU_ORDER_CREATED",
+      "resourceType": "payment_order",
+      "resourceId": "ord_payu_oe310puaw",
+      "metadata": {
+        "txnid": "TXN_1793775006071_OHJESX",
+        "totalAmount": 113265.84,
+        "productInfo": "OpenHiggs GPU Cluster Max - Annual Subscription 12 Months at INR 7999 mo"
+      },
+      "createdAt": "2026-11-04T06:50:06.089Z"
     }
   ],
   "supportTickets": [
@@ -16701,6 +17088,305 @@
     }
   ],
   "payuOrders": [
+    {
+      "txnid": "TXN_1793774994241_FXB4QG",
+      "userId": "usr_g474hrlf",
+      "workspaceId": "ws_jvpi5spl",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_openhiggs_lite",
+      "productInfo": "OpenHiggs Lite - Annual Subscription 12 Months at INR 1999 mo",
+      "currency": "INR",
+      "baseAmount": 23988,
+      "taxAmount": 4317.84,
+      "totalAmount": 28305.84,
+      "amountPaise": 2830584,
+      "taxBreakdown": {
+        "baseAmount": 23988,
+        "taxRate": 18,
+        "taxAmount": 4317.84,
+        "cgstRate": 9,
+        "cgstAmount": 2158.92,
+        "sgstRate": 9,
+        "sgstAmount": 2158.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "OpenHiggs Lite Creator",
+        "email": "lite@openhiggs.ai",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793774994241_FXB4QG",
+      "id": "ord_payu_403ifkl9t",
+      "createdAt": "2026-11-04T06:49:54.241Z",
+      "updatedAt": "2026-11-04T06:49:54.241Z"
+    },
+    {
+      "txnid": "TXN_1793774986598_4TCR95",
+      "userId": "usr_w5aho3qr",
+      "workspaceId": "ws_59051vex",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_openhiggs",
+      "productInfo": "OpenHiggs Studio Pro - Annual Subscription 12 Months at INR 4080 mo",
+      "currency": "INR",
+      "baseAmount": 48960,
+      "taxAmount": 8812.8,
+      "totalAmount": 57772.8,
+      "amountPaise": 5777280,
+      "taxBreakdown": {
+        "baseAmount": 48960,
+        "taxRate": 18,
+        "taxAmount": 8812.8,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 8812.8,
+        "isInterState": true,
+        "placeOfSupply": "Karnataka"
+      },
+      "customerDetails": {
+        "name": "OpenHiggs Artist",
+        "email": "artist@openhiggs.ai",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Karnataka",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793774986598_4TCR95",
+      "id": "ord_payu_x4wihjwd0",
+      "createdAt": "2026-11-04T06:49:46.599Z",
+      "updatedAt": "2026-11-04T06:49:46.599Z"
+    },
+    {
+      "txnid": "TXN_1793774739942_XGKQQL",
+      "userId": "usr_2f6v282o",
+      "workspaceId": "ws_nj3ymx53",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_business",
+      "productInfo": "Fluvia Teams - Annual Subscription 12 Months at INR 7999 mo",
+      "currency": "INR",
+      "baseAmount": 95988,
+      "taxAmount": 17277.84,
+      "totalAmount": 113265.84,
+      "amountPaise": 11326584,
+      "taxBreakdown": {
+        "baseAmount": 95988,
+        "taxRate": 18,
+        "taxAmount": 17277.84,
+        "cgstRate": 0,
+        "cgstAmount": 0,
+        "sgstRate": 0,
+        "sgstAmount": 0,
+        "igstRate": 18,
+        "igstAmount": 17277.84,
+        "isInterState": true,
+        "placeOfSupply": "Maharashtra"
+      },
+      "customerDetails": {
+        "name": "Saurav Agency",
+        "email": "saurav.agency@fluviaflow.ai",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Maharashtra",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793774739942_XGKQQL",
+      "id": "ord_payu_0nkc3ix7x",
+      "createdAt": "2026-11-04T06:45:39.942Z",
+      "updatedAt": "2026-11-04T06:45:39.942Z"
+    },
+    {
+      "txnid": "TXN_1793774729360_87MXVT",
+      "userId": "usr_baaf7v8l",
+      "workspaceId": "ws_rkqfiqn0",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_max",
+      "productInfo": "Fluvia Max - Annual Subscription 12 Months at INR 3999 mo Coupon FIRST20 applied",
+      "currency": "INR",
+      "baseAmount": 47418,
+      "taxAmount": 8535.24,
+      "totalAmount": 55953.24,
+      "amountPaise": 5595324,
+      "taxBreakdown": {
+        "baseAmount": 47418,
+        "taxRate": 18,
+        "taxAmount": 8535.24,
+        "cgstRate": 9,
+        "cgstAmount": 4267.62,
+        "sgstRate": 9,
+        "sgstAmount": 4267.62,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Saurav Creator",
+        "email": "saurav.creator@fluviaflow.ai",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "couponId": "cpn_first20",
+      "couponCode": "FIRST20",
+      "discountAmount": 570,
+      "originalBaseAmount": 47988,
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793774729360_87MXVT",
+      "id": "ord_payu_mxgzn8ss0",
+      "createdAt": "2026-11-04T06:45:29.360Z",
+      "updatedAt": "2026-11-04T06:45:29.360Z"
+    },
+    {
+      "txnid": "TXN_1793774722109_IR774S",
+      "userId": "usr_baaf7v8l",
+      "workspaceId": "ws_rkqfiqn0",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_creator",
+      "productInfo": "Fluvia Pro - Annual Subscription 12 Months at INR 1999 mo",
+      "currency": "INR",
+      "baseAmount": 23988,
+      "taxAmount": 4317.84,
+      "totalAmount": 28305.84,
+      "amountPaise": 2830584,
+      "taxBreakdown": {
+        "baseAmount": 23988,
+        "taxRate": 18,
+        "taxAmount": 4317.84,
+        "cgstRate": 9,
+        "cgstAmount": 2158.92,
+        "sgstRate": 9,
+        "sgstAmount": 2158.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Saurav Creator",
+        "email": "saurav.creator@fluviaflow.ai",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793774722109_IR774S",
+      "id": "ord_payu_7e976m21y",
+      "createdAt": "2026-11-04T06:45:22.110Z",
+      "updatedAt": "2026-11-04T06:45:22.110Z"
+    },
+    {
+      "txnid": "TXN_1793774716006_I39H01",
+      "userId": "usr_baaf7v8l",
+      "workspaceId": "ws_rkqfiqn0",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_starter",
+      "productInfo": "Fluvia Basic - Annual Subscription 12 Months at INR 799 mo",
+      "currency": "INR",
+      "baseAmount": 9588,
+      "taxAmount": 1725.84,
+      "totalAmount": 11313.84,
+      "amountPaise": 1131384,
+      "taxBreakdown": {
+        "baseAmount": 9588,
+        "taxRate": 18,
+        "taxAmount": 1725.84,
+        "cgstRate": 9,
+        "cgstAmount": 862.92,
+        "sgstRate": 9,
+        "sgstAmount": 862.92,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Saurav Creator",
+        "email": "saurav.creator@fluviaflow.ai",
+        "phone": "9876543210",
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
+      },
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793774716006_I39H01",
+      "id": "ord_payu_4l3up8kzr",
+      "createdAt": "2026-11-04T06:45:16.008Z",
+      "updatedAt": "2026-11-04T06:45:16.008Z"
+    },
+    {
+      "txnid": "TXN_1793251801982_XKCZMG",
+      "userId": "usr_flow_1793251801616",
+      "workspaceId": "ws_flow_1793251801616",
+      "paymentType": "credit_pack",
+      "itemPlanOrPackId": "pack_1200",
+      "productInfo": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
+      "currency": "INR",
+      "baseAmount": 799.2,
+      "taxAmount": 143.86,
+      "totalAmount": 943.06,
+      "amountPaise": 94306,
+      "taxBreakdown": {
+        "baseAmount": 799.2,
+        "taxRate": 18,
+        "taxAmount": 143.86,
+        "cgstRate": 9,
+        "cgstAmount": 71.93,
+        "sgstRate": 9,
+        "sgstAmount": 71.93,
+        "igstRate": 0,
+        "igstAmount": 0,
+        "isInterState": false,
+        "placeOfSupply": "Delhi"
+      },
+      "customerDetails": {
+        "name": "Flow Tester",
+        "email": "flow_1793251801616@fluviaflow.ai",
+        "phone": "9876543210",
+        "state": "Delhi"
+      },
+      "couponId": "cpn_save20",
+      "couponCode": "SAVE20",
+      "discountAmount": 199.8,
+      "originalBaseAmount": 999,
+      "status": "success",
+      "idempotencyKey": "payu_order_TXN_1793251801982_XKCZMG",
+      "id": "ord_payu_pv329gumn",
+      "createdAt": "2026-10-29T05:30:01.983Z",
+      "updatedAt": "2026-10-29T05:30:02.072Z",
+      "payuMihpayid": "mih_test_1793251801616",
+      "payuBankRefNum": "BNK_REF_1793251801616",
+      "payuPaymentMode": "UPI",
+      "invoiceId": "inv_c45rkkjgs",
+      "invoiceNumber": "INV-2026-0086",
+      "receiptId": "rcp_hpiljkhew",
+      "receiptNumber": "RCP-2026-0086",
+      "verifiedAt": "2026-10-29T05:30:02.016Z"
+    },
     {
       "txnid": "TXN_ZERO_1793251801870_OO2KDP",
       "userId": "usr_flow_1793251801616",
@@ -22885,53 +23571,45 @@
       "verifiedAt": "2026-10-21T10:10:25.231Z"
     },
     {
-      "txnid": "TXN_1793251801982_XKCZMG",
-      "userId": "usr_flow_1793251801616",
-      "workspaceId": "ws_flow_1793251801616",
-      "paymentType": "credit_pack",
-      "itemPlanOrPackId": "pack_1200",
-      "productInfo": "1200 Credits Studio 1200 Credits Coupon SAVE20 applied",
+      "txnid": "TXN_1793775006071_OHJESX",
+      "userId": "usr_7vqqf0cd",
+      "workspaceId": "ws_ywbdl803",
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_openhiggs_max",
+      "productInfo": "OpenHiggs GPU Cluster Max - Annual Subscription 12 Months at INR 7999 mo",
       "currency": "INR",
-      "baseAmount": 799.2,
-      "taxAmount": 143.86,
-      "totalAmount": 943.06,
-      "amountPaise": 94306,
+      "baseAmount": 95988,
+      "taxAmount": 17277.84,
+      "totalAmount": 113265.84,
+      "amountPaise": 11326584,
       "taxBreakdown": {
-        "baseAmount": 799.2,
+        "baseAmount": 95988,
         "taxRate": 18,
-        "taxAmount": 143.86,
+        "taxAmount": 17277.84,
         "cgstRate": 9,
-        "cgstAmount": 71.93,
+        "cgstAmount": 8638.92,
         "sgstRate": 9,
-        "sgstAmount": 71.93,
+        "sgstAmount": 8638.92,
         "igstRate": 0,
         "igstAmount": 0,
         "isInterState": false,
         "placeOfSupply": "Delhi"
       },
       "customerDetails": {
-        "name": "Flow Tester",
-        "email": "flow_1793251801616@fluviaflow.ai",
+        "name": "OpenHiggs Max Studio",
+        "email": "max@openhiggs.ai",
         "phone": "9876543210",
-        "state": "Delhi"
+        "address": "",
+        "city": "",
+        "state": "Delhi",
+        "pincode": "",
+        "gstin": ""
       },
-      "couponId": "cpn_save20",
-      "couponCode": "SAVE20",
-      "discountAmount": 199.8,
-      "originalBaseAmount": 999,
-      "status": "success",
-      "idempotencyKey": "payu_order_TXN_1793251801982_XKCZMG",
-      "id": "ord_payu_pv329gumn",
-      "createdAt": "2026-10-29T05:30:01.983Z",
-      "updatedAt": "2026-10-29T05:30:02.072Z",
-      "payuMihpayid": "mih_test_1793251801616",
-      "payuBankRefNum": "BNK_REF_1793251801616",
-      "payuPaymentMode": "UPI",
-      "invoiceId": "inv_c45rkkjgs",
-      "invoiceNumber": "INV-2026-0086",
-      "receiptId": "rcp_hpiljkhew",
-      "receiptNumber": "RCP-2026-0086",
-      "verifiedAt": "2026-10-29T05:30:02.016Z"
+      "status": "created",
+      "idempotencyKey": "payu_order_TXN_1793775006071_OHJESX",
+      "id": "ord_payu_oe310puaw",
+      "createdAt": "2026-11-04T06:50:06.071Z",
+      "updatedAt": "2026-11-04T06:50:06.071Z"
     }
   ],
   "invoices": [
@@ -32484,6 +33162,21 @@
       "status": "completed",
       "createdAt": "2026-10-29T05:30:01.993Z",
       "completedAt": "2026-10-29T05:30:02.036Z"
+    },
+    {
+      "id": "red_exvgwfp9m",
+      "couponId": "cpn_first20",
+      "couponCode": "FIRST20",
+      "userId": "usr_baaf7v8l",
+      "orderId": "ord_payu_mxgzn8ss0",
+      "txnid": "TXN_1793774729360_87MXVT",
+      "discountAmount": 570,
+      "originalAmount": 47988,
+      "finalAmount": 55953.24,
+      "paymentType": "subscription",
+      "itemPlanOrPackId": "plan_max",
+      "status": "reserved",
+      "createdAt": "2026-11-04T06:45:29.372Z"
     }
   ],
   "templateLikes": {

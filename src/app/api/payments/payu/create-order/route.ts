@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { getCurrentUser } from '@/lib/auth/session';
+import { getCurrentUser, createSignedSessionToken } from '@/lib/auth/session';
 import { createPayUPaymentOrder } from '@/lib/payments/payu';
+import { dbStore } from '@/lib/db/store';
 import {
   checkPaymentRateLimit,
   getClientIdentifier,
@@ -13,19 +14,78 @@ export async function POST(req: NextRequest) {
   const requestId = `req_${crypto.randomBytes(8).toString('hex')}`;
 
   try {
-    const current = await getCurrentUser();
-    if (!current) {
+    const body = await req.json();
+    const {
+      paymentType,
+      itemPlanOrPackId,
+      billingInterval,
+      customerDetails,
+      couponCode,
+      forceNew,
+    } = body;
+
+    if (!paymentType || !itemPlanOrPackId) {
       logPaymentEvent({
         requestId,
         category: 'checkout_init',
-        statusCode: 401,
-        error: 'Unauthorized',
+        statusCode: 400,
+        error: 'paymentType and itemPlanOrPackId are required',
       });
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'paymentType and itemPlanOrPackId are required.' },
+        { status: 400 }
+      );
+    }
+
+    // Authenticated user or seamless guest account resolution
+    let current = await getCurrentUser();
+    let newSessionToken: string | null = null;
+    let userId = current?.user?.id;
+    let workspaceId = current?.workspace?.id;
+
+    if (!current) {
+      const email = (customerDetails?.email || '').trim().toLowerCase();
+      if (!email || !email.includes('@')) {
+        logPaymentEvent({
+          requestId,
+          category: 'checkout_init',
+          statusCode: 400,
+          error: 'Valid customer email is required for checkout',
+        });
+        return NextResponse.json(
+          { error: 'Please enter a valid email address to complete checkout.' },
+          { status: 400 }
+        );
+      }
+
+      let profile = dbStore.getProfileByEmail(email);
+      let workspace: any;
+
+      if (profile) {
+        workspace = dbStore.ensureUserWorkspace(profile.id, profile.displayName);
+      } else {
+        const created = dbStore.createProfile({
+          email,
+          displayName: (customerDetails?.name || '').trim() || email.split('@')[0],
+          passwordPlainText: crypto.randomBytes(16).toString('hex'),
+          role: 'creator',
+        });
+        profile = created.profile;
+        workspace = created.workspace;
+      }
+
+      userId = profile.id;
+      workspaceId = workspace.id;
+      newSessionToken = createSignedSessionToken({
+        userId: profile.id,
+        email: profile.email,
+        role: 'creator',
+        workspaceId: workspace.id,
+      });
     }
 
     // 1. Rate Limiting Check (protect against rapid double-clicks & PayU 60s IP lockouts)
-    const clientId = getClientIdentifier(req, current.user.id);
+    const clientId = getClientIdentifier(req, userId!);
     const rateLimit = checkPaymentRateLimit(clientId);
 
     if (!rateLimit.allowed) {
@@ -33,7 +93,7 @@ export async function POST(req: NextRequest) {
         requestId,
         category: 'rate_limit',
         statusCode: 429,
-        userId: current.user.id,
+        userId: userId!,
         durationMs: Date.now() - startTime,
         error: rateLimit.errorMessage,
       });
@@ -56,33 +116,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
-    const {
-      paymentType,
-      itemPlanOrPackId,
-      billingInterval,
-      customerDetails,
-      couponCode,
-      forceNew,
-    } = body;
-
-    if (!paymentType || !itemPlanOrPackId) {
-      logPaymentEvent({
-        requestId,
-        category: 'checkout_init',
-        statusCode: 400,
-        userId: current.user.id,
-        error: 'paymentType and itemPlanOrPackId are required',
-      });
-      return NextResponse.json(
-        { error: 'paymentType and itemPlanOrPackId are required.' },
-        { status: 400 }
-      );
-    }
-
     const billingDetails = {
-      name: customerDetails?.name || current.user.displayName,
-      email: customerDetails?.email || current.user.email,
+      name: customerDetails?.name || current?.user?.displayName || 'Creator',
+      email: customerDetails?.email || current?.user?.email || 'creator@fluviaflow.ai',
       phone: customerDetails?.phone || '9999999999',
       address: customerDetails?.address || '',
       city: customerDetails?.city || '',
@@ -98,8 +134,8 @@ export async function POST(req: NextRequest) {
     const requestOrigin = host ? `${proto}://${host}` : undefined;
 
     const orderResult = await createPayUPaymentOrder({
-      userId: current.user.id,
-      workspaceId: current.workspace.id,
+      userId: userId!,
+      workspaceId: workspaceId!,
       paymentType,
       itemPlanOrPackId,
       billingInterval: billingInterval === 'year' ? 'year' : 'month',
@@ -116,12 +152,27 @@ export async function POST(req: NextRequest) {
       durationMs: Date.now() - startTime,
       txnid: orderResult.order.txnid,
       orderId: orderResult.order.id,
-      userId: current.user.id,
+      userId: userId!,
       paymentType,
       status: orderResult.order.status,
     });
 
-    return NextResponse.json(orderResult, { status: 201 });
+    const res = NextResponse.json(orderResult, { status: 201 });
+
+    if (newSessionToken) {
+      const isHttps = Boolean(requestOrigin && requestOrigin.startsWith('https://'));
+      const cookieOpts = {
+        httpOnly: true,
+        secure: isHttps,
+        sameSite: 'lax' as const,
+        path: '/',
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      };
+      res.cookies.set('fluvia_session', newSessionToken, cookieOpts);
+      res.cookies.set('vidai_session', newSessionToken, cookieOpts);
+    }
+
+    return res;
   } catch (err: any) {
     console.error('Error creating PayU payment order:', err);
     logPaymentEvent({

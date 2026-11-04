@@ -1153,6 +1153,27 @@ class Store {
     if (!schema.payuOrders) schema.payuOrders = [];
     if (!schema.invoices) schema.invoices = [];
     if (!schema.receipts) schema.receipts = [];
+
+    // Ensure all seed plans are present in schema.plans
+    const initialPlans = getInitialDatabase().plans;
+    if (!schema.plans || schema.plans.length === 0) {
+      schema.plans = initialPlans;
+    } else {
+      for (const p of initialPlans) {
+        const existingIdx = schema.plans.findIndex((sp) => sp.id === p.id);
+        if (existingIdx === -1) {
+          schema.plans.push(p);
+        } else {
+          schema.plans[existingIdx] = {
+            ...p,
+            ...schema.plans[existingIdx],
+            priceInr: p.priceInr,
+            priceAnnualInr: p.priceAnnualInr,
+            isActive: true,
+          };
+        }
+      }
+    }
     if (!schema.creditNotes) schema.creditNotes = [];
     if (!schema.passwordResetTokens) schema.passwordResetTokens = {};
     if (!schema.coupons) {
@@ -2575,7 +2596,35 @@ class Store {
   }
 
   getPlanById(id: string): Plan | undefined {
-    return this.load().plans.find((p) => p.id === id || (id === 'plan_basic' && p.id === 'plan_starter') || (id === 'plan_teams' && p.id === 'plan_business'));
+    if (!id) return undefined;
+    const clean = id.trim().toLowerCase();
+    const plans = this.load().plans;
+
+    const aliases: Record<string, string> = {
+      basic: 'plan_starter',
+      starter: 'plan_starter',
+      plan_basic: 'plan_starter',
+      pro: 'plan_creator',
+      plus: 'plan_creator',
+      creator: 'plan_creator',
+      plan_pro: 'plan_creator',
+      max: 'plan_max',
+      ultra: 'plan_max',
+      power: 'plan_max',
+      plan_ultra: 'plan_max',
+      teams: 'plan_business',
+      business: 'plan_business',
+      plan_teams: 'plan_business',
+      openhiggs: 'plan_openhiggs',
+      openhiggs_lite: 'plan_openhiggs_lite',
+      openhiggs_max: 'plan_openhiggs_max',
+    };
+
+    const targetId = aliases[clean] || clean;
+    const found = plans.find((p) => p.id === targetId || p.id === clean || (p.id.toLowerCase() === targetId));
+    if (found) return found;
+
+    return getInitialDatabase().plans.find((p) => p.id === targetId || p.id === clean || (p.id.toLowerCase() === targetId));
   }
 
   updatePlan(planId: string, updates: Partial<Plan>): Plan {

@@ -453,8 +453,8 @@ export async function createPayUPaymentOrder(
     productInfo = `${pack.name} (${pack.creditAmount.toLocaleString()} Credits)`;
   } else if (params.paymentType === 'subscription') {
     const plan =
-      dbStore.getPlans().find((p) => p.id === params.itemPlanOrPackId) ||
-      dbStore.getPlanById(params.itemPlanOrPackId);
+      dbStore.getPlanById(params.itemPlanOrPackId) ||
+      dbStore.getPlans().find((p) => p.id === params.itemPlanOrPackId);
     if (!plan) throw new Error('Invalid subscription plan selected.');
 
     const interval = params.billingInterval || plan.billingInterval || 'month';

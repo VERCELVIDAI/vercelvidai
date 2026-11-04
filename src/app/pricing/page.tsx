@@ -178,8 +178,10 @@ export default function PricingPage() {
 
   const handleSelectPlan = (planId: string) => {
     const couponParam = planId === 'plan_max' ? '&coupon=FIRST20' : '';
+    const tierParam = planId === 'plan_max' ? `&tier=${maxTierIndex}` : '';
+    const currencyParam = `&currency=${currency}`;
     router.push(
-      `/checkout?type=subscription&id=${planId}&interval=${billingInterval}${couponParam}`
+      `/checkout?type=subscription&id=${planId}&interval=${billingInterval}${tierParam}${currencyParam}${couponParam}`
     );
   };
 
@@ -234,72 +236,72 @@ export default function PricingPage() {
 
   const currentMaxTier = maxTiers[maxTierIndex];
 
-  // Distinct Color Themes for each card in Light Mode
+  // Distinct Multi-Colour SaaS Themes matching the Screenshot in Light Theme
   const planColorThemes: Record<string, PlanColorTheme> = {
     plan_starter: {
-      headerGlow: 'bg-gradient-to-b from-slate-100/90 via-slate-50/40 to-white',
-      cardBorder: 'border border-slate-300 hover:border-slate-500 shadow-sm hover:shadow-md',
+      headerGlow: 'bg-gradient-to-b from-slate-100/90 via-slate-50/40 to-transparent',
+      cardBorder: 'border-2 border-slate-200 hover:border-slate-400 shadow-sm hover:shadow-md',
       titleColor: 'text-[#17191D]',
-      discountBadge: 'bg-slate-100 text-slate-700 border border-slate-200',
-      creditBoxBg: 'bg-[#F8F9FA] border border-[#E5E7EB]',
+      discountBadge: '',
+      creditBoxBg: 'bg-slate-50/90 border border-slate-200',
       creditIconColor: 'text-slate-600',
-      creditHeaderColor: 'text-[#17191D]',
-      ctaButton: 'bg-white hover:bg-slate-50 text-[#17191D] font-extrabold border-2 border-slate-300 hover:border-slate-800 shadow-xs',
-      freeGensBoxBg: 'bg-[#F8F9FA] border border-[#E5E7EB]',
-      freeGensHeaderColor: 'text-emerald-800',
-      freeGensBadge: 'bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]',
-      unlimitedBoxBg: 'bg-[#F8F9FA] border border-[#E5E7EB]',
+      creditHeaderColor: 'text-slate-900',
+      ctaButton: 'bg-white hover:bg-slate-100 text-slate-900 font-black border-2 border-slate-900 shadow-sm',
+      freeGensBoxBg: 'bg-slate-50/90 border border-slate-200',
+      freeGensHeaderColor: 'text-slate-800',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-slate-50/90 border border-slate-200',
       unlimitedHeaderColor: 'text-slate-800',
-      unlimitedBadge: 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]',
+      unlimitedBadge: 'bg-slate-100 text-slate-500 border border-slate-200 font-bold',
     },
     plan_creator: {
-      headerGlow: 'bg-gradient-to-b from-lime-100/90 via-lime-50/30 to-white',
-      cardBorder: 'border-2 border-[#84CC16] hover:border-[#65A30D] shadow-md shadow-lime-500/10 hover:shadow-xl',
+      headerGlow: 'bg-gradient-to-b from-[#d4ff00]/25 via-lime-50/40 to-transparent',
+      cardBorder: 'border-2 border-[#84cc16] hover:border-[#65a30d] shadow-md shadow-lime-500/10 hover:shadow-xl',
       titleColor: 'text-[#17191D]',
-      discountBadge: 'bg-[#FF1F66] text-white font-black',
-      creditBoxBg: 'bg-lime-50/70 border border-lime-200',
+      discountBadge: 'bg-[#ff1f66] text-white font-black',
+      creditBoxBg: 'bg-[#f7fee7] border border-[#bef264]',
       creditIconColor: 'text-lime-700',
-      creditHeaderColor: 'text-lime-900',
-      ctaButton: 'bg-[#CCFF00] hover:bg-[#B8E600] text-black font-black shadow-md shadow-lime-500/25',
-      freeGensBoxBg: 'bg-lime-50/50 border border-lime-200',
-      freeGensHeaderColor: 'text-emerald-900',
-      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
-      unlimitedBoxBg: 'bg-lime-50/50 border border-lime-200',
+      creditHeaderColor: 'text-lime-950',
+      ctaButton: 'bg-[#d4ff00] hover:bg-[#c2eb00] text-black font-black shadow-md shadow-lime-500/30',
+      freeGensBoxBg: 'bg-[#f7fee7] border border-[#d9f99d]',
+      freeGensHeaderColor: 'text-emerald-950',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-[#f7fee7] border border-[#d9f99d]',
       unlimitedHeaderColor: 'text-lime-950',
-      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
     },
     plan_max: {
-      headerGlow: 'bg-gradient-to-b from-pink-100/90 via-purple-50/30 to-white',
-      cardBorder: 'border-2 border-[#FF1F66] shadow-xl shadow-pink-500/15 ring-2 ring-pink-400/20 lg:-translate-y-2',
+      headerGlow: 'bg-gradient-to-b from-pink-200/60 via-rose-50/40 to-transparent',
+      cardBorder: 'border-2 border-[#ff1f66] shadow-xl shadow-pink-500/20 ring-2 ring-pink-400/25 lg:-translate-y-2',
       titleColor: 'text-[#17191D]',
-      discountBadge: 'bg-[#FF1F66] text-white font-black',
-      bestValueBadge: 'bg-[#0284C7] text-white font-black',
-      creditBoxBg: 'bg-pink-50/70 border border-pink-200',
+      discountBadge: 'bg-[#ff1f66] text-white font-black',
+      bestValueBadge: 'bg-[#0284c7] text-white font-black',
+      creditBoxBg: 'bg-[#fff1f2] border border-[#fecdd3]',
       creditIconColor: 'text-pink-600',
       creditHeaderColor: 'text-pink-950',
-      ctaButton: 'bg-gradient-to-r from-[#FF1F66] via-[#E11D48] to-[#D946EF] hover:opacity-95 text-white font-black shadow-lg shadow-pink-500/30',
-      freeGensBoxBg: 'bg-pink-50/40 border border-pink-200',
+      ctaButton: 'bg-gradient-to-r from-[#ff007a] via-[#ff1f66] to-[#e11d48] hover:opacity-95 text-white font-black shadow-lg shadow-pink-500/35',
+      freeGensBoxBg: 'bg-[#fff1f2] border border-[#fecdd3]',
       freeGensHeaderColor: 'text-pink-950',
-      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
-      unlimitedBoxBg: 'bg-pink-50/40 border border-pink-200',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-[#fff1f2] border border-[#fecdd3]',
       unlimitedHeaderColor: 'text-pink-950',
-      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
     },
     plan_business: {
-      headerGlow: 'bg-gradient-to-b from-blue-100/90 via-blue-50/30 to-white',
+      headerGlow: 'bg-gradient-to-b from-blue-200/60 via-blue-50/40 to-transparent',
       cardBorder: 'border-2 border-blue-500 hover:border-blue-600 shadow-md shadow-blue-500/15',
       titleColor: 'text-[#17191D]',
-      discountBadge: 'bg-[#FF1F66] text-white font-black',
-      creditBoxBg: 'bg-blue-50/70 border border-blue-200',
+      discountBadge: 'bg-[#ff1f66] text-white font-black',
+      creditBoxBg: 'bg-[#eff6ff] border border-[#bfdbfe]',
       creditIconColor: 'text-blue-700',
       creditHeaderColor: 'text-blue-950',
-      ctaButton: 'bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:bg-[#1D4ED8] text-white font-black shadow-md shadow-blue-500/30',
-      freeGensBoxBg: 'bg-blue-50/50 border border-blue-200',
+      ctaButton: 'bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-black shadow-md shadow-blue-500/30',
+      freeGensBoxBg: 'bg-[#eff6ff] border border-[#bfdbfe]',
       freeGensHeaderColor: 'text-blue-900',
-      freeGensBadge: 'bg-[#CCFF00] text-black font-extrabold border border-lime-300',
-      unlimitedBoxBg: 'bg-blue-50/50 border border-blue-200',
+      freeGensBadge: 'bg-[#d4ff00] text-black font-extrabold border border-lime-300 shadow-xs',
+      unlimitedBoxBg: 'bg-[#eff6ff] border border-[#bfdbfe]',
       unlimitedHeaderColor: 'text-blue-900',
-      unlimitedBadge: 'bg-[#CCFF00] text-black font-extrabold',
+      unlimitedBadge: 'bg-[#d4ff00] text-black font-extrabold shadow-xs',
     },
     // OpenHiggs Studio Color Themes
     plan_openhiggs_lite: {
@@ -891,7 +893,7 @@ export default function PricingPage() {
                   }
                 }}
                 className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
-                  billingInterval === 'year' ? 'bg-[#5145CD]' : 'bg-[#D1D5DB]'
+                  billingInterval === 'year' ? 'bg-[#22c55e]' : 'bg-[#D1D5DB]'
                 }`}
               >
                 <span
@@ -1339,6 +1341,24 @@ export default function PricingPage() {
               </div>
             );
           })}
+        </div>
+
+        {/* ========================================================================= */}
+        {/* SCREENSHOT MATCHING DISCLAIMER FOOTER BAR */}
+        {/* ========================================================================= */}
+        <div className="mt-8 pt-5 pb-2 text-center text-[11px] text-[#667085] max-w-4xl mx-auto leading-relaxed border-t border-[#E5E7EB]">
+          <p>
+            Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer.
+            Prices exclude VAT and local taxes, calculated at checkout. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods.{' '}
+            <button
+              type="button"
+              onClick={scrollToMatrix}
+              className="text-[#5145CD] hover:underline font-semibold cursor-pointer"
+            >
+              Learn more
+            </button>
+            . Access to new models and advanced features may be done on a rolling basis and not available to all users at launch.
+          </p>
         </div>
 
         {/* ========================================================================= */}

@@ -50,16 +50,24 @@ function CheckoutContent() {
   const rawPack = searchParams.get('pack');
   const rawId = searchParams.get('id');
   const rawType = searchParams.get('type');
+  const rawTier = searchParams.get('tier');
+  const rawCurrency = (searchParams.get('currency') || 'inr').toLowerCase();
 
   const planAliases: Record<string, string> = {
     basic: 'plan_starter',
     starter: 'plan_starter',
+    plan_basic: 'plan_starter',
     pro: 'plan_creator',
     plus: 'plan_creator',
+    creator: 'plan_creator',
+    plan_pro: 'plan_creator',
     max: 'plan_max',
     ultra: 'plan_max',
+    power: 'plan_max',
+    plan_ultra: 'plan_max',
     teams: 'plan_business',
     business: 'plan_business',
+    plan_teams: 'plan_business',
     openhiggs: 'plan_openhiggs',
     openhiggs_lite: 'plan_openhiggs_lite',
     openhiggs_max: 'plan_openhiggs_max',
@@ -133,9 +141,8 @@ function CheckoutContent() {
     fetch('/api/auth/me')
       .then((res) => {
         if (!res.ok) {
-          const currentPath = `/checkout?type=${itemType}&id=${itemId}&interval=${interval}${initialCoupon ? `&coupon=${encodeURIComponent(initialCoupon)}` : ''}`;
-          router.push(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
-          return;
+          // Allow seamless guest checkout without forcing redirect
+          return null;
         }
         return res.json();
       })
@@ -177,54 +184,71 @@ function CheckoutContent() {
         isSubscription: false,
       });
     } else {
+      const tierIdx = parseInt(rawTier || '0', 10);
+      const isAnnual = interval === 'year';
+
       const plans: Record<string, any> = {
         plan_starter: {
-          name: 'Fluvia Starter (Basic)',
+          name: 'Basic Plan',
           monthly: 999,
           annualPerMo: 799,
           credits: 500,
+          usdMonthly: 9,
+          usdAnnualPerMo: 9,
           desc: '1080p Full HD video generations with Fluvia Cinematic & Seedance 2.0 Fast.',
         },
         plan_creator: {
-          name: 'Fluvia Plus (Pro)',
+          name: 'Pro Plan',
           monthly: 2499,
           annualPerMo: 1999,
           credits: 1600,
+          usdMonthly: 29,
+          usdAnnualPerMo: 23,
           desc: '4K Ultra HD exports, priority queue, Kling 3.0 & timeline editor.',
         },
         plan_max: {
-          name: 'Fluvia Ultra (Most Popular)',
-          monthly: 4999,
-          annualPerMo: 3999,
-          credits: 4000,
+          name: tierIdx === 1 ? 'Max Plan (6,000 Credits)' : tierIdx === 2 ? 'Max Plan (9,000 Credits)' : 'Max Plan (Most Popular)',
+          monthly: tierIdx === 1 ? 8499 : tierIdx === 2 ? 11999 : 4999,
+          annualPerMo: tierIdx === 1 ? 6999 : tierIdx === 2 ? 9999 : 3999,
+          credits: tierIdx === 1 ? 6000 : tierIdx === 2 ? 9000 : 3000,
+          usdMonthly: tierIdx === 1 ? 149 : tierIdx === 2 ? 219 : 79,
+          usdAnnualPerMo: tierIdx === 1 ? 118 : tierIdx === 2 ? 177 : 59,
           desc: '4K 60fps cinema master, dedicated GPU queue, Gemini storyboard director.',
         },
         plan_business: {
-          name: 'Fluvia Teams',
+          name: 'For Teams Plan',
           monthly: 9999,
           annualPerMo: 7999,
           credits: 10000,
+          usdMonthly: 85,
+          usdAnnualPerMo: 65,
           desc: 'Multi-seat team workspace, shared credits pool, dedicated capacity & SLA.',
         },
         plan_openhiggs_lite: {
           name: 'OpenHiggs Lite',
           monthly: 2499,
-          annualPerMo: 1624,
+          annualPerMo: 1999, // 20% discount
           credits: 1500,
+          usdMonthly: 29,
+          usdAnnualPerMo: 23,
           desc: '15 Core open-source AI models (Seedance 2.0 Fast, Kling 3.0 Turbo, Ideogram 4).',
         },
         plan_openhiggs: {
           name: 'OpenHiggs Studio Pro',
           monthly: 5100,
-          annualPerMo: 3315,
+          annualPerMo: 4080, // 20% discount
           credits: 3500,
+          usdMonthly: 59,
+          usdAnnualPerMo: 47,
           desc: 'Full access to all 38 OpenHiggs foundation models, Soul Cinema 4K & Seedance 2.5 Director.',
         },
         plan_openhiggs_max: {
           name: 'OpenHiggs GPU Cluster Max',
           monthly: 9999,
-          annualPerMo: 6499,
+          annualPerMo: 7999, // 20% discount
           credits: 8000,
+          usdMonthly: 119,
+          usdAnnualPerMo: 95,
           desc: 'Dedicated A100 GPU cluster priority, zero-wait queue, direct REST API & automated webhooks.',
         },
       };
@@ -244,8 +268,13 @@ function CheckoutContent() {
       plans['openhiggs_max'] = plans.plan_openhiggs_max;
 
       const pl = plans[itemId] || plans.plan_openhiggs;
-      const isAnnual = interval === 'year';
       const calculatedPrice = isAnnual ? pl.annualPerMo * 12 : pl.monthly;
+
+      const usdLabel = rawCurrency === 'usd' && pl.usdAnnualPerMo
+        ? isAnnual
+          ? ` ($${pl.usdAnnualPerMo}/mo • $${pl.usdAnnualPerMo * 12}/yr)`
+          : ` ($${pl.usdMonthly}/mo)`
+        : '';
 
       setItemDetails({
         name: pl.name,
@@ -254,8 +283,8 @@ function CheckoutContent() {
         credits: pl.credits,
         isSubscription: true,
         intervalLabel: isAnnual
-          ? `Annual (₹${pl.annualPerMo.toLocaleString('en-IN')}/mo • Billed ₹${calculatedPrice.toLocaleString('en-IN')}/yr)`
-          : `Monthly (Billed ₹${pl.monthly.toLocaleString('en-IN')}/mo)`,
+          ? `Annual (₹${pl.annualPerMo.toLocaleString('en-IN')}/mo • Billed ₹${calculatedPrice.toLocaleString('en-IN')}/yr${usdLabel})`
+          : `Monthly (Billed ₹${pl.monthly.toLocaleString('en-IN')}/mo${usdLabel})`,
       });
     }
   }, [itemType, itemId, interval, router]);
@@ -519,9 +548,21 @@ function CheckoutContent() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Customer Billing Details Form */}
           <div className="lg:col-span-7 bg-white border border-[#E5E7EB] rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm">
-            <div className="flex items-center gap-2 pb-4 border-b border-[#E5E7EB]">
-              <Building2 className="w-5 h-5 text-[#5145CD]" />
-              <h2 className="text-base font-bold text-[#17191D]">Billing Information</h2>
+            <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB]">
+              <div className="flex items-center gap-2">
+                <Building2 className="w-5 h-5 text-[#5145CD]" />
+                <h2 className="text-base font-bold text-[#17191D]">Billing Information</h2>
+              </div>
+              {user ? (
+                <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  <span>Logged in as {user.email}</span>
+                </span>
+              ) : (
+                <span className="text-[11px] font-semibold text-[#5145CD] bg-[#EEF2FF] border border-[#C7D2FE] px-2 py-0.5 rounded-full">
+                  ⚡ Instant Guest Checkout
+                </span>
+              )}
             </div>
 
             <form onSubmit={handleSubmitPayment} className="space-y-4">
@@ -800,18 +841,18 @@ function CheckoutContent() {
                       }}
                       className="w-full bg-white border border-[#E5E7EB] rounded-xl px-3 py-2 text-xs font-semibold text-[#17191D] focus:outline-none focus:border-[#5145CD] cursor-pointer"
                     >
-                      <optgroup label="Creative Studio Plans">
-                        <option value="plan_starter">Fluvia Starter (₹999/mo • 500 Credits)</option>
-                        <option value="plan_creator">Fluvia Plus (₹2,499/mo • 1,600 Credits)</option>
-                        <option value="plan_max">Fluvia Ultra (₹4,999/mo • 4,000 Credits)</option>
+                      <optgroup label="Creative Studio Plans (Matching Screenshot)">
+                        <option value="plan_starter">Basic Plan (₹999/mo / $9 • 500 Credits)</option>
+                        <option value="plan_creator">Pro Plan (₹2,499/mo / $29 • 1,600 Credits)</option>
+                        <option value="plan_max">Max Plan (₹4,999/mo / $79 • 3,000–9,000 Credits)</option>
                       </optgroup>
-                      <optgroup label="OpenHiggs Studio Suite (38 Foundation Models)">
+                      <optgroup label="OpenHiggs Studio Suite (38 Foundation Models • 20% OFF)">
                         <option value="plan_openhiggs_lite">OpenHiggs Lite (₹2,499/mo • 1,500 Credits)</option>
                         <option value="plan_openhiggs">OpenHiggs Studio Pro (₹5,100/mo • 3,500 Credits)</option>
                         <option value="plan_openhiggs_max">OpenHiggs GPU Cluster Max (₹9,999/mo • 8,000 Credits)</option>
                       </optgroup>
                       <optgroup label="Business & Teams">
-                        <option value="plan_business">Fluvia For Teams (₹9,999/mo • 10,000 Credits)</option>
+                        <option value="plan_business">For Teams Plan (₹9,999/mo / $85 • 10,000 Credits)</option>
                       </optgroup>
                     </select>
                   </div>
