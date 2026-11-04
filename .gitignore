@@ -37,3 +37,4 @@ next-env.d.ts
 data/*.tmp
 *.bat
 public/uploads/audio/*.mp3
+scratch/

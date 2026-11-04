@@ -380,6 +380,7 @@ export default function PricingPage() {
       freeGensBox: {
         header: 'FREE GENERATIONS',
         items: [
+          { name: 'Vox AI Motion Graphics', resBadge: '720p', gensBadge: '2 free tries', included: true },
           { name: 'Genjutsu Lite', resBadge: '1080p', gensBadge: '5 free gens', included: true },
           { name: 'Higgsfield AI Influencer', gensBadge: '10 free gens', included: true },
           { name: 'Higgsfield Genjutsu', gensBadge: 'No free gens', included: false },
@@ -400,6 +401,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
+        { text: 'Vox AI Motion Graphics (2 free tries included)', included: true, badge: '2 FREE', badgeColor: 'bg-violet-100 text-violet-900 font-bold' },
         { text: 'Parallel generations: up to 2 Videos, 2 Images', included: true },
         { text: 'Access to Seedance 2.0 Fast & 2.0 Mini', included: true },
         { text: 'Access to selected models & features', included: false },
@@ -432,6 +434,7 @@ export default function PricingPage() {
       freeGensBox: {
         header: 'FREE GENERATIONS',
         items: [
+          { name: 'Vox AI Motion Graphics', resBadge: '1080p', gensBadge: '50 gens/mo', included: true },
           { name: 'Genjutsu Lite', resBadge: '1080p', gensBadge: '5 free gens', included: true },
           { name: 'Higgsfield AI Influencer', gensBadge: '30 free gens', included: true },
           { name: 'Higgsfield Genjutsu', resBadge: '720p', gensBadge: '3 free gens', included: true },
@@ -457,6 +460,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
+        { text: 'Vox Motion Graphics Studio (50 gens/mo, 1080p)', included: true, badge: 'VOX AI', badgeColor: 'bg-violet-600 text-white font-black' },
         { text: 'Unlimited paid parallel generations', included: true, badge: 'NEW', badgeColor: 'bg-[#CCFF00] text-black font-black' },
         { text: 'Access to all Seedance models', included: true },
         { text: 'Access to all models & features', included: true },
@@ -492,6 +496,7 @@ export default function PricingPage() {
       freeGensBox: {
         header: 'FREE GENERATIONS',
         items: [
+          { name: 'Vox Living Posters 4K', resBadge: '4K 60fps', gensBadge: 'Unlimited', included: true },
           { name: 'Genjutsu Lite', resBadge: '1080p', gensBadge: '5 free gens', included: true },
           { name: 'Higgsfield AI Influencer', gensBadge: '30 free gens', included: true },
           { name: 'Higgsfield Genjutsu', resBadge: '720p', gensBadge: '3 free gens', included: true },
@@ -516,6 +521,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
+        { text: 'Vox Living Posters & Explainer Videos (Unlimited 4K)', included: true, badge: 'UNLIMITED', badgeColor: 'bg-[#d4ff00] text-black font-black' },
         { text: 'Unlimited paid parallel generations', included: true, badge: 'NEW', badgeColor: 'bg-[#CCFF00] text-black font-black' },
         { text: 'Access to all Seedance models', included: true },
         { text: 'Access to all models & features', included: true },
@@ -550,6 +556,7 @@ export default function PricingPage() {
       freeGensBox: {
         header: 'UNLIMITED MODELS',
         items: [
+          { name: 'Vox Team Motion Studio', resBadge: '4K Commercial', gensBadge: 'Multi-Seat', included: true },
           { name: 'Nano Banana Pro', resBadge: '4K', gensBadge: '7-day unlimited', included: true },
           { name: 'Seedream 5.0 Pro', resBadge: '2K', gensBadge: '7-day unlimited', included: true },
           { name: 'Kling 3.0', gensBadge: '7-day unlimited', included: true },
@@ -571,6 +578,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
+        { text: 'Vox Motion for Teams (Multi-seat shared collage assets)', included: true, badge: 'TEAMS', badgeColor: 'bg-blue-600 text-white font-black' },
         { text: 'Access to all features & models', included: true },
         { text: 'Dedicated capacity (SLA)', included: true },
         { text: 'Shared workspace & credit pool', included: true },
@@ -629,6 +637,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
+        { text: 'Vox AI Motion Graphics (2 free tries included)', included: true, badge: '2 FREE', badgeColor: 'bg-cyan-100 text-cyan-900 font-bold' },
         { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-cyan-100 text-cyan-900 font-bold' },
         { text: 'Access to 15 Core open models in catalog', included: true },
         { text: 'Parallel generations: up to 2 concurrent runs', included: true },
@@ -690,6 +699,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
+        { text: 'Vox Motion Graphics Studio (Unlimited living posters)', included: true, badge: 'VOX AI', badgeColor: 'bg-emerald-600 text-white font-black' },
         { text: 'One unified composer prompt bar for Image & Video', included: true, badge: 'UNIFIED', badgeColor: 'bg-emerald-100 text-emerald-900 font-bold' },
         { text: 'Full access to all 38 OpenHiggs models in catalog', included: true },
         { text: 'BYOK (Your own platform key) + Cloud fallback', included: true },
@@ -749,6 +759,7 @@ export default function PricingPage() {
         ],
       },
       bottomChecklist: [
+        { text: 'Vox Motion Graphics Studio (Dedicated GPU 4K living posters)', included: true, badge: 'DEDICATED', badgeColor: 'bg-purple-600 text-white font-black' },
         { text: 'Dedicated A100 GPU cluster acceleration lane', included: true, badge: 'A100 CLUSTER', badgeColor: 'bg-purple-100 text-purple-900 font-bold' },
         { text: 'Full access to all 38 OpenHiggs foundation models', included: true },
         { text: 'Zero queue rendering & highest concurrency (8 concurrent)', included: true },

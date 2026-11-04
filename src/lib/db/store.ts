@@ -67,6 +67,7 @@ interface DatabaseSchema {
   templateLikes?: Record<string, string[]>;
   creatorFollows?: Record<string, string[]>;
   publishedTemplates?: any[];
+  voxMotionUsage?: Record<string, { usedCount: number; lastGeneratedAt: string; generatedProjectIds: string[] }>;
 }
 
 // Determine writable data directory (handles Vercel / serverless read-only filesystem gracefully)
@@ -3728,6 +3729,76 @@ class Store {
       redemption.status = 'cancelled';
       this.save(db);
     }
+  }
+
+  // ==========================================
+  // VOX MOTION GRAPHICS (2 FREE TRIES ENFORCEMENT)
+  // ==========================================
+  getVoxMotionUsage(userIdOrIp: string, isPaid: boolean = false): {
+    usedCount: number;
+    maxFreeTries: number;
+    remainingFreeTries: number;
+    canGenerate: boolean;
+    isPaid: boolean;
+  } {
+    const db = this.load();
+    if (!db.voxMotionUsage) db.voxMotionUsage = {};
+    const key = (userIdOrIp || 'guest').trim().toLowerCase();
+    const entry = db.voxMotionUsage[key] || { usedCount: 0, lastGeneratedAt: '', generatedProjectIds: [] };
+    const maxFree = 2;
+    const remaining = Math.max(0, maxFree - entry.usedCount);
+    const canGenerate = isPaid || remaining > 0;
+
+    return {
+      usedCount: entry.usedCount,
+      maxFreeTries: maxFree,
+      remainingFreeTries: remaining,
+      canGenerate,
+      isPaid,
+    };
+  }
+
+  recordVoxMotionUsage(userIdOrIp: string, projectId: string, isPaid: boolean = false): {
+    usedCount: number;
+    maxFreeTries: number;
+    remainingFreeTries: number;
+    canGenerate: boolean;
+    isPaid: boolean;
+  } {
+    const db = this.load();
+    if (!db.voxMotionUsage) db.voxMotionUsage = {};
+    const key = (userIdOrIp || 'guest').trim().toLowerCase();
+    const now = new Date().toISOString();
+
+    if (!db.voxMotionUsage[key]) {
+      db.voxMotionUsage[key] = {
+        usedCount: 0,
+        lastGeneratedAt: now,
+        generatedProjectIds: [],
+      };
+    }
+
+    if (!isPaid) {
+      db.voxMotionUsage[key].usedCount += 1;
+    }
+    db.voxMotionUsage[key].lastGeneratedAt = now;
+    if (projectId) {
+      db.voxMotionUsage[key].generatedProjectIds.push(projectId);
+    }
+
+    this.save(db);
+
+    const maxFree = 2;
+    const used = db.voxMotionUsage[key].usedCount;
+    const remaining = Math.max(0, maxFree - used);
+
+    return {
+      usedCount: used,
+      maxFreeTries: maxFree,
+      remainingFreeTries: remaining,
+      canGenerate: isPaid || remaining > 0,
+      isPaid,
+    };
   }
 }
 

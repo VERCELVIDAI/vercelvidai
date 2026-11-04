@@ -44,6 +44,7 @@ export function Header() {
 
   const navLinks = [
     { label: 'Product', href: '/#features' },
+    { label: 'Vox Motion', href: '/studios/motion-graphics', isSpecial: true, badge: '2 Free' },
     { label: 'OpenHiggs', href: '/openhiggs', isSpecial: true, badge: '38 Models' },
     { label: 'Free Images', href: '/ai-image-generator', isSpecial: true, badge: '100k Free' },
     { label: 'Templates', href: '/templates' },
@@ -76,7 +77,9 @@ export function Header() {
                   {link.badge && (
                     <span
                       className={`px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider shadow-2xs ${
-                        link.badge === '100k Free'
+                        link.badge === '2 Free'
+                          ? 'bg-violet-100 text-violet-900 border border-violet-300'
+                          : link.badge === '100k Free'
                           ? 'bg-amber-100 text-amber-900 border border-amber-300'
                           : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                       }`}
@@ -213,7 +216,13 @@ export function Header() {
               >
                 <span>{link.label}</span>
                 {link.badge && (
-                  <span className="px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  <span
+                    className={`px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider ${
+                      link.badge === '2 Free'
+                        ? 'bg-violet-100 text-violet-900 border border-violet-300'
+                        : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                    }`}
+                  >
                     {link.badge}
                   </span>
                 )}

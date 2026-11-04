@@ -147,6 +147,22 @@ export function FeatureComparisonMatrix({
           ultra: true,
           teams: true,
         },
+        {
+          name: 'Vox AI Motion Graphics Generator',
+          tooltip: 'Paper-collage explainer video generator with living posters, 7 themes, and script beat map.',
+          starter: '2 Free Tries included',
+          plus: '50 gens / mo (1080p Full HD)',
+          ultra: 'Unlimited (4K 60fps Living Posters)',
+          teams: 'Unlimited (Multi-seat shared assets)',
+        },
+        {
+          name: 'Vox Paper-Collage Styles & Narrative Arcs',
+          tooltip: 'Access to Vox Modern Flat, Newsprint Editorial, Punk Zine, Deco, and 4 narrative arcs.',
+          starter: 'Signature Vox (1 style)',
+          plus: 'All 7 Curated Styles',
+          ultra: 'All 7 Styles + Custom Prompts',
+          teams: 'All 7 Styles + Custom Brand Kits',
+        },
       ],
     },
     {

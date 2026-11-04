@@ -9,6 +9,7 @@ import {
   Home,
   Plus,
   Video,
+  Film,
   Image as ImageIcon,
   Mic,
   FolderKanban,
@@ -88,6 +89,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     icon: any;
     badge?: string;
     isSpecial?: boolean;
+    specialType?: 'amber' | 'violet';
     badgeColor?: string;
   }
 
@@ -95,11 +97,21 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     { label: 'Overview', href: '/dashboard', icon: Home },
     { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap, badge: '38 Models' },
     {
+      label: 'Vox Motion Graphics',
+      href: '/studios/motion-graphics',
+      icon: Film,
+      badge: '2 Free Tries',
+      isSpecial: true,
+      specialType: 'violet',
+      badgeColor: 'bg-violet-100 text-violet-900 border border-violet-300 font-black',
+    },
+    {
       label: 'Free Image Studio',
       href: '/ai-image-generator',
       icon: ImageIcon,
       badge: '100k Free',
       isSpecial: true,
+      specialType: 'amber',
       badgeColor: 'bg-amber-100 text-amber-900 border-amber-300 font-black',
     },
     { label: 'Create', href: '/create', icon: Plus },
@@ -146,7 +158,11 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             } min-h-[38px] rounded-xl text-xs font-medium transition-all ${
               item.isSpecial
                 ? isActive
-                  ? 'bg-amber-100 text-amber-950 font-black border border-amber-400 shadow-xs ring-1 ring-amber-400/20'
+                  ? item.specialType === 'violet'
+                    ? 'bg-violet-100 text-violet-950 font-black border border-violet-400 shadow-xs ring-1 ring-violet-400/20'
+                    : 'bg-amber-100 text-amber-950 font-black border border-amber-400 shadow-xs ring-1 ring-amber-400/20'
+                  : item.specialType === 'violet'
+                  ? 'bg-gradient-to-r from-violet-50/90 to-purple-50/60 hover:bg-violet-100/70 text-violet-950 border border-violet-200 hover:border-violet-300 font-bold shadow-2xs'
                   : 'bg-gradient-to-r from-amber-50/90 to-orange-50/60 hover:bg-amber-100/70 text-amber-950 border border-amber-200 hover:border-amber-300 font-bold shadow-2xs'
                 : isActive
                 ? 'bg-[#EEF2FF] text-[#5145CD] font-semibold'
@@ -157,7 +173,11 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             {isActive && (
               <span
                 className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full ${
-                  item.isSpecial ? 'bg-amber-500' : 'bg-[#5145CD]'
+                  item.isSpecial
+                    ? item.specialType === 'violet'
+                      ? 'bg-violet-600'
+                      : 'bg-amber-500'
+                    : 'bg-[#5145CD]'
                 }`}
               />
             )}
@@ -166,7 +186,9 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               <Icon
                 className={`w-4 h-4 shrink-0 transition-transform ${
                   item.isSpecial
-                    ? 'text-amber-600'
+                    ? item.specialType === 'violet'
+                      ? 'text-violet-600'
+                      : 'text-amber-600'
                     : isActive
                     ? 'text-[#5145CD]'
                     : 'text-[#667085] group-hover:text-[#17191D]'

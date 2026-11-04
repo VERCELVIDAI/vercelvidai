@@ -13,6 +13,7 @@ import {
 } from '@/lib/templates';
 import {
   Sparkles,
+  Film,
   Video,
   Image as ImageIcon,
   Mic,
@@ -322,7 +323,7 @@ export default function DashboardPage() {
               What would you like to create today?
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-4">
               {/* Card 1: OpenHiggs Studio */}
               <Link
                 href="/openhiggs"
@@ -373,7 +374,32 @@ export default function DashboardPage() {
                 </div>
               </Link>
 
-              {/* Card 2: AI Video Ad */}
+              {/* Card 3: Vox AI Motion Graphics Studio */}
+              <Link
+                href="/studios/motion-graphics"
+                className="p-5 rounded-2xl bg-gradient-to-br from-violet-50/80 via-white to-purple-50/50 border-2 border-violet-400 hover:border-violet-600 hover:shadow-lg hover:shadow-violet-500/10 transition-all group relative overflow-hidden flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-violet-600/10 text-violet-700 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <Film className="w-5 h-5 text-violet-700" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-extrabold text-base text-slate-900">Vox Motion Studio</h3>
+                    <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-violet-100 text-violet-900 border border-violet-300">
+                      2 Free Tries
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                    Paper-collage explainer video generator with living posters, 7 themes, and script beat map.
+                  </p>
+                </div>
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-violet-700">
+                  <span>Create Living Poster</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+              {/* Card 4: AI Video Ad */}
               <Link
                 href="/create?mode=video"
                 className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
