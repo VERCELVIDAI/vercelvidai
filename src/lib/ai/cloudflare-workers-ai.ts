@@ -184,23 +184,43 @@ export class CloudflareWorkersAIService {
 
       const freeUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&model=${fallbackModel}&nologo=true`;
 
-      // Fetch the binary buffer to store persistently in public uploads
-      const fallbackResp = await fetch(freeUrl);
-      if (fallbackResp.ok) {
-        const buffer = Buffer.from(await fallbackResp.arrayBuffer());
-        const filename = `cf_free_${options.jobId || Date.now()}_${Math.random().toString(36).slice(2, 8)}.jpg`;
-        const publicUrl = await this.saveImageLocally(filename, buffer);
+      // In serverless environments (Vercel), return the direct CDN URL directly to avoid read-only filesystem issues
+      const isServerless = Boolean(
+        process.env.VERCEL || 
+        process.env.AWS_LAMBDA_FUNCTION_NAME || 
+        (typeof process.cwd === 'function' && process.cwd().startsWith('/var/task'))
+      );
 
+      if (isServerless) {
         return {
           success: true,
-          imageUrl: publicUrl,
+          imageUrl: freeUrl,
           modelUsed: model,
           provider: 'free-flux-fallback',
           latencyMs: Date.now() - startTime,
         };
       }
 
-      // If binary fetch fails, return the direct URL directly
+      // In local node environment, attempt saving locally with safe fallback
+      try {
+        const fallbackResp = await fetch(freeUrl);
+        if (fallbackResp.ok) {
+          const buffer = Buffer.from(await fallbackResp.arrayBuffer());
+          const filename = `cf_free_${options.jobId || Date.now()}_${Math.random().toString(36).slice(2, 8)}.jpg`;
+          const publicUrl = await this.saveImageLocally(filename, buffer, freeUrl);
+
+          return {
+            success: true,
+            imageUrl: publicUrl,
+            modelUsed: model,
+            provider: 'free-flux-fallback',
+            latencyMs: Date.now() - startTime,
+          };
+        }
+      } catch {
+        // Fallback to direct URL if buffer fetch fails
+      }
+
       return {
         success: true,
         imageUrl: freeUrl,
@@ -222,16 +242,33 @@ export class CloudflareWorkersAIService {
   }
 
   /**
-   * Helper to write buffer into public/uploads/generated
+   * Helper to write buffer into public/uploads/generated with serverless (Vercel) safety
    */
-  private async saveImageLocally(filename: string, buffer: Buffer): Promise<string> {
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+  private async saveImageLocally(filename: string, buffer: Buffer, fallbackUrl?: string): Promise<string> {
+    try {
+      const isServerless = Boolean(
+        process.env.VERCEL || 
+        process.env.AWS_LAMBDA_FUNCTION_NAME || 
+        (typeof process.cwd === 'function' && process.cwd().startsWith('/var/task'))
+      );
+
+      if (isServerless) {
+        if (fallbackUrl) return fallbackUrl;
+        return `data:image/jpeg;base64,${buffer.toString('base64')}`;
+      }
+
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const filePath = path.join(uploadsDir, filename);
+      fs.writeFileSync(filePath, buffer);
+      return `/uploads/generated/${filename}`;
+    } catch (err: any) {
+      console.warn('[Cloudflare Workers AI] Local write skipped (Serverless/read-only filesystem):', err.message);
+      if (fallbackUrl) return fallbackUrl;
+      return `data:image/jpeg;base64,${buffer.toString('base64')}`;
     }
-    const filePath = path.join(uploadsDir, filename);
-    fs.writeFileSync(filePath, buffer);
-    return `/uploads/generated/${filename}`;
   }
 }
 

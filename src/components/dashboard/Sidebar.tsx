@@ -87,11 +87,21 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     href: string;
     icon: any;
     badge?: string;
+    isSpecial?: boolean;
+    badgeColor?: string;
   }
 
   const creationItems: SidebarNavItem[] = [
     { label: 'Overview', href: '/dashboard', icon: Home },
     { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap, badge: '38 Models' },
+    {
+      label: 'Free Image Studio',
+      href: '/ai-image-generator',
+      icon: ImageIcon,
+      badge: '100k Free',
+      isSpecial: true,
+      badgeColor: 'bg-amber-100 text-amber-900 border-amber-300 font-black',
+    },
     { label: 'Create', href: '/create', icon: Plus },
     { label: 'Video Studio', href: '/create?mode=video', icon: Video, badge: '15 cr' },
     { label: 'Image Studio', href: '/create?mode=image', icon: ImageIcon, badge: '5 cr' },
@@ -133,21 +143,33 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             title={collapsed ? `${item.label}${item.badge ? ` (${item.badge})` : ''}` : undefined}
             className={`group relative flex items-center ${
               collapsed ? 'justify-center px-2 py-2.5' : 'justify-between px-3 py-2'
-            } min-h-[38px] rounded-lg text-xs font-medium transition-all ${
-              isActive
+            } min-h-[38px] rounded-xl text-xs font-medium transition-all ${
+              item.isSpecial
+                ? isActive
+                  ? 'bg-amber-100 text-amber-950 font-black border border-amber-400 shadow-xs ring-1 ring-amber-400/20'
+                  : 'bg-gradient-to-r from-amber-50/90 to-orange-50/60 hover:bg-amber-100/70 text-amber-950 border border-amber-200 hover:border-amber-300 font-bold shadow-2xs'
+                : isActive
                 ? 'bg-[#EEF2FF] text-[#5145CD] font-semibold'
                 : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]'
             }`}
           >
-            {/* Left active indigo line indicator */}
+            {/* Left active line indicator */}
             {isActive && (
-              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#5145CD]" />
+              <span
+                className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full ${
+                  item.isSpecial ? 'bg-amber-500' : 'bg-[#5145CD]'
+                }`}
+              />
             )}
 
             <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
               <Icon
                 className={`w-4 h-4 shrink-0 transition-transform ${
-                  isActive ? 'text-[#5145CD]' : 'text-[#667085] group-hover:text-[#17191D]'
+                  item.isSpecial
+                    ? 'text-amber-600'
+                    : isActive
+                    ? 'text-[#5145CD]'
+                    : 'text-[#667085] group-hover:text-[#17191D]'
                 }`}
               />
               {!collapsed && <span className="truncate">{item.label}</span>}
@@ -156,7 +178,9 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             {!collapsed && item.badge && (
               <span
                 className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium shrink-0 ${
-                  item.badge === '38 Models'
+                  item.badgeColor
+                    ? item.badgeColor
+                    : item.badge === '38 Models'
                     ? 'bg-[#121a10] text-[#d1fe17] border border-[#d1fe17]/40 font-bold shadow-xs'
                     : item.badge.includes('cr')
                     ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20'

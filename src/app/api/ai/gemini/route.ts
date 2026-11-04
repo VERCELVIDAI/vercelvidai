@@ -172,22 +172,40 @@ export async function POST(req: NextRequest) {
             );
           }
 
-          // Write binary image to public/uploads/generated
-          const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
-          if (!fs.existsSync(uploadsDir)) {
-            fs.mkdirSync(uploadsDir, { recursive: true });
-          }
-
           const ext = genResult.mimeType?.includes('jpeg')
             ? 'jpg'
             : genResult.mimeType?.includes('webp')
             ? 'webp'
             : 'png';
           const filename = `gemini_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${ext}`;
-          const filePath = path.join(uploadsDir, filename);
-          fs.writeFileSync(filePath, genResult.imageBuffer);
 
-          const publicUrl = `/uploads/generated/${filename}`;
+          let publicUrl = '';
+          let storageKey = '';
+
+          try {
+            const isServerless = Boolean(
+              process.env.VERCEL ||
+              process.env.AWS_LAMBDA_FUNCTION_NAME ||
+              (typeof process.cwd === 'function' && process.cwd().startsWith('/var/task'))
+            );
+
+            if (isServerless) {
+              publicUrl = `data:${genResult.mimeType || 'image/jpeg'};base64,${genResult.imageBuffer.toString('base64')}`;
+              storageKey = `gemini-data-${Date.now()}`;
+            } else {
+              const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
+              if (!fs.existsSync(uploadsDir)) {
+                fs.mkdirSync(uploadsDir, { recursive: true });
+              }
+              const filePath = path.join(uploadsDir, filename);
+              fs.writeFileSync(filePath, genResult.imageBuffer);
+              publicUrl = `/uploads/generated/${filename}`;
+              storageKey = `uploads/generated/${filename}`;
+            }
+          } catch (writeErr) {
+            publicUrl = `data:${genResult.mimeType || 'image/jpeg'};base64,${genResult.imageBuffer.toString('base64')}`;
+            storageKey = `gemini-data-${Date.now()}`;
+          }
 
           // Create persistent asset in user workspace
           const asset = dbStore.createAsset({
@@ -195,7 +213,7 @@ export async function POST(req: NextRequest) {
             ownerId: current.user.id,
             name: trimmedPrompt.slice(0, 48) + (trimmedPrompt.length > 48 ? '...' : ''),
             assetType: 'image',
-            storageKey: `uploads/generated/${filename}`,
+            storageKey,
             url: publicUrl,
             mimeType: genResult.mimeType || 'image/png',
             fileSize: genResult.imageBuffer.length,

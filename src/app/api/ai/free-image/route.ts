@@ -59,12 +59,18 @@ export async function POST(req: NextRequest) {
     try {
       const current = await getCurrentUser();
       if (current) {
+        const storageKey = result.imageUrl.startsWith('/')
+          ? result.imageUrl.slice(1)
+          : result.imageUrl.startsWith('http')
+          ? result.imageUrl
+          : `cf-generated-${Date.now()}`;
+
         asset = dbStore.createAsset({
           workspaceId: current.workspace.id,
           ownerId: current.user.id,
           name: trimmedPrompt.slice(0, 48) + (trimmedPrompt.length > 48 ? '...' : ''),
           assetType: 'image',
-          storageKey: result.imageUrl.startsWith('/') ? result.imageUrl.slice(1) : result.imageUrl,
+          storageKey,
           url: result.imageUrl,
           mimeType: 'image/jpeg',
           fileSize: 512 * 1024,

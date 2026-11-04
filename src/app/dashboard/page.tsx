@@ -322,7 +322,7 @@ export default function DashboardPage() {
               What would you like to create today?
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
               {/* Card 1: OpenHiggs Studio */}
               <Link
                 href="/openhiggs"
@@ -344,6 +344,31 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#d1fe17]">
                   <span>Open Studio</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+              {/* Card 2: Free Image Studio (Cloudflare Workers AI) */}
+              <Link
+                href="/ai-image-generator"
+                className="p-5 rounded-2xl bg-gradient-to-br from-amber-50/70 via-white to-orange-50/40 border-2 border-amber-300 hover:border-amber-400 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <ImageIcon className="w-5 h-5 text-amber-600" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-extrabold text-base text-slate-900">Free Image Studio</h3>
+                    <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                      100k Free
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                    Cloudflare Workers AI: Stable Diffusion XL & Flux 1 Schnell at 0 credit cost.
+                  </p>
+                </div>
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-amber-700">
+                  <span>Generate Free</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>

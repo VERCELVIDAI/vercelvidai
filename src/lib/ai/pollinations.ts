@@ -80,18 +80,34 @@ class PollinationsService {
       }
 
       const buffer = Buffer.from(await response.arrayBuffer());
-      const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
-      if (!fs.existsSync(uploadsDir)) {
-        fs.mkdirSync(uploadsDir, { recursive: true });
-      }
-
       const filename = `pollinations_${jobId || Date.now()}_${Date.now()}.png`;
-      const filePath = path.join(uploadsDir, filename);
-      fs.writeFileSync(filePath, buffer);
+
+      let mediaUrl = url;
+      try {
+        const isServerless = Boolean(
+          process.env.VERCEL ||
+          process.env.AWS_LAMBDA_FUNCTION_NAME ||
+          (typeof process.cwd === 'function' && process.cwd().startsWith('/var/task'))
+        );
+
+        if (isServerless) {
+          mediaUrl = url;
+        } else {
+          const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'generated');
+          if (!fs.existsSync(uploadsDir)) {
+            fs.mkdirSync(uploadsDir, { recursive: true });
+          }
+          const filePath = path.join(uploadsDir, filename);
+          fs.writeFileSync(filePath, buffer);
+          mediaUrl = `/uploads/generated/${filename}`;
+        }
+      } catch {
+        mediaUrl = url;
+      }
 
       return {
         success: true,
-        mediaUrl: `/uploads/generated/${filename}`,
+        mediaUrl,
         mediaBuffer: buffer,
         modelUsed: model,
       };
