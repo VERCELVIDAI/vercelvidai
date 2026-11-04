@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Logo } from '../brand/Logo';
+import { MobileBottomNav } from './MobileBottomNav';
 import {
   Home,
   Plus,
@@ -16,17 +17,15 @@ import {
   HardDrive,
   CreditCard,
   Settings,
-  ShieldCheck,
-  Zap,
-  Sparkles,
   HelpCircle,
+  ShieldCheck,
   LogOut,
+  Sparkles,
+  Zap,
   X,
   ChevronLeft,
   ChevronRight,
   Layers,
-  Scissors,
-  Tag,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -50,25 +49,30 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
   }, []);
 
   const toggleCollapsed = () => {
-    const next = !isCollapsed;
-    setIsCollapsed(next);
-    try {
-      localStorage.setItem('fluvia_sidebar_collapsed', String(next));
-    } catch {}
+    setIsCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('fluvia_sidebar_collapsed', String(next));
+      } catch {}
+      return next;
+    });
   };
 
   useEffect(() => {
     const handleToggle = () => setIsMobileOpen((prev) => !prev);
-    const handleClose = () => setIsMobileOpen(false);
-
     window.addEventListener('fluvia-toggle-mobile-sidebar', handleToggle);
-    window.addEventListener('fluvia-close-mobile-sidebar', handleClose);
-
-    return () => {
-      window.removeEventListener('fluvia-toggle-mobile-sidebar', handleToggle);
-      window.removeEventListener('fluvia-close-mobile-sidebar', handleClose);
-    };
+    return () => window.removeEventListener('fluvia-toggle-mobile-sidebar', handleToggle);
   }, []);
+
+  useEffect(() => {
+    if (isMobileOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [isMobileOpen]);
 
   useEffect(() => {
     setIsMobileOpen(false);
@@ -84,116 +88,67 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     href: string;
     icon: any;
     badge?: string;
+    isSpecial?: boolean;
+    specialType?: 'amber' | 'violet';
     badgeColor?: string;
-    textColor?: string;
-    pillBg?: string;
-    activeBorder?: string;
   }
 
-  // 1. AI Generation Studios (Categorized & Highlighted with Multi-Color Text)
-  const studioItems: SidebarNavItem[] = [
-    {
-      label: 'OpenHiggs Studio',
-      href: '/openhiggs',
-      icon: Zap,
-      badge: '38 Models',
-      textColor: 'text-emerald-700 font-black',
-      pillBg: 'bg-emerald-50/80 hover:bg-emerald-100/80 border border-emerald-200/80',
-      badgeColor: 'bg-emerald-100 text-emerald-900 border border-emerald-300 font-black',
-      activeBorder: 'border-emerald-400',
-    },
+  const creationItems: SidebarNavItem[] = [
+    { label: 'Overview', href: '/dashboard', icon: Home },
+    { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap, badge: '38 Models' },
     {
       label: 'Vox Motion Graphics',
       href: '/studios/motion-graphics',
-      icon: Scissors,
+      icon: Film,
       badge: '2 Free Tries',
-      textColor: 'text-purple-700 font-black',
-      pillBg: 'bg-purple-50/80 hover:bg-purple-100/80 border border-purple-200/80',
-      badgeColor: 'bg-purple-100 text-purple-900 border border-purple-300 font-black',
-      activeBorder: 'border-purple-400',
+      isSpecial: true,
+      specialType: 'violet',
+      badgeColor: 'bg-violet-100 text-violet-900 border border-violet-300 font-black',
     },
     {
       label: 'Free Image Studio',
       href: '/ai-image-generator',
       icon: ImageIcon,
       badge: '100k Free',
-      textColor: 'text-amber-700 font-black',
-      pillBg: 'bg-amber-50/80 hover:bg-amber-100/80 border border-amber-200/80',
-      badgeColor: 'bg-amber-100 text-amber-900 border border-amber-300 font-black',
-      activeBorder: 'border-amber-400',
+      isSpecial: true,
+      specialType: 'amber',
+      badgeColor: 'bg-amber-100 text-amber-900 border-amber-300 font-black',
     },
-    {
-      label: 'AI Video Ad Studio',
-      href: '/create?mode=video',
-      icon: Video,
-      badge: '15 cr',
-      textColor: 'text-blue-700 font-bold',
-      pillBg: 'hover:bg-blue-50/60 border border-transparent hover:border-blue-200/60',
-      badgeColor: 'bg-blue-100 text-blue-900 border border-blue-200 font-bold',
-      activeBorder: 'border-blue-400',
-    },
-    {
-      label: 'Voice-over Studio',
-      href: '/create?mode=audio',
-      icon: Mic,
-      badge: '2 cr',
-      textColor: 'text-violet-700 font-bold',
-      pillBg: 'hover:bg-violet-50/60 border border-transparent hover:border-violet-200/60',
-      badgeColor: 'bg-violet-100 text-violet-900 border border-violet-200 font-bold',
-      activeBorder: 'border-violet-400',
-    },
+    { label: 'Create', href: '/create', icon: Plus },
+    { label: 'Video Studio', href: '/create?mode=video', icon: Video, badge: '15 cr' },
+    { label: 'Image Studio', href: '/create?mode=image', icon: ImageIcon, badge: '5 cr' },
+    { label: 'Voice-over', href: '/create?mode=audio', icon: Mic, badge: '2 cr' },
+    { label: 'Templates', href: '/templates', icon: Layers, badge: 'Curated' },
   ];
 
-  // 2. Creative Workspace
-  const workspaceItems: SidebarNavItem[] = [
-    { label: 'Overview', href: '/dashboard', icon: Home, textColor: 'text-slate-800 font-semibold' },
-    { label: 'Create Ad Deck', href: '/create', icon: Plus, textColor: 'text-indigo-700 font-bold' },
-    {
-      label: 'Ad Templates',
-      href: '/templates',
-      icon: Layers,
-      badge: 'Curated',
-      textColor: 'text-indigo-700 font-bold',
-      badgeColor: 'bg-indigo-100 text-indigo-900 border border-indigo-200 font-bold',
-    },
-    { label: 'Projects', href: '/dashboard/projects', icon: FolderKanban, textColor: 'text-slate-700 font-medium' },
-    { label: 'Brand Kits', href: '/dashboard/brand-kit', icon: Palette, textColor: 'text-slate-700 font-medium' },
-    { label: 'Asset Library', href: '/dashboard/assets', icon: HardDrive, textColor: 'text-slate-700 font-medium' },
+  const libraryItems: SidebarNavItem[] = [
+    { label: 'Projects', href: '/dashboard/projects', icon: FolderKanban },
+    { label: 'Brand Kits', href: '/dashboard/brand-kit', icon: Palette },
+    { label: 'Asset Library', href: '/dashboard/assets', icon: HardDrive },
   ];
 
-  // 3. Subscription & Account
   const accountItems: SidebarNavItem[] = [
     {
       label: 'Credits & Billing',
       href: '/dashboard/billing',
       icon: CreditCard,
       badge: '20% OFF',
-      textColor: 'text-rose-700 font-black',
-      pillBg: 'bg-rose-50/80 hover:bg-rose-100/80 border border-rose-200/80',
-      badgeColor: 'bg-rose-100 text-rose-900 border border-rose-300 font-black',
-      activeBorder: 'border-rose-400',
+      badgeColor: 'bg-rose-100 text-rose-800 border border-rose-300 font-bold',
     },
-    { label: 'Settings', href: '/dashboard/settings', icon: Settings, textColor: 'text-slate-700 font-medium' },
-    { label: 'Help & Docs', href: '/help', icon: HelpCircle, textColor: 'text-slate-700 font-medium' },
+    { label: 'Settings', href: '/dashboard/settings', icon: Settings },
+    { label: 'Help', href: '/help', icon: HelpCircle },
   ];
 
   if (userRole === 'admin') {
-    accountItems.push({ label: 'Admin Panel', href: '/admin', icon: ShieldCheck, textColor: 'text-slate-900 font-bold' });
+    accountItems.push({ label: 'Admin Panel', href: '/admin', icon: ShieldCheck });
   }
 
-  const renderNavGroup = (title: string, groupBadge: string, badgeColor: string, items: SidebarNavItem[], collapsed: boolean, isDrawer: boolean) => (
-    <div className="space-y-1">
+  const renderNavGroup = (title: string, items: SidebarNavItem[], collapsed: boolean, isDrawer: boolean) => (
+    <div className="space-y-0.5">
       {!collapsed && (
-        <div className="flex items-center justify-between px-3 py-1">
-          <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 block">
-            {title}
-          </span>
-          {groupBadge && (
-            <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded ${badgeColor}`}>
-              {groupBadge}
-            </span>
-          )}
-        </div>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#667085] px-3 py-1.5 block">
+          {title}
+        </span>
       )}
       {items.map((item) => {
         const Icon = item.icon;
@@ -206,37 +161,57 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             title={collapsed ? `${item.label}${item.badge ? ` (${item.badge})` : ''}` : undefined}
             className={`group relative flex items-center ${
               collapsed ? 'justify-center px-2 py-2.5' : 'justify-between px-3 py-2'
-            } min-h-[38px] rounded-xl text-xs transition-all cursor-pointer ${
-              isActive
-                ? 'bg-[#EEF2FF] text-[#5145CD] font-bold border border-[#C7D2FE] shadow-2xs'
-                : item.pillBg
-                ? `${item.textColor} ${item.pillBg}`
-                : `text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]`
+            } min-h-[38px] rounded-xl text-xs font-medium transition-all ${
+              item.isSpecial
+                ? isActive
+                  ? item.specialType === 'violet'
+                    ? 'bg-violet-100 text-violet-950 font-black border border-violet-400 shadow-xs ring-1 ring-violet-400/20'
+                    : 'bg-amber-100 text-amber-950 font-black border border-amber-400 shadow-xs ring-1 ring-amber-400/20'
+                  : item.specialType === 'violet'
+                  ? 'bg-gradient-to-r from-violet-50/90 to-purple-50/60 hover:bg-violet-100/70 text-violet-950 border border-violet-200 hover:border-violet-300 font-bold shadow-2xs'
+                  : 'bg-gradient-to-r from-amber-50/90 to-orange-50/60 hover:bg-amber-100/70 text-amber-950 border border-amber-200 hover:border-amber-300 font-bold shadow-2xs'
+                : isActive
+                ? 'bg-[#EEF2FF] text-[#5145CD] font-semibold'
+                : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]'
             }`}
           >
             {/* Left active line indicator */}
             {isActive && (
-              <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#5145CD]" />
+              <span
+                className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full ${
+                  item.isSpecial
+                    ? item.specialType === 'violet'
+                      ? 'bg-violet-600'
+                      : 'bg-amber-500'
+                    : 'bg-[#5145CD]'
+                }`}
+              />
             )}
 
             <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
               <Icon
                 className={`w-4 h-4 shrink-0 transition-transform ${
-                  isActive
+                  item.isSpecial
+                    ? item.specialType === 'violet'
+                      ? 'text-violet-600'
+                      : 'text-amber-600'
+                    : isActive
                     ? 'text-[#5145CD]'
-                    : item.textColor
-                    ? ''
                     : 'text-[#667085] group-hover:text-[#17191D]'
                 }`}
               />
-              {!collapsed && <span className={`truncate ${item.textColor || ''}`}>{item.label}</span>}
+              {!collapsed && <span className="truncate">{item.label}</span>}
             </div>
 
             {!collapsed && item.badge && (
               <span
-                className={`text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0 ${
+                className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium shrink-0 ${
                   item.badgeColor
                     ? item.badgeColor
+                    : item.badge === '38 Models'
+                    ? 'bg-[#121a10] text-[#d1fe17] border border-[#d1fe17]/40 font-bold shadow-xs'
+                    : item.badge.includes('cr')
+                    ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20'
                     : 'bg-[#F7F8FA] text-[#667085] border border-[#E5E7EB]'
                 }`}
               >
@@ -267,7 +242,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
               type="button"
               onClick={() => setIsMobileOpen(false)}
               aria-label="Close navigation"
-              className="p-1 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA] cursor-pointer"
+              className="p-1 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]"
             >
               <X className="w-5 h-5" />
             </button>
@@ -289,11 +264,11 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
           </Link>
         </div>
 
-        {/* Navigation Groups Synchronized with Categorized Multi-Color Text */}
-        <div className={`space-y-5 py-2 text-left ${collapsed ? 'px-2' : 'px-3'}`}>
-          {renderNavGroup('AI Studios', 'ENGINES', 'bg-purple-100 text-purple-900', studioItems, collapsed, isDrawer)}
-          {renderNavGroup('Creative Workspace', 'SUITE', 'bg-indigo-100 text-indigo-900', workspaceItems, collapsed, isDrawer)}
-          {renderNavGroup('Plans & Billing', 'WALLET', 'bg-rose-100 text-rose-900', accountItems, collapsed, isDrawer)}
+        {/* Navigation Groups */}
+        <div className={`space-y-4 py-2 text-left ${collapsed ? 'px-2' : 'px-3'}`}>
+          {renderNavGroup('Workspace', creationItems, collapsed, isDrawer)}
+          {renderNavGroup('Library', libraryItems, collapsed, isDrawer)}
+          {renderNavGroup('Account', accountItems, collapsed, isDrawer)}
         </div>
       </div>
 
@@ -324,7 +299,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
             type="button"
             onClick={handleLogout}
             title="Sign out"
-            className={`text-xs font-medium text-[#667085] hover:text-[#17191D] flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-slate-200/50 transition-colors cursor-pointer ${
+            className={`text-xs font-medium text-[#667085] hover:text-[#17191D] flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-slate-200/50 transition-colors ${
               collapsed ? 'w-full justify-center px-0' : ''
             }`}
           >
@@ -357,6 +332,9 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
       >
         {renderContent(false, isCollapsed)}
       </aside>
+
+      {/* Dedicated Mobile Bottom Navigation Bar */}
+      <MobileBottomNav onOpenMenu={() => setIsMobileOpen(true)} />
 
       {/* Mobile Drawer Overlay */}
       {isMobileOpen && (
