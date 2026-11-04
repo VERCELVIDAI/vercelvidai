@@ -44,11 +44,11 @@ export function Header() {
 
   const navLinks = [
     { label: 'Product', href: '/#features' },
-    { label: 'Vox Motion', href: '/studios/motion-graphics', isSpecial: true, badge: '2 Free' },
-    { label: 'OpenHiggs', href: '/openhiggs', isSpecial: true, badge: '38 Models' },
-    { label: 'Free Images', href: '/ai-image-generator', isSpecial: true, badge: '100k Free' },
+    { label: 'Vox Motion', href: '/studios/motion-graphics' },
+    { label: 'OpenHiggs', href: '/openhiggs' },
+    { label: 'Free Images', href: '/ai-image-generator' },
     { label: 'Templates', href: '/templates' },
-    { label: 'Pricing', href: '/pricing', badge: '20% OFF' },
+    { label: 'Pricing', href: '/pricing' },
     { label: 'Resources', href: '/blog' },
   ];
 
@@ -67,28 +67,13 @@ export function Header() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'text-[#5145CD] bg-[#EEF2FF]'
                       : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]'
                   }`}
                 >
-                  <span>{link.label}</span>
-                  {link.badge && (
-                    <span
-                      className={`px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider shadow-2xs ${
-                        link.badge === '2 Free'
-                          ? 'bg-violet-100 text-violet-900 border border-violet-300'
-                          : link.badge === '100k Free'
-                          ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                          : link.badge === '20% OFF'
-                          ? 'bg-rose-100 text-rose-800 border border-rose-300'
-                          : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                      }`}
-                    >
-                      {link.badge}
-                    </span>
-                  )}
+                  {link.label}
                 </Link>
               );
             })}
@@ -127,10 +112,10 @@ export function Header() {
                 </button>
 
                 {userMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-52 p-2 rounded-xl bg-[#FFFFFF] border border-[#E5E7EB] shadow-lg text-xs space-y-1 z-50">
-                    <div className="px-2.5 py-1.5 border-b border-[#E5E7EB]">
+                  <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white border border-[#E5E7EB] shadow-lg py-1.5 px-1 z-50 text-xs animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="px-2.5 py-2 border-b border-[#E5E7EB] mb-1">
                       <p className="font-semibold text-[#17191D] truncate">{user.displayName || 'Creator'}</p>
-                      <p className="text-[11px] text-[#667085] truncate">{user.email}</p>
+                      <p className="text-[#667085] text-[11px] truncate">{user.email}</p>
                     </div>
 
                     <Link
@@ -214,24 +199,9 @@ export function Header() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-[#17191D] hover:bg-[#F7F8FA] flex items-center justify-between"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-[#17191D] hover:bg-[#F7F8FA]"
               >
-                <span>{link.label}</span>
-                {link.badge && (
-                  <span
-                    className={`px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider ${
-                      link.badge === '2 Free'
-                        ? 'bg-violet-100 text-violet-900 border border-violet-300'
-                        : link.badge === '100k Free'
-                        ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                        : link.badge === '20% OFF'
-                        ? 'bg-rose-100 text-rose-800 border border-rose-300'
-                        : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                    }`}
-                  >
-                    {link.badge}
-                  </span>
-                )}
+                {link.label}
               </Link>
             ))}
           </nav>

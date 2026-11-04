@@ -88,37 +88,18 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
     href: string;
     icon: any;
     badge?: string;
-    isSpecial?: boolean;
-    specialType?: 'amber' | 'violet';
-    badgeColor?: string;
   }
 
   const creationItems: SidebarNavItem[] = [
     { label: 'Overview', href: '/dashboard', icon: Home },
-    { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap, badge: '38 Models' },
-    {
-      label: 'Vox Motion Graphics',
-      href: '/studios/motion-graphics',
-      icon: Film,
-      badge: '2 Free Tries',
-      isSpecial: true,
-      specialType: 'violet',
-      badgeColor: 'bg-violet-100 text-violet-900 border border-violet-300 font-black',
-    },
-    {
-      label: 'Free Image Studio',
-      href: '/ai-image-generator',
-      icon: ImageIcon,
-      badge: '100k Free',
-      isSpecial: true,
-      specialType: 'amber',
-      badgeColor: 'bg-amber-100 text-amber-900 border-amber-300 font-black',
-    },
+    { label: 'Vox Motion Graphics', href: '/studios/motion-graphics', icon: Film },
+    { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap },
+    { label: 'Free Image Studio', href: '/ai-image-generator', icon: ImageIcon },
     { label: 'Create', href: '/create', icon: Plus },
-    { label: 'Video Studio', href: '/create?mode=video', icon: Video, badge: '15 cr' },
-    { label: 'Image Studio', href: '/create?mode=image', icon: ImageIcon, badge: '5 cr' },
-    { label: 'Voice-over', href: '/create?mode=audio', icon: Mic, badge: '2 cr' },
-    { label: 'Templates', href: '/templates', icon: Layers, badge: 'Curated' },
+    { label: 'Video Studio', href: '/create?mode=video', icon: Video },
+    { label: 'Image Studio', href: '/create?mode=image', icon: ImageIcon },
+    { label: 'Voice-over', href: '/create?mode=audio', icon: Mic },
+    { label: 'Templates', href: '/templates', icon: Layers },
   ];
 
   const libraryItems: SidebarNavItem[] = [
@@ -128,13 +109,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
   ];
 
   const accountItems: SidebarNavItem[] = [
-    {
-      label: 'Credits & Billing',
-      href: '/dashboard/billing',
-      icon: CreditCard,
-      badge: '20% OFF',
-      badgeColor: 'bg-rose-100 text-rose-800 border border-rose-300 font-bold',
-    },
+    { label: 'Credits & Billing', href: '/dashboard/billing', icon: CreditCard },
     { label: 'Settings', href: '/dashboard/settings', icon: Settings },
     { label: 'Help', href: '/help', icon: HelpCircle },
   ];
@@ -146,75 +121,40 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
   const renderNavGroup = (title: string, items: SidebarNavItem[], collapsed: boolean, isDrawer: boolean) => (
     <div className="space-y-0.5">
       {!collapsed && (
-        <span className="text-[10px] font-bold uppercase tracking-wider text-[#667085] px-3 py-1.5 block">
+        <span className="text-[11px] font-semibold text-[#667085] px-3 py-1.5 block">
           {title}
         </span>
       )}
       {items.map((item) => {
         const Icon = item.icon;
-        const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href) && !item.href.includes('?'));
+        const isActive =
+          pathname === item.href ||
+          (item.href !== '/dashboard' && pathname.startsWith(item.href) && !item.href.includes('?'));
         return (
           <Link
             key={item.href}
             href={item.href}
             onClick={() => isDrawer && setIsMobileOpen(false)}
-            title={collapsed ? `${item.label}${item.badge ? ` (${item.badge})` : ''}` : undefined}
-            className={`group relative flex items-center ${
-              collapsed ? 'justify-center px-2 py-2.5' : 'justify-between px-3 py-2'
-            } min-h-[38px] rounded-xl text-xs font-medium transition-all ${
-              item.isSpecial
-                ? isActive
-                  ? item.specialType === 'violet'
-                    ? 'bg-violet-100 text-violet-950 font-black border border-violet-400 shadow-xs ring-1 ring-violet-400/20'
-                    : 'bg-amber-100 text-amber-950 font-black border border-amber-400 shadow-xs ring-1 ring-amber-400/20'
-                  : item.specialType === 'violet'
-                  ? 'bg-gradient-to-r from-violet-50/90 to-purple-50/60 hover:bg-violet-100/70 text-violet-950 border border-violet-200 hover:border-violet-300 font-bold shadow-2xs'
-                  : 'bg-gradient-to-r from-amber-50/90 to-orange-50/60 hover:bg-amber-100/70 text-amber-950 border border-amber-200 hover:border-amber-300 font-bold shadow-2xs'
-                : isActive
+            title={collapsed ? item.label : undefined}
+            className={`group flex items-center ${
+              collapsed ? 'justify-center px-2 py-2' : 'justify-between px-3 py-2'
+            } rounded-lg text-xs font-medium transition-colors ${
+              isActive
                 ? 'bg-[#EEF2FF] text-[#5145CD] font-semibold'
                 : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]'
             }`}
           >
-            {/* Left active line indicator */}
-            {isActive && (
-              <span
-                className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full ${
-                  item.isSpecial
-                    ? item.specialType === 'violet'
-                      ? 'bg-violet-600'
-                      : 'bg-amber-500'
-                    : 'bg-[#5145CD]'
-                }`}
-              />
-            )}
-
             <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
               <Icon
-                className={`w-4 h-4 shrink-0 transition-transform ${
-                  item.isSpecial
-                    ? item.specialType === 'violet'
-                      ? 'text-violet-600'
-                      : 'text-amber-600'
-                    : isActive
-                    ? 'text-[#5145CD]'
-                    : 'text-[#667085] group-hover:text-[#17191D]'
+                className={`w-4 h-4 shrink-0 transition-colors ${
+                  isActive ? 'text-[#5145CD]' : 'text-[#667085] group-hover:text-[#17191D]'
                 }`}
               />
               {!collapsed && <span className="truncate">{item.label}</span>}
             </div>
 
             {!collapsed && item.badge && (
-              <span
-                className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium shrink-0 ${
-                  item.badgeColor
-                    ? item.badgeColor
-                    : item.badge === '38 Models'
-                    ? 'bg-[#121a10] text-[#d1fe17] border border-[#d1fe17]/40 font-bold shadow-xs'
-                    : item.badge.includes('cr')
-                    ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20'
-                    : 'bg-[#F7F8FA] text-[#667085] border border-[#E5E7EB]'
-                }`}
-              >
+              <span className="text-[10px] text-slate-400 font-mono font-medium">
                 {item.badge}
               </span>
             )}
@@ -249,13 +189,13 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
           )}
         </div>
 
-        {/* Quick Create CTA in Deep Indigo */}
+        {/* Quick Create CTA */}
         <div className={`p-3 ${collapsed ? 'px-2' : ''}`}>
           <Link
             href="/create"
             onClick={() => isDrawer && setIsMobileOpen(false)}
             title={collapsed ? 'New Video Ad' : undefined}
-            className={`w-full py-2.5 px-3 min-h-[40px] text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-xs bg-[#5145CD] hover:bg-[#4338CA] transition-all cursor-pointer ${
+            className={`w-full py-2 px-3 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 bg-[#5145CD] hover:bg-[#4338CA] transition-colors cursor-pointer ${
               collapsed ? 'px-0' : ''
             }`}
           >
@@ -272,34 +212,26 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
         </div>
       </div>
 
-      {/* Bottom Footer: Credit Balance & Collapse Toggle */}
-      <div className={`p-3 border-t border-[#E5E7EB] bg-[#F7F8FA] space-y-2.5 ${collapsed ? 'px-2' : ''}`}>
+      {/* Bottom Footer: Credit Balance & Sign Out */}
+      <div className={`p-3 border-t border-[#E5E7EB] bg-[#F7F8FA] space-y-2 ${collapsed ? 'px-2' : ''}`}>
         {!collapsed && (
-          <div className="p-3 rounded-xl bg-white border border-[#E5E7EB] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold text-[#17191D] flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
-                <span>Credits</span>
-              </span>
-              <span className="font-mono font-bold text-[#5145CD]">
-                {credits.availableBalance.toLocaleString()}
-              </span>
-            </div>
-            <Link
-              href="/checkout?type=pack&id=pack_5000"
-              className="w-full block py-1.5 px-2 bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] text-[11px] font-semibold rounded-lg text-center transition-colors"
-            >
-              Top Up Credits
-            </Link>
+          <div className="flex items-center justify-between px-2 py-1 text-xs">
+            <span className="text-[#667085] flex items-center gap-1.5 font-medium">
+              <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
+              <span>Credits</span>
+            </span>
+            <span className="font-mono font-bold text-[#17191D]">
+              {credits.availableBalance.toLocaleString()}
+            </span>
           </div>
         )}
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pt-1">
           <button
             type="button"
             onClick={handleLogout}
             title="Sign out"
-            className={`text-xs font-medium text-[#667085] hover:text-[#17191D] flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-slate-200/50 transition-colors ${
+            className={`text-xs font-medium text-[#667085] hover:text-[#17191D] flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-slate-200/50 transition-colors cursor-pointer ${
               collapsed ? 'w-full justify-center px-0' : ''
             }`}
           >
