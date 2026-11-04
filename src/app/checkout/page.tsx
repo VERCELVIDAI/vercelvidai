@@ -777,7 +777,7 @@ function CheckoutContent() {
                       >
                         <span>Annual</span>
                         <span className="px-1 py-0.2 rounded text-[9px] bg-red-500 text-white font-black">
-                          35% OFF
+                          {itemId.startsWith('plan_openhiggs') ? '20% OFF' : 'UP TO 30% OFF'}
                         </span>
                       </button>
                     </div>

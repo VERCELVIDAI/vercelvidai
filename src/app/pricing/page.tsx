@@ -9,6 +9,7 @@ import { PlanRecommenderModal } from '@/components/pricing/PlanRecommenderModal'
 import { FeatureComparisonMatrix } from '@/components/pricing/FeatureComparisonMatrix';
 import { CreditTopUpSection } from '@/components/pricing/CreditTopUpSection';
 import { AnimatedDiscountGiftBox } from '@/components/pricing/AnimatedDiscountGiftBox';
+import { AnnualPrivilegePassModal } from '@/components/pricing/AnnualPrivilegePassModal';
 import {
   Check,
   X,
@@ -115,7 +116,22 @@ export default function PricingPage() {
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default with savings
   const [currency, setCurrency] = useState<'inr' | 'usd'>('inr'); // INR default, toggleable to USD
   const [isRecommenderOpen, setIsRecommenderOpen] = useState(false);
+  const [isAnnualPassModalOpen, setIsAnnualPassModalOpen] = useState(false);
   const [expandedAccordions, setExpandedAccordions] = useState<Record<string, boolean>>({});
+
+  // Auto-engage after 7 seconds for visitors who haven't seen the Annual Pass modal
+  useEffect(() => {
+    try {
+      const alreadyShown = sessionStorage.getItem('fluvia_annual_modal_shown');
+      if (!alreadyShown) {
+        const timer = setTimeout(() => {
+          setIsAnnualPassModalOpen(true);
+          sessionStorage.setItem('fluvia_annual_modal_shown', 'true');
+        }, 7000);
+        return () => clearTimeout(timer);
+      }
+    } catch {}
+  }, []);
 
   // Pro tier selector: 600 or 900
   const [proTierIndex, setProTierIndex] = useState<number>(0);
@@ -571,12 +587,12 @@ export default function PricingPage() {
       title: 'OPENHIGGS LITE',
       subtitle: 'Starter open-source engine for creator video & image generation',
       category: 'openhiggs',
-      discountBadge: '35% OFF',
+      discountBadge: '20% OFF',
       bestValueBadge: '15 MODELS',
-      usdPriceAnnual: 19,
+      usdPriceAnnual: 23,
       usdPriceMonthly: 29,
       usdStrikethrough: 29,
-      inrPriceAnnual: 1624,
+      inrPriceAnnual: 1999,
       inrPriceMonthly: 2499,
       inrStrikethrough: 2499,
       creditsMonthly: currency === 'usd' ? 1200 : 1500,
@@ -619,19 +635,19 @@ export default function PricingPage() {
         { text: 'Access to all 38 foundation models', included: false },
       ],
     },
-    // 6. OPENHIGGS STUDIO PRO (FLAGSHIP ₹5,100 / mo)
+    // 6. OPENHIGGS STUDIO PRO (FLAGSHIP ₹5,100 / mo with 20% Annual Discount)
     {
       id: 'plan_openhiggs',
       title: 'OPENHIGGS STUDIO PRO',
       subtitle: 'The complete flagship open-source AI studio engine with all 38 foundation models',
       category: 'openhiggs',
-      discountBadge: '35% OFF',
+      discountBadge: '20% OFF',
       bestValueBadge: 'ALL 38 MODELS',
       isRecommended: true,
-      usdPriceAnnual: 39,
-      usdPriceMonthly: 61,
-      usdStrikethrough: 61,
-      inrPriceAnnual: 3315,
+      usdPriceAnnual: 47,
+      usdPriceMonthly: 59,
+      usdStrikethrough: 59,
+      inrPriceAnnual: 4080,
       inrPriceMonthly: 5100,
       inrStrikethrough: 5100,
       creditsMonthly: currency === 'usd' ? 3000 : 3500,
@@ -686,12 +702,12 @@ export default function PricingPage() {
       title: 'OPENHIGGS GPU MAX',
       subtitle: 'Dedicated A100 GPU cluster acceleration for high-volume studio production',
       category: 'openhiggs',
-      discountBadge: '35% OFF',
+      discountBadge: '20% OFF',
       bestValueBadge: 'DEDICATED A100',
-      usdPriceAnnual: 77,
+      usdPriceAnnual: 95,
       usdPriceMonthly: 119,
       usdStrikethrough: 119,
-      inrPriceAnnual: 6499,
+      inrPriceAnnual: 7999,
       inrPriceMonthly: 9999,
       inrStrikethrough: 9999,
       creditsMonthly: currency === 'usd' ? 7000 : 8000,
@@ -783,7 +799,7 @@ export default function PricingPage() {
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                 <span>OpenHiggs Studio (3 Plans)</span>
                 <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-black border border-emerald-200">
-                  35% OFF
+                  20% OFF
                 </span>
               </button>
 
@@ -845,13 +861,18 @@ export default function PricingPage() {
               </button>
             </div>
 
-            {/* Minimalist Switch Toggle for Monthly / Annual */}
+            {/* Minimalist Switch Toggle for Monthly / Annual with Smart Intercept */}
             <div className="flex items-center gap-2">
               <span
                 className={`text-xs font-semibold cursor-pointer ${
                   billingInterval === 'month' ? 'text-[#17191D]' : 'text-[#667085]'
                 }`}
-                onClick={() => setBillingInterval('month')}
+                onClick={() => {
+                  if (billingInterval === 'year') {
+                    setIsAnnualPassModalOpen(true);
+                  }
+                  setBillingInterval('month');
+                }}
               >
                 Monthly
               </span>
@@ -861,7 +882,14 @@ export default function PricingPage() {
                 type="button"
                 role="switch"
                 aria-checked={billingInterval === 'year'}
-                onClick={() => setBillingInterval(billingInterval === 'year' ? 'month' : 'year')}
+                onClick={() => {
+                  if (billingInterval === 'year') {
+                    setIsAnnualPassModalOpen(true);
+                    setBillingInterval('month');
+                  } else {
+                    setBillingInterval('year');
+                  }
+                }}
                 className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
                   billingInterval === 'year' ? 'bg-[#5145CD]' : 'bg-[#D1D5DB]'
                 }`}
@@ -882,7 +910,7 @@ export default function PricingPage() {
                 <span>Annual</span>
                 {billingInterval === 'year' && (
                   <span className="text-[10px] font-black bg-[#EF4444] text-white px-2 py-0.5 rounded shadow-xs">
-                    UP TO 35% OFF
+                    SAVE UP TO 30%
                   </span>
                 )}
               </span>
@@ -1373,7 +1401,7 @@ export default function PricingPage() {
             {[
               {
                 q: 'What is the OpenHiggs Studio plan and how does it work?',
-                a: 'OpenHiggs is our flagship studio engine featuring 38 top open-source video and image foundation models (Soul Cinema 4K, Seedance 2.5 Director, Kling 3.0 Pro, Wan 3, Flux 3 Schnell, and more). It supports BYOK (Bring Your Own Key) plus dedicated GPU cloud acceleration for ₹5,100/mo (or ₹3,315/mo on annual billing with 35% savings).',
+                a: 'OpenHiggs is our flagship studio engine featuring 38 top open-source video and image foundation models (Soul Cinema 4K, Seedance 2.5 Director, Kling 3.0 Pro, Wan 3, Flux 3 Schnell, and more). It supports BYOK (Bring Your Own Key) plus dedicated GPU cloud acceleration for ₹5,100/mo (or ₹4,080/mo on annual billing with 20% savings).',
               },
               {
                 q: 'How does the FIRST20 coupon voucher work?',
@@ -1425,6 +1453,38 @@ export default function PricingPage() {
         onClose={() => setIsRecommenderOpen(false)}
         billingInterval={billingInterval}
       />
+
+      {/* Annual Privilege Pass Interactive Engagement Modal */}
+      <AnnualPrivilegePassModal
+        isOpen={isAnnualPassModalOpen}
+        onClose={() => setIsAnnualPassModalOpen(false)}
+        onSwitchToAnnual={() => {
+          setBillingInterval('year');
+          setIsAnnualPassModalOpen(false);
+        }}
+        currency={currency}
+      />
+
+      {/* Floating High-Converting Annual Pass Engagement Pill */}
+      <div className="fixed bottom-5 right-5 z-40">
+        <button
+          type="button"
+          onClick={() => setIsAnnualPassModalOpen(true)}
+          className="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-indigo-600 hover:opacity-95 text-white shadow-xl shadow-rose-500/30 border-2 border-white/90 cursor-pointer transform hover:scale-105 active:scale-95 transition-all text-xs font-black"
+          title="Click to unlock exclusive Annual Creator Pass perks & save 20%"
+        >
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-300 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400" />
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span>👑 Annual Pass • Save 20% + 2 Mo Free</span>
+          </span>
+          <span className="bg-white/20 px-2 py-0.5 rounded-full text-[10px] font-mono font-extrabold group-hover:bg-white/30 transition-colors">
+            CLAIM
+          </span>
+        </button>
+      </div>
 
       <Footer />
     </div>
