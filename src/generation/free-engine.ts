@@ -1,6 +1,7 @@
 import type { GenerationPlane } from "./catalog/types";
 import { getModel } from "./catalog";
 import type { GenerationStatus, QueuedGeneration } from "./platform";
+import { cloudflareAIService } from "@/lib/ai/cloudflare-workers-ai";
 
 interface FreeJob {
   requestId: string;
@@ -93,6 +94,23 @@ export function submitFreeGeneration(plane: GenerationPlane): QueuedGeneration {
     imageUrl,
     videoUrl,
   });
+
+  // If this is an image generation job and Cloudflare Workers AI is configured, invoke it
+  if (!isVideo && cloudflareAIService.isConfigured()) {
+    cloudflareAIService
+      .generateImage({
+        prompt: promptText,
+        aspectRatio: aspectRatio as any,
+        jobId: requestId,
+      })
+      .then((res) => {
+        if (res.success && res.imageUrl) {
+          const job = freeJobs.get(requestId);
+          if (job) job.imageUrl = res.imageUrl;
+        }
+      })
+      .catch(() => {});
+  }
 
   return {
     status: "queued",

@@ -12,15 +12,15 @@ export default function AIImageGeneratorPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-left">
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EEF2FF] border border-[#E0E7FF] text-xs font-bold text-[#5145CD] mb-4 shadow-2xs font-mono">
-            <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
-            <span>Google Gemini Imagen & Flux 1.1 Pro Vision</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-xs font-bold text-amber-800 mb-4 shadow-2xs font-mono">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>100,000 Free Calls / Day • Cloudflare Workers AI & Google Gemini</span>
           </div>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#17191D] tracking-tight">
-            Gemini AI Image Studio
+            Free AI Image Studio
           </h1>
           <p className="mt-3 text-sm sm:text-lg text-[#667085]">
-            Generate ultra-high-fidelity concept art, luxury commercial advertisements, and product renderings powered by Google Gemini AI.
+            Generate photorealistic visuals, anime illustrations, and commercial concept art using Cloudflare Workers AI (Stable Diffusion XL & Flux 1 Schnell) and Google Gemini.
           </p>
         </div>
 
