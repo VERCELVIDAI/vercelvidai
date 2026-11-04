@@ -46,11 +46,8 @@ export default function BrandKitPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#070A0F] text-white flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-center">
-          <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-slate-400">Loading brand kit guidelines...</span>
-        </div>
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -59,10 +56,10 @@ export default function BrandKitPage() {
   const credits = data?.credits || { availableBalance: 0, reservedBalance: 0 };
 
   return (
-    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-[#070A0F] text-white relative selection:bg-[#d4ff00] selection:text-black">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden bg-white text-[#17191D] relative">
       <Sidebar userRole={user.role} credits={credits} />
 
-      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden relative bg-[#070A0F] pb-24 md:pb-6">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -72,51 +69,51 @@ export default function BrandKitPage() {
         />
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto w-full space-y-6 text-left">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 sm:p-7 rounded-3xl bg-[#0E121B]/95 border-2 border-slate-800 shadow-2xl backdrop-blur-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white border border-[#E5E7EB] shadow-xs">
             <div>
-              <div className="flex items-center gap-2 text-violet-400 font-black text-xs uppercase tracking-wider mb-1 font-mono">
-                <Palette className="w-4 h-4 text-violet-400" />
+              <div className="flex items-center gap-2 text-[#5145CD] font-semibold text-xs uppercase tracking-wider mb-1 font-mono">
+                <Palette className="w-4 h-4 text-[#5145CD]" />
                 <span>Brand Identity</span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">Brand Kit & Guidelines</h1>
-              <p className="mt-1 text-xs sm:text-sm text-slate-400">
+              <h1 className="text-xl sm:text-2xl font-bold text-[#17191D]">Brand Kit & Guidelines</h1>
+              <p className="mt-1 text-xs sm:text-sm text-[#667085]">
                 Lock your company typography, palette, and stylistic guidelines across all AI video workflows.
               </p>
             </div>
 
             <button
               onClick={handleSave}
-              className="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:brightness-110 text-white rounded-xl text-xs font-black flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.35)] shrink-0 transition-all cursor-pointer self-start sm:self-auto border border-violet-400/30"
+              className="px-5 py-2.5 bg-[#5145CD] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-xs shrink-0 transition-all cursor-pointer self-start sm:self-auto"
             >
-              {savedSuccess ? <Check className="w-4 h-4 text-[#d4ff00]" /> : <Sparkles className="w-4 h-4 text-[#d4ff00]" />}
+              {savedSuccess ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
               <span>{savedSuccess ? 'Saved to Studio' : 'Save Brand Kit'}</span>
             </button>
           </div>
 
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#0E121B]/95 border-2 border-slate-800 space-y-6 text-xs shadow-2xl">
+          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5E7EB] space-y-6 text-xs shadow-xs">
             {/* Brand Name */}
             <div>
-              <label className="block text-white uppercase font-black text-[11px] tracking-wider mb-2">
+              <label className="block text-[#17191D] uppercase font-semibold text-[11px] tracking-wider mb-2">
                 Brand Identifier
               </label>
               <input
                 type="text"
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
-                className="w-full bg-[#141A26] border border-slate-800 text-white px-4 py-2.5 rounded-xl text-sm font-semibold focus:outline-none focus:border-violet-500"
+                className="w-full bg-[#F7F8FA] border border-[#E5E7EB] text-[#17191D] px-4 py-2.5 rounded-xl text-sm font-medium focus:outline-none focus:border-[#5145CD]"
               />
             </div>
 
             {/* Brand Palette */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-white uppercase font-black text-[11px] tracking-wider">
+                <label className="block text-[#17191D] uppercase font-semibold text-[11px] tracking-wider">
                   Color Palette
                 </label>
                 <button
                   type="button"
                   onClick={handleAddColor}
-                  className="text-violet-400 hover:text-violet-300 flex items-center gap-1 font-bold cursor-pointer"
+                  className="text-[#5145CD] hover:text-[#4338CA] flex items-center gap-1 font-semibold cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Add Color</span>
@@ -125,9 +122,9 @@ export default function BrandKitPage() {
 
               <div className="flex flex-wrap gap-3">
                 {colors.map((c, i) => (
-                  <div key={i} className="flex items-center gap-2 p-2 rounded-xl bg-[#141A26] border border-slate-800">
+                  <div key={i} className="flex items-center gap-2 p-2 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB]">
                     <div
-                      className="w-6 h-6 rounded-lg border border-white/20 shadow-xs shrink-0"
+                      className="w-6 h-6 rounded-lg border border-[#E5E7EB] shadow-2xs shrink-0"
                       style={{ backgroundColor: c }}
                     />
                     <input
@@ -138,12 +135,12 @@ export default function BrandKitPage() {
                         updated[i] = e.target.value;
                         setColors(updated);
                       }}
-                      className="bg-transparent text-white font-mono font-bold text-xs w-20 focus:outline-none"
+                      className="bg-transparent text-[#17191D] font-mono font-medium text-xs w-20 focus:outline-none"
                     />
                     <button
                       type="button"
                       onClick={() => handleRemoveColor(i)}
-                      className="text-slate-500 hover:text-rose-400 transition-colors cursor-pointer px-1"
+                      className="text-[#667085] hover:text-rose-500 transition-colors cursor-pointer px-1"
                     >
                       ✕
                     </button>
@@ -154,14 +151,14 @@ export default function BrandKitPage() {
 
             {/* Typography */}
             <div>
-              <label className="block text-white uppercase font-black text-[11px] tracking-wider mb-2">
+              <label className="block text-[#17191D] uppercase font-semibold text-[11px] tracking-wider mb-2">
                 Approved Fonts
               </label>
               <div className="flex flex-wrap gap-2">
                 {fonts.map((f, fi) => (
                   <span
                     key={fi}
-                    className="px-3 py-1.5 rounded-lg bg-[#141A26] border border-slate-800 text-slate-300 font-bold font-mono text-xs"
+                    className="px-3 py-1.5 rounded-lg bg-[#F7F8FA] border border-[#E5E7EB] text-[#17191D] font-medium font-mono text-xs"
                   >
                     {f}
                   </span>
@@ -171,16 +168,16 @@ export default function BrandKitPage() {
 
             {/* Tone of Voice Guidelines */}
             <div>
-              <label className="block text-white uppercase font-black text-[11px] tracking-wider mb-2">
+              <label className="block text-[#17191D] uppercase font-semibold text-[11px] tracking-wider mb-2">
                 Tone of Voice & Creative Directives
               </label>
               <textarea
                 rows={4}
                 value={guidelines}
                 onChange={(e) => setGuidelines(e.target.value)}
-                className="w-full bg-[#141A26] border border-slate-800 text-white p-3.5 rounded-xl text-xs resize-none leading-relaxed focus:outline-none focus:border-violet-500 placeholder:text-slate-500 font-medium"
+                className="w-full bg-[#F7F8FA] border border-[#E5E7EB] text-[#17191D] p-3.5 rounded-xl text-xs resize-none leading-relaxed focus:outline-none focus:border-[#5145CD]"
               />
-              <p className="mt-1.5 text-[11px] text-slate-400">
+              <p className="mt-1.5 text-[11px] text-[#667085]">
                 These directives are automatically injected into prompts when generating branded commercial videos.
               </p>
             </div>

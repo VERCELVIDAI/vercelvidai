@@ -256,10 +256,9 @@ export function VoxMotionGraphicsStudio() {
         transition={{ duration: 0.5 }}
         className="relative rounded-3xl p-6 sm:p-8 bg-[#0E121B]/95 text-white border-2 border-violet-500/40 shadow-[0_0_40px_rgba(139,92,246,0.18)] backdrop-blur-xl overflow-hidden"
       >
-        {/* Subtle Cyber Latent Accent */}
-        <div className="absolute top-4 right-6 hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-950/80 border border-violet-500/40 text-violet-300 text-[10px] font-mono font-black uppercase tracking-wider shadow-[0_0_15px_rgba(139,92,246,0.25)] pointer-events-none">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] animate-pulse" />
-          <span>VOX ENGINE • 60FPS LATENT SYNTHESIS</span>
+        {/* Subtle Washi Tape Tactile Accent */}
+        <div className="absolute -top-2 right-12 bg-amber-400/20 border-t border-b border-amber-300/40 text-amber-200 text-[10px] font-mono font-black uppercase tracking-widest px-4 py-0.5 transform rotate-2 shadow-xs pointer-events-none">
+          VOX TAPE STAMP #084
         </div>
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -926,15 +925,15 @@ export function VoxMotionGraphicsStudio() {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-2xl border-2 border-violet-500/50 bg-[#121826] space-y-2 relative shadow-[0_0_25px_rgba(139,92,246,0.25)]">
+              <div className="p-4 rounded-2xl border-2 border-[#a3e635] bg-[#0E180B] space-y-2 relative shadow-[0_0_25px_rgba(163,230,53,0.2)]">
                 <span className="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-[#ff1f66] text-white text-[9px] font-black uppercase shadow-xs">
                   Recommended
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-violet-300">
-                  Pro Plan (20% OFF)
+                <span className="text-[10px] font-bold uppercase tracking-wider text-lime-400">
+                  Pro Plan
                 </span>
                 <div className="text-lg font-black text-white">
-                  $24 <span className="text-xs font-normal text-slate-400">/mo (₹1,999)</span>
+                  $23 <span className="text-xs font-normal text-slate-400">/mo</span>
                 </div>
                 <ul className="text-[11px] text-slate-300 space-y-1">
                   <li className="flex items-center gap-1.5">
@@ -957,14 +956,14 @@ export function VoxMotionGraphicsStudio() {
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Link
                 href="/checkout?type=subscription&id=plan_creator&interval=year"
-                className="flex-1 py-3.5 px-4 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:brightness-110 text-white font-black text-xs sm:text-sm text-center shadow-[0_0_25px_rgba(139,92,246,0.35)] transition-all flex items-center justify-center gap-2 cursor-pointer border border-violet-400/30"
+                className="flex-1 py-3.5 px-4 rounded-2xl bg-[#d4ff00] hover:bg-[#c2eb00] text-black font-black text-xs sm:text-sm text-center shadow-[0_0_30px_rgba(212,255,0,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Upgrade to Pro ($24/mo • 20% OFF)</span>
-                <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
+                <span>Upgrade to Pro ($23/mo - 21% OFF)</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/pricing"
-                className="py-3.5 px-4 rounded-2xl bg-[#141A26] hover:bg-[#1C2538] text-white font-bold text-xs text-center transition-all cursor-pointer border border-slate-700"
+                className="py-3.5 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition-all cursor-pointer border border-slate-700"
               >
                 View All Plans
               </Link>

@@ -26,10 +26,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Layers,
-  Scissors,
-  Radio,
-  Coins,
-  ExternalLink,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -37,21 +33,11 @@ interface SidebarProps {
   credits?: { availableBalance: number; reservedBalance: number };
 }
 
-export function Sidebar({
-  userRole = 'creator',
-  credits = { availableBalance: 0, reservedBalance: 0 },
-}: SidebarProps) {
+export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0, reservedBalance: 0 } }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [currentQuery, setCurrentQuery] = useState('');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setCurrentQuery(window.location.search);
-    }
-  }, [pathname]);
 
   useEffect(() => {
     try {
@@ -93,10 +79,8 @@ export function Sidebar({
   }, [pathname]);
 
   const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-    } catch {}
-    window.location.href = '/login';
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
   };
 
   interface SidebarNavItem {
@@ -104,30 +88,22 @@ export function Sidebar({
     href: string;
     icon: any;
     badge?: string;
-    badgeClass?: string;
     isSpecial?: boolean;
-    specialType?: 'lime' | 'violet' | 'amber';
+    specialType?: 'amber' | 'violet';
+    badgeColor?: string;
   }
 
-  // 1. AI Generation Studios Group
-  const studioItems: SidebarNavItem[] = [
-    {
-      label: 'OpenHiggs Studio',
-      href: '/openhiggs',
-      icon: Zap,
-      badge: '38 Models',
-      isSpecial: true,
-      specialType: 'lime',
-      badgeClass: 'bg-[#121c10] text-[#d4ff00] border border-[#d4ff00]/40 font-mono font-black shadow-[0_0_10px_rgba(212,255,0,0.2)]',
-    },
+  const creationItems: SidebarNavItem[] = [
+    { label: 'Overview', href: '/dashboard', icon: Home },
+    { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap, badge: '38 Models' },
     {
       label: 'Vox Motion Graphics',
-      href: '/dashboard/vox-motion',
-      icon: Scissors,
-      badge: '2 Free',
+      href: '/studios/motion-graphics',
+      icon: Film,
+      badge: '2 Free Tries',
       isSpecial: true,
       specialType: 'violet',
-      badgeClass: 'bg-violet-950/80 text-violet-300 border border-violet-400/50 font-mono font-black shadow-[0_0_10px_rgba(139,92,246,0.3)]',
+      badgeColor: 'bg-violet-100 text-violet-900 border border-violet-300 font-black',
     },
     {
       label: 'Free Image Studio',
@@ -136,80 +112,41 @@ export function Sidebar({
       badge: '100k Free',
       isSpecial: true,
       specialType: 'amber',
-      badgeClass: 'bg-amber-950/80 text-amber-300 border border-amber-400/50 font-mono font-black shadow-[0_0_10px_rgba(245,158,11,0.25)]',
+      badgeColor: 'bg-amber-100 text-amber-900 border-amber-300 font-black',
     },
-    {
-      label: 'AI Video Ad',
-      href: '/create?mode=video',
-      icon: Video,
-      badge: '15 cr',
-      badgeClass: 'bg-white/10 text-slate-300 border border-white/10 font-mono font-bold',
-    },
-    {
-      label: 'Voice-over Studio',
-      href: '/create?mode=audio',
-      icon: Mic,
-      badge: '2 cr',
-      badgeClass: 'bg-white/10 text-slate-300 border border-white/10 font-mono font-bold',
-    },
+    { label: 'Create', href: '/create', icon: Plus },
+    { label: 'Video Studio', href: '/create?mode=video', icon: Video, badge: '15 cr' },
+    { label: 'Image Studio', href: '/create?mode=image', icon: ImageIcon, badge: '5 cr' },
+    { label: 'Voice-over', href: '/create?mode=audio', icon: Mic, badge: '2 cr' },
+    { label: 'Templates', href: '/templates', icon: Layers, badge: 'Curated' },
   ];
 
-  // 2. Creative Workspace & Assets
-  const workspaceItems: SidebarNavItem[] = [
-    { label: 'Overview', href: '/dashboard', icon: Home },
-    {
-      label: 'Templates',
-      href: '/templates',
-      icon: Layers,
-      badge: 'Curated',
-      badgeClass: 'bg-blue-950/70 text-blue-300 border border-blue-500/30 font-mono font-bold',
-    },
+  const libraryItems: SidebarNavItem[] = [
     { label: 'Projects', href: '/dashboard/projects', icon: FolderKanban },
     { label: 'Brand Kits', href: '/dashboard/brand-kit', icon: Palette },
     { label: 'Asset Library', href: '/dashboard/assets', icon: HardDrive },
   ];
 
-  // 3. Workspace Account & Billing
   const accountItems: SidebarNavItem[] = [
     { label: 'Credits & Billing', href: '/dashboard/billing', icon: CreditCard },
     { label: 'Settings', href: '/dashboard/settings', icon: Settings },
-    { label: 'Help & Docs', href: '/help', icon: HelpCircle },
+    { label: 'Help', href: '/help', icon: HelpCircle },
   ];
 
   if (userRole === 'admin') {
-    accountItems.push({
-      label: 'Admin Panel',
-      href: '/admin',
-      icon: ShieldCheck,
-      badge: 'Admin',
-      badgeClass: 'bg-rose-950/80 text-rose-300 border border-rose-500/40 font-mono font-black',
-    });
+    accountItems.push({ label: 'Admin Panel', href: '/admin', icon: ShieldCheck });
   }
 
-  const renderNavGroup = (
-    title: string,
-    items: SidebarNavItem[],
-    collapsed: boolean,
-    isDrawer: boolean
-  ) => (
-    <div className="space-y-1">
+  const renderNavGroup = (title: string, items: SidebarNavItem[], collapsed: boolean, isDrawer: boolean) => (
+    <div className="space-y-0.5">
       {!collapsed && (
-        <span className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400 px-3 py-1.5 block select-none">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#667085] px-3 py-1.5 block">
           {title}
         </span>
       )}
       {items.map((item) => {
         const Icon = item.icon;
-        let isActive = false;
-        if (item.href.includes('?')) {
-          const [itemPath, itemQuery] = item.href.split('?');
-          isActive = pathname === itemPath && currentQuery.includes(itemQuery);
-        } else if (item.href === '/dashboard') {
-          isActive = pathname === '/dashboard';
-        } else {
-          isActive = pathname === item.href || (pathname.startsWith(item.href + '/') && item.href !== '/');
-        }
-
+        const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href) && !item.href.includes('?'));
         return (
           <Link
             key={item.href}
@@ -218,45 +155,43 @@ export function Sidebar({
             title={collapsed ? `${item.label}${item.badge ? ` (${item.badge})` : ''}` : undefined}
             className={`group relative flex items-center ${
               collapsed ? 'justify-center px-2 py-2.5' : 'justify-between px-3 py-2'
-            } min-h-[40px] rounded-xl text-xs font-semibold transition-all duration-200 ${
-              isActive
-                ? item.specialType === 'lime'
-                  ? 'bg-[#14230E] text-white font-black border border-[#d4ff00]/50 shadow-[0_0_20px_rgba(212,255,0,0.22)]'
+            } min-h-[38px] rounded-xl text-xs font-medium transition-all ${
+              item.isSpecial
+                ? isActive
+                  ? item.specialType === 'violet'
+                    ? 'bg-violet-100 text-violet-950 font-black border border-violet-400 shadow-xs ring-1 ring-violet-400/20'
+                    : 'bg-amber-100 text-amber-950 font-black border border-amber-400 shadow-xs ring-1 ring-amber-400/20'
                   : item.specialType === 'violet'
-                  ? 'bg-violet-950/60 text-white font-black border border-violet-500/50 shadow-[0_0_20px_rgba(139,92,246,0.25)]'
-                  : item.specialType === 'amber'
-                  ? 'bg-amber-950/50 text-white font-black border border-amber-500/50 shadow-[0_0_18px_rgba(245,158,11,0.22)]'
-                  : 'bg-white/10 text-white font-bold border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.08)]'
-                : 'text-slate-300 hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/5 group-hover:translate-x-0.5'
+                  ? 'bg-gradient-to-r from-violet-50/90 to-purple-50/60 hover:bg-violet-100/70 text-violet-950 border border-violet-200 hover:border-violet-300 font-bold shadow-2xs'
+                  : 'bg-gradient-to-r from-amber-50/90 to-orange-50/60 hover:bg-amber-100/70 text-amber-950 border border-amber-200 hover:border-amber-300 font-bold shadow-2xs'
+                : isActive
+                ? 'bg-[#EEF2FF] text-[#5145CD] font-semibold'
+                : 'text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]'
             }`}
           >
-            {/* Active Left Indicator Bar */}
+            {/* Left active line indicator */}
             {isActive && (
               <span
                 className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full ${
-                  item.specialType === 'lime'
-                    ? 'bg-[#d4ff00] shadow-[0_0_10px_#d4ff00]'
-                    : item.specialType === 'violet'
-                    ? 'bg-violet-400 shadow-[0_0_10px_#a78bfa]'
-                    : item.specialType === 'amber'
-                    ? 'bg-amber-400 shadow-[0_0_10px_#fbbf24]'
-                    : 'bg-indigo-400 shadow-[0_0_10px_#818cf8]'
+                  item.isSpecial
+                    ? item.specialType === 'violet'
+                      ? 'bg-violet-600'
+                      : 'bg-amber-500'
+                    : 'bg-[#5145CD]'
                 }`}
               />
             )}
 
             <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
               <Icon
-                className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                  item.specialType === 'lime'
-                    ? 'text-[#d4ff00]'
-                    : item.specialType === 'violet'
-                    ? 'text-violet-400'
-                    : item.specialType === 'amber'
-                    ? 'text-amber-400'
+                className={`w-4 h-4 shrink-0 transition-transform ${
+                  item.isSpecial
+                    ? item.specialType === 'violet'
+                      ? 'text-violet-600'
+                      : 'text-amber-600'
                     : isActive
-                    ? 'text-indigo-400'
-                    : 'text-slate-400 group-hover:text-white'
+                    ? 'text-[#5145CD]'
+                    : 'text-[#667085] group-hover:text-[#17191D]'
                 }`}
               />
               {!collapsed && <span className="truncate">{item.label}</span>}
@@ -264,8 +199,14 @@ export function Sidebar({
 
             {!collapsed && item.badge && (
               <span
-                className={`text-[10px] px-2 py-0.5 rounded-md font-mono shrink-0 ${
-                  item.badgeClass || 'bg-white/10 text-slate-300 border border-white/10'
+                className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium shrink-0 ${
+                  item.badgeColor
+                    ? item.badgeColor
+                    : item.badge === '38 Models'
+                    ? 'bg-[#121a10] text-[#d1fe17] border border-[#d1fe17]/40 font-bold shadow-xs'
+                    : item.badge.includes('cr')
+                    ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20'
+                    : 'bg-[#F7F8FA] text-[#667085] border border-[#E5E7EB]'
                 }`}
               >
                 {item.badge}
@@ -278,30 +219,16 @@ export function Sidebar({
   );
 
   const renderContent = (isDrawer: boolean, collapsed: boolean) => (
-    <div className="flex flex-col h-full justify-between bg-[#0B0E17] text-white selection:bg-[#d4ff00] selection:text-black">
+    <div className="flex flex-col h-full justify-between">
       <div className="flex flex-col flex-1 overflow-y-auto overscroll-contain">
         {/* Brand Header */}
-        <div
-          className={`p-4 border-b border-white/[0.08] flex items-center ${
-            collapsed ? 'justify-center' : 'justify-between'
-          }`}
-        >
+        <div className={`p-4 border-b border-[#E5E7EB] flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
           {collapsed ? (
-            <Link
-              href="/dashboard"
-              className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 via-indigo-600 to-purple-700 flex items-center justify-center text-white font-black text-base shadow-[0_0_20px_rgba(139,92,246,0.45)] border border-violet-400/40 hover:scale-105 transition-all"
-              title="Fluvia Creative Suite"
-            >
+            <Link href="/dashboard" className="w-8 h-8 rounded-lg bg-[#5145CD] flex items-center justify-center text-white font-bold text-sm">
               F
             </Link>
           ) : (
-            <div className="flex items-center justify-between w-full">
-              <Logo size="sm" isDark={true} showTagline={false} />
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-violet-950/90 text-violet-300 border border-violet-500/40 text-[9px] font-mono font-black uppercase tracking-wider shadow-[0_0_12px_rgba(139,92,246,0.25)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
-                <span>STUDIO v2.5</span>
-              </div>
-            </div>
+            <Logo size="sm" showTagline={false} />
           )}
 
           {isDrawer && (
@@ -309,90 +236,64 @@ export function Sidebar({
               type="button"
               onClick={() => setIsMobileOpen(false)}
               aria-label="Close navigation"
-              className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
+              className="p-1 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-[#F7F8FA]"
             >
               <X className="w-5 h-5" />
             </button>
           )}
         </div>
 
-        {/* Primary Radiant CTA: Create Video Ad */}
+        {/* Quick Create CTA in Deep Indigo */}
         <div className={`p-3 ${collapsed ? 'px-2' : ''}`}>
           <Link
             href="/create"
             onClick={() => isDrawer && setIsMobileOpen(false)}
-            title={collapsed ? 'Create Video Ad' : undefined}
-            className={`relative overflow-hidden group w-full py-2.5 px-3 min-h-[44px] text-white rounded-xl text-xs font-black flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(139,92,246,0.4)] bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer border border-violet-400/40 ${
+            title={collapsed ? 'New Video Ad' : undefined}
+            className={`w-full py-2.5 px-3 min-h-[40px] text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-xs bg-[#5145CD] hover:bg-[#4338CA] transition-all cursor-pointer ${
               collapsed ? 'px-0' : ''
             }`}
           >
-            {/* Shimmer sweep */}
-            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
-
-            <Sparkles className="w-4 h-4 text-[#d4ff00] shrink-0 animate-pulse" />
-            {!collapsed && <span className="tracking-wide">+ Create Video Ad</span>}
+            <Sparkles className="w-4 h-4 text-white shrink-0" />
+            {!collapsed && <span>Create Video Ad</span>}
           </Link>
         </div>
 
-        {/* Navigation Rail Groups */}
+        {/* Navigation Groups */}
         <div className={`space-y-4 py-2 text-left ${collapsed ? 'px-2' : 'px-3'}`}>
-          {renderNavGroup('AI Studios', studioItems, collapsed, isDrawer)}
-          {renderNavGroup('Workspace', workspaceItems, collapsed, isDrawer)}
+          {renderNavGroup('Workspace', creationItems, collapsed, isDrawer)}
+          {renderNavGroup('Library', libraryItems, collapsed, isDrawer)}
           {renderNavGroup('Account', accountItems, collapsed, isDrawer)}
         </div>
       </div>
 
-      {/* Bottom Footer: Titanium Credit Card Widget & Controls */}
-      <div className={`p-3 border-t border-white/[0.08] bg-[#07090F] space-y-2.5 ${collapsed ? 'px-2' : ''}`}>
+      {/* Bottom Footer: Credit Balance & Collapse Toggle */}
+      <div className={`p-3 border-t border-[#E5E7EB] bg-[#F7F8FA] space-y-2.5 ${collapsed ? 'px-2' : ''}`}>
         {!collapsed && (
-          <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#121828] via-[#0E1320] to-[#121828] border border-violet-500/30 shadow-[0_0_20px_rgba(139,92,246,0.15)] space-y-2.5">
+          <div className="p-3 rounded-xl bg-white border border-[#E5E7EB] shadow-2xs space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-slate-300 flex items-center gap-1.5 text-[11px] uppercase tracking-wider">
-                <Coins className="w-3.5 h-3.5 text-violet-400" />
-                <span>Available Fuel</span>
+              <span className="font-semibold text-[#17191D] flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
+                <span>Credits</span>
               </span>
-              <span className="font-mono font-black text-[#d4ff00] text-sm tracking-wide">
-                {credits.availableBalance.toLocaleString()} CR
+              <span className="font-mono font-bold text-[#5145CD]">
+                {credits.availableBalance.toLocaleString()}
               </span>
             </div>
-
-            {/* Battery / Fuel visual bar */}
-            <div className="w-full h-1.5 rounded-full bg-slate-800/80 overflow-hidden p-[1px] border border-white/5">
-              <div
-                className="h-full bg-gradient-to-r from-violet-500 via-indigo-500 to-[#d4ff00] rounded-full shadow-[0_0_8px_rgba(212,255,0,0.5)] transition-all duration-500"
-                style={{
-                  width: `${Math.min(100, Math.max(8, (credits.availableBalance / 5000) * 100))}%`,
-                }}
-              />
-            </div>
-
             <Link
               href="/checkout?type=pack&id=pack_5000"
-              className="w-full block py-2 px-3 bg-gradient-to-r from-violet-600/30 to-indigo-600/30 hover:from-violet-600 hover:to-indigo-600 text-violet-200 hover:text-white text-xs font-black rounded-xl text-center transition-all border border-violet-500/40 hover:border-violet-400 shadow-[0_0_15px_rgba(139,92,246,0.2)] cursor-pointer"
+              className="w-full block py-1.5 px-2 bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] text-[11px] font-semibold rounded-lg text-center transition-colors"
             >
-              Top Up Credits (5,000 CR)
+              Top Up Credits
             </Link>
           </div>
         )}
 
-        {/* Collapsed Credit Mini Badge */}
-        {collapsed && (
-          <Link
-            href="/dashboard/billing"
-            title={`${credits.availableBalance.toLocaleString()} credits available`}
-            className="w-full p-2.5 rounded-xl bg-violet-950/60 border border-violet-500/40 flex flex-col items-center justify-center text-[#d4ff00] font-mono text-[10px] font-black hover:border-violet-400 transition-colors shadow-xs"
-          >
-            <Coins className="w-3.5 h-3.5 text-violet-400 mb-0.5" />
-            <span>{credits.availableBalance > 999 ? `${Math.round(credits.availableBalance / 1000)}k` : credits.availableBalance}</span>
-          </Link>
-        )}
-
-        <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center justify-between">
           <button
             type="button"
             onClick={handleLogout}
-            title="Sign out of Fluvia"
-            className={`text-xs font-semibold text-slate-400 hover:text-rose-400 flex items-center gap-2 py-1.5 px-2 rounded-xl hover:bg-rose-950/30 transition-colors cursor-pointer ${
+            title="Sign out"
+            className={`text-xs font-medium text-[#667085] hover:text-[#17191D] flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-slate-200/50 transition-colors ${
               collapsed ? 'w-full justify-center px-0' : ''
             }`}
           >
@@ -405,8 +306,7 @@ export function Sidebar({
               type="button"
               onClick={toggleCollapsed}
               aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer border border-transparent hover:border-white/10"
-              title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+              className="p-1.5 rounded-lg text-[#667085] hover:text-[#17191D] hover:bg-slate-200/50 transition-colors cursor-pointer"
             >
               {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
             </button>
@@ -418,10 +318,10 @@ export function Sidebar({
 
   return (
     <>
-      {/* Desktop Persistent Obsidian Rail */}
+      {/* Desktop Persistent Sidebar */}
       <aside
-        className={`hidden md:flex flex-col border-r border-slate-800/90 bg-[#0B0E17] text-white select-none transition-all duration-300 ease-in-out shrink-0 shadow-2xl z-20 ${
-          isCollapsed ? 'w-20' : 'w-64'
+        className={`hidden md:flex flex-col border-r border-[#E5E7EB] bg-white text-[#17191D] select-none transition-all duration-200 shrink-0 ${
+          isCollapsed ? 'w-16' : 'w-60'
         }`}
       >
         {renderContent(false, isCollapsed)}
@@ -438,10 +338,10 @@ export function Sidebar({
           className="fixed inset-0 z-50 md:hidden flex"
         >
           <div
-            className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
             onClick={() => setIsMobileOpen(false)}
           />
-          <div className="relative w-72 max-w-[85vw] bg-[#0B0E17] h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200 pb-[max(1rem,env(safe-area-inset-bottom))] border-r border-slate-800">
+          <div className="relative w-72 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200 pb-[max(1rem,env(safe-area-inset-bottom))]">
             {renderContent(true, false)}
           </div>
         </div>

@@ -494,12 +494,12 @@ function CreateWorkspaceContent() {
   ).filter(Boolean) as (CreativeTemplate | VideoTemplate)[];
 
   return (
-    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden text-white bg-[#070A0F] relative selection:bg-[#d4ff00] selection:text-black">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden text-[#17191D] bg-[#F7F8FA] relative">
       {/* Studio Nav Rail */}
       <Sidebar credits={credits} userRole={authData?.user?.role} />
 
       {/* Main Studio Viewport */}
-      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#070A0F] pb-24 md:pb-6">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#F7F8FA] pb-24 md:pb-6">
         <DashboardHeader
           displayName={authData?.user?.displayName}
           avatarUrl={authData?.user?.avatarUrl}
@@ -509,22 +509,22 @@ function CreateWorkspaceContent() {
         />
 
         {/* Studio Top Command Bar */}
-        <div className="sticky top-0 z-20 px-4 sm:px-6 py-2.5 bg-[#0B0E17]/95 backdrop-blur-2xl border-b border-white/[0.08] flex items-center justify-between gap-4 text-white shadow-xl">
+        <div className="sticky top-0 z-20 px-4 sm:px-6 py-2.5 bg-white/95 backdrop-blur-xl border-b border-[#E5E7EB] flex items-center justify-between gap-4">
           {/* Left: Mode Switcher Pills */}
-          <div className="flex items-center gap-1 p-1 bg-[#141A26] rounded-xl border border-slate-800">
+          <div className="flex items-center gap-1 p-1 bg-[#F1F3F5] rounded-xl border border-[#E5E7EB]">
             <button
               type="button"
               onClick={() => {
                 setMode('video');
                 setModelId('gemini-omni-1.1-flash');
               }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-black flex items-center gap-1.5 transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                 mode === 'video'
-                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-[0_0_15px_rgba(139,92,246,0.4)] border border-violet-400/30'
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-[#5145CD] text-white shadow-xs'
+                  : 'text-[#667085] hover:text-[#17191D]'
               }`}
             >
-              <Video className="w-3.5 h-3.5 text-[#d4ff00]" />
+              <Video className="w-3.5 h-3.5" />
               <span>AI Video (Gemini Omni)</span>
             </button>
 
@@ -534,13 +534,13 @@ function CreateWorkspaceContent() {
                 setMode('image');
                 setModelId('gemini-3.1-flash-image');
               }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-black flex items-center gap-1.5 transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                 mode === 'image'
-                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-[0_0_15px_rgba(139,92,246,0.4)] border border-violet-400/30'
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-[#5145CD] text-white shadow-xs'
+                  : 'text-[#667085] hover:text-[#17191D]'
               }`}
             >
-              <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
+              <ImageIcon className="w-3.5 h-3.5" />
               <span>AI Image (Gemini)</span>
             </button>
 
@@ -550,30 +550,30 @@ function CreateWorkspaceContent() {
                 setMode('audio');
                 setModelId('eleven-multilingual');
               }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-black flex items-center gap-1.5 transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                 mode === 'audio'
-                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-[0_0_15px_rgba(139,92,246,0.4)] border border-violet-400/30'
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-[#5145CD] text-white shadow-xs'
+                  : 'text-[#667085] hover:text-[#17191D]'
               }`}
             >
-              <Mic className="w-3.5 h-3.5 text-emerald-400" />
+              <Mic className="w-3.5 h-3.5" />
               <span>Voiceover HD</span>
             </button>
           </div>
 
           {/* Right: Studio Mode Tabs & Inspector Toggle */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 p-1 bg-[#141A26] rounded-xl border border-slate-800 text-xs">
+            <div className="flex items-center gap-1 p-1 bg-[#F1F3F5] rounded-xl border border-[#E5E7EB] text-xs">
               <button
                 type="button"
                 onClick={() => setActiveTab('studio')}
                 className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'studio'
-                    ? 'bg-violet-600 text-white shadow-xs'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-white text-[#17191D] border border-[#E5E7EB] shadow-xs'
+                    : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                <Film className="w-3.5 h-3.5 text-[#d4ff00]" />
+                <Film className="w-3.5 h-3.5 text-[#5145CD]" />
                 <span className="hidden sm:inline">Studio Viewport</span>
               </button>
 
@@ -582,11 +582,11 @@ function CreateWorkspaceContent() {
                 onClick={() => setActiveTab('templates')}
                 className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'templates'
-                    ? 'bg-violet-600 text-white shadow-xs'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-white text-[#17191D] border border-[#E5E7EB] shadow-xs'
+                    : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                <LayoutGrid className="w-3.5 h-3.5 text-blue-400" />
+                <LayoutGrid className="w-3.5 h-3.5 text-[#5145CD]" />
                 <span className="hidden sm:inline">Live Templates ({productiveTemplates.length})</span>
               </button>
 
@@ -598,11 +598,11 @@ function CreateWorkspaceContent() {
                 }}
                 className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                   activeTab === 'history'
-                    ? 'bg-violet-600 text-white shadow-xs'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-white text-[#17191D] border border-[#E5E7EB] shadow-xs'
+                    : 'text-[#667085] hover:text-[#17191D]'
                 }`}
               >
-                <History className="w-3.5 h-3.5 text-emerald-400" />
+                <History className="w-3.5 h-3.5 text-[#5145CD]" />
                 <span className="hidden sm:inline">History ({userJobs.length})</span>
               </button>
             </div>
@@ -612,7 +612,7 @@ function CreateWorkspaceContent() {
               onClick={() => setInspectorOpen(!inspectorOpen)}
               title={inspectorOpen ? 'Hide Parameters Inspector' : 'Show Parameters Inspector'}
               className={`p-2 rounded-xl border transition-colors cursor-pointer hidden lg:flex items-center justify-center ${
-                inspectorOpen ? 'bg-violet-950/80 border-violet-500/50 text-violet-300' : 'bg-[#141A26] border-slate-800 text-slate-400 hover:text-white'
+                inspectorOpen ? 'bg-[#EEF2FF] border-[#C7D2FE] text-[#5145CD]' : 'bg-white border-[#E5E7EB] text-[#667085] hover:text-[#17191D]'
               }`}
             >
               <Settings2 className="w-4 h-4" />
@@ -622,23 +622,23 @@ function CreateWorkspaceContent() {
 
         {/* Global Error Banner */}
         {errorMsg && (
-          <div className="m-4 p-4 rounded-2xl bg-rose-950/60 border-2 border-rose-500/50 text-rose-200 text-xs flex items-center justify-between gap-3 shadow-xl">
+          <div className="m-4 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center justify-between gap-3 shadow-xs">
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
-              <span className="font-bold">{errorMsg}</span>
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span className="font-semibold">{errorMsg}</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {errorMsg.toLowerCase().includes('insufficient') && (
                 <Link
                   href="/pricing"
-                  className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-xl text-xs shadow-md"
+                  className="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg text-xs shadow-2xs"
                 >
                   Top Up Credits
                 </Link>
               )}
               <button
                 onClick={() => setErrorMsg(null)}
-                className="p-1 text-rose-400 hover:text-white rounded cursor-pointer"
+                className="p-1 text-rose-500 hover:text-rose-800 rounded cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -655,20 +655,17 @@ function CreateWorkspaceContent() {
             <div className="flex-1 flex flex-col justify-between min-w-0 space-y-4">
               
               {/* STAGE: Large Cinema Display Monitor */}
-              <div className="relative w-full rounded-3xl border-2 border-slate-800 bg-[#0B0E17] overflow-hidden flex flex-col items-center justify-center min-h-[380px] sm:min-h-[460px] shadow-2xl group">
+              <div className="relative w-full rounded-2xl border border-[#E5E7EB] bg-white overflow-hidden flex flex-col items-center justify-center min-h-[380px] sm:min-h-[460px] shadow-sm group">
                 
                 {/* Cinema Crosshair & Aspect Frame Watermarks */}
-                <div className="absolute inset-4 pointer-events-none border border-slate-800/80 rounded-2xl flex flex-col justify-between p-3 z-10">
-                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] animate-pulse" />
-                      <span>FLUVIA CINEMA • 4K RENDER</span>
-                    </span>
+                <div className="absolute inset-4 pointer-events-none border border-[#E5E7EB] rounded-xl flex flex-col justify-between p-3 z-10">
+                  <div className="flex justify-between items-center text-[10px] font-mono text-[#667085] font-bold uppercase tracking-wider">
+                    <span>FLUVIA CINEMA • 4K RENDER</span>
                     <span>{aspectRatio} • {durationSec}s</span>
                   </div>
-                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-400">
+                  <div className="flex justify-between items-center text-[10px] font-mono text-[#667085]">
                     <span>MODEL: {selectedModelObj.name}</span>
-                    <span className="text-[#d4ff00] font-black">15 Credits</span>
+                    <span>15 Credits</span>
                   </div>
                 </div>
 
@@ -676,14 +673,14 @@ function CreateWorkspaceContent() {
                 {!activeJob ? (
                   // IDLE MONITOR STATE
                   <div className="py-20 px-6 text-center z-10 max-w-lg mx-auto space-y-4">
-                    <div className="w-16 h-16 rounded-2xl bg-violet-950/60 border border-violet-500/40 text-[#d4ff00] flex items-center justify-center mx-auto shadow-[0_0_25px_rgba(139,92,246,0.3)]">
-                      <Camera className="w-8 h-8" />
+                    <div className="w-16 h-16 rounded-2xl bg-[#EEF2FF] border border-[#E0E7FF] text-[#5145CD] flex items-center justify-center mx-auto shadow-2xs">
+                      <Camera className="w-8 h-8 text-[#5145CD]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-black text-white tracking-tight">
+                      <h3 className="text-xl font-extrabold text-[#17191D] tracking-tight">
                         Studio Viewport Ready
                       </h3>
-                      <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+                      <p className="mt-1 text-xs text-[#667085] leading-relaxed">
                         Enter your creative prompt below or select a camera motion path to synthesize 4K cinematic commercial video with Google Gemini Omni 1.1 Flash.
                       </p>
                     </div>
@@ -695,7 +692,7 @@ function CreateWorkspaceContent() {
                           key={p.label}
                           type="button"
                           onClick={() => handleApplyCameraPreset(p)}
-                          className="px-2.5 py-1 rounded-full bg-[#141A26] hover:bg-violet-950/60 border border-slate-800 hover:border-violet-500/50 text-slate-300 hover:text-[#d4ff00] text-[11px] font-bold transition-colors cursor-pointer"
+                          className="px-2.5 py-1 rounded-full bg-[#F1F3F5] hover:bg-[#EEF2FF] border border-[#E5E7EB] hover:border-[#C7D2FE] text-[#667085] hover:text-[#5145CD] text-[11px] font-medium transition-colors cursor-pointer"
                         >
                           + {p.label}
                         </button>
@@ -706,32 +703,32 @@ function CreateWorkspaceContent() {
                   // NEURAL SYNTHESIS PROGRESS STATE
                   <div className="py-16 px-6 text-center z-10 max-w-md mx-auto space-y-5">
                     <div className="relative w-20 h-20 mx-auto flex items-center justify-center">
-                      <div className="absolute inset-0 rounded-full border-2 border-violet-500/40 animate-ping" />
-                      <div className="w-16 h-16 rounded-full bg-violet-950/80 border-2 border-violet-500 border-t-transparent animate-spin" />
-                      <Film className="w-7 h-7 text-[#d4ff00] absolute" />
+                      <div className="absolute inset-0 rounded-full border-2 border-[#5145CD]/30 animate-ping" />
+                      <div className="w-16 h-16 rounded-full bg-[#EEF2FF] border-2 border-[#5145CD] border-t-transparent animate-spin" />
+                      <Film className="w-7 h-7 text-[#5145CD] absolute" />
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#d4ff00] font-black block mb-1">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#5145CD] font-bold block mb-1">
                         NEURAL INFERENCE IN PROGRESS
                       </span>
-                      <h3 className="text-lg font-black text-white">
+                      <h3 className="text-lg font-bold text-[#17191D]">
                         {activeJob.status === 'queued' ? 'Dispatched to Queue' : 'Synthesizing Latent Frames'}
                       </h3>
-                      <p className="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
+                      <p className="text-xs text-[#667085] mt-1 max-w-xs mx-auto">
                         {activeJob.progressMessage || 'Processing latent motion tensors with Gemini Omni 1.1 Flash...'}
                       </p>
                     </div>
 
                     {/* Progress Bar & Telemetry */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-[11px] font-mono text-slate-400 font-bold px-1">
+                      <div className="flex justify-between text-[11px] font-mono text-[#667085] font-semibold px-1">
                         <span>Diffusion Step</span>
-                        <span className="text-[#d4ff00]">{activeJob.progressPercent || 45}%</span>
+                        <span>{activeJob.progressPercent || 45}%</span>
                       </div>
-                      <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+                      <div className="w-full h-2 bg-[#F1F3F5] rounded-full overflow-hidden border border-[#E5E7EB]">
                         <div
-                          className="h-full bg-gradient-to-r from-violet-500 via-indigo-500 to-[#d4ff00] transition-all duration-500 rounded-full"
+                          className="h-full bg-[#5145CD] transition-all duration-500 rounded-full"
                           style={{ width: `${activeJob.progressPercent || 45}%` }}
                         />
                       </div>
@@ -739,31 +736,31 @@ function CreateWorkspaceContent() {
                   </div>
                 ) : activeJob.status === 'completed' ? (
                   // FINISHED RENDER PLAYBACK STATE
-                  <div className="w-full h-full flex flex-col justify-between relative z-10 bg-black">
+                  <div className="w-full h-full flex flex-col justify-between relative z-10 bg-white">
                     {/* VIDEO OUTPUT */}
                     {activeJob.output?.videoUrl ? (
-                      <div className="relative w-full h-full flex items-center justify-center bg-black">
+                      <div className="relative w-full h-full flex items-center justify-center bg-[#17191D]">
                         <video
                           src={activeJob.output.videoUrl}
                           controls
                           autoPlay
                           loop
                           playsInline
-                          className="w-full max-h-[520px] object-contain rounded-2xl shadow-2xl"
+                          className="w-full max-h-[520px] object-contain rounded-xl shadow-md"
                         />
                       </div>
                     ) : activeJob.output?.audioUrl ? (
                       // ELEVENLABS AUDIO PLAYER
                       <div className="p-8 text-center space-y-6 max-w-lg mx-auto my-auto">
-                        <div className="w-16 h-16 rounded-full bg-violet-950/80 border border-violet-500/50 text-[#d4ff00] flex items-center justify-center mx-auto shadow-[0_0_25px_rgba(139,92,246,0.4)]">
+                        <div className="w-16 h-16 rounded-full bg-[#EEF2FF] border border-[#C7D2FE] text-[#5145CD] flex items-center justify-center mx-auto shadow-sm">
                           <Volume2 className="w-8 h-8" />
                         </div>
                         <div>
-                          <span className="text-[10px] font-mono uppercase tracking-wider text-violet-300 font-black">
+                          <span className="text-[10px] font-mono uppercase tracking-wider text-[#5145CD] font-bold">
                             ElevenLabs Neural Voiceover HD
                           </span>
-                          <h4 className="text-xl font-black text-white mt-1">Voiceover Synthesized</h4>
-                          <p className="text-xs text-slate-200 mt-2 italic bg-[#141A26] p-3 rounded-2xl border border-slate-800">
+                          <h4 className="text-xl font-bold text-[#17191D] mt-1">Voiceover Synthesized</h4>
+                          <p className="text-xs text-[#17191D] mt-2 italic bg-[#F7F8FA] p-3 rounded-xl border border-[#E5E7EB]">
                             "{activeJob.output.text}"
                           </p>
                         </div>
@@ -772,31 +769,31 @@ function CreateWorkspaceContent() {
                           <a
                             href={activeJob.output.audioUrl}
                             download="fluvia-voiceover.mp3"
-                            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:brightness-110 text-white font-black text-xs flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.35)]"
+                            className="px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold text-xs flex items-center gap-2 shadow-xs"
                           >
-                            <Download className="w-3.5 h-3.5 text-[#d4ff00]" />
+                            <Download className="w-3.5 h-3.5" />
                             <span>Download MP3</span>
                           </a>
                         </div>
                       </div>
                     ) : activeJob.output?.imageUrl ? (
                       // IMAGE OUTPUT
-                      <div className="relative w-full h-full flex items-center justify-center bg-black">
+                      <div className="relative w-full h-full flex items-center justify-center bg-[#F7F8FA]">
                         <img
                           src={activeJob.output.imageUrl}
                           alt="Rendered Output"
-                          className="w-full max-h-[520px] object-contain rounded-2xl shadow-2xl"
+                          className="w-full max-h-[520px] object-contain rounded-xl shadow-sm"
                         />
                       </div>
                     ) : (
-                      <div className="p-8 text-center text-slate-400">
+                      <div className="p-8 text-center text-[#667085]">
                         Render completed without preview output.
                       </div>
                     )}
 
                     {/* Stage Control Action Strip */}
-                    <div className="p-4 bg-[#0E121B] flex items-center justify-between gap-3 border-t border-slate-800">
-                      <div className="text-xs text-white font-bold truncate max-w-md">
+                    <div className="p-4 bg-[#F7F8FA] flex items-center justify-between gap-3 border-t border-[#E5E7EB]">
+                      <div className="text-xs text-[#17191D] font-medium truncate max-w-md">
                         {activeJob.output?.videoUrl ? 'Gemini Omni 1.1 Flash 4K Video Render' : 'Synthesized Generation'}
                       </div>
 
@@ -805,9 +802,9 @@ function CreateWorkspaceContent() {
                           <button
                             type="button"
                             onClick={() => handleDownloadVideo(activeJob.output.videoUrl)}
-                            className="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:brightness-110 text-white font-black text-xs flex items-center gap-1.5 shadow-[0_0_20px_rgba(139,92,246,0.35)] cursor-pointer border border-violet-400/30"
+                            className="px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer"
                           >
-                            <Download className="w-3.5 h-3.5 text-[#d4ff00]" />
+                            <Download className="w-3.5 h-3.5" />
                             <span>Download MP4</span>
                           </button>
                         )}
@@ -818,10 +815,10 @@ function CreateWorkspaceContent() {
                             if (activeJob.input?.prompt) setPrompt(activeJob.input.prompt);
                             if (activeJob.input?.aspectRatio) setAspectRatio(activeJob.input.aspectRatio);
                           }}
-                          className="px-3.5 py-2 rounded-xl bg-[#141A26] hover:bg-[#1C2538] text-white font-bold text-xs flex items-center gap-1.5 border border-slate-700 cursor-pointer shadow-xs"
+                          className="px-3 py-2 rounded-xl bg-white hover:bg-[#F1F3F5] text-[#17191D] font-bold text-xs flex items-center gap-1.5 border border-[#E5E7EB] cursor-pointer shadow-2xs"
                           title="Remix Prompt"
                         >
-                          <RotateCcw className="w-3.5 h-3.5 text-violet-400" />
+                          <RotateCcw className="w-3.5 h-3.5 text-[#5145CD]" />
                           <span>Remix Prompt</span>
                         </button>
                       </div>
@@ -831,14 +828,14 @@ function CreateWorkspaceContent() {
                   // FAILED STATE
                   <div className="py-16 px-6 text-center z-10 max-w-sm mx-auto space-y-3">
                     <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
-                    <h3 className="text-lg font-black text-white">Generation Failed</h3>
-                    <p className="text-xs text-rose-400">
+                    <h3 className="text-lg font-bold text-[#17191D]">Generation Failed</h3>
+                    <p className="text-xs text-rose-600">
                       {activeJob.error || 'The model was unable to complete this generation. Your credits have been restored.'}
                     </p>
                     <button
                       type="button"
                       onClick={() => setActiveJob(null)}
-                      className="px-4 py-2 rounded-xl bg-[#141A26] hover:bg-[#1C2538] text-white text-xs font-bold border border-slate-700 shadow-xs"
+                      className="px-4 py-2 rounded-xl bg-white hover:bg-[#F1F3F5] text-[#17191D] text-xs font-bold border border-[#E5E7EB] shadow-2xs"
                     >
                       Reset Viewport
                     </button>
@@ -849,7 +846,7 @@ function CreateWorkspaceContent() {
               {/* ========================================================================= */}
               {/* FLOATING CREATIVE COMMAND DOCK (PROMPT COMPOSER) */}
               {/* ========================================================================= */}
-              <div className="rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 p-4 sm:p-5 shadow-2xl space-y-4">
+              <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4 sm:p-5 shadow-sm space-y-4">
                 
                 {/* Prompt Textarea & Gemini Enhance */}
                 <div className="relative">
@@ -864,7 +861,7 @@ function CreateWorkspaceContent() {
                         ? 'Enter the narration script for ElevenLabs Neural Voiceover HD...'
                         : 'Describe the photorealistic subject, lighting, and composition...'
                     }
-                    className="w-full bg-[#141A26] text-white px-4 py-3 rounded-2xl border border-slate-800 focus:outline-none focus:border-violet-500 placeholder:text-slate-500 text-sm leading-relaxed resize-none transition-colors"
+                    className="w-full bg-[#F7F8FA] text-[#17191D] px-4 py-3 rounded-xl border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] focus:bg-white placeholder-[#667085]/60 text-sm leading-relaxed resize-none transition-colors"
                   />
 
                   {/* Gemini AI Enhance Button */}
@@ -873,16 +870,16 @@ function CreateWorkspaceContent() {
                       type="button"
                       onClick={handleEnhancePrompt}
                       disabled={isEnhancing || !prompt.trim()}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all cursor-pointer ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                         enhancementApplied
-                          ? 'bg-violet-950/80 text-violet-300 border border-violet-500/50'
-                          : 'bg-violet-900/40 hover:bg-violet-900/70 text-violet-300 border border-violet-500/40'
+                          ? 'bg-[#EEF2FF] text-[#5145CD] border border-[#C7D2FE]'
+                          : 'bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#5145CD] border border-[#C7D2FE]'
                       }`}
                     >
                       {isEnhancing ? (
-                        <span className="w-3 h-3 border-2 border-violet-400 border-t-transparent rounded-full animate-spin" />
+                        <span className="w-3 h-3 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
                       ) : (
-                        <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
+                        <Sparkles className="w-3.5 h-3.5 text-[#5145CD]" />
                       )}
                       <span>{enhancementApplied ? 'Enhanced by Gemini!' : 'Gemini AI Enhance'}</span>
                     </button>
@@ -895,16 +892,16 @@ function CreateWorkspaceContent() {
                   {/* Left Controls: Aspect Ratio & Duration */}
                   <div className="flex flex-wrap items-center gap-2 text-xs">
                     {mode !== 'audio' && (
-                      <div className="flex items-center gap-1 bg-[#141A26] p-1 rounded-xl border border-slate-800">
+                      <div className="flex items-center gap-1 bg-[#F1F3F5] p-1 rounded-xl border border-[#E5E7EB]">
                         {(['16:9', '9:16', '1:1', '4:3'] as const).map((r) => (
                           <button
                             key={r}
                             type="button"
                             onClick={() => setAspectRatio(r)}
-                            className={`px-2.5 py-1 rounded-lg font-black text-[11px] transition-all cursor-pointer ${
+                            className={`px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${
                               aspectRatio === r
-                                ? 'bg-violet-600 text-white shadow-xs'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-white text-[#17191D] shadow-2xs font-extrabold'
+                                : 'text-[#667085] hover:text-[#17191D]'
                             }`}
                           >
                             {r}
@@ -914,16 +911,16 @@ function CreateWorkspaceContent() {
                     )}
 
                     {mode === 'video' && (
-                      <div className="flex items-center gap-1 bg-[#141A26] p-1 rounded-xl border border-slate-800 text-[11px] font-mono">
+                      <div className="flex items-center gap-1 bg-[#F1F3F5] p-1 rounded-xl border border-[#E5E7EB] text-[11px] font-mono">
                         {[5, 10, 15].map((d) => (
                           <button
                             key={d}
                             type="button"
                             onClick={() => setDurationSec(d)}
-                            className={`px-2 py-1 rounded-lg font-black transition-all cursor-pointer ${
+                            className={`px-2 py-1 rounded-lg font-bold transition-all cursor-pointer ${
                               durationSec === d
-                                ? 'bg-violet-600 text-white shadow-xs'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-white text-[#17191D] shadow-2xs font-extrabold'
+                                : 'text-[#667085] hover:text-[#17191D]'
                             }`}
                           >
                             {d}s
@@ -933,9 +930,9 @@ function CreateWorkspaceContent() {
                     )}
 
                     {/* Cost Telemetry Pill */}
-                    <div className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#141A26] border border-slate-800 text-[11px] font-mono text-slate-300">
-                      <Zap className="w-3.5 h-3.5 text-[#d4ff00]" />
-                      <span>Cost: <strong className="text-[#d4ff00] font-black">{estimatedCost} Credits</strong></span>
+                    <div className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#F1F3F5] border border-[#E5E7EB] text-[11px] font-mono text-[#667085]">
+                      <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
+                      <span>Cost: <strong className="text-[#17191D] font-bold">{estimatedCost} Credits</strong></span>
                     </div>
                   </div>
 
@@ -944,7 +941,7 @@ function CreateWorkspaceContent() {
                     {!hasEnoughCredits && (
                       <Link
                         href="/pricing"
-                        className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-black transition-all shadow-xs"
+                        className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-all shadow-xs"
                       >
                         Top Up
                       </Link>
@@ -954,12 +951,12 @@ function CreateWorkspaceContent() {
                       type="button"
                       onClick={handleStartGeneration}
                       disabled={isSubmitting || (!prompt.trim() && !referenceImageUrl) || !hasEnoughCredits}
-                      className="px-6 py-2.5 bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:brightness-110 text-white font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(139,92,246,0.35)] transition-all disabled:opacity-50 cursor-pointer border border-violet-400/30"
+                      className="px-6 py-2.5 bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
                     >
                       {isSubmitting ? (
                         <span className="inline-block w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                       ) : (
-                        <Sparkles className="w-4 h-4 text-[#d4ff00]" />
+                        <Sparkles className="w-4 h-4 text-white" />
                       )}
                       <span>
                         {!hasEnoughCredits
@@ -982,12 +979,12 @@ function CreateWorkspaceContent() {
               <div className="w-full lg:w-80 shrink-0 space-y-4">
                 
                 {/* 1. Model Engine Selector */}
-                <div className="p-5 rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 space-y-3 text-xs shadow-xl">
+                <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white space-y-3 text-xs shadow-xs">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">
+                    <span className="font-bold text-[#667085] uppercase tracking-wider text-[10px]">
                       Active Model Policy
                     </span>
-                    <span className="text-[10px] font-mono font-black text-[#d4ff00] bg-[#121c10] px-2 py-0.5 rounded border border-[#d4ff00]/40">
+                    <span className="text-[10px] font-mono font-bold text-[#5145CD] bg-[#EEF2FF] px-2 py-0.5 rounded border border-[#E0E7FF]">
                       15 Credits
                     </span>
                   </div>
@@ -995,14 +992,14 @@ function CreateWorkspaceContent() {
                   <select
                     value={modelId}
                     onChange={(e) => setModelId(e.target.value)}
-                    className="w-full bg-[#141A26] text-white px-3 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-violet-500 text-xs cursor-pointer font-bold"
+                    className="w-full bg-[#F7F8FA] text-[#17191D] px-3 py-2 rounded-xl border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] text-xs cursor-pointer font-medium"
                   >
                     {MODELS.map((m) => (
                       <option
                         key={m.id}
                         value={m.id}
                         disabled={!m.active}
-                        className={`bg-[#0E121B] ${m.active ? 'text-white font-medium' : 'text-slate-500 italic'}`}
+                        className={`bg-white ${m.active ? 'text-[#17191D] font-medium' : 'text-[#667085] italic'}`}
                       >
                         {m.name} {!m.active ? '(Coming Soon)' : `(${m.cost} cr)`}
                       </option>
@@ -1012,19 +1009,19 @@ function CreateWorkspaceContent() {
 
                 {/* 2. Video Workflow: Text-to-Video vs Image-to-Video */}
                 {mode === 'video' && (
-                  <div className="p-5 rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 space-y-3 text-xs shadow-xl">
-                    <span className="font-bold text-slate-400 uppercase tracking-wider text-[10px] block">
+                  <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white space-y-3 text-xs shadow-xs">
+                    <span className="font-bold text-[#667085] uppercase tracking-wider text-[10px] block">
                       Input Workflow
                     </span>
 
-                    <div className="grid grid-cols-2 gap-1 bg-[#141A26] p-1 rounded-xl border border-slate-800">
+                    <div className="grid grid-cols-2 gap-1 bg-[#F1F3F5] p-1 rounded-xl border border-[#E5E7EB]">
                       <button
                         type="button"
                         onClick={() => setVideoInputType('text')}
-                        className={`py-1.5 rounded-lg font-black text-xs transition-all cursor-pointer ${
+                        className={`py-1.5 rounded-lg font-bold text-xs transition-all cursor-pointer ${
                           videoInputType === 'text'
-                            ? 'bg-violet-600 text-white shadow-xs'
-                            : 'text-slate-400 hover:text-white'
+                            ? 'bg-white text-[#17191D] shadow-2xs font-extrabold'
+                            : 'text-[#667085] hover:text-[#17191D]'
                         }`}
                       >
                         Text-to-Video
@@ -1032,10 +1029,10 @@ function CreateWorkspaceContent() {
                       <button
                         type="button"
                         onClick={() => setVideoInputType('image')}
-                        className={`py-1.5 rounded-lg font-black text-xs transition-all cursor-pointer ${
+                        className={`py-1.5 rounded-lg font-bold text-xs transition-all cursor-pointer ${
                           videoInputType === 'image'
-                            ? 'bg-violet-600 text-white shadow-xs'
-                            : 'text-slate-400 hover:text-white'
+                            ? 'bg-white text-[#17191D] shadow-2xs font-extrabold'
+                            : 'text-[#667085] hover:text-[#17191D]'
                         }`}
                       >
                         Image-to-Video
@@ -1057,20 +1054,20 @@ function CreateWorkspaceContent() {
                         {!uploadedImagePreview ? (
                           <label
                             htmlFor="image-to-video-file-input"
-                            className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-700 hover:border-violet-500 rounded-2xl bg-[#141A26] hover:bg-[#1a2333] transition-colors cursor-pointer text-center"
+                            className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-[#E5E7EB] hover:border-[#5145CD] rounded-xl bg-[#F7F8FA] hover:bg-white transition-colors cursor-pointer text-center"
                           >
-                            <UploadCloud className="w-6 h-6 text-violet-400 mb-1" />
-                            <span className="font-bold text-white text-xs">Upload Starting Frame</span>
-                            <span className="text-[10px] text-slate-400 mt-0.5">PNG, JPG, WEBP up to 10MB</span>
+                            <UploadCloud className="w-6 h-6 text-[#5145CD] mb-1" />
+                            <span className="font-bold text-[#17191D] text-xs">Upload Starting Frame</span>
+                            <span className="text-[10px] text-[#667085] mt-0.5">PNG, JPG, WEBP up to 10MB</span>
                           </label>
                         ) : (
-                          <div className="relative rounded-2xl overflow-hidden border border-slate-700 group">
+                          <div className="relative rounded-xl overflow-hidden border border-[#E5E7EB] group">
                             <img
                               src={uploadedImagePreview}
                               alt="Uploaded source frame"
                               className="w-full h-32 object-cover"
                             />
-                            <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <div className="absolute inset-0 bg-[#17191D]/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                               <button
                                 type="button"
                                 onClick={handleClearImage}
@@ -1092,18 +1089,18 @@ function CreateWorkspaceContent() {
 
                 {/* 3. Neural Voiceover Selector (when mode === 'audio') */}
                 {mode === 'audio' && (
-                  <div className="p-5 rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 space-y-3 text-xs shadow-xl">
-                    <span className="font-bold text-slate-400 uppercase tracking-wider text-[10px] block">
+                  <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white space-y-3 text-xs shadow-xs">
+                    <span className="font-bold text-[#667085] uppercase tracking-wider text-[10px] block">
                       ElevenLabs Neural Voice
                     </span>
 
                     <select
                       value={selectedVoice}
                       onChange={(e) => setSelectedVoice(e.target.value)}
-                      className="w-full bg-[#141A26] text-white px-3 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-violet-500 text-xs cursor-pointer font-bold"
+                      className="w-full bg-[#F7F8FA] text-[#17191D] px-3 py-2 rounded-xl border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] text-xs cursor-pointer font-medium"
                     >
                       {availableVoices.map((v) => (
-                        <option key={v.voiceId || v.id} value={v.voiceId || v.id} className="bg-[#0E121B] text-white">
+                        <option key={v.voiceId || v.id} value={v.voiceId || v.id} className="bg-white text-[#17191D]">
                           {v.name} ({v.gender || 'Neural'})
                         </option>
                       ))}
@@ -1115,10 +1112,10 @@ function CreateWorkspaceContent() {
                         <div
                           key={v.voiceId || v.id}
                           onClick={() => setSelectedVoice(v.voiceId || v.id)}
-                          className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                          className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                             selectedVoice === (v.voiceId || v.id)
-                              ? 'bg-violet-950/80 border-violet-500/50 text-white font-bold shadow-xs'
-                              : 'bg-[#141A26] border-slate-800 hover:border-slate-700 text-slate-300'
+                              ? 'bg-[#EEF2FF] border-[#5145CD] text-[#5145CD]'
+                              : 'bg-[#F7F8FA] border-[#E5E7EB] hover:border-[#D1D5DB] text-[#667085]'
                           }`}
                         >
                           <span className="font-bold truncate text-[11px]">{v.name.split('-')[0].trim()}</span>
@@ -1129,7 +1126,7 @@ function CreateWorkspaceContent() {
                                 e.stopPropagation();
                                 handleToggleVoicePreview(v.previewUrl, v.voiceId || v.id);
                               }}
-                              className="p-1 rounded-full text-violet-400 hover:text-white"
+                              className="p-1 rounded-full text-[#5145CD] hover:text-[#4338CA]"
                             >
                               <Volume2 className="w-3.5 h-3.5" />
                             </button>
@@ -1141,8 +1138,8 @@ function CreateWorkspaceContent() {
                 )}
 
                 {/* 4. Negative Prompt Drawer */}
-                <div className="p-5 rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 space-y-2 text-xs shadow-xl">
-                  <span className="font-bold text-slate-400 uppercase tracking-wider text-[10px] block">
+                <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white space-y-2 text-xs shadow-xs">
+                  <span className="font-bold text-[#667085] uppercase tracking-wider text-[10px] block">
                     Negative Prompt (Exclusions)
                   </span>
                   <input
@@ -1150,22 +1147,22 @@ function CreateWorkspaceContent() {
                     value={negativePrompt}
                     onChange={(e) => setNegativePrompt(e.target.value)}
                     placeholder="blurry, distorted anatomy, low quality, artifacts..."
-                    className="w-full bg-[#141A26] text-white px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-violet-500 placeholder:text-slate-500 text-xs font-medium"
+                    className="w-full bg-[#F7F8FA] text-[#17191D] px-3 py-2 rounded-xl border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] placeholder-[#667085]/60 text-xs"
                   />
                 </div>
 
                 {/* 5. Google Vids Studio Card */}
-                <div className="p-5 rounded-3xl bg-[#0E121B]/95 border-2 border-slate-800 text-xs space-y-3 text-slate-400 shadow-xl">
+                <div className="p-4 rounded-2xl bg-white border border-[#E5E7EB] text-xs space-y-2 text-[#667085] shadow-xs">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-700 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(139,92,246,0.4)]">
+                      <div className="w-8 h-8 rounded-lg bg-[#5145CD] text-white font-bold text-xs flex items-center justify-center shrink-0">
                         G
                       </div>
                       <div>
-                        <p className="font-black text-white text-xs">
+                        <p className="font-bold text-[#17191D] text-xs">
                           Google Vids Studio Workspace
                         </p>
-                        <p className="text-[10px] text-slate-400">
+                        <p className="text-[10px] text-[#667085]">
                           External Google Workspace tool
                         </p>
                       </div>
@@ -1174,15 +1171,15 @@ function CreateWorkspaceContent() {
                     <button
                       type="button"
                       onClick={handleCopyAndLaunchGoogleVids}
-                      className="px-3 py-1.5 rounded-xl bg-violet-600/30 hover:bg-violet-600 text-violet-200 hover:text-white font-bold text-[11px] flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer border border-violet-500/40"
+                      className="px-3 py-1.5 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold text-[11px] flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer shadow-2xs"
                     >
-                      {copiedVids ? <Check className="w-3 h-3 text-[#d4ff00]" /> : <ExternalLink className="w-3 h-3 text-[#d4ff00]" />}
+                      {copiedVids ? <Check className="w-3 h-3" /> : <ExternalLink className="w-3 h-3" />}
                       <span>{copiedVids ? 'Opening...' : 'Launch (0 cr)'}</span>
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-2 text-[10px] text-violet-300 bg-violet-950/60 px-2.5 py-1.5 rounded-xl font-bold border border-violet-500/30">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#d4ff00] shrink-0" />
+                  <div className="flex items-center gap-2 text-[10px] text-[#5145CD] bg-[#EEF2FF] px-2 py-1 rounded font-semibold border border-[#E0E7FF]">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#5145CD]" />
                     <span>0 Fluvia Credits Charged for Google Vids handoff.</span>
                   </div>
                 </div>
@@ -1197,8 +1194,8 @@ function CreateWorkspaceContent() {
         {activeTab === 'templates' && (
           <main className="flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full space-y-6 text-left">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">Live Productive Templates</h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              <h2 className="text-xl font-bold text-[#17191D]">Live Productive Templates</h2>
+              <p className="text-xs text-[#667085] mt-1">
                 Agency-grade commercial video prompts curated for high-converting advertising campaigns.
               </p>
             </div>
@@ -1207,19 +1204,19 @@ function CreateWorkspaceContent() {
               {productiveTemplates.map((t) => (
                 <div
                   key={t.id}
-                  className="p-5 rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 hover:border-violet-500/50 hover:shadow-[0_0_25px_rgba(139,92,246,0.2)] flex flex-col justify-between space-y-4 shadow-xl transition-all group"
+                  className="p-5 rounded-2xl border border-[#E5E7EB] bg-white hover:border-[#5145CD]/40 flex flex-col justify-between space-y-4 shadow-xs transition-all group"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-violet-950/80 text-violet-300 font-mono border border-violet-500/40">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] font-mono border border-[#E0E7FF]">
                         {t.category}
                       </span>
-                      <span className="text-[10px] font-mono text-[#d4ff00] font-black">15 Credits</span>
+                      <span className="text-[10px] font-mono text-[#667085]">15 Credits</span>
                     </div>
-                    <h3 className="font-bold text-white text-sm group-hover:text-violet-300 transition-colors">
+                    <h3 className="font-bold text-[#17191D] text-sm group-hover:text-[#5145CD] transition-colors">
                       {t.title}
                     </h3>
-                    <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
+                    <p className="text-xs text-[#667085] line-clamp-3 leading-relaxed">
                       {t.prompt}
                     </p>
                   </div>
@@ -1227,9 +1224,9 @@ function CreateWorkspaceContent() {
                   <button
                     type="button"
                     onClick={() => handleLoadTemplate(t)}
-                    className="w-full py-2.5 rounded-xl bg-violet-600/30 hover:bg-violet-600 text-violet-200 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-violet-500/40"
+                    className="w-full py-2 rounded-xl bg-[#EEF2FF] hover:bg-[#5145CD] text-[#5145CD] hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-[#E0E7FF]"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
+                    <Sparkles className="w-3.5 h-3.5" />
                     <span>Use Template in Studio</span>
                   </button>
                 </div>
@@ -1245,35 +1242,35 @@ function CreateWorkspaceContent() {
           <main className="flex-1 p-5 sm:p-8 max-w-7xl mx-auto w-full space-y-6 text-left">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">Your Generation History</h2>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                <h2 className="text-xl font-bold text-[#17191D]">Your Generation History</h2>
+                <p className="text-xs text-[#667085] mt-1">
                   Review, download, and remix all video and audio jobs rendered under your account.
                 </p>
               </div>
               <button
                 onClick={fetchUserJobs}
-                className="px-4 py-2 rounded-xl bg-[#141A26] border border-slate-700 text-xs font-bold text-white hover:bg-[#1C2538] shadow-xs cursor-pointer flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-lg bg-white border border-[#E5E7EB] text-xs font-bold text-[#17191D] hover:bg-[#F1F3F5] shadow-2xs cursor-pointer flex items-center gap-1.5"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-violet-400" />
+                <RotateCcw className="w-3.5 h-3.5 text-[#667085]" />
                 <span>Refresh</span>
               </button>
             </div>
 
             {isLoadingJobs ? (
               <div className="py-16 text-center">
-                <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                <p className="text-xs text-slate-400">Loading your generation history...</p>
+                <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                <p className="text-xs text-[#667085]">Loading your generation history...</p>
               </div>
             ) : userJobs.length === 0 ? (
-              <div className="py-20 text-center rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 p-8 shadow-2xl space-y-3">
-                <Film className="w-12 h-12 text-slate-600 mx-auto mb-1" />
-                <h4 className="font-black text-white text-base">No Generations Dispatched Yet</h4>
-                <p className="text-xs text-slate-400 max-w-xs mx-auto">
+              <div className="py-20 text-center rounded-2xl border border-[#E5E7EB] bg-white p-8">
+                <Film className="w-12 h-12 text-[#667085]/40 mx-auto mb-3" />
+                <h4 className="font-bold text-[#17191D] text-sm">No Generations Dispatched Yet</h4>
+                <p className="text-xs text-[#667085] max-w-xs mx-auto mt-1 mb-4">
                   Head to the Studio Viewport or choose a template to create your first AI video.
                 </p>
                 <button
                   onClick={() => setActiveTab('studio')}
-                  className="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:brightness-110 text-white font-black rounded-xl text-xs shadow-[0_0_20px_rgba(139,92,246,0.35)] cursor-pointer border border-violet-400/30"
+                  className="px-4 py-2 bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold rounded-xl text-xs shadow-xs cursor-pointer"
                 >
                   Launch Studio
                 </button>
@@ -1283,11 +1280,11 @@ function CreateWorkspaceContent() {
                 {userJobs.map((job) => (
                   <div
                     key={job.id}
-                    className="p-4 rounded-3xl border-2 border-slate-800 bg-[#0E121B]/95 hover:border-violet-500/50 flex flex-col justify-between space-y-3 shadow-xl transition-all"
+                    className="p-4 rounded-2xl border border-[#E5E7EB] bg-white hover:border-[#D1D5DB] flex flex-col justify-between space-y-3 shadow-xs transition-all"
                   >
                     <div>
                       {/* Video / Image preview */}
-                      <div className="aspect-video rounded-2xl overflow-hidden bg-black relative border border-slate-800 mb-2">
+                      <div className="aspect-video rounded-xl overflow-hidden bg-[#F1F3F5] relative border border-[#E5E7EB] mb-2">
                         {job.output?.videoUrl ? (
                           <video
                             src={job.output.videoUrl}
@@ -1302,47 +1299,47 @@ function CreateWorkspaceContent() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
+                          <div className="w-full h-full flex items-center justify-center text-[#667085] text-xs">
                             {job.status === 'processing' ? 'Generating...' : job.status}
                           </div>
                         )}
 
                         <span
-                          className={`absolute top-2 left-2 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs uppercase font-mono ${
+                          className={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded shadow-2xs ${
                             job.status === 'completed'
-                              ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40'
+                              ? 'bg-[#5145CD] text-white'
                               : job.status === 'failed'
-                              ? 'bg-rose-950/80 text-rose-300 border border-rose-500/40'
-                              : 'bg-amber-950/80 text-amber-300 border border-amber-500/40'
+                              ? 'bg-rose-600 text-white'
+                              : 'bg-amber-500 text-white'
                           }`}
                         >
-                          {job.status}
+                          {job.status.toUpperCase()}
                         </span>
 
-                        <span className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-white/10">
+                        <span className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-md text-[#17191D] text-[10px] font-mono px-1.5 py-0.5 rounded border border-[#E5E7EB]">
                           {job.input?.aspectRatio || '16:9'}
                         </span>
                       </div>
 
-                      <p className="text-xs font-bold text-white line-clamp-2 leading-relaxed">
+                      <p className="text-xs font-semibold text-[#17191D] line-clamp-2 leading-relaxed">
                         {job.input?.prompt || 'No prompt provided'}
                       </p>
 
-                      <div className="flex items-center justify-between text-[10px] text-slate-400 mt-2 font-mono">
+                      <div className="flex items-center justify-between text-[10px] text-[#667085] mt-2 font-mono">
                         <span>{new Date(job.createdAt).toLocaleDateString()}</span>
-                        <span className="text-[#d4ff00] font-black">{job.actualCredits || job.estimatedCredits || 15} Credits</span>
+                        <span>{job.actualCredits || job.estimatedCredits || 15} Credits</span>
                       </div>
                     </div>
 
                     {/* History actions */}
-                    <div className="flex items-center gap-2 pt-2 border-t border-slate-800">
+                    <div className="flex items-center gap-2 pt-2 border-t border-[#E5E7EB]">
                       {job.output?.videoUrl && (
                         <button
                           type="button"
                           onClick={() => handleDownloadVideo(job.output.videoUrl)}
-                          className="flex-1 py-1.5 rounded-xl bg-violet-600/30 hover:bg-violet-600 text-violet-200 hover:text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer border border-violet-500/40"
+                          className="flex-1 py-1.5 rounded-lg bg-[#5145CD] hover:bg-[#4338CA] text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
                         >
-                          <Download className="w-3 h-3 text-[#d4ff00]" />
+                          <Download className="w-3 h-3" />
                           <span>Download MP4</span>
                         </button>
                       )}
@@ -1353,9 +1350,9 @@ function CreateWorkspaceContent() {
                           setActiveJob(job);
                           setActiveTab('studio');
                         }}
-                        className="flex-1 py-1.5 rounded-xl bg-[#141A26] hover:bg-[#1C2538] text-white font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer border border-slate-700"
+                        className="flex-1 py-1.5 rounded-lg bg-white hover:bg-[#F1F3F5] text-[#17191D] font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer border border-[#E5E7EB]"
                       >
-                        <Play className="w-3 h-3 text-[#d4ff00]" />
+                        <Play className="w-3 h-3 text-[#5145CD]" />
                         <span>View</span>
                       </button>
 
@@ -1366,10 +1363,10 @@ function CreateWorkspaceContent() {
                           if (job.input?.aspectRatio) setAspectRatio(job.input.aspectRatio);
                           setActiveTab('studio');
                         }}
-                        className="p-1.5 rounded-xl bg-[#141A26] hover:bg-[#1C2538] text-slate-400 hover:text-white font-bold text-[11px] cursor-pointer border border-slate-700"
+                        className="p-1.5 rounded-lg bg-white hover:bg-[#F1F3F5] text-[#667085] hover:text-[#17191D] font-bold text-[11px] cursor-pointer border border-[#E5E7EB]"
                         title="Remix Prompt"
                       >
-                        <RotateCcw className="w-3.5 h-3.5 text-violet-400" />
+                        <RotateCcw className="w-3 h-3" />
                       </button>
                     </div>
                   </div>
@@ -1387,11 +1384,8 @@ export default function CreatePage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#070A0F] text-white flex items-center justify-center">
-          <div className="flex flex-col items-center gap-3 text-center">
-            <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-xs text-slate-400">Initializing Fluvia Creative Studio...</span>
-          </div>
+        <div className="min-h-screen bg-[#F7F8FA] text-[#17191D] flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

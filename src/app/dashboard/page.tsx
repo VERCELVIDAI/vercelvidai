@@ -151,11 +151,11 @@ export default function DashboardPage() {
 
   if (isRedirecting) {
     return (
-      <div className="min-h-screen bg-[#070A0F] text-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white text-[#17191D] flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm font-bold text-white">Session expired</p>
-          <span className="text-xs text-slate-400">Redirecting to sign in...</span>
+          <div className="w-8 h-8 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-semibold text-[#17191D]">Session expired</p>
+          <span className="text-xs text-[#667085]">Redirecting to sign in...</span>
         </div>
       </div>
     );
@@ -163,23 +163,18 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen md:h-screen md:h-[100dvh] w-full bg-[#070A0F] flex flex-col md:flex-row text-white overflow-x-hidden md:overflow-hidden">
-        <div className="hidden md:block w-64 h-full shrink-0 border-r border-slate-800/90 bg-[#0B0E17] p-4 space-y-4">
-          <div className="h-8 w-32 bg-slate-800/60 rounded-xl animate-pulse" />
+      <div className="min-h-screen md:h-screen md:h-[100dvh] w-full bg-white flex flex-col md:flex-row text-[#17191D] overflow-x-hidden md:overflow-hidden">
+        <div className="hidden md:block w-60 h-full shrink-0 border-r border-[#E5E7EB] bg-[#F7F8FA] p-4 space-y-4">
+          <div className="h-8 w-32 bg-[#E5E7EB] rounded-lg animate-pulse" />
           <div className="space-y-2 pt-6">
-            <div className="h-8 w-full bg-slate-800/50 rounded-xl animate-pulse" />
-            <div className="h-8 w-full bg-slate-800/50 rounded-xl animate-pulse" />
-            <div className="h-8 w-full bg-slate-800/50 rounded-xl animate-pulse" />
+            <div className="h-8 w-full bg-[#E5E7EB] rounded-lg animate-pulse" />
+            <div className="h-8 w-full bg-[#E5E7EB] rounded-lg animate-pulse" />
+            <div className="h-8 w-full bg-[#E5E7EB] rounded-lg animate-pulse" />
           </div>
         </div>
-        <div className="flex-1 h-full flex flex-col p-4 sm:p-8 space-y-6 bg-[#070A0F]">
-          <div className="h-8 w-64 bg-slate-800/60 rounded-xl animate-pulse" />
-          <div className="h-48 w-full bg-[#0E121B] border border-slate-800/80 rounded-3xl animate-pulse" />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="h-36 bg-[#0E121B] border border-slate-800/80 rounded-2xl animate-pulse" />
-            <div className="h-36 bg-[#0E121B] border border-slate-800/80 rounded-2xl animate-pulse" />
-            <div className="h-36 bg-[#0E121B] border border-slate-800/80 rounded-2xl animate-pulse" />
-          </div>
+        <div className="flex-1 h-full flex flex-col p-4 sm:p-8 space-y-6">
+          <div className="h-8 w-64 bg-[#F7F8FA] rounded-lg animate-pulse" />
+          <div className="h-72 w-full bg-[#F7F8FA] rounded-2xl animate-pulse" />
         </div>
       </div>
     );
@@ -197,7 +192,7 @@ export default function DashboardPage() {
       : IMAGE_TEMPLATES.slice(0, 6);
 
   return (
-    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden text-white bg-[#070A0F] relative selection:bg-[#d4ff00] selection:text-black">
+    <div className="min-h-screen md:h-screen md:h-[100dvh] w-full flex flex-col md:flex-row overflow-x-hidden md:overflow-hidden text-[#17191D] bg-white relative">
       {/* FIRST20 Modal for Eligible New Users */}
       <FirstCampaignModal />
 
@@ -205,7 +200,7 @@ export default function DashboardPage() {
       <Sidebar userRole={user.role} credits={credits} />
 
       {/* Main Viewport */}
-      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-[#070A0F] pb-24 md:pb-8">
+      <div className="flex-1 min-w-0 flex flex-col md:h-full md:overflow-y-auto overflow-x-hidden overscroll-contain relative bg-white pb-24 md:pb-8">
         <DashboardHeader
           displayName={user.displayName}
           avatarUrl={user.avatarUrl}
@@ -216,37 +211,31 @@ export default function DashboardPage() {
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-8 text-left min-w-0">
           {/* Welcome Banner */}
-          <div className="p-6 sm:p-7 rounded-3xl bg-[#0E121B]/95 border-2 border-slate-800/90 text-white shadow-2xl backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="p-6 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
-                <span className="text-[10px] font-mono uppercase font-black tracking-widest text-violet-400">
-                  CREATIVE SUITE READY
-                </span>
-              </div>
-              <h1 className="text-xl sm:text-3xl font-black text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-bold text-[#17191D] tracking-tight">
                 Welcome back, {user.displayName}
               </h1>
-              <p className="mt-1 text-xs sm:text-sm text-slate-300">
-                Gemini Omni 1.1 Flash Engine is active. You currently have{' '}
-                <strong className="text-[#d4ff00] font-black">{credits.availableBalance.toLocaleString()} credits</strong> available.
+              <p className="mt-1 text-xs sm:text-sm text-[#667085]">
+                Gemini Omni 1.1 Flash Engine is ready. You currently have{' '}
+                <strong className="text-[#17191D]">{credits.availableBalance.toLocaleString()} credits</strong> available.
               </p>
             </div>
 
-            <div className="flex flex-wrap xs:flex-nowrap items-center gap-2.5 shrink-0 w-full sm:w-auto">
+            <div className="flex flex-wrap xs:flex-nowrap items-center gap-2 shrink-0 w-full sm:w-auto">
               <Link
                 href="/checkout?type=pack&id=pack_5000"
-                className="flex-1 sm:flex-initial text-center justify-center px-4 py-2.5 rounded-xl bg-[#141A26] hover:bg-[#1C2538] text-white border border-slate-700 text-xs font-bold shadow-xs transition-all flex items-center gap-1.5"
+                className="flex-1 sm:flex-initial text-center justify-center px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#17191D] border border-[#E5E7EB] text-xs font-semibold shadow-2xs transition-all flex items-center gap-1.5"
               >
-                <Zap className="w-3.5 h-3.5 text-[#d4ff00]" />
-                <span>Top Up (5,000 CR)</span>
+                <Zap className="w-3.5 h-3.5 text-[#5145CD]" />
+                <span>Top Up (5,000 Credits)</span>
               </Link>
               <Link
                 href="/create"
-                className="flex-1 sm:flex-initial text-center justify-center px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:brightness-110 text-white text-xs font-black shadow-[0_0_20px_rgba(139,92,246,0.35)] transition-all flex items-center gap-1.5 border border-violet-400/30"
+                className="flex-1 sm:flex-initial text-center justify-center px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-                <span>+ Create Ad</span>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Create Ad</span>
               </Link>
             </div>
           </div>
@@ -330,7 +319,7 @@ export default function DashboardPage() {
 
           {/* Quick Start Creation Deck */}
           <div>
-            <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#667085] mb-3">
               What would you like to create today?
             </h2>
 
@@ -338,15 +327,15 @@ export default function DashboardPage() {
               {/* Card 1: OpenHiggs Studio */}
               <Link
                 href="/openhiggs"
-                className="p-5 rounded-3xl bg-[#0E150F]/95 text-white border-2 border-[#d4ff00]/40 hover:border-[#d4ff00] hover:shadow-[0_0_35px_rgba(212,255,0,0.25)] transition-all group relative overflow-hidden flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-[#0B0F17] text-white border-2 border-[#d1fe17]/40 hover:border-[#d1fe17] hover:shadow-[0_0_25px_rgba(209,254,23,0.2)] transition-all group relative overflow-hidden flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#d4ff00]/20 border border-[#d4ff00]/40 text-[#d4ff00] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-[0_0_12px_rgba(212,255,0,0.3)]">
+                  <div className="w-10 h-10 rounded-xl bg-[#d1fe17]/20 border border-[#d1fe17]/30 text-[#d1fe17] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
                     <Zap className="w-5 h-5" />
                   </div>
                   <div className="flex items-center justify-between">
                     <h3 className="font-extrabold text-base text-white">OpenHiggs Studio</h3>
-                    <span className="text-[11px] font-mono font-black px-2 py-0.5 rounded-full bg-[#121c10] text-[#d4ff00] border border-[#d4ff00]/40 shadow-xs">
+                    <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#121c10] text-[#d1fe17] border border-[#d1fe17]/40">
                       38 Models
                     </span>
                   </div>
@@ -354,7 +343,7 @@ export default function DashboardPage() {
                     Seedance 2.5, Kling 3.0, Soul Cinema, Wan 3, and Flux 3 in one unified studio.
                   </p>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-xs font-black text-[#d4ff00]">
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#d1fe17]">
                   <span>Open Studio</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -363,23 +352,23 @@ export default function DashboardPage() {
               {/* Card 2: Free Image Studio (Cloudflare Workers AI) */}
               <Link
                 href="/ai-image-generator"
-                className="p-5 rounded-3xl bg-[#160E06]/95 text-white border-2 border-amber-500/40 hover:border-amber-400 hover:shadow-[0_0_35px_rgba(245,158,11,0.25)] transition-all group relative overflow-hidden flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-gradient-to-br from-amber-50/70 via-white to-orange-50/40 border-2 border-amber-300 hover:border-amber-400 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-[0_0_12px_rgba(245,158,11,0.3)]">
-                    <ImageIcon className="w-5 h-5 text-amber-400" />
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <ImageIcon className="w-5 h-5 text-amber-600" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-base text-white">Free Image Studio</h3>
-                    <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-amber-950/80 text-amber-300 border border-amber-500/40 shadow-xs">
+                    <h3 className="font-extrabold text-base text-slate-900">Free Image Studio</h3>
+                    <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
                       100k Free
                     </span>
                   </div>
-                  <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                  <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
                     Cloudflare Workers AI: Stable Diffusion XL & Flux 1 Schnell at 0 credit cost.
                   </p>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-xs font-black text-amber-400">
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-amber-700">
                   <span>Generate Free</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -387,24 +376,24 @@ export default function DashboardPage() {
 
               {/* Card 3: Vox AI Motion Graphics Studio */}
               <Link
-                href="/dashboard/vox-motion"
-                className="p-5 rounded-3xl bg-[#160B24]/95 text-white border-2 border-violet-500/40 hover:border-violet-400 hover:shadow-[0_0_35px_rgba(139,92,246,0.3)] transition-all group relative overflow-hidden flex flex-col justify-between"
+                href="/studios/motion-graphics"
+                className="p-5 rounded-2xl bg-gradient-to-br from-violet-50/80 via-white to-purple-50/50 border-2 border-violet-400 hover:border-violet-600 hover:shadow-lg hover:shadow-violet-500/10 transition-all group relative overflow-hidden flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-violet-600/20 border border-violet-500/40 text-violet-300 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-[0_0_12px_rgba(139,92,246,0.3)]">
-                    <Film className="w-5 h-5 text-violet-400" />
+                  <div className="w-10 h-10 rounded-xl bg-violet-600/10 text-violet-700 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <Film className="w-5 h-5 text-violet-700" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-base text-white">Vox Motion Studio</h3>
-                    <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-violet-950/80 text-violet-300 border border-violet-500/50 shadow-xs">
+                    <h3 className="font-extrabold text-base text-slate-900">Vox Motion Studio</h3>
+                    <span className="text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-violet-100 text-violet-900 border border-violet-300">
                       2 Free Tries
                     </span>
                   </div>
-                  <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                  <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
                     Paper-collage explainer video generator with living posters, 7 themes, and script beat map.
                   </p>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-xs font-black text-violet-400">
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-violet-700">
                   <span>Create Living Poster</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -413,73 +402,73 @@ export default function DashboardPage() {
               {/* Card 4: AI Video Ad */}
               <Link
                 href="/create?mode=video"
-                className="p-5 rounded-3xl bg-[#0B1024]/95 text-white border-2 border-blue-500/40 hover:border-blue-400 hover:shadow-[0_0_35px_rgba(37,99,235,0.3)] transition-all group relative overflow-hidden flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/40 text-blue-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-[0_0_12px_rgba(37,99,235,0.3)]">
+                  <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
                     <Video className="w-5 h-5" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-base text-white">AI Video Ad</h3>
-                    <span className="text-[11px] font-mono font-black px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-500/40">
-                      15 cr
+                    <h3 className="font-bold text-base text-[#17191D]">AI Video Ad</h3>
+                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
+                      15 cr / video
                     </span>
                   </div>
-                  <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                  <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
                     Turn product URLs or descriptions into multi-scene cinematic commercial spots with Gemini Omni.
                   </p>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-xs font-black text-blue-400">
+                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#5145CD]">
                   <span>Launch Video Studio</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
 
-              {/* Card 5: AI Product Photography */}
+              {/* Card 3: AI Product Photography */}
               <Link
                 href="/create?mode=image"
-                className="p-5 rounded-3xl bg-[#0E121B]/95 text-white border-2 border-slate-800 hover:border-slate-700 hover:shadow-xl transition-all group relative overflow-hidden flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-white/10 text-slate-300 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                  <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
                     <ImageIcon className="w-5 h-5" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-base text-white">Product Photography</h3>
-                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-white/10 text-slate-300 border border-white/10">
-                      5 cr
+                    <h3 className="font-bold text-base text-[#17191D]">Product Photography</h3>
+                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
+                      5 cr / image
                     </span>
                   </div>
-                  <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
+                  <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
                     Generate 4K studio-lit product imagery, advertising banners, and social catalog shots.
                   </p>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-300">
+                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#5145CD]">
                   <span>Launch Image Studio</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
 
-              {/* Card 6: AI Voiceover */}
+              {/* Card 4: AI Voiceover */}
               <Link
                 href="/create?mode=audio"
-                className="p-5 rounded-3xl bg-[#0E121B]/95 text-white border-2 border-slate-800 hover:border-slate-700 hover:shadow-xl transition-all group relative overflow-hidden flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#5145CD]/40 hover:shadow-md transition-all group relative overflow-hidden flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-white/10 text-slate-300 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                  <div className="w-10 h-10 rounded-xl bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
                     <Mic className="w-5 h-5" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-base text-white">AI Voice-Over</h3>
-                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-white/10 text-slate-300 border border-white/10">
-                      2 cr
+                    <h3 className="font-bold text-base text-[#17191D]">AI Voice-Over</h3>
+                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#EEF2FF] text-[#5145CD] border border-[#5145CD]/20">
+                      2 cr / voice
                     </span>
                   </div>
-                  <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
+                  <p className="mt-1.5 text-xs text-[#667085] leading-relaxed">
                     Generate studio-quality voice-overs in 29+ languages with emotional pacing and ElevenLabs.
                   </p>
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-300">
+                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-[#5145CD]">
                   <span>Launch Voice Studio</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -488,7 +477,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Quick Prompt Command Bar */}
-          <div className="p-4 sm:p-5 rounded-3xl bg-[#0E121B]/95 border-2 border-slate-800 shadow-2xl">
+          <div className="p-4 sm:p-5 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB]">
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <div className="flex-1 relative">
                 <input
@@ -497,7 +486,7 @@ export default function DashboardPage() {
                   onChange={(e) => setQuickPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleLaunchQuickCreate()}
                   placeholder="Describe your product ad (e.g. Cinematic luxury watch commercial with water droplets and dramatic rim lighting)..."
-                  className="w-full bg-[#141A26] rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white border border-slate-800 focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 placeholder:text-slate-500"
+                  className="w-full bg-white rounded-xl px-4 py-2.5 text-xs sm:text-sm text-[#17191D] border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] focus:ring-2 focus:ring-[#5145CD]/20 placeholder:text-[#667085]/60"
                 />
               </div>
 
@@ -505,19 +494,19 @@ export default function DashboardPage() {
                 <select
                   value={quickAspect}
                   onChange={(e: any) => setQuickAspect(e.target.value)}
-                  className="bg-[#141A26] rounded-xl px-3 py-2.5 text-xs font-semibold text-white border border-slate-800 focus:outline-none focus:border-violet-500 cursor-pointer"
+                  className="bg-white rounded-xl px-3 py-2.5 text-xs font-semibold text-[#17191D] border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] cursor-pointer"
                 >
-                  <option value="16:9" className="bg-[#0E121B] text-white">16:9 Cinema</option>
-                  <option value="9:16" className="bg-[#0E121B] text-white">9:16 Reel / Story</option>
-                  <option value="1:1" className="bg-[#0E121B] text-white">1:1 Square Post</option>
+                  <option value="16:9">16:9 Cinema</option>
+                  <option value="9:16">9:16 Reel / Story</option>
+                  <option value="1:1">1:1 Square Post</option>
                 </select>
 
                 <button
                   type="button"
                   onClick={handleLaunchQuickCreate}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:brightness-110 text-white text-xs font-black shadow-[0_0_20px_rgba(139,92,246,0.35)] flex items-center gap-1.5 cursor-pointer shrink-0 border border-violet-400/30"
+                  className="px-5 py-2.5 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
+                  <Sparkles className="w-3.5 h-3.5" />
                   <span>Generate</span>
                 </button>
               </div>
@@ -526,39 +515,39 @@ export default function DashboardPage() {
 
           {/* Active Generation Jobs / Telemetry Feed */}
           {jobs.length > 0 && (
-            <div className="p-6 rounded-3xl bg-[#0E121B]/95 border-2 border-slate-800 shadow-2xl space-y-3">
+            <div className="p-5 rounded-2xl bg-white border border-[#E5E7EB] space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-black text-white flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-violet-400" />
+                <h3 className="text-sm font-bold text-[#17191D] flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#5145CD]" />
                   <span>Recent Generation Tasks</span>
                 </h3>
-                <span className="text-xs text-slate-400 font-mono">{jobs.length} total tasks</span>
+                <span className="text-xs text-[#667085]">{jobs.length} total tasks</span>
               </div>
 
               <div className="space-y-2">
                 {jobs.slice(0, 3).map((job) => (
                   <div
                     key={job.id}
-                    className="p-3.5 rounded-2xl bg-[#141A26] border border-slate-800/80 flex items-center justify-between text-xs"
+                    className="p-3 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] flex items-center justify-between text-xs"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       {job.status === 'completed' ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                       ) : (
-                        <div className="w-4 h-4 border-2 border-violet-500 border-t-transparent rounded-full animate-spin shrink-0" />
+                        <div className="w-4 h-4 border-2 border-[#5145CD] border-t-transparent rounded-full animate-spin shrink-0" />
                       )}
                       <div>
-                        <p className="font-bold text-white capitalize">{job.type || 'Generation'}</p>
-                        <p className="text-[11px] text-slate-400 truncate max-w-md">
+                        <p className="font-semibold text-[#17191D] capitalize">{job.type || 'Generation'}</p>
+                        <p className="text-[11px] text-[#667085] truncate max-w-md">
                           {job.prompt || job.inputParams?.prompt || 'Asset generation request'}
                         </p>
                       </div>
                     </div>
                     <span
-                      className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full capitalize font-bold ${
+                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full capitalize font-semibold ${
                         job.status === 'completed'
-                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40'
-                          : 'bg-amber-950/80 text-amber-300 border border-amber-500/40'
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                          : 'bg-amber-50 text-amber-800 border border-amber-200'
                       }`}
                     >
                       {job.status}
@@ -573,12 +562,12 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-base font-black text-white">Recent Projects</h2>
-                <p className="text-xs text-slate-400">Continue editing or export your campaign assets</p>
+                <h2 className="text-base font-bold text-[#17191D]">Recent Projects</h2>
+                <p className="text-xs text-[#667085]">Continue editing or export your campaign assets</p>
               </div>
               <Link
                 href="/dashboard/projects"
-                className="text-xs font-bold text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors"
+                className="text-xs font-semibold text-[#5145CD] hover:underline flex items-center gap-1"
               >
                 <span>View all projects</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -586,17 +575,17 @@ export default function DashboardPage() {
             </div>
 
             {projects.length === 0 ? (
-              <div className="p-10 rounded-3xl bg-[#0E121B]/95 border-2 border-slate-800 text-center space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#141A26] border border-slate-700 flex items-center justify-center mx-auto text-violet-400">
+              <div className="p-10 rounded-2xl bg-[#F7F8FA] border border-[#E5E7EB] text-center space-y-3">
+                <div className="w-12 h-12 rounded-xl bg-white border border-[#E5E7EB] flex items-center justify-center mx-auto text-[#667085]">
                   <FolderOpen className="w-6 h-6" />
                 </div>
-                <h3 className="font-black text-base text-white">No projects created yet</h3>
-                <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                <h3 className="font-bold text-sm text-[#17191D]">No projects created yet</h3>
+                <p className="text-xs text-[#667085] max-w-sm mx-auto">
                   Start your first creative campaign or pick a curated template from the library below.
                 </p>
                 <Link
                   href="/create"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:brightness-110 text-white text-xs font-black shadow-[0_0_20px_rgba(139,92,246,0.35)] transition-all"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white text-xs font-semibold shadow-xs transition-all"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Create Project</span>
@@ -607,42 +596,42 @@ export default function DashboardPage() {
                 {projects.slice(0, 6).map((proj) => (
                   <div
                     key={proj.id}
-                    className="rounded-2xl bg-[#0E121B]/95 border-2 border-slate-800 hover:border-slate-700 hover:shadow-[0_0_25px_rgba(139,92,246,0.2)] transition-all overflow-hidden flex flex-col justify-between"
+                    className="rounded-xl bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] hover:shadow-sm transition-all overflow-hidden flex flex-col justify-between"
                   >
-                    <div className="relative aspect-video w-full bg-black flex items-center justify-center overflow-hidden">
+                    <div className="relative aspect-video w-full bg-[#F7F8FA] flex items-center justify-center overflow-hidden">
                       {proj.thumbnailUrl ? (
                         <img src={proj.thumbnailUrl} alt={proj.title} className="w-full h-full object-cover" />
                       ) : (
-                        <div className="text-xs text-slate-400 font-mono flex items-center gap-1.5">
-                          <Video className="w-4 h-4 text-violet-400" />
+                        <div className="text-xs text-[#667085] font-mono flex items-center gap-1.5">
+                          <Video className="w-4 h-4 text-[#5145CD]" />
                           <span>Creative Timeline</span>
                         </div>
                       )}
-                      <span className="absolute top-2 left-2 text-[10px] font-mono px-2 py-0.5 rounded bg-black/80 text-white backdrop-blur-xs font-bold border border-white/10">
+                      <span className="absolute top-2 left-2 text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 text-white backdrop-blur-xs font-semibold">
                         {proj.aspectRatio || '16:9'}
                       </span>
                     </div>
 
                     <div className="p-4 space-y-2">
                       <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-bold text-sm text-white truncate">{proj.title}</h4>
+                        <h4 className="font-bold text-sm text-[#17191D] truncate">{proj.title}</h4>
                         <button
                           type="button"
                           onClick={() => handleToggleFavorite(proj.id, proj.isFavorite)}
-                          className="text-slate-500 hover:text-amber-400 transition-colors"
+                          className="text-[#667085] hover:text-amber-500 transition-colors"
                         >
-                          <Star className={`w-3.5 h-3.5 ${proj.isFavorite ? 'text-amber-400 fill-amber-400' : ''}`} />
+                          <Star className={`w-3.5 h-3.5 ${proj.isFavorite ? 'text-amber-500 fill-amber-500' : ''}`} />
                         </button>
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                      <div className="flex items-center justify-between text-[11px] text-[#667085] pt-2 border-t border-[#E5E7EB]">
                         <span>{new Date(proj.updatedAt || proj.createdAt).toLocaleDateString()}</span>
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
                             onClick={() => handleDuplicate(proj.id)}
                             title="Duplicate"
-                            className="hover:text-white"
+                            className="hover:text-[#17191D]"
                           >
                             <Copy className="w-3.5 h-3.5" />
                           </button>
@@ -650,13 +639,13 @@ export default function DashboardPage() {
                             type="button"
                             onClick={() => setDeleteModal({ id: proj.id, title: proj.title })}
                             title="Delete"
-                            className="hover:text-rose-400"
+                            className="hover:text-rose-600"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                           <Link
                             href={`/create?projectId=${proj.id}`}
-                            className="text-violet-400 font-bold hover:underline"
+                            className="text-[#5145CD] font-semibold hover:underline"
                           >
                             Edit
                           </Link>
@@ -673,19 +662,19 @@ export default function DashboardPage() {
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
-                <h2 className="text-base font-black text-white">Curated Ad Templates</h2>
-                <p className="text-xs text-slate-400">Production-ready storyboards with proven marketing hooks</p>
+                <h2 className="text-base font-bold text-[#17191D]">Curated Ad Templates</h2>
+                <p className="text-xs text-[#667085]">Production-ready storyboards with proven marketing hooks</p>
               </div>
 
               {/* Category Filter Tabs */}
-              <div className="inline-flex p-1 rounded-xl bg-[#141A26] border border-slate-800">
+              <div className="inline-flex p-1 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB]">
                 <button
                   type="button"
                   onClick={() => setTemplateTab('all')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
                     templateTab === 'all'
-                      ? 'bg-violet-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-white text-[#17191D] shadow-2xs'
+                      : 'text-[#667085] hover:text-[#17191D]'
                   }`}
                 >
                   All
@@ -693,10 +682,10 @@ export default function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setTemplateTab('video')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
                     templateTab === 'video'
-                      ? 'bg-violet-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-white text-[#17191D] shadow-2xs'
+                      : 'text-[#667085] hover:text-[#17191D]'
                   }`}
                 >
                   Video
@@ -704,10 +693,10 @@ export default function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setTemplateTab('image')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
                     templateTab === 'image'
-                      ? 'bg-violet-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-white text-[#17191D] shadow-2xs'
+                      : 'text-[#667085] hover:text-[#17191D]'
                   }`}
                 >
                   Image
@@ -719,33 +708,33 @@ export default function DashboardPage() {
               {displayedTemplates.map((tmpl) => (
                 <div
                   key={tmpl.id}
-                  className="rounded-2xl bg-[#0E121B]/95 border-2 border-slate-800 hover:border-slate-700 hover:shadow-[0_0_25px_rgba(139,92,246,0.2)] transition-all overflow-hidden flex flex-col justify-between"
+                  className="rounded-xl bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] hover:shadow-sm transition-all overflow-hidden flex flex-col justify-between"
                 >
-                  <div className="relative aspect-video w-full bg-black overflow-hidden">
+                  <div className="relative aspect-video w-full bg-[#17191D] overflow-hidden">
                     <img
                       src={tmpl.thumbnail}
                       alt={tmpl.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/20 text-white backdrop-blur-xs font-bold">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/20 text-white backdrop-blur-xs font-semibold">
                         {tmpl.category}
                       </span>
                     </div>
                   </div>
 
                   <div className="p-4 space-y-2">
-                    <h4 className="font-bold text-sm text-white truncate">{tmpl.title}</h4>
-                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                    <h4 className="font-bold text-sm text-[#17191D] truncate">{tmpl.title}</h4>
+                    <p className="text-xs text-[#667085] line-clamp-2 leading-relaxed">
                       {tmpl.description}
                     </p>
-                    <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-                      <span className="text-[11px] font-mono text-slate-400 font-bold">
+                    <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-between">
+                      <span className="text-[11px] font-mono text-[#667085] font-semibold">
                         {tmpl.estimatedCredits} credits
                       </span>
                       <Link
                         href={`/templates/${tmpl.id}`}
-                        className="text-xs font-bold text-violet-400 hover:underline flex items-center gap-1"
+                        className="text-xs font-semibold text-[#5145CD] hover:underline flex items-center gap-1"
                       >
                         <span>Use Template</span>
                         <ArrowRight className="w-3 h-3" />
@@ -762,24 +751,24 @@ export default function DashboardPage() {
       {/* Delete Confirmation Modal */}
       {deleteModal && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setDeleteModal(null)} />
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#0E121B] p-6 shadow-2xl border-2 border-slate-800 space-y-4 text-white">
-            <h3 className="font-black text-base text-white">Delete Project?</h3>
-            <p className="text-xs text-slate-400">
+          <div className="fixed inset-0 bg-black/40 backdrop-blur-xs" onClick={() => setDeleteModal(null)} />
+          <div className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl border border-[#E5E7EB] space-y-4">
+            <h3 className="font-bold text-base text-[#17191D]">Delete Project?</h3>
+            <p className="text-xs text-[#667085]">
               Are you sure you want to delete &ldquo;{deleteModal.title}&rdquo;? This action cannot be undone.
             </p>
             <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 type="button"
                 onClick={() => setDeleteModal(null)}
-                className="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white hover:bg-white/10"
+                className="px-3.5 py-2 rounded-xl text-xs font-semibold text-[#667085] hover:bg-[#F7F8FA]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleDeleteConfirm}
-                className="px-4 py-2 rounded-xl text-xs font-black text-white bg-rose-600 hover:bg-rose-500 shadow-sm"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700"
               >
                 Delete
               </button>

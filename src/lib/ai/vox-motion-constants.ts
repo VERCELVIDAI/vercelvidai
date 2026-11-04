@@ -35,8 +35,8 @@ export const VOX_STYLES: VoxStyleInfo[] = [
     badge: 'Signature Vox',
     promptModifier:
       'Clean modern flat 2D illustrated collage in the Vox explainer motion-graphic style: bold flat-color vector-illustration cut-outs, simple confident shapes, limited contemporary palette of ochre, emerald, cream and deep navy, crisp infographic editorial layout, torn paper edges, washi tape corners, soft paper drop shadows.',
-    bgColors: ['#0E121B', '#141A26', '#1E293B'],
-    previewGradient: 'from-violet-600 via-indigo-600 to-[#d4ff00]',
+    bgColors: ['#F4F1EA', '#E7ECEF', '#F9EAE1'],
+    previewGradient: 'from-amber-100 via-emerald-50 to-teal-100',
   },
   {
     id: 'newsprint-editorial',
@@ -45,8 +45,8 @@ export const VOX_STYLES: VoxStyleInfo[] = [
     badge: 'Editorial',
     promptModifier:
       'Vintage newsprint editorial collage in the style of a mid-century front-page news feature: bold cut-out photographs and illustrations laid over a broadsheet newspaper page, heavy halftone print dots, aged newsprint texture with slight ink misregistration, tactile cinematic editorial energy.',
-    bgColors: ['#12161F', '#1B2232', '#2A3449'],
-    previewGradient: 'from-slate-700 via-zinc-800 to-slate-900',
+    bgColors: ['#F3EFE6', '#E9E4D9', '#DCD6C8'],
+    previewGradient: 'from-stone-200 via-amber-50 to-stone-300',
   },
   {
     id: 'american-retro',
@@ -55,8 +55,8 @@ export const VOX_STYLES: VoxStyleInfo[] = [
     badge: 'Retro 1960s',
     promptModifier:
       'Vintage 1950s-60s American advertising and pulp-magazine paper collage: bold flat retro colors, mid-century engraved and illustrated Western cut-out figures, classic Americana printed imagery, aged pulp paper texture, halftone screen, nostalgic cinematic mood.',
-    bgColors: ['#1B1218', '#261822', '#3D2034'],
-    previewGradient: 'from-rose-600 via-orange-600 to-amber-500',
+    bgColors: ['#FDF0D5', '#C6D8D3', '#F2545B'],
+    previewGradient: 'from-orange-100 via-red-50 to-amber-100',
   },
   {
     id: 'zine',
@@ -65,8 +65,8 @@ export const VOX_STYLES: VoxStyleInfo[] = [
     badge: 'High Contrast',
     promptModifier:
       'Gritty punk zine and ransom-note collage: torn newspaper and magazine scraps, cut-out mismatched headline letters, photocopied high-contrast halftone, black-and-white with one neon spot color, raw hand-cut scissor edges, DIY analog Xerox aesthetic.',
-    bgColors: ['#161608', '#22220A', '#383810'],
-    previewGradient: 'from-[#d4ff00] via-yellow-400 to-zinc-900',
+    bgColors: ['#FFFFFF', '#111111', '#FFE600'],
+    previewGradient: 'from-yellow-200 via-slate-100 to-black/10',
   },
   {
     id: 'photo-collage',
@@ -75,8 +75,8 @@ export const VOX_STYLES: VoxStyleInfo[] = [
     badge: 'Documentary',
     promptModifier:
       'Cinematic documentary photo-collage: real black-and-white archival photographs cut out and layered with soft drop shadows, one restrained accent color, sepia and monochrome vintage photography, museum-curated editorial layout.',
-    bgColors: ['#0B0E14', '#141822', '#222938'],
-    previewGradient: 'from-blue-600 via-indigo-900 to-slate-950',
+    bgColors: ['#EAEAEA', '#D5D5D5', '#222222'],
+    previewGradient: 'from-slate-200 via-gray-100 to-zinc-300',
   },
   {
     id: 'gilded-deco',
@@ -85,8 +85,8 @@ export const VOX_STYLES: VoxStyleInfo[] = [
     badge: 'Luxury 1920s',
     promptModifier:
       'Vintage luxury editorial paper collage, 1920s art-deco advertisement mood: aged cream paper with visible grain, champagne-gold foil paper accents, thin art-deco geometric line frames and gilded arches, torn French newspaper clippings, halftone print dots, opulent calm.',
-    bgColors: ['#1C160B', '#2B200E', '#423214'],
-    previewGradient: 'from-amber-400 via-yellow-600 to-amber-800',
+    bgColors: ['#FBF7F0', '#EFE6D5', '#DFD3BE'],
+    previewGradient: 'from-amber-100 via-yellow-50 to-amber-200',
   },
   {
     id: 'chinese-ink',
@@ -95,8 +95,8 @@ export const VOX_STYLES: VoxStyleInfo[] = [
     badge: 'Oriental Ink',
     promptModifier:
       'Mixed-media collage of Chinese woodblock-print and ink-mural cut-out figures, mineral pigments (ochre, vermilion, malachite green), aged rice-paper and Chinese newspaper clippings, vermilion seal stamps, elegant historical collage aesthetic.',
-    bgColors: ['#180D10', '#261218', '#381B24'],
-    previewGradient: 'from-red-600 via-stone-800 to-emerald-700',
+    bgColors: ['#F5EFEB', '#EAE0D5', '#C6AC8F'],
+    previewGradient: 'from-red-100 via-stone-100 to-emerald-100',
   },
 ];
 
