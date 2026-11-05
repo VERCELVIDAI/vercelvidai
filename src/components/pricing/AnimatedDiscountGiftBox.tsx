@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Gift,
@@ -27,8 +27,21 @@ export function AnimatedDiscountGiftBox({
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const couponCode = 'FIRST20';
-  const discountAmount = '₹570';
+  const [couponCode, setCouponCode] = useState('FLUVIA750');
+  const [discountAmount, setDiscountAmount] = useState('₹750');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedAmount = sessionStorage.getItem('fluvia_scratch_discount_amount');
+      const savedCode = sessionStorage.getItem('fluvia_scratch_discount_code');
+      if (savedAmount) {
+        setDiscountAmount(`₹${savedAmount}`);
+      }
+      if (savedCode) {
+        setCouponCode(savedCode);
+      }
+    }
+  }, []);
 
   const handleCopyCode = async () => {
     try {
@@ -43,8 +56,9 @@ export function AnimatedDiscountGiftBox({
       onApplyCoupon(couponCode);
     }
     setIsOpen(false);
+    const numericDiscount = discountAmount.replace(/[^0-9]/g, "");
     router.push(
-      `/checkout?type=subscription&id=plan_max&interval=${billingInterval}&coupon=${couponCode}`
+      `/checkout?type=subscription&id=plan_max&interval=${billingInterval}&coupon=${couponCode}&discount=${numericDiscount}`
     );
   };
 

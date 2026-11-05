@@ -329,6 +329,14 @@ function CheckoutContent() {
           if (!isNaN(parsed) && parsed >= 500 && parsed <= 1000) activeDiscountAmount = parsed;
         }
       }
+      // Also extract amount directly from the code if user typed e.g. FLUVIA750, SAVE800, etc.
+      if (!activeDiscountAmount && code) {
+        const codeNumMatch = code.match(/([5-9]\d{2}|1000)/);
+        if (codeNumMatch) {
+          const parsed = parseInt(codeNumMatch[1], 10);
+          if (!isNaN(parsed) && parsed >= 500 && parsed <= 1000) activeDiscountAmount = parsed;
+        }
+      }
 
       const res = await fetch('/api/coupons/validate', {
         method: 'POST',
@@ -931,7 +939,7 @@ function CheckoutContent() {
                         handleApplyCoupon();
                       }
                     }}
-                    placeholder="e.g. FIRST20"
+                    placeholder="e.g. FLUVIA750"
                     className="flex-1 bg-white rounded-xl px-3 py-2 text-xs text-[#17191D] font-mono uppercase border border-[#E5E7EB] focus:outline-none focus:border-[#5145CD] placeholder:text-[#667085]/60"
                   />
                   <button

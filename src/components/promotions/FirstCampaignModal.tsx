@@ -47,21 +47,28 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
 
   // Dynamic randomized scratch discount between ₹500 and ₹1,000 (steps of 10)
   const [discountAmount, setDiscountAmount] = useState<number>(750);
+  const [couponCode, setCouponCode] = useState<string>('FLUVIA750');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = sessionStorage.getItem('fluvia_scratch_discount_amount');
-      if (saved) {
-        const val = parseInt(saved, 10);
+      let amount = 750;
+      const savedAmount = sessionStorage.getItem('fluvia_scratch_discount_amount');
+      const savedCode = sessionStorage.getItem('fluvia_scratch_discount_code');
+      if (savedAmount) {
+        const val = parseInt(savedAmount, 10);
         if (!isNaN(val) && val >= 500 && val <= 1000) {
-          setDiscountAmount(val);
-          return;
+          amount = val;
         }
+      } else {
+        const step = Math.floor(Math.random() * 51); // 0 to 50
+        amount = 500 + step * 10;
+        sessionStorage.setItem('fluvia_scratch_discount_amount', amount.toString());
       }
-      const step = Math.floor(Math.random() * 51); // 0 to 50
-      const generated = 500 + step * 10;
-      sessionStorage.setItem('fluvia_scratch_discount_amount', generated.toString());
-      setDiscountAmount(generated);
+
+      const code = savedCode || `FLUVIA${amount}`;
+      sessionStorage.setItem('fluvia_scratch_discount_code', code);
+      setDiscountAmount(amount);
+      setCouponCode(code);
     }
   }, []);
 
@@ -277,7 +284,7 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
 
   const handleCopyCode = async () => {
     try {
-      await navigator.clipboard.writeText('FIRST20');
+      await navigator.clipboard.writeText(couponCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
@@ -304,7 +311,7 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
 
   const handleClaimOffer = () => {
     handleDismiss();
-    router.push(`/checkout?plan=plan_max&coupon=FIRST20&discount=${discountAmount}`);
+    router.push(`/checkout?plan=plan_max&coupon=${couponCode}&discount=${discountAmount}`);
   };
 
   const toggleVideoPlayback = () => {
@@ -492,8 +499,8 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
                 <div className="flex items-center gap-2 pl-2">
                   <Tag className="w-3.5 h-3.5 text-[#5145CD]" />
                   <span className="text-xs font-mono text-[#667085]">CODE:</span>
-                  <code className="text-sm sm:text-base font-mono font-black tracking-widest text-[#17191D] select-all">
-                    FIRST20
+                  <code className="text-sm sm:text-base font-mono font-black tracking-widest text-[#5145CD] select-all">
+                    {couponCode}
                   </code>
                 </div>
 

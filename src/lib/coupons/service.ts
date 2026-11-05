@@ -56,13 +56,30 @@ export function validateCoupon(params: ValidateCouponParams): CouponValidationRe
 
   // 2. Lookup coupon
   let coupon = dbStore.getCouponByCode(normalizedCode);
-  if (!coupon && normalizedCode === 'FIRST20') {
-    const rawDiscount = typeof params.discountAmount === 'number' ? params.discountAmount : 750;
+
+  // Check if code is a dynamic scratch coupon according to the discount amount (e.g. FLUVIA750, SAVE800, SCRATCH920, WIN650, etc.)
+  const dynamicMatch = normalizedCode.match(/^(?:FLUVIA|SAVE|WIN|SCRATCH|GIFT|DISC|FIRST)?[-_]?([0-9]{3,4})$/i);
+  let parsedAmountFromCode: number | undefined = undefined;
+
+  if (dynamicMatch) {
+    const val = parseInt(dynamicMatch[1], 10);
+    if (!isNaN(val) && val >= 500 && val <= 1000) {
+      parsedAmountFromCode = val;
+    }
+  }
+
+  const isScratchCoupon = normalizedCode === 'FIRST20' || Boolean(parsedAmountFromCode);
+
+  if (!coupon && isScratchCoupon) {
+    const rawDiscount =
+      parsedAmountFromCode ||
+      (typeof params.discountAmount === 'number' ? params.discountAmount : 750);
     const safeDiscount = Math.min(1000, Math.max(500, rawDiscount));
+
     coupon = {
-      id: 'cpn_first20_scratch',
-      code: 'FIRST20',
-      description: 'Exclusive VIP Creator Scratch Voucher (₹500–₹1,000)',
+      id: `cpn_scratch_${normalizedCode.toLowerCase()}`,
+      code: normalizedCode,
+      description: `Exclusive VIP Creator Scratch Voucher (₹${safeDiscount} OFF)`,
       discountType: 'fixed',
       discountValue: safeDiscount,
       minimumOrderValue: 999,
@@ -76,9 +93,11 @@ export function validateCoupon(params: ValidateCouponParams): CouponValidationRe
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-  } else if (coupon && normalizedCode === 'FIRST20') {
-    if (typeof params.discountAmount === 'number') {
-      const safeDiscount = Math.min(1000, Math.max(500, params.discountAmount));
+  } else if (coupon && isScratchCoupon) {
+    const safeDiscount =
+      parsedAmountFromCode ||
+      (typeof params.discountAmount === 'number' ? Math.min(1000, Math.max(500, params.discountAmount)) : undefined);
+    if (safeDiscount) {
       coupon = {
         ...coupon,
         discountType: 'fixed',
@@ -123,11 +142,11 @@ export function validateCoupon(params: ValidateCouponParams): CouponValidationRe
   }
 
   // 6. Applicable Checkout Types & Item Restrictions
-  if (normalizedCode === 'FIRST20') {
+  if (isScratchCoupon) {
     if (params.paymentType !== 'subscription' || params.itemPlanOrPackId !== 'plan_max') {
       return {
         valid: false,
-        error: 'Coupon FIRST20 is valid on FLUVIA MAX only.',
+        error: `Coupon ${coupon.code} is valid on FLUVIA MAX only.`,
       };
     }
   }
@@ -145,10 +164,10 @@ export function validateCoupon(params: ValidateCouponParams): CouponValidationRe
   // 7. Applicable Specific Item IDs
   if (coupon.applicableItemIds && coupon.applicableItemIds.length > 0) {
     if (!coupon.applicableItemIds.includes(params.itemPlanOrPackId)) {
-      if (normalizedCode === 'FIRST20') {
+      if (isScratchCoupon) {
         return {
           valid: false,
-          error: 'Coupon FIRST20 is valid on FLUVIA MAX only.',
+          error: `Coupon ${coupon.code} is valid on FLUVIA MAX only.`,
         };
       }
       return {
