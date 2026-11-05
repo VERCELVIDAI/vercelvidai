@@ -358,7 +358,23 @@ export function Header() {
 
         {/* Right: Actions (Desktop) */}
         <div className="hidden lg:flex items-center gap-3 shrink-0 whitespace-nowrap">
-          {user ? (
+          {/* Scratch & Win Discount Trigger Button */}
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent('open-discount-modal'));
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#EEF2FF] to-[#ECFDF5] border border-[#C7D2FE] text-[#5145CD] hover:border-[#5145CD] hover:shadow-xs transition-all text-xs font-bold cursor-pointer group"
+            title="Scratch & Reveal ₹570 Discount"
+          >
+            <span className="flex h-2 w-2 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+            </span>
+            <span>🎁 ₹570 Scratch Gift</span>
+          </button>          {user ? (
             <div className="flex items-center gap-2.5">
               <Link
                 href="/dashboard/billing"
@@ -478,6 +494,25 @@ export function Header() {
       {/* Mobile & Tablet Drawer (Organized & Touch-friendly) */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-[#E5E7EB] bg-white px-4 py-4 max-h-[calc(100vh-4rem)] overflow-y-auto space-y-4 shadow-2xl animate-in slide-in-from-top-2 duration-150">
+          {/* Special Scratch Gift Button */}
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent('open-discount-modal'));
+              }
+            }}
+            className="w-full px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#5145CD] bg-[#EEF2FF] border border-[#C7D2FE] flex items-center justify-between shadow-xs cursor-pointer"
+          >
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
+              <span>🎁 Scratch & Win ₹570 Discount</span>
+            </span>
+            <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-white text-[#5145CD] font-bold">
+              Claim
+            </span>
+          </button>
           {/* Section 1: Studios */}
           <div>
             <span className="text-[11px] font-bold tracking-wider uppercase text-[#98A2B3] px-2 block mb-1.5">
