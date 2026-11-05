@@ -6,6 +6,7 @@ import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { FirstCampaignModal } from '@/components/promotions/FirstCampaignModal';
 import { LiveCrazyBackground } from '@/components/home/LiveCrazyBackground';
+import { DiwaliHeroCelebration } from '@/components/home/DiwaliHeroCelebration';
 import {
   Sparkles,
   ArrowRight,
@@ -607,8 +608,20 @@ export default function HomePage() {
           {/* Live Interactive Canvas & Aurora Background */}
           <LiveCrazyBackground />
 
+          {/* Diwali Festive Rangoli & Interactive Firecrackers Animation */}
+          <DiwaliHeroCelebration />
+
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto space-y-5 mb-10">
+            <div className="text-center max-w-3xl mx-auto space-y-4 mb-10">
+              {/* Diwali Special Festive Banner */}
+              <div className="flex justify-center mb-0.5">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#FEF3C7] via-[#FFFBEB] to-[#FEF3C7] border border-[#F59E0B]/60 text-xs text-[#92400E] font-bold shadow-xs hover:shadow-md transition-all">
+                  <span className="text-sm">🪔</span>
+                  <span className="tracking-wide">Shubh Diwali Edition • Light Up Your Ad Creatives</span>
+                  <span className="text-xs">✨</span>
+                </div>
+              </div>
+
               {/* Flagship OpenHiggs Announcement Pill */}
               <div className="flex justify-center mb-1">
                 <Link
