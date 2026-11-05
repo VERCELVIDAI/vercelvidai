@@ -148,28 +148,42 @@ export function DiscoveryDetailModal({
         </button>
 
         {/* Left: Media Preview Section (Dynamic by Template Type) */}
-        <div className="relative flex-1 bg-slate-950 flex items-center justify-center min-h-[320px] lg:min-h-[560px] overflow-hidden">
+        <div className="relative flex-1 bg-slate-950 flex items-center justify-center min-h-[320px] lg:min-h-[560px] overflow-hidden p-4">
           {isVideo && !template.videoPreview ? (
-            <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
+            <div className="relative w-full h-full flex flex-col items-center justify-center p-2">
               <img
                 src={template.thumbnail}
                 alt={template.title}
-                className="max-w-full max-h-[70vh] lg:max-h-[85vh] object-contain rounded-xl shadow-2xl"
+                className={`max-w-full ${
+                  template.aspect === '9:16'
+                    ? 'aspect-[9/16] max-h-[72vh] lg:max-h-[85vh] object-cover rounded-2xl shadow-2xl border border-white/10'
+                    : 'max-h-[70vh] lg:max-h-[85vh] object-contain rounded-xl shadow-2xl'
+                }`}
               />
             </div>
           ) : isVideo ? (
             <>
-              {/* Real Video Player */}
-              <video
-                ref={videoRef}
-                src={template.videoPreview}
-                poster={template.thumbnail}
-                autoPlay
-                loop
-                muted={isMuted}
-                playsInline
-                className="w-full h-full max-h-[70vh] lg:max-h-[85vh] object-contain"
-              />
+              {/* Real Video Player — Dynamic 9:16 Portrait vs Widescreen */}
+              <div className={`relative flex items-center justify-center ${
+                template.aspect === '9:16'
+                  ? 'h-full max-h-[75vh] lg:max-h-[85vh] aspect-[9/16] mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black'
+                  : 'w-full h-full'
+              }`}>
+                <video
+                  ref={videoRef}
+                  src={template.videoPreview}
+                  poster={template.thumbnail}
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  className={`w-full h-full ${
+                    template.aspect === '9:16'
+                      ? 'object-cover'
+                      : 'max-h-[70vh] lg:max-h-[85vh] object-contain'
+                  }`}
+                />
+              </div>
 
               {/* Video Player Controls Bar */}
               <div className="absolute bottom-4 inset-x-4 flex items-center justify-between z-30 pointer-events-auto">

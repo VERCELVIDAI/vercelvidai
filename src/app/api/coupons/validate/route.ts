@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
       itemPlanOrPackId,
       billingInterval,
       customerState,
+      discountAmount,
     } = body;
 
     if (!code || typeof code !== 'string') {
@@ -38,6 +39,7 @@ export async function POST(req: NextRequest) {
       itemPlanOrPackId,
       billingInterval: billingInterval === 'year' ? 'year' : 'month',
       customerState: customerState || 'Delhi',
+      discountAmount: typeof discountAmount === 'number' ? discountAmount : undefined,
     });
 
     if (!result.valid) {

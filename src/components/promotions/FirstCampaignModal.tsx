@@ -45,6 +45,26 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
   const [scratchProgress, setScratchProgress] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
 
+  // Dynamic randomized scratch discount between ₹500 and ₹1,000 (steps of 10)
+  const [discountAmount, setDiscountAmount] = useState<number>(750);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('fluvia_scratch_discount_amount');
+      if (saved) {
+        const val = parseInt(saved, 10);
+        if (!isNaN(val) && val >= 500 && val <= 1000) {
+          setDiscountAmount(val);
+          return;
+        }
+      }
+      const step = Math.floor(Math.random() * 51); // 0 to 50
+      const generated = 500 + step * 10;
+      sessionStorage.setItem('fluvia_scratch_discount_amount', generated.toString());
+      setDiscountAmount(generated);
+    }
+  }, []);
+
   // Listen for global custom trigger event so user or header button can open anytime
   useEffect(() => {
     const handleOpenModal = () => {
@@ -284,7 +304,7 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
 
   const handleClaimOffer = () => {
     handleDismiss();
-    router.push('/checkout?plan=plan_max&coupon=FIRST20');
+    router.push(`/checkout?plan=plan_max&coupon=FIRST20&discount=${discountAmount}`);
   };
 
   const toggleVideoPlayback = () => {
@@ -458,7 +478,7 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
                     <span>Unlocked VIP Voucher</span>
                   </span>
                   <div className="text-2xl sm:text-3xl font-black text-[#5145CD] tracking-tight mt-1">
-                    ₹570 FLAT OFF
+                    ₹{discountAmount} FLAT OFF
                   </div>
                 </div>
 
@@ -582,7 +602,7 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
           ) : (
             <div className="flex items-center gap-1.5 text-xs text-[#059669] font-bold bg-[#ECFDF5] border border-[#A7F3D0] p-2 rounded-xl">
               <Check className="w-4 h-4 text-[#10B981] shrink-0" />
-              <span>🎉 Congratulations! ₹570 Discount Unlocked & Applied!</span>
+              <span>🎉 Congratulations! ₹{discountAmount} Discount Unlocked & Applied!</span>
             </div>
           )}
 
@@ -594,7 +614,7 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
               className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-[#5145CD] hover:bg-[#4338CA] text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:shadow-indigo-500/25 transition-all cursor-pointer focus-indigo hover:-translate-y-0.5"
             >
               <Zap className="w-4 h-4 fill-current text-[#d1fe17]" />
-              <span>{isRevealed ? 'Claim ₹570 & Upgrade Now' : 'Scratch & Claim Discount'}</span>
+              <span>{isRevealed ? `Claim ₹${discountAmount} & Upgrade Now` : 'Scratch & Claim Discount'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 

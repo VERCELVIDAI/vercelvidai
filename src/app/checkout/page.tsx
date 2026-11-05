@@ -316,6 +316,20 @@ function CheckoutContent() {
     if (showSuccessMsg) setCouponSuccess('');
 
     try {
+      let activeDiscountAmount: number | undefined = undefined;
+      const urlDiscount = searchParams.get('discount');
+      if (urlDiscount) {
+        const parsed = parseInt(urlDiscount, 10);
+        if (!isNaN(parsed) && parsed >= 500 && parsed <= 1000) activeDiscountAmount = parsed;
+      }
+      if (!activeDiscountAmount && typeof window !== 'undefined') {
+        const stored = sessionStorage.getItem('fluvia_scratch_discount_amount');
+        if (stored) {
+          const parsed = parseInt(stored, 10);
+          if (!isNaN(parsed) && parsed >= 500 && parsed <= 1000) activeDiscountAmount = parsed;
+        }
+      }
+
       const res = await fetch('/api/coupons/validate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -325,6 +339,7 @@ function CheckoutContent() {
           itemPlanOrPackId: itemId,
           billingInterval: interval,
           customerState,
+          discountAmount: activeDiscountAmount,
         }),
       });
 

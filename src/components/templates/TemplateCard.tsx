@@ -97,10 +97,12 @@ export function TemplateCard({
       onMouseLeave={() => setIsHovered(false)}
       className="group relative rounded-2xl border border-[#E5E7EB] bg-white hover:border-[#5145CD]/40 hover:shadow-lg overflow-hidden transition-all duration-300 flex flex-col justify-between text-left"
     >
-      {/* Video & Thumbnail Container */}
+      {/* Video & Thumbnail Container — Dynamic 9:16 vs 16:10 */}
       <div
         onClick={handleMobileCardTap}
-        className="relative aspect-[16/10] overflow-hidden bg-slate-100 select-none cursor-pointer"
+        className={`relative overflow-hidden bg-slate-100 select-none cursor-pointer ${
+          template.aspect === '9:16' ? 'aspect-[9/16]' : 'aspect-[16/10]'
+        }`}
       >
         {/* Poster Image */}
         <img

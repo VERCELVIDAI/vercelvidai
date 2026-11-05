@@ -9,6 +9,7 @@ export interface ValidateCouponParams {
   itemPlanOrPackId: string;
   billingInterval?: 'month' | 'year';
   customerState?: string;
+  discountAmount?: number;
 }
 
 /**
@@ -54,7 +55,38 @@ export function validateCoupon(params: ValidateCouponParams): CouponValidationRe
   }
 
   // 2. Lookup coupon
-  const coupon = dbStore.getCouponByCode(normalizedCode);
+  let coupon = dbStore.getCouponByCode(normalizedCode);
+  if (!coupon && normalizedCode === 'FIRST20') {
+    const rawDiscount = typeof params.discountAmount === 'number' ? params.discountAmount : 750;
+    const safeDiscount = Math.min(1000, Math.max(500, rawDiscount));
+    coupon = {
+      id: 'cpn_first20_scratch',
+      code: 'FIRST20',
+      description: 'Exclusive VIP Creator Scratch Voucher (₹500–₹1,000)',
+      discountType: 'fixed',
+      discountValue: safeDiscount,
+      minimumOrderValue: 999,
+      applicableTypes: ['subscription'],
+      applicableItemIds: ['plan_max'],
+      usageLimit: 100000,
+      perUserLimit: 1,
+      usageCount: 0,
+      isActive: true,
+      createdBy: 'usr_admin_master_1',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  } else if (coupon && normalizedCode === 'FIRST20') {
+    if (typeof params.discountAmount === 'number') {
+      const safeDiscount = Math.min(1000, Math.max(500, params.discountAmount));
+      coupon = {
+        ...coupon,
+        discountType: 'fixed',
+        discountValue: safeDiscount,
+      };
+    }
+  }
+
   if (!coupon) {
     return { valid: false, error: 'Coupon code is invalid or does not exist.' };
   }

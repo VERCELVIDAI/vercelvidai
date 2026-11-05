@@ -367,13 +367,13 @@ export function Header() {
               }
             }}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#EEF2FF] to-[#ECFDF5] border border-[#C7D2FE] text-[#5145CD] hover:border-[#5145CD] hover:shadow-xs transition-all text-xs font-bold cursor-pointer group"
-            title="Scratch & Reveal ₹570 Discount"
+            title="Scratch & Reveal Discount (₹500–₹1,000)"
           >
             <span className="flex h-2 w-2 relative shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
             </span>
-            <span>🎁 ₹570 Scratch Gift</span>
+            <span>🎁 ₹500–₹1,000 Scratch Gift</span>
           </button>          {user ? (
             <div className="flex items-center gap-2.5">
               <Link
@@ -507,7 +507,7 @@ export function Header() {
           >
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
-              <span>🎁 Scratch & Win ₹570 Discount</span>
+              <span>🎁 Scratch & Win ₹500–₹1,000</span>
             </span>
             <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-white text-[#5145CD] font-bold">
               Claim

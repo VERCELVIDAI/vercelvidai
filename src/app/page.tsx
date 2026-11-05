@@ -856,8 +856,12 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* MAIN 16:9 CINEMA THEATER VIEWPORT */}
-              <div className="relative aspect-[16/9] w-full bg-[#0D0E12] rounded-2xl overflow-hidden shadow-2xl border border-slate-900 group">
+              {/* MAIN THEATER VIEWPORT: DYNAMIC RATIO (16:9 Widescreen or Authentic Centered 9:16 Reel Stage) */}
+              <div className={`relative w-full bg-[#0D0E12] rounded-2xl overflow-hidden shadow-2xl border border-slate-900 group ${
+                selectedPreset.aspect === '9:16'
+                  ? 'aspect-[16/9] min-h-[440px] sm:min-h-[580px] flex items-center justify-center'
+                  : 'aspect-[16/9]'
+              }`}>
                 {/* Thin Cinema Live Progress Bar at Top of Video */}
                 <div className="absolute top-0 inset-x-0 h-1 bg-black/40 z-30 pointer-events-none">
                   <div
@@ -871,34 +875,63 @@ export default function HomePage() {
                   src={selectedPreset.poster}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-35 scale-125 pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-125 pointer-events-none"
                 />
 
-                {/* Primary High-Resolution Video with Automatic Next Trigger */}
-                <video
-                  ref={mainHeroVideoRef}
-                  key={selectedPreset.videoUrl}
-                  src={selectedPreset.videoUrl}
-                  poster={selectedPreset.poster}
-                  autoPlay
-                  muted={unmutedHeroIndex === null}
-                  playsInline
-                  preload="auto"
-                  onPlay={() => setIsHeroPlaying(true)}
-                  onPause={() => setIsHeroPlaying(false)}
-                  onTimeUpdate={(e) => {
-                    const v = e.currentTarget;
-                    if (v.duration && !isNaN(v.duration) && v.duration > 0) {
-                      const pct = (v.currentTime / v.duration) * 100;
-                      setHeroVideoProgress(pct);
-                    }
-                  }}
-                  onEnded={() => {
-                    advanceToNextHeroVideo();
-                  }}
-                  className="relative z-10 w-full h-full object-cover cursor-pointer"
-                  onClick={togglePlayPause}
-                />
+                {/* Video Player Display: 9:16 Vertical Reel vs 16:9 Landscape Widescreen */}
+                {selectedPreset.aspect === '9:16' ? (
+                  <div className="relative z-10 h-full max-h-[96%] aspect-[9/16] mx-auto rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.85)] border border-white/20 bg-black flex items-center justify-center my-auto">
+                    <video
+                      ref={mainHeroVideoRef}
+                      key={selectedPreset.videoUrl}
+                      src={selectedPreset.videoUrl}
+                      poster={selectedPreset.poster}
+                      autoPlay
+                      muted={unmutedHeroIndex === null}
+                      playsInline
+                      preload="auto"
+                      onPlay={() => setIsHeroPlaying(true)}
+                      onPause={() => setIsHeroPlaying(false)}
+                      onTimeUpdate={(e) => {
+                        const v = e.currentTarget;
+                        if (v.duration && !isNaN(v.duration) && v.duration > 0) {
+                          const pct = (v.currentTime / v.duration) * 100;
+                          setHeroVideoProgress(pct);
+                        }
+                      }}
+                      onEnded={() => {
+                        advanceToNextHeroVideo();
+                      }}
+                      className="w-full h-full object-cover cursor-pointer"
+                      onClick={togglePlayPause}
+                    />
+                  </div>
+                ) : (
+                  <video
+                    ref={mainHeroVideoRef}
+                    key={selectedPreset.videoUrl}
+                    src={selectedPreset.videoUrl}
+                    poster={selectedPreset.poster}
+                    autoPlay
+                    muted={unmutedHeroIndex === null}
+                    playsInline
+                    preload="auto"
+                    onPlay={() => setIsHeroPlaying(true)}
+                    onPause={() => setIsHeroPlaying(false)}
+                    onTimeUpdate={(e) => {
+                      const v = e.currentTarget;
+                      if (v.duration && !isNaN(v.duration) && v.duration > 0) {
+                        const pct = (v.currentTime / v.duration) * 100;
+                        setHeroVideoProgress(pct);
+                      }
+                    }}
+                    onEnded={() => {
+                      advanceToNextHeroVideo();
+                    }}
+                    className="relative z-10 w-full h-full object-cover cursor-pointer"
+                    onClick={togglePlayPause}
+                  />
+                )}
 
                 {/* In-Video Motion Headline Tag */}
                 <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-20 pointer-events-none text-left">
@@ -935,7 +968,7 @@ export default function HomePage() {
 
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] px-2 py-0.5 rounded bg-[#5145CD] text-white font-bold hidden sm:inline">
-                      Gemini Omni 1.1 Flash
+                      OpenHiggs
                     </span>
                     <span className="text-[10px] px-2 py-0.5 rounded bg-black/70 font-mono border border-white/20">
                       15 cr
@@ -966,7 +999,12 @@ export default function HomePage() {
                       }`}
                     >
                       {/* Video Thumbnail with Hover Preview */}
-                      <div className="relative aspect-[16/10] w-full bg-[#0D0E12] overflow-hidden">
+                      <div className={`relative w-full bg-[#0D0E12] overflow-hidden ${preset.aspect === '9:16' ? 'aspect-[9/16]' : 'aspect-[16/10]'}`}>
+                        {preset.aspect === '9:16' && (
+                          <span className="absolute top-1.5 left-1.5 z-20 px-1.5 py-0.5 rounded text-[8px] font-bold bg-[#5145CD] text-white shadow-xs">
+                            9:16
+                          </span>
+                        )}
                         <img
                           src={preset.poster}
                           alt={preset.title}
@@ -1550,7 +1588,7 @@ export default function HomePage() {
                   </div>
                   <div className="p-2 rounded-md bg-[#EEF2FF] border border-[#C7D2FE] text-[11px] text-[#5145CD] font-medium flex items-center gap-1.5">
                     <Tag className="w-3.5 h-3.5" />
-                    <span>Eligible for ₹570 OFF with code FIRST20</span>
+                    <span>Eligible for ₹500–₹1,000 Scratch OFF with code FIRST20</span>
                   </div>
                   <ul className="space-y-2.5 text-xs text-[#667085]">
                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#10B981]" /> 3,500 Credits monthly</li>
@@ -1608,7 +1646,7 @@ export default function HomePage() {
                 },
                 {
                   q: 'How do I use the FIRST20 coupon code?',
-                  a: 'New creators receive the FIRST20 welcome code after completing registration. This coupon provides an instant ₹570 discount exclusively on the FLUVIA MAX subscription plan and is verified server-side at checkout.',
+                  a: 'New creators receive the FIRST20 welcome code after completing registration. This coupon provides an instant ₹500 to ₹1,000 randomized discount exclusively on the FLUVIA MAX subscription plan and is verified server-side at checkout.',
                 },
                 {
                   q: 'Do I own the commercial rights to generated ads?',
