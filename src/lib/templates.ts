@@ -796,7 +796,7 @@ export const TEMPLATES_DATA: VideoTemplate[] = [
     tags: ['#Festival', '#EDM', '#Lasers', '#Aftermovie', '#EventPromo'],
     aiModelsUsed: ['Google Gemini (gemini-omni-1.1-flash)'],
     estimatedCredits: 15,
-    prompt: "Festive golden fireworks exploding into glowing floral mandala patterns, shimmering gold sparkles, celebratory ambient glow, Diwali & holiday festival promo 1:1",
+    prompt: "Festive golden fireworks exploding into glowing floral patterns, shimmering gold sparkles, celebratory ambient glow, music & holiday festival promo 1:1",
     creatorId: 'usr_c4',
     creatorName: '@marcus_ai',
     creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
