@@ -23,6 +23,7 @@ import {
   HelpCircle,
   Wand2,
   Sliders,
+  FileText,
 } from 'lucide-react';
 
 interface StudioItem {
@@ -72,6 +73,13 @@ const STUDIOS_MENU: StudioItem[] = [
     description: 'Open-weights generative motion models',
     href: '/openhiggs',
     icon: Zap,
+    badge: 'New',
+  },
+  {
+    title: 'PDF Studio',
+    description: 'Edit, compress, merge, split & convert PDFs',
+    href: '/pdf-tools',
+    icon: FileText,
     badge: 'New',
   },
 ];

@@ -25,6 +25,9 @@ import {
   Sliders,
   ExternalLink,
   Camera,
+  FileText,
+  Scissors,
+  Combine,
 } from 'lucide-react';
 
 interface AdPreset {
@@ -1613,7 +1616,113 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 5. FREQUENTLY ASKED QUESTIONS */}
+        {/* 5. PDF CREATIVE & UTILITY SUITE SHOWCASE */}
+        {/* ========================================================================= */}
+        <section className="py-20 bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#FFFFFF] border-b border-[#E5E7EB]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="text-center max-w-3xl mx-auto space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold text-blue-700 shadow-2xs font-mono">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <span>New Feature • 100% Client-Side Privacy Guaranteed</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#17191D] tracking-tight">
+                Creative & Utility PDF Studio
+              </h2>
+              <p className="text-sm sm:text-base text-[#667085]">
+                Full vector PDF power built directly into Fluvia Flow. Edit text, shrink bloated files, merge multi-page contracts, and convert photos into crisp PDFs with zero server uploads.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {[
+                {
+                  title: 'PDF Editor',
+                  desc: 'Add vector text, watermark stamps, and rotate pages.',
+                  icon: FileText,
+                  href: '/pdf-tools/editor',
+                  badge: 'Flagship',
+                  color: 'text-blue-600 bg-blue-50 border-blue-200',
+                },
+                {
+                  title: 'PDF Compressor',
+                  desc: 'Shrink file sizes by 40-70% while keeping text vector-sharp.',
+                  icon: Zap,
+                  href: '/pdf-tools/compress',
+                  badge: 'Smart Size',
+                  color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+                },
+                {
+                  title: 'Merge PDF',
+                  desc: 'Join invoices, reports, and contracts into one master PDF.',
+                  icon: Combine,
+                  href: '/pdf-tools/merge',
+                  badge: 'Multi-doc',
+                  color: 'text-purple-600 bg-purple-50 border-purple-200',
+                },
+                {
+                  title: 'Split & Extract',
+                  desc: 'Extract specific pages, chapters, or custom ranges.',
+                  icon: Scissors,
+                  href: '/pdf-tools/split',
+                  badge: 'Fast Cut',
+                  color: 'text-amber-600 bg-amber-50 border-amber-200',
+                },
+                {
+                  title: 'Image to PDF',
+                  desc: 'Convert JPG & PNG photos, receipts, or mockups into clean PDFs.',
+                  icon: ImageIcon,
+                  href: '/pdf-tools/image-to-pdf',
+                  badge: 'Photo Book',
+                  color: 'text-rose-600 bg-rose-50 border-rose-200',
+                },
+              ].map((tool, i) => {
+                const Icon = tool.icon;
+                return (
+                  <Link
+                    key={i}
+                    href={tool.href}
+                    className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${tool.color}`}>
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                          {tool.badge}
+                        </span>
+                      </div>
+                      <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-blue-600 transition-colors mb-1">
+                        {tool.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 leading-relaxed">
+                        {tool.desc}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600">
+                      <span>Launch Tool</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="text-center pt-2">
+              <Link
+                href="/pdf-tools"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#17191D] hover:bg-[#000000] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
+              >
+                <span>Open Full PDF Studio Suite</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 6. FREQUENTLY ASKED QUESTIONS */}
         {/* ========================================================================= */}
         <section className="py-20 bg-[#F7F8FA] border-b border-[#E5E7EB]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
