@@ -694,17 +694,6 @@ export default function HomePage() {
                   <Film className="w-4 h-4 text-[#5145CD]" />
                   <span>Browse Ad Templates</span>
                 </Link>
-
-                <Link
-                  href="/pdf-tools"
-                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-300 hover:border-rose-400 shadow-xs hover:shadow-md transition-all text-sm group"
-                >
-                  <FileText className="w-4 h-4 text-rose-600" />
-                  <span>PDF Studio Suite</span>
-                  <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-rose-200/80 text-rose-800">
-                    Free
-                  </span>
-                </Link>
               </div>
 
               {/* Trust Indicators */}
