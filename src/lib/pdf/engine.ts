@@ -8,6 +8,12 @@ import {
   PageSizes,
 } from 'pdf-lib';
 
+export {
+  compressPdfAdvanced,
+  type AdvancedCompressOptions,
+  type AdvancedCompressionResult,
+} from './compressorEngine';
+
 export interface TextAnnotation {
   id: string;
   pageIndex: number;

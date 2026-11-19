@@ -70,14 +70,14 @@ export function PdfToolsHub({ initialTool = 'editor' }: Props) {
     },
     {
       id: 'compressor' as const,
-      name: 'Compressor',
-      shortDesc: 'Reduce size by 40-70%',
+      name: 'Custom Compressor',
+      shortDesc: 'Set exact target KB or MB',
       icon: Zap,
       color: 'text-emerald-600',
       bgColor: 'bg-emerald-50',
       borderColor: 'border-emerald-200',
-      badge: 'Smart',
-      badgeColor: 'bg-emerald-100 text-emerald-700',
+      badge: 'Custom Size',
+      badgeColor: 'bg-emerald-100 text-emerald-800 font-extrabold',
     },
     {
       id: 'merge' as const,

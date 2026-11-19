@@ -531,6 +531,25 @@ export function PdfEditorTool() {
                       className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg"
                       placeholder="e.g. CONFIDENTIAL, DRAFT, SAMPLE"
                     />
+                    <div className="flex flex-wrap gap-1.5 pt-2">
+                      {['CONFIDENTIAL', 'APPROVED', 'DRAFT', 'COPY', 'URGENT', 'PAID', 'OFFICIAL', 'DO NOT COPY'].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => {
+                            setWatermark((prev) => ({ ...prev, text: preset }));
+                            setWatermarkEnabled(true);
+                          }}
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md border transition-all cursor-pointer ${
+                            watermark.text === preset && watermarkEnabled
+                              ? 'bg-blue-600 text-white border-blue-600'
+                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-blue-400 hover:bg-blue-50/50'
+                          }`}
+                        >
+                          {preset}
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">

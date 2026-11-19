@@ -19,13 +19,13 @@ const TOOL_TITLES: Record<string, { title: string; desc: string; toolId: PdfTool
     toolId: 'editor',
   },
   compress: {
-    title: 'PDF Compressor — Reduce File Size by up to 70%',
-    desc: 'Shrink large PDF documents while preserving crisp typography and high-resolution images.',
+    title: 'Custom PDF Compressor — Set Target Size (100KB, 200KB, 500KB) & Quality',
+    desc: 'Compress PDF documents to custom target file sizes, adjust DPI, convert to B&W/Grayscale, or optimize vector streams. 100% In-Browser Private.',
     toolId: 'compressor',
   },
   compressor: {
-    title: 'PDF Compressor — Reduce File Size by up to 70%',
-    desc: 'Shrink large PDF documents while preserving crisp typography and high-resolution images.',
+    title: 'Custom PDF Compressor — Set Target Size (100KB, 200KB, 500KB) & Quality',
+    desc: 'Compress PDF documents to custom target file sizes, adjust DPI, convert to B&W/Grayscale, or optimize vector streams. 100% In-Browser Private.',
     toolId: 'compressor',
   },
   merge: {

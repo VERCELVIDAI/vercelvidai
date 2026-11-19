@@ -56,6 +56,14 @@ const nextConfig = {
       },
     ];
   },
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      canvas: false,
+    };
+    return config;
+  },
   env: {
     PAYU_MERCHANT_KEY: process.env.PAYU_MERCHANT_KEY || 'wogXBT',
     PAYU_MERCHANT_SALT: process.env.PAYU_MERCHANT_SALT || 'FBM1jRW3CHwOtrdXELuunFFbAyy2IZlF',
