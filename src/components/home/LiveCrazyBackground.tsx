@@ -114,7 +114,7 @@ export function LiveCrazyBackground() {
     ];
 
     const initParticles = () => {
-      const density = isMobile ? 24 : 70;
+      const density = isMobile ? 16 : 42;
       const particles: Particle[] = [];
 
       for (let i = 0; i < density; i++) {

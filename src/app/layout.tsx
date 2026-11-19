@@ -1,8 +1,23 @@
 import type { Metadata, Viewport } from 'next';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme/ThemeContext';
 import { FluviaMotionBackground } from '@/components/brand/FluviaMotionBackground';
 import { BRAND } from '@/lib/brand';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  weight: ['300', '400', '500', '600', '700', '800'],
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-plus-jakarta',
+  weight: ['500', '600', '700', '800'],
+});
 
 export const viewport: Viewport = {
   themeColor: '#5145CD',
@@ -91,14 +106,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="light" data-theme="light" style={{ colorScheme: 'light' }} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`light ${inter.variable} ${plusJakarta.variable}`}
+      data-theme="light"
+      style={{ colorScheme: 'light' }}
+      suppressHydrationWarning
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `

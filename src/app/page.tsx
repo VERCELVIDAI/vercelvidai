@@ -895,7 +895,7 @@ export default function HomePage() {
                       autoPlay
                       muted={unmutedHeroIndex === null}
                       playsInline
-                      preload="auto"
+                      preload="metadata"
                       onPlay={() => setIsHeroPlaying(true)}
                       onPause={() => setIsHeroPlaying(false)}
                       onTimeUpdate={(e) => {
@@ -921,7 +921,7 @@ export default function HomePage() {
                     autoPlay
                     muted={unmutedHeroIndex === null}
                     playsInline
-                    preload="auto"
+                    preload="metadata"
                     onPlay={() => setIsHeroPlaying(true)}
                     onPause={() => setIsHeroPlaying(false)}
                     onTimeUpdate={(e) => {

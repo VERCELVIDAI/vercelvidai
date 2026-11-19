@@ -45,6 +45,17 @@ const TOOL_TITLES: Record<string, { title: string; desc: string; toolId: PdfTool
   },
 };
 
+export function generateStaticParams() {
+  return [
+    { tool: 'editor' },
+    { tool: 'compress' },
+    { tool: 'compressor' },
+    { tool: 'merge' },
+    { tool: 'split' },
+    { tool: 'image-to-pdf' },
+  ];
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const toolKey = params.tool.toLowerCase();
   const info = TOOL_TITLES[toolKey];

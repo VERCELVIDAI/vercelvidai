@@ -16,11 +16,36 @@ import {
   HardDrive,
   Eye,
 } from 'lucide-react';
-import { PdfEditorTool } from './PdfEditorTool';
-import { PdfCompressorTool } from './PdfCompressorTool';
-import { PdfMergeTool } from './PdfMergeTool';
-import { PdfSplitTool } from './PdfSplitTool';
-import { ImageToPdfTool } from './ImageToPdfTool';
+import dynamic from 'next/dynamic';
+
+const ToolLoading = () => (
+  <div className="w-full min-h-[360px] rounded-2xl bg-white border border-slate-200 flex flex-col items-center justify-center p-8 space-y-3">
+    <div className="w-10 h-10 rounded-xl bg-slate-100 animate-pulse" />
+    <div className="h-4 w-40 bg-slate-100 rounded animate-pulse" />
+    <div className="h-3 w-64 bg-slate-50 rounded animate-pulse" />
+  </div>
+);
+
+const PdfEditorTool = dynamic(
+  () => import('./PdfEditorTool').then((m) => m.PdfEditorTool),
+  { ssr: false, loading: () => <ToolLoading /> }
+);
+const PdfCompressorTool = dynamic(
+  () => import('./PdfCompressorTool').then((m) => m.PdfCompressorTool),
+  { ssr: false, loading: () => <ToolLoading /> }
+);
+const PdfMergeTool = dynamic(
+  () => import('./PdfMergeTool').then((m) => m.PdfMergeTool),
+  { ssr: false, loading: () => <ToolLoading /> }
+);
+const PdfSplitTool = dynamic(
+  () => import('./PdfSplitTool').then((m) => m.PdfSplitTool),
+  { ssr: false, loading: () => <ToolLoading /> }
+);
+const ImageToPdfTool = dynamic(
+  () => import('./ImageToPdfTool').then((m) => m.ImageToPdfTool),
+  { ssr: false, loading: () => <ToolLoading /> }
+);
 
 export type PdfToolId = 'editor' | 'compressor' | 'merge' | 'split' | 'image-to-pdf';
 
