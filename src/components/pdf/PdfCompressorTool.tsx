@@ -35,9 +35,10 @@ export function PdfCompressorTool() {
   // Compression Mode: 'target_size' | 'preset' | 'manual' | 'lossless_vector'
   const [mode, setMode] = useState<'target_size' | 'preset' | 'manual' | 'lossless_vector'>('target_size');
 
-  // Target Size Settings
-  const [targetSizeVal, setTargetSizeVal] = useState<number>(200);
-  const [targetUnit, setTargetUnit] = useState<'KB' | 'MB'>('KB');
+  // Custom Target Size Settings (Supports explicit MB and KB modes)
+  const [targetUnit, setTargetUnit] = useState<'MB' | 'KB'>('MB');
+  const [targetMbVal, setTargetMbVal] = useState<number>(2); // Default 2 MB
+  const [targetKbVal, setTargetKbVal] = useState<number>(200); // Default 200 KB
 
   // Preset Settings
   const [presetLevel, setPresetLevel] = useState<'extreme' | 'recommended' | 'low'>('recommended');
@@ -104,17 +105,16 @@ export function PdfCompressorTool() {
         const info = await inspectPdf(buffer);
         setPageCount(info.pageCount);
 
-        // Smart auto-preset for target size based on original size
-        const originalKb = Math.round(buffer.byteLength / 1024);
-        if (originalKb > 2000) {
-          setTargetSizeVal(500);
-          setTargetUnit('KB');
-        } else if (originalKb > 500) {
-          setTargetSizeVal(200);
-          setTargetUnit('KB');
+        const originalMb = buffer.byteLength / (1024 * 1024);
+        if (originalMb >= 3) {
+          setTargetUnit('MB');
+          setTargetMbVal(Math.max(1, Math.round(originalMb * 0.4 * 10) / 10));
+        } else if (originalMb >= 1) {
+          setTargetUnit('MB');
+          setTargetMbVal(1);
         } else {
-          setTargetSizeVal(Math.max(50, Math.round(originalKb * 0.5)));
           setTargetUnit('KB');
+          setTargetKbVal(Math.max(50, Math.round((buffer.byteLength / 1024) * 0.5)));
         }
       } catch (e) {
         setPageCount(1);
@@ -134,7 +134,7 @@ export function PdfCompressorTool() {
       setProgress(5);
       setProgressStatus('Preparing compression engine...');
 
-      const targetKb = targetUnit === 'MB' ? targetSizeVal * 1024 : targetSizeVal;
+      const targetKb = targetUnit === 'MB' ? targetMbVal * 1024 : targetKbVal;
 
       const options: AdvancedCompressOptions = {
         mode,
@@ -173,7 +173,9 @@ export function PdfCompressorTool() {
     const baseName = file.name.replace(/\.[^/.]+$/, '');
     const suffix =
       mode === 'target_size'
-        ? `-${targetSizeVal}${targetUnit}`
+        ? targetUnit === 'MB'
+          ? `-${targetMbVal}MB`
+          : `-${targetKbVal}KB`
         : mode === 'lossless_vector'
         ? '-vector-optimized'
         : '-compressed';
@@ -194,6 +196,8 @@ export function PdfCompressorTool() {
     setProgressStatus('');
   };
 
+  const currentTargetDisplay = targetUnit === 'MB' ? `${targetMbVal} MB` : `${targetKbVal} KB`;
+
   return (
     <div className="w-full bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
       {/* Premium Header */}
@@ -202,13 +206,13 @@ export function PdfCompressorTool() {
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/80 border border-emerald-300 text-xs font-bold text-emerald-800 shadow-2xs font-mono">
               <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Smart Size Targeting Engine • 100% In-Browser Private</span>
+              <span>Custom MB & KB Target Compressor • 100% In-Browser Private</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Advanced PDF Compressor
+              Advanced PDF Compressor (Custom MB/KB)
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 max-w-2xl">
-              Compress any PDF to exact target file sizes (e.g. 100 KB, 200 KB, 500 KB), reduce DPI resolution, convert to grayscale, or run lossless vector stream compression.
+              Set exact target sizes in <strong>MB (e.g. 1 MB, 2 MB, 5 MB)</strong> or <strong>KB (e.g. 100 KB, 200 KB)</strong>, reduce DPI resolution, convert to grayscale, or run lossless vector stream compression.
             </p>
           </div>
 
@@ -244,12 +248,12 @@ export function PdfCompressorTool() {
               Click to select or drag & drop a PDF document
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mb-4">
-              Supports scanned PDFs, multi-page contracts, invoices, photo portfolios, and heavy reports.
+              Supports scanned PDFs, multi-page contracts, invoices, photo portfolios, and heavy reports up to 100MB+.
             </p>
             <div className="inline-flex items-center gap-3 text-xs text-slate-400">
               <span>PDF up to 100MB</span>
               <span>•</span>
-              <span>Client-Side Processing</span>
+              <span>Set Custom MB / KB</span>
               <span>•</span>
               <span>Private & Safe</span>
             </div>
@@ -298,9 +302,9 @@ export function PdfCompressorTool() {
                 {[
                   {
                     id: 'target_size' as const,
-                    title: '🎯 Custom Target Size',
-                    desc: 'Set exact size in KB or MB',
-                    badge: 'Most Popular',
+                    title: '🎯 Custom Target (MB/KB)',
+                    desc: 'Set exact MB or KB target',
+                    badge: 'Custom Size',
                   },
                   {
                     id: 'preset' as const,
@@ -352,79 +356,249 @@ export function PdfCompressorTool() {
               </div>
             </div>
 
-            {/* TAB 1: CUSTOM TARGET SIZE */}
+            {/* TAB 1: CUSTOM TARGET SIZE (MB & KB) */}
             {mode === 'target_size' && (
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-50/50 via-white to-slate-50 border border-emerald-200 space-y-5 animate-in fade-in duration-150">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-50/70 via-white to-teal-50/40 border-2 border-emerald-300 shadow-sm space-y-6 animate-in fade-in duration-150">
+                {/* Header & Unit Mode Toggle */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-emerald-100">
                   <div>
-                    <h4 className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
-                      <Target className="w-4 h-4 text-emerald-600" />
-                      <span>Enter Your Desired Output File Size</span>
+                    <h4 className="font-extrabold text-base text-slate-900 flex items-center gap-2">
+                      <Target className="w-5 h-5 text-emerald-600" />
+                      <span>Set Custom Output Size (MB or KB)</span>
                     </h4>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Our adaptive engine automatically adjusts resolution, image streams, and compression to hit your target size.
+                      Enter any custom MB size (e.g. 1 MB, 2 MB, 5 MB) or KB size. Our adaptive engine hits your target output.
                     </p>
                   </div>
 
-                  {/* Input Group */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    <input
-                      type="number"
-                      min={10}
-                      max={targetUnit === 'KB' ? 50000 : 50}
-                      value={targetSizeVal}
-                      onChange={(e) => setTargetSizeVal(Math.max(10, parseInt(e.target.value, 10) || 50))}
-                      className="w-28 px-3.5 py-2 rounded-xl border-2 border-emerald-400 focus:border-emerald-600 focus:outline-hidden font-extrabold text-base text-slate-900 bg-white shadow-2xs text-center"
-                    />
-                    <select
-                      value={targetUnit}
-                      onChange={(e) => setTargetUnit(e.target.value as 'KB' | 'MB')}
-                      className="px-3 py-2 rounded-xl border border-slate-300 font-bold text-xs bg-white text-slate-800 shadow-2xs focus:outline-hidden"
+                  {/* Big Unit Switcher (MB vs KB) */}
+                  <div className="inline-flex p-1 rounded-2xl bg-slate-100 border border-slate-200 shrink-0 shadow-inner">
+                    <button
+                      type="button"
+                      onClick={() => setTargetUnit('MB')}
+                      className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                        targetUnit === 'MB'
+                          ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-500'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
                     >
-                      <option value="KB">KB</option>
-                      <option value="MB">MB</option>
-                    </select>
+                      <span>📦 Megabytes (MB)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTargetUnit('KB')}
+                      className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                        targetUnit === 'KB'
+                          ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-500'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      <span>📄 Kilobytes (KB)</span>
+                    </button>
                   </div>
                 </div>
 
-                {/* 1-Click Target Size Pills */}
-                <div>
-                  <span className="text-xs font-semibold text-slate-600 block mb-2">
-                    Quick One-Click Target Presets:
-                  </span>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {[
-                      { label: '100 KB', val: 100, unit: 'KB' as const, hint: 'Govt Job / SSC / UPSC Portals' },
-                      { label: '200 KB', val: 200, unit: 'KB' as const, hint: 'Job Application & Passport Forms' },
-                      { label: '500 KB', val: 500, unit: 'KB' as const, hint: 'Email & WhatsApp Friendly' },
-                      { label: '1 MB', val: 1, unit: 'MB' as const, hint: 'Standard Web Sharing' },
-                      { label: '2 MB', val: 2, unit: 'MB' as const, hint: 'High-Res Presentation' },
-                    ].map((p) => {
-                      const isSelected = targetSizeVal === p.val && targetUnit === p.unit;
-                      return (
-                        <button
-                          key={p.label}
-                          type="button"
-                          onClick={() => {
-                            setTargetSizeVal(p.val);
-                            setTargetUnit(p.unit);
-                          }}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${
-                            isSelected
-                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-                              : 'bg-white text-slate-700 border-slate-200 hover:border-emerald-400 hover:bg-emerald-50/50'
-                          }`}
-                          title={p.hint}
-                        >
-                          <span>{p.label}</span>
-                          <span className={`text-[10px] font-normal opacity-80 hidden md:inline`}>
-                            ({p.hint})
+                {/* Direct Custom Input + Slider */}
+                <div className="p-5 rounded-2xl bg-white border border-emerald-200/80 shadow-xs space-y-4">
+                  {targetUnit === 'MB' ? (
+                    // MB CONTROLS
+                    <div className="space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="space-y-0.5">
+                          <label className="text-xs font-extrabold text-slate-800 uppercase tracking-wider block">
+                            Target Output Size in Megabytes (MB):
+                          </label>
+                          <span className="text-[11px] text-slate-500">
+                            Type your custom MB (supports decimals e.g. 1.5 MB, 2.5 MB) or drag the slider:
                           </span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <div className="relative">
+                            <input
+                              type="number"
+                              step="0.1"
+                              min="0.1"
+                              max="100"
+                              value={targetMbVal}
+                              onChange={(e) => {
+                                const val = parseFloat(e.target.value);
+                                setTargetMbVal(isNaN(val) ? 1 : Math.max(0.1, val));
+                              }}
+                              className="w-32 px-4 py-2.5 rounded-xl border-2 border-emerald-500 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-hidden font-black text-xl text-emerald-900 bg-emerald-50/30 text-center shadow-xs"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 font-black text-xs text-emerald-700 pointer-events-none">
+                              MB
+                            </span>
+                          </div>
+                          <span className="text-xs font-bold font-mono text-slate-500 bg-slate-100 px-2.5 py-2 rounded-xl">
+                            ≈ {Math.round(targetMbVal * 1024)} KB
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* MB Slider */}
+                      <div className="space-y-1.5 pt-1">
+                        <input
+                          type="range"
+                          min="0.2"
+                          max="15"
+                          step="0.1"
+                          value={targetMbVal}
+                          onChange={(e) => setTargetMbVal(parseFloat(e.target.value))}
+                          className="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 rounded-lg"
+                        />
+                        <div className="flex justify-between text-[10px] font-bold text-slate-400">
+                          <span>0.2 MB (200 KB)</span>
+                          <span>1.0 MB</span>
+                          <span>2.5 MB</span>
+                          <span>5.0 MB</span>
+                          <span>10.0 MB</span>
+                          <span>15.0 MB</span>
+                        </div>
+                      </div>
+
+                      {/* 1-Click Quick MB Presets */}
+                      <div className="pt-2">
+                        <span className="text-[11px] font-bold text-slate-600 block mb-2">
+                          Popular Custom MB Presets:
+                        </span>
+                        <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
+                          {[
+                            { mb: 0.5, label: '0.5 MB', desc: '512 KB • Fast Web' },
+                            { mb: 1.0, label: '1.0 MB', desc: 'Standard Email' },
+                            { mb: 2.0, label: '2.0 MB', desc: 'Balanced Quality' },
+                            { mb: 3.0, label: '3.0 MB', desc: 'High Definition' },
+                            { mb: 5.0, label: '5.0 MB', desc: 'Print & Photos' },
+                            { mb: 10.0, label: '10.0 MB', desc: 'Large Document' },
+                          ].map((item) => (
+                            <button
+                              key={item.mb}
+                              type="button"
+                              onClick={() => setTargetMbVal(item.mb)}
+                              className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                                targetMbVal === item.mb
+                                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm font-black'
+                                  : 'bg-slate-50 hover:bg-emerald-50/60 border-slate-200 hover:border-emerald-300 text-slate-800'
+                              }`}
+                            >
+                              <span className="text-xs font-bold block">{item.label}</span>
+                              <span className="text-[9px] opacity-80 block truncate">{item.desc}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    // KB CONTROLS
+                    <div className="space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="space-y-0.5">
+                          <label className="text-xs font-extrabold text-slate-800 uppercase tracking-wider block">
+                            Target Output Size in Kilobytes (KB):
+                          </label>
+                          <span className="text-[11px] text-slate-500">
+                            Ideal for Govt Jobs, SSC, UPSC, and portal restrictions:
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <div className="relative">
+                            <input
+                              type="number"
+                              step="10"
+                              min="20"
+                              max="10000"
+                              value={targetKbVal}
+                              onChange={(e) => {
+                                const val = parseInt(e.target.value, 10);
+                                setTargetKbVal(isNaN(val) ? 100 : Math.max(20, val));
+                              }}
+                              className="w-32 px-4 py-2.5 rounded-xl border-2 border-emerald-500 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-hidden font-black text-xl text-emerald-900 bg-emerald-50/30 text-center shadow-xs"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 font-black text-xs text-emerald-700 pointer-events-none">
+                              KB
+                            </span>
+                          </div>
+                          <span className="text-xs font-bold font-mono text-slate-500 bg-slate-100 px-2.5 py-2 rounded-xl">
+                            ≈ {(targetKbVal / 1024).toFixed(2)} MB
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* KB Slider */}
+                      <div className="space-y-1.5 pt-1">
+                        <input
+                          type="range"
+                          min="50"
+                          max="2000"
+                          step="25"
+                          value={targetKbVal}
+                          onChange={(e) => setTargetKbVal(parseInt(e.target.value, 10))}
+                          className="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 rounded-lg"
+                        />
+                        <div className="flex justify-between text-[10px] font-bold text-slate-400">
+                          <span>50 KB</span>
+                          <span>200 KB</span>
+                          <span>500 KB</span>
+                          <span>1000 KB</span>
+                          <span>2000 KB</span>
+                        </div>
+                      </div>
+
+                      {/* 1-Click Quick KB Presets */}
+                      <div className="pt-2">
+                        <span className="text-[11px] font-bold text-slate-600 block mb-2">
+                          Popular Custom KB Presets:
+                        </span>
+                        <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
+                          {[
+                            { kb: 50, label: '50 KB', desc: 'Ultra Strict Limit' },
+                            { kb: 100, label: '100 KB', desc: 'Govt Job / SSC' },
+                            { kb: 200, label: '200 KB', desc: 'Passport & Visa' },
+                            { kb: 300, label: '300 KB', desc: 'Certificates' },
+                            { kb: 500, label: '500 KB', desc: 'Email Attachment' },
+                            { kb: 800, label: '800 KB', desc: 'Standard Report' },
+                          ].map((item) => (
+                            <button
+                              key={item.kb}
+                              type="button"
+                              onClick={() => setTargetKbVal(item.kb)}
+                              className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                                targetKbVal === item.kb
+                                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm font-black'
+                                  : 'bg-slate-50 hover:bg-emerald-50/60 border-slate-200 hover:border-emerald-300 text-slate-800'
+                              }`}
+                            >
+                              <span className="text-xs font-bold block">{item.label}</span>
+                              <span className="text-[9px] opacity-80 block truncate">{item.desc}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
+
+                {/* Target Estimation Card */}
+                {file && (
+                  <div className="p-4 rounded-2xl bg-emerald-100/60 border border-emerald-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-2">
+                      <Info className="w-4 h-4 text-emerald-700 shrink-0" />
+                      <span className="font-semibold text-emerald-950">
+                        Original: <span className="font-bold">{formatBytes(file.size)}</span> → Target Output: <span className="font-black text-emerald-800 underline text-sm">{currentTargetDisplay}</span>
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 font-mono text-[11px] text-emerald-800 font-bold">
+                      <span>{pageCount} {pageCount === 1 ? 'Page' : 'Pages'}</span>
+                      <span>•</span>
+                      <span>
+                        Budget: ~{formatBytes(((targetUnit === 'MB' ? targetMbVal * 1024 : targetKbVal) * 1024) / pageCount)} / page
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -646,7 +820,7 @@ export function PdfCompressorTool() {
                     <Zap className="w-5 h-5 fill-current" />
                     <span>
                       {mode === 'target_size'
-                        ? `Compress PDF to ~${targetSizeVal} ${targetUnit}`
+                        ? `Compress PDF to ~${currentTargetDisplay}`
                         : mode === 'lossless_vector'
                         ? 'Run Lossless Vector Compression'
                         : 'Compress PDF Now'}

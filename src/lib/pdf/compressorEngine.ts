@@ -120,13 +120,21 @@ export async function compressPdfAdvanced(
       scale = 1.0;
       quality = 0.6;
     } else if (targetPerPage < 400 * 1024) {
-      // ~1MB total
+      // ~500KB - 1MB
       scale = 1.25;
       quality = 0.72;
-    } else {
-      // 2MB+
-      scale = 1.4;
+    } else if (targetPerPage < 1000 * 1024) {
+      // ~1MB - 2MB
+      scale = 1.45;
       quality = 0.82;
+    } else if (targetPerPage < 2500 * 1024) {
+      // ~2MB - 5MB
+      scale = 1.6;
+      quality = 0.88;
+    } else {
+      // 5MB - 20MB+
+      scale = 1.8;
+      quality = 0.92;
     }
   } else if (options.mode === 'preset') {
     if (options.presetLevel === 'extreme') {
