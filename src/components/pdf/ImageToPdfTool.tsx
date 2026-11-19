@@ -110,7 +110,7 @@ export function ImageToPdfTool() {
         { pageSize, margin, orientation }
       );
 
-      const blob = new Blob([res.pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([res.pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       if (pdfBlobUrl) URL.revokeObjectURL(pdfBlobUrl);
       const url = URL.createObjectURL(blob);
       setPdfBlobUrl(url);

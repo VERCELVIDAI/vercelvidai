@@ -209,7 +209,7 @@ export function PdfEditorTool() {
         URL.revokeObjectURL(previewUrl);
       }
 
-      const blob = new Blob([editedBytes], { type: 'application/pdf' });
+      const blob = new Blob([editedBytes as unknown as BlobPart], { type: 'application/pdf' });
       const newUrl = URL.createObjectURL(blob);
       setPreviewUrl(newUrl);
       setStatusMessage('Preview updated with all changes!');
@@ -233,7 +233,7 @@ export function PdfEditorTool() {
         pageTransforms,
       });
 
-      const blob = new Blob([editedBytes], { type: 'application/pdf' });
+      const blob = new Blob([editedBytes as unknown as BlobPart], { type: 'application/pdf' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       const baseName = file.name.replace(/\.[^/.]+$/, '');

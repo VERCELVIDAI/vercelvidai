@@ -80,7 +80,7 @@ export function PdfCompressorTool() {
       const res = await compressPdf(fileBuffer, level);
       setResult(res);
 
-      const blob = new Blob([res.pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([res.pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       if (previewUrl) URL.revokeObjectURL(previewUrl);
       const url = URL.createObjectURL(blob);
       setPreviewUrl(url);
@@ -94,7 +94,7 @@ export function PdfCompressorTool() {
 
   const handleDownload = () => {
     if (!result || !file) return;
-    const blob = new Blob([result.pdfBytes], { type: 'application/pdf' });
+    const blob = new Blob([result.pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     const baseName = file.name.replace(/\.[^/.]+$/, '');

@@ -88,7 +88,7 @@ export function PdfSplitTool() {
       const res = await splitPdf(fileBuffer, rangeExpr);
       setExtractedCount(res.extractedCount);
 
-      const blob = new Blob([res.pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([res.pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       if (splitBlobUrl) URL.revokeObjectURL(splitBlobUrl);
       const url = URL.createObjectURL(blob);
       setSplitBlobUrl(url);

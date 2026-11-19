@@ -105,7 +105,7 @@ export function PdfMergeTool() {
       );
 
       setMergedPageCount(res.totalPages);
-      const blob = new Blob([res.pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([res.pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       if (mergedBlobUrl) URL.revokeObjectURL(mergedBlobUrl);
       const url = URL.createObjectURL(blob);
       setMergedBlobUrl(url);
