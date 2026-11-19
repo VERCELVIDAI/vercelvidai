@@ -89,30 +89,7 @@ export function FirstCampaignModal({ forceOpen = false, onDismiss }: FirstCampai
       setIsOpen(true);
       return;
     }
-
-    // Check if dismissed previously in localStorage
-    const dismissedSession = typeof window !== 'undefined'
-      ? sessionStorage.getItem('fluvia_first_coupon_dismissed')
-      : null;
-
-    if (!dismissedSession) {
-      // Automatic gentle popup after 2.2 seconds for new visitors
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 2200);
-
-      // Also check backend eligibility if authenticated
-      fetch('/api/user/first-coupon')
-        .then((res) => (res.ok ? res.json() : { eligible: false }))
-        .then((data) => {
-          if (data?.eligible) {
-            setIsOpen(true);
-          }
-        })
-        .catch(() => {});
-
-      return () => clearTimeout(timer);
-    }
+    // Auto popup disabled - opens only when user clicks Scratch Gift button
   }, [forceOpen]);
 
   // Trigger celebration confetti

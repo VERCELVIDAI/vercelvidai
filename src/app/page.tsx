@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
-import { FirstCampaignModal } from '@/components/promotions/FirstCampaignModal';
 import { LiveCrazyBackground } from '@/components/home/LiveCrazyBackground';
 import {
   Sparkles,
@@ -600,7 +599,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#17191D] selection:bg-[#EEF2FF] selection:text-[#5145CD] overflow-x-hidden max-w-full">
       <Header />
-      <FirstCampaignModal />
 
       <main className="flex-1 w-full overflow-x-hidden">
         {/* ========================================================================= */}
@@ -613,8 +611,8 @@ export default function HomePage() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto space-y-5 mb-10">
 
-              {/* Flagship OpenHiggs Announcement Pill */}
-              <div className="flex justify-center mb-1">
+              {/* Announcement Pills: OpenHiggs & Free PDF Suite */}
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-2">
                 <Link
                   href="/openhiggs"
                   className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#0E150F] border border-[#d1fe17]/60 text-xs text-white shadow-lg hover:border-[#d1fe17] hover:shadow-[0_0_25px_rgba(209,254,23,0.35)] transition-all group max-w-full truncate"
@@ -627,12 +625,29 @@ export default function HomePage() {
                     New Studio
                   </span>
                   <span className="text-slate-200 font-medium truncate">
-                    OpenHiggs Studio is live with 38 Foundation Models
-                  </span>
-                  <span className="text-[10px] font-mono bg-[#d1fe17]/20 text-[#d1fe17] px-1.5 py-0.2 rounded font-bold hidden md:inline shrink-0">
-                    Seedance 2.5 • Kling 3.0 • Wan 3
+                    OpenHiggs Studio • 38 Models
                   </span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#d1fe17] group-hover:translate-x-1 transition-transform shrink-0" />
+                </Link>
+
+                <Link
+                  href="/pdf-tools"
+                  className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-rose-50 border border-rose-300 text-xs text-rose-700 shadow-sm hover:border-rose-400 hover:bg-rose-100/80 transition-all group max-w-full font-bold"
+                >
+                  <span className="flex h-2 w-2 relative shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-600" />
+                  </span>
+                  <span className="text-rose-700 font-black uppercase tracking-wider text-[10px] sm:text-[11px] shrink-0">
+                    📄 Free PDF Tools
+                  </span>
+                  <span className="text-rose-900 font-medium truncate">
+                    Editor • Compressor • Merge • Convert
+                  </span>
+                  <span className="text-[10px] font-mono bg-rose-200/80 text-rose-800 px-1.5 py-0.2 rounded font-bold hidden sm:inline shrink-0">
+                    100% In-Browser Private
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 text-rose-600 group-hover:translate-x-1 transition-transform shrink-0" />
                 </Link>
               </div>
 
@@ -678,6 +693,17 @@ export default function HomePage() {
                 >
                   <Film className="w-4 h-4 text-[#5145CD]" />
                   <span>Browse Ad Templates</span>
+                </Link>
+
+                <Link
+                  href="/pdf-tools"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-300 hover:border-rose-400 shadow-xs hover:shadow-md transition-all text-sm group"
+                >
+                  <FileText className="w-4 h-4 text-rose-600" />
+                  <span>PDF Studio Suite</span>
+                  <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-rose-200/80 text-rose-800">
+                    Free
+                  </span>
                 </Link>
               </div>
 
@@ -1329,6 +1355,144 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
+        {/* 2. HIGHLIGHTED FREE PDF CREATIVE & UTILITY STUDIO SUITE */}
+        {/* ========================================================================= */}
+        <section id="pdf-tools-suite" className="py-20 bg-gradient-to-b from-[#FFF1F2]/60 via-[#FFFFFF] to-[#F8FAFC] border-b border-[#F43F5E]/20 relative overflow-hidden">
+          {/* Subtle Accent Glows */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-gradient-to-r from-rose-400/10 via-red-400/10 to-amber-400/10 blur-3xl pointer-events-none" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+            <div className="text-center max-w-3xl mx-auto space-y-4">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-50 border border-rose-300 text-xs font-bold text-rose-700 shadow-xs">
+                <span className="flex h-2 w-2 relative shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-600" />
+                </span>
+                <Sparkles className="w-3.5 h-3.5 text-rose-600" />
+                <span>Featured Studio • 100% Free Forever • Zero Server Uploads</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17191D] tracking-tight">
+                All-in-One <span className="bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent">PDF Creative Studio</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#667085] leading-relaxed max-w-2xl mx-auto">
+                Full client-side vector PDF power right inside your browser. Edit text and signatures, compress bloated contracts by up to 70%, merge multiple files, and convert images to crisp PDFs — strictly zero file uploads to any server.
+              </p>
+
+              {/* Privacy & Speed Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-1 text-xs font-semibold text-slate-700">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  100% In-Browser Privacy
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-50 border border-blue-200 text-blue-800">
+                  <Zap className="w-4 h-4 text-blue-600" />
+                  Instant Client-Side Processing
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-purple-50 border border-purple-200 text-purple-800">
+                  <CheckCircle2 className="w-4 h-4 text-purple-600" />
+                  No Account or Login Required
+                </span>
+              </div>
+            </div>
+
+            {/* 5 Prominent PDF Tools Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {[
+                {
+                  title: 'PDF Editor',
+                  desc: 'Add vector text, watermark stamps, custom page numbers & rotate.',
+                  icon: FileText,
+                  href: '/pdf-tools/editor',
+                  badge: 'Flagship',
+                  color: 'text-blue-600 bg-blue-50 border-blue-200',
+                  accent: 'from-blue-500 to-indigo-500',
+                },
+                {
+                  title: 'PDF Compressor',
+                  desc: 'Shrink file size by 40–70% while keeping text and graphics crisp.',
+                  icon: Zap,
+                  href: '/pdf-tools/compress',
+                  badge: 'Smart Size',
+                  color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+                  accent: 'from-emerald-500 to-teal-500',
+                },
+                {
+                  title: 'Merge PDF',
+                  desc: 'Combine invoices, reports, slides & contracts into one master PDF.',
+                  icon: Combine,
+                  href: '/pdf-tools/merge',
+                  badge: 'Multi-doc',
+                  color: 'text-purple-600 bg-purple-50 border-purple-200',
+                  accent: 'from-purple-500 to-pink-500',
+                },
+                {
+                  title: 'Split & Extract',
+                  desc: 'Extract specific pages, chapters, or custom ranges in seconds.',
+                  icon: Scissors,
+                  href: '/pdf-tools/split',
+                  badge: 'Fast Cut',
+                  color: 'text-amber-600 bg-amber-50 border-amber-200',
+                  accent: 'from-amber-500 to-orange-500',
+                },
+                {
+                  title: 'Image to PDF',
+                  desc: 'Convert JPG, PNG, receipts, or mockups into clean vector PDFs.',
+                  icon: ImageIcon,
+                  href: '/pdf-tools/image-to-pdf',
+                  badge: 'Photos',
+                  color: 'text-rose-600 bg-rose-50 border-rose-200',
+                  accent: 'from-rose-500 to-red-500',
+                },
+              ].map((tool, i) => {
+                const Icon = tool.icon;
+                return (
+                  <Link
+                    key={i}
+                    href={tool.href}
+                    className="p-5 rounded-2xl bg-white border-2 border-slate-200 hover:border-rose-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+                  >
+                    <div className={`absolute top-0 right-0 left-0 h-1 bg-gradient-to-r ${tool.accent}`} />
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center border ${tool.color} shadow-xs`}>
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 border border-slate-200">
+                          {tool.badge}
+                        </span>
+                      </div>
+                      <h3 className="font-extrabold text-base text-slate-900 group-hover:text-rose-600 transition-colors mb-1">
+                        {tool.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 leading-relaxed">
+                        {tool.desc}
+                      </p>
+                    </div>
+
+                    <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-rose-600 group-hover:text-rose-700">
+                      <span>Launch Tool</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Hub Action Link */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <Link
+                href="/pdf-tools"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all group"
+              >
+                <FileText className="w-4 h-4 text-white" />
+                <span>Open Full PDF Studio Hub</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
         {/* 2. 4-STEP CAMPAIGN WORKFLOW (HOW FLUVIA FLOW WORKS) */}
         {/* ========================================================================= */}
         <section id="features" className="py-20 bg-[#FFFFFF] border-b border-[#E5E7EB]">
@@ -1616,113 +1780,7 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 5. PDF CREATIVE & UTILITY SUITE SHOWCASE */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#FFFFFF] border-b border-[#E5E7EB]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-            <div className="text-center max-w-3xl mx-auto space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold text-blue-700 shadow-2xs font-mono">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                <span>New Feature • 100% Client-Side Privacy Guaranteed</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#17191D] tracking-tight">
-                Creative & Utility PDF Studio
-              </h2>
-              <p className="text-sm sm:text-base text-[#667085]">
-                Full vector PDF power built directly into Fluvia Flow. Edit text, shrink bloated files, merge multi-page contracts, and convert photos into crisp PDFs with zero server uploads.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {[
-                {
-                  title: 'PDF Editor',
-                  desc: 'Add vector text, watermark stamps, and rotate pages.',
-                  icon: FileText,
-                  href: '/pdf-tools/editor',
-                  badge: 'Flagship',
-                  color: 'text-blue-600 bg-blue-50 border-blue-200',
-                },
-                {
-                  title: 'PDF Compressor',
-                  desc: 'Shrink file sizes by 40-70% while keeping text vector-sharp.',
-                  icon: Zap,
-                  href: '/pdf-tools/compress',
-                  badge: 'Smart Size',
-                  color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
-                },
-                {
-                  title: 'Merge PDF',
-                  desc: 'Join invoices, reports, and contracts into one master PDF.',
-                  icon: Combine,
-                  href: '/pdf-tools/merge',
-                  badge: 'Multi-doc',
-                  color: 'text-purple-600 bg-purple-50 border-purple-200',
-                },
-                {
-                  title: 'Split & Extract',
-                  desc: 'Extract specific pages, chapters, or custom ranges.',
-                  icon: Scissors,
-                  href: '/pdf-tools/split',
-                  badge: 'Fast Cut',
-                  color: 'text-amber-600 bg-amber-50 border-amber-200',
-                },
-                {
-                  title: 'Image to PDF',
-                  desc: 'Convert JPG & PNG photos, receipts, or mockups into clean PDFs.',
-                  icon: ImageIcon,
-                  href: '/pdf-tools/image-to-pdf',
-                  badge: 'Photo Book',
-                  color: 'text-rose-600 bg-rose-50 border-rose-200',
-                },
-              ].map((tool, i) => {
-                const Icon = tool.icon;
-                return (
-                  <Link
-                    key={i}
-                    href={tool.href}
-                    className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all flex flex-col justify-between group"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${tool.color}`}>
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
-                          {tool.badge}
-                        </span>
-                      </div>
-                      <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-blue-600 transition-colors mb-1">
-                        {tool.title}
-                      </h3>
-                      <p className="text-xs text-slate-500 leading-relaxed">
-                        {tool.desc}
-                      </p>
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600">
-                      <span>Launch Tool</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="text-center pt-2">
-              <Link
-                href="/pdf-tools"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#17191D] hover:bg-[#000000] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
-              >
-                <span>Open Full PDF Studio Suite</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* 6. FREQUENTLY ASKED QUESTIONS */}
+        {/* 5. FREQUENTLY ASKED QUESTIONS */}
         {/* ========================================================================= */}
         <section className="py-20 bg-[#F7F8FA] border-b border-[#E5E7EB]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">

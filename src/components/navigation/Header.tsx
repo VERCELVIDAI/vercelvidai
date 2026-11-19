@@ -80,7 +80,7 @@ const STUDIOS_MENU: StudioItem[] = [
     description: 'Edit, compress, merge, split & convert PDFs',
     href: '/pdf-tools',
     icon: FileText,
-    badge: 'New',
+    badge: '100% Free',
   },
 ];
 
@@ -299,6 +299,22 @@ export function Header() {
               }`}
             >
               Pricing
+            </Link>
+
+            {/* 3.5 Featured Direct Link: PDF Tools */}
+            <Link
+              href="/pdf-tools"
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
+                pathname.startsWith('/pdf-tools')
+                  ? 'text-rose-600 bg-rose-50 border border-rose-200 shadow-2xs'
+                  : 'text-slate-800 hover:text-rose-600 hover:bg-rose-50/70'
+              }`}
+            >
+              <FileText className="w-4 h-4 text-rose-500" />
+              <span>PDF Tools</span>
+              <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-rose-100 text-rose-600 border border-rose-200">
+                Free
+              </span>
             </Link>
 
             {/* 4. Resources Dropdown */}
@@ -566,6 +582,23 @@ export function Header() {
               Explore & Resources
             </span>
             <nav className="flex flex-col space-y-0.5">
+              <Link
+                href="/pdf-tools"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-lg text-xs font-bold flex items-center justify-between ${
+                  pathname.startsWith('/pdf-tools')
+                    ? 'text-rose-600 bg-rose-50 border border-rose-200'
+                    : 'text-rose-600 bg-rose-50/50 hover:bg-rose-50'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <FileText className="w-3.5 h-3.5 text-rose-500" />
+                  <span>Free PDF Tools Suite</span>
+                </span>
+                <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded bg-rose-200/80 text-rose-700">
+                  Free
+                </span>
+              </Link>
               <Link
                 href="/templates"
                 onClick={() => setMobileMenuOpen(false)}
