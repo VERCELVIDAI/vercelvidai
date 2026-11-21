@@ -559,6 +559,15 @@ function CreateWorkspaceContent() {
               <Mic className="w-3.5 h-3.5" />
               <span>Voiceover HD</span>
             </button>
+
+            <Link
+              href="/mythology/studio"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-300 transition-all cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>Mythology Creator</span>
+              <span className="text-[9px] uppercase px-1 py-0.2 bg-amber-200 text-amber-800 rounded font-black hidden sm:inline">New</span>
+            </Link>
           </div>
 
           {/* Right: Studio Mode Tabs & Inspector Toggle */}

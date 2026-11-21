@@ -36,6 +36,13 @@ interface StudioItem {
 
 const STUDIOS_MENU: StudioItem[] = [
   {
+    title: 'Mythology Studio',
+    description: 'AI vertical videos for sacred epics & Puranas',
+    href: '/mythology',
+    icon: Sparkles,
+    badge: 'New',
+  },
+  {
     title: 'Cinema Studio',
     description: 'Direct 3D camera & optical lens emulation',
     href: '/studios/cinema',

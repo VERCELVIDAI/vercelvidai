@@ -1119,6 +1119,23 @@ export default function PricingPage() {
               >
                 Business plans
               </button>
+
+              <Link
+                href="/mythology/pricing"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  isDark
+                    ? 'text-amber-400 hover:text-amber-200 font-bold'
+                    : 'text-amber-700 hover:text-amber-950 font-bold'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <span>Mythology Studio Plans</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded font-black border ${
+                  isDark ? 'bg-amber-900/60 text-amber-200 border-amber-600/50' : 'bg-amber-100 text-amber-800 border-amber-200'
+                }`}>
+                  New
+                </span>
+              </Link>
             </div>
 
             {/* Promotional Pill Badge */}

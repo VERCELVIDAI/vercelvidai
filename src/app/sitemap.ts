@@ -7,6 +7,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = [
     '',
+    '/mythology',
+    '/mythology/studio',
+    '/mythology/pricing',
     '/studios/cinema',
     '/studios/marketing',
     '/studios/storyboard',
