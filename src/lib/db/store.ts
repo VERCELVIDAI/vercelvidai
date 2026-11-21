@@ -484,6 +484,116 @@ function getInitialDatabase(): DatabaseSchema {
         },
         isActive: true,
       },
+      {
+        id: 'plan_mythos_10',
+        name: 'Mythos Starter (10 Videos)',
+        description: 'Ideal for devotional channels and creators posting weekly mythology stories.',
+        priceInr: 5100,
+        priceAnnualInr: 4080,
+        billingInterval: 'month',
+        creditsPerPeriod: 220,
+        category: 'individual',
+        badge: '10 VIDEOS',
+        accentTheme: 'mythology',
+        features: [
+          '10 Full Mythology Videos per month (220 credits)',
+          '1080p Full HD Watermark-Free MP4 Exports',
+          'All 7 Mythology Art Styles & Custom Prompts',
+          'ElevenLabs Multilingual Neural Voices (Hindi + English)',
+          'Word-by-word Synced Karaoke Captions in Devanagari',
+          'Licensed Temple Shankh, Flute & War Drums BGM',
+          'Full Commercial Rights for YouTube & Instagram Reels',
+          'Automated GST Tax Invoicing (18% ITC Included)',
+        ],
+        entitlements: {
+          maxResolution: '1080p',
+          watermark: false,
+          maxVideoLengthSec: 45,
+          supportedModels: ['gemini-flash', 'flux-pro', 'elevenlabs-multilingual'],
+          storageMb: 15000,
+          priorityQueue: true,
+          brandKitsAllowed: 5,
+          seatsAllowed: 1,
+          commercialLicense: true,
+          apiAccess: false,
+          supportLevel: 'standard',
+        },
+        isActive: true,
+      },
+      {
+        id: 'plan_mythos_20',
+        name: 'Mythos Special Creator (20 Videos)',
+        description: 'Special creator plan with 20 videos, 4K upscale, hero scene animations & deity character consistency.',
+        priceInr: 7999,
+        priceAnnualInr: 6399,
+        billingInterval: 'month',
+        creditsPerPeriod: 450,
+        category: 'individual',
+        badge: 'SPECIAL PLAN • 20 VIDEOS',
+        accentTheme: 'mythology',
+        features: [
+          '20 Full Mythology Videos per month (450 credits)',
+          '1080p Full HD Watermark-Free + 4K AI Upscale',
+          'Hero Scene Video Animations (Image-to-Video Engine)',
+          'Character Bible Lock (Rama, Krishna, Shiva, Hanuman)',
+          'All 7 Art Styles + Custom Deity Prompt Engine',
+          'ElevenLabs HD Voices with Emotion Pacing',
+          'Word-by-word Synced Karaoke in Noto Sans Devanagari',
+          '1-Click Viral Social Metadata Pack (Hooks & Hashtags)',
+          'Priority GPU Cloud Render Queue',
+          'Automated GST Tax Invoicing (18% ITC Included)',
+        ],
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 60,
+          supportedModels: ['gemini-flash', 'flux-pro', 'elevenlabs-multilingual', 'seedance-i2v'],
+          storageMb: 35000,
+          priorityQueue: true,
+          brandKitsAllowed: 10,
+          seatsAllowed: 1,
+          commercialLicense: true,
+          apiAccess: true,
+          supportLevel: 'priority',
+        },
+        isActive: true,
+      },
+      {
+        id: 'plan_mythos_50',
+        name: 'Mythos Studio Scale (50 Videos)',
+        description: 'High-volume production tier for media houses, devotional studios, and daily channels.',
+        priceInr: 16999,
+        priceAnnualInr: 13599,
+        billingInterval: 'month',
+        creditsPerPeriod: 1150,
+        category: 'business',
+        badge: '50 VIDEOS • STUDIO',
+        accentTheme: 'mythology',
+        features: [
+          '50 Full Mythology Videos per month (1,150 credits)',
+          'Up to 60s per video with multi-character dialogues',
+          'Multi-Episode Epic Series Manager (Ramayan/Mahabharat)',
+          'Unlimited Character Bible with Reference Image Anchoring',
+          'Dedicated High-Speed Cloud Render Cluster',
+          'Full Commercial Agency & Broadcast Monetization License',
+          'VIP Priority WhatsApp & Direct Video Architect Support',
+          'Automated GST Tax Invoicing (18% ITC Included)',
+        ],
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 90,
+          supportedModels: ['gemini-flash', 'flux-pro', 'elevenlabs-multilingual', 'seedance-i2v'],
+          storageMb: 100000,
+          priorityQueue: true,
+          brandKitsAllowed: 30,
+          seatsAllowed: 5,
+          commercialLicense: true,
+          apiAccess: true,
+          supportLevel: 'dedicated',
+        },
+        isActive: true,
+      },
     ],
     subscriptions: [
       {
@@ -503,6 +613,9 @@ function getInitialDatabase(): DatabaseSchema {
       { id: 'pack_1200', name: '1,200 Credits Studio', priceInr: 999, creditAmount: 1200, isActive: true },
       { id: 'pack_3500', name: '3,500 Credits Scale', priceInr: 2499, creditAmount: 3500, isActive: true },
       { id: 'pack_10000', name: '10,000 Credits Agency', priceInr: 5999, creditAmount: 10000, isActive: true },
+      { id: 'pack_mythos_200', name: 'Mythos Boost Pack (200 Credits)', priceInr: 299, creditAmount: 200, isActive: true },
+      { id: 'pack_mythos_500', name: 'Mythos Storyteller Pack (500 Credits)', priceInr: 599, creditAmount: 500, isActive: true },
+      { id: 'pack_mythos_1200', name: 'Mythos Epic Pack (1,200 Credits)', priceInr: 1199, creditAmount: 1200, isActive: true },
     ],
     aiProviders: [
       { id: 'fluvia_core', name: 'Fluvia Neural Engine (High Speed)', providerType: 'multimodal', configurationStatus: 'configured', isActive: true },
@@ -2599,7 +2712,16 @@ class Store {
   // PLANS, SUBSCRIPTIONS & PAYMENTS (SECTION 14)
   // ==========================================
   getPlans(): Plan[] {
-    return this.load().plans.filter((p) => p.isActive);
+    const loaded = this.load().plans.filter((p) => p.isActive);
+    const initial = getInitialDatabase().plans.filter((p) => p.isActive);
+    const existingIds = new Set(loaded.map((p) => p.id));
+    const merged = [...loaded];
+    for (const p of initial) {
+      if (!existingIds.has(p.id)) {
+        merged.push(p);
+      }
+    }
+    return merged;
   }
 
   getPlanById(id: string): Plan | undefined {
@@ -2625,6 +2747,14 @@ class Store {
       openhiggs: 'plan_openhiggs',
       openhiggs_lite: 'plan_openhiggs_lite',
       openhiggs_max: 'plan_openhiggs_max',
+      mythos: 'plan_mythos_20',
+      mythology: 'plan_mythos_20',
+      mythos_10: 'plan_mythos_10',
+      mythos_20: 'plan_mythos_20',
+      mythos_50: 'plan_mythos_50',
+      plan_mythos_10: 'plan_mythos_10',
+      plan_mythos_20: 'plan_mythos_20',
+      plan_mythos_50: 'plan_mythos_50',
     };
 
     const targetId = aliases[clean] || clean;
@@ -2653,11 +2783,21 @@ class Store {
   }
 
   getCreditPacks(): CreditPack[] {
-    return this.load().creditPacks.filter((p) => p.isActive);
+    const loaded = this.load().creditPacks.filter((p) => p.isActive);
+    const initial = getInitialDatabase().creditPacks.filter((p) => p.isActive);
+    const existingIds = new Set(loaded.map((p) => p.id));
+    const merged = [...loaded];
+    for (const p of initial) {
+      if (!existingIds.has(p.id)) merged.push(p);
+    }
+    return merged;
   }
 
   getCreditPackById(id: string): CreditPack | undefined {
-    return this.load().creditPacks.find((p) => p.id === id);
+    return (
+      this.load().creditPacks.find((p) => p.id === id) ||
+      getInitialDatabase().creditPacks.find((p) => p.id === id)
+    );
   }
 
   updateCreditPack(packId: string, updates: Partial<CreditPack>): CreditPack {

@@ -206,7 +206,7 @@ export interface Plan {
   creditsPerPeriod: number;
   category?: 'individual' | 'business';
   badge?: string;
-  accentTheme?: 'basic' | 'pro' | 'max' | 'teams' | 'openhiggs';
+  accentTheme?: 'basic' | 'pro' | 'max' | 'teams' | 'openhiggs' | 'mythology';
   features?: string[];
   entitlements: {
     maxResolution: '720p' | '1080p' | '4k';

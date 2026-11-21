@@ -16,6 +16,7 @@ import {
   X,
   Loader2,
   Clock,
+  Sparkles,
 } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 
@@ -71,6 +72,15 @@ function CheckoutContent() {
     openhiggs: 'plan_openhiggs',
     openhiggs_lite: 'plan_openhiggs_lite',
     openhiggs_max: 'plan_openhiggs_max',
+    mythos: 'plan_mythos_20',
+    mythology: 'plan_mythos_20',
+    mythos_special: 'plan_mythos_20',
+    mythos_10: 'plan_mythos_10',
+    mythos_20: 'plan_mythos_20',
+    mythos_50: 'plan_mythos_50',
+    plan_mythos_10: 'plan_mythos_10',
+    plan_mythos_20: 'plan_mythos_20',
+    plan_mythos_50: 'plan_mythos_50',
   };
 
   const rawTargetId = rawPlan || rawPack || rawId || '';
@@ -167,6 +177,9 @@ function CheckoutContent() {
         pack_5000: { name: '5,000 Credits Pro Top-Up', basePrice: 6500, credits: 5000, desc: 'Most popular top-up for scaling e-commerce brands & agencies.' },
         pack_10000: { name: '10,000 Credits Agency Pack', basePrice: 12000, credits: 10000, desc: 'Designed for production studios running high-concurrency 4K jobs.' },
         pack_25000: { name: '25,000 Credits Enterprise Pack', basePrice: 27500, credits: 25000, desc: 'High-volume commercial pack with dedicated GPU processing queue.' },
+        pack_mythos_200: { name: 'Mythos Boost Pack (200 Credits)', basePrice: 299, credits: 200, desc: 'Adds 200 credits to your wallet for ~10 mythology videos. Never expires.' },
+        pack_mythos_500: { name: 'Mythos Storyteller Pack (500 Credits)', basePrice: 599, credits: 500, desc: 'Adds 500 credits to your wallet for ~25 mythology videos. Never expires.' },
+        pack_mythos_1200: { name: 'Mythos Epic Pack (1,200 Credits)', basePrice: 1199, credits: 1200, desc: 'Adds 1,200 credits for complete series generation (~60 videos). Never expires.' },
       };
       packs['500'] = packs.pack_500;
       packs['1000'] = packs.pack_1000;
@@ -250,6 +263,33 @@ function CheckoutContent() {
           usdMonthly: 119,
           usdAnnualPerMo: 95,
           desc: 'Dedicated A100 GPU cluster priority, zero-wait queue, direct REST API & automated webhooks.',
+        },
+        plan_mythos_10: {
+          name: 'Mythos Starter (10 Videos)',
+          monthly: 5100,
+          annualPerMo: 4080, // 20% discount
+          credits: 220,
+          usdMonthly: 59,
+          usdAnnualPerMo: 47,
+          desc: '10 Full Mythology Videos / mo (220 credits), 1080p HD watermark-free, ElevenLabs narration & Devanagari subtitles.',
+        },
+        plan_mythos_20: {
+          name: 'Mythos Creator Special (20 Videos)',
+          monthly: 7999,
+          annualPerMo: 6399, // 20% discount
+          credits: 450,
+          usdMonthly: 96,
+          usdAnnualPerMo: 79,
+          desc: '20 Full Mythology Videos / mo (450 credits), 4K AI upscale, character consistency lock, hero scene video animations.',
+        },
+        plan_mythos_50: {
+          name: 'Mythos Studio Scale (50 Videos)',
+          monthly: 16999,
+          annualPerMo: 13599, // 20% discount
+          credits: 1150,
+          usdMonthly: 199,
+          usdAnnualPerMo: 159,
+          desc: '50 Full Mythology Videos / mo (1,150 credits), automated series manager, priority GPU cluster, VIP WhatsApp SLA.',
         },
       };
 
@@ -787,23 +827,53 @@ function CheckoutContent() {
           </div>
 
           {/* Right: Order Summary Card */}
-          <div className="lg:col-span-5 bg-white border border-[#E5E7EB] rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm">
-            <h2 className="text-base font-bold text-[#17191D] pb-4 border-b border-[#E5E7EB]">Order Summary</h2>
+          <div className={`lg:col-span-5 bg-white rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm border transition-all ${
+            itemId.startsWith('plan_mythos')
+              ? 'border-2 border-amber-400 ring-2 ring-amber-400/30 shadow-lg shadow-amber-500/10'
+              : 'border-[#E5E7EB]'
+          }`}>
+            <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB]">
+              <h2 className="text-base font-bold text-[#17191D]">Order Summary</h2>
+              {itemId.startsWith('plan_mythos') && (
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs">
+                  🕉️ Mythos Creator
+                </span>
+              )}
+            </div>
 
-            <div className="p-4 rounded-xl bg-[#F7F8FA] border border-[#E5E7EB] space-y-3">
+            {itemId.startsWith('plan_mythos') && (
+              <div className="p-3 rounded-xl bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 border border-amber-300 text-amber-950 text-xs font-semibold flex items-center gap-2">
+                <span className="text-base">🕉️</span>
+                <span>Fluvia Mythos Creator Special • Watermark-Free 1080p/4K Video Reels + 18% GST Invoice</span>
+              </div>
+            )}
+
+            <div className={`p-4 rounded-xl border space-y-3 ${
+              itemId.startsWith('plan_mythos')
+                ? 'bg-amber-50/40 border-amber-200'
+                : 'bg-[#F7F8FA] border-[#E5E7EB]'
+            }`}>
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h3 className="text-sm font-bold text-[#17191D]">{itemDetails.name}</h3>
                   <p className="text-xs text-[#667085] mt-0.5">{itemDetails.description}</p>
                 </div>
-                <div className="w-8 h-8 rounded-lg bg-[#5145CD]/10 text-[#5145CD] flex items-center justify-center shrink-0 border border-[#5145CD]/20">
-                  <Zap className="w-4 h-4 text-[#5145CD]" />
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
+                  itemId.startsWith('plan_mythos')
+                    ? 'bg-amber-100 text-amber-600 border-amber-300'
+                    : 'bg-[#5145CD]/10 text-[#5145CD] border-[#5145CD]/20'
+                }`}>
+                  {itemId.startsWith('plan_mythos') ? (
+                    <Sparkles className="w-4 h-4 text-amber-600" />
+                  ) : (
+                    <Zap className="w-4 h-4 text-[#5145CD]" />
+                  )}
                 </div>
               </div>
 
               <div className="flex items-center justify-between text-xs text-[#667085] pt-2 border-t border-[#E5E7EB]">
                 <span>Credits Included:</span>
-                <strong className="text-[#5145CD] font-mono font-bold">
+                <strong className={`font-mono font-bold ${itemId.startsWith('plan_mythos') ? 'text-amber-700' : 'text-[#5145CD]'}`}>
                   {itemDetails.credits.toLocaleString()} Credits
                 </strong>
               </div>
@@ -868,6 +938,11 @@ function CheckoutContent() {
                         <option value="plan_starter">Basic Plan (₹999/mo / $9 • 500 Credits)</option>
                         <option value="plan_creator">Pro Plan (₹2,499/mo / $29 • 1,600 Credits)</option>
                         <option value="plan_max">Max Plan (₹4,999/mo / $79 • 3,000–9,000 Credits)</option>
+                      </optgroup>
+                      <optgroup label="🕉️ Fluvia Mythos Video Creator (10–50 Sacred Videos)">
+                        <option value="plan_mythos_10">Mythos Starter (₹5,100/mo • 10 Videos / 220 Credits)</option>
+                        <option value="plan_mythos_20">🔥 Mythos Creator Special (₹7,999/mo • 20 Videos + 4K Upscale)</option>
+                        <option value="plan_mythos_50">Mythos Studio Scale (₹16,999/mo • 50 Videos / 1,150 Credits)</option>
                       </optgroup>
                       <optgroup label="OpenHiggs Studio Suite (38 Foundation Models • 20% OFF)">
                         <option value="plan_openhiggs_lite">OpenHiggs Lite (₹2,499/mo • 1,500 Credits)</option>
