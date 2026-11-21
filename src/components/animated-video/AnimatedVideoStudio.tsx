@@ -29,6 +29,8 @@ import {
   Lock,
   Coins,
   Trash2,
+  Wand2,
+  AlignLeft,
 } from 'lucide-react';
 import { ANIMATION_STYLES, STYLE_SAMPLE_JSONS, MASTER_AI_PROMPTS } from '@/lib/animated-video/styles';
 import { AnimationStyleId, AnimatedScene, AnimatedVideoHistoryItem } from '@/lib/animated-video/types';
@@ -59,6 +61,17 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
   const [rawJsonText, setRawJsonText] = useState(() => {
     return JSON.stringify(STYLE_SAMPLE_JSONS[initialStyleId] || STYLE_SAMPLE_JSONS['mythology'], null, 2);
   });
+
+  // AI Script generation state (inside Step 2)
+  const [topicInput, setTopicInput] = useState('Lord Krishna revealing cosmic Vishwaroop to Arjuna at Kurukshetra');
+  const [scriptLanguage, setScriptLanguage] = useState<'hi' | 'en' | 'hi-en'>('hi');
+  const [isGeneratingScript, setIsGeneratingScript] = useState(false);
+
+  // Video Generation from JSON state
+  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
+  const [generationStage, setGenerationStage] = useState('');
+  const [hasGeneratedVideo, setHasGeneratedVideo] = useState(false);
+  const playerContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Validation state
   const [validationState, setValidationState] = useState<{ status: 'idle' | 'valid' | 'invalid'; message: string }>({
@@ -167,6 +180,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
     setCurrentSceneIdx(0);
     setCurrentTimeSec(0);
     setIsPlaying(false);
+    setHasGeneratedVideo(false);
   };
 
   // Live parse JSON on change
@@ -179,26 +193,114 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
         setValidationState({ status: 'valid', message: `Parsed ${parsed.length} scenes live.` });
       }
     } catch (e) {
-      // User is actively typing, don't show red error immediately unless loaded
+      // User is actively typing, don't show red error immediately
     }
   };
 
-  // Explicit Load script action
-  const handleLoadScript = () => {
+  // AI Script Generation
+  const handleGenerateScriptWithAi = async () => {
+    if (!topicInput.trim()) {
+      setValidationState({ status: 'invalid', message: 'Please enter a story topic or idea.' });
+      return;
+    }
+    setIsGeneratingScript(true);
+    setValidationState({ status: 'idle', message: '' });
+
+    try {
+      const res = await fetch('/api/animated-video/script', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          styleId: selectedStyleId,
+          topic: topicInput.trim(),
+          language: scriptLanguage,
+          targetDuration: 30,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || 'Failed to generate script');
+      }
+
+      if (data.scenes && Array.isArray(data.scenes)) {
+        setScenes(data.scenes);
+        setRawJsonText(JSON.stringify(data.scenes, null, 2));
+        setCurrentSceneIdx(0);
+        setCurrentTimeSec(0);
+        setValidationState({
+          status: 'valid',
+          message: data.mode === 'live_ai' ? 'AI generated script in JSON!' : 'Loaded customized template in JSON!',
+        });
+      }
+    } catch (err: any) {
+      setValidationState({ status: 'invalid', message: err.message || 'Script generation failed' });
+    } finally {
+      setIsGeneratingScript(false);
+    }
+  };
+
+  // THE BIG GENERATE VIDEO FROM JSON HANDLER
+  const handleGenerateVideoFromJson = async () => {
     try {
       const parsed = JSON.parse(rawJsonText);
-      if (!Array.isArray(parsed)) {
-        throw new Error('Root JSON must be an array of scenes: [ { "scene": 1, ... } ]');
+      if (!Array.isArray(parsed) || parsed.length === 0) {
+        throw new Error('Root JSON must be a non-empty array of scenes: [ { "scene": 1, ... } ]');
       }
-      if (parsed.length === 0) {
-        throw new Error('Scenes array cannot be empty. Please include at least 1 scene.');
+
+      for (let i = 0; i < parsed.length; i++) {
+        const item = parsed[i];
+        if (!item.say && !item.narration && !item.quote && !item.on_screen_text) {
+          throw new Error(`Scene #${i + 1} is missing "say" or "narration".`);
+        }
       }
+
+      setIsGeneratingVideo(true);
+      setGenerationStage(`Validating ${parsed.length} JSON scenes & timings...`);
+      await new Promise((r) => setTimeout(r, 500));
+
+      setGenerationStage(`Rendering ${activeStyle.name} visual scenes & motion...`);
+      await new Promise((r) => setTimeout(r, 600));
+
+      setGenerationStage('Syncing karaoke typography captions & speech...');
+      await new Promise((r) => setTimeout(r, 500));
+
       setScenes(parsed);
       setCurrentSceneIdx(0);
       setCurrentTimeSec(0);
-      setValidationState({ status: 'valid', message: `Success: Loaded ${parsed.length} scenes into player.` });
+      setHasGeneratedVideo(true);
+      setValidationState({
+        status: 'valid',
+        message: `✨ Video generated successfully with ${parsed.length} scenes!`,
+      });
+
+      // Smooth scroll to preview player
+      if (playerContainerRef.current) {
+        playerContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      // Start playing preview
+      setIsPlaying(true);
+      videoRef.current?.play().catch(() => {});
+      if (activeAudioUrl && audioRef.current) {
+        audioRef.current.play().catch(() => {});
+      }
     } catch (err: any) {
-      setValidationState({ status: 'invalid', message: `JSON Error: ${err.message}` });
+      setValidationState({ status: 'invalid', message: `Cannot generate video: ${err.message}` });
+    } finally {
+      setIsGeneratingVideo(false);
+      setGenerationStage('');
+    }
+  };
+
+  // Format JSON
+  const handleFormatJson = () => {
+    try {
+      const parsed = JSON.parse(rawJsonText);
+      setRawJsonText(JSON.stringify(parsed, null, 2));
+      setValidationState({ status: 'valid', message: 'JSON formatted cleanly.' });
+    } catch (err: any) {
+      setValidationState({ status: 'invalid', message: `Syntax error: ${err.message}` });
     }
   };
 
@@ -209,7 +311,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
     setRawJsonText(JSON.stringify(sample, null, 2));
     setCurrentSceneIdx(0);
     setCurrentTimeSec(0);
-    setValidationState({ status: 'valid', message: `Loaded example JSON for ${activeStyle.name}.` });
+    setValidationState({ status: 'valid', message: `Loaded example JSON for ${activeStyle.name}. Click "Generate Video from JSON" to preview!` });
   };
 
   // Clear JSON
@@ -217,6 +319,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
     setRawJsonText('[\n  \n]');
     setScenes([]);
     setValidationState({ status: 'idle', message: '' });
+    setHasGeneratedVideo(false);
   };
 
   // Upload .json file
@@ -232,7 +335,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
           const parsed = JSON.parse(content);
           if (Array.isArray(parsed)) {
             setScenes(parsed);
-            setValidationState({ status: 'valid', message: `Loaded ${parsed.length} scenes from ${file.name}.` });
+            setValidationState({ status: 'valid', message: `Loaded ${parsed.length} scenes from ${file.name}. Click "Generate Video from JSON"!` });
             setCurrentSceneIdx(0);
           }
         } catch (err: any) {
@@ -533,7 +636,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
           <button
             type="button"
             onClick={() => setIsHistoryOpen(true)}
-            className="px-3 py-1.5 rounded-xl bg-[#17142A] hover:bg-[#231E40] border border-[#2B2552] text-xs font-bold text-white flex items-center gap-1.5 transition-colors"
+            className="px-3 py-1.5 rounded-xl bg-[#17142A] hover:bg-[#231E40] border border-[#2B2552] text-xs font-bold text-white flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <History className="w-3.5 h-3.5 text-[#FFB800]" />
             <span>Generations History ({historyItems.length})</span>
@@ -575,7 +678,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                 key={st.id}
                 type="button"
                 onClick={() => handleSelectStyle(st.id)}
-                className={`shrink-0 flex flex-col items-center p-2 rounded-2xl transition-all border min-w-[125px] ${
+                className={`shrink-0 flex flex-col items-center p-2 rounded-2xl transition-all border min-w-[125px] cursor-pointer ${
                   isSelected
                     ? 'bg-[#1F193D] border-[#FFB800] shadow-[0_0_20px_rgba(255,184,0,0.3)] ring-1 ring-[#FFB800]'
                     : 'bg-[#121124] border-[#252047] hover:border-[#3E366E] text-[#9E9AB7]'
@@ -642,7 +745,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
               <button
                 type="button"
                 onClick={() => setIsPromptModalOpen(true)}
-                className="px-3.5 py-2 rounded-xl bg-[#1B1736] hover:bg-[#26214A] border border-[#2E2856] text-xs font-bold text-[#E2DEFA] flex items-center gap-1.5 transition-colors"
+                className="px-3.5 py-2 rounded-xl bg-[#1B1736] hover:bg-[#26214A] border border-[#2E2856] text-xs font-bold text-[#E2DEFA] flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <span>👁️ View prompt</span>
               </button>
@@ -650,11 +753,49 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
               <button
                 type="button"
                 onClick={handleLoadSample}
-                className="px-3.5 py-2 rounded-xl bg-[#1B1736] hover:bg-[#26214A] border border-[#2E2856] text-xs font-bold text-[#E2DEFA] flex items-center gap-1.5 transition-colors"
+                className="px-3.5 py-2 rounded-xl bg-[#1B1736] hover:bg-[#26214A] border border-[#2E2856] text-xs font-bold text-[#E2DEFA] flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#FFB800]" />
                 <span>Load example</span>
               </button>
+            </div>
+
+            {/* OPTIONAL IN-STUDIO AI TOPIC GENERATOR BAR */}
+            <div className="p-3 rounded-xl bg-[#131126] border border-[#252047] space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-[#FFB800] flex items-center gap-1.5">
+                  <Wand2 className="w-3.5 h-3.5" />
+                  <span>Generate JSON Script with AI:</span>
+                </span>
+                <select
+                  value={scriptLanguage}
+                  onChange={(e) => setScriptLanguage(e.target.value as any)}
+                  className="px-2 py-0.5 rounded bg-[#090A11] border border-[#2F2959] text-[11px] font-bold text-white outline-none focus:border-[#FFB800]"
+                >
+                  <option value="hi">Hindi (हिंदी)</option>
+                  <option value="en">English</option>
+                  <option value="hi-en">Hinglish</option>
+                </select>
+              </div>
+
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={topicInput}
+                  onChange={(e) => setTopicInput(e.target.value)}
+                  placeholder="e.g. Untold story of warrior Karna in Kurukshetra..."
+                  className="flex-1 px-3 py-2 rounded-lg bg-[#090A11] border border-[#231F3D] text-xs text-white placeholder-[#544E75] focus:outline-none focus:border-[#FFB800]"
+                />
+                <button
+                  type="button"
+                  onClick={handleGenerateScriptWithAi}
+                  disabled={isGeneratingScript}
+                  className="px-3.5 py-2 rounded-lg bg-[#241F47] hover:bg-[#322A63] border border-[#433878] text-xs font-bold text-[#FFB800] shrink-0 flex items-center gap-1.5 transition-all disabled:opacity-50 cursor-pointer"
+                >
+                  {isGeneratingScript ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 fill-[#FFB800]" />}
+                  <span>{isGeneratingScript ? 'Generating...' : 'AI Generate'}</span>
+                </button>
+              </div>
             </div>
 
             {/* Validation Banner if any */}
@@ -682,41 +823,63 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
               />
             </div>
 
-            {/* Bottom Actions Under JSON Editor (Matching Screenshot 2) */}
-            <div className="flex items-center justify-between flex-wrap gap-2 pt-1">
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleLoadScript}
-                  className="px-4 py-2 rounded-xl bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-indigo-500/20 transition-all cursor-pointer"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Load script</span>
-                </button>
+            {/* BIG PROMINENT GENERATE VIDEO FROM JSON BUTTON */}
+            <div className="space-y-2.5 pt-1">
+              <button
+                type="button"
+                onClick={handleGenerateVideoFromJson}
+                disabled={isGeneratingVideo}
+                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#FFB800] via-[#FFAE00] to-[#FF9000] hover:opacity-95 text-black font-black text-sm flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(255,184,0,0.4)] transition-all cursor-pointer disabled:opacity-50 transform active:scale-[0.99]"
+              >
+                {isGeneratingVideo ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-black" />
+                    <span>{generationStage || 'Generating Video from JSON...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4 fill-black" />
+                    <span>⚡ GENERATE VIDEO FROM JSON</span>
+                  </>
+                )}
+              </button>
 
-                <label className="px-3 py-2 rounded-xl bg-[#1A1733] hover:bg-[#252047] border border-[#2B2552] text-xs font-bold text-[#D0CCE8] flex items-center gap-1.5 cursor-pointer transition-colors">
-                  <Upload className="w-3.5 h-3.5" />
-                  <span>Upload .json</span>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".json"
-                    onChange={handleUploadJson}
-                    className="hidden"
-                  />
-                </label>
+              {/* Utility actions under JSON button */}
+              <div className="flex items-center justify-between flex-wrap gap-2 text-xs">
+                <div className="flex items-center gap-2">
+                  <label className="px-3 py-1.5 rounded-lg bg-[#1A1733] hover:bg-[#252047] border border-[#2B2552] text-xs font-bold text-[#D0CCE8] flex items-center gap-1.5 cursor-pointer transition-colors">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload .json</span>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".json"
+                      onChange={handleUploadJson}
+                      className="hidden"
+                    />
+                  </label>
 
-                <button
-                  type="button"
-                  onClick={handleClearJson}
-                  className="px-3 py-2 rounded-xl bg-[#1A1733] hover:bg-[#252047] border border-[#2B2552] text-xs font-bold text-[#A5A0C5] hover:text-white transition-colors"
-                >
-                  Clear
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={handleFormatJson}
+                    className="px-3 py-1.5 rounded-lg bg-[#1A1733] hover:bg-[#252047] border border-[#2B2552] text-xs font-bold text-[#D0CCE8] flex items-center gap-1 transition-colors cursor-pointer"
+                  >
+                    <AlignLeft className="w-3.5 h-3.5" />
+                    <span>Format</span>
+                  </button>
 
-              <div className="text-[11px] text-[#8680A6] font-mono">
-                {scenes.length} scenes • ~{totalDuration}s duration
+                  <button
+                    type="button"
+                    onClick={handleClearJson}
+                    className="px-3 py-1.5 rounded-lg bg-[#1A1733] hover:bg-[#252047] border border-[#2B2552] text-xs font-bold text-[#A5A0C5] hover:text-white transition-colors cursor-pointer"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <div className="text-[11px] text-[#8680A6] font-mono">
+                  {scenes.length} scenes • ~{totalDuration}s duration
+                </div>
               </div>
             </div>
           </div>
@@ -751,7 +914,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                     key={tab.id}
                     type="button"
                     onClick={() => setVoiceTab(tab.id)}
-                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
+                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       isActive
                         ? 'bg-[#1E193C] text-white shadow-sm border border-[#3E366E]'
                         : 'text-[#8A84AC] hover:text-white'
@@ -808,7 +971,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                       type="button"
                       onClick={handleLoadElevenVoices}
                       disabled={isLoadingVoices}
-                      className="px-4 py-2.5 rounded-xl bg-[#1B1736] hover:bg-[#28224F] border border-[#2F2959] text-xs font-bold text-white shrink-0 flex items-center gap-1.5 transition-colors disabled:opacity-50"
+                      className="px-4 py-2.5 rounded-xl bg-[#1B1736] hover:bg-[#28224F] border border-[#2F2959] text-xs font-bold text-white shrink-0 flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
                     >
                       {isLoadingVoices ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
                       <span>Load voices</span>
@@ -984,7 +1147,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                       <button
                         type="button"
                         onClick={handleStartRecording}
-                        className="px-4 py-2 rounded-xl bg-[#1B1736] hover:bg-[#252047] border border-[#2B2552] text-xs font-bold text-white flex items-center gap-2"
+                        className="px-4 py-2 rounded-xl bg-[#1B1736] hover:bg-[#252047] border border-[#2B2552] text-xs font-bold text-white flex items-center gap-2 cursor-pointer"
                       >
                         <Mic className="w-4 h-4 text-[#FFB800]" />
                         <span>Record with Mic</span>
@@ -1009,7 +1172,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                         setUploadedAudioName(null);
                         setActiveAudioUrl(null);
                       }}
-                      className="text-[#8680A6] hover:text-rose-400"
+                      className="text-[#8680A6] hover:text-rose-400 cursor-pointer"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -1032,18 +1195,25 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
         </div>
 
         {/* RIGHT COLUMN: PREVIEW PLAYER & STEP 4 (EXPORT MP4 - DEDUCTS CREDITS) (5 COLS) */}
-        <div className="lg:col-span-5 space-y-4 flex flex-col justify-between">
+        <div ref={playerContainerRef} className="lg:col-span-5 space-y-4 flex flex-col justify-between">
           <div className="p-5 rounded-2xl bg-[#0E0D1B] border border-[#231F3D] flex flex-col items-center">
             {/* Aspect Ratio Switcher */}
             <div className="w-full flex items-center justify-between mb-3 text-xs">
-              <span className="font-bold text-[#9E9AB7]">Video Preview</span>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-[#9E9AB7]">Video Preview</span>
+                {hasGeneratedVideo && (
+                  <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                    ✨ Generated
+                  </span>
+                )}
+              </div>
               <div className="flex items-center gap-1 bg-[#090A11] p-1 rounded-lg border border-[#231F3D]">
                 {(['9:16', '1:1', '16:9'] as const).map((r) => (
                   <button
                     key={r}
                     type="button"
                     onClick={() => setAspectRatio(r)}
-                    className={`px-2 py-0.5 rounded text-[10px] font-black transition-all ${
+                    className={`px-2 py-0.5 rounded text-[10px] font-black transition-all cursor-pointer ${
                       aspectRatio === r ? 'bg-[#FFB800] text-black' : 'text-[#9E9AB7] hover:text-white'
                     }`}
                   >
@@ -1154,7 +1324,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                   <button
                     type="button"
                     onClick={handleTogglePlay}
-                    className="p-1 rounded text-white hover:text-[#FFB800]"
+                    className="p-1 rounded text-white hover:text-[#FFB800] cursor-pointer"
                   >
                     {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                   </button>
@@ -1166,7 +1336,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                 <button
                   type="button"
                   onClick={() => setIsMuted(!isMuted)}
-                  className="p-1 rounded text-white hover:text-[#FFB800]"
+                  className="p-1 rounded text-white hover:text-[#FFB800] cursor-pointer"
                 >
                   {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
                 </button>
@@ -1243,7 +1413,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
               <button
                 type="button"
                 onClick={() => setIsPromptModalOpen(false)}
-                className="text-[#8680A6] hover:text-white"
+                className="text-[#8680A6] hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1267,7 +1437,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                   setIsCopiedPrompt(true);
                   setTimeout(() => setIsCopiedPrompt(false), 2000);
                 }}
-                className="px-4 py-2 rounded-xl bg-[#FFB800] text-black font-black text-xs flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl bg-[#FFB800] text-black font-black text-xs flex items-center gap-1.5 cursor-pointer"
               >
                 {isCopiedPrompt ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{isCopiedPrompt ? 'Copied to clipboard' : 'Copy Prompt'}</span>
@@ -1276,7 +1446,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
               <button
                 type="button"
                 onClick={() => setIsPromptModalOpen(false)}
-                className="px-4 py-2 rounded-xl bg-[#1B1736] text-white font-bold text-xs"
+                className="px-4 py-2 rounded-xl bg-[#1B1736] text-white font-bold text-xs cursor-pointer"
               >
                 Close
               </button>
@@ -1346,7 +1516,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
               <button
                 type="button"
                 onClick={() => setCreditErrorModal({ isOpen: false, message: '', required: 20 })}
-                className="w-full py-2 text-xs text-[#8680A6] hover:text-white font-bold"
+                className="w-full py-2 text-xs text-[#8680A6] hover:text-white font-bold cursor-pointer"
               >
                 Close
               </button>
@@ -1369,7 +1539,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
               <button
                 type="button"
                 onClick={() => setIsHistoryOpen(false)}
-                className="text-[#8680A6] hover:text-white"
+                className="text-[#8680A6] hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1426,7 +1596,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                           setSelectedStyleId(item.styleId);
                           setIsHistoryOpen(false);
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-[#1E193C] hover:bg-[#28224F] border border-[#3E366E] text-xs font-bold text-white transition-colors"
+                        className="px-3 py-1.5 rounded-lg bg-[#1E193C] hover:bg-[#28224F] border border-[#3E366E] text-xs font-bold text-white transition-colors cursor-pointer"
                       >
                         Load to Studio
                       </button>
@@ -1440,7 +1610,7 @@ export function AnimatedVideoStudio({ initialStyleId = 'mythology', onStyleChang
                             localStorage.setItem('OXFLOW_ANIMATED_VIDEO_HISTORY', JSON.stringify(updated));
                           } catch (e) {}
                         }}
-                        className="p-1.5 rounded-lg text-[#8680A6] hover:text-rose-400"
+                        className="p-1.5 rounded-lg text-[#8680A6] hover:text-rose-400 cursor-pointer"
                         title="Delete from history"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
