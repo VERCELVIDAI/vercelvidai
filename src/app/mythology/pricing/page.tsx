@@ -19,7 +19,6 @@ import {
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { DevotionalParticles } from '@/components/mythology/DevotionalParticles';
-import { MYTHOS_ADDON_PACKS } from '@/lib/mythology/mythosPlansConfig';
 
 export default function MythologyPricingPage() {
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('month');
@@ -300,58 +299,6 @@ export default function MythologyPricingPage() {
               <span>Open Free Mythology Studio</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
-          </div>
-
-          {/* Add-on Credit Packs */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#111022] border border-[#242142] space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <span className="text-xs font-bold text-amber-400 uppercase tracking-wider block">
-                  Flexible Top-ups
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-white mt-0.5">
-                  Mythos Add-on Credit Packs (Never Expire)
-                </h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Need more videos without changing your subscription? Top up credits instantly into your unified wallet.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {MYTHOS_ADDON_PACKS.map((pack) => (
-                <div
-                  key={pack.id}
-                  className="p-5 rounded-2xl border border-[#231F3D] bg-[#0E0D1C] flex flex-col justify-between space-y-4 hover:border-amber-400/40 transition-colors"
-                >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-white">
-                        {pack.name}
-                      </span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                        {pack.badge}
-                      </span>
-                    </div>
-                    <div className="mt-2 text-2xl font-black text-white font-mono">
-                      ₹{pack.priceInr.toLocaleString('en-IN')}{' '}
-                      <span className="text-xs text-slate-400 font-normal">({pack.credits} Credits)</span>
-                    </div>
-                    <p className="text-xs text-slate-400 mt-1">
-                      {pack.description}
-                    </p>
-                  </div>
-
-                  <Link
-                    href={`/checkout?pack=${pack.id}`}
-                    className="w-full py-2.5 rounded-xl bg-[#FFB800] hover:bg-[#FFA500] text-black text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
-                  >
-                    <span>Buy Credits</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Pricing FAQ */}
