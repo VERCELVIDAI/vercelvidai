@@ -36,6 +36,13 @@ interface StudioItem {
 
 const STUDIOS_MENU: StudioItem[] = [
   {
+    title: 'AI Animated Video Maker',
+    description: '7 styles, JSON script, voice & vertical MP4 video',
+    href: '/animated-video',
+    icon: Sparkles,
+    badge: 'Hot',
+  },
+  {
     title: 'Mythology Studio',
     description: 'AI vertical videos for sacred epics & Puranas',
     href: '/mythology',
