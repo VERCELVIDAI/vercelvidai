@@ -53,6 +53,14 @@ export const BRAND = {
       icon: 'Layers',
     },
     {
+      id: 'mythology',
+      name: 'Mythology Studio',
+      slug: '/mythology',
+      badge: 'Special',
+      description: 'Turn epic mythology & puranic stories into narrated, captioned vertical videos in Hindi, English & Hinglish.',
+      icon: 'Sparkles',
+    },
+    {
       id: 'canvas',
       name: 'Creative Canvas',
       slug: '/editor',
