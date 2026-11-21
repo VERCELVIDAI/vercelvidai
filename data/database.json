@@ -31,11 +31,31 @@
       "role": "admin",
       "createdAt": "2026-11-04T07:14:07.856Z",
       "updatedAt": "2026-11-04T07:14:07.856Z"
+    },
+    {
+      "id": "usr_creator_demo_1",
+      "email": "creator@fluviaflow.ai",
+      "displayName": "Aria Vance",
+      "role": "creator",
+      "createdAt": "2026-11-21T05:09:44.811Z",
+      "updatedAt": "2026-11-21T05:09:44.811Z"
+    },
+    {
+      "id": "usr_admin_master_1",
+      "email": "admin@fluviaflow.ai",
+      "displayName": "System Administrator",
+      "role": "admin",
+      "createdAt": "2026-11-21T05:09:44.811Z",
+      "updatedAt": "2026-11-21T05:09:44.811Z"
     }
   ],
   "passwords": {
     "usr_creator_demo_1": "scrypt:3927caeeab658a05b1941a7376836a6d:11b3999b9ec9337640cec6dc71e5d487b818052c2916f1ea3277a2f288264a7b7b9ccfacb3ceede116add08d47279a7fcca9e309be54a3bea239d6375c288afb",
-    "usr_admin_master_1": "scrypt:f34669aedc14729c40e9a17f0f314085:4e9d1fdb7debea6b2569e53dca0e3bdbb0e9da44dd08b763eb51a05296fa3a7f7a194204c819ba758bb7c6402eee4a045880c0f47cd5e28a423fb75b334c2686"
+    "usr_admin_master_1": "scrypt:f34669aedc14729c40e9a17f0f314085:4e9d1fdb7debea6b2569e53dca0e3bdbb0e9da44dd08b763eb51a05296fa3a7f7a194204c819ba758bb7c6402eee4a045880c0f47cd5e28a423fb75b334c2686",
+    "creator@fluviaflow.ai": "scrypt:b5311d0cc68be9ebdc14e721c95ed4a2:9d3736abf7c433fa5c983e0552c0dee17f47b3d66a16556341807129440eceac4fca9387a4ebba99c2ee10a7cb31d82f9e12c659674828f95c0ae3a98cea5971",
+    "creator@vidai.io": "scrypt:07ddac0fa03b10319262cdfad3514fff:12ab2fa12100f41384b21283bc0402ea5c5c34da71d9da14f01b6c983d310402887e287abc8ebd5ebc6845bc5bb8ede18de82d2e43d4a2e8a874c4b14a2d9878",
+    "admin@fluviaflow.ai": "scrypt:65938a0798aabc2b9ab68b51dea5cdfc:12ef95e3462774afc0db2c6cea357819ebcaa0508463a6b90435b5129f0dcd51c0caee51c2423c6ee8e7c8cdf292be4335b6b6e087a410c2e89678e486c27735",
+    "admin@vidai.io": "scrypt:fd68b04635532808edaea335238b0b1c:915820b83cd6279585b9fb53f92297cba2cdf046e1a18b610178cf0716b0c67537c3bb95435a5dd5fe7391e098e2c807f363d5ece10186ef7b240f7cd5c819e5"
   },
   "workspaces": [
     {
@@ -401,6 +421,114 @@
         "commercialLicense": true,
         "apiAccess": true,
         "supportLevel": "dedicated"
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_mythos_free",
+      "name": "Mythos Explorer",
+      "description": "Free trial to experience AI mythology storytelling for Shorts & Reels.",
+      "priceInr": 0,
+      "priceAnnualInr": 0,
+      "billingInterval": "month",
+      "creditsPerPeriod": 50,
+      "badge": "Free Trial",
+      "accentTheme": "pro",
+      "category": "individual",
+      "features": [
+        "50 Welcome Mythos Credits",
+        "1 Watermarked 30s Mythology Video",
+        "3 Core Art Styles (Classical, Pahari, Stone)",
+        "Hindi & English Narration Preview",
+        "720p Video Export with Fluvia Watermark",
+        "Public Domain Epic Story Library"
+      ],
+      "entitlements": {
+        "maxResolution": "720p",
+        "watermark": true,
+        "maxVideoLengthSec": 30,
+        "supportedModels": [
+          "gemini-flash",
+          "flux-fast"
+        ],
+        "storageMb": 500,
+        "priorityQueue": false,
+        "commercialLicense": false
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_mythos_creator",
+      "name": "Mythos Creator",
+      "description": "For creators, bhakti channels, and social media storytellers building an audience.",
+      "priceInr": 799,
+      "priceAnnualInr": 639,
+      "billingInterval": "month",
+      "creditsPerPeriod": 800,
+      "badge": "Most Popular",
+      "accentTheme": "pro",
+      "category": "individual",
+      "features": [
+        "800 Mythos Credits every month (~50 full videos)",
+        "1080p Full HD Watermark-Free MP4 Exports",
+        "All 7 Mythology Art Styles & Custom Prompts",
+        "All 4 Aspect Ratios (9:16, 4:5, 1:1, 16:9)",
+        "ElevenLabs Multilingual Neural Voices (Hindi + English)",
+        "Word-by-word Synced Karaoke Captions",
+        "Character Bible (Save up to 10 characters)",
+        "Licensed Devotional & Epic Music Library",
+        "Full Commercial Monetization License",
+        "Automated GST Tax Invoicing (18% ITC)"
+      ],
+      "entitlements": {
+        "maxResolution": "1080p",
+        "watermark": false,
+        "maxVideoLengthSec": 45,
+        "supportedModels": [
+          "gemini-flash",
+          "flux-pro",
+          "elevenlabs-multilingual"
+        ],
+        "storageMb": 10000,
+        "priorityQueue": true,
+        "commercialLicense": true
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_mythos_pro",
+      "name": "Mythos Studio Pro",
+      "description": "For production studios, YouTube creators, and high-frequency devotional media brands.",
+      "priceInr": 1999,
+      "priceAnnualInr": 1599,
+      "billingInterval": "month",
+      "creditsPerPeriod": 2500,
+      "badge": "Studio Grade",
+      "accentTheme": "max",
+      "category": "individual",
+      "features": [
+        "2,500 Mythos Credits every month (~150 videos)",
+        "Hero Scene Video Animation (Image-to-Video)",
+        "Multi-Episode Series Manager (Ramayan/Mahabharat)",
+        "Unlimited Character Bible with Reference Images",
+        "Up to 60s Video Clips per Generation",
+        "Priority Cloud Rendering Queue (No Waiting)",
+        "Automated Viral Metadata Pack (Title, Tags, Thumbnails)",
+        "Priority VIP WhatsApp & Email Support"
+      ],
+      "entitlements": {
+        "maxResolution": "1080p",
+        "watermark": false,
+        "maxVideoLengthSec": 60,
+        "supportedModels": [
+          "gemini-flash",
+          "flux-pro",
+          "elevenlabs-multilingual",
+          "seedance-i2v"
+        ],
+        "storageMb": 30000,
+        "priorityQueue": true,
+        "commercialLicense": true
       },
       "isActive": true
     }
@@ -1140,8 +1268,88 @@
     }
   ],
   "payuOrders": [],
-  "invoices": [],
-  "receipts": [],
+  "invoices": [
+    {
+      "id": "inv_30ro18bt3",
+      "invoiceNumber": "INV-2026-0001",
+      "orderId": "order_rzp_mock_123",
+      "txnid": "pay_rzp_mock_456",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "supplier": {
+        "legalName": "Fluvia Flow Technologies Private Limited",
+        "tradeName": "Fluvia Flow",
+        "registeredAddress": "Level 4, Horizon Creative Hub, Connaught Place, New Delhi 110001",
+        "state": "Delhi",
+        "gstin": "07AAAAA0000A1Z5",
+        "pan": "AAAAA0000A",
+        "supportEmail": "billing@fluviaflow.ai",
+        "website": "https://fluviaflow.ai",
+        "isGstRegistered": true
+      },
+      "customer": {
+        "name": "Aria Vance",
+        "email": "creator@vidai.io",
+        "phone": "9999999999",
+        "state": "Delhi"
+      },
+      "items": [
+        {
+          "id": "itm_1",
+          "description": "Fluvia Starter Plan Subscription",
+          "hsnSacCode": "998314",
+          "quantity": 1,
+          "unitPrice": 999,
+          "taxableValue": 999,
+          "gstRate": 0,
+          "cgstAmount": 0,
+          "sgstAmount": 0,
+          "igstAmount": 0,
+          "totalAmount": 999
+        }
+      ],
+      "baseAmount": 999,
+      "taxAmount": 0,
+      "cgstAmount": 0,
+      "sgstAmount": 0,
+      "igstAmount": 0,
+      "totalAmount": 999,
+      "currency": "INR",
+      "status": "paid",
+      "issueDate": "2026-11-04T07:14:07.856Z",
+      "dueDate": "2026-11-04T07:14:07.856Z",
+      "paymentDate": "2026-11-04T07:14:07.856Z",
+      "payuPaymentId": "pay_rzp_mock_456",
+      "terms": "Payment received. Subject to terms at fluviaflow.ai/terms.",
+      "notes": "Thank you for your business. Official tax invoice.",
+      "createdAt": "2026-11-04T07:14:07.856Z",
+      "updatedAt": "2026-11-04T07:14:07.856Z"
+    }
+  ],
+  "receipts": [
+    {
+      "id": "rcp_nq5cw5m9m",
+      "receiptNumber": "RCP-2026-0001",
+      "orderId": "order_rzp_mock_123",
+      "txnid": "pay_rzp_mock_456",
+      "invoiceId": "inv_30ro18bt3",
+      "invoiceNumber": "INV-2026-0001",
+      "userId": "usr_creator_demo_1",
+      "workspaceId": "ws_creator_demo_1",
+      "customerName": "Aria Vance",
+      "customerEmail": "creator@vidai.io",
+      "amountReceived": 999,
+      "currency": "INR",
+      "paymentMethod": "Online Payment",
+      "payuMihpayid": "pay_rzp_mock_456",
+      "productPurchased": "Fluvia Starter Plan Subscription",
+      "paymentDate": "2026-11-04T07:14:07.856Z",
+      "paymentStatus": "verified_success",
+      "verificationReference": "VERIFIED-pay_starter_1",
+      "footerNotice": "Official payment receipt.",
+      "createdAt": "2026-11-04T07:14:07.856Z"
+    }
+  ],
   "creditNotes": [],
   "coupons": [
     {
@@ -1264,5 +1472,9 @@
     "supportEmail": "billing@fluviaflow.ai",
     "website": "https://fluviaflow.ai",
     "isGstRegistered": true
-  }
+  },
+  "mythProjects": [],
+  "mythCharacters": [],
+  "mythSeries": [],
+  "passwordResetTokens": {}
 }

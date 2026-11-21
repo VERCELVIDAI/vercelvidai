@@ -32,6 +32,9 @@ import {
   SupplierLegalDetails,
   Coupon,
   CouponRedemption,
+  MythProject,
+  MythCharacter,
+  MythSeries,
 } from '../types';
 
 interface DatabaseSchema {
@@ -68,6 +71,9 @@ interface DatabaseSchema {
   creatorFollows?: Record<string, string[]>;
   publishedTemplates?: any[];
   voxMotionUsage?: Record<string, { usedCount: number; lastGeneratedAt: string; generatedProjectIds: string[] }>;
+  mythProjects?: MythProject[];
+  mythCharacters?: MythCharacter[];
+  mythSeries?: MythSeries[];
 }
 
 // Determine writable data directory (handles Vercel / serverless read-only filesystem gracefully)
@@ -3799,6 +3805,193 @@ class Store {
       canGenerate: isPaid || remaining > 0,
       isPaid,
     };
+  }
+
+  // ==========================================
+  // MYTHOLOGY STUDIO METHODS
+  // ==========================================
+
+  getMythProjects(userId: string): MythProject[] {
+    const db = this.load();
+    const projects = db.mythProjects || [];
+    return projects
+      .filter((p) => p.userId === userId)
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  }
+
+  getMythProjectById(id: string): MythProject | undefined {
+    const db = this.load();
+    const projects = db.mythProjects || [];
+    return projects.find((p) => p.id === id);
+  }
+
+  createMythProject(data: Partial<MythProject> & { userId: string; title: string }): MythProject {
+    const db = this.load();
+    if (!db.mythProjects) db.mythProjects = [];
+
+    const now = new Date().toISOString();
+    const project: MythProject = {
+      id: `myth_proj_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      userId: data.userId,
+      workspaceId: data.workspaceId || `ws_${data.userId}`,
+      title: data.title || 'Untitled Mythology Epic',
+      storyConcept: data.storyConcept || '',
+      sourceNote: data.sourceNote,
+      culture: data.culture || 'hindu_epic',
+      language: data.language || 'hi',
+      targetDurationSec: data.targetDurationSec || 30,
+      tone: data.tone || 'devotional',
+      artStyleId: data.artStyleId || 'classical_oil_painting',
+      voiceId: data.voiceId || 'voice_devotional_hindi_m',
+      bgmMoodId: data.bgmMoodId || 'bgm_vedic_flute',
+      characterBible: data.characterBible || [],
+      scenes: data.scenes || [],
+      status: data.status || 'draft',
+      currentStep: data.currentStep || 1,
+      exportedVideos: data.exportedVideos || [],
+      thumbnailUrl: data.thumbnailUrl,
+      seriesId: data.seriesId,
+      viralPack: data.viralPack,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.mythProjects.push(project);
+    this.save(db);
+    return project;
+  }
+
+  updateMythProject(id: string, updates: Partial<MythProject>): MythProject {
+    const db = this.load();
+    if (!db.mythProjects) db.mythProjects = [];
+
+    const idx = db.mythProjects.findIndex((p) => p.id === id);
+    if (idx === -1) {
+      throw new Error(`Mythology project with ID "${id}" not found.`);
+    }
+
+    const current = db.mythProjects[idx];
+    const updated: MythProject = {
+      ...current,
+      ...updates,
+      id: current.id, // Prevent overriding immutable primary key
+      userId: current.userId, // Prevent overriding ownership
+      updatedAt: new Date().toISOString(),
+    };
+
+    db.mythProjects[idx] = updated;
+    this.save(db);
+    return updated;
+  }
+
+  deleteMythProject(id: string, userId: string): boolean {
+    const db = this.load();
+    if (!db.mythProjects) return false;
+
+    const initialLength = db.mythProjects.length;
+    db.mythProjects = db.mythProjects.filter((p) => !(p.id === id && p.userId === userId));
+
+    if (db.mythProjects.length !== initialLength) {
+      this.save(db);
+      return true;
+    }
+    return false;
+  }
+
+  getMythCharacters(userId: string): MythCharacter[] {
+    const db = this.load();
+    const chars = db.mythCharacters || [];
+    return chars.filter((c) => !c.userId || c.userId === userId);
+  }
+
+  saveMythCharacter(character: MythCharacter): MythCharacter {
+    const db = this.load();
+    if (!db.mythCharacters) db.mythCharacters = [];
+
+    const now = new Date().toISOString();
+    const existingIdx = db.mythCharacters.findIndex((c) => c.id === character.id);
+
+    if (existingIdx >= 0) {
+      db.mythCharacters[existingIdx] = {
+        ...db.mythCharacters[existingIdx],
+        ...character,
+        updatedAt: now,
+      };
+      this.save(db);
+      return db.mythCharacters[existingIdx];
+    } else {
+      const created: MythCharacter = {
+        ...character,
+        id: character.id || `myth_char_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        createdAt: now,
+        updatedAt: now,
+      };
+      db.mythCharacters.push(created);
+      this.save(db);
+      return created;
+    }
+  }
+
+  deleteMythCharacter(id: string, userId: string): boolean {
+    const db = this.load();
+    if (!db.mythCharacters) return false;
+
+    const initialLength = db.mythCharacters.length;
+    db.mythCharacters = db.mythCharacters.filter((c) => !(c.id === id && c.userId === userId));
+
+    if (db.mythCharacters.length !== initialLength) {
+      this.save(db);
+      return true;
+    }
+    return false;
+  }
+
+  getMythSeries(userId: string): MythSeries[] {
+    const db = this.load();
+    const series = db.mythSeries || [];
+    return series.filter((s) => s.userId === userId);
+  }
+
+  saveMythSeries(series: MythSeries): MythSeries {
+    const db = this.load();
+    if (!db.mythSeries) db.mythSeries = [];
+
+    const now = new Date().toISOString();
+    const existingIdx = db.mythSeries.findIndex((s) => s.id === series.id);
+
+    if (existingIdx >= 0) {
+      db.mythSeries[existingIdx] = {
+        ...db.mythSeries[existingIdx],
+        ...series,
+        updatedAt: now,
+      };
+      this.save(db);
+      return db.mythSeries[existingIdx];
+    } else {
+      const created: MythSeries = {
+        ...series,
+        id: series.id || `myth_series_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        createdAt: now,
+        updatedAt: now,
+      };
+      db.mythSeries.push(created);
+      this.save(db);
+      return created;
+    }
+  }
+
+  deleteMythSeries(id: string, userId: string): boolean {
+    const db = this.load();
+    if (!db.mythSeries) return false;
+
+    const initialLength = db.mythSeries.length;
+    db.mythSeries = db.mythSeries.filter((s) => !(s.id === id && s.userId === userId));
+
+    if (db.mythSeries.length !== initialLength) {
+      this.save(db);
+      return true;
+    }
+    return false;
   }
 }
 
