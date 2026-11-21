@@ -116,6 +116,109 @@ export function Step1Story({
         </button>
       </div>
 
+      {/* 4 FEATURED VIDEO TEMPLATES (ACTUAL UPLOADED VIDEOS) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-amber-500" />
+            <span>Featured Video Templates</span>
+            <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+              1-Click Instant Script & Visuals
+            </span>
+          </h3>
+          <span className="text-xs text-slate-500 hidden sm:inline">Click to pre-fill entire storyline</span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            {
+              id: 'tmpl_shiva',
+              title: 'Mahadev Shiva Tandava',
+              source: 'Shiva Purana, Rudra Samhita',
+              concept: 'Lord Shiva performing cosmic Tandava dance on sacred Mount Kailash with celestial third-eye glow, crescent moon on matted locks, river Ganga flow, and cosmic Damru rhythms.',
+              culture: 'hindu_puranic' as const,
+              tone: 'heroic' as const,
+              poster: '/media/mythology/mythos-template-1.jpg',
+              duration: '78s',
+              tag: '#Mahadev',
+            },
+            {
+              id: 'tmpl_ram',
+              title: 'Shri Ram & Ayodhya Dham',
+              source: 'Valmiki Ramayana, Balakanda',
+              concept: 'Lord Rama holding divine Kodanda bow in radiant golden Ayodhya sunrise, radiating boundless compassion and Dharma.',
+              culture: 'hindu_epic' as const,
+              tone: 'devotional' as const,
+              poster: '/media/mythology/mythos-template-2.jpg',
+              duration: '108s',
+              tag: '#ShriRam',
+            },
+            {
+              id: 'tmpl_krishna',
+              title: 'Shri Krishna Vishwaroop',
+              source: 'Srimad Bhagavad Gita, Chapter 11',
+              concept: 'Lord Krishna revealing the infinite cosmic Vishwaroop to warrior Arjuna in the middle of Kurukshetra battlefield.',
+              culture: 'hindu_epic' as const,
+              tone: 'cosmic' as const,
+              poster: '/media/mythology/mythos-template-3.jpg',
+              duration: '179s',
+              tag: '#Vishwaroop',
+            },
+            {
+              id: 'tmpl_hanuman',
+              title: 'Veer Hanuman Sanjeevani',
+              source: 'Valmiki Ramayana, Yuddha Kanda',
+              concept: 'Veer Hanuman leaping across starlit skies carrying luminous Dronagiri herbal mountain on right palm with fearless devotion.',
+              culture: 'hindu_epic' as const,
+              tone: 'heroic' as const,
+              poster: '/media/mythology/mythos-template-4.jpg',
+              duration: '135s',
+              tag: '#Sanjeevani',
+            },
+          ].map((tmpl) => {
+            const isSelected = selectedPresetId === tmpl.id;
+            return (
+              <button
+                key={tmpl.id}
+                type="button"
+                onClick={() => {
+                  setSelectedPresetId(tmpl.id);
+                  onChange({
+                    storyConcept: tmpl.concept,
+                    sourceNote: tmpl.source,
+                    culture: tmpl.culture,
+                    tone: tmpl.tone,
+                  });
+                }}
+                className={`group relative rounded-2xl p-2.5 text-left border-2 transition-all cursor-pointer overflow-hidden flex flex-col justify-between ${
+                  isSelected
+                    ? 'border-amber-500 bg-amber-500/10 shadow-lg ring-2 ring-amber-400'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-amber-400'
+                }`}
+              >
+                <div className="relative aspect-[9/14] w-full rounded-xl overflow-hidden mb-2 bg-slate-900">
+                  <img
+                    src={tmpl.poster}
+                    alt={tmpl.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[9px] font-black text-amber-300">
+                    {tmpl.duration}
+                  </span>
+                  <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-amber-500 text-black text-[9px] font-black">
+                    {tmpl.tag}
+                  </span>
+                </div>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-amber-600 transition-colors">
+                  {tmpl.title}
+                </h4>
+                <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5">{tmpl.source}</p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Main Story Concept Input */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">

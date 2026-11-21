@@ -33,11 +33,17 @@ async function runMythologyTests() {
 
   // 2. Plan Configuration & Credit Economics Tests
   console.log('\n2. Plan Configuration & Unit Economics:');
-  assert('Mythos plans exist in config', MYTHOS_PLANS.length === 3);
+  assert('Mythos plans exist in config', MYTHOS_PLANS.length === 4);
 
-  const creatorPlan = MYTHOS_PLANS.find((p) => p.id === 'plan_mythos_creator');
-  assert('Mythos Creator plan is ₹799 with 800 credits', creatorPlan?.priceInr === 799 && creatorPlan?.creditsPerPeriod === 800);
-  assert('Mythos Creator provides watermark-free 1080p exports', creatorPlan?.entitlements.watermark === false && creatorPlan?.entitlements.maxResolution === '1080p');
+  const plan10 = MYTHOS_PLANS.find((p) => p.id === 'plan_mythos_10');
+  assert('Mythos 10 Videos plan is ₹5,100 with 200 credits', plan10?.priceInr === 5100 && plan10?.creditsPerPeriod === 200);
+
+  const plan20 = MYTHOS_PLANS.find((p) => p.id === 'plan_mythos_20');
+  assert('Mythos 20 Videos special plan is ₹7,999 with 450 credits', plan20?.priceInr === 7999 && plan20?.creditsPerPeriod === 450);
+  assert('Mythos 20 Videos provides watermark-free 1080p exports', plan20?.entitlements.watermark === false && plan20?.entitlements.maxResolution === '1080p');
+
+  const plan50 = MYTHOS_PLANS.find((p) => p.id === 'plan_mythos_50');
+  assert('Mythos 50 Videos studio plan is ₹16,999 with 1200 credits', plan50?.priceInr === 16999 && plan50?.creditsPerPeriod === 1200);
 
   const costStandard = calculateMythosProjectCredits({ scenesCount: 5, hasVoiceover: true, animatedHeroScenesCount: 0 });
   assert('Standard 5-scene 30s video costs exactly 16 credits', costStandard === 16);

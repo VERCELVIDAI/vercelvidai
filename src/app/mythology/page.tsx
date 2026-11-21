@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
+import { DevotionalParticles } from '@/components/mythology/DevotionalParticles';
 import { MYTH_ART_STYLES, PURANIC_STORY_PRESETS } from '@/lib/mythology/constants';
 import { MythologyPlayerModal } from '@/components/mythology/MythologyPlayerModal';
 import { CULTURAL_DISCLAIMER_TEXT, CULTURAL_DISCLAIMER_HINDI } from '@/lib/mythology/moderation';
@@ -44,38 +45,38 @@ export default function MythologyLandingPage() {
   const SAMPLE_REELS = [
     {
       id: 'reel_1',
-      title: isHindi ? 'हनुमान जी और संजीवनी पर्वत' : 'Hanuman Leaps for Sanjeevani',
-      source: 'Valmiki Ramayana, Yuddha Kanda',
-      style: 'Classical Oil Realism',
-      posterUrl: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80',
-      videoUrl: '/demos/vidai-astronaut-spacewalk.mp4',
-      badge: 'Trending #1',
+      title: isHindi ? 'भगवान शिव का आनंद तांडव' : 'Mahadev Shiva Tandava & Kailash Stuti',
+      source: 'Shiva Purana, Rudra Samhita',
+      style: 'Classical Indian Oil',
+      posterUrl: '/media/mythology/mythos-template-1.jpg',
+      videoUrl: '/media/mythology/mythos-template-1.mp4',
+      badge: 'Viral #1',
     },
     {
       id: 'reel_2',
-      title: isHindi ? 'कुरुक्षेत्र: श्रीकृष्ण का विराट स्वरूप' : 'Krishna Unveils the Cosmic Viswaroopa',
-      source: 'Mahabharata, Bhishma Parva',
-      style: 'Cinematic Epic 8K',
-      posterUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80',
-      videoUrl: '/demos/vidai-cyberpunk-superbike.mp4',
-      badge: 'Most Shared',
+      title: isHindi ? 'मर्यादा पुरुषोत्तम श्री राम व अयोध्या धाम' : 'Maryada Purushottam Shri Ram & Ayodhya Dham',
+      source: 'Valmiki Ramayana, Balakanda',
+      style: 'Tanjore Gold Leaf',
+      posterUrl: '/media/mythology/mythos-template-2.jpg',
+      videoUrl: '/media/mythology/mythos-template-2.mp4',
+      badge: 'Trending',
     },
     {
       id: 'reel_3',
-      title: isHindi ? 'भगवान नृसिंह का खंभे से प्राकट्य' : 'Lord Narasimha Shatters the Pillar',
-      source: 'Srimad Bhagavata Purana',
-      style: 'Tanjore Gold Leaf',
-      posterUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&auto=format&fit=crop&q=80',
-      videoUrl: '/demos/vidai-jungle-expedition.mp4',
-      badge: 'Viral Hook',
+      title: isHindi ? 'कुरुक्षेत्र: श्रीकृष्ण का विराट स्वरूप' : 'Krishna Unveils the Cosmic Vishwaroop',
+      source: 'Srimad Bhagavad Gita, Chapter 11',
+      style: 'Cinematic Epic 8K',
+      posterUrl: '/media/mythology/mythos-template-3.jpg',
+      videoUrl: '/media/mythology/mythos-template-3.mp4',
+      badge: 'Most Shared',
     },
     {
       id: 'reel_4',
-      title: isHindi ? 'भगवान शिव का आनंद तांडव' : 'Shiva’s Cosmic Tandava Dance',
-      source: 'Shiva Purana',
-      style: 'Dark Fantasy Mythos',
-      posterUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80',
-      videoUrl: '/demos/vidai-snow-avalanche.mp4',
+      title: isHindi ? 'संकट मोचन वीर हनुमान व संजीवनी पर्वत' : 'Sankat Mochan Veer Hanuman & Sanjeevani Mountain',
+      source: 'Valmiki Ramayana, Yuddha Kanda',
+      style: 'Anime Epic / Graphic',
+      posterUrl: '/media/mythology/mythos-template-4.jpg',
+      videoUrl: '/media/mythology/mythos-template-4.mp4',
       badge: 'Staff Pick',
     },
   ];
@@ -118,7 +119,8 @@ export default function MythologyLandingPage() {
 
       {/* Hero Section */}
       <section className="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden">
-        {/* Glow Effects */}
+        {/* Glow Effects & Floating Embers */}
+        <DevotionalParticles count={16} />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-amber-500/15 via-indigo-500/10 to-transparent blur-3xl pointer-events-none rounded-full" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 text-center space-y-6">
@@ -435,8 +437,8 @@ export default function MythologyLandingPage() {
           </h2>
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
             {isHindi
-              ? 'मुफ्त परीक्षण से शुरुआत करें अथवा क्रिएटर प्लान लेकर 1080p वॉटरमार्क-मुक्त वीडियो बनाएं।'
-              : 'Start free with 1 watermarked trial video, or upgrade to Mythos Creator at ₹799/month for watermark-free 1080p Full HD exports.'}
+              ? 'मुफ्त परीक्षण से शुरुआत करें अथवा 10 वीडियो प्लान (₹5,100), स्पेशल क्रिएटर प्लान (₹7,999/माह - 20 वीडियो), या 50 वीडियो का स्टूडियो प्लान चुनें।'
+              : 'Choose our 10 Videos Plan (₹5,100), Special Creator Plan (20 Videos at ₹7,999/mo), or Studio Scale (50 Videos) with 1080p watermark-free exports.'}
           </p>
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">

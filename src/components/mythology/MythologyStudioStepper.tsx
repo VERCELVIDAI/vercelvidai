@@ -28,6 +28,7 @@ import { Step7Export } from './steps/Step7Export';
 import { MythProject, MythScene, MythCharacter, MythAudioTrack } from '@/lib/mythology/types';
 import { calculateMythosProjectCredits } from '@/lib/mythology/mythosPlansConfig';
 import { CULTURAL_DISCLAIMER_TEXT } from '@/lib/mythology/moderation';
+import { DevotionalParticles } from './DevotionalParticles';
 
 const STEPS = [
   { step: 1, label: 'Story', icon: BookOpen },
@@ -95,6 +96,61 @@ export function MythologyStudioStepper({ initialProject }: StepperProps) {
 
     return () => clearTimeout(timer);
   }, [project, currentStep]);
+
+  // Pre-load story when navigating with ?template= or ?preset=
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const tmpl = params.get('template');
+      if (tmpl) {
+        if (tmpl === 'shiva') {
+          setProject((prev) => ({
+            ...prev,
+            title: 'Mahadev Shiva Tandava & Kailash Stuti',
+            storyConcept: 'Lord Shiva performing cosmic Tandava dance on sacred Mount Kailash with celestial third-eye glow, crescent moon on matted locks, river Ganga flow, and cosmic Damru rhythms.',
+            sourceNote: 'Shiva Purana, Rudra Samhita',
+            culture: 'hindu_puranic',
+            tone: 'heroic',
+            artStyleId: 'classical_oil_painting',
+            language: 'hi',
+          }));
+        } else if (tmpl === 'ram') {
+          setProject((prev) => ({
+            ...prev,
+            title: 'Maryada Purushottam Shri Ram & Ayodhya Dham',
+            storyConcept: 'Lord Rama holding divine Kodanda bow in radiant golden Ayodhya sunrise, radiating boundless compassion and Dharma.',
+            sourceNote: 'Valmiki Ramayana, Balakanda',
+            culture: 'hindu_epic',
+            tone: 'devotional',
+            artStyleId: 'tanjore_gold_leaf',
+            language: 'hi',
+          }));
+        } else if (tmpl === 'krishna') {
+          setProject((prev) => ({
+            ...prev,
+            title: 'Shri Krishna Gita Vishwaroop Darshan',
+            storyConcept: 'Lord Krishna revealing the infinite cosmic Vishwaroop to warrior Arjuna in the middle of Kurukshetra battlefield.',
+            sourceNote: 'Srimad Bhagavad Gita, Chapter 11',
+            culture: 'hindu_epic',
+            tone: 'cosmic',
+            artStyleId: 'cinematic_epic',
+            language: 'hi',
+          }));
+        } else if (tmpl === 'hanuman') {
+          setProject((prev) => ({
+            ...prev,
+            title: 'Sankat Mochan Veer Hanuman & Sanjeevani Mountain',
+            storyConcept: 'Veer Hanuman leaping across starlit skies carrying luminous Dronagiri herbal mountain on right palm with fearless devotion.',
+            sourceNote: 'Valmiki Ramayana, Yuddha Kanda',
+            culture: 'hindu_epic',
+            tone: 'heroic',
+            artStyleId: 'anime_epic',
+            language: 'hi',
+          }));
+        }
+      }
+    } catch {}
+  }, []);
 
   const updateProject = (updates: Partial<MythProject>) => {
     setProject((prev) => ({ ...prev, ...updates, updatedAt: new Date().toISOString() }));
@@ -209,7 +265,8 @@ export function MythologyStudioStepper({ initialProject }: StepperProps) {
       </nav>
 
       {/* Main Studio Viewport */}
-      <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8 relative">
+        <DevotionalParticles count={14} className="opacity-60" />
         {currentStep === 1 && (
           <Step1Story
             storyConcept={project.storyConcept}

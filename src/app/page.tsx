@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { LiveCrazyBackground } from '@/components/home/LiveCrazyBackground';
+import { HomeMythologyShowcase } from '@/components/home/HomeMythologyShowcase';
 import {
   Sparkles,
   ArrowRight,
@@ -1361,85 +1362,9 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 1.8 FLUVIA MYTHOS: SACRED MYTHOLOGY VIDEO STUDIO */}
+        {/* 1.8 FLUVIA MYTHOS: SACRED MYTHOLOGY VIDEO STUDIO SHOWCASE */}
         {/* ========================================================================= */}
-        <section className="py-20 bg-gradient-to-b from-[#FFFDF9] via-[#FFF9EE] to-[#FFFFFF] border-b border-amber-200/60 relative overflow-hidden">
-          <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
-            <div className="text-center max-w-3xl mx-auto space-y-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-xs font-bold text-amber-800 shadow-xs">
-                <span className="flex h-2 w-2 relative shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-600" />
-                </span>
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>New Dedicated Studio • Ramayana, Mahabharata & World Legends</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Turn Sacred Epics into <span className="bg-gradient-to-r from-amber-600 via-orange-600 to-indigo-600 bg-clip-text text-transparent">Viral Vertical Videos</span>
-              </h2>
-
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                Fluvia Mythos delivers full 7-step automated mythology video creation. Character bibles for deity consistency, 7 authentic Indian art styles, multi-scene pacing, and bilingual neural voiceovers synced with Noto Sans Devanagari karaoke captions.
-              </p>
-
-              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/mythology/studio"
-                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-indigo-600 hover:opacity-95 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 group"
-                >
-                  <Sparkles className="w-4 h-4 text-amber-200" />
-                  <span>Launch Mythology Studio</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-
-                <Link
-                  href="/mythology"
-                  className="px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm border border-slate-300 transition-all flex items-center gap-2 shadow-xs"
-                >
-                  <span>Explore Showcase & Presets</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Feature Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-6 rounded-2xl bg-white border border-amber-200/80 shadow-sm hover:border-amber-400 transition-all space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 font-black text-lg">
-                  🎨
-                </div>
-                <h3 className="font-bold text-slate-900 text-base">7 Curated Traditional Styles</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Tanjore Gold Leaf, Pahari Miniature, Classical Indian Oil, Anime Epic, and Dark Fantasy. Tested prompt engineering prefixes guaranteed to capture sacred reverence.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-amber-200/80 shadow-sm hover:border-amber-400 transition-all space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 font-black text-lg">
-                  🎙️
-                </div>
-                <h3 className="font-bold text-slate-900 text-base">Bilingual Voices & Karaoke Sync</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Deep Hindi & English narrator voices with word-level timestamps. Word-by-word karaoke highlight in Noto Sans Devanagari with licensed temple shankh and war drums.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-amber-200/80 shadow-sm hover:border-amber-400 transition-all space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 font-black text-lg">
-                  🛡️
-                </div>
-                <h3 className="font-bold text-slate-900 text-base">Character Bible & Dignity Filter</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Persist deity appearances, vahanas, and weapons across multi-episode series. Built-in moderation guards against mockery, vulgarity, and political distortion.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HomeMythologyShowcase />
 
         {/* ========================================================================= */}
         {/* 2. HIGHLIGHTED FREE PDF CREATIVE & UTILITY STUDIO SUITE */}

@@ -458,27 +458,25 @@
       "isActive": true
     },
     {
-      "id": "plan_mythos_creator",
-      "name": "Mythos Creator",
-      "description": "For creators, bhakti channels, and social media storytellers building an audience.",
-      "priceInr": 799,
-      "priceAnnualInr": 639,
+      "id": "plan_mythos_10",
+      "name": "Mythos 10 Videos",
+      "description": "Ideal for devotional channels and creators posting weekly mythology stories.",
+      "priceInr": 5100,
+      "priceAnnualInr": 4080,
       "billingInterval": "month",
-      "creditsPerPeriod": 800,
-      "badge": "Most Popular",
+      "creditsPerPeriod": 200,
+      "badge": "10 Videos / Mo",
       "accentTheme": "pro",
       "category": "individual",
       "features": [
-        "800 Mythos Credits every month (~50 full videos)",
+        "10 Full Mythology Videos per month (200 credits)",
         "1080p Full HD Watermark-Free MP4 Exports",
         "All 7 Mythology Art Styles & Custom Prompts",
-        "All 4 Aspect Ratios (9:16, 4:5, 1:1, 16:9)",
         "ElevenLabs Multilingual Neural Voices (Hindi + English)",
-        "Word-by-word Synced Karaoke Captions",
-        "Character Bible (Save up to 10 characters)",
-        "Licensed Devotional & Epic Music Library",
-        "Full Commercial Monetization License",
-        "Automated GST Tax Invoicing (18% ITC)"
+        "Word-by-word Synced Karaoke Captions in Devanagari",
+        "Licensed Temple Shankh, Flute & War Drums BGM",
+        "Full Commercial Rights for YouTube & Instagram Reels",
+        "Automated GST Tax Invoicing (18% ITC Included)"
       ],
       "entitlements": {
         "maxResolution": "1080p",
@@ -496,25 +494,27 @@
       "isActive": true
     },
     {
-      "id": "plan_mythos_pro",
-      "name": "Mythos Studio Pro",
-      "description": "For production studios, YouTube creators, and high-frequency devotional media brands.",
-      "priceInr": 1999,
-      "priceAnnualInr": 1599,
+      "id": "plan_mythos_20",
+      "name": "Mythos Special Creator (20 Videos)",
+      "description": "Special creator plan with 20 videos, 4K upscale, hero scene animations & character consistency.",
+      "priceInr": 7999,
+      "priceAnnualInr": 6399,
       "billingInterval": "month",
-      "creditsPerPeriod": 2500,
-      "badge": "Studio Grade",
+      "creditsPerPeriod": 450,
+      "badge": "Special Plan • 20 Videos",
       "accentTheme": "max",
       "category": "individual",
       "features": [
-        "2,500 Mythos Credits every month (~150 videos)",
-        "Hero Scene Video Animation (Image-to-Video)",
-        "Multi-Episode Series Manager (Ramayan/Mahabharat)",
-        "Unlimited Character Bible with Reference Images",
-        "Up to 60s Video Clips per Generation",
-        "Priority Cloud Rendering Queue (No Waiting)",
-        "Automated Viral Metadata Pack (Title, Tags, Thumbnails)",
-        "Priority VIP WhatsApp & Email Support"
+        "20 Full Mythology Videos per month (450 credits)",
+        "1080p Full HD Watermark-Free + 4K AI Upscale",
+        "Hero Scene Video Animations (Image-to-Video Engine)",
+        "Character Bible Lock (Rama, Krishna, Shiva, Hanuman)",
+        "All 7 Art Styles + Custom Deity Prompt Engine",
+        "ElevenLabs HD Voices with Emotion Pacing",
+        "Word-by-word Synced Karaoke in Noto Sans Devanagari",
+        "1-Click Viral Social Metadata Pack (Hooks & Hashtags)",
+        "Priority GPU Cloud Render Queue",
+        "Automated GST Tax Invoicing (18% ITC Included)"
       ],
       "entitlements": {
         "maxResolution": "1080p",
@@ -526,7 +526,44 @@
           "elevenlabs-multilingual",
           "seedance-i2v"
         ],
-        "storageMb": 30000,
+        "storageMb": 25000,
+        "priorityQueue": true,
+        "commercialLicense": true
+      },
+      "isActive": true
+    },
+    {
+      "id": "plan_mythos_50",
+      "name": "Mythos Studio Scale (50 Videos)",
+      "description": "High-volume production tier for media houses, devotional studios, and daily channels.",
+      "priceInr": 16999,
+      "priceAnnualInr": 13599,
+      "billingInterval": "month",
+      "creditsPerPeriod": 1200,
+      "badge": "Studio Scale • 50 Videos",
+      "accentTheme": "max",
+      "category": "individual",
+      "features": [
+        "50 Full Mythology Videos per month (1,200 credits)",
+        "Up to 60s per video with multi-character dialogues",
+        "Multi-Episode Epic Series Manager (Ramayan/Mahabharat)",
+        "Unlimited Character Bible with Reference Image Anchoring",
+        "Dedicated High-Speed Cloud Render Cluster",
+        "Full Commercial Agency & Broadcast Monetization License",
+        "Automated GST Tax Invoicing (18% ITC Included)",
+        "VIP Priority WhatsApp & Direct Video Architect Support"
+      ],
+      "entitlements": {
+        "maxResolution": "1080p",
+        "watermark": false,
+        "maxVideoLengthSec": 60,
+        "supportedModels": [
+          "gemini-flash",
+          "flux-pro",
+          "elevenlabs-multilingual",
+          "seedance-i2v"
+        ],
+        "storageMb": 60000,
         "priorityQueue": true,
         "commercialLicense": true
       },

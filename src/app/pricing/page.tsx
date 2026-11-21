@@ -57,7 +57,7 @@ interface PlanCardData {
   id: string;
   title: string;
   subtitle: string;
-  category: 'individual' | 'business' | 'openhiggs';
+  category: 'individual' | 'business' | 'openhiggs' | 'mythology';
   discountBadge?: string;
   bestValueBadge?: string;
   isRecommended?: boolean;
@@ -147,8 +147,8 @@ export default function PricingPage() {
     } catch {}
   };
 
-  // Toolbar state: 'individual' (4 sample plans) or 'openhiggs' (3 OpenHiggs studio tiers) or 'business'
-  const [activeTab, setActiveTab] = useState<'individual' | 'openhiggs' | 'business'>('individual');
+  // Toolbar state: 'individual' (4 sample plans) or 'openhiggs' (3 OpenHiggs studio tiers) or 'business' or 'mythology'
+  const [activeTab, setActiveTab] = useState<'individual' | 'openhiggs' | 'business' | 'mythology'>('individual');
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default with savings
   const [currency, setCurrency] = useState<'inr' | 'usd'>('inr'); // INR default, toggleable to USD
   const [isRecommenderOpen, setIsRecommenderOpen] = useState(false);
@@ -1031,9 +1031,178 @@ export default function PricingPage() {
         { text: '24/7 dedicated support & 99.9% uptime SLA', included: true },
       ],
     },
+
+    // 8. MYTHOS 10 VIDEOS (₹5,100 / mo)
+    {
+      id: 'plan_mythos_10',
+      title: 'MYTHOS 10 VIDEOS',
+      subtitle: 'For weekly sacred storytelling on Shorts & Reels',
+      category: 'mythology',
+      discountBadge: '10 VIDEOS',
+      usdPriceAnnual: 49,
+      usdPriceMonthly: 61,
+      usdStrikethrough: 79,
+      inrPriceAnnual: 4080,
+      inrPriceMonthly: 5100,
+      inrStrikethrough: 6500,
+      creditsMonthly: 200,
+      creditsLabel: '200 Credits (~10 full videos)',
+      creditsLines: [
+        '10 Full Mythology Videos / mo (200 credits)',
+        '1080p Watermark-Free Broadcast MP4 exports',
+        '7 Curated Indian Art Styles & Custom Prompts',
+        'Hindi & English ElevenLabs Neural Voices',
+      ],
+      fixedCreditsNote: 'Includes full commercial monetization license & GST tax invoice.',
+      ctaText: 'Get Mythos 10 Videos',
+      freeGensBox: {
+        header: 'VIDEO ALLOCATION',
+        items: [
+          { name: '10 Full Mythology Videos', resBadge: '1080p HD', gensBadge: 'Included', included: true },
+          { name: 'Word-by-word Synced Karaoke', resBadge: 'Devanagari', gensBadge: 'Included', included: true },
+          { name: 'Temple Shankh & Bell SFX', resBadge: 'Licensed', gensBadge: 'Included', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'STUDIO FEATURES',
+        items: [
+          { name: 'All 7 Sacred Art Styles', unlimitedBadge: 'Unlocked', included: true },
+          { name: 'Public Domain Epics Library', unlimitedBadge: 'Unlocked', included: true },
+          { name: 'Multi-Ratio MP4 (9:16, 4:5, 1:1, 16:9)', unlimitedBadge: 'Unlocked', included: true },
+        ],
+        extraCount: 2,
+        extraItems: [
+          { name: 'Commercial Rights for YouTube & Reels', unlimitedBadge: 'Included', included: true },
+          { name: 'Automated 18% GST Invoicing', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: '10 Full Mythology Videos per month (200 credits)', included: true, badge: '10 VIDEOS', badgeColor: 'bg-amber-100 text-amber-900 font-bold' },
+        { text: '1080p Full HD Watermark-Free MP4 Exports', included: true },
+        { text: 'All 7 Traditional Art Styles (Tanjore, Pahari, Classical, Anime, Stone)', included: true },
+        { text: 'ElevenLabs Multilingual Neural Voices (Hindi + English)', included: true },
+        { text: 'Word-by-word Synced Karaoke Captions in Noto Sans Devanagari', included: true },
+        { text: 'Full Commercial Monetization Rights for YouTube & Instagram', included: true },
+        { text: 'Automated 18% GST Tax Invoicing with input tax credit', included: true },
+      ],
+    },
+
+    // 9. MYTHOS SPECIAL CREATOR (20 Videos - ₹7,999 / mo)
+    {
+      id: 'plan_mythos_20',
+      title: 'MYTHOS CREATOR SPECIAL',
+      subtitle: '20 Videos + 4K AI Upscale + Hero Animations',
+      category: 'mythology',
+      isRecommended: true,
+      bestValueBadge: 'SPECIAL PLAN • 20 VIDEOS',
+      discountBadge: 'MOST POPULAR',
+      usdPriceAnnual: 79,
+      usdPriceMonthly: 96,
+      usdStrikethrough: 125,
+      inrPriceAnnual: 6399,
+      inrPriceMonthly: 7999,
+      inrStrikethrough: 10500,
+      creditsMonthly: 450,
+      creditsLabel: '450 Credits (~20 full videos + Hero Anim)',
+      creditsLines: [
+        '20 Full Mythology Videos / mo (450 credits)',
+        '1080p Watermark-Free + 4K AI Upscale',
+        'Hero Scene Video Animations (Image-to-Video Engine)',
+        'Deity Character Bible Lock (Rama, Krishna, Shiva)',
+      ],
+      fixedCreditsNote: 'Includes 1-click viral metadata pack & priority GPU rendering.',
+      ctaText: 'Get Mythos Special (20 Videos)',
+      freeGensBox: {
+        header: 'SPECIAL CREATOR PACK',
+        items: [
+          { name: '20 Full Mythology Videos', resBadge: '1080p/4K', gensBadge: 'Included', included: true },
+          { name: 'Hero Scene Video Animation', resBadge: 'I2V Motion', gensBadge: 'Included', included: true },
+          { name: 'Character Bible Deity Locking', resBadge: 'Consistent', gensBadge: 'Included', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'GROWTH ENGINE',
+        items: [
+          { name: '1-Click Viral Metadata Pack (Hooks & Tags)', unlimitedBadge: 'Included', included: true },
+          { name: 'Priority Cloud Render Queue', unlimitedBadge: 'Fast Lane', included: true },
+          { name: 'Deep Hindi / Hinglish Narrator Voices', unlimitedBadge: 'ElevenLabs', included: true },
+        ],
+        extraCount: 3,
+        extraItems: [
+          { name: 'Devanagari Matra-Safe Karaoke Subtitles', unlimitedBadge: 'Included', included: true },
+          { name: 'Licensed Temple Shankh & War Drums SFX', unlimitedBadge: 'Included', included: true },
+          { name: 'Priority Email & Chat Support', unlimitedBadge: 'VIP', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: '20 Full Mythology Videos per month (450 credits)', included: true, badge: '20 VIDEOS', badgeColor: 'bg-amber-500 text-white font-black' },
+        { text: '1080p Full HD Watermark-Free + 4K AI Upscale', included: true, badge: '4K UPSCALE', badgeColor: 'bg-indigo-100 text-indigo-900 font-bold' },
+        { text: 'Hero Scene Video Animations (Image-to-Video Engine)', included: true },
+        { text: 'Character Bible (Deity consistency across all scenes)', included: true },
+        { text: '1-Click Viral Social Metadata Pack (Titles, Tags, Hooks)', included: true },
+        { text: 'Priority GPU Cloud Render Queue (Zero waiting)', included: true },
+        { text: 'Automated 18% GST Tax Invoicing (18% ITC Included)', included: true },
+      ],
+    },
+
+    // 10. MYTHOS STUDIO SCALE (50 Videos - ₹16,999 / mo)
+    {
+      id: 'plan_mythos_50',
+      title: 'MYTHOS STUDIO SCALE',
+      subtitle: '50 Videos / mo for Media Houses & Daily Channels',
+      category: 'mythology',
+      discountBadge: 'STUDIO SCALE',
+      usdPriceAnnual: 169,
+      usdPriceMonthly: 205,
+      usdStrikethrough: 290,
+      inrPriceAnnual: 13599,
+      inrPriceMonthly: 16999,
+      inrStrikethrough: 24000,
+      creditsMonthly: 1200,
+      creditsLabel: '1,200 Credits (~50 full videos)',
+      creditsLines: [
+        '50 Full Mythology Videos / mo (1,200 credits)',
+        'Up to 60s clips with multi-character dialogues',
+        'Multi-Episode Epic Series Manager (Ramayan/Mahabharat)',
+        'Unlimited Character Bibles with Reference Images',
+      ],
+      fixedCreditsNote: 'Dedicated high-speed render cluster & VIP Video Architect support.',
+      ctaText: 'Get Mythos Studio (50 Videos)',
+      freeGensBox: {
+        header: 'PRODUCTION CLUSTER',
+        items: [
+          { name: '50 Full Mythology Videos', resBadge: 'Pro Cinema', gensBadge: 'Included', included: true },
+          { name: 'Multi-Episode Series Manager', resBadge: 'Episodic', gensBadge: 'Included', included: true },
+          { name: 'Dedicated Fast Render Cluster', resBadge: 'Instant', gensBadge: 'Zero Queue', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'STUDIO GRADE',
+        items: [
+          { name: 'Unlimited Character Bibles', unlimitedBadge: 'Unlimited', included: true },
+          { name: 'Full Broadcast & Agency Commercial License', unlimitedBadge: 'Agency', included: true },
+          { name: '1-on-1 Dedicated Video Architect Support', unlimitedBadge: 'VIP WhatsApp', included: true },
+        ],
+        extraCount: 3,
+        extraItems: [
+          { name: 'Custom LoRA deity facial fine-tuning', unlimitedBadge: 'Included', included: true },
+          { name: 'API programmatic video rendering endpoints', unlimitedBadge: 'Included', included: true },
+          { name: '99.9% Uptime Production SLA', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: '50 Full Mythology Videos per month (1,200 credits)', included: true, badge: '50 VIDEOS', badgeColor: 'bg-amber-600 text-white font-black' },
+        { text: 'Multi-Episode Epic Series Manager (Ramayana / Mahabharata)', included: true },
+        { text: 'Dedicated High-Speed Cloud Render Cluster', included: true },
+        { text: 'Full Commercial Agency & Broadcast Monetization License', included: true },
+        { text: 'VIP Priority WhatsApp & Direct Video Architect Support', included: true },
+        { text: 'Automated 18% GST Tax Invoicing with input tax credit', included: true },
+      ],
+    },
   ];
 
   const visiblePlans = plansData.filter((p) => {
+    if (activeTab === 'mythology') return p.category === 'mythology';
     if (activeTab === 'openhiggs') return p.category === 'openhiggs';
     if (activeTab === 'business') return p.id === 'plan_business';
     return p.category === 'individual'; // 4 sample plans
@@ -1120,22 +1289,27 @@ export default function PricingPage() {
                 Business plans
               </button>
 
-              <Link
-                href="/mythology/pricing"
+              <button
+                type="button"
+                onClick={() => setActiveTab('mythology')}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  isDark
+                  activeTab === 'mythology'
+                    ? isDark
+                      ? 'bg-amber-950/80 text-amber-300 border border-amber-500/40 font-black shadow-sm'
+                      : 'bg-white text-amber-700 shadow-xs font-black'
+                    : isDark
                     ? 'text-amber-400 hover:text-amber-200 font-bold'
                     : 'text-amber-700 hover:text-amber-950 font-bold'
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                <span>Mythology Studio Plans</span>
+                <span>Mythology Creator (3 Plans)</span>
                 <span className={`text-[10px] px-1.5 py-0.2 rounded font-black border ${
                   isDark ? 'bg-amber-900/60 text-amber-200 border-amber-600/50' : 'bg-amber-100 text-amber-800 border-amber-200'
                 }`}>
-                  New
+                  ₹5,100+
                 </span>
-              </Link>
+              </button>
             </div>
 
             {/* Promotional Pill Badge */}
@@ -1331,7 +1505,63 @@ export default function PricingPage() {
             const isMax = plan.id === 'plan_max';
             const isTeams = plan.id === 'plan_business';
 
-            const theme = planColorThemes[plan.id] || planColorThemes.plan_starter;
+            const mythosTheme = isDark
+              ? {
+                  cardBg: 'bg-[#181206]/95',
+                  headerGlow: 'bg-gradient-to-b from-amber-500/25 to-transparent',
+                  cardBorder: plan.isRecommended
+                    ? 'border-2 border-amber-400 shadow-[0_0_40px_rgba(245,158,11,0.3)] ring-2 ring-amber-400/40 lg:-translate-y-2'
+                    : 'border-2 border-amber-400/70 shadow-[0_0_25px_rgba(245,158,11,0.15)]',
+                  titleColor: 'text-white font-black',
+                  subtitleColor: 'text-amber-200/80',
+                  discountBadge: 'bg-amber-600 text-white font-black',
+                  bestValueBadge: 'bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black',
+                  creditBoxBg: 'bg-[#261A05] border border-amber-400/40',
+                  creditIconColor: 'text-amber-400',
+                  creditHeaderColor: 'text-white font-black',
+                  creditTextColor: 'text-amber-100/90',
+                  priceColor: 'text-white',
+                  periodColor: 'text-slate-400',
+                  ctaButton: plan.isRecommended
+                    ? 'bg-gradient-to-r from-amber-400 via-orange-400 to-amber-300 text-black font-black shadow-[0_0_30px_rgba(245,158,11,0.5)]'
+                    : 'bg-gradient-to-r from-amber-500 to-orange-500 text-black font-black shadow-[0_0_25px_rgba(245,158,11,0.35)]',
+                  freeGensBoxBg: 'bg-[#261A05]/80 border border-amber-400/30',
+                  freeGensHeaderColor: 'text-amber-300 font-extrabold',
+                  freeGensBadge: 'bg-amber-400 text-black font-extrabold',
+                  unlimitedBoxBg: 'bg-[#261A05]/80 border border-amber-400/30',
+                  unlimitedHeaderColor: 'text-amber-300 font-extrabold',
+                  unlimitedBadge: 'bg-amber-400 text-black font-extrabold',
+                  checklistText: 'text-slate-300',
+                  checkIconColor: 'text-amber-400',
+                }
+              : {
+                  cardBg: 'bg-white',
+                  headerGlow: 'bg-gradient-to-b from-amber-100/90 via-amber-50/30 to-white',
+                  cardBorder: plan.isRecommended
+                    ? 'border-2 border-amber-500 shadow-xl shadow-amber-500/20 ring-2 ring-amber-500/30 lg:-translate-y-2'
+                    : 'border-2 border-amber-400 hover:border-amber-500 shadow-md shadow-amber-500/10',
+                  titleColor: 'text-[#17191D]',
+                  subtitleColor: 'text-[#667085]',
+                  discountBadge: 'bg-amber-600 text-white font-black',
+                  bestValueBadge: 'bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black shadow-md',
+                  creditBoxBg: 'bg-amber-50/80 border border-amber-300',
+                  creditIconColor: 'text-amber-700',
+                  creditHeaderColor: 'text-amber-950',
+                  creditTextColor: 'text-[#667085]',
+                  priceColor: 'text-[#17191D]',
+                  periodColor: 'text-[#667085]',
+                  ctaButton: 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:opacity-95 text-white font-black shadow-lg shadow-amber-500/30',
+                  freeGensBoxBg: 'bg-amber-50/60 border border-amber-200',
+                  freeGensHeaderColor: 'text-amber-950',
+                  freeGensBadge: 'bg-amber-200 text-amber-950 font-extrabold border border-amber-300',
+                  unlimitedBoxBg: 'bg-amber-50/60 border border-amber-200',
+                  unlimitedHeaderColor: 'text-amber-950',
+                  unlimitedBadge: 'bg-amber-200 text-amber-950 font-extrabold',
+                  checklistText: 'text-[#17191D]',
+                  checkIconColor: 'text-[#10B981]',
+                };
+
+            const theme = planColorThemes[plan.id] || (plan.category === 'mythology' ? mythosTheme : planColorThemes.plan_starter);
 
             return (
               <motion.div
