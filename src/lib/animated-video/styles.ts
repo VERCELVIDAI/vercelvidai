@@ -1,4 +1,106 @@
-import { AnimationStyle } from './types';
+import { AnimationStyle, AnimationStyleId } from './types';
+
+export const MASTER_AI_PROMPTS: Record<AnimationStyleId, string> = {
+  mythology: `You are a viral mythology short video scriptwriter and director. 
+Given a topic or legend from Indian epics (Ramayana, Mahabharata, Shiva Purana, Bhagavata Purana), generate a 3-to-4 scene vertical 9:16 script in valid JSON format.
+Each scene must have:
+- "scene": number (1, 2, 3...)
+- "say": the spoken Hindi or English narration line (natural, engaging, dramatic, 15-25 words)
+- "quote": the on-screen karaoke caption text (concise, powerful, Devanagari or English)
+- "on": key highlighted keyword or deity name
+- "accent": boolean (true for dramatic emphasis)
+- "setting": visual environment description
+- "duration": seconds (4 to 6 seconds per scene)
+- "image_prompt": detailed visual prompt for Raja Ravi Varma oil painting / Tanjore gold-leaf art style
+- "camera": "zoom_in" | "zoom_out" | "pan_left" | "pan_right"
+
+If the user types IDEAS, return 10 high-curiosity viral mythology hook ideas.
+Otherwise, return ONLY the raw JSON array of scenes without markdown ticks.`,
+
+  'flat-vector': `You are a modern explainer video director.
+Given a topic, generate a 3-to-4 scene vertical 9:16 script in valid JSON format.
+Each scene must have:
+- "scene": number (1, 2, 3...)
+- "say": clear, punchy narration line (English or Hindi)
+- "quote": highlighted on-screen takeaway
+- "on": key action keyword
+- "setting": modern flat vector isometric scene description
+- "duration": seconds (4 to 6)
+- "image_prompt": clean 2D vector shapes, smooth gradients, crisp modern iconography, dribbble style
+- "camera": "zoom_in" | "zoom_out" | "pan_left" | "pan_right"
+
+Return ONLY the raw JSON array of scenes.`,
+
+  'comic-art': `You are a retro comic book video creator.
+Given a topic, generate a 3-to-4 scene vertical 9:16 script in valid JSON format.
+Each scene must have:
+- "scene": number (1, 2, 3...)
+- "say": energetic, dramatic comic narration
+- "quote": punchy comic sound effect or speech bubble text (e.g., "DID YOU KNOW?!", "WHOOSH!")
+- "on": key power word
+- "setting": vintage comic book panel with halftone dots and bold black outlines
+- "duration": seconds (4 to 6)
+- "image_prompt": vintage comic panel, halftone dots, thick black inking, pop art primary colors
+- "camera": "zoom_in" | "zoom_out" | "pan_left" | "pan_right"
+
+Return ONLY the raw JSON array of scenes.`,
+
+  chalkboard: `You are an educational science & tech video director.
+Given a topic, generate a 3-to-4 scene vertical 9:16 script in valid JSON format.
+Each scene must have:
+- "scene": number (1, 2, 3...)
+- "say": fascinating educational explanation (Hindi or English)
+- "quote": chalkboard diagram title or math formula
+- "on": core scientific concept
+- "setting": green slate chalkboard with white and pastel chalk sketches
+- "duration": seconds (4 to 6)
+- "image_prompt": hand-drawn chalk illustration on green blackboard, diagrams, binary code, educational sketches
+- "camera": "zoom_in" | "zoom_out" | "pan_left" | "pan_right"
+
+Return ONLY the raw JSON array of scenes.`,
+
+  'glow-sketch': `You are a minimalist cyberpunk visual artist.
+Given a topic, generate a 3-to-4 scene vertical 9:16 script in valid JSON format.
+Each scene must have:
+- "scene": number (1, 2, 3...)
+- "say": deep, philosophical or futuristic narration
+- "quote": minimalist neon glowing text
+- "on": glowing focus word
+- "setting": pitch-black void with electric luminous neon line art
+- "duration": seconds (4 to 6)
+- "image_prompt": minimalist glowing neon wireframe lines on pitch black background, cyber zen bloom
+- "camera": "zoom_in" | "zoom_out" | "pan_left" | "pan_right"
+
+Return ONLY the raw JSON array of scenes.`,
+
+  'pixel-art': `You are an 8-bit retro gaming video animator.
+Given a topic, generate a 3-to-4 scene vertical 9:16 script in valid JSON format.
+Each scene must have:
+- "scene": number (1, 2, 3...)
+- "say": nostalgic gaming narration
+- "quote": arcade pixel text (e.g., "STAGE 1", "LEVEL UP", "GAME OVER")
+- "on": arcade power-up keyword
+- "setting": 16-bit SNES arcade game level
+- "duration": seconds (4 to 6)
+- "image_prompt": nostalgic 16-bit pixel art sprite, arcade cabinet CRT scanlines, vibrant chiptune palette
+- "camera": "zoom_in" | "zoom_out" | "pan_left" | "pan_right"
+
+Return ONLY the raw JSON array of scenes.`,
+
+  'lyrics-tower': `You are a kinetic typography and lyric video designer.
+Given a song or poetic thought, generate a 3-to-4 scene vertical 9:16 script in valid JSON format.
+Each scene must have:
+- "scene": number (1, 2, 3...)
+- "say": emotional poetic or lyrical line
+- "quote": vertically stacked Devanagari or English words with glowing color emphasis
+- "on": emotional climax word
+- "setting": dark aesthetic background with subtle light leaks and kinetic typography tower
+- "duration": seconds (4 to 6)
+- "image_prompt": vertical stacked typography, cinematic ambient lighting, neon gradient glow, emotional visual atmosphere
+- "camera": "zoom_in" | "zoom_out" | "pan_left" | "pan_right"
+
+Return ONLY the raw JSON array of scenes.`,
+};
 
 export const ANIMATION_STYLES: AnimationStyle[] = [
   {
@@ -7,6 +109,7 @@ export const ANIMATION_STYLES: AnimationStyle[] = [
     tagline: 'Colourful explainer graphics',
     description: 'Clean 2D vector shapes, smooth gradients, crisp modern iconography, and minimalist corporate or educational infographics.',
     accentColor: '#3B82F6',
+    palette: ['#FBF6EE', '#202E44', '#F97316', '#3B82F6'],
     badge: 'Popular',
     tags: ['1080p vertical', 'Clean 2D', 'Explainer', 'Corporate'],
     samplePrompt: 'Bold colourful flat vector illustration of an animated delivery route with map pin icon and modern UI icons, clean gradients, dribbble style',
@@ -20,6 +123,7 @@ export const ANIMATION_STYLES: AnimationStyle[] = [
     tagline: 'Bold comic panels and speech bubbles',
     description: 'Dynamic comic book aesthetic with vintage halftone dots, thick black ink outlines, energetic action bursts, and expressive pop-art speech bubbles.',
     accentColor: '#F97316',
+    palette: ['#FAF5EB', '#1F2022', '#FACC15', '#EF4444'],
     badge: 'Hero',
     tags: ['Halftones', 'Action lines', 'Speech bubbles', 'Pop Art'],
     samplePrompt: 'Classic vintage American comic book panel with dynamic action burst, halftone dots, thick black ink outlines, bold pop art primary colors, retro speech bubble',
@@ -33,6 +137,7 @@ export const ANIMATION_STYLES: AnimationStyle[] = [
     tagline: 'Illustrated mythology stories',
     description: 'Richly detailed Indian and world mythology epics inspired by classical Raja Ravi Varma oil paintings, Tanjore gold-leaf, and ancient Puranic scripture iconography.',
     accentColor: '#A855F7',
+    palette: ['#1B1736', '#FBBF24', '#8B5CF6', '#F97316'],
     badge: 'Epic',
     tags: ['Devotional', 'Tanjore Gold', 'Puranic', 'Sacred'],
     samplePrompt: 'Lord Shiva in deep cosmic meditation atop snowy Mount Kailash, glowing crescent moon, holy river Ganga, classical Indian oil painting by Raja Ravi Varma, 8k cinematic',
@@ -47,6 +152,7 @@ export const ANIMATION_STYLES: AnimationStyle[] = [
     tagline: 'Hand-drawn educational explainers',
     description: 'Green slate-board texture with textured white and pastel chalk sketches, hand-drawn schematics, mathematics formulas, and academic lecture explainers.',
     accentColor: '#10B981',
+    palette: ['#274E37', '#FAF7EE', '#FEF08A', '#93C5FD'],
     badge: 'Updated',
     tags: ['Educational', 'Hand-drawn', 'Science', 'Microchip'],
     samplePrompt: 'Detailed hand-drawn green chalkboard schematic of a computer microchip architecture with chalk arrows, binary numbers, and rough white chalk sketches',
@@ -60,6 +166,7 @@ export const ANIMATION_STYLES: AnimationStyle[] = [
     tagline: 'Minimal glowing line art',
     description: 'Electric neon outlines and luminous wireframe vector sketches set against deep obsidian darkness, creating a sleek cyber-zen aesthetic.',
     accentColor: '#06B6D4',
+    palette: ['#0A0A0E', '#E0E7FF', '#FBBF24', '#1E2238'],
     badge: 'Minimal',
     tags: ['Neon lines', 'Cyber Zen', 'Minimalist', 'Dark Mode'],
     samplePrompt: 'Minimalist glowing cyan neon wireframe line art of a human brain connecting with neural network nodes, deep pitch black background, luminous bloom',
@@ -73,6 +180,7 @@ export const ANIMATION_STYLES: AnimationStyle[] = [
     tagline: 'Retro game-inspired animation',
     description: 'Nostalgic 16-bit and 32-bit pixel graphics, retro arcade gaming sprites, isometric city blocks, and chiptune dungeon aesthetics.',
     accentColor: '#6366F1',
+    palette: ['#38BDF8', '#FBBF24', '#22C55E'],
     badge: '8-bit',
     tags: ['16-bit', 'Retro gaming', 'Pixel sprite', 'Arcade'],
     samplePrompt: 'Charming 16-bit retro pixel art scene of a cyberpunk city street with neon game console controller glowing, nostalgic SNES palette, detailed sprite work',
@@ -86,6 +194,7 @@ export const ANIMATION_STYLES: AnimationStyle[] = [
     tagline: 'Animated lyrics and typography',
     description: 'Vertical cascading kinetic typography, bold Hindi / English karaoke lyrics, glowing neon text animations, and rhythmic music-synchronized motion.',
     accentColor: '#EF4444',
+    palette: ['#0B0B0E', '#7F1D1D', '#FFFFFF', '#EF4444'],
     badge: 'New',
     tags: ['Devanagari font', 'Karaoke sync', 'Music reel', 'Kinetic type'],
     samplePrompt: 'Glowing vertical Devanagari kinetic typography "सपने यह हैं मेरे" rising through atmospheric stardust, cinematic volumetric red and gold spotlights',
@@ -101,15 +210,25 @@ export const STYLE_SAMPLE_JSONS: Record<string, any[]> = {
     {
       scene: 1,
       duration: 5,
-      narration: "कुरुक्षेत्र के भीषण रणभूमि में जब अर्जुन का मन मोह और विषाद से कांप उठा...",
-      on_screen_text: "कुरुक्षेत्र: विषाद और धर्मसंकट",
-      image_prompt: "Warrior Arjuna kneeling with bowed head and Gandiva bow slipping from hands in chariot on dusty Kurukshetra battlefield, dark storm clouds, classical Indian oil painting style",
+      say: "कुरुक्षेत्र के रणक्षेत्र में जब अर्जुन विषाद में घिर गए, तब शंखनाद हुआ।",
+      quote: "कुरुक्षेत्र: रणक्षेत्र और विषाद",
+      on: "कुरुक्षेत्र",
+      accent: true,
+      setting: "kurukshetra battlefield",
+      narration: "कुरुक्षेत्र के रणक्षेत्र में जब अर्जुन विषाद में घिर गए, तब शंखनाद हुआ।",
+      on_screen_text: "कुरुक्षेत्र: रणक्षेत्र और विषाद",
+      image_prompt: "Grand ancient battlefield of Kurukshetra at dawn, thousands of chariots, divine glowing mist, Raja Ravi Varma style oil painting, 8k",
       camera: "zoom_in",
       sfx: "war_drums"
     },
     {
       scene: 2,
       duration: 6,
+      say: "तब सारथी बने भगवान श्रीकृष्ण ने जीवन और आत्मा का अमर ज्ञान दिया।",
+      quote: "श्रीकृष्ण का अमर गीता उपदेश",
+      on: "गीता उपदेश",
+      accent: true,
+      setting: "golden chariot",
       narration: "तब सारथी बने भगवान श्रीकृष्ण ने जीवन और आत्मा का अमर ज्ञान दिया।",
       on_screen_text: "श्रीकृष्ण का अमर गीता उपदेश",
       image_prompt: "Lord Krishna holding chariot reins with radiant compassionate smile, golden peacock feather crown, divine yellow pitambara silk glowing, Tanjore gold leaf style, 8k",
@@ -119,6 +238,11 @@ export const STYLE_SAMPLE_JSONS: Record<string, any[]> = {
     {
       scene: 3,
       duration: 7,
+      say: "और प्रकट किया अपना अनंत विराट स्वरूप, जिसमें पूरा ब्रह्मांड समाया हुआ था।",
+      quote: "दिव्य विराट स्वरूप दर्शन",
+      on: "विश्वरूप",
+      accent: true,
+      setting: "cosmic eternity",
       narration: "और प्रकट किया अपना अनंत विराट स्वरूप, जिसमें पूरा ब्रह्मांड समाया हुआ था।",
       on_screen_text: "दिव्य विराट स्वरूप दर्शन",
       image_prompt: "Supreme Lord Krishna revealing infinite cosmic Vishwaroop form with millions of radiant faces, spinning golden Sudarshana Chakra, celestial suns and stars, epic cinematic",
@@ -128,9 +252,14 @@ export const STYLE_SAMPLE_JSONS: Record<string, any[]> = {
     {
       scene: 4,
       duration: 5,
-      narration: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन — कर्तव्य ही तुम्हारा सबसे बड़ा धर्म है।",
-      on_screen_text: "कर्म ही तुम्हारा धर्म है",
-      image_prompt: "Arjuna standing renewed with blazing determination holding Gandiva bow high, divine golden light breaking through battlefield dust, classical masterpiece",
+      say: "ऐसे ही पौराणिक रहस्यों और सनातन धर्म के प्रेरक प्रसंगों के लिए फ़ॉलो कीजिए।",
+      quote: "सनातन ज्ञान, सरल भाषा में",
+      on: "फ़ॉलो कीजिए",
+      accent: true,
+      setting: "sacred temple altar",
+      narration: "ऐसे ही पौराणिक रहस्यों और सनातन धर्म के प्रेरक प्रसंगों के लिए फ़ॉलो कीजिए।",
+      on_screen_text: "सनातन ज्ञान, सरल भाषा में",
+      image_prompt: "Ancient sacred temple altar glowing with holy diyas, sacred shankh, and golden bells, classical sacred art",
       camera: "zoom_in",
       sfx: "temple_bell"
     }

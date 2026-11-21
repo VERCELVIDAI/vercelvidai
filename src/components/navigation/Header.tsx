@@ -315,6 +315,22 @@ export function Header() {
               Pricing
             </Link>
 
+            {/* 3.4 Direct Link: Mythology Videos */}
+            <Link
+              href="/mythology"
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
+                pathname.startsWith('/mythology')
+                  ? 'text-amber-700 bg-amber-50 border border-amber-300 shadow-2xs'
+                  : 'text-slate-800 hover:text-amber-700 hover:bg-amber-50/70'
+              }`}
+            >
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>Mythology Videos</span>
+              <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+                Hot
+              </span>
+            </Link>
+
             {/* 3.5 Featured Direct Link: PDF Tools */}
             <Link
               href="/pdf-tools"
@@ -596,6 +612,23 @@ export function Header() {
               Explore & Resources
             </span>
             <nav className="flex flex-col space-y-0.5">
+              <Link
+                href="/mythology"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-lg text-xs font-bold flex items-center justify-between ${
+                  pathname.startsWith('/mythology')
+                    ? 'text-amber-700 bg-amber-50 border border-amber-300'
+                    : 'text-amber-800 bg-amber-50/60 hover:bg-amber-100/60'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Mythology Videos Studio</span>
+                </span>
+                <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 border border-amber-300">
+                  Hot
+                </span>
+              </Link>
               <Link
                 href="/pdf-tools"
                 onClick={() => setMobileMenuOpen(false)}

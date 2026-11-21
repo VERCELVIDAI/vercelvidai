@@ -13,6 +13,7 @@ export interface AnimationStyle {
   tagline: string;
   description: string;
   accentColor: string;
+  palette?: string[];
   badge: string;
   tags: string[];
   samplePrompt: string;
@@ -25,8 +26,13 @@ export interface AnimationStyle {
 export interface AnimatedScene {
   scene: number;
   duration: number; // in seconds
-  narration: string;
+  narration?: string;
+  say?: string;
   on_screen_text?: string;
+  quote?: string;
+  on?: string;
+  accent?: boolean;
+  setting?: string;
   image_prompt: string;
   camera?: 'zoom_in' | 'zoom_out' | 'pan_left' | 'pan_right' | 'static';
   sfx?: string;
@@ -47,4 +53,19 @@ export interface AnimatedVideoProject {
   status: 'draft' | 'scripted' | 'rendering' | 'ready' | 'failed';
   createdAt: string;
   updatedAt: string;
+}
+
+export interface AnimatedVideoHistoryItem {
+  id: string;
+  title: string;
+  styleId: AnimationStyleId;
+  styleName: string;
+  duration: number;
+  scenesCount: number;
+  aspectRatio: '9:16' | '1:1' | '16:9';
+  videoUrl: string;
+  audioUrl?: string;
+  rawJson: string;
+  creditsCost: number;
+  createdAt: string;
 }

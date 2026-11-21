@@ -68,8 +68,8 @@ export function AnimatedVideoLanding({ initialStyle = 'mythology' }: AnimatedVid
 
   const FAQS = [
     {
-      q: 'Is it really free?',
-      a: 'Yes! The in-browser script generator, JSON editor, and canvas export are completely free without any watermark. If you want ultra-fast cloud rendering for 4K video exports, you can use our regular studio credits.',
+      q: 'How do video credits work? Is video export free?',
+      a: 'Script generating, JSON editing, and real-time canvas previewing are completely open in your browser. Rendering and exporting high-definition 1080p MP4 videos consumes 20 video credits per video according to your active Mythology Plan (10 Videos for ₹5,100, 20 Videos for ₹7,999, or 50 Videos for ₹16,999). Every export includes commercial licensing and zero watermarks.',
     },
     {
       q: 'Which AI model is used for the script?',
@@ -186,7 +186,7 @@ export function AnimatedVideoLanding({ initialStyle = 'mythology' }: AnimatedVid
           {/* Feature Badges line matching screenshot */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-[11px] font-semibold text-slate-300">
             <span className="px-2.5 py-1 rounded-full bg-[#18162E] border border-[#2B274F] text-[#FFB800]">
-              100% Free
+              JSON-to-Video Engine
             </span>
             <span className="px-2.5 py-1 rounded-full bg-[#18162E] border border-[#2B274F]">
               In-Browser

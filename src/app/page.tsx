@@ -615,23 +615,6 @@ export default function HomePage() {
               {/* Announcement Pills: OpenHiggs & Free PDF Suite */}
               <div className="flex flex-wrap items-center justify-center gap-2 mb-2">
                 <Link
-                  href="/mythology"
-                  className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-300 text-xs text-amber-900 shadow-sm hover:border-amber-400 hover:bg-amber-100/80 transition-all group max-w-full font-bold"
-                >
-                  <span className="flex h-2 w-2 relative shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-600" />
-                  </span>
-                  <span className="text-amber-700 font-black uppercase tracking-wider text-[10px] sm:text-[11px] shrink-0">
-                    🕉️ Mythology Studio
-                  </span>
-                  <span className="text-amber-950 font-medium truncate">
-                    AI Sacred Videos • Reels & Shorts
-                  </span>
-                  <ArrowRight className="w-3.5 h-3.5 text-amber-600 group-hover:translate-x-1 transition-transform shrink-0" />
-                </Link>
-
-                <Link
                   href="/openhiggs"
                   className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#0E150F] border border-[#d1fe17]/60 text-xs text-white shadow-lg hover:border-[#d1fe17] hover:shadow-[0_0_25px_rgba(209,254,23,0.35)] transition-all group max-w-full truncate"
                 >
