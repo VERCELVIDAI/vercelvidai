@@ -24,6 +24,7 @@ import {
   Wand2,
   Sliders,
   FileText,
+  Mic,
 } from 'lucide-react';
 
 interface StudioItem {
@@ -35,6 +36,13 @@ interface StudioItem {
 }
 
 const STUDIOS_MENU: StudioItem[] = [
+  {
+    title: 'Fluvia vLabs Audio Studio',
+    description: 'AI voiceover, voice cloning & video dubbing',
+    href: '/vlabs',
+    icon: Mic,
+    badge: 'Pro Audio',
+  },
   {
     title: 'AI Animated Video Maker',
     description: '7 styles, JSON script, voice & vertical MP4 video',
@@ -328,6 +336,22 @@ export function Header() {
               <span>Mythology Videos</span>
               <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
                 Hot
+              </span>
+            </Link>
+
+            {/* 3.45 Featured Direct Link: FLUVIA vLABS */}
+            <Link
+              href="/vlabs"
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
+                pathname.startsWith('/vlabs')
+                  ? 'text-emerald-700 bg-emerald-50 border border-emerald-300 shadow-2xs'
+                  : 'text-slate-800 hover:text-emerald-700 hover:bg-emerald-50/70'
+              }`}
+            >
+              <Mic className="w-4 h-4 text-emerald-600" />
+              <span>FLUVIA vLABS</span>
+              <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                AI Audio
               </span>
             </Link>
 
@@ -627,6 +651,23 @@ export function Header() {
                 </span>
                 <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 border border-amber-300">
                   Hot
+                </span>
+              </Link>
+              <Link
+                href="/vlabs"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-lg text-xs font-bold flex items-center justify-between ${
+                  pathname.startsWith('/vlabs')
+                    ? 'text-emerald-700 bg-emerald-50 border border-emerald-300'
+                    : 'text-emerald-800 bg-emerald-50/60 hover:bg-emerald-100/60'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <Mic className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>FLUVIA vLABS (AI Audio)</span>
+                </span>
+                <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded bg-emerald-200 text-emerald-900 border border-emerald-300">
+                  New
                 </span>
               </Link>
               <Link

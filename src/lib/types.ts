@@ -628,4 +628,140 @@ export interface CouponValidationResult {
 
 export * from './mythology/types';
 
+// ==============================================================================
+// FLUVIA vLABS - AI VOICE PRODUCTION & DUBBING STUDIO TYPES
+// ==============================================================================
+
+export type VlabsLicencePlanId = 'vlabs_1yr' | 'vlabs_2yr' | 'vlabs_5yr';
+
+export type VlabsLicenceStatus =
+  | 'active'
+  | 'expired'
+  | 'cancelled'
+  | 'suspended'
+  | 'refunded'
+  | 'pending';
+
+export interface VlabsLicence {
+  id: string;
+  userId: string;
+  planId: VlabsLicencePlanId;
+  orderId: string;
+  paymentId?: string;
+  txnid: string;
+  purchaseDate: string;
+  activationDate: string;
+  expirationDate: string;
+  status: VlabsLicenceStatus;
+  paymentStatus: 'success' | 'pending' | 'failed';
+  durationMonths: 12 | 24 | 60;
+  productAccess: string[];
+  autoRenew: false;
+  metadata?: Record<string, any>;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type VlabsGenerationType = 'tts' | 'dubbing' | 'clone' | 'design' | 'transcription' | 'audiobook';
+
+export interface VlabsGeneration {
+  id: string;
+  userId: string;
+  type: VlabsGenerationType;
+  title: string;
+  inputText?: string;
+  audioUrl: string;
+  durationSec: number;
+  voiceId: string;
+  voiceName: string;
+  language: string;
+  format: 'mp3' | 'wav';
+  settings?: {
+    speed?: number;
+    pitch?: number;
+    stability?: number;
+    similarity?: number;
+    style?: number;
+    emotion?: string;
+    model?: string;
+  };
+  fileSizeKb?: number;
+  status: 'completed' | 'processing' | 'failed';
+  errorMessage?: string;
+  createdAt: string;
+}
+
+export interface VlabsVoice {
+  id: string;
+  userId?: string; // null for system library voices
+  name: string;
+  description: string;
+  category: 'indian' | 'narrator' | 'cinematic' | 'advertisement' | 'storytelling' | 'professional' | 'conversational' | 'character' | 'cloned' | 'designed';
+  gender: 'male' | 'female' | 'neutral';
+  language: string;
+  accent?: string;
+  sampleAudioUrl: string;
+  isCloned?: boolean;
+  isCustom?: boolean;
+  consentConfirmed?: boolean;
+  consentTimestamp?: string;
+  voiceCharacteristics?: {
+    tone?: string;
+    ageGroup?: string;
+    style?: string;
+  };
+  createdAt: string;
+}
+
+export interface VlabsDubbingSpeaker {
+  id: string;
+  name: string;
+  assignedVoiceId: string;
+  dialogueCount: number;
+}
+
+export interface VlabsDubbingDialogue {
+  id: string;
+  speakerId: string;
+  startTime: number;
+  endTime: number;
+  sourceText: string;
+  translatedText: string;
+  audioUrl?: string;
+}
+
+export interface VlabsDubbingProject {
+  id: string;
+  userId: string;
+  title: string;
+  sourceVideoUrl?: string;
+  sourceLang: string;
+  targetLang: string;
+  speakers: VlabsDubbingSpeaker[];
+  dialogues: VlabsDubbingDialogue[];
+  outputVideoUrl?: string;
+  outputAudioUrl?: string;
+  srtUrl?: string;
+  preserveBackgroundAudio: boolean;
+  status: 'draft' | 'transcribing' | 'translating' | 'synthesizing' | 'completed' | 'failed';
+  progressPercentage: number;
+  errorMessage?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface VlabsSettings {
+  activeProvider: 'elevenlabs' | 'gemini' | 'hybrid' | 'browser_edge';
+  elevenlabsApiKey?: string;
+  geminiApiKey?: string;
+  enableVoiceCloning: boolean;
+  enableVideoDubbing: boolean;
+  enableVoiceDesign: boolean;
+  enableTextToSpeech: boolean;
+  maxAudioLengthSec: number;
+  maxVideoUploadMb: number;
+  maintenanceMode: boolean;
+}
+
+
 

@@ -324,6 +324,31 @@ export default function DashboardPage() {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-4">
+              {/* Card 0: Fluvia vLabs AI Audio Studio */}
+              <Link
+                href="/vlabs/studio"
+                className="p-5 rounded-2xl bg-gradient-to-br from-[#061512] via-[#091b17] to-[#040c0a] text-white border-2 border-emerald-500/50 hover:border-emerald-400 hover:shadow-[0_0_25px_rgba(16,185,129,0.25)] transition-all group relative overflow-hidden flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <Mic className="w-5 h-5" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-extrabold text-base text-white">Fluvia vLabs</h3>
+                    <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/40">
+                      Pro Audio
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                    AI Voiceover, Voice Cloning, Video Dubbing & 15+ Multilingual Voices with studio mastering.
+                  </p>
+                </div>
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-400">
+                  <span>Open Audio Studio</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
               {/* Card 1: OpenHiggs Studio */}
               <Link
                 href="/openhiggs"

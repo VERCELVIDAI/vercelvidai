@@ -45,6 +45,17 @@ export default function PrivacyPage() {
           <p>
             Users can request immediate and irreversible account deletion through their profile settings at any time, which purges all stored projects, uploaded assets, and credentials from our active database.
           </p>
+
+          <h2 className="text-lg font-bold text-[#17191D] pt-4 border-t border-[#E5E7EB]">5. Fluvia vLabs Voice Cloning & Audio Data Security</h2>
+          <p>
+            For creators utilizing Fluvia vLabs audio synthesis and voice cloning features:
+          </p>
+          <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
+            <li><strong>Audio Sample Processing:</strong> Audio samples uploaded for voice cloning or video dubbing are processed exclusively to derive acoustic embedding vectors for your authorized account workspace.</li>
+            <li><strong>No Public Weight Training:</strong> Private creator audio reference clips are never pooled or used to train open foundational models without your express written opt-in.</li>
+            <li><strong>Consent Record Retention:</strong> For ethical traceability and protection against unauthorized voice impersonation, legal consent affirmations and creation timestamps are encrypted and retained in your account compliance audit log.</li>
+            <li><strong>Voice Profile Deletion:</strong> You may permanently delete your custom cloned voices and generated audio project histories at any time from the vLabs Studio interface.</li>
+          </ul>
         </div>
       </main>
 

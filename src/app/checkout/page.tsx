@@ -81,10 +81,17 @@ function CheckoutContent() {
     plan_mythos_10: 'plan_mythos_10',
     plan_mythos_20: 'plan_mythos_20',
     plan_mythos_50: 'plan_mythos_50',
+    vlabs: 'vlabs_2yr',
+    vlabs_1: 'vlabs_1yr',
+    vlabs_1yr: 'vlabs_1yr',
+    vlabs_2: 'vlabs_2yr',
+    vlabs_2yr: 'vlabs_2yr',
+    vlabs_5: 'vlabs_5yr',
+    vlabs_5yr: 'vlabs_5yr',
   };
 
   const rawTargetId = rawPlan || rawPack || rawId || '';
-  const isPlan = Boolean(rawPlan || (rawId && rawId.startsWith('plan_')) || (rawType === 'subscription') || planAliases[rawTargetId.toLowerCase()]);
+  const isPlan = Boolean(rawPlan || (rawId && (rawId.startsWith('plan_') || rawId.startsWith('vlabs_'))) || (rawType === 'subscription' || rawType === 'licence') || planAliases[rawTargetId.toLowerCase()]);
   const itemType = isPlan ? 'subscription' : 'pack';
   const resolvedTarget = rawPlan || rawPack || rawId || (isPlan ? 'plan_openhiggs' : 'pack_5000');
   const itemId = planAliases[resolvedTarget.toLowerCase()] || resolvedTarget;
@@ -291,6 +298,33 @@ function CheckoutContent() {
           usdAnnualPerMo: 159,
           desc: '50 Full Mythology Videos / mo (1,150 credits), automated series manager, priority GPU cluster, VIP WhatsApp SLA.',
         },
+        vlabs_1yr: {
+          name: 'Fluvia vLabs — 1 Year Licence',
+          monthly: 35988,
+          annualPerMo: 2999,
+          fixedTotal: 35988,
+          credits: 0,
+          desc: '12-Month full licence for AI Voiceover Studio, Video Dubbing, Voice Cloning, Voice Design & Voice Library.',
+          intervalLabel: '1 Year Licence (₹2,999/mo equivalent • Total ₹35,988)',
+        },
+        vlabs_2yr: {
+          name: 'Fluvia vLabs — 2 Years Licence (Most Popular)',
+          monthly: 47976,
+          annualPerMo: 1999,
+          fixedTotal: 47976,
+          credits: 0,
+          desc: '24-Month high-value licence with priority generation queue, commercial agency rights & all enabled vLabs modules.',
+          intervalLabel: '2 Years Licence (₹1,999/mo equivalent • Total ₹47,976)',
+        },
+        vlabs_5yr: {
+          name: 'Fluvia vLabs — 5 Years Licence',
+          monthly: 107940,
+          annualPerMo: 1799,
+          fixedTotal: 107940,
+          credits: 0,
+          desc: '60-Month master enterprise studio licence for media houses, agencies and pro creators with 24/7 priority SLA.',
+          intervalLabel: '5 Years Licence (₹1,799/mo equivalent • Total ₹1,07,940)',
+        },
       };
 
       plans['plan_pro'] = plans.plan_creator;
@@ -308,7 +342,7 @@ function CheckoutContent() {
       plans['openhiggs_max'] = plans.plan_openhiggs_max;
 
       const pl = plans[itemId] || plans.plan_openhiggs;
-      const calculatedPrice = isAnnual ? pl.annualPerMo * 12 : pl.monthly;
+      const calculatedPrice = pl.fixedTotal !== undefined ? pl.fixedTotal : (isAnnual ? pl.annualPerMo * 12 : pl.monthly);
 
       const usdLabel = rawCurrency === 'usd' && pl.usdAnnualPerMo
         ? isAnnual
@@ -322,9 +356,9 @@ function CheckoutContent() {
         basePrice: calculatedPrice,
         credits: pl.credits,
         isSubscription: true,
-        intervalLabel: isAnnual
+        intervalLabel: pl.intervalLabel || (isAnnual
           ? `Annual (₹${pl.annualPerMo.toLocaleString('en-IN')}/mo • Billed ₹${calculatedPrice.toLocaleString('en-IN')}/yr${usdLabel})`
-          : `Monthly (Billed ₹${pl.monthly.toLocaleString('en-IN')}/mo${usdLabel})`,
+          : `Monthly (Billed ₹${pl.monthly.toLocaleString('en-IN')}/mo${usdLabel})`),
       });
     }
   }, [itemType, itemId, interval, router]);

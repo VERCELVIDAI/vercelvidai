@@ -92,6 +92,7 @@ export function Sidebar({ userRole = 'creator', credits = { availableBalance: 0,
 
   const creationItems: SidebarNavItem[] = [
     { label: 'Overview', href: '/dashboard', icon: Home },
+    { label: 'Fluvia vLabs Audio', href: '/vlabs/studio', icon: Mic, badge: 'vLabs' },
     { label: 'Mythology Studio', href: '/mythology/dashboard', icon: Sparkles, badge: 'Mythos' },
     { label: 'Vox Motion Graphics', href: '/studios/motion-graphics', icon: Film },
     { label: 'OpenHiggs Studio', href: '/openhiggs', icon: Zap },

@@ -36,5 +36,8 @@ next-env.d.ts
 # temp files
 data/*.tmp
 *.bat
-public/uploads/audio/*.mp3
+public/uploads/audio/*
+!public/uploads/audio/.gitkeep
+public/uploads/audio/vlabs/*
+!public/uploads/audio/vlabs/.gitkeep
 scratch/

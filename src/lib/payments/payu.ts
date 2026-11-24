@@ -451,20 +451,36 @@ export async function createPayUPaymentOrder(
     if (!pack) throw new Error('Invalid credit pack selected.');
     basePriceInr = pack.priceInr;
     productInfo = `${pack.name} (${pack.creditAmount.toLocaleString()} Credits)`;
-  } else if (params.paymentType === 'subscription') {
-    const plan =
-      dbStore.getPlanById(params.itemPlanOrPackId) ||
-      dbStore.getPlans().find((p) => p.id === params.itemPlanOrPackId);
-    if (!plan) throw new Error('Invalid subscription plan selected.');
-
-    const interval = params.billingInterval || plan.billingInterval || 'month';
-    if (interval === 'year') {
-      const monthlyRate = plan.priceAnnualInr || Math.round(plan.priceInr * 0.8);
-      basePriceInr = monthlyRate * 12;
-      productInfo = `${plan.name} - Annual Subscription (12 Months at INR ${monthlyRate}/mo)`;
+  } else if (params.paymentType === 'subscription' || params.paymentType === 'licence' || (params.itemPlanOrPackId && params.itemPlanOrPackId.startsWith('vlabs_'))) {
+    if (params.itemPlanOrPackId.startsWith('vlabs_')) {
+      if (params.itemPlanOrPackId === 'vlabs_1yr') {
+        basePriceInr = 35988;
+        productInfo = 'Fluvia vLabs — AI Voice Production 1 Year Licence (12 Months)';
+      } else if (params.itemPlanOrPackId === 'vlabs_2yr') {
+        basePriceInr = 47976;
+        productInfo = 'Fluvia vLabs — AI Voice Production 2 Years Licence (24 Months)';
+      } else if (params.itemPlanOrPackId === 'vlabs_5yr') {
+        basePriceInr = 107940;
+        productInfo = 'Fluvia vLabs — AI Voice Production 5 Years Licence (60 Months)';
+      } else {
+        basePriceInr = 35988;
+        productInfo = 'Fluvia vLabs — AI Voice Production Licence';
+      }
     } else {
-      basePriceInr = plan.priceInr;
-      productInfo = `${plan.name} - Monthly Subscription`;
+      const plan =
+        dbStore.getPlanById(params.itemPlanOrPackId) ||
+        dbStore.getPlans().find((p) => p.id === params.itemPlanOrPackId);
+      if (!plan) throw new Error('Invalid subscription plan selected.');
+
+      const interval = params.billingInterval || plan.billingInterval || 'month';
+      if (interval === 'year') {
+        const monthlyRate = plan.priceAnnualInr || Math.round(plan.priceInr * 0.8);
+        basePriceInr = monthlyRate * 12;
+        productInfo = `${plan.name} - Annual Subscription (12 Months at INR ${monthlyRate}/mo)`;
+      } else {
+        basePriceInr = plan.priceInr;
+        productInfo = `${plan.name} - Monthly Subscription`;
+      }
     }
   }
 
@@ -937,6 +953,46 @@ export async function fulfillPayUPayment(
         currentPeriodEnd: periodEnd,
         cancelAtPeriodEnd: false,
       });
+    }
+
+    // 1.3b. If order is for Fluvia vLabs Licence, activate the licence server-side
+    if (order.itemPlanOrPackId.startsWith('vlabs_')) {
+      let durationMonths: 12 | 24 | 60 = 12;
+      if (order.itemPlanOrPackId === 'vlabs_2yr') durationMonths = 24;
+      if (order.itemPlanOrPackId === 'vlabs_5yr') durationMonths = 60;
+
+      const actDate = new Date();
+      const expDate = new Date();
+      expDate.setMonth(expDate.getMonth() + durationMonths);
+
+      const existingLicence = dbStore.getUserVlabsLicence(order.userId);
+      if (existingLicence && existingLicence.status === 'active') {
+        const currentExp = new Date(existingLicence.expirationDate);
+        currentExp.setMonth(currentExp.getMonth() + durationMonths);
+        dbStore.updateVlabsLicence(existingLicence.id, {
+          expirationDate: currentExp.toISOString(),
+          planId: order.itemPlanOrPackId as any,
+          durationMonths: ((existingLicence.durationMonths || 12) + durationMonths) as any,
+          status: 'active',
+          paymentStatus: 'success',
+        });
+      } else {
+        dbStore.createVlabsLicence({
+          userId: order.userId,
+          planId: order.itemPlanOrPackId as any,
+          orderId: order.id,
+          paymentId: mihpayid,
+          txnid: order.txnid,
+          purchaseDate: now,
+          activationDate: actDate.toISOString(),
+          expirationDate: expDate.toISOString(),
+          status: 'active',
+          paymentStatus: 'success',
+          durationMonths,
+          productAccess: ['studio', 'tts', 'dubbing', 'voice_cloning', 'voice_design', 'voice_library'],
+          autoRenew: false,
+        });
+      }
     }
   }
 

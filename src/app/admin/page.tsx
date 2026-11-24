@@ -38,7 +38,9 @@ export default function AdminConsolePage() {
   const [billingSearch, setBillingSearch] = useState('');
   const [recheckStatus, setRecheckStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'providers' | 'jobs' | 'audits' | 'billing' | 'pricing' | 'coupons'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'providers' | 'jobs' | 'audits' | 'billing' | 'pricing' | 'coupons' | 'vlabs'>('overview');
+  const [vlabsAdminData, setVlabsAdminData] = useState<any>(null);
+  const [vlabsSearch, setVlabsSearch] = useState('');
 
   // Pricing & Legal Settings Admin State
   const [billingConfig, setBillingConfig] = useState<any>(null);
@@ -109,6 +111,14 @@ export default function AdminConsolePage() {
         setCouponRedemptions(c.redemptions || []);
         setCouponStats(c.stats || null);
       }
+
+      try {
+        const vlabsRes = await fetch('/api/admin/vlabs');
+        if (vlabsRes.ok) {
+          const vd = await vlabsRes.json();
+          setVlabsAdminData(vd);
+        }
+      } catch (err) {}
     } catch (e) {
       console.error(e);
       router.push('/dashboard');
@@ -405,6 +415,7 @@ export default function AdminConsolePage() {
             { id: 'users', label: 'User Directory' },
             { id: 'providers', label: 'AI Providers & Models' },
             { id: 'jobs', label: 'Job Monitor' },
+            { id: 'vlabs', label: 'Fluvia vLabs Licences' },
             { id: 'audits', label: 'Audit Trail' },
           ].map((tab) => (
             <button
@@ -846,7 +857,201 @@ export default function AdminConsolePage() {
           </div>
         )}
 
-        {/* BILLING & FINANCE TAB */}
+        {/* FLUVIA vLABS LICENCES & ENGINE MANAGEMENT TAB */}
+        {activeTab === 'vlabs' && (
+          <div className="space-y-8 animate-in fade-in duration-200">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <Mic className="w-5 h-5 text-emerald-400" />
+                  <span>Fluvia vLabs • Licence & Audio Engine Administration</span>
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Manage commercial voice licences, revenue, AI provider credentials, and audio generation workloads.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-bold">
+                  Zero Payment Failure Mode Active
+                </span>
+              </div>
+            </div>
+
+            {/* Metric Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Total Licences</span>
+                <div className="text-3xl font-black text-white font-mono">
+                  {vlabsAdminData?.stats?.totalLicences ?? 0}
+                </div>
+                <span className="text-[11px] text-slate-500">All-time issued licences</span>
+              </div>
+
+              <div className="p-6 rounded-2xl glass-panel border border-emerald-500/30 bg-emerald-950/20 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Active Licences</span>
+                <div className="text-3xl font-black text-emerald-300 font-mono">
+                  {vlabsAdminData?.stats?.activeCount ?? 0}
+                </div>
+                <span className="text-[11px] text-emerald-400/80">Authorized studios in good standing</span>
+              </div>
+
+              <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Expired Licences</span>
+                <div className="text-3xl font-black text-slate-400 font-mono">
+                  {vlabsAdminData?.stats?.expiredCount ?? 0}
+                </div>
+                <span className="text-[11px] text-slate-500">Requires renewal</span>
+              </div>
+
+              <div className="p-6 rounded-2xl glass-panel border border-teal-500/30 bg-teal-950/20 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-teal-400">vLabs Gross Revenue</span>
+                <div className="text-3xl font-black text-white font-mono">
+                  ₹{(vlabsAdminData?.stats?.totalRevenueInr ?? 0).toLocaleString('en-IN')}
+                </div>
+                <span className="text-[11px] text-teal-400/80">100% verified PayU receipts</span>
+              </div>
+            </div>
+
+            {/* AI Provider Configuration Card */}
+            <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-white text-base">vLabs AI Engine & Providers</h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Configure voice providers, fallback routing, and safety consent enforcement.
+                  </p>
+                </div>
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/40">
+                  Provider Mode: Hybrid
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">ElevenLabs API</span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-400">Connected</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-snug">
+                    Eleven Multilingual v2 & Voice Design integration for studio-grade clarity.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">Google Gemini GenAI</span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-400">Connected</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-snug">
+                    Multilingual video dialogue translation, scriptwriting and acoustic design.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">Consent Safeguards</span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-400">Enforced</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-snug">
+                    Mandatory anti-impersonation affirmation required on all cloned profiles.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Licences Table */}
+            <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="font-bold text-white text-base">Active & Historical Licences</h3>
+                  <p className="text-xs text-slate-400">Search customers, plan terms, order IDs and activation validity.</p>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="Filter by customer, plan or order ID..."
+                  value={vlabsSearch}
+                  onChange={(e) => setVlabsSearch(e.target.value)}
+                  className="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 w-full sm:w-72 focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-white/10 text-slate-400 font-bold">
+                      <th className="pb-3">Customer</th>
+                      <th className="pb-3">Plan Tier</th>
+                      <th className="pb-3">Order / Txn ID</th>
+                      <th className="pb-3">Duration</th>
+                      <th className="pb-3">Expiration Date</th>
+                      <th className="pb-3">Amount</th>
+                      <th className="pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 font-mono">
+                    {(vlabsAdminData?.licences || [])
+                      .filter((l: any) => {
+                        if (!vlabsSearch) return true;
+                        const q = vlabsSearch.toLowerCase();
+                        return (
+                          (l.userEmail || '').toLowerCase().includes(q) ||
+                          (l.userName || '').toLowerCase().includes(q) ||
+                          (l.orderId || '').toLowerCase().includes(q) ||
+                          (l.txnid || '').toLowerCase().includes(q) ||
+                          (l.planId || '').toLowerCase().includes(q)
+                        );
+                      })
+                      .map((lic: any) => (
+                        <tr key={lic.id} className="hover:bg-white/5 transition-colors">
+                          <td className="py-3 font-sans">
+                            <span className="font-bold text-white block">{lic.userName}</span>
+                            <span className="text-slate-400 text-[11px] font-mono">{lic.userEmail}</span>
+                          </td>
+                          <td className="py-3">
+                            <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold">
+                              {lic.planId === 'vlabs_1yr' ? '1 Year' : lic.planId === 'vlabs_2yr' ? '2 Years' : '5 Years'}
+                            </span>
+                          </td>
+                          <td className="py-3 text-slate-300 text-[11px]">
+                            {lic.txnid || lic.orderId}
+                          </td>
+                          <td className="py-3 text-slate-300">
+                            {lic.durationMonths} Mos
+                          </td>
+                          <td className="py-3 text-slate-300">
+                            {new Date(lic.expirationDate).toLocaleDateString('en-IN')}
+                          </td>
+                          <td className="py-3 font-bold text-white">
+                            ₹{(lic.amountInr || 0).toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-3">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                              lic.status === 'active'
+                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                : 'bg-red-500/20 text-red-300 border border-red-500/40'
+                            }`}>
+                              {lic.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+
+                    {(!vlabsAdminData?.licences || vlabsAdminData.licences.length === 0) && (
+                      <tr>
+                        <td colSpan={7} className="py-8 text-center text-slate-500 font-sans">
+                          No commercial vLabs licences issued yet. When users purchase plans, active licences appear here automatically.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
         {/* PRICING, PLANS & TAX SETTINGS TAB */}
         {activeTab === 'pricing' && (
           <div className="space-y-8 animate-in fade-in duration-200">
@@ -1181,7 +1386,201 @@ export default function AdminConsolePage() {
           </div>
         )}
 
-        {/* BILLING & FINANCE TAB */}
+        {/* FLUVIA vLABS LICENCES & ENGINE MANAGEMENT TAB */}
+        {activeTab === 'vlabs' && (
+          <div className="space-y-8 animate-in fade-in duration-200">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <Mic className="w-5 h-5 text-emerald-400" />
+                  <span>Fluvia vLabs • Licence & Audio Engine Administration</span>
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  Manage commercial voice licences, revenue, AI provider credentials, and audio generation workloads.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-bold">
+                  Zero Payment Failure Mode Active
+                </span>
+              </div>
+            </div>
+
+            {/* Metric Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Total Licences</span>
+                <div className="text-3xl font-black text-white font-mono">
+                  {vlabsAdminData?.stats?.totalLicences ?? 0}
+                </div>
+                <span className="text-[11px] text-slate-500">All-time issued licences</span>
+              </div>
+
+              <div className="p-6 rounded-2xl glass-panel border border-emerald-500/30 bg-emerald-950/20 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Active Licences</span>
+                <div className="text-3xl font-black text-emerald-300 font-mono">
+                  {vlabsAdminData?.stats?.activeCount ?? 0}
+                </div>
+                <span className="text-[11px] text-emerald-400/80">Authorized studios in good standing</span>
+              </div>
+
+              <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Expired Licences</span>
+                <div className="text-3xl font-black text-slate-400 font-mono">
+                  {vlabsAdminData?.stats?.expiredCount ?? 0}
+                </div>
+                <span className="text-[11px] text-slate-500">Requires renewal</span>
+              </div>
+
+              <div className="p-6 rounded-2xl glass-panel border border-teal-500/30 bg-teal-950/20 space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-teal-400">vLabs Gross Revenue</span>
+                <div className="text-3xl font-black text-white font-mono">
+                  ₹{(vlabsAdminData?.stats?.totalRevenueInr ?? 0).toLocaleString('en-IN')}
+                </div>
+                <span className="text-[11px] text-teal-400/80">100% verified PayU receipts</span>
+              </div>
+            </div>
+
+            {/* AI Provider Configuration Card */}
+            <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-white text-base">vLabs AI Engine & Providers</h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Configure voice providers, fallback routing, and safety consent enforcement.
+                  </p>
+                </div>
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/40">
+                  Provider Mode: Hybrid
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">ElevenLabs API</span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-400">Connected</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-snug">
+                    Eleven Multilingual v2 & Voice Design integration for studio-grade clarity.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">Google Gemini GenAI</span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-400">Connected</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-snug">
+                    Multilingual video dialogue translation, scriptwriting and acoustic design.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">Consent Safeguards</span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-400">Enforced</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-snug">
+                    Mandatory anti-impersonation affirmation required on all cloned profiles.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Licences Table */}
+            <div className="p-6 rounded-2xl glass-panel border border-white/10 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="font-bold text-white text-base">Active & Historical Licences</h3>
+                  <p className="text-xs text-slate-400">Search customers, plan terms, order IDs and activation validity.</p>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="Filter by customer, plan or order ID..."
+                  value={vlabsSearch}
+                  onChange={(e) => setVlabsSearch(e.target.value)}
+                  className="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 w-full sm:w-72 focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-white/10 text-slate-400 font-bold">
+                      <th className="pb-3">Customer</th>
+                      <th className="pb-3">Plan Tier</th>
+                      <th className="pb-3">Order / Txn ID</th>
+                      <th className="pb-3">Duration</th>
+                      <th className="pb-3">Expiration Date</th>
+                      <th className="pb-3">Amount</th>
+                      <th className="pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 font-mono">
+                    {(vlabsAdminData?.licences || [])
+                      .filter((l: any) => {
+                        if (!vlabsSearch) return true;
+                        const q = vlabsSearch.toLowerCase();
+                        return (
+                          (l.userEmail || '').toLowerCase().includes(q) ||
+                          (l.userName || '').toLowerCase().includes(q) ||
+                          (l.orderId || '').toLowerCase().includes(q) ||
+                          (l.txnid || '').toLowerCase().includes(q) ||
+                          (l.planId || '').toLowerCase().includes(q)
+                        );
+                      })
+                      .map((lic: any) => (
+                        <tr key={lic.id} className="hover:bg-white/5 transition-colors">
+                          <td className="py-3 font-sans">
+                            <span className="font-bold text-white block">{lic.userName}</span>
+                            <span className="text-slate-400 text-[11px] font-mono">{lic.userEmail}</span>
+                          </td>
+                          <td className="py-3">
+                            <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold">
+                              {lic.planId === 'vlabs_1yr' ? '1 Year' : lic.planId === 'vlabs_2yr' ? '2 Years' : '5 Years'}
+                            </span>
+                          </td>
+                          <td className="py-3 text-slate-300 text-[11px]">
+                            {lic.txnid || lic.orderId}
+                          </td>
+                          <td className="py-3 text-slate-300">
+                            {lic.durationMonths} Mos
+                          </td>
+                          <td className="py-3 text-slate-300">
+                            {new Date(lic.expirationDate).toLocaleDateString('en-IN')}
+                          </td>
+                          <td className="py-3 font-bold text-white">
+                            ₹{(lic.amountInr || 0).toLocaleString('en-IN')}
+                          </td>
+                          <td className="py-3">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                              lic.status === 'active'
+                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                : 'bg-red-500/20 text-red-300 border border-red-500/40'
+                            }`}>
+                              {lic.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+
+                    {(!vlabsAdminData?.licences || vlabsAdminData.licences.length === 0) && (
+                      <tr>
+                        <td colSpan={7} className="py-8 text-center text-slate-500 font-sans">
+                          No commercial vLabs licences issued yet. When users purchase plans, active licences appear here automatically.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
         {activeTab === 'billing' && (
           <div className="space-y-6">
             {/* Top Stat Cards */}

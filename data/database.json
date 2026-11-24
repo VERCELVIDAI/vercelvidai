@@ -465,9 +465,9 @@
       "priceAnnualInr": 4080,
       "billingInterval": "month",
       "creditsPerPeriod": 200,
+      "category": "individual",
       "badge": "10 Videos / Mo",
       "accentTheme": "pro",
-      "category": "individual",
       "features": [
         "10 Full Mythology Videos per month (200 credits)",
         "1080p Full HD Watermark-Free MP4 Exports",
@@ -501,9 +501,9 @@
       "priceAnnualInr": 6399,
       "billingInterval": "month",
       "creditsPerPeriod": 450,
+      "category": "individual",
       "badge": "Special Plan • 20 Videos",
       "accentTheme": "max",
-      "category": "individual",
       "features": [
         "20 Full Mythology Videos per month (450 credits)",
         "1080p Full HD Watermark-Free + 4K AI Upscale",
@@ -540,9 +540,9 @@
       "priceAnnualInr": 13599,
       "billingInterval": "month",
       "creditsPerPeriod": 1200,
+      "category": "individual",
       "badge": "Studio Scale • 50 Videos",
       "accentTheme": "max",
-      "category": "individual",
       "features": [
         "50 Full Mythology Videos per month (1,200 credits)",
         "Up to 60s per video with multi-character dialogues",
@@ -566,6 +566,122 @@
         "storageMb": 60000,
         "priorityQueue": true,
         "commercialLicense": true
+      },
+      "isActive": true
+    },
+    {
+      "id": "vlabs_1yr",
+      "name": "Fluvia vLabs — 1 Year Licence",
+      "description": "Unlock professional AI voice generation, cloning and dubbing with a 12-month licence.",
+      "priceInr": 35988,
+      "priceAnnualInr": 35988,
+      "billingInterval": "year",
+      "creditsPerPeriod": 0,
+      "category": "individual",
+      "badge": "12 MONTHS",
+      "accentTheme": "pro",
+      "features": [
+        "12-month full platform licence",
+        "AI Voiceover Studio with unlimited projects",
+        "AI Video Dubbing Engine (up to 4K)",
+        "Voice Library with Indian & Global accents",
+        "Instant Voice Cloning (Consent Protected)",
+        "Natural Language AI Voice Design",
+        "Generation History & Cloud Project Storage",
+        "High-Fidelity Studio Audio Exports (WAV / MP3)",
+        "Commercial Broadcast & Monetization Rights",
+        "Standard Technical Support & Regular Updates"
+      ],
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 600,
+        "supportedModels": [
+          "vlabs-tts-v1",
+          "elevenlabs-multilingual",
+          "gemini-voice"
+        ],
+        "storageMb": 50000,
+        "priorityQueue": false,
+        "commercialLicense": true,
+        "supportLevel": "standard"
+      },
+      "isActive": true
+    },
+    {
+      "id": "vlabs_2yr",
+      "name": "Fluvia vLabs — 2 Years Licence",
+      "description": "24-month high-value licence with priority generation and all enabled vLabs modules.",
+      "priceInr": 47976,
+      "priceAnnualInr": 47976,
+      "billingInterval": "year",
+      "creditsPerPeriod": 0,
+      "category": "individual",
+      "badge": "MOST POPULAR",
+      "accentTheme": "max",
+      "features": [
+        "24-month long-term platform licence",
+        "All 1-Year plan features included",
+        "Priority AI generation queue (Zero Wait)",
+        "High-Capacity Multilingual Dubbing",
+        "Advanced Multi-Speaker Production Pipeline",
+        "Full Commercial & Agency Client Rights",
+        "Priority VIP WhatsApp & Direct Engineer Support",
+        "Automated 18% GST Tax Invoicing (ITC Eligible)"
+      ],
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 1200,
+        "supportedModels": [
+          "vlabs-tts-v1",
+          "elevenlabs-multilingual",
+          "gemini-voice",
+          "vlabs-neural-hd"
+        ],
+        "storageMb": 150000,
+        "priorityQueue": true,
+        "commercialLicense": true,
+        "supportLevel": "priority"
+      },
+      "isActive": true
+    },
+    {
+      "id": "vlabs_5yr",
+      "name": "Fluvia vLabs — 5 Years Licence",
+      "description": "60-month ultimate enterprise studio licence for agencies, media houses and pro creators.",
+      "priceInr": 107940,
+      "priceAnnualInr": 107940,
+      "billingInterval": "year",
+      "creditsPerPeriod": 0,
+      "category": "business",
+      "badge": "5 YEARS STUDIO",
+      "accentTheme": "teams",
+      "features": [
+        "60-month master enterprise licence",
+        "All 2-Year plan features included",
+        "Maximum long-term cost lock-in (₹1,799/mo equiv)",
+        "Advanced Audio Production & Mastering Suite",
+        "Unlimited Voice Cloning & Voice Design Profiles",
+        "Full Commercial Agency & Broadcast Rights",
+        "Dedicated Account Manager & 24/7 SLA",
+        "Automated 18% GST Invoicing with Input Tax Credit"
+      ],
+      "entitlements": {
+        "maxResolution": "4k",
+        "watermark": false,
+        "maxVideoLengthSec": 3600,
+        "supportedModels": [
+          "all",
+          "vlabs-tts-v1",
+          "elevenlabs-multilingual",
+          "gemini-voice",
+          "vlabs-neural-hd"
+        ],
+        "storageMb": 500000,
+        "priorityQueue": true,
+        "commercialLicense": true,
+        "supportLevel": "dedicated"
       },
       "isActive": true
     }
@@ -1513,5 +1629,197 @@
   "mythProjects": [],
   "mythCharacters": [],
   "mythSeries": [],
-  "passwordResetTokens": {}
+  "passwordResetTokens": {},
+  "vlabsLicences": [],
+  "vlabsGenerations": [],
+  "vlabsVoices": [
+    {
+      "id": "voice_in_male_1",
+      "name": "Aarav Sharma",
+      "category": "indian",
+      "language": "Hindi & English",
+      "gender": "male",
+      "accent": "Indian (Delhi / Mumbai)",
+      "description": "Deep, authoritative Indian male narrator with polished corporate tone.",
+      "sampleAudioUrl": "/media/audio/samples/aarav-narrator.mp3",
+      "voiceCharacteristics": {
+        "tone": "Authoritative",
+        "ageGroup": "Middle-Aged",
+        "style": "Corporate Narrator"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    },
+    {
+      "id": "voice_in_fem_1",
+      "name": "Ananya Iyer",
+      "category": "conversational",
+      "language": "Hindi & English",
+      "gender": "female",
+      "accent": "Indian (Neutral)",
+      "description": "Natural, warm and conversational Indian female voice. Perfect for explainers and audiobooks.",
+      "sampleAudioUrl": "/media/audio/samples/ananya-conversational.mp3",
+      "voiceCharacteristics": {
+        "tone": "Warm & Friendly",
+        "ageGroup": "Young Adult",
+        "style": "Conversational"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    },
+    {
+      "id": "voice_cine_male_1",
+      "name": "Marcus Vance",
+      "category": "cinematic",
+      "language": "English",
+      "gender": "male",
+      "accent": "American (Deep Cinematic)",
+      "description": "Deep, resonant, dramatic trailer and movie narrator voice.",
+      "sampleAudioUrl": "/media/audio/samples/marcus-cinematic.mp3",
+      "voiceCharacteristics": {
+        "tone": "Epic & Dramatic",
+        "ageGroup": "Mature",
+        "style": "Movie Trailer"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    },
+    {
+      "id": "voice_adv_fem_1",
+      "name": "Zara Sterling",
+      "category": "advertisement",
+      "language": "English",
+      "gender": "female",
+      "accent": "Global English",
+      "description": "Upbeat, punchy, persuasive commercial voice for social media ads & high-converting reels.",
+      "sampleAudioUrl": "/media/audio/samples/zara-ad.mp3",
+      "voiceCharacteristics": {
+        "tone": "Energetic & Punchy",
+        "ageGroup": "Young Adult",
+        "style": "Promo Commercial"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    },
+    {
+      "id": "voice_hindi_story_1",
+      "name": "Devdutt Shastri",
+      "category": "storytelling",
+      "language": "Hindi",
+      "gender": "male",
+      "accent": "Hindi (Classical / Devanagari)",
+      "description": "Traditional Indian mythological & folkloric narrator with rich inflection and emotional depth.",
+      "sampleAudioUrl": "/media/audio/samples/devdutt-story.mp3",
+      "voiceCharacteristics": {
+        "tone": "Solemn & Storyteller",
+        "ageGroup": "Elderly",
+        "style": "Mythological Katha"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    },
+    {
+      "id": "voice_en_prof_1",
+      "name": "Elena Rostova",
+      "category": "professional",
+      "language": "English",
+      "gender": "female",
+      "accent": "British / Mid-Atlantic",
+      "description": "Crisp, articulate corporate presenter and financial report narrator.",
+      "sampleAudioUrl": "/media/audio/samples/elena-corporate.mp3",
+      "voiceCharacteristics": {
+        "tone": "Articulate & Crisp",
+        "ageGroup": "Adult",
+        "style": "Executive Presentation"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    },
+    {
+      "id": "voice_doc_male_1",
+      "name": "Sir David Sterling",
+      "category": "narrator",
+      "language": "English",
+      "gender": "male",
+      "accent": "British (Prestigious)",
+      "description": "Prestigious wildlife, nature and history documentary narrator.",
+      "sampleAudioUrl": "/media/audio/samples/david-doc.mp3",
+      "voiceCharacteristics": {
+        "tone": "Calm & Scholarly",
+        "ageGroup": "Senior",
+        "style": "Nature Documentary"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    },
+    {
+      "id": "voice_yt_creator_1",
+      "name": "Kabir Tech",
+      "category": "conversational",
+      "language": "Hinglish",
+      "gender": "male",
+      "accent": "Modern Hinglish",
+      "description": "Fast-paced, high-energy YouTube creator, tech reviewer and podcast host.",
+      "sampleAudioUrl": "/media/audio/samples/kabir-yt.mp3",
+      "voiceCharacteristics": {
+        "tone": "Excited & Trendy",
+        "ageGroup": "Young Adult",
+        "style": "YouTube Tech Reviewer"
+      },
+      "createdAt": "2026-11-24T16:30:09.902Z"
+    }
+  ],
+  "vlabsDubbingProjects": [
+    {
+      "userId": "usr_guest_vlabs",
+      "title": "AI Dubbed Project 24/11/2026",
+      "sourceVideoUrl": "https://fluviaflow.online/media/demo-video.mp4",
+      "sourceLang": "English",
+      "targetLang": "Hindi",
+      "speakers": [
+        {
+          "id": "spk_1",
+          "name": "Speaker 1 (Narrator)",
+          "assignedVoiceId": "voice_in_male_1",
+          "dialogueCount": 1
+        },
+        {
+          "id": "spk_2",
+          "name": "Speaker 2 (Co-Host)",
+          "assignedVoiceId": "voice_in_fem_1",
+          "dialogueCount": 1
+        }
+      ],
+      "dialogues": [
+        {
+          "id": "dlg_1",
+          "speakerId": "spk_1",
+          "startTime": 0,
+          "endTime": 4.5,
+          "sourceText": "Welcome to this presentation. Today we will explore innovative AI voice technology.",
+          "translatedText": "इस प्रस्तुति में आपका स्वागत है। आज हम अत्याधुनिक एआई वॉयस तकनीक का अन्वेषण करेंगे।"
+        },
+        {
+          "id": "dlg_2",
+          "speakerId": "spk_2",
+          "startTime": 4.8,
+          "endTime": 9.2,
+          "sourceText": "Our platform enables natural speech generation in multiple languages instantly.",
+          "translatedText": "हमारा प्लेटफॉर्म कई भाषाओं में तुरंत स्वाभाविक वाक् निर्माण को सक्षम बनाता है।"
+        }
+      ],
+      "outputAudioUrl": "/uploads/audio/vlabs/dubbed_audio_1795537809374_97a2cb.wav",
+      "outputVideoUrl": "https://fluviaflow.online/media/demo-video.mp4",
+      "srtUrl": "/uploads/audio/vlabs/dubbed_subtitles_1795537809375_b7cedc.srt",
+      "preserveBackgroundAudio": true,
+      "status": "completed",
+      "progressPercentage": 100,
+      "id": "dub_proj_1795537810111_91004cd1",
+      "createdAt": "2026-11-24T16:30:10.111Z",
+      "updatedAt": "2026-11-24T16:30:10.111Z"
+    }
+  ],
+  "vlabsSettings": {
+    "activeProvider": "hybrid",
+    "enableVoiceCloning": true,
+    "enableVideoDubbing": true,
+    "enableVoiceDesign": true,
+    "enableTextToSpeech": true,
+    "maxAudioLengthSec": 1800,
+    "maxVideoUploadMb": 250,
+    "maintenanceMode": false
+  }
 }

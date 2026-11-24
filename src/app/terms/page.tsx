@@ -45,6 +45,17 @@ export default function TermsPage() {
           <p>
             Credits represent non-monetary digital units of compute consumed during AI video generation. All credit adjustments, monthly renewals, and pack additions are governed strictly by our automated server ledger.
           </p>
+
+          <h2 className="text-lg font-bold text-[#17191D] pt-4 border-t border-[#E5E7EB]">5. Fluvia vLabs: Voice Cloning, Audio Production & Video Dubbing Terms</h2>
+          <p>
+            Users of Fluvia vLabs (including Text-to-Speech, Voice Cloning, AI Voice Design, and AI Video Dubbing) must strictly comply with the following ethical and legal requirements:
+          </p>
+          <ul className="list-disc pl-5 space-y-2 text-[#4B5563]">
+            <li><strong>Mandatory Voice Ownership & Consent:</strong> You must never clone, synthesize, or imitate the voice of any individual without their explicit, informed written consent. Uploading audio samples of third parties or public figures without verified authorization is strictly prohibited and constitutes an immediate violation resulting in permanent licence termination.</li>
+            <li><strong>Anti-Impersonation & Fraud Prevention:</strong> Fluvia vLabs tools may not be used for fraudulent schemes, scam calls, non-consensual biometric profiling, defamatory disinformation, or impersonation of legal or corporate authorities.</li>
+            <li><strong>Commercial Voice Licences:</strong> Active holders of a Fluvia vLabs Licence (1-Year, 2-Year, or 5-Year) obtain full worldwide commercial exploitation rights for synthetic audio and dubbed video created through authorized voice profiles.</li>
+            <li><strong>Auditability & Compliance:</strong> Fluvia reserves the right to log cryptographic audit timestamps and consent records for voice cloning requests to satisfy statutory compliance and cooperate with legal inquiries into unauthorized impersonation.</li>
+          </ul>
         </div>
       </main>
 

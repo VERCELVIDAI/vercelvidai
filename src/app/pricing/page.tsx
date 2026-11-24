@@ -57,7 +57,7 @@ interface PlanCardData {
   id: string;
   title: string;
   subtitle: string;
-  category: 'individual' | 'business' | 'openhiggs' | 'mythology';
+  category: 'individual' | 'business' | 'openhiggs' | 'mythology' | 'vlabs';
   discountBadge?: string;
   bestValueBadge?: string;
   isRecommended?: boolean;
@@ -147,8 +147,18 @@ export default function PricingPage() {
     } catch {}
   };
 
-  // Toolbar state: 'individual' (4 sample plans) or 'openhiggs' (3 OpenHiggs studio tiers) or 'business' or 'mythology'
-  const [activeTab, setActiveTab] = useState<'individual' | 'openhiggs' | 'business' | 'mythology'>('individual');
+  // Toolbar state: 'individual' (4 sample plans) or 'openhiggs' (3 OpenHiggs studio tiers) or 'business' or 'mythology' or 'vlabs'
+  const [activeTab, setActiveTab] = useState<'individual' | 'openhiggs' | 'business' | 'mythology' | 'vlabs'>('individual');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam === 'vlabs') {
+        setActiveTab('vlabs');
+      }
+    }
+  }, []);
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('year'); // Annual by default with savings
   const [currency, setCurrency] = useState<'inr' | 'usd'>('inr'); // INR default, toggleable to USD
   const [isRecommenderOpen, setIsRecommenderOpen] = useState(false);
@@ -213,6 +223,10 @@ export default function PricingPage() {
   };
 
   const handleSelectPlan = (planId: string) => {
+    if (planId.startsWith('vlabs_')) {
+      router.push(`/checkout?type=subscription&id=${planId}&interval=year&currency=inr`);
+      return;
+    }
     const couponParam = planId === 'plan_max' ? '&coupon=FIRST20' : '';
     const tierParam = planId === 'plan_max' ? `&tier=${maxTierIndex}` : '';
     const currencyParam = `&currency=${currency}`;
@@ -1199,9 +1213,166 @@ export default function PricingPage() {
         { text: 'Automated 18% GST Tax Invoicing with input tax credit', included: true },
       ],
     },
+    {
+      id: 'vlabs_1yr',
+      title: '1 YEAR LICENCE',
+      subtitle: '₹2,999 / mo equivalent • Billed ₹35,988',
+      category: 'vlabs',
+      discountBadge: '12 MONTHS',
+      usdPriceAnnual: 432,
+      usdPriceMonthly: 432,
+      inrPriceAnnual: 35988,
+      inrPriceMonthly: 35988,
+      creditsMonthly: 0,
+      creditsLabel: 'Full vLabs Audio Suite Access',
+      creditsLines: [
+        '12-Month Production Licence',
+        'AI Voiceover Studio & Audio Editor',
+        'Video Dubbing & Subtitle Sync',
+        'Voice Library with Indian & Global accents',
+      ],
+      fixedCreditsNote: 'Full 12-Month Licence. Customer pays complete amount at checkout. No recurring charges.',
+      ctaText: 'Get 1 Year Licence',
+      freeGensBox: {
+        header: 'ENABLED MODULES',
+        items: [
+          { name: 'AI Voiceover Studio', resBadge: 'Studio HD', gensBadge: 'Included', included: true },
+          { name: 'Video Dubbing Engine', resBadge: 'Multilingual', gensBadge: 'Included', included: true },
+          { name: 'Voice Library', resBadge: 'Indian & Global', gensBadge: 'Full Access', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'LICENCE PERMISSIONS',
+        items: [
+          { name: 'Voice Cloning (subject to engine)', unlimitedBadge: 'Included', included: true },
+          { name: 'Voice Design (subject to engine)', unlimitedBadge: 'Included', included: true },
+          { name: 'Audio Export (MP3 & WAV)', unlimitedBadge: 'Included', included: true },
+        ],
+        extraCount: 2,
+        extraItems: [
+          { name: 'Generation History & Cloud Storage', unlimitedBadge: 'Included', included: true },
+          { name: 'Standard Technical Support', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: '12-month licence', included: true },
+        { text: 'Access to enabled vLabs tools', included: true },
+        { text: 'AI Voiceover Studio', included: true },
+        { text: 'Video Dubbing', included: true },
+        { text: 'Voice Library', included: true },
+        { text: 'Voice Cloning, subject to available engine', included: true },
+        { text: 'Voice Design, subject to available engine', included: true },
+        { text: 'Generation History', included: true },
+        { text: 'Audio Export', included: true },
+        { text: 'Standard support', included: true },
+      ],
+    },
+    {
+      id: 'vlabs_2yr',
+      title: '2 YEAR LICENCE',
+      subtitle: '₹1,999 / mo equivalent • Billed ₹47,976',
+      category: 'vlabs',
+      discountBadge: '24 MONTHS',
+      bestValueBadge: 'MOST POPULAR',
+      isRecommended: true,
+      usdPriceAnnual: 576,
+      usdPriceMonthly: 576,
+      inrPriceAnnual: 47976,
+      inrPriceMonthly: 47976,
+      creditsMonthly: 0,
+      creditsLabel: 'Priority Audio Production Suite',
+      creditsLines: [
+        '24-Month Long-Term Licence',
+        'All 1-Year Plan Features Included',
+        'Priority Generation Queue (Zero Wait)',
+        'Priority Technical & Engineer Support',
+      ],
+      fixedCreditsNote: 'Most Popular: Customer pays ₹47,976 for 2 full years. No recurring charges.',
+      ctaText: 'Get 2 Years Licence',
+      freeGensBox: {
+        header: 'PRIORITY CLUSTER',
+        items: [
+          { name: 'Priority Generation Queue', resBadge: 'Fast Track', gensBadge: 'Zero Wait', included: true },
+          { name: 'All Enabled vLabs Modules', resBadge: 'Full Suite', gensBadge: 'Included', included: true },
+          { name: 'Advanced Multilingual Dubbing', resBadge: 'Multi-Speaker', gensBadge: 'Included', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'PRODUCTION GRADE',
+        items: [
+          { name: 'All 1-Year plan features', unlimitedBadge: 'Included', included: true },
+          { name: 'Long-term 2-Year Access', unlimitedBadge: '₹1,999/mo', included: true },
+          { name: 'Priority Technical Support', unlimitedBadge: 'Priority', included: true },
+        ],
+        extraCount: 2,
+        extraItems: [
+          { name: 'Full Commercial & Agency Client Rights', unlimitedBadge: 'Included', included: true },
+          { name: 'Automated 18% GST Tax Invoicing', unlimitedBadge: 'ITC Eligible', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: '24-month licence', included: true },
+        { text: 'All 1-year plan features', included: true },
+        { text: 'Long-term access', included: true },
+        { text: 'Priority generation queue where available', included: true, badge: 'ZERO WAIT', badgeColor: 'bg-emerald-600 text-white font-black' },
+        { text: 'Priority support', included: true },
+        { text: 'All enabled vLabs modules', included: true },
+      ],
+    },
+    {
+      id: 'vlabs_5yr',
+      title: '5 YEAR LICENCE',
+      subtitle: '₹1,799 / mo equivalent • Billed ₹1,07,940',
+      category: 'vlabs',
+      discountBadge: '60 MONTHS',
+      usdPriceAnnual: 1295,
+      usdPriceMonthly: 1295,
+      inrPriceAnnual: 107940,
+      inrPriceMonthly: 107940,
+      creditsMonthly: 0,
+      creditsLabel: 'Master Enterprise Studio Licence',
+      creditsLines: [
+        '60-Month Master Enterprise Licence',
+        'All 2-Year Plan Features Included',
+        'Advanced Production Tools Suite',
+        'Maximum Cost Lock-In (₹1,799/mo)',
+      ],
+      fixedCreditsNote: 'Enterprise Studio: Single payment of ₹1,07,940 for 5 full years. No recurring charges.',
+      ctaText: 'Get 5 Years Licence',
+      freeGensBox: {
+        header: 'MASTER PRODUCTION',
+        items: [
+          { name: '60-Month Enterprise Licence', resBadge: '5 Years', gensBadge: 'Included', included: true },
+          { name: 'Advanced Production Tools', resBadge: 'Master Suite', gensBadge: 'Enabled', included: true },
+          { name: 'Dedicated Fast Audio Cluster', resBadge: 'Enterprise', gensBadge: 'VIP Queue', included: true },
+        ],
+      },
+      unlimitedGensBox: {
+        header: 'ENTERPRISE SUITE',
+        items: [
+          { name: 'All 2-Year plan features', unlimitedBadge: 'Included', included: true },
+          { name: 'Long-term premium access', unlimitedBadge: '5 Years', included: true },
+          { name: 'Dedicated Priority Support', unlimitedBadge: 'VIP 24/7', included: true },
+        ],
+        extraCount: 2,
+        extraItems: [
+          { name: 'Full Commercial Agency & Broadcast Rights', unlimitedBadge: 'Included', included: true },
+          { name: 'Automated 18% GST Invoicing with ITC', unlimitedBadge: 'Included', included: true },
+        ],
+      },
+      bottomChecklist: [
+        { text: '60-month licence', included: true },
+        { text: 'All 2-year plan features', included: true },
+        { text: 'Long-term premium access', included: true, badge: '5 YEARS', badgeColor: 'bg-indigo-600 text-white font-black' },
+        { text: 'Advanced production tools where available', included: true },
+        { text: 'Priority support', included: true },
+        { text: 'All enabled vLabs modules', included: true },
+      ],
+    },
   ];
 
   const visiblePlans = plansData.filter((p) => {
+    if (activeTab === 'vlabs') return p.category === 'vlabs';
     if (activeTab === 'mythology') return p.category === 'mythology';
     if (activeTab === 'openhiggs') return p.category === 'openhiggs';
     if (activeTab === 'business') return p.id === 'plan_business';
@@ -1308,6 +1479,28 @@ export default function PricingPage() {
                   isDark ? 'bg-amber-900/60 text-amber-200 border-amber-600/50' : 'bg-amber-100 text-amber-800 border-amber-200'
                 }`}>
                   ₹5,100+
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('vlabs')}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === 'vlabs'
+                    ? isDark
+                      ? 'bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 font-black shadow-sm'
+                      : 'bg-white text-emerald-700 shadow-xs font-black'
+                    : isDark
+                    ? 'text-emerald-400 hover:text-emerald-200 font-bold'
+                    : 'text-emerald-700 hover:text-emerald-950 font-bold'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <span>FLUVIA vLABS (3 Licences)</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded font-black border ${
+                  isDark ? 'bg-emerald-900/60 text-emerald-200 border-emerald-600/50' : 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                }`}>
+                  HOT
                 </span>
               </button>
             </div>
@@ -1477,6 +1670,24 @@ export default function PricingPage() {
         />
 
         {/* ========================================================================= */}
+        {/* FLUVIA vLABS DEDICATED CATEGORY HEADER BANNER */}
+        {/* ========================================================================= */}
+        {activeTab === 'vlabs' && (
+          <div className="mb-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-emerald-950/80 via-[#0a1518] to-teal-950/80 border border-emerald-500/40 text-center relative overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mb-3">
+              FLUVIA vLABS
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              Fluvia vLabs — AI Voice Production Licence
+            </h2>
+            <p className="text-sm sm:text-base text-emerald-200/90 max-w-2xl mx-auto mt-2 font-medium">
+              Unlock professional AI voice generation, cloning and dubbing with a long-term licence.
+            </p>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
         {/* FOUR-COLUMN PRICING GRID (EXACT SCREENSHOT COLOURS, SHADOWS & HIERARCHY) */}
         {/* ========================================================================= */}
         <div
@@ -1504,6 +1715,62 @@ export default function PricingPage() {
             const isPro = plan.id === 'plan_creator';
             const isMax = plan.id === 'plan_max';
             const isTeams = plan.id === 'plan_business';
+
+            const vlabsTheme = isDark
+              ? {
+                  cardBg: plan.isRecommended ? 'bg-[#0b1717]/95' : 'bg-[#091316]/95',
+                  headerGlow: 'bg-gradient-to-b from-emerald-500/25 to-transparent',
+                  cardBorder: plan.isRecommended
+                    ? 'border-2 border-emerald-400 shadow-[0_0_40px_rgba(16,185,129,0.3)] ring-2 ring-emerald-400/40 lg:-translate-y-2'
+                    : 'border-2 border-emerald-500/60 hover:border-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.15)]',
+                  titleColor: 'text-white font-black',
+                  subtitleColor: 'text-emerald-200/80',
+                  discountBadge: 'bg-emerald-600 text-white font-black',
+                  bestValueBadge: 'bg-gradient-to-r from-emerald-400 to-teal-400 text-black font-black',
+                  creditBoxBg: 'bg-[#0f1f1d] border border-emerald-500/40',
+                  creditIconColor: 'text-emerald-400',
+                  creditHeaderColor: 'text-white font-black',
+                  creditTextColor: 'text-emerald-100/90',
+                  priceColor: 'text-white',
+                  periodColor: 'text-slate-400',
+                  ctaButton: plan.isRecommended
+                    ? 'bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 text-black font-black shadow-[0_0_30px_rgba(16,185,129,0.5)]'
+                    : 'bg-gradient-to-r from-emerald-500 to-teal-500 text-black font-black shadow-[0_0_25px_rgba(16,185,129,0.35)]',
+                  freeGensBoxBg: 'bg-[#0f1f1d]/80 border border-emerald-500/30',
+                  freeGensHeaderColor: 'text-emerald-300 font-extrabold',
+                  freeGensBadge: 'bg-emerald-400 text-black font-extrabold',
+                  unlimitedBoxBg: 'bg-[#0f1f1d]/80 border border-emerald-500/30',
+                  unlimitedHeaderColor: 'text-emerald-300 font-extrabold',
+                  unlimitedBadge: 'bg-emerald-400 text-black font-extrabold',
+                  checklistText: 'text-slate-300',
+                  checkIconColor: 'text-emerald-400',
+                }
+              : {
+                  cardBg: 'bg-white',
+                  headerGlow: 'bg-gradient-to-b from-emerald-100/90 via-emerald-50/30 to-white',
+                  cardBorder: plan.isRecommended
+                    ? 'border-2 border-emerald-500 shadow-xl shadow-emerald-500/20 ring-2 ring-emerald-500/30 lg:-translate-y-2'
+                    : 'border-2 border-emerald-400 hover:border-emerald-500 shadow-md shadow-emerald-500/10',
+                  titleColor: 'text-[#17191D]',
+                  subtitleColor: 'text-[#667085]',
+                  discountBadge: 'bg-emerald-600 text-white font-black',
+                  bestValueBadge: 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black shadow-md',
+                  creditBoxBg: 'bg-emerald-50/80 border border-emerald-300',
+                  creditIconColor: 'text-emerald-700',
+                  creditHeaderColor: 'text-emerald-950',
+                  creditTextColor: 'text-[#667085]',
+                  priceColor: 'text-[#17191D]',
+                  periodColor: 'text-[#667085]',
+                  ctaButton: 'bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:opacity-95 text-white font-black shadow-lg shadow-emerald-500/30',
+                  freeGensBoxBg: 'bg-emerald-50/60 border border-emerald-200',
+                  freeGensHeaderColor: 'text-emerald-950',
+                  freeGensBadge: 'bg-emerald-200 text-emerald-950 font-extrabold border border-emerald-300',
+                  unlimitedBoxBg: 'bg-emerald-50/60 border border-emerald-200',
+                  unlimitedHeaderColor: 'text-emerald-950',
+                  unlimitedBadge: 'bg-emerald-200 text-emerald-950 font-extrabold',
+                  checklistText: 'text-[#17191D]',
+                  checkIconColor: 'text-[#10B981]',
+                };
 
             const mythosTheme = isDark
               ? {
@@ -1561,7 +1828,7 @@ export default function PricingPage() {
                   checkIconColor: 'text-[#10B981]',
                 };
 
-            const theme = planColorThemes[plan.id] || (plan.category === 'mythology' ? mythosTheme : planColorThemes.plan_starter);
+            const theme = planColorThemes[plan.id] || (plan.category === 'vlabs' ? vlabsTheme : (plan.category === 'mythology' ? mythosTheme : planColorThemes.plan_starter));
 
             return (
               <motion.div
@@ -1719,25 +1986,43 @@ export default function PricingPage() {
 
                   {/* 2. Price Section */}
                   <div className={`mt-4 pb-4 border-b ${isDark ? 'border-slate-800' : 'border-[#E5E7EB]'}`}>
-                    <div className="flex items-baseline gap-2 flex-wrap">
-                      {isAnnual && strikethroughPrice && (
-                        <span className={`text-base line-through font-mono font-bold ${
-                          theme.strikethroughColor || 'text-[#FF1F66]'
-                        }`}>
-                          {currencySymbol}{strikethroughPrice.toLocaleString()}
+                    {plan.category === 'vlabs' ? (
+                      <div className="flex flex-col">
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          <span className={`text-3xl sm:text-4xl font-black font-mono tracking-tight ${
+                            theme.priceColor || (isDark ? 'text-white' : 'text-[#17191D]')
+                          }`}>
+                            ₹{plan.inrPriceAnnual.toLocaleString('en-IN')}
+                          </span>
+                          <span className="text-xs font-bold text-emerald-400">
+                            {plan.id === 'vlabs_1yr' ? '/ Yearly Licence' : plan.id === 'vlabs_2yr' ? '/ 2 Years' : '/ 5 Years'}
+                          </span>
+                        </div>
+                        <span className="text-xs text-slate-400 mt-1 font-mono">
+                          {plan.id === 'vlabs_1yr' ? '₹2,999 / month equivalent' : plan.id === 'vlabs_2yr' ? '₹1,999 / month equivalent' : '₹1,799 / month equivalent'}
                         </span>
-                      )}
-                      <span className={`text-3xl sm:text-4xl font-black font-mono tracking-tight ${
-                        theme.priceColor || (isDark ? 'text-white' : 'text-[#17191D]')
-                      }`}>
-                        {isTeams ? 'From ' : ''}{currencySymbol}{price.toLocaleString()}
-                      </span>
-                      <span className={`text-xs font-medium ${
-                        theme.periodColor || (isDark ? 'text-slate-400' : 'text-[#667085]')
-                      }`}>
-                        {isTeams ? 'per seat/month' : `per month, ${isAnnual ? 'billed annually' : 'billed monthly'}`}
-                      </span>
-                    </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-baseline gap-2 flex-wrap">
+                        {isAnnual && strikethroughPrice && (
+                          <span className={`text-base line-through font-mono font-bold ${
+                            theme.strikethroughColor || 'text-[#FF1F66]'
+                          }`}>
+                            {currencySymbol}{strikethroughPrice.toLocaleString()}
+                          </span>
+                        )}
+                        <span className={`text-3xl sm:text-4xl font-black font-mono tracking-tight ${
+                          theme.priceColor || (isDark ? 'text-white' : 'text-[#17191D]')
+                        }`}>
+                          {isTeams ? 'From ' : ''}{currencySymbol}{price.toLocaleString()}
+                        </span>
+                        <span className={`text-xs font-medium ${
+                          theme.periodColor || (isDark ? 'text-slate-400' : 'text-[#667085]')
+                        }`}>
+                          {isTeams ? 'per seat/month' : `per month, ${isAnnual ? 'billed annually' : 'billed monthly'}`}
+                        </span>
+                      </div>
+                    )}
 
                     {/* FIRST20 Coupon Tag Callout on Max */}
                     {plan.couponTag && (

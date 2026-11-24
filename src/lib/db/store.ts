@@ -35,6 +35,11 @@ import {
   MythProject,
   MythCharacter,
   MythSeries,
+  VlabsLicence,
+  VlabsGeneration,
+  VlabsVoice,
+  VlabsDubbingProject,
+  VlabsSettings,
 } from '../types';
 
 interface DatabaseSchema {
@@ -74,6 +79,11 @@ interface DatabaseSchema {
   mythProjects?: MythProject[];
   mythCharacters?: MythCharacter[];
   mythSeries?: MythSeries[];
+  vlabsLicences?: VlabsLicence[];
+  vlabsGenerations?: VlabsGeneration[];
+  vlabsVoices?: VlabsVoice[];
+  vlabsDubbingProjects?: VlabsDubbingProject[];
+  vlabsSettings?: VlabsSettings;
 }
 
 // Determine writable data directory (handles Vercel / serverless read-only filesystem gracefully)
@@ -590,6 +600,107 @@ function getInitialDatabase(): DatabaseSchema {
           seatsAllowed: 5,
           commercialLicense: true,
           apiAccess: true,
+          supportLevel: 'dedicated',
+        },
+        isActive: true,
+      },
+      {
+        id: 'vlabs_1yr',
+        name: 'Fluvia vLabs — 1 Year Licence',
+        description: 'Unlock professional AI voice generation, cloning and dubbing with a 12-month licence.',
+        priceInr: 35988,
+        priceAnnualInr: 35988,
+        billingInterval: 'year',
+        creditsPerPeriod: 0,
+        category: 'individual',
+        badge: '12 MONTHS',
+        accentTheme: 'pro',
+        features: [
+          '12-month full platform licence',
+          'AI Voiceover Studio with unlimited projects',
+          'AI Video Dubbing Engine (up to 4K)',
+          'Voice Library with Indian & Global accents',
+          'Instant Voice Cloning (Consent Protected)',
+          'Natural Language AI Voice Design',
+          'Generation History & Cloud Project Storage',
+          'High-Fidelity Studio Audio Exports (WAV / MP3)',
+          'Commercial Broadcast & Monetization Rights',
+          'Standard Technical Support & Regular Updates',
+        ],
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 600,
+          supportedModels: ['vlabs-tts-v1', 'elevenlabs-multilingual', 'gemini-voice'],
+          storageMb: 50000,
+          priorityQueue: false,
+          commercialLicense: true,
+          supportLevel: 'standard',
+        },
+        isActive: true,
+      },
+      {
+        id: 'vlabs_2yr',
+        name: 'Fluvia vLabs — 2 Years Licence',
+        description: '24-month high-value licence with priority generation and all enabled vLabs modules.',
+        priceInr: 47976,
+        priceAnnualInr: 47976,
+        billingInterval: 'year',
+        creditsPerPeriod: 0,
+        category: 'individual',
+        badge: 'MOST POPULAR',
+        accentTheme: 'max',
+        features: [
+          '24-month long-term platform licence',
+          'All 1-Year plan features included',
+          'Priority AI generation queue (Zero Wait)',
+          'High-Capacity Multilingual Dubbing',
+          'Advanced Multi-Speaker Production Pipeline',
+          'Full Commercial & Agency Client Rights',
+          'Priority VIP WhatsApp & Direct Engineer Support',
+          'Automated 18% GST Tax Invoicing (ITC Eligible)',
+        ],
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 1200,
+          supportedModels: ['vlabs-tts-v1', 'elevenlabs-multilingual', 'gemini-voice', 'vlabs-neural-hd'],
+          storageMb: 150000,
+          priorityQueue: true,
+          commercialLicense: true,
+          supportLevel: 'priority',
+        },
+        isActive: true,
+      },
+      {
+        id: 'vlabs_5yr',
+        name: 'Fluvia vLabs — 5 Years Licence',
+        description: '60-month ultimate enterprise studio licence for agencies, media houses and pro creators.',
+        priceInr: 107940,
+        priceAnnualInr: 107940,
+        billingInterval: 'year',
+        creditsPerPeriod: 0,
+        category: 'business',
+        badge: '5 YEARS STUDIO',
+        accentTheme: 'teams',
+        features: [
+          '60-month master enterprise licence',
+          'All 2-Year plan features included',
+          'Maximum long-term cost lock-in (₹1,799/mo equiv)',
+          'Advanced Audio Production & Mastering Suite',
+          'Unlimited Voice Cloning & Voice Design Profiles',
+          'Full Commercial Agency & Broadcast Rights',
+          'Dedicated Account Manager & 24/7 SLA',
+          'Automated 18% GST Invoicing with Input Tax Credit',
+        ],
+        entitlements: {
+          maxResolution: '4k',
+          watermark: false,
+          maxVideoLengthSec: 3600,
+          supportedModels: ['all', 'vlabs-tts-v1', 'elevenlabs-multilingual', 'gemini-voice', 'vlabs-neural-hd'],
+          storageMb: 500000,
+          priorityQueue: true,
+          commercialLicense: true,
           supportLevel: 'dedicated',
         },
         isActive: true,
@@ -1189,6 +1300,117 @@ function getInitialDatabase(): DatabaseSchema {
       website: 'https://fluviaflow.ai',
       isGstRegistered: true,
     },
+    vlabsLicences: [],
+    vlabsGenerations: [],
+    vlabsVoices: [
+      {
+        id: 'voice_in_male_1',
+        name: 'Aarav Sharma',
+        category: 'indian',
+        language: 'Hindi & English',
+        gender: 'male',
+        accent: 'Indian (Delhi / Mumbai)',
+        description: 'Deep, authoritative Indian male narrator with polished corporate tone.',
+        sampleAudioUrl: '/media/audio/samples/aarav-narrator.mp3',
+        voiceCharacteristics: { tone: 'Authoritative', ageGroup: 'Middle-Aged', style: 'Corporate Narrator' },
+        createdAt: now,
+      },
+      {
+        id: 'voice_in_fem_1',
+        name: 'Ananya Iyer',
+        category: 'conversational',
+        language: 'Hindi & English',
+        gender: 'female',
+        accent: 'Indian (Neutral)',
+        description: 'Natural, warm and conversational Indian female voice. Perfect for explainers and audiobooks.',
+        sampleAudioUrl: '/media/audio/samples/ananya-conversational.mp3',
+        voiceCharacteristics: { tone: 'Warm & Friendly', ageGroup: 'Young Adult', style: 'Conversational' },
+        createdAt: now,
+      },
+      {
+        id: 'voice_cine_male_1',
+        name: 'Marcus Vance',
+        category: 'cinematic',
+        language: 'English',
+        gender: 'male',
+        accent: 'American (Deep Cinematic)',
+        description: 'Deep, resonant, dramatic trailer and movie narrator voice.',
+        sampleAudioUrl: '/media/audio/samples/marcus-cinematic.mp3',
+        voiceCharacteristics: { tone: 'Epic & Dramatic', ageGroup: 'Mature', style: 'Movie Trailer' },
+        createdAt: now,
+      },
+      {
+        id: 'voice_adv_fem_1',
+        name: 'Zara Sterling',
+        category: 'advertisement',
+        language: 'English',
+        gender: 'female',
+        accent: 'Global English',
+        description: 'Upbeat, punchy, persuasive commercial voice for social media ads & high-converting reels.',
+        sampleAudioUrl: '/media/audio/samples/zara-ad.mp3',
+        voiceCharacteristics: { tone: 'Energetic & Punchy', ageGroup: 'Young Adult', style: 'Promo Commercial' },
+        createdAt: now,
+      },
+      {
+        id: 'voice_hindi_story_1',
+        name: 'Devdutt Shastri',
+        category: 'storytelling',
+        language: 'Hindi',
+        gender: 'male',
+        accent: 'Hindi (Classical / Devanagari)',
+        description: 'Traditional Indian mythological & folkloric narrator with rich inflection and emotional depth.',
+        sampleAudioUrl: '/media/audio/samples/devdutt-story.mp3',
+        voiceCharacteristics: { tone: 'Solemn & Storyteller', ageGroup: 'Elderly', style: 'Mythological Katha' },
+        createdAt: now,
+      },
+      {
+        id: 'voice_en_prof_1',
+        name: 'Elena Rostova',
+        category: 'professional',
+        language: 'English',
+        gender: 'female',
+        accent: 'British / Mid-Atlantic',
+        description: 'Crisp, articulate corporate presenter and financial report narrator.',
+        sampleAudioUrl: '/media/audio/samples/elena-corporate.mp3',
+        voiceCharacteristics: { tone: 'Articulate & Crisp', ageGroup: 'Adult', style: 'Executive Presentation' },
+        createdAt: now,
+      },
+      {
+        id: 'voice_doc_male_1',
+        name: 'Sir David Sterling',
+        category: 'narrator',
+        language: 'English',
+        gender: 'male',
+        accent: 'British (Prestigious)',
+        description: 'Prestigious wildlife, nature and history documentary narrator.',
+        sampleAudioUrl: '/media/audio/samples/david-doc.mp3',
+        voiceCharacteristics: { tone: 'Calm & Scholarly', ageGroup: 'Senior', style: 'Nature Documentary' },
+        createdAt: now,
+      },
+      {
+        id: 'voice_yt_creator_1',
+        name: 'Kabir Tech',
+        category: 'conversational',
+        language: 'Hinglish',
+        gender: 'male',
+        accent: 'Modern Hinglish',
+        description: 'Fast-paced, high-energy YouTube creator, tech reviewer and podcast host.',
+        sampleAudioUrl: '/media/audio/samples/kabir-yt.mp3',
+        voiceCharacteristics: { tone: 'Excited & Trendy', ageGroup: 'Young Adult', style: 'YouTube Tech Reviewer' },
+        createdAt: now,
+      },
+    ],
+    vlabsDubbingProjects: [],
+    vlabsSettings: {
+      activeProvider: 'hybrid',
+      enableVoiceCloning: true,
+      enableVideoDubbing: true,
+      enableVoiceDesign: true,
+      enableTextToSpeech: true,
+      maxAudioLengthSec: 1800,
+      maxVideoUploadMb: 250,
+      maintenanceMode: false,
+    },
   };
 }
 
@@ -1418,6 +1640,25 @@ class Store {
         supportEmail: 'billing@fluviaflow.ai',
         website: 'https://fluviaflow.ai',
         isGstRegistered: true,
+      };
+    }
+
+    if (!schema.vlabsLicences) schema.vlabsLicences = [];
+    if (!schema.vlabsGenerations) schema.vlabsGenerations = [];
+    if (!schema.vlabsVoices || schema.vlabsVoices.length === 0) {
+      schema.vlabsVoices = getInitialDatabase().vlabsVoices || [];
+    }
+    if (!schema.vlabsDubbingProjects) schema.vlabsDubbingProjects = [];
+    if (!schema.vlabsSettings) {
+      schema.vlabsSettings = getInitialDatabase().vlabsSettings || {
+        activeProvider: 'hybrid',
+        enableVoiceCloning: true,
+        enableVideoDubbing: true,
+        enableVoiceDesign: true,
+        enableTextToSpeech: true,
+        maxAudioLengthSec: 1800,
+        maxVideoUploadMb: 250,
+        maintenanceMode: false,
       };
     }
 
@@ -4132,6 +4373,270 @@ class Store {
       return true;
     }
     return false;
+  }
+
+  // ============================================================================
+  // FLUVIA vLABS — AI VOICE PRODUCTION & DUBBING STUDIO DATA ACCESS METHODS
+  // ============================================================================
+
+  getVlabsLicences(): VlabsLicence[] {
+    const db = this.load();
+    return db.vlabsLicences || [];
+  }
+
+  getUserVlabsLicence(userId: string): VlabsLicence | null {
+    const db = this.load();
+    if (!db.vlabsLicences || db.vlabsLicences.length === 0) return null;
+
+    const userLicences = db.vlabsLicences.filter((l) => l.userId === userId);
+    if (userLicences.length === 0) return null;
+
+    const now = Date.now();
+    let hasChanges = false;
+
+    // Check expiration dynamically and update status
+    userLicences.forEach((lic) => {
+      if (lic.status === 'active' && new Date(lic.expirationDate).getTime() <= now) {
+        lic.status = 'expired';
+        lic.updatedAt = new Date().toISOString();
+        hasChanges = true;
+      }
+    });
+
+    if (hasChanges) {
+      this.save(db);
+    }
+
+    // Return the active licence with furthest expiration
+    const active = userLicences.filter((l) => l.status === 'active');
+    if (active.length > 0) {
+      active.sort((a, b) => new Date(b.expirationDate).getTime() - new Date(a.expirationDate).getTime());
+      return active[0];
+    }
+
+    // If none active, return the most recent expired/pending one
+    userLicences.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return userLicences[0];
+  }
+
+  createVlabsLicence(
+    licenceData: Omit<VlabsLicence, 'id' | 'createdAt' | 'updatedAt'>
+  ): VlabsLicence {
+    const db = this.load();
+    if (!db.vlabsLicences) db.vlabsLicences = [];
+
+    const now = new Date().toISOString();
+    const id = `lic_vlabs_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+
+    const newLicence: VlabsLicence = {
+      ...licenceData,
+      id,
+      autoRenew: false,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.vlabsLicences.push(newLicence);
+    this.save(db);
+
+    this.logAudit(licenceData.userId, 'VLABS_LICENCE_ACTIVATED', 'vlabs_licence', id, {
+      planId: licenceData.planId,
+      durationMonths: licenceData.durationMonths,
+      expirationDate: licenceData.expirationDate,
+      orderId: licenceData.orderId,
+    });
+
+    return newLicence;
+  }
+
+  updateVlabsLicence(id: string, updates: Partial<VlabsLicence>): VlabsLicence | null {
+    const db = this.load();
+    if (!db.vlabsLicences) return null;
+
+    const idx = db.vlabsLicences.findIndex((l) => l.id === id);
+    if (idx === -1) return null;
+
+    const updated = {
+      ...db.vlabsLicences[idx],
+      ...updates,
+      id: db.vlabsLicences[idx].id,
+      userId: db.vlabsLicences[idx].userId,
+      updatedAt: new Date().toISOString(),
+    };
+
+    db.vlabsLicences[idx] = updated;
+    this.save(db);
+    return updated;
+  }
+
+  getVlabsGenerations(userId: string): VlabsGeneration[] {
+    const db = this.load();
+    const all = db.vlabsGenerations || [];
+    return all.filter((g) => g.userId === userId).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  createVlabsGeneration(
+    genData: Omit<VlabsGeneration, 'id' | 'createdAt'>
+  ): VlabsGeneration {
+    const db = this.load();
+    if (!db.vlabsGenerations) db.vlabsGenerations = [];
+
+    const now = new Date().toISOString();
+    const id = `gen_vlabs_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+
+    const newGen: VlabsGeneration = {
+      ...genData,
+      id,
+      createdAt: now,
+    };
+
+    db.vlabsGenerations.push(newGen);
+    this.save(db);
+    return newGen;
+  }
+
+  deleteVlabsGeneration(id: string, userId: string): boolean {
+    const db = this.load();
+    if (!db.vlabsGenerations) return false;
+
+    const beforeLen = db.vlabsGenerations.length;
+    db.vlabsGenerations = db.vlabsGenerations.filter((g) => !(g.id === id && g.userId === userId));
+
+    if (db.vlabsGenerations.length !== beforeLen) {
+      this.save(db);
+      return true;
+    }
+    return false;
+  }
+
+  getVlabsVoices(userId?: string): VlabsVoice[] {
+    const db = this.load();
+    const all = db.vlabsVoices || [];
+    // Return system voices + user's custom/cloned voices
+    return all.filter((v) => !v.userId || (userId && v.userId === userId));
+  }
+
+  createVlabsVoice(
+    voiceData: Omit<VlabsVoice, 'id' | 'createdAt'>
+  ): VlabsVoice {
+    const db = this.load();
+    if (!db.vlabsVoices) db.vlabsVoices = [];
+
+    const now = new Date().toISOString();
+    const id = `voice_custom_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+
+    const newVoice: VlabsVoice = {
+      ...voiceData,
+      id,
+      createdAt: now,
+    };
+
+    db.vlabsVoices.push(newVoice);
+    this.save(db);
+    return newVoice;
+  }
+
+  deleteVlabsVoice(id: string, userId: string): boolean {
+    const db = this.load();
+    if (!db.vlabsVoices) return false;
+
+    const beforeLen = db.vlabsVoices.length;
+    db.vlabsVoices = db.vlabsVoices.filter((v) => !(v.id === id && v.userId === userId));
+
+    if (db.vlabsVoices.length !== beforeLen) {
+      this.save(db);
+      return true;
+    }
+    return false;
+  }
+
+  getVlabsDubbingProjects(userId: string): VlabsDubbingProject[] {
+    const db = this.load();
+    const all = db.vlabsDubbingProjects || [];
+    return all.filter((p) => p.userId === userId).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  getVlabsDubbingProject(id: string): VlabsDubbingProject | null {
+    const db = this.load();
+    if (!db.vlabsDubbingProjects) return null;
+    return db.vlabsDubbingProjects.find((p) => p.id === id) || null;
+  }
+
+  createVlabsDubbingProject(
+    projectData: Omit<VlabsDubbingProject, 'id' | 'createdAt' | 'updatedAt'>
+  ): VlabsDubbingProject {
+    const db = this.load();
+    if (!db.vlabsDubbingProjects) db.vlabsDubbingProjects = [];
+
+    const now = new Date().toISOString();
+    const id = `dub_proj_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+
+    const newProj: VlabsDubbingProject = {
+      ...projectData,
+      id,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.vlabsDubbingProjects.push(newProj);
+    this.save(db);
+    return newProj;
+  }
+
+  updateVlabsDubbingProject(
+    id: string,
+    updates: Partial<VlabsDubbingProject>
+  ): VlabsDubbingProject | null {
+    const db = this.load();
+    if (!db.vlabsDubbingProjects) return null;
+
+    const idx = db.vlabsDubbingProjects.findIndex((p) => p.id === id);
+    if (idx === -1) return null;
+
+    const updated = {
+      ...db.vlabsDubbingProjects[idx],
+      ...updates,
+      id: db.vlabsDubbingProjects[idx].id,
+      userId: db.vlabsDubbingProjects[idx].userId,
+      updatedAt: new Date().toISOString(),
+    };
+
+    db.vlabsDubbingProjects[idx] = updated;
+    this.save(db);
+    return updated;
+  }
+
+  getVlabsSettings(): VlabsSettings {
+    const db = this.load();
+    return db.vlabsSettings || {
+      activeProvider: 'hybrid',
+      enableVoiceCloning: true,
+      enableVideoDubbing: true,
+      enableVoiceDesign: true,
+      enableTextToSpeech: true,
+      maxAudioLengthSec: 1800,
+      maxVideoUploadMb: 250,
+      maintenanceMode: false,
+    };
+  }
+
+  updateVlabsSettings(updates: Partial<VlabsSettings>): VlabsSettings {
+    const db = this.load();
+    db.vlabsSettings = {
+      ...(db.vlabsSettings || {
+        activeProvider: 'hybrid',
+        enableVoiceCloning: true,
+        enableVideoDubbing: true,
+        enableVoiceDesign: true,
+        enableTextToSpeech: true,
+        maxAudioLengthSec: 1800,
+        maxVideoUploadMb: 250,
+        maintenanceMode: false,
+      }),
+      ...updates,
+    };
+    this.save(db);
+    return db.vlabsSettings;
   }
 }
 
